@@ -1,0 +1,22 @@
+* CMOS inverter transient - NMOS18 pull-down, PMOS18 pull-up (TT corner)
+.include "../autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=1.8
+
+Vdd vdd 0 {VDD}
+Vin in  0 PULSE(0 {VDD} 1n 0.2n 0.2n 4n 10n)
+
+* PMOS: drain=out gate=in source=vdd bulk=vdd
+XP out in vdd vdd PMOS18 W=20u L=1u M=1
+* NMOS: drain=out gate=in source=0 bulk=0
+XN out in 0 0 NMOS18 W=10u L=1u M=1
+CL out 0 50f
+
+.tran 0.05n 20n
+
+.control
+  run
+  meas tran tphl TRIG v(in) VAL=0.9 RISE=1 TARG v(out) VAL=0.9 FALL=1
+  * plot in out       ; uncomment for interactive waveforms
+.endc
+.end

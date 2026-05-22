@@ -1,0 +1,17 @@
+* NMOS18 output characteristics - Id vs Vds at stepped Vgs (TT corner)
+.include "../autohv_bicmos180_case.lib"
+.param case=0
+
+Vds d 0 0
+Vgs g 0 0
+X1 d g 0 0 NMOS18 W=10u L=1u M=1     ; d g s b
+
+* sweep Vds 0..1.8 V; step Vgs 0.6..1.8 V in 0.3 V increments
+.dc Vds 0 1.8 0.02 Vgs 0.6 1.8 0.3
+
+.control
+  run
+  * plot -i(Vds)      ; uncomment for interactive Id-Vds curves
+  print -i(Vds)
+.endc
+.end
