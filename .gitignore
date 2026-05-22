@@ -1,0 +1,14 @@
+# Build / packaging artifacts
+*.zip
+
+# Simulator output & logs
+*.raw
+*.log
+b3v33check.log
+*.out
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*~
+.*.swp

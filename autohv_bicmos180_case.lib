@@ -1,0 +1,302 @@
+* ============================================================================
+* AutoHV_BiCMOS180 - device subcircuit library for Qucs-S (case-parameterized).
+* Drop this file + autohv_bicmos180_case_models.inc + the autohv_bicmos180_case/
+* symbol folder into a Qucs-S library directory (e.g. ~/.qucs/user_lib or
+* <install>/share/qucs-s/library). All 38 .SUBCKT devices then appear in the
+* left-side Library dock with their symbols, drag-and-drop ready.
+* Corner: set the global 'case' param (0=TT 1=FF 2=SS 3=FS 4=SF); see the .inc.
+* ============================================================================
+.include "autohv_bicmos180_case_models.inc"
+
+* ============================ DEVICE SUBCIRCUITS ============================
+* Place these via the Qucs-S 'SPICE Library Device' (File Components group).
+.subckt NMOS18 d g s b params: W=10u L=1u M=1
+.param AUM2={(W/1u)*(L/1u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0105/sqrt(AUM2+1e-12), 3)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param WEFF={W*(1+DWREL_MM)}
+.param LEFF={L*(1+DLREL_MM)}
+BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+M0 d g_int s b NMOS18_INT W={WEFF} L={LEFF} M={M}
+.ends NMOS18
+
+.subckt PMOS18 d g s b params: W=10u L=1u M=1
+.param AUM2={(W/1u)*(L/1u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0105/sqrt(AUM2+1e-12), 3)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param WEFF={W*(1+DWREL_MM)}
+.param LEFF={L*(1+DLREL_MM)}
+BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+M0 d g_int s b PMOS18_INT W={WEFF} L={LEFF} M={M}
+.ends PMOS18
+
+.subckt NMOS33 d g s b params: W=10u L=1u M=1
+.param AUM2={(W/1u)*(L/1u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.012/sqrt(AUM2+1e-12), 3)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param WEFF={W*(1+DWREL_MM)}
+.param LEFF={L*(1+DLREL_MM)}
+BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+M0 d g_int s b NMOS33_INT W={WEFF} L={LEFF} M={M}
+.ends NMOS33
+
+.subckt PMOS33 d g s b params: W=10u L=1u M=1
+.param AUM2={(W/1u)*(L/1u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.012/sqrt(AUM2+1e-12), 3)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param WEFF={W*(1+DWREL_MM)}
+.param LEFF={L*(1+DLREL_MM)}
+BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+M0 d g_int s b PMOS33_INT W={WEFF} L={LEFF} M={M}
+.ends PMOS33
+
+.subckt NMOS50 d g s b params: W=10u L=1u M=1
+.param AUM2={(W/1u)*(L/1u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.013499999999999998/sqrt(AUM2+1e-12), 3)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param WEFF={W*(1+DWREL_MM)}
+.param LEFF={L*(1+DLREL_MM)}
+BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+M0 d g_int s b NMOS50_INT W={WEFF} L={LEFF} M={M}
+.ends NMOS50
+
+.subckt PMOS50 d g s b params: W=10u L=1u M=1
+.param AUM2={(W/1u)*(L/1u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.013499999999999998/sqrt(AUM2+1e-12), 3)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param WEFF={W*(1+DWREL_MM)}
+.param LEFF={L*(1+DLREL_MM)}
+BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+M0 d g_int s b PMOS50_INT W={WEFF} L={LEFF} M={M}
+.ends PMOS50
+
+.subckt NMOS12 d g s b params: W=10u L=1u M=1
+.param AUM2={(W/1u)*(L/1u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.018000000000000002/sqrt(AUM2+1e-12), 3)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param WEFF={W*(1+DWREL_MM)}
+.param LEFF={L*(1+DLREL_MM)}
+BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+M0 d g_int s b NMOS12_INT W={WEFF} L={LEFF} M={M}
+.ends NMOS12
+
+.subckt PMOS12 d g s b params: W=10u L=1u M=1
+.param AUM2={(W/1u)*(L/1u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.018000000000000002/sqrt(AUM2+1e-12), 3)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param WEFF={W*(1+DWREL_MM)}
+.param LEFF={L*(1+DLREL_MM)}
+BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+M0 d g_int s b PMOS12_INT W={WEFF} L={LEFF} M={M}
+.ends PMOS12
+
+.subckt NDMOS20 d g s params: W=10u M=1
+* HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
+.param W_REF=10u
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
+ESHIFT g_int s value={V(g,s)+DVTH_MM}
+M0 d g_int s NDMOS20_INT m={mtot}
+.ends NDMOS20
+.subckt PDMOS20 d g s params: W=10u M=1
+* HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
+.param W_REF=10u
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
+ESHIFT g_int s value={V(g,s)+DVTH_MM}
+M0 d g_int s PDMOS20_INT m={mtot}
+.ends PDMOS20
+.subckt NDMOS60 d g s params: W=10u M=1
+* HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
+.param W_REF=10u
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6))}
+ESHIFT g_int s value={V(g,s)+DVTH_MM}
+M0 d g_int s NDMOS60_INT m={mtot}
+.ends NDMOS60
+.subckt PDMOS60 d g s params: W=10u M=1
+* HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
+.param W_REF=10u
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6))}
+ESHIFT g_int s value={V(g,s)+DVTH_MM}
+M0 d g_int s PDMOS60_INT m={mtot}
+.ends PDMOS60
+.subckt NDMOS120 d g s params: W=10u M=1
+* HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
+.param W_REF=10u
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6))}
+ESHIFT g_int s value={V(g,s)+DVTH_MM}
+M0 d g_int s NDMOS120_INT m={mtot}
+.ends NDMOS120
+.subckt NDMOS40 d g s params: W=10u M=1
+* HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
+.param W_REF=10u
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6))}
+ESHIFT g_int s value={V(g,s)+DVTH_MM}
+M0 d g_int s NDMOS40_INT m={mtot}
+.ends NDMOS40
+.subckt PDMOS40 d g s params: W=10u M=1
+* HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
+.param W_REF=10u
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6))}
+ESHIFT g_int s value={V(g,s)+DVTH_MM}
+M0 d g_int s PDMOS40_INT m={mtot}
+.ends PDMOS40
+.subckt NDMOS80 d g s params: W=10u M=1
+* HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
+.param W_REF=10u
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6))}
+ESHIFT g_int s value={V(g,s)+DVTH_MM}
+M0 d g_int s NDMOS80_INT m={mtot}
+.ends NDMOS80
+.subckt PDMOS80 d g s params: W=10u M=1
+* HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
+.param W_REF=10u
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6))}
+ESHIFT g_int s value={V(g,s)+DVTH_MM}
+M0 d g_int s PDMOS80_INT m={mtot}
+.ends PDMOS80
+.subckt NDMOS200 d g s params: W=10u L=8u M=1
+* 200V LDMOS: W free (m=W/W_REF); L = drift length. Recommended RESURF window ~5u..16u.
+* L raises drift Rdson (~linear); breakdown is held at the model rating (see notes).
+.param W_REF=10u
+.param L_REF=8u
+.param L_MIN=5u
+.param Leff={max(L,L_MIN)}
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6))}
+.param RDRIFT={max(1.2*(Leff/L_REF-1)/mtot, 1e-6)}
+ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Rdrift d dd {RDRIFT}
+M0 dd g_int s NDMOS200_INT m={mtot}
+.ends NDMOS200
+.subckt DNMOS20 d g s params: W=10u M=1
+* HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
+.param W_REF=10u
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
+ESHIFT g_int s value={V(g,s)+DVTH_MM}
+M0 d g_int s DNMOS20_INT m={mtot}
+.ends DNMOS20
+.subckt NPN_LV c b e params: AREA=1
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+Q0 c b e NPN_LV_INT area={AREAEFF}
+.ends NPN_LV
+
+.subckt PNP_LAT c b e params: AREA=1
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+Q0 c b e PNP_LAT_INT area={AREAEFF}
+.ends PNP_LAT
+
+.subckt NPN_HV c b e params: AREA=1
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+Q0 c b e NPN_HV_INT area={AREAEFF}
+.ends NPN_HV
+
+.subckt PNP_HV c b e params: AREA=1
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+Q0 c b e PNP_HV_INT area={AREAEFF}
+.ends PNP_HV
+
+.subckt DIO_PN a c params: AREA=1
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+D0 a c DIO_PN_INT area={AREAEFF}
+.ends DIO_PN
+
+.subckt DIO_FAST a c params: AREA=1
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+D0 a c DIO_FAST_INT area={AREAEFF}
+.ends DIO_FAST
+
+.subckt DIO_SCH a c params: AREA=1
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+D0 a c DIO_SCH_INT area={AREAEFF}
+.ends DIO_SCH
+
+.subckt DZ_5V6 a c params: AREA=1
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+D0 a c DZ_5V6_INT area={AREAEFF}
+.ends DZ_5V6
+
+.subckt DZ_12 a c params: AREA=1
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+D0 a c DZ_12_INT area={AREAEFF}
+.ends DZ_12
+
+.subckt DZ_24 a c params: AREA=1
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+D0 a c DZ_24_INT area={AREAEFF}
+.ends DZ_24
+
+.subckt RPOLY_HI p n params: L=100u W=10u
+.param AUM2={(L/1u)*(W/1u)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+R0 p n RPOLY_HI_INT L={L*RMM} W={W}
+.ends RPOLY_HI
+
+.subckt RPOLY_LO p n params: L=100u W=10u
+.param AUM2={(L/1u)*(W/1u)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+R0 p n RPOLY_LO_INT L={L*RMM} W={W}
+.ends RPOLY_LO
+
+.subckt RNWELL p n params: L=100u W=10u
+.param AUM2={(L/1u)*(W/1u)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+R0 p n RNWELL_INT L={L*RMM} W={W}
+.ends RNWELL
+
+.subckt RNPLUS p n params: L=100u W=10u
+.param AUM2={(L/1u)*(W/1u)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+R0 p n RNPLUS_INT L={L*RMM} W={W}
+.ends RNPLUS
+
+.subckt RPPLUS p n params: L=100u W=10u
+.param AUM2={(L/1u)*(W/1u)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+R0 p n RPPLUS_INT L={L*RMM} W={W}
+.ends RPPLUS
+
+.subckt CMIM_STD p n params: L=100u W=100u
+.param AUM2={(L/1u)*(W/1u)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.0024000000000000002/sqrt(AUM2+1e-12), 3)}
+.param LS={sqrt(CMM)}
+C0 p n CMIM_STD_INT L={L*LS} W={W*LS}
+.ends CMIM_STD
+
+.subckt CMIM_HI p n params: L=100u W=100u
+.param AUM2={(L/1u)*(W/1u)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.0024000000000000002/sqrt(AUM2+1e-12), 3)}
+.param LS={sqrt(CMM)}
+C0 p n CMIM_HI_INT L={L*LS} W={W*LS}
+.ends CMIM_HI
+
+.subckt CMOM p n params: L=100u W=100u
+.param AUM2={(L/1u)*(W/1u)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.0024000000000000002/sqrt(AUM2+1e-12), 3)}
+.param LS={sqrt(CMM)}
+C0 p n CMOM_INT L={L*LS} W={W*LS}
+.ends CMOM
+
+.subckt CFRINGE p n params: L=100u W=100u
+.param AUM2={(L/1u)*(W/1u)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.0024000000000000002/sqrt(AUM2+1e-12), 3)}
+.param LS={sqrt(CMM)}
+C0 p n CFRINGE_INT L={L*LS} W={W*LS}
+.ends CFRINGE
+

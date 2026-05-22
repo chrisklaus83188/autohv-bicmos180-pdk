@@ -1,0 +1,15 @@
+* NDMOS200 - on-resistance vs drift length, width fixed
+.include "../autohv_bicmos180_case.lib"
+.param case=0
+
+Vg  g  0  5
+Va  da 0  0.5
+Vb  db 0  0.5
+X_a da g 0 NDMOS200 W=100u L=8u     ; nominal drift
+X_b db g 0 NDMOS200 W=100u L=16u    ; long drift -> higher Rdson
+
+.control
+  op
+  print abs(va#branch) abs(vb#branch)   ; Id(8u) > Id(16u)
+.endc
+.end

@@ -1,0 +1,23 @@
+* Monte Carlo - process + mismatch on an NMOS current mirror
+.include "../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=1       ; die-to-die process variation on
+.param MM_ON=1         ; local mismatch on
+
+Vdd  dd 0 3.3
+Iref dd in 10u
+X1 in in 0 0 NMOS33 W=20u L=1u      ; diode-connected reference
+X2 out in 0 0 NMOS33 W=20u L=1u     ; mirror output
+Vout dd out 0
+
+.control
+  let n = 200
+  let i = 0
+  dowhile i < n
+    reset
+    op
+    print abs(vout#branch)          ; mirror output current
+    let i = i + 1
+  end
+.endc
+.end
