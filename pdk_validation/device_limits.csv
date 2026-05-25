@@ -1,0 +1,87 @@
+device,param,min,max,note
+NMOS12,L,0.15,50.0,drawn channel length (um)
+NMOS12,W,0.22,100.0,drawn channel width per device (um); use M for arrays
+NMOS12,M,1,1000,integer device multiplier
+PMOS12,L,0.15,50.0,drawn channel length (um)
+PMOS12,W,0.22,100.0,drawn channel width per device (um); use M for arrays
+PMOS12,M,1,1000,integer device multiplier
+NMOS18,L,0.18,50.0,drawn channel length (um)
+NMOS18,W,0.22,100.0,drawn channel width per device (um); use M for arrays
+NMOS18,M,1,1000,integer device multiplier
+PMOS18,L,0.18,50.0,drawn channel length (um)
+PMOS18,W,0.22,100.0,drawn channel width per device (um); use M for arrays
+PMOS18,M,1,1000,integer device multiplier
+NMOS33,L,0.35,50.0,drawn channel length (um)
+NMOS33,W,0.3,100.0,drawn channel width per device (um); use M for arrays
+NMOS33,M,1,1000,integer device multiplier
+PMOS33,L,0.35,50.0,drawn channel length (um)
+PMOS33,W,0.3,100.0,drawn channel width per device (um); use M for arrays
+PMOS33,M,1,1000,integer device multiplier
+NMOS50,L,0.5,50.0,drawn channel length (um)
+NMOS50,W,0.4,100.0,drawn channel width per device (um); use M for arrays
+NMOS50,M,1,1000,integer device multiplier
+PMOS50,L,0.5,50.0,drawn channel length (um)
+PMOS50,W,0.4,100.0,drawn channel width per device (um); use M for arrays
+PMOS50,M,1,1000,integer device multiplier
+NDMOS20,W,2.0,100000.0,total drawn width (um)
+NDMOS20,M,1,10000,integer device multiplier
+NDMOS40,W,2.0,100000.0,total drawn width (um)
+NDMOS40,M,1,10000,integer device multiplier
+NDMOS60,W,2.0,100000.0,total drawn width (um)
+NDMOS60,M,1,10000,integer device multiplier
+NDMOS80,W,2.0,100000.0,total drawn width (um)
+NDMOS80,M,1,10000,integer device multiplier
+NDMOS120,W,2.0,100000.0,total drawn width (um)
+NDMOS120,M,1,10000,integer device multiplier
+NDMOS200,W,2.0,100000.0,total drawn width (um)
+NDMOS200,M,1,10000,integer device multiplier
+PDMOS20,W,2.0,100000.0,total drawn width (um)
+PDMOS20,M,1,10000,integer device multiplier
+PDMOS40,W,2.0,100000.0,total drawn width (um)
+PDMOS40,M,1,10000,integer device multiplier
+PDMOS60,W,2.0,100000.0,total drawn width (um)
+PDMOS60,M,1,10000,integer device multiplier
+PDMOS80,W,2.0,100000.0,total drawn width (um)
+PDMOS80,M,1,10000,integer device multiplier
+DNMOS20,W,2.0,100000.0,total drawn width (um)
+DNMOS20,M,1,10000,integer device multiplier
+NDMOS200,L,5.4,10.0,"drift/extended-drain length (um); RESURF window, ~5.4u = realistic 200V minimum"
+NPN_LV,AREA,1.0,1000.0,relative area multiplier (unitless)
+NPN_HV,AREA,1.0,1000.0,relative area multiplier (unitless)
+PNP_HV,AREA,1.0,1000.0,relative area multiplier (unitless)
+PNP_LAT,AREA,1.0,1000.0,relative area multiplier (unitless)
+DIO_PN,AREA,1.0,1000.0,relative area multiplier (unitless)
+DIO_FAST,AREA,1.0,1000.0,relative area multiplier (unitless)
+DIO_SCH,AREA,1.0,1000.0,relative area multiplier (unitless)
+DZ_5V6,AREA,1.0,1000.0,relative area multiplier (unitless)
+DZ_12,AREA,1.0,1000.0,relative area multiplier (unitless)
+DZ_24,AREA,1.0,1000.0,relative area multiplier (unitless)
+RPOLY_HI,L,0.5,1000.0,drawn length (um)
+RPOLY_HI,W,0.5,50.0,drawn width (um)
+RPOLY_LO,L,0.5,1000.0,drawn length (um)
+RPOLY_LO,W,0.5,50.0,drawn width (um)
+RNWELL,L,0.5,1000.0,drawn length (um)
+RNWELL,W,0.5,50.0,drawn width (um)
+RNPLUS,L,0.5,1000.0,drawn length (um)
+RNPLUS,W,0.5,50.0,drawn width (um)
+RPPLUS,L,0.5,1000.0,drawn length (um)
+RPPLUS,W,0.5,50.0,drawn width (um)
+CMIM_STD,L,2.0,1000.0,drawn length (um)
+CMIM_STD,W,2.0,1000.0,drawn width (um)
+CMIM_HI,L,2.0,1000.0,drawn length (um)
+CMIM_HI,W,2.0,1000.0,drawn width (um)
+CMOM,L,2.0,1000.0,drawn length (um)
+CMOM,W,2.0,1000.0,drawn width (um)
+CFRINGE,L,2.0,1000.0,drawn length (um)
+CFRINGE,W,2.0,1000.0,drawn width (um)
+NDMOS20,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+NDMOS40,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+NDMOS60,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+NDMOS80,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+NDMOS120,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+NDMOS200,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+PDMOS20,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+PDMOS40,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+PDMOS60,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+PDMOS80,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+DNMOS20,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
