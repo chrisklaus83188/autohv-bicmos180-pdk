@@ -170,12 +170,18 @@ M0 d g_int s NDMOS80_INT m={mtot}
 ESHIFT g_int s value={V(g,s)+DVTH_MM}
 M0 d g_int s PDMOS80_INT m={mtot}
 .ends PDMOS80
-.subckt NDMOS200 d g s params: W=10u L=8u M=1
-* 200V LDMOS: W free (m=W/W_REF); L = drift length. Recommended RESURF window ~5u..16u.
-* L raises drift Rdson (~linear); breakdown is held at the model rating (see notes).
+.subckt NDMOS200 d g s params: W=10u L=6u M=1
+* 200V LDMOS.  W is free; current scales as  m = W/W_REF.
+* L is the DRIFT / EXTENDED-DRAIN length -- NOT the gate/channel length.
+*   The MOS channel length is diffusion-set and fixed at the process minimum
+*   (~0.6u, like the lower-voltage DMOS); it is not a drawn parameter here.
+*   L sets the BV/Rdson trade: longer drift raises on-resistance (~linear,
+*   modeled by Rdrift). Breakdown is held at the model-card rating.
+* Recommended drift window ~5.4u .. 10u (calibrate to process; ~5.4u is a
+*   realistic 200V minimum, consistent with measured ST/BCD parts).
 .param W_REF=10u
-.param L_REF=8u
-.param L_MIN=5u
+.param L_REF=5.4u
+.param L_MIN=5.4u
 .param Leff={max(L,L_MIN)}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6))}
