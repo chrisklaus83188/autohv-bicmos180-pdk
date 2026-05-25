@@ -1,0 +1,112 @@
+* ============================================================================
+* AutoHV_BiCMOS180 - passive device validation deck
+* Exercises every updated resistor and capacitor: nominal value, temperature
+* coefficient (TCR), voltage coefficient (VCR/VCC), RC-filter corner spread,
+* and layer-dependent mismatch via Monte Carlo.
+* Run:  ngspice -b autohv_passive_validation.cir
+* ============================================================================
+.include "autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+* resistors (100u x 10u), biased 1V so R = 1/I(branch)
+Va a 0 1
+Vb b 0 1
+Vc c 0 1
+Vd d 0 1
+Ve e 0 1
+Xa a 0 RPOLY_HI L=100u W=10u
+Xb b 0 RPOLY_LO L=100u W=10u
+Xc c 0 RNWELL  L=100u W=10u
+Xd d 0 RNPLUS  L=100u W=10u
+Xe e 0 RPPLUS  L=100u W=10u
+
+* capacitors (100u x 100u), small-signal C readout
+Vf f 0 dc 0 ac 1
+Vg g 0 dc 0 ac 1
+Vh h 0 dc 0 ac 1
+Vi i 0 dc 0 ac 1
+Xf f 0 CMIM_STD L=100u W=100u
+Xg g 0 CMIM_HI  L=100u W=100u
+Xh h 0 CMOM     L=100u W=100u
+Xi i 0 CFRINGE  L=100u W=100u
+
+* RC low-pass for corner spread: RPOLY_HI (~12.3k) + CMIM_STD (10p)
+Vin in 0 dc 0 ac 1
+Xrf in out RPOLY_HI L=100u W=10u
+Xcf out 0 CMIM_STD L=100u W=100u
+
+.control
+set noaskquit
+
+echo "=== 1. NOMINAL RESISTANCE (TT, 27C, 100u x 10u) ==="
+op
+let r_hi = 1/abs(Va#branch)
+let r_lo = 1/abs(Vb#branch)
+let r_nw = 1/abs(Vc#branch)
+let r_np = 1/abs(Vd#branch)
+let r_pp = 1/abs(Ve#branch)
+echo "  RPOLY_HI =" $&r_hi "   RPOLY_LO =" $&r_lo "   RNWELL =" $&r_nw
+echo "  RNPLUS   =" $&r_np "   RPPLUS   =" $&r_pp
+
+echo " "
+echo "=== 2. NOMINAL CAPACITANCE (TT, 27C, 100u x 100u) ==="
+ac lin 1 1e6 1e6
+let kc = 1/(2*3.141592653589793*1e6)
+let c_std = abs(Vf#branch)*kc
+let c_hi  = abs(Vg#branch)*kc
+let c_mom = abs(Vh#branch)*kc
+let c_fr  = abs(Vi#branch)*kc
+echo "  CMIM_STD =" $&c_std "   CMIM_HI =" $&c_hi
+echo "  CMOM     =" $&c_mom "   CFRINGE =" $&c_fr
+
+echo " "
+echo "=== 3. TCR (RPOLY_HI ~600 ppm/C, RNWELL ~4000 ppm/C) ==="
+foreach t -40 27 125
+  set temp = $t
+  op
+  let rh = 1/abs(Va#branch)
+  let rn = 1/abs(Vc#branch)
+  echo "  T=$t C   RPOLY_HI =" $&rh "   RNWELL =" $&rn
+end
+set temp = 27
+
+echo " "
+echo "=== 4. VCR (effective R vs terminal voltage) ==="
+foreach vv 0.1 5 10
+  alter Va dc = $vv
+  alter Vc dc = $vv
+  op
+  let rhv = $vv/abs(Va#branch)
+  let rnv = $vv/abs(Vc#branch)
+  echo "  V=$vv V   RPOLY_HI =" $&rhv "   RNWELL =" $&rnv
+end
+alter Va dc = 1
+alter Vc dc = 1
+
+echo " "
+echo "=== 5. VCC (CMIM_HI capacitance vs DC bias) ==="
+foreach vb 0 10 20
+  alter Vg dc = $vb
+  ac lin 1 1e6 1e6
+  let cc = abs(Vg#branch)/(2*3.141592653589793*1e6)
+  echo "  bias=$vb V   CMIM_HI =" $&cc "F"
+end
+alter Vg dc = 0
+
+echo " "
+echo "=== 6. RC LOW-PASS -3dB CORNER (RPOLY_HI + CMIM_STD) ==="
+foreach cc 0 1 2 3 4
+  alterparam case = $cc
+  reset
+  ac dec 100 1e4 1e8
+  meas ac fc when vdb(out)=-3.0103
+end
+alterparam case = 0
+reset
+
+echo " "
+echo "=== deterministic validation complete ==="
+.endc
+.end

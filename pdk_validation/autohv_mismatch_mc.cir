@@ -1,0 +1,67 @@
+* ============================================================================
+* AutoHV_BiCMOS180 - resistor mismatch Monte Carlo
+* Confirms layer-dependent matching: sigma(R)/R should scale
+* RPOLY_LO < diffusion < RPOLY_HI < RNWELL at identical geometry.
+* Run:  ngspice -b autohv_mismatch_mc.cir
+* ============================================================================
+.include "autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=1
+Va a 0 1
+Vb b 0 1
+Vc c 0 1
+Vd d 0 1
+Ve e 0 1
+Xa a 0 RPOLY_LO L=20u W=4u
+Xb b 0 RNPLUS  L=20u W=4u
+Xc c 0 RPPLUS  L=20u W=4u
+Xd d 0 RPOLY_HI L=20u W=4u
+Xe e 0 RNWELL  L=20u W=4u
+.control
+set noaskquit
+let N = 500
+let i = 0
+let s1=0
+let s2=0
+let s3=0
+let s4=0
+let s5=0
+let q1=0
+let q2=0
+let q3=0
+let q4=0
+let q5=0
+dowhile i < N
+  reset
+  op
+  let x1 = 1/abs(Va#branch)
+  let x2 = 1/abs(Vb#branch)
+  let x3 = 1/abs(Vc#branch)
+  let x4 = 1/abs(Vd#branch)
+  let x5 = 1/abs(Ve#branch)
+  let s1=s1+x1
+  let s2=s2+x2
+  let s3=s3+x3
+  let s4=s4+x4
+  let s5=s5+x5
+  let q1=q1+x1*x1
+  let q2=q2+x2*x2
+  let q3=q3+x3*x3
+  let q4=q4+x4*x4
+  let q5=q5+x5*x5
+  let i = i + 1
+end
+let p1 = sqrt(q1/N-(s1/N)^2)/(s1/N)*100
+let p2 = sqrt(q2/N-(s2/N)^2)/(s2/N)*100
+let p3 = sqrt(q3/N-(s3/N)^2)/(s3/N)*100
+let p4 = sqrt(q4/N-(s4/N)^2)/(s4/N)*100
+let p5 = sqrt(q5/N-(s5/N)^2)/(s5/N)*100
+echo "Mismatch sigma(R)/R over $&N runs (all 20u x 4u):"
+echo "  RPOLY_LO  =" $&p1 "%"
+echo "  RNPLUS    =" $&p2 "%"
+echo "  RPPLUS    =" $&p3 "%"
+echo "  RPOLY_HI  =" $&p4 "%"
+echo "  RNWELL    =" $&p5 "%"
+.endc
+.end

@@ -182,11 +182,15 @@
 .param P_DBV_DZ_24={PROC_ON*AGAUSS(0,0.03,3)}
 .param P_DCJO_DZ_24={PROC_ON*AGAUSS(0,0.05,3)}
 .param P_DTT_DZ_24={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRSH_RPOLY_HI={PROC_ON*AGAUSS(0,0.15,3)}
-.param P_DRSH_RPOLY_LO={PROC_ON*AGAUSS(0,0.15,3)}
-.param P_DRSH_RNWELL={PROC_ON*AGAUSS(0,0.15,3)}
-.param P_DRSH_RNPLUS={PROC_ON*AGAUSS(0,0.15,3)}
-.param P_DRSH_RPPLUS={PROC_ON*AGAUSS(0,0.15,3)}
+* Die-to-die absolute tolerance is layer-dependent (random part of "absolute
+* accuracy"). Low-sheet poly is tightest; lightly-doped well is widest. Ranges
+* follow the trend in Allen, CMOS Analog Circuit Design (poly ~+/-30%, n-well
+* ~+/-40% absolute) and the high-sheet-implant tolerance note in US Pat 6,313,516.
+.param P_DRSH_RPOLY_HI={PROC_ON*AGAUSS(0,0.18,3)}
+.param P_DRSH_RPOLY_LO={PROC_ON*AGAUSS(0,0.12,3)}
+.param P_DRSH_RNWELL={PROC_ON*AGAUSS(0,0.30,3)}
+.param P_DRSH_RNPLUS={PROC_ON*AGAUSS(0,0.18,3)}
+.param P_DRSH_RPPLUS={PROC_ON*AGAUSS(0,0.18,3)}
 .param P_DCJ_CMIM_STD={PROC_ON*AGAUSS(0,0.05,3)}
 .param P_DCJ_CMIM_HI={PROC_ON*AGAUSS(0,0.05,3)}
 .param P_DCJ_CMOM={PROC_ON*AGAUSS(0,0.05,3)}
@@ -1112,7 +1116,7 @@
 
 .model RPOLY_LO_INT R (
 + rsh={((25*_isTT + 22.5*_isFF + 28*_isSS + 25*_isFS + 25*_isSF))*(1+P_DRSH_RPOLY_LO)}
-+ tc1=0.0012
++ tc1=0.001
 + tc2=2e-06
 + defw=2e-06
 + narrow=1.5e-07
@@ -1126,8 +1130,8 @@
 
 .model RNWELL_INT R (
 + rsh={((1800*_isTT + 1620*_isFF + 2016*_isSS + 1800*_isFS + 1800*_isSF))*(1+P_DRSH_RNWELL)}
-+ tc1=0.0025
-+ tc2=3e-06
++ tc1=0.004
++ tc2=5e-06
 + defw=2e-06
 + narrow=1.8e-07
 + short=1.5e-07

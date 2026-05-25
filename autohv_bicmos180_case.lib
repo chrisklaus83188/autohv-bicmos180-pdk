@@ -243,60 +243,123 @@ D0 a c DZ_24_INT area={AREAEFF}
 .ends DZ_24
 
 .subckt RPOLY_HI p n params: L=100u W=10u
+* High-sheet poly: matching coeff worse than low-sheet poly (US Pat 12,464,737:
+* resistance and matching coeff are inversely related). VCR small (~200 ppm/V,
+* Allen poly ~100 ppm/V; higher-sheet/lower-doping poly trends a bit higher).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
-R0 p n RPOLY_HI_INT L={L*RMM} W={W}
+.param RMM={1+MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
+.param RSH0=1200
+.param VCR1=200e-6
+.param VCR2=10e-6
+R0   p mid RPOLY_HI_INT L={L*RMM} W={W}
+BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
 .ends RPOLY_HI
 
 .subckt RPOLY_LO p n params: L=100u W=10u
+* Low-sheet (heavily-doped) poly: best matching of the poly pair, very linear
+* (VCR ~50 ppm/V), but high tc1 (heavily-doped poly trends metallic/positive).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
-R0 p n RPOLY_LO_INT L={L*RMM} W={W}
+.param RMM={1+MM_ON*AGAUSS(0, 0.003/sqrt(AUM2+1e-12), 3)}
+.param RSH0=25
+.param VCR1=50e-6
+.param VCR2=2e-6
+R0   p mid RPOLY_LO_INT L={L*RMM} W={W}
+BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
 .ends RPOLY_LO
 
 .subckt RNWELL p n params: L=100u W=10u
+* N-well resistor: worst matching of the set and a LARGE voltage coefficient
+* from junction-depletion modulation (~8000 ppm/V, Allen CMOS Analog Circuit
+* Design). R rises with terminal-voltage magnitude. Avoid on signal nodes.
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
-R0 p n RNWELL_INT L={L*RMM} W={W}
+.param RMM={1+MM_ON*AGAUSS(0, 0.013/sqrt(AUM2+1e-12), 3)}
+.param RSH0=1800
+.param VCR1=8000e-6
+.param VCR2=400e-6
+R0   p mid RNWELL_INT L={L*RMM} W={W}
+BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
 .ends RNWELL
 
 .subckt RNPLUS p n params: L=100u W=10u
+* N+ diffusion resistor: moderate matching, moderate VCR from junction
+* depletion into the surrounding well/substrate (~1500 ppm/V).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
-R0 p n RNPLUS_INT L={L*RMM} W={W}
+.param RMM={1+MM_ON*AGAUSS(0, 0.005/sqrt(AUM2+1e-12), 3)}
+.param RSH0=32
+.param VCR1=1500e-6
+.param VCR2=80e-6
+R0   p mid RNPLUS_INT L={L*RMM} W={W}
+BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
 .ends RNPLUS
 
 .subckt RPPLUS p n params: L=100u W=10u
+* P+ diffusion resistor: moderate matching, moderate VCR (~1800 ppm/V),
+* slightly higher than N+ (opposite junction-side depletion behaviour).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
-R0 p n RPPLUS_INT L={L*RMM} W={W}
+.param RMM={1+MM_ON*AGAUSS(0, 0.0055/sqrt(AUM2+1e-12), 3)}
+.param RSH0=58
+.param VCR1=1800e-6
+.param VCR2=90e-6
+R0   p mid RPPLUS_INT L={L*RMM} W={W}
+BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
 .ends RPPLUS
 
 .subckt CMIM_STD p n params: L=100u W=100u
+* Standard MIM: best matching of the four (MIM >> MOM matching; measured
+* sigma ~0.1% vs ~0.65% for MOM, Subramanian et al.). Small VCC from the
+* nitride-like dielectric (~30 ppm/V + quadratic term).
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.0024000000000000002/sqrt(AUM2+1e-12), 3)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 3)}
 .param LS={sqrt(CMM)}
-C0 p n CMIM_STD_INT L={L*LS} W={W*LS}
+.param CJ0=0.001
+.param VCC1=30e-6
+.param VCC2=20e-6
+.param C0NOM={CJ0*(L*LS)*(W*LS)}
+C0     p n CMIM_STD_INT L={L*LS} W={W*LS}
+Cextra p n C={ C0NOM*(VCC1*abs(V(p,n)) + VCC2*V(p,n)*V(p,n)) }
 .ends CMIM_STD
 
 .subckt CMIM_HI p n params: L=100u W=100u
+* High-density MIM: thinner dielectric -> slightly worse matching than STD and
+* a higher voltage coefficient (~60 ppm/V; higher field accentuates dielectric
+* nonlinearity). Still far better matched than the metal caps.
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.0024000000000000002/sqrt(AUM2+1e-12), 3)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.002/sqrt(AUM2+1e-12), 3)}
 .param LS={sqrt(CMM)}
-C0 p n CMIM_HI_INT L={L*LS} W={W*LS}
+.param CJ0=0.002
+.param VCC1=60e-6
+.param VCC2=40e-6
+.param C0NOM={CJ0*(L*LS)*(W*LS)}
+C0     p n CMIM_HI_INT L={L*LS} W={W*LS}
+Cextra p n C={ C0NOM*(VCC1*abs(V(p,n)) + VCC2*V(p,n)*V(p,n)) }
 .ends CMIM_HI
 
 .subckt CMOM p n params: L=100u W=100u
+* Metal-oxide-metal: matches worse than MIM (~0.65% sigma class) but the SiO2
+* dielectric is very linear, so VCC is tiny (~5 ppm/V).
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.0024000000000000002/sqrt(AUM2+1e-12), 3)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.006/sqrt(AUM2+1e-12), 3)}
 .param LS={sqrt(CMM)}
-C0 p n CMOM_INT L={L*LS} W={W*LS}
+.param CJ0=0.00035
+.param VCC1=5e-6
+.param VCC2=2e-6
+.param C0NOM={CJ0*(L*LS)*(W*LS)}
+C0     p n CMOM_INT L={L*LS} W={W*LS}
+Cextra p n C={ C0NOM*(VCC1*abs(V(p,n)) + VCC2*V(p,n)*V(p,n)) }
 .ends CMOM
 
 .subckt CFRINGE p n params: L=100u W=100u
+* Lateral fringe cap: lowest density and worst matching of the four, but the
+* most linear (oxide dielectric, VCC ~3 ppm/V). C0NOM uses the area term only
+* as a first-order scale for the (very small) VCC increment.
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.0024000000000000002/sqrt(AUM2+1e-12), 3)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
 .param LS={sqrt(CMM)}
-C0 p n CFRINGE_INT L={L*LS} W={W*LS}
+.param CJ0=0.00018
+.param VCC1=3e-6
+.param VCC2=1e-6
+.param C0NOM={CJ0*(L*LS)*(W*LS)}
+C0     p n CFRINGE_INT L={L*LS} W={W*LS}
+Cextra p n C={ C0NOM*(VCC1*abs(V(p,n)) + VCC2*V(p,n)*V(p,n)) }
 .ends CFRINGE
 
