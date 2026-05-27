@@ -44,6 +44,9 @@ jobs:
       - name: Phase D - per-class transients
         run: python pdk_validation/regression/run_transients.py
 
+      - name: P2.2 - corner-sanity check (9 family probes x 5 corners)
+        run: python pdk_validation/regression/run_corners.py
+
       # Phase E is the Monte Carlo *flow* validation, not a regression
       # gate. It involves a statistical comparison (measured sigma vs.
       # intended sigma), so it can occasionally land outside tolerance

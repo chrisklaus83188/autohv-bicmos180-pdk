@@ -2,6 +2,29 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — P2.2: corner-sanity check across all device families
+
+- New `pdk_validation/regression/run_corners.py`. For each of 9
+  representative devices (one per family/polarity) it measures
+  one canonical quantity at all 5 corners (TT, FF, SS, FS, SF)
+  and verifies the *sign* of the relative change vs TT matches
+  the .inc's corner-factor design:
+    BSIM3 NMOS/PMOS, VDMOS NMOS/PMOS, BJT NPN/PNP, Diode, R, C.
+- 36 corner checks total (9 probes x 4 non-TT corners). All PASS
+  on the current lib.
+- Confirms `case` propagates to every device family (including
+  through the P0-fixed VDMOS `_STAT` params). Sample magnitudes:
+    BSIM3 NMOS18 ID: +50% FF, -36% SS, +49% FS, -35% SF
+    BSIM3 PMOS18 ID: +57% FF, -39% SS, -39% FS, +56% SF
+                     (cross-pair naming verified: FS=slow-P, SF=fast-P)
+    VDMOS NDMOS20 ID: +-22% (P0 STAT params carry case correctly)
+    BJT NPN_LV Ic: +-18% (FS fast, SF slow; tracks NMOS)
+    BJT PNP_LAT Ic: +-19% (SF fast, FS slow; tracks PMOS)
+    DIO_PN Vf: +-0.23% (FS=SF=TT exactly, as designed)
+    RPOLY_HI R: -10%/+12% (FS=SF=TT exactly)
+    CMIM_STD C: +-3% (FS=SF=TT exactly)
+- Wired into CI as a new gating step after Phase D, before MC.
+
 ### 2026-05-27 — P2.1: BJT avalanche audit (no code change required)
 
 The handoff flagged the four BJT subckts (`NPN_LV/HV`, `PNP_LAT/HV`)

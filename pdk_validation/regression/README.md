@@ -274,6 +274,46 @@ Confirms both axes work end-to-end as designed.
 - Repeat on other device families (VDMOS, BJT, diodes, R, C)
 - Hook into Phase F CI as a non-gating informational run
 
+## P2.2 — Corner-sanity check across all families (`run_corners.py`)
+
+Verifies the `case` parameter (corner selector) propagates to every
+device family and produces sign-correct shifts at non-TT corners.
+For each of 9 representative devices (one per family/polarity),
+measures one canonical quantity at all 5 corners and asserts that
+`(value - value_TT) / value_TT` has the expected sign:
+
+| Family / polarity                  | Metric                | FF | SS | FS | SF |
+|------------------------------------|-----------------------|---:|---:|---:|---:|
+| BSIM3 NMOS (NMOS18)                | ID @ VGS=VDS=1.2 V    | +1 | −1 | +1 | −1 |
+| BSIM3 PMOS (PMOS18)                | \|ID\| @ \|VGS\|=\|VDS\|=1.2 V | +1 | −1 | −1 | +1 |
+| VDMOS NMOS (NDMOS20)               | ID @ Vgs=2.5 Vds=3 V  | +1 | −1 | +1 | −1 |
+| VDMOS PMOS (PDMOS20)               | \|ID\| @ Vgs=−2.5 Vds=−3 V | +1 | −1 | −1 | +1 |
+| BJT NPN (NPN_LV)                   | Ic @ Ib=10 µA Vc=2 V  | +1 | −1 | +1 | −1 |
+| BJT PNP (PNP_LAT)                  | \|Ic\| @ Ib=10 µA Vec=2 V | +1 | −1 | −1 | +1 |
+| Diode (DIO_PN)                     | Vf @ Ifwd=1 mA        | −1 | +1 |  0 |  0 |
+| Resistor (RPOLY_HI)                | R = V/I @ V=1 V       | −1 | +1 |  0 |  0 |
+| Cap (CMIM_STD)                     | C from dV/dt = 1 kV/s | +1 | −1 |  0 |  0 |
+
+Total: **36 corner checks across 9 probes**. Baseline run: 36/36 PASS.
+
+The deltas observed at FF/SS are large (~20–50 % for active
+devices, a few % for passives), so the gate is robust against
+sample noise. The "0" entries are exact-equality checks (relative
+tolerance 1e-4) — the diode/R/C corner tables in the `.inc`
+explicitly set FS=SF=TT, so any drift here would mean the corner
+factor leaked into a code path that shouldn't carry it.
+
+Catches: missing `_isFF`/`_isSS` terms on a new model card, a
+sign-flipped corner factor, or (most importantly) corner factors
+failing to flow through the P0 VDMOS `_STAT` params.
+
+### Running
+
+```sh
+python pdk_validation/regression/run_corners.py
+python pdk_validation/regression/run_corners.py --probe PMOS
+```
+
 ## Phase F — GitHub Actions CI (`.github/workflows/regression.yml`)
 
 CI runs on `ubuntu-24.04` with Python 3.12 and ngspice from
