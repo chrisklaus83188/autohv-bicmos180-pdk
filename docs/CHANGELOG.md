@@ -2,6 +2,30 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — P0 fix: VDMOS family is instantiable
+
+- Bug: any VDMOS instantiation (`NDMOS20/40/60/80/120/200`,
+  `PDMOS20/40/60/80`, `DNMOS20`) failed at `op` with
+  `Error: no such function 'agauss'`. Root cause: each `.model`
+  card's `vto`/`kp`/`rd`/`rs` mixed `temper` (runtime) and the
+  `agauss`-bearing `P_D*` params (parse-time) in one braced
+  expression. ngspice defers any expression containing `temper`
+  to per-temperature runtime evaluation, where `agauss` is not
+  resolvable — so the whole expression failed.
+- Fix: hoist the statistical product into parse-time `.param`
+  definitions, one per affected expression per device
+  (`VTO_<dev>_STAT`, `KP_<dev>_STAT`, `RD_<dev>_STAT`,
+  `RS_<dev>_STAT` — 44 in total). Each card line now reads
+  e.g. `vto={VTO_NDMOS20_STAT + TC_VTO_NDMOS20*(temper-27)}`,
+  so the runtime-deferred expression contains only numbers and
+  `temper`. Statistically identical to the old form (the
+  `agauss` draw simply moves to parse time).
+- Verified on ngspice-45.2: all 11 VDMOS devices instantiate
+  and `op` converges at T=27 °C and T=125 °C with
+  `case=0`, `PROC_ON=1`, `MM_ON=1`. Smoke decks at
+  `pdk_validation/smoke_p0_ndmos20.cir` and
+  `pdk_validation/smoke_p0_vdmos_all.cir`.
+
 ### 2026-05-27 — Library refinements
 
 - MOS Vth mismatch (NMOS/PMOS 12/18/33/50): replaced the external

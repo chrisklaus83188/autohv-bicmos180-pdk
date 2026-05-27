@@ -1,0 +1,17 @@
+* P0 smoke test: NDMOS20 op at T=27 C, then T=125 C
+.include "../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=1
+.param MM_ON=1
+Vd d 0 3
+Vg g 0 2.5
+XND20 d g 0 NDMOS20 W=20u
+.control
+op
+echo OK_AT_27
+set temp=125
+op
+echo OK_AT_125
+quit
+.endc
+.end

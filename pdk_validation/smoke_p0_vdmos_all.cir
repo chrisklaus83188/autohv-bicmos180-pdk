@@ -1,0 +1,39 @@
+* P0 smoke: instantiate all 11 VDMOS devices, op at T=27 and T=125 C,
+* with case=0 (TT), MM_ON=1, PROC_ON=1. Verifies the temper/agauss split.
+.include "../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=1
+.param MM_ON=1
+
+* --- N-channel drains @ +3 V, gates @ +2.5 V ---
+Vdn dn 0 3
+Vgn gn 0 2.5
+XND20  dn gn 0 NDMOS20  W=20u
+XND40  dn gn 0 NDMOS40  W=20u
+XND60  dn gn 0 NDMOS60  W=20u
+XND80  dn gn 0 NDMOS80  W=20u
+XND120 dn gn 0 NDMOS120 W=20u
+XND200 dn gn 0 NDMOS200 W=20u L=8u
+
+* --- P-channel drains @ -3 V, gates @ -2.5 V ---
+Vdp dp 0 -3
+Vgp gp 0 -2.5
+XPD20 dp gp 0 PDMOS20 W=20u
+XPD40 dp gp 0 PDMOS40 W=20u
+XPD60 dp gp 0 PDMOS60 W=20u
+XPD80 dp gp 0 PDMOS80 W=20u
+
+* --- Depletion n-channel (vto < 0): drain @ +3 V, gate @ 0 V ---
+Vdd dd 0 3
+Vgd gd 0 0
+XDN20 dd gd 0 DNMOS20 W=20u
+
+.control
+op
+echo OK_AT_27
+set temp=125
+op
+echo OK_AT_125
+quit
+.endc
+.end

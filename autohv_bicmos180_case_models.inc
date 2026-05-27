@@ -247,6 +247,59 @@
 .param TC_VTO_NDMOS200=-0.0028
 * =========================================================================
 
+* === VDMOS parse-time statistical params (corner * (1+P_D*) products) ====
+* These hoist the agauss-bearing part of each VDMOS vto/kp/rd/rs out of the
+* model-card expressions, so the braced expressions on the cards contain
+* only numbers + the runtime 'temper'. ngspice defers any expression that
+* mentions temper to runtime per-temperature evaluation, where agauss is
+* unresolvable; isolating the statistical product here keeps it parse-time.
+* Each card line then reads e.g. vto={VTO_<dev>_STAT + TC_VTO_<dev>*(temper-27)}.
+.param VTO_NDMOS20_STAT={(((1*_isTT + 0.96*_isFF + 1.06*_isSS + 0.96*_isFS + 1.06*_isSF))+P_DVTO_NDMOS20)}
+.param KP_NDMOS20_STAT={(((2.8*_isTT + 3.248*_isFF + 2.408*_isSS + 3.248*_isFS + 2.408*_isSF))*(1+P_DKP_NDMOS20))}
+.param RD_NDMOS20_STAT={(((0.045*_isTT + 0.0396*_isFF + 0.05175*_isSS + 0.0396*_isFS + 0.05175*_isSF))*(1+P_DRD_NDMOS20))}
+.param RS_NDMOS20_STAT={(((0.025*_isTT + 0.022*_isFF + 0.02875*_isSS + 0.022*_isFS + 0.02875*_isSF))*(1+P_DRS_NDMOS20))}
+.param VTO_PDMOS20_STAT={(((-1.05*_isTT + -1*_isFF + -1.11*_isSS + -1.11*_isFS + -1*_isSF))+P_DVTO_PDMOS20)}
+.param KP_PDMOS20_STAT={(((1.3*_isTT + 1.482*_isFF + 1.144*_isSS + 1.144*_isFS + 1.482*_isSF))*(1+P_DKP_PDMOS20))}
+.param RD_PDMOS20_STAT={(((0.07*_isTT + 0.063*_isFF + 0.0791*_isSS + 0.0791*_isFS + 0.063*_isSF))*(1+P_DRD_PDMOS20))}
+.param RS_PDMOS20_STAT={(((0.04*_isTT + 0.036*_isFF + 0.0452*_isSS + 0.0452*_isFS + 0.036*_isSF))*(1+P_DRS_PDMOS20))}
+.param VTO_NDMOS60_STAT={(((1.1*_isTT + 1.05*_isFF + 1.17*_isSS + 1.05*_isFS + 1.17*_isSF))+P_DVTO_NDMOS60)}
+.param KP_NDMOS60_STAT={(((1.2*_isTT + 1.368*_isFF + 1.056*_isSS + 1.368*_isFS + 1.056*_isSF))*(1+P_DKP_NDMOS60))}
+.param RD_NDMOS60_STAT={(((0.16*_isTT + 0.144*_isFF + 0.1808*_isSS + 0.144*_isFS + 0.1808*_isSF))*(1+P_DRD_NDMOS60))}
+.param RS_NDMOS60_STAT={(((0.08*_isTT + 0.072*_isFF + 0.0904*_isSS + 0.072*_isFS + 0.0904*_isSF))*(1+P_DRS_NDMOS60))}
+.param VTO_PDMOS60_STAT={(((-1.15*_isTT + -1.09*_isFF + -1.23*_isSS + -1.23*_isFS + -1.09*_isSF))+P_DVTO_PDMOS60)}
+.param KP_PDMOS60_STAT={(((0.55*_isTT + 0.616*_isFF + 0.4895*_isSS + 0.4895*_isFS + 0.616*_isSF))*(1+P_DKP_PDMOS60))}
+.param RD_PDMOS60_STAT={(((0.35*_isTT + 0.3185*_isFF + 0.392*_isSS + 0.392*_isFS + 0.3185*_isSF))*(1+P_DRD_PDMOS60))}
+.param RS_PDMOS60_STAT={(((0.18*_isTT + 0.1638*_isFF + 0.2016*_isSS + 0.2016*_isFS + 0.1638*_isSF))*(1+P_DRS_PDMOS60))}
+.param VTO_NDMOS120_STAT={(((1.2*_isTT + 1.14*_isFF + 1.28*_isSS + 1.14*_isFS + 1.28*_isSF))+P_DVTO_NDMOS120)}
+.param KP_NDMOS120_STAT={(((0.45*_isTT + 0.4995*_isFF + 0.405*_isSS + 0.4995*_isFS + 0.405*_isSF))*(1+P_DKP_NDMOS120))}
+.param RD_NDMOS120_STAT={(((0.55*_isTT + 0.506*_isFF + 0.6105*_isSS + 0.506*_isFS + 0.6105*_isSF))*(1+P_DRD_NDMOS120))}
+.param RS_NDMOS120_STAT={(((0.25*_isTT + 0.23*_isFF + 0.2775*_isSS + 0.23*_isFS + 0.2775*_isSF))*(1+P_DRS_NDMOS120))}
+.param VTO_NDMOS40_STAT={(((1.05*_isTT + 1*_isFF + 1.11*_isSS + 1*_isFS + 1.11*_isSF))+P_DVTO_NDMOS40)}
+.param KP_NDMOS40_STAT={(((1.9*_isTT + 2.185*_isFF + 1.653*_isSS + 2.185*_isFS + 1.653*_isSF))*(1+P_DKP_NDMOS40))}
+.param RD_NDMOS40_STAT={(((0.09*_isTT + 0.0801*_isFF + 0.1026*_isSS + 0.0801*_isFS + 0.1026*_isSF))*(1+P_DRD_NDMOS40))}
+.param RS_NDMOS40_STAT={(((0.045*_isTT + 0.04005*_isFF + 0.0513*_isSS + 0.04005*_isFS + 0.0513*_isSF))*(1+P_DRS_NDMOS40))}
+.param VTO_PDMOS40_STAT={(((-1.1*_isTT + -1.04*_isFF + -1.17*_isSS + -1.17*_isFS + -1.04*_isSF))+P_DVTO_PDMOS40)}
+.param KP_PDMOS40_STAT={(((0.85*_isTT + 0.9605*_isFF + 0.748*_isSS + 0.748*_isFS + 0.9605*_isSF))*(1+P_DKP_PDMOS40))}
+.param RD_PDMOS40_STAT={(((0.16*_isTT + 0.144*_isFF + 0.1808*_isSS + 0.1808*_isFS + 0.144*_isSF))*(1+P_DRD_PDMOS40))}
+.param RS_PDMOS40_STAT={(((0.09*_isTT + 0.081*_isFF + 0.1017*_isSS + 0.1017*_isFS + 0.081*_isSF))*(1+P_DRS_PDMOS40))}
+.param VTO_NDMOS80_STAT={(((1.15*_isTT + 1.09*_isFF + 1.22*_isSS + 1.09*_isFS + 1.22*_isSF))+P_DVTO_NDMOS80)}
+.param KP_NDMOS80_STAT={(((0.8*_isTT + 0.904*_isFF + 0.712*_isSS + 0.904*_isFS + 0.712*_isSF))*(1+P_DKP_NDMOS80))}
+.param RD_NDMOS80_STAT={(((0.26*_isTT + 0.2366*_isFF + 0.2912*_isSS + 0.2366*_isFS + 0.2912*_isSF))*(1+P_DRD_NDMOS80))}
+.param RS_NDMOS80_STAT={(((0.12*_isTT + 0.1092*_isFF + 0.1344*_isSS + 0.1092*_isFS + 0.1344*_isSF))*(1+P_DRS_NDMOS80))}
+.param VTO_PDMOS80_STAT={(((-1.2*_isTT + -1.14*_isFF + -1.29*_isSS + -1.29*_isFS + -1.14*_isSF))+P_DVTO_PDMOS80)}
+.param KP_PDMOS80_STAT={(((0.38*_isTT + 0.4218*_isFF + 0.342*_isSS + 0.342*_isFS + 0.4218*_isSF))*(1+P_DKP_PDMOS80))}
+.param RD_PDMOS80_STAT={(((0.55*_isTT + 0.506*_isFF + 0.6105*_isSS + 0.6105*_isFS + 0.506*_isSF))*(1+P_DRD_PDMOS80))}
+.param RS_PDMOS80_STAT={(((0.28*_isTT + 0.2576*_isFF + 0.3108*_isSS + 0.3108*_isFS + 0.2576*_isSF))*(1+P_DRS_PDMOS80))}
+.param VTO_NDMOS200_STAT={(((1.25*_isTT + 1.19*_isFF + 1.34*_isSS + 1.19*_isFS + 1.34*_isSF))+P_DVTO_NDMOS200)}
+.param KP_NDMOS200_STAT={(((0.22*_isTT + 0.2398*_isFF + 0.2024*_isSS + 0.2398*_isFS + 0.2024*_isSF))*(1+P_DKP_NDMOS200))}
+.param RD_NDMOS200_STAT={(((1.2*_isTT + 1.116*_isFF + 1.32*_isSS + 1.116*_isFS + 1.32*_isSF))*(1+P_DRD_NDMOS200))}
+.param RS_NDMOS200_STAT={(((0.55*_isTT + 0.5115*_isFF + 0.605*_isSS + 0.5115*_isFS + 0.605*_isSF))*(1+P_DRS_NDMOS200))}
+.param VTO_DNMOS20_STAT={(((-0.9*_isTT + -0.94*_isFF + -0.85*_isSS + -0.94*_isFS + -0.85*_isSF))+P_DVTO_DNMOS20)}
+.param KP_DNMOS20_STAT={(((1*_isTT + 1.12*_isFF + 0.9*_isSS + 1.12*_isFS + 0.9*_isSF))*(1+P_DKP_DNMOS20))}
+.param RD_DNMOS20_STAT={(((0.12*_isTT + 0.108*_isFF + 0.1344*_isSS + 0.108*_isFS + 0.1344*_isSF))*(1+P_DRD_DNMOS20))}
+.param RS_DNMOS20_STAT={(((0.06*_isTT + 0.054*_isFF + 0.0672*_isSS + 0.054*_isFS + 0.0672*_isSF))*(1+P_DRS_DNMOS20))}
+* =========================================================================
+
 * ============================== DEVICE MODELS ===============================
 .model NMOS18_INT NMOS (
 + level=49
@@ -671,12 +724,12 @@
 + )
 
 .model NDMOS20_INT VDMOS (nchan
-+ vto={(((1*_isTT + 0.96*_isFF + 1.06*_isSS + 0.96*_isFS + 1.06*_isSF))+P_DVTO_NDMOS20)+TC_VTO_NDMOS20*(temper-27)}
-+ kp={(((2.8*_isTT + 3.248*_isFF + 2.408*_isSS + 3.248*_isFS + 2.408*_isSF))*(1+P_DKP_NDMOS20))*(1+TC_KP_NDMOS20*(temper-27))}
++ vto={VTO_NDMOS20_STAT+TC_VTO_NDMOS20*(temper-27)}
++ kp={KP_NDMOS20_STAT*(1+TC_KP_NDMOS20*(temper-27))}
 + lambda=0.008
 + theta=0.04
-+ rd={(((0.045*_isTT + 0.0396*_isFF + 0.05175*_isSS + 0.0396*_isFS + 0.05175*_isSF))*(1+P_DRD_NDMOS20))*(1+TC_RD_NDMOS20*(temper-27))}
-+ rs={(((0.025*_isTT + 0.022*_isFF + 0.02875*_isSS + 0.022*_isFS + 0.02875*_isSF))*(1+P_DRS_NDMOS20))*(1+TC_RS_NDMOS20*(temper-27))}
++ rd={RD_NDMOS20_STAT*(1+TC_RD_NDMOS20*(temper-27))}
++ rs={RS_NDMOS20_STAT*(1+TC_RS_NDMOS20*(temper-27))}
 + rg=2
 + rds=1e+09
 + cgdmax=4.032e-10
@@ -697,12 +750,12 @@
 + )
 
 .model PDMOS20_INT VDMOS (pchan
-+ vto={(((-1.05*_isTT + -1*_isFF + -1.11*_isSS + -1.11*_isFS + -1*_isSF))+P_DVTO_PDMOS20)+TC_VTO_PDMOS20*(temper-27)}
-+ kp={(((1.3*_isTT + 1.482*_isFF + 1.144*_isSS + 1.144*_isFS + 1.482*_isSF))*(1+P_DKP_PDMOS20))*(1+TC_KP_PDMOS20*(temper-27))}
++ vto={VTO_PDMOS20_STAT+TC_VTO_PDMOS20*(temper-27)}
++ kp={KP_PDMOS20_STAT*(1+TC_KP_PDMOS20*(temper-27))}
 + lambda=0.007
 + theta=0.045
-+ rd={(((0.07*_isTT + 0.063*_isFF + 0.0791*_isSS + 0.0791*_isFS + 0.063*_isSF))*(1+P_DRD_PDMOS20))*(1+TC_RD_PDMOS20*(temper-27))}
-+ rs={(((0.04*_isTT + 0.036*_isFF + 0.0452*_isSS + 0.0452*_isFS + 0.036*_isSF))*(1+P_DRS_PDMOS20))*(1+TC_RS_PDMOS20*(temper-27))}
++ rd={RD_PDMOS20_STAT*(1+TC_RD_PDMOS20*(temper-27))}
++ rs={RS_PDMOS20_STAT*(1+TC_RS_PDMOS20*(temper-27))}
 + rg=3
 + rds=1e+09
 + cgdmax=3.456e-10
@@ -723,12 +776,12 @@
 + )
 
 .model NDMOS60_INT VDMOS (nchan
-+ vto={(((1.1*_isTT + 1.05*_isFF + 1.17*_isSS + 1.05*_isFS + 1.17*_isSF))+P_DVTO_NDMOS60)+TC_VTO_NDMOS60*(temper-27)}
-+ kp={(((1.2*_isTT + 1.368*_isFF + 1.056*_isSS + 1.368*_isFS + 1.056*_isSF))*(1+P_DKP_NDMOS60))*(1+TC_KP_NDMOS60*(temper-27))}
++ vto={VTO_NDMOS60_STAT+TC_VTO_NDMOS60*(temper-27)}
++ kp={KP_NDMOS60_STAT*(1+TC_KP_NDMOS60*(temper-27))}
 + lambda=0.004
 + theta=0.03
-+ rd={(((0.16*_isTT + 0.144*_isFF + 0.1808*_isSS + 0.144*_isFS + 0.1808*_isSF))*(1+P_DRD_NDMOS60))*(1+TC_RD_NDMOS60*(temper-27))}
-+ rs={(((0.08*_isTT + 0.072*_isFF + 0.0904*_isSS + 0.072*_isFS + 0.0904*_isSF))*(1+P_DRS_NDMOS60))*(1+TC_RS_NDMOS60*(temper-27))}
++ rd={RD_NDMOS60_STAT*(1+TC_RD_NDMOS60*(temper-27))}
++ rs={RS_NDMOS60_STAT*(1+TC_RS_NDMOS60*(temper-27))}
 + rg=3
 + rds=5e+09
 + cgdmax=1.536e-10
@@ -749,12 +802,12 @@
 + )
 
 .model PDMOS60_INT VDMOS (pchan
-+ vto={(((-1.15*_isTT + -1.09*_isFF + -1.23*_isSS + -1.23*_isFS + -1.09*_isSF))+P_DVTO_PDMOS60)+TC_VTO_PDMOS60*(temper-27)}
-+ kp={(((0.55*_isTT + 0.616*_isFF + 0.4895*_isSS + 0.4895*_isFS + 0.616*_isSF))*(1+P_DKP_PDMOS60))*(1+TC_KP_PDMOS60*(temper-27))}
++ vto={VTO_PDMOS60_STAT+TC_VTO_PDMOS60*(temper-27)}
++ kp={KP_PDMOS60_STAT*(1+TC_KP_PDMOS60*(temper-27))}
 + lambda=0.0035
 + theta=0.035
-+ rd={(((0.35*_isTT + 0.3185*_isFF + 0.392*_isSS + 0.392*_isFS + 0.3185*_isSF))*(1+P_DRD_PDMOS60))*(1+TC_RD_PDMOS60*(temper-27))}
-+ rs={(((0.18*_isTT + 0.1638*_isFF + 0.2016*_isSS + 0.2016*_isFS + 0.1638*_isSF))*(1+P_DRS_PDMOS60))*(1+TC_RS_PDMOS60*(temper-27))}
++ rd={RD_PDMOS60_STAT*(1+TC_RD_PDMOS60*(temper-27))}
++ rs={RS_PDMOS60_STAT*(1+TC_RS_PDMOS60*(temper-27))}
 + rg=4
 + rds=5e+09
 + cgdmax=1.152e-10
@@ -775,12 +828,12 @@
 + )
 
 .model NDMOS120_INT VDMOS (nchan
-+ vto={(((1.2*_isTT + 1.14*_isFF + 1.28*_isSS + 1.14*_isFS + 1.28*_isSF))+P_DVTO_NDMOS120)+TC_VTO_NDMOS120*(temper-27)}
-+ kp={(((0.45*_isTT + 0.4995*_isFF + 0.405*_isSS + 0.4995*_isFS + 0.405*_isSF))*(1+P_DKP_NDMOS120))*(1+TC_KP_NDMOS120*(temper-27))}
++ vto={VTO_NDMOS120_STAT+TC_VTO_NDMOS120*(temper-27)}
++ kp={KP_NDMOS120_STAT*(1+TC_KP_NDMOS120*(temper-27))}
 + lambda=0.002
 + theta=0.022
-+ rd={(((0.55*_isTT + 0.506*_isFF + 0.6105*_isSS + 0.506*_isFS + 0.6105*_isSF))*(1+P_DRD_NDMOS120))*(1+TC_RD_NDMOS120*(temper-27))}
-+ rs={(((0.25*_isTT + 0.23*_isFF + 0.2775*_isSS + 0.23*_isFS + 0.2775*_isSF))*(1+P_DRS_NDMOS120))*(1+TC_RS_NDMOS120*(temper-27))}
++ rd={RD_NDMOS120_STAT*(1+TC_RD_NDMOS120*(temper-27))}
++ rs={RS_NDMOS120_STAT*(1+TC_RS_NDMOS120*(temper-27))}
 + rg=5
 + rds=1e+10
 + cgdmax=6.24e-11
@@ -801,12 +854,12 @@
 + )
 
 .model NDMOS40_INT VDMOS (nchan
-+ vto={(((1.05*_isTT + 1*_isFF + 1.11*_isSS + 1*_isFS + 1.11*_isSF))+P_DVTO_NDMOS40)+TC_VTO_NDMOS40*(temper-27)}
-+ kp={(((1.9*_isTT + 2.185*_isFF + 1.653*_isSS + 2.185*_isFS + 1.653*_isSF))*(1+P_DKP_NDMOS40))*(1+TC_KP_NDMOS40*(temper-27))}
++ vto={VTO_NDMOS40_STAT+TC_VTO_NDMOS40*(temper-27)}
++ kp={KP_NDMOS40_STAT*(1+TC_KP_NDMOS40*(temper-27))}
 + lambda=0.0055
 + theta=0.035
-+ rd={(((0.09*_isTT + 0.0801*_isFF + 0.1026*_isSS + 0.0801*_isFS + 0.1026*_isSF))*(1+P_DRD_NDMOS40))*(1+TC_RD_NDMOS40*(temper-27))}
-+ rs={(((0.045*_isTT + 0.04005*_isFF + 0.0513*_isSS + 0.04005*_isFS + 0.0513*_isSF))*(1+P_DRS_NDMOS40))*(1+TC_RS_NDMOS40*(temper-27))}
++ rd={RD_NDMOS40_STAT*(1+TC_RD_NDMOS40*(temper-27))}
++ rs={RS_NDMOS40_STAT*(1+TC_RS_NDMOS40*(temper-27))}
 + rg=3
 + rds=2e+09
 + cgdmax=2.52e-10
@@ -827,12 +880,12 @@
 + )
 
 .model PDMOS40_INT VDMOS (pchan
-+ vto={(((-1.1*_isTT + -1.04*_isFF + -1.17*_isSS + -1.17*_isFS + -1.04*_isSF))+P_DVTO_PDMOS40)+TC_VTO_PDMOS40*(temper-27)}
-+ kp={(((0.85*_isTT + 0.9605*_isFF + 0.748*_isSS + 0.748*_isFS + 0.9605*_isSF))*(1+P_DKP_PDMOS40))*(1+TC_KP_PDMOS40*(temper-27))}
++ vto={VTO_PDMOS40_STAT+TC_VTO_PDMOS40*(temper-27)}
++ kp={KP_PDMOS40_STAT*(1+TC_KP_PDMOS40*(temper-27))}
 + lambda=0.0048
 + theta=0.039
-+ rd={(((0.16*_isTT + 0.144*_isFF + 0.1808*_isSS + 0.1808*_isFS + 0.144*_isSF))*(1+P_DRD_PDMOS40))*(1+TC_RD_PDMOS40*(temper-27))}
-+ rs={(((0.09*_isTT + 0.081*_isFF + 0.1017*_isSS + 0.1017*_isFS + 0.081*_isSF))*(1+P_DRS_PDMOS40))*(1+TC_RS_PDMOS40*(temper-27))}
++ rd={RD_PDMOS40_STAT*(1+TC_RD_PDMOS40*(temper-27))}
++ rs={RS_PDMOS40_STAT*(1+TC_RS_PDMOS40*(temper-27))}
 + rg=3
 + rds=2e+09
 + cgdmax=1.92e-10
@@ -853,12 +906,12 @@
 + )
 
 .model NDMOS80_INT VDMOS (nchan
-+ vto={(((1.15*_isTT + 1.09*_isFF + 1.22*_isSS + 1.09*_isFS + 1.22*_isSF))+P_DVTO_NDMOS80)+TC_VTO_NDMOS80*(temper-27)}
-+ kp={(((0.8*_isTT + 0.904*_isFF + 0.712*_isSS + 0.904*_isFS + 0.712*_isSF))*(1+P_DKP_NDMOS80))*(1+TC_KP_NDMOS80*(temper-27))}
++ vto={VTO_NDMOS80_STAT+TC_VTO_NDMOS80*(temper-27)}
++ kp={KP_NDMOS80_STAT*(1+TC_KP_NDMOS80*(temper-27))}
 + lambda=0.003
 + theta=0.027
-+ rd={(((0.26*_isTT + 0.2366*_isFF + 0.2912*_isSS + 0.2366*_isFS + 0.2912*_isSF))*(1+P_DRD_NDMOS80))*(1+TC_RD_NDMOS80*(temper-27))}
-+ rs={(((0.12*_isTT + 0.1092*_isFF + 0.1344*_isSS + 0.1092*_isFS + 0.1344*_isSF))*(1+P_DRS_NDMOS80))*(1+TC_RS_NDMOS80*(temper-27))}
++ rd={RD_NDMOS80_STAT*(1+TC_RD_NDMOS80*(temper-27))}
++ rs={RS_NDMOS80_STAT*(1+TC_RS_NDMOS80*(temper-27))}
 + rg=4
 + rds=7e+09
 + cgdmax=1.0e-10
@@ -879,12 +932,12 @@
 + )
 
 .model PDMOS80_INT VDMOS (pchan
-+ vto={(((-1.2*_isTT + -1.14*_isFF + -1.29*_isSS + -1.29*_isFS + -1.14*_isSF))+P_DVTO_PDMOS80)+TC_VTO_PDMOS80*(temper-27)}
-+ kp={(((0.38*_isTT + 0.4218*_isFF + 0.342*_isSS + 0.342*_isFS + 0.4218*_isSF))*(1+P_DKP_PDMOS80))*(1+TC_KP_PDMOS80*(temper-27))}
++ vto={VTO_PDMOS80_STAT+TC_VTO_PDMOS80*(temper-27)}
++ kp={KP_PDMOS80_STAT*(1+TC_KP_PDMOS80*(temper-27))}
 + lambda=0.0027
 + theta=0.031
-+ rd={(((0.55*_isTT + 0.506*_isFF + 0.6105*_isSS + 0.6105*_isFS + 0.506*_isSF))*(1+P_DRD_PDMOS80))*(1+TC_RD_PDMOS80*(temper-27))}
-+ rs={(((0.28*_isTT + 0.2576*_isFF + 0.3108*_isSS + 0.3108*_isFS + 0.2576*_isSF))*(1+P_DRS_PDMOS80))*(1+TC_RS_PDMOS80*(temper-27))}
++ rd={RD_PDMOS80_STAT*(1+TC_RD_PDMOS80*(temper-27))}
++ rs={RS_PDMOS80_STAT*(1+TC_RS_PDMOS80*(temper-27))}
 + rg=5
 + rds=7e+09
 + cgdmax=7.5e-11
@@ -905,12 +958,12 @@
 + )
 
 .model NDMOS200_INT VDMOS (nchan
-+ vto={(((1.25*_isTT + 1.19*_isFF + 1.34*_isSS + 1.19*_isFS + 1.34*_isSF))+P_DVTO_NDMOS200)+TC_VTO_NDMOS200*(temper-27)}
-+ kp={(((0.22*_isTT + 0.2398*_isFF + 0.2024*_isSS + 0.2398*_isFS + 0.2024*_isSF))*(1+P_DKP_NDMOS200))*(1+TC_KP_NDMOS200*(temper-27))}
++ vto={VTO_NDMOS200_STAT+TC_VTO_NDMOS200*(temper-27)}
++ kp={KP_NDMOS200_STAT*(1+TC_KP_NDMOS200*(temper-27))}
 + lambda=0.0012
 + theta=0.018
-+ rd={(((1.2*_isTT + 1.116*_isFF + 1.32*_isSS + 1.116*_isFS + 1.32*_isSF))*(1+P_DRD_NDMOS200))*(1+TC_RD_NDMOS200*(temper-27))}
-+ rs={(((0.55*_isTT + 0.5115*_isFF + 0.605*_isSS + 0.5115*_isFS + 0.605*_isSF))*(1+P_DRS_NDMOS200))*(1+TC_RS_NDMOS200*(temper-27))}
++ rd={RD_NDMOS200_STAT*(1+TC_RD_NDMOS200*(temper-27))}
++ rs={RS_NDMOS200_STAT*(1+TC_RS_NDMOS200*(temper-27))}
 + rg=6
 + rds=2e+10
 + cgdmax=3.5e-11
@@ -931,12 +984,12 @@
 + )
 
 .model DNMOS20_INT VDMOS (nchan
-+ vto={(((-0.9*_isTT + -0.94*_isFF + -0.85*_isSS + -0.94*_isFS + -0.85*_isSF))+P_DVTO_DNMOS20)+TC_VTO_DNMOS20*(temper-27)}
-+ kp={(((1*_isTT + 1.12*_isFF + 0.9*_isSS + 1.12*_isFS + 0.9*_isSF))*(1+P_DKP_DNMOS20))*(1+TC_KP_DNMOS20*(temper-27))}
++ vto={VTO_DNMOS20_STAT+TC_VTO_DNMOS20*(temper-27)}
++ kp={KP_DNMOS20_STAT*(1+TC_KP_DNMOS20*(temper-27))}
 + lambda=0.005
 + theta=0.038
-+ rd={(((0.12*_isTT + 0.108*_isFF + 0.1344*_isSS + 0.108*_isFS + 0.1344*_isSF))*(1+P_DRD_DNMOS20))*(1+TC_RD_DNMOS20*(temper-27))}
-+ rs={(((0.06*_isTT + 0.054*_isFF + 0.0672*_isSS + 0.054*_isFS + 0.0672*_isSF))*(1+P_DRS_DNMOS20))*(1+TC_RS_DNMOS20*(temper-27))}
++ rd={RD_DNMOS20_STAT*(1+TC_RD_DNMOS20*(temper-27))}
++ rs={RS_DNMOS20_STAT*(1+TC_RS_DNMOS20*(temper-27))}
 + rg=2
 + rds=1e+09
 + cgdmax=1.44e-10
