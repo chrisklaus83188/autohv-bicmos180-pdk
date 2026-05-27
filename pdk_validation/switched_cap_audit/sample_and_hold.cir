@@ -1,0 +1,47 @@
+* P3.1: switched-cap sample-and-hold testbench.
+*
+* Topology:
+*   Vin -> NMOS18 switch -> hold node -> CMIM_STD to GND
+*
+* Drive Vin with a slow ramp 0 -> 1 V over 10 clock periods. Clock at
+* 1 MHz, 50 % duty: phi high (switch on / sampling) for 500 ns, then
+* phi low (switch off / holding) for 500 ns.
+*
+* With a 10x10 um CMIM_STD (10 pF) and an NMOS18 (W=10u L=1u, Vth_TT
+* ~ 0.48 V), the switch's Ron at Vgs - Vth ~ 0.3 V is ~ 240 ohm, so the
+* sampling time constant is ~ 2.4 ns -- the 500 ns sampling window
+* gives ~ 200 tau, settling to <e-200. Any residual error reflects
+* charge injection, clock feedthrough, body-effect, and BSIM3-level
+* mismatch in the switch's small-signal model.
+*
+* Expected charge-injection error (Cgso = 2.2e-10 F/m, W = 10 um):
+*   Q_inj = Cov * dVgs / 2 ~ 2.2 fF * 1.8 V / 2 = 2 fC
+*   dVhold = Q_inj / C_hold = 2 fC / 10 pF = 0.2 mV
+* So expect a few-hundred-microvolt offset and small gain error.
+.include "../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+* Slow ramp Vin from 0 to 1 V over 10 us, then hold.
+Vin in 0 PWL(0 0 10u 1 100u 1)
+
+* Sampling clock: 1 MHz, 50 % duty.
+* PULSE(V_low V_high tdelay trise tfall t_high T_period)
+Vphi phi 0 PULSE(0 1.8 100n 5n 5n 495n 1u)
+
+* NMOS18 switch: gate driven by phi.
+XSW in phi hnode 0 NMOS18 W=10u L=1u M=1
+
+* 10 pF hold cap (CMIM_STD at L=W=100u, cj=0.001 F/m^2 at TT).
+XCH hnode 0 CMIM_STD L=100u W=100u
+
+.control
+tran 10n 11u 0 50n UIC
+echo SC_RUN_OK
+* Use the Windows TEMP path explicitly. The harness substitutes
+* this if it needs a different location.
+wrdata C:/Users/christopherklaus/AppData/Local/Temp/sc_sample_hold.data v(in) v(phi) v(hnode)
+quit
+.endc
+.end

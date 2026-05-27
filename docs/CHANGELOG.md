@@ -2,6 +2,47 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — P3.1: switched-cap precision audit (CMIM_STD / CMIM_HI)
+
+New deck `pdk_validation/switched_cap_audit/sample_and_hold.cir` plus
+`run_sc_audit.py` (Python). Topology: NMOS18 sampling switch into a
+CMIM_STD or CMIM_HI hold cap, driven by a slow Vin ramp (0 -> 1 V over
+10 us) and clocked at 1 MHz / 50 % duty. For each clock period the
+harness pairs (V_in at the phi falling edge, V_hold 50 ns after the
+fall, when charge injection has settled), fits a linear model, and
+reports gain error, offset, and RMS residual.
+
+Baseline numbers on the current lib (ngspice 45.2, TT, no statistics):
+
+| Cap (size) | Q_inj offset | Gain error | RMS residual | kT/C floor |
+|------------|--------------|------------|--------------|------------|
+| CMIM_STD (10 pF) | -4.67 mV | +0.128 % | 1.17 mV | 20.4 uV |
+| CMIM_HI  (20 pF) | -2.32 mV | -0.350 % | 1.77 mV | 14.4 uV |
+
+Charge-injection offset halves with 2x hold cap, as expected for a
+charge-dominant error. Deterministic errors are ~100 - 1000x the kT/C
+noise floor, so:
+
+  * The PDK's deterministic SC flow is sound: charge injection is
+    physically reasonable in magnitude (a few mV on 10 pF with an
+    NMOS18 switch matches W*L*Cox*Vov/(2C) within 2x).
+  * Explicit thermal-noise injection (kT/C) into the cap model is
+    moot for SC applications -- the systematic errors dominate by
+    orders of magnitude unless designers use cancellation techniques
+    (dummy / complementary switches, autozero, CDS).
+
+The audit is one-shot investigation; not added to CI gating.
+
+### 2026-05-27 — P3.2: line-ending convention (.gitattributes)
+
+Added `.gitattributes` with `* text=auto eol=lf` plus explicit `eol=lf`
+entries for the project's text extensions (`.lib`, `.inc`, `.cir`,
+`.sym`, `.py`, `.md`, `.csv`, `.yml`, `.yaml`, `.json`). Docx / pdf /
+image extensions explicitly marked binary. Repo was already stored as
+LF in git, so this is mostly preventive -- future commits stop
+emitting CRLF/LF normalization warnings, and any new collaborator on
+Windows gets a clean diff regardless of their `core.autocrlf`.
+
 ### 2026-05-27 — P2.2: corner-sanity check across all device families
 
 - New `pdk_validation/regression/run_corners.py`. For each of 9
