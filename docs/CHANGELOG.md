@@ -2,6 +2,71 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — Add PDMOS120 and PDMOS200 (complete the HV PMOS family)
+
+The HV VDMOS family previously stopped at 80 V on the P-channel side
+(PDMOS20/40/60/80) while N-channel went up to 200 V (NDMOS20/40/60/80/
+120/200). Added two new p-channel devices to fill the gap:
+
+  PDMOS120 -- 120 V p-channel HV DMOS, single-arg subckt
+              .subckt PDMOS120 d g s params: W=10u M=1
+  PDMOS200 -- 200 V p-channel LDMOS, W and L (drift) parameterised
+              .subckt PDMOS200 d g s params: W=10u L=8u M=1
+
+The 200 V variant uses the same RDRIFT-extension scheme as NDMOS200
+but with a 3.0x per-um delta-R scale factor (vs 1.2x on NDMOS200),
+reflecting the ~2.5x higher per-um drift resistance of an n-well
+drift region vs the p-substrate / n-drift used by NDMOS200. Default
+L is 8 um (= L_REF); recommended drift window 5 u .. 16 u.
+
+Nominal sizing (TT, derived by scaling NDMOS120/200 with the 80V
+NDMOS<->PDMOS ratios extracted from the existing pair):
+
+                      kp      rd      rs      bv     vto
+   PDMOS120         0.21   1.15   0.58    128   -1.25
+   (vs NDMOS120)   0.45   0.55   0.25    135    1.20    (kp 0.47x, rd 2.1x)
+   PDMOS200        0.088  3.00   1.38    207   -1.31
+   (vs NDMOS200)   0.22   1.20   0.55    225    1.25    (kp 0.40x, rd 2.5x)
+
+Additions across the lib:
+
+  .inc:
+    + 10 P_D*_PDMOS{120,200} statistical params (sigma matches the
+      corresponding NDMOS counterpart at each voltage class)
+    +  8 TC_*_PDMOS{120,200} temperature coefficients (same magnitudes
+      as N counterparts)
+    +  8 *_PDMOS{120,200}_STAT params (parse-time STAT split per the
+      P0 temper/agauss-separation pattern)
+    +  2 .model PDMOS{120,200}_INT VDMOS cards (pchan)
+
+  .lib:
+    +  2 .subckt PDMOS{120,200} wrappers with the same Vshift-based
+      mismatch idiom as the other DMOS subckts (VDMOS rejects delvto)
+
+  Symbols:
+    + qucs-s_symbols/PDMOS120.sym  (copy of PDMOS80.sym -- same p-arrow)
+    + qucs-s_symbols/PDMOS200.sym  (same)
+
+  Regression:
+    run_smoke.py: device list 38 -> 40; total ops 760 -> 800
+                  (5 corners x 4 stat combos x 40 devices). Both new
+                  devices pass at every combination in ~52 ms each.
+
+All four regression phases pass on the post-addition lib:
+  smoke:      800 / 800   (median 57 ms / op, max 303 ms)
+  corners:     36 /  36   (9 family probes x 4 non-TT corners)
+  passives:     9 /   9   (R + C goldens unchanged; existing devices
+                           untouched)
+  transients:   7 /   7   (~0.7 s wall total)
+
+Notes for users:
+  * The new models are engineered (NMOS-to-PMOS scaling from the
+    existing 80 V pair), not silicon-fit. Calibration TODO matches
+    the rest of the lib's note about uncalibrated magnitudes.
+  * PDMOS200 with the recommended RESURF window (L = 5 - 16 um) gives
+    Rds(on) roughly 2.5x of NDMOS200 at the same L; expect that
+    factor to grow further if pushed beyond 16 um.
+
 ### 2026-05-27 — P3.1: switched-cap precision audit (CMIM_STD / CMIM_HI)
 
 New deck `pdk_validation/switched_cap_audit/sample_and_hold.cir` plus

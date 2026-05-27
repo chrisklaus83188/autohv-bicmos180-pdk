@@ -130,6 +130,14 @@ M0 d g_int s PDMOS60_INT m={mtot}
 Vshift g g_int DC {-DVTH_MM}
 M0 d g_int s NDMOS120_INT m={mtot}
 .ends NDMOS120
+.subckt PDMOS120 d g s params: W=10u M=1
+* HV DMOS p-channel: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
+.param W_REF=10u
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6))}
+Vshift g g_int DC {-DVTH_MM}
+M0 d g_int s PDMOS120_INT m={mtot}
+.ends PDMOS120
 .subckt NDMOS40 d g s params: W=10u M=1
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
@@ -176,6 +184,22 @@ Vshift g g_int DC {-DVTH_MM}
 Rdrift d dd {RDRIFT}
 M0 dd g_int s NDMOS200_INT m={mtot}
 .ends NDMOS200
+.subckt PDMOS200 d g s params: W=10u L=8u M=1
+* 200V LDMOS p-channel: W free (m=W/W_REF); L = drift length. Recommended RESURF window ~5u..16u.
+* L raises drift Rdson (~linear); breakdown is held at the model rating. RDRIFT scale factor
+* is 3.0 (vs 1.2 on NDMOS200): PMOS drift in n-well has ~2.5x higher per-um R, so the per-um
+* delta-R also scales by ~2.5x.
+.param W_REF=10u
+.param L_REF=8u
+.param L_MIN=5u
+.param Leff={max(L,L_MIN)}
+.param mtot={(W/W_REF)*M}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6))}
+.param RDRIFT={max(3.0*(Leff/L_REF-1)/mtot, 1e-6)}
+Vshift g g_int DC {-DVTH_MM}
+Rdrift d dd {RDRIFT}
+M0 dd g_int s PDMOS200_INT m={mtot}
+.ends PDMOS200
 .subckt DNMOS20 d g s params: W=10u M=1
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u

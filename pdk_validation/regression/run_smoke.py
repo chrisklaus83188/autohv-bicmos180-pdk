@@ -62,7 +62,9 @@ DEVICES = [
     ("NDMOS80",  "vdmos_n",   ""),
     ("PDMOS80",  "vdmos_p",   ""),
     ("NDMOS120", "vdmos_n",   ""),
+    ("PDMOS120", "vdmos_p",   ""),
     ("NDMOS200", "vdmos_n",   "L=8u"),
+    ("PDMOS200", "vdmos_p",   "L=8u"),
     ("DNMOS20",  "vdmos_dep", ""),
     ("NPN_LV",   "npn",       ""),
     ("PNP_LAT",  "pnp",       ""),
@@ -84,7 +86,7 @@ DEVICES = [
     ("CMOM",     "c",         ""),
     ("CFRINGE",  "c",         ""),
 ]
-assert len(DEVICES) == 38, "device count drifted from the .lib"
+assert len(DEVICES) == 40, "device count drifted from the .lib"
 
 
 def make_instance(name: str, klass: str, extra: str) -> list[str]:
