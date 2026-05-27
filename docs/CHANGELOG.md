@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — Library refinements
+
+- MOS Vth mismatch (NMOS/PMOS 12/18/33/50): replaced the external
+  `Vshift g g_int DC {DVTH_MM}` + node-split workaround with BSIM3's
+  native `delvto` instance parameter on `M0`. Removes the extra
+  series voltage source and dangling `g_int` node per device while
+  delivering the same mismatch Vth shift through the model's
+  intrinsic mechanism.
+- Smoothed `|V|` in voltage-coefficient expressions: replaced
+  `abs(V(p,n))` with `sqrt(V(p,n)*V(p,n)+1e-6)` in the VCR
+  branches of `RPOLY_HI`, `RPOLY_LO`, `RNWELL`, `RNPLUS`, `RPPLUS`
+  and the VCC branches of `CMIM_STD`, `CMIM_HI`, `CMOM`, `CFRINGE`.
+  Removes the cusp at V=0 (now C∞) so Newton/DC convergence is
+  cleaner; bias dependence is unchanged for |V| >> 1 mV.
+
+### Initial snapshot
+
 Initial tracked version of the AutoHV BiCMOS 180 PDK for Qucs-S.
 
 ### Library

@@ -17,8 +17,7 @@
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-Vshift g g_int DC {DVTH_MM}
-M0 d g_int s b NMOS18_INT W={WEFF} L={LEFF} M={M}
+M0 d g s b NMOS18_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends NMOS18
 
 .subckt PMOS18 d g s b params: W=10u L=1u M=1
@@ -28,8 +27,7 @@ M0 d g_int s b NMOS18_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-Vshift g g_int DC {DVTH_MM}
-M0 d g_int s b PMOS18_INT W={WEFF} L={LEFF} M={M}
+M0 d g s b PMOS18_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends PMOS18
 
 .subckt NMOS33 d g s b params: W=10u L=1u M=1
@@ -39,8 +37,7 @@ M0 d g_int s b PMOS18_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-Vshift g g_int DC {DVTH_MM}
-M0 d g_int s b NMOS33_INT W={WEFF} L={LEFF} M={M}
+M0 d g s b NMOS33_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends NMOS33
 
 .subckt PMOS33 d g s b params: W=10u L=1u M=1
@@ -50,8 +47,7 @@ M0 d g_int s b NMOS33_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-Vshift g g_int DC {DVTH_MM}
-M0 d g_int s b PMOS33_INT W={WEFF} L={LEFF} M={M}
+M0 d g s b PMOS33_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends PMOS33
 
 .subckt NMOS50 d g s b params: W=10u L=1u M=1
@@ -61,8 +57,7 @@ M0 d g_int s b PMOS33_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-Vshift g g_int DC {DVTH_MM}
-M0 d g_int s b NMOS50_INT W={WEFF} L={LEFF} M={M}
+M0 d g s b NMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends NMOS50
 
 .subckt PMOS50 d g s b params: W=10u L=1u M=1
@@ -72,8 +67,7 @@ M0 d g_int s b NMOS50_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-Vshift g g_int DC {DVTH_MM}
-M0 d g_int s b PMOS50_INT W={WEFF} L={LEFF} M={M}
+M0 d g s b PMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends PMOS50
 
 .subckt NMOS12 d g s b params: W=10u L=1u M=1
@@ -83,8 +77,7 @@ M0 d g_int s b PMOS50_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-Vshift g g_int DC {DVTH_MM}
-M0 d g_int s b NMOS12_INT W={WEFF} L={LEFF} M={M}
+M0 d g s b NMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends NMOS12
 
 .subckt PMOS12 d g s b params: W=10u L=1u M=1
@@ -94,8 +87,7 @@ M0 d g_int s b NMOS12_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-Vshift g g_int DC {DVTH_MM}
-M0 d g_int s b PMOS12_INT W={WEFF} L={LEFF} M={M}
+M0 d g s b PMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends PMOS12
 
 .subckt NDMOS20 d g s params: W=10u M=1
@@ -268,7 +260,7 @@ D0 a c DZ_24_INT area={AREAEFF}
 .param VCR1=200e-6
 .param VCR2=10e-6
 R0   p mid RPOLY_HI_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
+BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 .ends RPOLY_HI
 
 .subckt RPOLY_LO p n params: L=100u W=10u
@@ -280,7 +272,7 @@ BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
 .param VCR1=50e-6
 .param VCR2=2e-6
 R0   p mid RPOLY_LO_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
+BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 .ends RPOLY_LO
 
 .subckt RNWELL p n params: L=100u W=10u
@@ -293,7 +285,7 @@ BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
 .param VCR1=8000e-6
 .param VCR2=400e-6
 R0   p mid RNWELL_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
+BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 .ends RNWELL
 
 .subckt RNPLUS p n params: L=100u W=10u
@@ -305,7 +297,7 @@ BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
 .param VCR1=1500e-6
 .param VCR2=80e-6
 R0   p mid RNPLUS_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
+BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 .ends RNPLUS
 
 .subckt RPPLUS p n params: L=100u W=10u
@@ -317,7 +309,7 @@ BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
 .param VCR1=1800e-6
 .param VCR2=90e-6
 R0   p mid RPPLUS_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
+BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 .ends RPPLUS
 
 .subckt CMIM_STD p n params: L=100u W=100u
@@ -332,7 +324,7 @@ BVCR mid n V={ V(p,mid)*(VCR1*abs(V(p,n)) + VCR2*V(p,n)*V(p,n)) }
 .param VCC2=20e-6
 .param C0NOM={CJ0*(L*LS)*(W*LS)}
 C0     p n CMIM_STD_INT L={L*LS} W={W*LS}
-Cextra p n C={ C0NOM*(VCC1*abs(V(p,n)) + VCC2*V(p,n)*V(p,n)) }
+Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 .ends CMIM_STD
 
 .subckt CMIM_HI p n params: L=100u W=100u
@@ -347,7 +339,7 @@ Cextra p n C={ C0NOM*(VCC1*abs(V(p,n)) + VCC2*V(p,n)*V(p,n)) }
 .param VCC2=40e-6
 .param C0NOM={CJ0*(L*LS)*(W*LS)}
 C0     p n CMIM_HI_INT L={L*LS} W={W*LS}
-Cextra p n C={ C0NOM*(VCC1*abs(V(p,n)) + VCC2*V(p,n)*V(p,n)) }
+Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 .ends CMIM_HI
 
 .subckt CMOM p n params: L=100u W=100u
@@ -361,7 +353,7 @@ Cextra p n C={ C0NOM*(VCC1*abs(V(p,n)) + VCC2*V(p,n)*V(p,n)) }
 .param VCC2=2e-6
 .param C0NOM={CJ0*(L*LS)*(W*LS)}
 C0     p n CMOM_INT L={L*LS} W={W*LS}
-Cextra p n C={ C0NOM*(VCC1*abs(V(p,n)) + VCC2*V(p,n)*V(p,n)) }
+Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 .ends CMOM
 
 .subckt CFRINGE p n params: L=100u W=100u
@@ -376,6 +368,6 @@ Cextra p n C={ C0NOM*(VCC1*abs(V(p,n)) + VCC2*V(p,n)*V(p,n)) }
 .param VCC2=1e-6
 .param C0NOM={CJ0*(L*LS)*(W*LS)}
 C0     p n CFRINGE_INT L={L*LS} W={W*LS}
-Cextra p n C={ C0NOM*(VCC1*abs(V(p,n)) + VCC2*V(p,n)*V(p,n)) }
+Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 .ends CFRINGE
 
