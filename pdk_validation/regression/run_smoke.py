@@ -206,7 +206,8 @@ def run_one(
     case: int,
     proc: int,
     mm: int,
-) -> tuple[bool, str]:
+) -> tuple[bool, str, float]:
+    """Returns (ok, reason, elapsed_seconds)."""
     instance = "\n".join(make_instance(name, klass, extra))
     deck = DECK_TEMPLATE.format(
         name=name,
@@ -221,6 +222,7 @@ def run_one(
     ) as f:
         f.write(deck)
         deck_path = f.name
+    t0 = time.monotonic()
     try:
         res = subprocess.run(
             [ngspice, "-b", deck_path],
@@ -230,12 +232,14 @@ def run_one(
         )
         out = (res.stdout or "") + "\n" + (res.stderr or "")
     except subprocess.TimeoutExpired:
-        return False, "TIMEOUT (>60s)"
+        return False, "TIMEOUT (>60s)", time.monotonic() - t0
     finally:
         try:
             os.unlink(deck_path)
         except OSError:
             pass
+
+    elapsed = time.monotonic() - t0
 
     for pat in ERROR_PATTERNS:
         m = pat.search(out)
@@ -246,11 +250,11 @@ def run_one(
             if line_end < 0:
                 line_end = len(out)
             line = out[line_start:line_end].strip()
-            return False, f"{line[:160]}"
+            return False, f"{line[:160]}", elapsed
 
     if "SMOKE_OK" not in out:
-        return False, "no SMOKE_OK marker (op did not complete)"
-    return True, ""
+        return False, "no SMOKE_OK marker (op did not complete)", elapsed
+    return True, "", elapsed
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
@@ -274,6 +278,18 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         type=int,
         default=1,
         help="parallel worker count (default 1; raise to 4-8 on idle laptop)",
+    )
+    p.add_argument(
+        "--max-op-secs",
+        type=float,
+        default=2.0,
+        help=(
+            "per-op wall-time budget in seconds (default 2.0). "
+            "An op that converges but exceeds the budget is reported as a "
+            "failure -- catches convergence/stiffness regressions like the "
+            "pre-fix abs() kink (>120 s on a passive transient). Disable "
+            "with --max-op-secs 0."
+        ),
     )
     return p.parse_args(argv)
 
@@ -315,12 +331,24 @@ def main(argv: list[str] | None = None) -> int:
     print(f"corners : {corners}")
     print(f"stat    : {stat_combos}    (PROC_ON, MM_ON)")
     print(f"jobs    : {args.jobs}")
+    budget_str = (
+        "disabled" if args.max_op_secs <= 0 else f"{args.max_op_secs:.2f}s"
+    )
+    print(f"budget  : {budget_str} per op")
     print(f"total   : {total} ops")
     print()
 
     fails: list[tuple[str, int, int, int, str]] = []
     pass_count = 0
+    op_times: list[float] = []
     started = time.monotonic()
+
+    def check_budget(ok: bool, reason: str, elapsed: float) -> tuple[bool, str]:
+        if ok and args.max_op_secs > 0 and elapsed > args.max_op_secs:
+            return False, (
+                f"exceeded budget: {elapsed:.2f}s > {args.max_op_secs:.2f}s"
+            )
+        return ok, reason
 
     def submit_all(executor):
         for dev_name, klass, extra in devices:
@@ -347,9 +375,11 @@ def main(argv: list[str] | None = None) -> int:
             per_dev_fails = 0
             for case in corners:
                 for proc, mm in stat_combos:
-                    ok, reason = run_one(
+                    ok, reason, op_elapsed = run_one(
                         ngspice, LIB_PATH, dev_name, klass, extra, case, proc, mm
                     )
+                    op_times.append(op_elapsed)
+                    ok, reason = check_budget(ok, reason, op_elapsed)
                     completed += 1
                     if ok:
                         pass_count += 1
@@ -370,7 +400,9 @@ def main(argv: list[str] | None = None) -> int:
             for fut in as_completed(future_keys):
                 key = future_keys[fut]
                 dev_name, case, proc, mm = key
-                ok, reason = fut.result()
+                ok, reason, op_elapsed = fut.result()
+                op_times.append(op_elapsed)
+                ok, reason = check_budget(ok, reason, op_elapsed)
                 completed += 1
                 if ok:
                     pass_count += 1
@@ -385,7 +417,23 @@ def main(argv: list[str] | None = None) -> int:
 
     elapsed = time.monotonic() - started
     print()
-    print(f"Passed: {pass_count}/{total}   ({elapsed:.1f}s)")
+    if op_times:
+        sorted_times = sorted(op_times)
+        n = len(sorted_times)
+        median = sorted_times[n // 2]
+        p95 = sorted_times[min(n - 1, int(n * 0.95))]
+        max_t = sorted_times[-1]
+        max_idx = op_times.index(max_t)
+        print(
+            f"Op time: median={median*1000:.0f}ms  "
+            f"p95={p95*1000:.0f}ms  max={max_t*1000:.0f}ms"
+        )
+        if args.max_op_secs > 0 and max_t > args.max_op_secs * 0.5:
+            print(
+                f"  (max op was #{max_idx+1}/{n}, using "
+                f"{max_t / args.max_op_secs * 100:.0f}% of {args.max_op_secs:.2f}s budget)"
+            )
+    print(f"Passed: {pass_count}/{total}   ({elapsed:.1f}s wall)")
     if fails:
         print(f"Failed: {len(fails)}")
         # Group by device for readability.

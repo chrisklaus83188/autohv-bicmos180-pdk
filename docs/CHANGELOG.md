@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — P1 Phase B: per-op wall-time budget
+
+- `run_smoke.py` now times every op and treats `--max-op-secs` (default
+  `2.0`) as a hard pass/fail gate: any op that converges but exceeds
+  the budget is reported as a failure. Catches the kind of
+  convergence/stiffness regression the pre-fix `abs()` kink caused
+  (>120 s vs. ~3 s after the smooth-`|V|` fix).
+- Run footer now prints `median / p95 / max` op time and flags the
+  slowest test when it crosses 50 % of the budget.
+- Baseline on ngspice-45.2: median ~53 ms, p95 ~67 ms, max ~204 ms —
+  the default budget gives ~10× headroom.
+- New flag: `--max-op-secs 0` disables the gate (useful when
+  benchmarking long-running transient experiments under the same
+  harness later).
+
 ### 2026-05-27 — P1 Phase A: device-instantiation regression suite
 
 - New `pdk_validation/regression/run_smoke.py` plus a README.

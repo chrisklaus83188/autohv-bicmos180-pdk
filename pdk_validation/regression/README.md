@@ -3,14 +3,18 @@
 Automated smoke / regression harness for `autohv_bicmos180_case.lib`.
 Pinned to **ngspice-45.2**.
 
-## Phase A — device instantiation smoke (`run_smoke.py`)
+## Phases A + B — instantiation smoke + per-op wall-time budget (`run_smoke.py`)
 
 Generates a minimal bias circuit for every `.subckt` device (all 38),
 runs `op` in `ngspice_con -b`, and asserts that:
 
-- the deck reaches the `SMOKE_OK` marker (`op` converged), and
+- the deck reaches the `SMOKE_OK` marker (`op` converged),
 - ngspice prints no fatal-error patterns (e.g. `no such function`,
-  `singular matrix`, `iteration limit reached`).
+  `singular matrix`, `iteration limit reached`), **and**
+- the op completes within `--max-op-secs` seconds (default 2.0).
+  Catches convergence/stiffness regressions like the pre-fix `abs()`
+  kink (which took >120 s on a passive transient vs. ~3 s after the
+  smooth-`|V|` fix).
 
 Sweeps the full corner × statistics matrix:
 
@@ -36,10 +40,31 @@ python pdk_validation/regression/run_smoke.py --device NDMOS200 RPOLY_HI
 
 # Parallelize for faster CI runs
 python pdk_validation/regression/run_smoke.py --jobs 4
+
+# Tighten the wall-time budget (default 2.0s); disable with 0
+python pdk_validation/regression/run_smoke.py --max-op-secs 1.0
+python pdk_validation/regression/run_smoke.py --max-op-secs 0
 ```
 
 Exit code is `0` on full pass, `1` on any failure, `2` on setup error
 (ngspice not found, lib missing, etc.).
+
+### Op-time stats
+
+Every run prints `median / p95 / max` op time at the end:
+
+```
+Op time: median=53ms  p95=67ms  max=204ms
+Passed: 760/760   (42.8s wall)
+ALL PASS
+```
+
+The current baseline on ngspice-45.2: median ~55 ms, p95 ~80 ms, max
+~200 ms. The default 2.0 s budget gives roughly 10× headroom over the
+worst observed op, so a Newton/LTE regression of even ~10× would trip
+the gate. If `--jobs > 1`, individual op times are still measured per
+subprocess but may inflate slightly under sibling contention — bump
+`--max-op-secs` if you see flaky budget hits under parallelism.
 
 ### ngspice binary discovery
 
@@ -68,10 +93,8 @@ Each failure prints the device, axes, and the matched error line:
 The exact error patterns the harness watches for live at the top of
 `run_smoke.py` (`ERROR_PATTERNS`).
 
-## Out of scope for Phase A (planned)
+## Remaining phases (planned)
 
-- **Phase B**: per-test wall-time assertion (catches convergence /
-  stiffness regressions like the pre-fix `abs()` kink).
 - **Phase C**: DC-sweep R/C and diff R(V)/C(V) against golden curves.
 - **Phase D**: short transient per device class with timestep budget.
 - **Phase E**: Monte Carlo harness (validates AGAUSS re-randomization
