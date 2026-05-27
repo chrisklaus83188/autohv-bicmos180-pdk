@@ -208,10 +208,74 @@ Every deck uses <10 % of its budget — there's headroom for a 20×+
 regression before the gate trips. The decks are intentionally short
 so the suite stays usable as a pre-commit smoke check.
 
+## Phase E — Monte Carlo flow validation (`run_mc.py`)
+
+Standalone verification (not a regression gate) for the handoff P1
+"Monte Carlo validation" item. Confirms three things about how the
+PDK's statistics actually behave end-to-end:
+
+1. **AGAUSS re-randomizes across MC iterations.** Each `ngspice_con
+   -b` invocation re-seeds its RNG from time, so subprocess-per-iter
+   with no special flags gives fresh draws. No `--rndseed` CLI flag
+   exists; `-D rndseed=N` is silently ignored by `.param AGAUSS`.
+2. **Per-instance subckt mismatch produces independent draws.** Two
+   identical NMOS50 instances in the same deck get different
+   `delvto` values when `MM_ON=1`.
+3. **Measured σ matches intended σ** on a mismatch-sensitive
+   testbench, within statistical noise.
+
+Testbench: two `NMOS50` (W=10u L=1u) in saturation at the same bias
+(Vds=3 V, Vgs=2 V). Per iteration the harness captures
+`i(Vd1), i(Vd2)` and the empirical `gm` via `@m.xm1.m0[gm]` /
+`@m.xm2.m0[gm]`, then forms `log(I1/I2)`. Over N iterations it
+reports per-device current σ, pair log-ratio σ, and compares the
+log-ratio σ to a model-anchored intended sigma.
+
+### Critical finding: AGAUSS HSPICE convention
+
+`AGAUSS(mean, X, N)` in ngspice 45.2 is HSPICE-style: **`X` is the
+clip bound at N sigmas, not the 1-σ value**. So true 1-σ = X / N.
+
+Empirically verified: `AGAUSS(0, 1, 3)` over 200 samples →
+σ_measured = 0.34, range ±1.0, matching X/N = 1/3.
+
+Concretely: every `.param ... AGAUSS(0, X, 3)` in `autohv_bicmos180_case.lib`
+has effective 1-σ = X / 3. The numbers in the lib are 3-σ bounds.
+Divide by 3 when reasoning about 1-σ behavior.
+
+### Running
+
+```sh
+# MM axis (local mismatch), N=200, ~12 s
+python pdk_validation/regression/run_mc.py
+
+# PROC axis (die-to-die process), N=200, ~12 s
+python pdk_validation/regression/run_mc.py --axis proc
+
+# Tighter statistics
+python pdk_validation/regression/run_mc.py -n 1000
+```
+
+### Baseline on the current lib (ngspice-45.2)
+
+**MM axis** (PROC_ON=0, MM_ON=1):
+- Per-device σ(I): ~0.29 %
+- Pair σ(log(I1/I2)): **0.42 % measured** vs **0.36 % intended** (16 % deviation, within tolerance)
+
+**PROC axis** (PROC_ON=1, MM_ON=0):
+- Per-device σ(I): ~3.93 % (consistent with the combined Vth/u0/vsat/rdsw process params)
+- Pair σ(log(I1/I2)): **0.00 % exactly** (both devices share one die-level draw)
+
+Confirms both axes work end-to-end as designed.
+
+### Out of scope (follow-on work)
+
+- Sweep W·L → confirm σ scales as `1/√(W·L)`
+- Repeat on other device families (VDMOS, BJT, diodes, R, C)
+- Hook into Phase F CI as a non-gating informational run
+
 ## Remaining phases (planned)
 
-- **Phase E**: Monte Carlo harness (validates AGAUSS re-randomization
-  across MC iterations — see handoff P1 "Monte Carlo validation").
 - **Phase F**: GitHub Actions wiring with pinned ngspice version.
 
 See `docs/PDK_HANDOFF.md` (or the handoff source) for the full backlog.

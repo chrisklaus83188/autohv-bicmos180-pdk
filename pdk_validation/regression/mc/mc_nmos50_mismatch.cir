@@ -1,0 +1,24 @@
+* Phase E: two NMOS50 in saturation, local mismatch only.
+* Used by run_mc.py to characterize the spread of ID1/ID2 over N runs.
+* Bias: Vds=3 V, Vgs=2 V (well into saturation since Vth_TT~0.88 V).
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=1
+
+Vd1 d1 0 3
+Vg1 g1 0 2
+Vd2 d2 0 3
+Vg2 g2 0 2
+
+XM1 d1 g1 0 0 NMOS50 W=10u L=1u M=1
+XM2 d2 g2 0 0 NMOS50 W=10u L=1u M=1
+
+.control
+op
+echo MC_BEGIN
+print i(Vd1) i(Vd2)
+echo MC_END
+quit
+.endc
+.end

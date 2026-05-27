@@ -2,6 +2,36 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — P1 Phase E: Monte Carlo flow validation
+
+- New `pdk_validation/regression/run_mc.py` plus a small testbench
+  deck `pdk_validation/regression/mc/mc_nmos50_mismatch.cir`.
+- Verifies three end-to-end properties of the PDK's statistics
+  flow on ngspice 45.2:
+  1. AGAUSS re-randomizes across `-b` invocations (default
+     time-seeded RNG, no special flag needed).
+  2. Two subckt instances of the same device get independent
+     mismatch draws when `MM_ON=1`.
+  3. Measured sigma of `log(I1/I2)` on a two-NMOS50 mismatch
+     testbench matches the model-anchored intended sigma within
+     statistical noise.
+- **Critical finding** documented: ngspice's `AGAUSS(mean, X, N)`
+  uses the HSPICE convention -- **true 1-sigma = X / N** (X is
+  the clip bound at N sigmas, not the 1-sigma value). Empirically
+  verified: `AGAUSS(0, 1, 3)` produces sigma ~ 0.34, range +/-1.
+  Every AGAUSS-bearing `.param` in `autohv_bicmos180_case.lib` has
+  effective 1-sigma = X / 3; the numbers in the lib are 3-sigma
+  bounds. Divide by 3 when reasoning about 1-sigma behavior.
+- Baseline on the current lib:
+  - **MM axis**: pair sigma(log I1/I2) measured 0.42 %, intended
+    0.36 % (16 % deviation; tolerance 30 %). Per-device sigma
+    ~0.29 %. PASS.
+  - **PROC axis**: pair log-ratio sigma 0.00 % exactly (both
+    devices share one die draw), per-device sigma 3.93 % from
+    combined Vth/u0/vsat/rdsw process params. PASS.
+- Out of scope (follow-on): W*L sigma-scaling sweep, other device
+  families, CI integration.
+
 ### 2026-05-27 — P1 Phase D: per-class transient regression
 
 - New `pdk_validation/regression/run_transients.py` plus 6 canonical
