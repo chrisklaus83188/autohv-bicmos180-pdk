@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — P1 Phase A: device-instantiation regression suite
+
+- New `pdk_validation/regression/run_smoke.py` plus a README.
+  Generates a minimal bias deck per `.subckt`, runs
+  `ngspice_con -b`, and asserts `op` convergence and the absence of
+  fatal-error patterns (`no such function`, `singular matrix`,
+  `iteration limit reached`, etc.).
+- Sweeps the full corner × statistics matrix:
+  38 devices × 5 corners (`case=0..4`) × 4 `(PROC_ON, MM_ON)` combos
+  = **760 ops**. Runs in ~45 s serially on ngspice-45.2.
+- `--quick` mode: 38 ops at `case=0`, `(PROC,MM)=(1,1)` only — for
+  fast iteration while editing the lib (~3 s).
+- Baseline result on the post-P0 lib: **760/760 PASS**.
+- Catches the P0 class (temper/agauss collision) instantly: any
+  regression that re-mixes parse-time statistics with runtime
+  `temper` would trip the `no such function 'agauss'` pattern.
+
 ### 2026-05-27 — P0 fix: VDMOS family is instantiable
 
 - Bug: any VDMOS instantiation (`NDMOS20/40/60/80/120/200`,
