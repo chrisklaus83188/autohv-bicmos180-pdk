@@ -70,7 +70,11 @@ def find_ngspice() -> str | None:
     cand = os.environ.get("NGSPICE_BIN")
     if cand and Path(cand).exists():
         return cand
-    for name in ("ngspice_con", "ngspice_con.exe"):
+    # On Windows the preferred batch binary is ngspice_con(.exe) (the
+    # plain ngspice.exe opens a GUI/console window and doesn't stream
+    # stdout). On Linux/macOS the binary is just `ngspice` and runs in
+    # batch mode under -b.
+    for name in ("ngspice_con", "ngspice_con.exe", "ngspice"):
         p = shutil.which(name)
         if p:
             return p

@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — P1 Phase F: CI wiring (GitHub Actions)
+
+- New `.github/workflows/regression.yml`. Triggers on push to
+  `main`, PR to `main`, and manual `workflow_dispatch`.
+- Runs on `ubuntu-24.04` with Python 3.12 and ngspice from
+  `apt-get` (likely 41-42; older than the local 45.2 baseline).
+- Phases A/B/C/D **gate** the build (suite must pass to merge);
+  Phase E runs with `continue-on-error: true` because it's a
+  statistical sanity check (intended-vs-measured sigma) that can
+  occasionally land outside tolerance due to small-N noise. CI
+  uses `-n 80 --tol 0.40` for E to balance speed and stability.
+- Cross-platform plumbing: `find_ngspice()` in all four harnesses
+  now also looks for plain `ngspice` (Linux/macOS binary name),
+  falling back from `ngspice_con(.exe)` (Windows-preferred batch
+  binary).
+- If Phase C's goldens drift on a different ngspice version, two
+  fix paths documented in the regression README: regenerate
+  goldens on the CI version, or switch the workflow to build
+  ngspice 45.2 from source with `actions/cache`.
+
 ### 2026-05-27 — P1 Phase E: Monte Carlo flow validation
 
 - New `pdk_validation/regression/run_mc.py` plus a small testbench

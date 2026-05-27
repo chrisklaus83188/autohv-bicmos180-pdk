@@ -1,0 +1,56 @@
+name: PDK regression
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Install ngspice from the apt repository. The local development
+      # baseline is ngspice 45.2 on Windows; Ubuntu 24.04 ships an
+      # older release (~41-42). For phases A/B/D this should be fine
+      # (they test structural / convergence behavior), and the
+      # AGAUSS HSPICE convention is stable across versions. Phase C
+      # diffs against pinned goldens generated on 45.2, so it may
+      # show small drift on a different ngspice; if that becomes a
+      # problem we can switch to building ngspice 45.2 from source
+      # in CI with caching.
+      - name: Install ngspice
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ngspice
+          ngspice --help | head -1 || true
+          which ngspice
+
+      - name: Phase A+B - device instantiation smoke (760 ops, ~45 s)
+        run: python pdk_validation/regression/run_smoke.py
+
+      - name: Phase C - passive R(V)/C(V) goldens
+        run: python pdk_validation/regression/run_passives.py
+
+      - name: Phase D - per-class transients
+        run: python pdk_validation/regression/run_transients.py
+
+      # Phase E is the Monte Carlo *flow* validation, not a regression
+      # gate. It involves a statistical comparison (measured sigma vs.
+      # intended sigma), so it can occasionally land outside tolerance
+      # due to small-N noise. Run it for visibility but never fail the
+      # build on it. Use a smaller N to keep CI fast.
+      - name: Phase E - Monte Carlo flow (informational)
+        continue-on-error: true
+        run: |
+          python pdk_validation/regression/run_mc.py --axis mm -n 80 --tol 0.40
+          python pdk_validation/regression/run_mc.py --axis proc -n 80

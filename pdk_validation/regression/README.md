@@ -274,8 +274,38 @@ Confirms both axes work end-to-end as designed.
 - Repeat on other device families (VDMOS, BJT, diodes, R, C)
 - Hook into Phase F CI as a non-gating informational run
 
-## Remaining phases (planned)
+## Phase F — GitHub Actions CI (`.github/workflows/regression.yml`)
 
-- **Phase F**: GitHub Actions wiring with pinned ngspice version.
+CI runs on `ubuntu-24.04` with Python 3.12 and ngspice from
+`apt-get`. Workflow triggers:
+
+- `push` to `main`,
+- `pull_request` against `main`,
+- manual `workflow_dispatch`.
+
+Steps:
+
+| Step               | Gates the build? |
+|--------------------|------------------|
+| Phase A + B (smoke)| **yes**          |
+| Phase C (passives) | **yes**          |
+| Phase D (transients)| **yes**         |
+| Phase E (MC flow)  | no (informational, `continue-on-error: true`) |
+
+### ngspice version
+
+The local development baseline is ngspice **45.2** on Windows (the
+binary is `ngspice_con.exe`; the GUI `ngspice.exe` does *not* stream
+stdout to the calling shell). Ubuntu 24.04's `apt-get` ships an
+older release (likely ~41–42); for phases A/B/D this should not
+matter, but Phase C's goldens were generated on 45.2 so they may
+need slight tolerance loosening or regeneration on the CI runner
+if the apt-get version's numerical results drift.
+
+If Phase C starts failing in CI due to ngspice-version drift while
+passing locally, the fix path is to either:
+- regenerate C goldens on the CI ngspice version (commit them), or
+- switch the workflow to build ngspice 45.2 from source with
+  `actions/cache` (~3 min uncached, ~10 s cached).
 
 See `docs/PDK_HANDOFF.md` (or the handoff source) for the full backlog.
