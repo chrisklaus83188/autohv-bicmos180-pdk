@@ -156,9 +156,60 @@ the lib change so the diff stays clean.
 | `CMIM_HI`  | 20.00 – 20.03 pF             | cj=0.002, area=1e-8 m² → 20 pF; VCC ~0.15 % |
 | `CFRINGE`  | 1.81 pF (flat)               | weakest VCC                            |
 
+## Phase D — short transient per device class (`run_transients.py`)
+
+One canonical `.cir` per device class lives under `transients/`:
+
+| Deck                       | Class  | Stress                                                |
+|----------------------------|--------|-------------------------------------------------------|
+| `bsim_inverter.cir`        | BSIM3  | NMOS18+PMOS18 inverter switching at 1.8 V w/ 10 fF    |
+| `vdmos_switching.cir`      | VDMOS  | NDMOS20 switching a 10 Ω load from 12 V (5 V gate)    |
+| `bjt_common_emitter.cir`   | BJT    | NPN_LV common-emitter pulse response                  |
+| `diode_rectifier.cir`      | Diode  | DIO_PN half-wave rectifier, 5 V / 1 MHz, RC load      |
+| `r_thru_zero.cir`          | R      | RNWELL with 1 MHz sine — V(p,n) crosses 0 V each ½-cycle |
+| `c_thru_zero.cir`          | C      | CMIM_HI same — strongest VCC, charge thru V=0         |
+
+The last two are the "abs() kink killers": pre-fix, those AC-through-zero
+sinusoidal sweeps hung at >120 s because the non-smooth `|V|` term in
+the VCR/VCC expressions destabilized the Newton/LTE timestep loop. The
+post-fix `sqrt(V*V + 1e-6)` runs each in ~55 ms.
+
+The harness asserts:
+- the deck reaches its `TRAN_OK` marker,
+- ngspice prints no fatal-error / timestep-too-small patterns,
+- wall time stays under the deck's budget (2 s for active devices,
+  3 s for the passive AC-through-zero decks).
+
+### Running
+
+```sh
+# Full run (~0.4 s wall total on the current lib)
+python pdk_validation/regression/run_transients.py
+
+# Restrict to one or more decks
+python pdk_validation/regression/run_transients.py --deck r_thru_zero c_thru_zero
+
+# Tighten or loosen budgets uniformly (e.g. for a deliberately slower deck)
+python pdk_validation/regression/run_transients.py --max-overrun 2.0
+```
+
+Baseline on the post-P0 lib (ngspice-45.2):
+
+| Deck                  | Wall    | Budget |
+|-----------------------|---------|--------|
+| BSIM3 inverter        | ~120 ms | 2.0 s  |
+| VDMOS switching load  | ~55 ms  | 2.0 s  |
+| BJT common-emitter    | ~60 ms  | 2.0 s  |
+| Diode rectifier       | ~60 ms  | 2.0 s  |
+| RNWELL AC thru 0 V    | ~55 ms  | 3.0 s  |
+| CMIM_HI AC thru 0 V   | ~55 ms  | 3.0 s  |
+
+Every deck uses <10 % of its budget — there's headroom for a 20×+
+regression before the gate trips. The decks are intentionally short
+so the suite stays usable as a pre-commit smoke check.
+
 ## Remaining phases (planned)
 
-- **Phase D**: short transient per device class with timestep budget.
 - **Phase E**: Monte Carlo harness (validates AGAUSS re-randomization
   across MC iterations — see handoff P1 "Monte Carlo validation").
 - **Phase F**: GitHub Actions wiring with pinned ngspice version.

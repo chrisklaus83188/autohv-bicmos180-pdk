@@ -1,0 +1,19 @@
+* Phase D: NDMOS20 switching a resistive load from a 12 V supply
+* Stress: HV drift-MOS turn-on/off through the triode/saturation boundary,
+* gate-charge sweep, and the smoothed VCR resistors on bias.
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+Vdd   vdd 0 12
+Rload vdd d   10
+Vgs   g   0 PULSE(0 5 50n 10n 10n 500n 1u)
+XN    d g 0 NDMOS20 W=100u M=1
+
+.control
+tran 5n 1.5u
+echo TRAN_OK
+quit
+.endc
+.end

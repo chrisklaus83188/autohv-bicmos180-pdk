@@ -1,0 +1,21 @@
+* Phase D: BSIM3 CMOS inverter (NMOS18 + PMOS18) switching
+* Stress: gate-cap conservation across a rail-to-rail transition,
+* charge-storage in source/drain junctions, and Newton convergence
+* at the high-dV/dt input edges.
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+Vdd  vdd 0 1.8
+Vin  in  0 PULSE(0 1.8 1n 100p 100p 5n 10n)
+XN   out in 0 0  NMOS18 W=2u L=1u M=1
+XP   vdd in out vdd PMOS18 W=4u L=1u M=1
+Cload out 0 10f
+
+.control
+tran 50p 30n
+echo TRAN_OK
+quit
+.endc
+.end

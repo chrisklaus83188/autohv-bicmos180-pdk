@@ -1,0 +1,17 @@
+* Phase D: AC current through CMIM_HI with V(p,n) crossing zero each
+* half-cycle. Same motivation as r_thru_zero.cir but for the Cextra
+* B-source in the cap subckt; CMIM_HI has the largest VCC.
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+Vs s 0 SIN(0 5 1MEG)
+XC s 0 CMIM_HI L=100u W=100u
+
+.control
+tran 10n 5u
+echo TRAN_OK
+quit
+.endc
+.end

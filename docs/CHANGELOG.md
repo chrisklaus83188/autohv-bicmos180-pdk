@@ -2,6 +2,31 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — P1 Phase D: per-class transient regression
+
+- New `pdk_validation/regression/run_transients.py` plus 6 canonical
+  `.cir` files under `pdk_validation/regression/transients/`, one
+  per device class:
+  - `bsim_inverter.cir`      — NMOS18+PMOS18 rail-to-rail switching
+  - `vdmos_switching.cir`    — NDMOS20 switching a 10 Ω/12 V load
+  - `bjt_common_emitter.cir` — NPN_LV pulse response
+  - `diode_rectifier.cir`    — DIO_PN half-wave rectifier
+  - `r_thru_zero.cir`        — RNWELL AC current with V(p,n)
+    crossing 0 V each half-cycle (strongest VCR)
+  - `c_thru_zero.cir`        — CMIM_HI same (strongest VCC)
+- The last two are the canonical "abs() kink killers": pre-fix,
+  those AC-through-zero passive transients hung at >120 s because
+  the non-smooth `|V|` in the VCR/VCC expressions destabilized the
+  Newton/LTE timestep loop. The post-fix `sqrt(V*V + 1e-6)` form
+  finishes each in ~55 ms.
+- Per-deck wall-time budget (2.0 s for active devices, 3.0 s for the
+  passive AC-thru-zero decks) is enforced as a pass/fail gate.
+  Baseline uses 2-6 % of each budget -> ~20x headroom against
+  regression.
+- `--deck <stem>` restricts to listed decks; `--max-overrun N`
+  scales every deck's budget (use >1 for a legitimately slower
+  change, <1 to tighten).
+
 ### 2026-05-27 — P1 Phase C: passive R(V)/C(V) golden-curve diff
 
 - New `pdk_validation/regression/run_passives.py`. For each of the 5
