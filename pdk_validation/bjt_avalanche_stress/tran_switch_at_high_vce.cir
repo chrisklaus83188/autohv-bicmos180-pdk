@@ -1,0 +1,22 @@
+* P2.1 stress: BJT switched on/off while Vcc is held above BVCEO.
+* On the rising/falling edges of Ib, Ic transitions through ~zero,
+* which is where abs(i(Vsen)) has its derivative kink. If that kink
+* hurts the timestep adapter, this is the deck that surfaces it.
+.include "../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+* Hold Vcc above BVCEO (~4 V for NPN_LV) but well below BVCBO=14 V.
+Vcc cc 0 8
+* Pulse the base current 0 -> 100 uA -> 0 with fast edges.
+Ib  0 b PULSE(0 100u 10n 1n 1n 50n 100n)
+Ve  e 0 0
+XQ  cc b e NPN_LV AREA=1
+
+.control
+tran 0.5n 200n
+echo BJT_SWITCH_OK
+quit
+.endc
+.end

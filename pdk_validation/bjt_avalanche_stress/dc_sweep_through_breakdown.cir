@@ -1,0 +1,20 @@
+* P2.1 stress: NPN_LV DC sweep Vce from 0 to BVCBO+20%, Ib forced.
+* BVCBO(NPN_LV) = 14 V at TT. Sweep to 17 V to stress the avalanche
+* clamp and the (V/BVCBO)**4 power expression.
+.include "../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+Vcc cc 0 1
+Ib  0 b 10u
+Ve  e 0 0
+XQ  cc b e NPN_LV AREA=1
+
+.control
+dc Vcc 0 17 0.05
+echo NPN_LV_DC_OK
+wrdata C:/Users/christopherklaus/AppData/Local/Temp/bjt_dc.data v(cc) i(Vcc)
+quit
+.endc
+.end

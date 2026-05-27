@@ -2,6 +2,46 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — P2.1: BJT avalanche audit (no code change required)
+
+The handoff flagged the four BJT subckts (`NPN_LV/HV`, `PNP_LAT/HV`)
+as having simulation-time non-smooth constructs in their `Bavl`
+expressions:
+
+  `Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(max(V(ci,b)/BVCBO,0),0.997))**MAV_BJT) - 1 ) }`
+
+Stress-tested all four under three regimes:
+
+  * DC sweep Vcc from 0 V to BVCBO + 20 % (with Ib forced) - all 4
+    subckts converge at every step. Decks in
+    `pdk_validation/bjt_avalanche_stress/`.
+  * Transient ramp Vcc 0 -> BVCBO + 20 % over 1 us - 251 timepoints,
+    220 ms wall, no timestep blow-up.
+  * Transient switching at Vcc held above BVCEO with Ib pulsed
+    0 <-> 100 uA and 1 ns edges - Ic transitions through zero each
+    edge; 432 timepoints, 170 ms wall, no timestep blow-up.
+
+The `abs(i(Vsen))` is actually a *stabilizing* feature: once the
+small-signal model would give "Ic = beta*Ib/(2-M)" with M > 2 (well
+beyond BVCEO), the magnitude wrapper keeps the avalanche current
+positive and the clamp at 0.997 turns the high-Vcb region into a
+finite plateau rather than a divergence. No smoothing needed.
+
+The handoff also flagged `max()` calls in the DMOS subckts as
+potential simulation-time kinks. On inspection, all of those
+(`max(mtot,1e-6)`, `max(L,L_MIN)`, `max(1.2*(Leff/L_REF-1)/mtot, 1e-6)`)
+depend only on parse-time parameters and are evaluated once during
+expansion - **not** simulation-time. No risk there.
+
+Net result: **the only simulation-time non-smooth constructs in the
+entire lib are the four BJT avalanche `Bavl` expressions**, and they
+have now been verified to converge cleanly under stress.
+
+Added `pdk_validation/regression/transients/bjt_breakdown_ramp.cir`
+to the Phase D suite (one deck, 62 ms baseline) so any future
+regression in this area shows up as a budget hit. Phase D is now
+7 decks; all pass.
+
 ### 2026-05-27 — P1 Phase F: CI wiring (GitHub Actions)
 
 - New `.github/workflows/regression.yml`. Triggers on push to

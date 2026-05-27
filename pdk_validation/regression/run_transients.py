@@ -50,6 +50,7 @@ TRANSIENTS = [
     ("bsim_inverter.cir",      "BSIM3 inverter",          2.0),
     ("vdmos_switching.cir",    "VDMOS switching load",    2.0),
     ("bjt_common_emitter.cir", "BJT common-emitter",      2.0),
+    ("bjt_breakdown_ramp.cir", "BJT BVCBO ramp (P2)",     2.0),
     ("diode_rectifier.cir",    "Diode rectifier",         2.0),
     ("r_thru_zero.cir",        "RNWELL AC thru 0 V",      3.0),
     ("c_thru_zero.cir",        "CMIM_HI AC thru 0 V",     3.0),

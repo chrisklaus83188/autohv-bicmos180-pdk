@@ -1,0 +1,21 @@
+* P2.1 stress: ramp Vcc through BVCBO with the BJT biased on.
+* This exercises the avalanche generator's smoothness across the
+* 0 < V/BVCBO < 0.997 clamp region in transient. If the abs() / min /
+* max constructs hurt timestep adaptation, this will surface it.
+.include "../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+* Ramp Vcc from 0 to BVCBO + 20% in 1 us, then hold.
+Vcc cc 0 PWL(0 0 1u 17 100u 17)
+Ib  0 b 10u
+Ve  e 0 0
+XQ  cc b e NPN_LV AREA=1
+
+.control
+tran 5n 1.2u
+echo BJT_RAMP_OK
+quit
+.endc
+.end

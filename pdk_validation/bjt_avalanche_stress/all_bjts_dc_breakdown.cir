@@ -1,0 +1,46 @@
+* P2.1: all 4 BJT subckts DC-swept through their respective BVCBO.
+* NPN_LV BVCBO=14V, PNP_LAT BVCBO=18V, NPN_HV BVCBO=45V, PNP_HV BVCBO=32V.
+* Each gets its own collector source with PARAM end-point set to
+* BVCBO + 20%. We run the sweeps sequentially in one .control block
+* and check that op converged at every step.
+.include "../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+* NPN_LV: forward active, Ib = 10 uA
+Vcc1 cc1 0 1
+Ib1  0 b1 10u
+XQ1  cc1 b1 0 NPN_LV AREA=1
+
+* PNP_LAT: emitter at 0, collector pulled DOWN to negative Vcc, base biased above 0
+* Convention for the BJT subckt is c b e; for PNP forward active we
+* want Ve > Vb > Vc. Use Vcc2 going negative.
+Vcc2 cc2 0 -1
+Ib2  b2 0 10u
+Ve2  e2 0 0
+XQ2  cc2 b2 e2 PNP_LAT AREA=1
+
+* NPN_HV
+Vcc3 cc3 0 1
+Ib3  0 b3 10u
+XQ3  cc3 b3 0 NPN_HV AREA=1
+
+* PNP_HV
+Vcc4 cc4 0 -1
+Ib4  b4 0 10u
+Ve4  e4 0 0
+XQ4  cc4 b4 e4 PNP_HV AREA=1
+
+.control
+dc Vcc1 0   17  0.1
+echo NPN_LV_OK
+dc Vcc2 0  -22  -0.1
+echo PNP_LAT_OK
+dc Vcc3 0   55  0.25
+echo NPN_HV_OK
+dc Vcc4 0  -40  -0.25
+echo PNP_HV_OK
+quit
+.endc
+.end

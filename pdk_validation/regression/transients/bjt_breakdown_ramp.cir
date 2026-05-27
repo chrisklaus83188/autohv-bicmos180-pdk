@@ -1,0 +1,22 @@
+* Phase D: NPN_LV with Vcc ramped through BVCBO (P2 stress).
+* The avalanche subckt's Bavl uses abs(i(Vsen)) + min/max + (V/BVCBO)**4.
+* This deck exercises all of those at simulation time so any future
+* regression in the avalanche smoothness shows up as a wall-time hit.
+*
+* BVCBO(NPN_LV, TT) = 14 V. Ramp Vcc 0 -> 17 V over 1 us with Ib forced.
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+Vcc cc 0 PWL(0 0 1u 17 100u 17)
+Ib  0 b 10u
+Ve  e 0 0
+XQ  cc b e NPN_LV AREA=1
+
+.control
+tran 5n 1.2u
+echo TRAN_OK
+quit
+.endc
+.end
