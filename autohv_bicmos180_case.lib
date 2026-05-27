@@ -17,7 +17,7 @@
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 M0 d g_int s b NMOS18_INT W={WEFF} L={LEFF} M={M}
 .ends NMOS18
 
@@ -28,7 +28,7 @@ M0 d g_int s b NMOS18_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 M0 d g_int s b PMOS18_INT W={WEFF} L={LEFF} M={M}
 .ends PMOS18
 
@@ -39,7 +39,7 @@ M0 d g_int s b PMOS18_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 M0 d g_int s b NMOS33_INT W={WEFF} L={LEFF} M={M}
 .ends NMOS33
 
@@ -50,7 +50,7 @@ M0 d g_int s b NMOS33_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 M0 d g_int s b PMOS33_INT W={WEFF} L={LEFF} M={M}
 .ends PMOS33
 
@@ -61,7 +61,7 @@ M0 d g_int s b PMOS33_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 M0 d g_int s b NMOS50_INT W={WEFF} L={LEFF} M={M}
 .ends NMOS50
 
@@ -72,7 +72,7 @@ M0 d g_int s b NMOS50_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 M0 d g_int s b PMOS50_INT W={WEFF} L={LEFF} M={M}
 .ends PMOS50
 
@@ -83,7 +83,7 @@ M0 d g_int s b PMOS50_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 M0 d g_int s b NMOS12_INT W={WEFF} L={LEFF} M={M}
 .ends NMOS12
 
@@ -94,7 +94,7 @@ M0 d g_int s b NMOS12_INT W={WEFF} L={LEFF} M={M}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-BGSHIFT g_int s V={V(g,s)-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 M0 d g_int s b PMOS12_INT W={WEFF} L={LEFF} M={M}
 .ends PMOS12
 
@@ -103,7 +103,7 @@ M0 d g_int s b PMOS12_INT W={WEFF} L={LEFF} M={M}
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
-ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Vshift g g_int DC {-DVTH_MM}
 M0 d g_int s NDMOS20_INT m={mtot}
 .ends NDMOS20
 .subckt PDMOS20 d g s params: W=10u M=1
@@ -111,7 +111,7 @@ M0 d g_int s NDMOS20_INT m={mtot}
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
-ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Vshift g g_int DC {-DVTH_MM}
 M0 d g_int s PDMOS20_INT m={mtot}
 .ends PDMOS20
 .subckt NDMOS60 d g s params: W=10u M=1
@@ -119,7 +119,7 @@ M0 d g_int s PDMOS20_INT m={mtot}
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6))}
-ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Vshift g g_int DC {-DVTH_MM}
 M0 d g_int s NDMOS60_INT m={mtot}
 .ends NDMOS60
 .subckt PDMOS60 d g s params: W=10u M=1
@@ -127,7 +127,7 @@ M0 d g_int s NDMOS60_INT m={mtot}
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6))}
-ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Vshift g g_int DC {-DVTH_MM}
 M0 d g_int s PDMOS60_INT m={mtot}
 .ends PDMOS60
 .subckt NDMOS120 d g s params: W=10u M=1
@@ -135,7 +135,7 @@ M0 d g_int s PDMOS60_INT m={mtot}
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6))}
-ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Vshift g g_int DC {-DVTH_MM}
 M0 d g_int s NDMOS120_INT m={mtot}
 .ends NDMOS120
 .subckt NDMOS40 d g s params: W=10u M=1
@@ -143,7 +143,7 @@ M0 d g_int s NDMOS120_INT m={mtot}
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6))}
-ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Vshift g g_int DC {-DVTH_MM}
 M0 d g_int s NDMOS40_INT m={mtot}
 .ends NDMOS40
 .subckt PDMOS40 d g s params: W=10u M=1
@@ -151,7 +151,7 @@ M0 d g_int s NDMOS40_INT m={mtot}
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6))}
-ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Vshift g g_int DC {-DVTH_MM}
 M0 d g_int s PDMOS40_INT m={mtot}
 .ends PDMOS40
 .subckt NDMOS80 d g s params: W=10u M=1
@@ -159,7 +159,7 @@ M0 d g_int s PDMOS40_INT m={mtot}
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6))}
-ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Vshift g g_int DC {-DVTH_MM}
 M0 d g_int s NDMOS80_INT m={mtot}
 .ends NDMOS80
 .subckt PDMOS80 d g s params: W=10u M=1
@@ -167,26 +167,20 @@ M0 d g_int s NDMOS80_INT m={mtot}
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6))}
-ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Vshift g g_int DC {-DVTH_MM}
 M0 d g_int s PDMOS80_INT m={mtot}
 .ends PDMOS80
-.subckt NDMOS200 d g s params: W=10u L=6u M=1
-* 200V LDMOS.  W is free; current scales as  m = W/W_REF.
-* L is the DRIFT / EXTENDED-DRAIN length -- NOT the gate/channel length.
-*   The MOS channel length is diffusion-set and fixed at the process minimum
-*   (~0.6u, like the lower-voltage DMOS); it is not a drawn parameter here.
-*   L sets the BV/Rdson trade: longer drift raises on-resistance (~linear,
-*   modeled by Rdrift). Breakdown is held at the model-card rating.
-* Recommended drift window ~5.4u .. 10u (calibrate to process; ~5.4u is a
-*   realistic 200V minimum, consistent with measured ST/BCD parts).
+.subckt NDMOS200 d g s params: W=10u L=8u M=1
+* 200V LDMOS: W free (m=W/W_REF); L = drift length. Recommended RESURF window ~5u..16u.
+* L raises drift Rdson (~linear); breakdown is held at the model rating (see notes).
 .param W_REF=10u
-.param L_REF=5.4u
-.param L_MIN=5.4u
+.param L_REF=8u
+.param L_MIN=5u
 .param Leff={max(L,L_MIN)}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6))}
 .param RDRIFT={max(1.2*(Leff/L_REF-1)/mtot, 1e-6)}
-ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Vshift g g_int DC {-DVTH_MM}
 Rdrift d dd {RDRIFT}
 M0 dd g_int s NDMOS200_INT m={mtot}
 .ends NDMOS200
@@ -195,27 +189,43 @@ M0 dd g_int s NDMOS200_INT m={mtot}
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
-ESHIFT g_int s value={V(g,s)+DVTH_MM}
+Vshift g g_int DC {-DVTH_MM}
 M0 d g_int s DNMOS20_INT m={mtot}
 .ends DNMOS20
 .subckt NPN_LV c b e params: AREA=1
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
-Q0 c b e NPN_LV_INT area={AREAEFF}
+.param BVCBO={((14*_isTT + 13.3*_isFF + 14.7*_isSS + 13.3*_isFS + 14.7*_isSF))*(1+P_DBV_NPN_LV)}
+.param MAV_BJT=4
+Vsen c ci DC 0
+Q0 ci b e NPN_LV_INT area={AREAEFF}
+Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(max(V(ci,b)/BVCBO,0),0.997))**MAV_BJT) - 1 ) }
 .ends NPN_LV
 
 .subckt PNP_LAT c b e params: AREA=1
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
-Q0 c b e PNP_LAT_INT area={AREAEFF}
+.param BVCBO={((18*_isTT + 17.1*_isFF + 18.9*_isSS + 18.9*_isFS + 17.1*_isSF))*(1+P_DBV_PNP_LAT)}
+.param MAV_BJT=4
+Vsen c ci DC 0
+Q0 ci b e PNP_LAT_INT area={AREAEFF}
+Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(max(V(ci,b)/BVCBO,0),0.997))**MAV_BJT) - 1 ) }
 .ends PNP_LAT
 
 .subckt NPN_HV c b e params: AREA=1
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
-Q0 c b e NPN_HV_INT area={AREAEFF}
+.param BVCBO={((45*_isTT + 42.75*_isFF + 47.25*_isSS + 42.75*_isFS + 47.25*_isSF))*(1+P_DBV_NPN_HV)}
+.param MAV_BJT=4
+Vsen c ci DC 0
+Q0 ci b e NPN_HV_INT area={AREAEFF}
+Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(max(V(ci,b)/BVCBO,0),0.997))**MAV_BJT) - 1 ) }
 .ends NPN_HV
 
 .subckt PNP_HV c b e params: AREA=1
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
-Q0 c b e PNP_HV_INT area={AREAEFF}
+.param BVCBO={((32*_isTT + 30.4*_isFF + 33.6*_isSS + 33.6*_isFS + 30.4*_isSF))*(1+P_DBV_PNP_HV)}
+.param MAV_BJT=4
+Vsen c ci DC 0
+Q0 ci b e PNP_HV_INT area={AREAEFF}
+Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(max(V(ci,b)/BVCBO,0),0.997))**MAV_BJT) - 1 ) }
 .ends PNP_HV
 
 .subckt DIO_PN a c params: AREA=1

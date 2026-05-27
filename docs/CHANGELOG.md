@@ -16,9 +16,44 @@ Initial tracked version of the AutoHV BiCMOS 180 PDK for Qucs-S.
   via an internal multiplier; `L` raises modeled on-resistance (breakdown held at the
   model rating).
 
+### Models
+- Bipolar breakdown reinstated. Removed the inert `bv`/`ibv` from the four
+  Gummel-Poon BJT cards (they are not GP parameters and were silently ignored,
+  so the `P_DBV_*` draws varied nothing) and rebuilt breakdown behaviorally in
+  the subckts as a collector-base avalanche branch keyed to the original ratings
+  (now `BVCBO`), with the `P_DBV_*` draws kept live. Model beta now sets
+  BVceo < BVcbo.
+- 12 V devices (`NMOS12`/`PMOS12`) converted from MOS Level 3 to BSIM3
+  (level 49) for smooth output conductance, charge-conserving capacitances and a
+  real subthreshold region, matching the 18/33/50 family. Also removes a Level-3
+  `lambda`/`kappa` ambiguity that made gds differ between ngspice and SmartSpice.
+  Corner Vth/u0/vsat/rdsw carried over from the Level-3 sets; Monte-Carlo draws
+  remapped with none added and none left dead.
+- HV drift-MOS (VDMOS, all 11 cards) given temperature dependence (on-resistance
+  rises, Kp/Vth fall with T) via per-device tempco constants grouped at the top
+  of the models include. Previously the VDMOS array had no temperature behavior.
+- Bipolars given 1/f (flicker) noise (`kf`/`af`); flicker was previously zero.
+- Annotated the inert `binunit=1` on the BSIM3 cards (no L/W bins are shipped).
+
 ### Symbols
 - Schematic symbols for all 38 devices, with corrected device-specific artwork
   (core FET orientation, HV DMOS extended-drain symbol, zig-zag resistors).
 
 ### Docs / tooling
 - Added the PDK reference manual (`docs/`) and runnable example decks (`examples/`).
+
+### Notes & known limitations
+- Calibration required. Signs and mechanisms are validated on ngspice 42,
+  but the magnitudes are engineered, not fit to silicon: the BSIM3 12 V secondary
+  coefficients, the VDMOS tempco constants (`TC_*`), and the BJT avalanche
+  sharpness (`MAV_BJT`) and `kf`/`af`. The converted BSIM3 12 V cards
+  intentionally do not reproduce the old Level-3 I-V.
+- `AGAUSS` in `.param` is not parsed by stock ngspice in its default mode; the
+  statistics rely on Qucs-S preprocessing, an HSPICE-compatibility path, or
+  SmartSpice (native `AGAUSS`).
+- The avalanche subckts use ngspice idioms (`temper` re-evaluation in `.model`
+  braces, the `**` operator, `min`/`max`, and the `i(Vsen)` current probe);
+  confirm equivalents when porting to SmartSpice.
+- Deferred: cap VCC charge-form conversion; substrate/junction caps and a
+  self-heating thermal node on the HV array (interface change); and calibrated
+  MOS 1/f (`noia/noib/noic`, currently on `noimod=2` defaults).
