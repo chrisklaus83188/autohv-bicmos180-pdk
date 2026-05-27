@@ -2,6 +2,29 @@
 
 ## [Unreleased]
 
+### 2026-05-27 — P1 Phase C: passive R(V)/C(V) golden-curve diff
+
+- New `pdk_validation/regression/run_passives.py`. For each of the 5
+  behavioral resistors (`RPOLY_HI/LO`, `RNWELL`, `RNPLUS`, `RPPLUS`)
+  it runs a single `.dc Vp -5 5 0.25` and extracts
+  `R(V) = V / -i(Vp)`. For each of the 4 capacitors (`CMIM_STD/HI`,
+  `CMOM`, `CFRINGE`) it runs a `.tran` with a PWL ramp `0 -> 5 V`
+  over 1 ms and extracts `C(V) = -i(Vp) / dV/dt`.
+- Each curve is interpolated onto a fixed comparison grid (41 pts
+  for R, 21 pts for C) and diffed against a stored golden in
+  `pdk_validation/regression/goldens/`. Default tolerance: 1e-3
+  relative (`--tol`).
+- Goldens generated from the post-P0 lib. Numerical sanity:
+  - `RPOLY_HI` 12.27-12.29 kΩ (rsh=1200, L/W=10 with mild VCR),
+  - `RNWELL` 18.65-19.55 kΩ (strongest VCR at ~5 % @ 5 V),
+  - `CMIM_HI` 20.00-20.03 pF (cj=0.002 over 100×100 um, mild VCC).
+- `--regenerate` rewrites goldens from the current lib (use only
+  when the new behavior is the accepted baseline; commit the
+  updated JSONs alongside the lib change).
+- Catches: VCR/VCC coefficient drift, re-introduced `abs()` kinks
+  (the curve would re-acquire a cusp at V=0), unit typos on
+  `rsh`/`cj`. Doesn't yet sweep temperature -- folded into Phase D.
+
 ### 2026-05-27 — P1 Phase B: per-op wall-time budget
 
 - `run_smoke.py` now times every op and treats `--max-op-secs` (default

@@ -93,9 +93,71 @@ Each failure prints the device, axes, and the matched error line:
 The exact error patterns the harness watches for live at the top of
 `run_smoke.py` (`ERROR_PATTERNS`).
 
+## Phase C — passive R(V) / C(V) golden-curve diff (`run_passives.py`)
+
+Catches VCR/VCC coefficient drift, re-introduced `abs()` kinks (a cusp at
+V=0 would change the bias-dependent curve), unit-typo regressions on
+`rsh`/`cj`, and similar passive-card changes.
+
+- **Resistors (5):** `RPOLY_HI`, `RPOLY_LO`, `RNWELL`, `RNPLUS`,
+  `RPPLUS`. Single `.dc Vp -5 5 0.25` sweep; extract
+  `R(V) = V / -i(Vp)`.
+- **Capacitors (4):** `CMIM_STD`, `CMIM_HI`, `CMOM`, `CFRINGE`. PWL
+  ramp 0 → 5 V over 1 ms (so `dV/dt = 5000 V/s`) inside a `.tran`;
+  extract `C(V) = -i(Vp) / dV/dt`.
+
+Each device's curve is interpolated onto a fixed comparison grid and
+diffed against a stored golden in `goldens/`. Tolerance is relative
+(default `--tol 1e-3` = 0.1 %).
+
+### Running
+
+```sh
+# Check against the stored goldens (~9 ngspice runs, a couple of seconds)
+python pdk_validation/regression/run_passives.py
+
+# Overwrite goldens from the current lib (use only when the lib's
+# passive behavior is the new accepted baseline)
+python pdk_validation/regression/run_passives.py --regenerate
+
+# Restrict to specific devices
+python pdk_validation/regression/run_passives.py --device CMIM_STD RNWELL
+
+# Tighter or looser tolerance
+python pdk_validation/regression/run_passives.py --tol 1e-4
+```
+
+### Goldens
+
+Stored under `pdk_validation/regression/goldens/<device>.json`, one
+file per device:
+
+```json
+{
+  "device": "RPOLY_HI",
+  "type": "r",
+  "ngspice_version": "45.2",
+  "v_grid": [-5.0, -4.75, ..., 5.0],
+  "values": [12289.42, 12286.36, ..., 12289.42]
+}
+```
+
+The current goldens were generated on the post-P0 lib. If you make a
+deliberate change to a VCR/VCC coefficient or a passive `rsh`/`cj`,
+re-run with `--regenerate` and commit the updated goldens alongside
+the lib change so the diff stays clean.
+
+### Sanity of current baseline
+
+| Device     | R or C range (V = ±5 V)      | Comment                                |
+|------------|------------------------------|----------------------------------------|
+| `RPOLY_HI` | 12.27 – 12.29 kΩ             | rsh=1200, L/W=10 → 12 kΩ; VCR ~0.16 %  |
+| `RNWELL`   | 18.65 – 19.55 kΩ             | strongest VCR (~5 % at 5 V)            |
+| `CMIM_HI`  | 20.00 – 20.03 pF             | cj=0.002, area=1e-8 m² → 20 pF; VCC ~0.15 % |
+| `CFRINGE`  | 1.81 pF (flat)               | weakest VCC                            |
+
 ## Remaining phases (planned)
 
-- **Phase C**: DC-sweep R/C and diff R(V)/C(V) against golden curves.
 - **Phase D**: short transient per device class with timestep budget.
 - **Phase E**: Monte Carlo harness (validates AGAUSS re-randomization
   across MC iterations — see handoff P1 "Monte Carlo validation").
