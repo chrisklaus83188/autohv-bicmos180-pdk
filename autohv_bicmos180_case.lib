@@ -96,6 +96,7 @@ M0 d g s b PMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 M0 d g_int s NDMOS20_INT m={mtot}
 .ends NDMOS20
 .subckt PDMOS20 d g s params: W=10u M=1
@@ -104,6 +105,7 @@ M0 d g_int s NDMOS20_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 M0 d g_int s PDMOS20_INT m={mtot}
 .ends PDMOS20
 .subckt NDMOS60 d g s params: W=10u M=1
@@ -112,6 +114,7 @@ M0 d g_int s PDMOS20_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6))}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 M0 d g_int s NDMOS60_INT m={mtot}
 .ends NDMOS60
 .subckt PDMOS60 d g s params: W=10u M=1
@@ -120,6 +123,7 @@ M0 d g_int s NDMOS60_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6))}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 M0 d g_int s PDMOS60_INT m={mtot}
 .ends PDMOS60
 .subckt NDMOS120 d g s params: W=10u M=1
@@ -128,6 +132,7 @@ M0 d g_int s PDMOS60_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6))}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 M0 d g_int s NDMOS120_INT m={mtot}
 .ends NDMOS120
 .subckt PDMOS120 d g s params: W=10u M=1
@@ -136,6 +141,7 @@ M0 d g_int s NDMOS120_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6))}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 M0 d g_int s PDMOS120_INT m={mtot}
 .ends PDMOS120
 .subckt NDMOS40 d g s params: W=10u M=1
@@ -144,6 +150,7 @@ M0 d g_int s PDMOS120_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6))}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 M0 d g_int s NDMOS40_INT m={mtot}
 .ends NDMOS40
 .subckt PDMOS40 d g s params: W=10u M=1
@@ -152,6 +159,7 @@ M0 d g_int s NDMOS40_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6))}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 M0 d g_int s PDMOS40_INT m={mtot}
 .ends PDMOS40
 .subckt NDMOS80 d g s params: W=10u M=1
@@ -160,6 +168,7 @@ M0 d g_int s PDMOS40_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6))}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 M0 d g_int s NDMOS80_INT m={mtot}
 .ends NDMOS80
 .subckt PDMOS80 d g s params: W=10u M=1
@@ -168,6 +177,7 @@ M0 d g_int s NDMOS80_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6))}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 M0 d g_int s PDMOS80_INT m={mtot}
 .ends PDMOS80
 .subckt NDMOS200 d g s params: W=10u L=8u M=1
@@ -181,6 +191,7 @@ M0 d g_int s PDMOS80_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6))}
 .param RDRIFT={max(1.2*(Leff/L_REF-1)/mtot, 1e-6)}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rdrift d dd {RDRIFT}
 M0 dd g_int s NDMOS200_INT m={mtot}
 .ends NDMOS200
@@ -197,6 +208,7 @@ M0 dd g_int s NDMOS200_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6))}
 .param RDRIFT={max(3.0*(Leff/L_REF-1)/mtot, 1e-6)}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rdrift d dd {RDRIFT}
 M0 dd g_int s PDMOS200_INT m={mtot}
 .ends PDMOS200
@@ -206,6 +218,7 @@ M0 dd g_int s PDMOS200_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
 Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 M0 d g_int s DNMOS20_INT m={mtot}
 .ends DNMOS20
 .subckt NPN_LV c b e params: AREA=1

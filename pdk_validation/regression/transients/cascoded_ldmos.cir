@@ -1,0 +1,36 @@
+* Phase D: cascoded HV LDMOS pair with shared gate, MM_ON=0.
+*
+* This is the topology that exposes the Vshift singular-matrix bug
+* described in HANDOFF_ngspice_compat.md / _REPRO_RESULTS.md. With
+* MM_ON=0, each subckt's `Vshift g g_int DC {-DVTH_MM}` collapses to
+* a 0 V VSRC. When two LDMOSes share the external gate node, KCL at
+* the shared gate becomes 0=0 (a redundant equation) and the matrix
+* is singular. Some ngspice versions (e.g. 45.2 + KLU) tolerate this
+* via gmin-stepping; others (e.g. 46) abort with "Timestep too small ...
+* trouble with node v.x.vshift#branch".
+*
+* The PDK fix is a 1 GOhm shunt across each Vshift (added 2026-05-28);
+* this deck regression-tests the fix and would have caught the issue
+* if it had existed before the cascoded-LDMOS pattern was covered.
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+Vgd  gd 0 PULSE(0 5 5n 1n 1n 50n 100n)
+Vdd  vdd 0 100
+Rmid vdd mid 1k
+
+XN1 vdd gd  mid  NDMOS200 W=40u L=8u
+XN2 mid gd  0    NDMOS200 W=40u L=8u
+
+Vgd2 gd2 0 PULSE(0 5 5n 1n 1n 50n 100n)
+XN3 vdd  gd2 mid2 NDMOS120 W=40u
+XN4 mid2 gd2 0    NDMOS120 W=40u
+
+.control
+tran 1n 200n
+echo TRAN_OK
+quit
+.endc
+.end

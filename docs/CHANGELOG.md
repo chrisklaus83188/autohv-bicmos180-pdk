@@ -2,6 +2,47 @@
 
 ## [Unreleased]
 
+### 2026-05-28 — Fix VDMOS Vshift singular-matrix on ngspice 46 (gmin shunt)
+
+The 13 VDMOS subckts each use `Vshift g g_int DC {-DVTH_MM}` to apply
+the mismatch threshold shift. When `MM_ON=0` (default), `DVTH_MM=0`
+and `Vshift` collapses to a 0 V VSRC. With two LDMOSes sharing the
+external gate node (a routine pattern in HV cascodes, level shifters,
+charge pumps, gate drivers), KCL at the shared gate becomes 0=0 -- a
+dependent equation -- and the matrix is singular. ngspice 45.2's
+KLU solver tolerates this via gmin-stepping; ngspice 46 doesn't.
+
+Fix: add `Rgmin g g_int 1e9` in parallel with each `Vshift` (13 sites,
+all VDMOS subckts: NDMOS20/40/60/80/120/200, PDMOS20/40/60/80/120/200,
+DNMOS20). 1 GOhm leaks ~1 pA per mV -- 4 to 6 orders of magnitude
+below any real mismatch sigma. Standard foundry idiom for Vshift-style
+HV mismatch wrappers.
+
+Scope: this is intentionally **narrower** than the global
+`NGSPICE_COMPAT` switch proposed in `HANDOFF_ngspice_compat.md`.
+That handoff's claims #1 (BVCR), #2 (Cextra), and #4 (Bavl) were
+retracted in `HANDOFF_ngspice_compat_REPRO_RESULTS.md` after their
+own author confirmed those repros pass on ngspice 46. Only claim
+#3 (Vshift) reproduced standalone, so only it is fixed here.
+BVCR / Cextra / Bavl behavioral elements are unchanged.
+
+Regression coverage added: new
+`pdk_validation/regression/transients/cascoded_ldmos.cir` deck --
+two NDMOS200 + two NDMOS120 with shared gates at `MM_ON=0`. This
+is the exact pattern the original suite was missing (the existing
+smoke + transients exercise single VDMOS devices; the cascoded
+pattern, which is where the singular matrix manifests, was not
+covered). Phase D is now 8 decks; new deck baseline 84 ms.
+
+Baseline post-fix on ngspice 45.2:
+  smoke      :  800/800 ops    (40 dev x 5 corners x 4 stat combos)
+  passives   :    9/9  goldens   (R(V)/C(V) unchanged -- no VCR/VCC edit)
+  corners    :   36/36 checks    (9 family probes x 4 non-TT corners)
+  transients :    8/8  decks     (incl. new cascoded_ldmos.cir)
+
+Awaiting verification on ngspice 46 from the handoff author per
+`HANDOFF_ngspice_compat_REPLY_FIX_LANDED.md`.
+
 ### 2026-05-27 — Add PDMOS120 and PDMOS200 (complete the HV PMOS family)
 
 The HV VDMOS family previously stopped at 80 V on the P-channel side
