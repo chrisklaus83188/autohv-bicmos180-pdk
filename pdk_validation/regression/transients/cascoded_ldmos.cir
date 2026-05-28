@@ -12,6 +12,23 @@
 * The PDK fix is a 1 GOhm shunt across each Vshift (added 2026-05-28);
 * this deck regression-tests the fix and would have caught the issue
 * if it had existed before the cascoded-LDMOS pattern was covered.
+*
+* Known portability caveat (per HANDOFF_ngspice_compat_REPLY_VERIFIED.md
+* and _REPLY_FINAL.md):
+*   - On ngspice 45.2: this deck passes both pre- and post-fix.
+*   - On ngspice 46:   the matrix-singularity is repaired by the Rgmin
+*     shunt (the "singular matrix" warning is gone), BUT a separate
+*     issue in 46's transient solver still trips on the Vshift VSRC
+*     branch variable at t ~ 1 ns. The Rgmin fix does resolve the
+*     realistic level-shifter failure on ngspice 46 (verified by the
+*     handoff author at SS / 125 C). The minimal four-LDMOS repro is
+*     an ngspice-46-specific corner case that cannot be addressed
+*     within the PDK without dropping the Vth mismatch mechanism
+*     (VDMOS rejects `delvto`, tested 2026-05-28).
+* So: do not let a future failure of this deck *only on ngspice 46*
+* be confused with a PDK regression. If you see the failure pattern
+* migrate to ngspice 45.2 / 47+ / KLU on a newer build, that IS a
+* PDK regression and needs investigation.
 .include "../../../autohv_bicmos180_case.lib"
 .param case=0
 .param PROC_ON=0

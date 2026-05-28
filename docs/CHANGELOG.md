@@ -2,6 +2,51 @@
 
 ## [Unreleased]
 
+### 2026-05-28 — Verification close-out for the Vshift gmin shunt
+
+Verification reply from the handoff author
+(`HANDOFF_ngspice_compat_REPLY_VERIFIED.md`) confirms the Rgmin fix
+resolves the realistic workload on ngspice 46:
+
+  * **Simplified level shifter at SS / 125 C** -- previously failed
+    with "singular matrix: check node v.x1.xn6.vshift#branch" -- now
+    passes. TT and FF pass too. This is the case that motivated the
+    whole investigation.
+  * **Full level shifter** -- failure mode moved off any
+    `vshift#branch` node. Pre-fix the deck never found an operating
+    point (gmin / true-gmin / source stepping all failed). Post-fix
+    "Transient op finished successfully", then transient runs to
+    t ~ 4.57 us before failing at `ecextra#branch` during a 200 V
+    SW ramp. The handoff author traces this residual to the level-
+    shifter topology + tight `.options`, not the PDK; they're
+    handling it on their side.
+
+Residual not addressed (intentionally):
+
+  * **Minimal 4-cascoded-LDMOS repro on ngspice 46** still fails.
+    The Rgmin shunt repairs the matrix conditioning (no more
+    "singular matrix" warning), but ngspice 46's transient solver
+    still aborts at t ~ 1 ns with "trouble with node v.xn4.vshift#branch".
+    Tested two follow-up workarounds and confirmed neither helps:
+      - **Option A: `delvto` on the VDMOS M-element.** ngspice 45.2
+        rejects with `unknown parameter (delvto)`. VDMOS doesn't
+        expose a Vth instance shifter analogous to BSIM3's
+        `delvto`; original handoff's pre-existing finding stands.
+      - **Option C: `Bshift gd g_int V=-DVTH_MM` (B-source as
+        voltage)** instead of `Vshift`. Probe shows ngspice still
+        creates a `bshift#branch` variable -- B-source-as-voltage
+        has the same MNA structure as a VSRC, so it would hit the
+        same ngspice-46 transient-solver wall.
+    Concluded: this is an ngspice-46 solver-tolerance issue around
+    VSRC branch variables that cannot be addressed inside the PDK
+    without dropping per-instance Vth mismatch. Documented in the
+    cascoded_ldmos.cir docstring so a future ngspice-46-only
+    failure isn't confused with a PDK regression.
+
+**Ship decision:** the Rgmin fix as landed in `0ceabc3` is final.
+BVCR / Cextra / Bavl remain unchanged per the handoff author's
+retraction in `HANDOFF_ngspice_compat_REPRO_RESULTS.md`.
+
 ### 2026-05-28 — Fix VDMOS Vshift singular-matrix on ngspice 46 (gmin shunt)
 
 The 13 VDMOS subckts each use `Vshift g g_int DC {-DVTH_MM}` to apply
