@@ -1,0 +1,10 @@
+* ===========================================================================
+*  INV  -  single CMOS inverter (5V devices).   in -> out  (inverting)
+*    Ports : in out vp vn      (vp = high rail, vn = low rail)
+*    Params: WP WN L
+*    PDK   : PMOS50 / NMOS50    Deps: none (self-contained)
+* ===========================================================================
+.subckt INV in out vp vn params: WP=20u WN=10u L=1u
+XP out in vp vp PMOS50 W={WP} L={L}
+XN out in vn vn NMOS50 W={WN} L={L}
+.ends INV

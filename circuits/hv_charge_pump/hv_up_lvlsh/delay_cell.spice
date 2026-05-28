@@ -1,0 +1,30 @@
+* ===========================================================================
+*  DELAY_CELL  -  per supplied schematic
+*    Two identical chains, each:
+*       in -> INV -> INV -> R(series) -> [C to GND] -> INV -> INV -> INV -> out
+*       Chain A:  ONS  -> OFFP        Chain B:  OFFS -> ONP
+*    5 inverters/chain  =>  output = delayed INVERSE of the input.
+*    Ports : ONS OFFS ONP OFFP VDD GND
+*      ONS  <-> leg node S6     OFFS <-> leg node S5
+*      ONP  -> gate of N10      OFFP -> gate of N13
+*    Params: WPI/WNI/LI (inverters), RDL/RDW (series R), CDL/CDW (shunt C)
+*    PDK   : RPOLY_HI, CMIM_STD    Deps: INV (include inv.spice)
+* ===========================================================================
+.subckt DELAY_CELL ONS OFFS ONP OFFP VDD GND params: WPI=20u WNI=10u LI=1u RDL=100u RDW=2u CDL=20u CDW=20u
+* ---- chain A : ONS -> OFFP ----
+XA1 ONS a1   VDD GND INV WP={WPI} WN={WNI} L={LI}
+XA2 a1  a2   VDD GND INV WP={WPI} WN={WNI} L={LI}
+XRA a2  a3   RPOLY_HI L={RDL} W={RDW}
+XCA a3  GND  CMIM_STD L={CDL} W={CDW}
+XA3 a3  a4   VDD GND INV WP={WPI} WN={WNI} L={LI}
+XA4 a4  a5   VDD GND INV WP={WPI} WN={WNI} L={LI}
+XA5 a5  OFFP VDD GND INV WP={WPI} WN={WNI} L={LI}
+* ---- chain B : OFFS -> ONP (identical copy) ----
+XB1 OFFS b1  VDD GND INV WP={WPI} WN={WNI} L={LI}
+XB2 b1   b2  VDD GND INV WP={WPI} WN={WNI} L={LI}
+XRB b2   b3  RPOLY_HI L={RDL} W={RDW}
+XCB b3   GND CMIM_STD L={CDL} W={CDW}
+XB3 b3   b4  VDD GND INV WP={WPI} WN={WNI} L={LI}
+XB4 b4   b5  VDD GND INV WP={WPI} WN={WNI} L={LI}
+XB5 b5   ONP VDD GND INV WP={WPI} WN={WNI} L={LI}
+.ends DELAY_CELL

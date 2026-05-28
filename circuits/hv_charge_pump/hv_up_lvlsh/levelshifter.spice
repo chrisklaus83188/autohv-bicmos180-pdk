@@ -1,0 +1,61 @@
+* ===========================================================================
+*  LEVELSHIFTER  -  high-side gate-driver level shifter (main circuit)
+*    Ports : BOOT SW VDD GND ON OFF ON_HS OFF_HS
+*    Device class: HV = 200V (NDMOS200 / PDMOS200), LV = 5V (NMOS50 / PMOS50)
+*    PDK   : PMOS50 NMOS50 NDMOS200 PDMOS200 RPOLY_HI
+*    Deps  : BUFFER, DELAY_CELL (-> INV)  [include buffer.spice, delay_cell.spice, inv.spice]
+*    Sizing: uses global params wp wn llv whv lhv whvp rl rw rdl rdw cdl cdw
+*            (defined by the top deck, levelshifter_top.spice)
+* ===========================================================================
+.subckt LEVELSHIFTER BOOT SW VDD GND ON OFF ON_HS OFF_HS
+
+* --- Latch-1 : cross-coupled PMOS (5V) ---
+XP1 Q  QB BOOT BOOT PMOS50 W={wp} L={llv}
+XP2 QB Q  BOOT BOOT PMOS50 W={wp} L={llv}
+
+* --- HV PMOS level-shift cascodes (200V) ---
+XP5 D5 SW Q  PDMOS200 W={whvp} L={lhv}
+XP6 D6 SW QB PDMOS200 W={whvp} L={lhv}
+
+* --- HV NMOS cascodes (200V), gate tied to VDD ---
+XN5 D5 VDD S5 NDMOS200 W={whv} L={lhv}
+XN6 D6 VDD S6 NDMOS200 W={whv} L={lhv}
+
+* --- Leg switching NMOS (5V) : gates = ON / OFF ---
+XN7 S5 ON  GND GND NMOS50 W={wn} L={llv}
+XN8 S6 OFF GND GND NMOS50 W={wn} L={llv}
+
+* --- Left current mirror (5V PMOS): P7 diode-tied, P8 output -> Q ---
+XP7 D9 D9 BOOT BOOT PMOS50 W={wp} L={llv}
+XP8 Q  D9 BOOT BOOT PMOS50 W={wp} L={llv}
+* --- Right current mirror: P10 diode-tied, P9 output -> QB ---
+XP10 D12 D12 BOOT BOOT PMOS50 W={wp} L={llv}
+XP9  QB  D12 BOOT BOOT PMOS50 W={wp} L={llv}
+
+* --- Bias resistors BOOT -> D9 / D12 (high-sheet poly; size for bias I) ---
+XR1 BOOT D9  RPOLY_HI L={rl} W={rw}
+XR2 BOOT D12 RPOLY_HI L={rl} W={rw}
+
+* --- Left stack : N9(HV) - N10 - N11 -> GND ---
+XN9  D9  VDD  S9  NDMOS200 W={whv} L={lhv}
+XN10 S9  ONP  S10 GND NMOS50 W={wn} L={llv}
+XN11 S10 OFF  GND GND NMOS50 W={wn} L={llv}
+* --- Right stack: N12(HV) - N13 - N14 -> GND ---
+XN12 D12 VDD  S12 NDMOS200 W={whv} L={lhv}
+XN13 S12 OFFP S13 GND NMOS50 W={wn} L={llv}
+XN14 S13 ON   GND GND NMOS50 W={wn} L={llv}
+
+* --- Latch-2 : PMOS drivers P3/P4, cross-coupled NMOS N3/N4 (5V) ---
+XP3 Q2  Q  BOOT BOOT PMOS50 W={wp} L={llv}
+XP4 Q2B QB BOOT BOOT PMOS50 W={wp} L={llv}
+XN3 Q2  Q2B SW SW NMOS50 W={wn} L={llv}
+XN4 Q2B Q2  SW SW NMOS50 W={wn} L={llv}
+
+* --- Output buffers : non-inverting BUFFER subckt, BOOT/SW supplied ---
+XBUF1 Q2  ON_HS  BOOT SW BUFFER WP={wp} WN={wn} L={llv}
+XBUF2 Q2B OFF_HS BOOT SW BUFFER WP={wp} WN={wn} L={llv}
+
+* --- Delay-cell block : ONS=S6 OFFS=S5 ONP->N10g OFFP->N13g ; powered VDD/GND ---
+XDELAY S6 S5 ONP OFFP VDD GND DELAY_CELL WPI={wp} WNI={wn} LI={llv} RDL={rdl} RDW={rdw} CDL={cdl} CDW={cdw}
+
+.ends LEVELSHIFTER

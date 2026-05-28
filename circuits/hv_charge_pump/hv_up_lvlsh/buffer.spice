@@ -1,0 +1,10 @@
+* ===========================================================================
+*  BUFFER  -  non-inverting buffer = two INV stages in cascade
+*    Ports : in out vp vn
+*    Params: WP WN L   (passed through to both INV stages)
+*    Deps  : INV  (include inv.spice)
+* ===========================================================================
+.subckt BUFFER in out vp vn params: WP=20u WN=10u L=1u
+XA in  mid vp vn INV WP={WP} WN={WN} L={L}
+XB mid out vp vn INV WP={WP} WN={WN} L={L}
+.ends BUFFER

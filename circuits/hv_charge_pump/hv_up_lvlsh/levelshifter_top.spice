@@ -1,0 +1,64 @@
+* ===========================================================================
+*  TOP DECK  -  High-side gate-driver LEVEL SHIFTER  (AutoHV_BiCMOS180)
+* ---------------------------------------------------------------------------
+*  >> Run / simulate THIS file. <<
+*  It includes the PDK, defines the global sizing params, pulls in every
+*  subcircuit-definition file, and holds the (commented) test bench.
+*
+*  Files (keep all in the same directory):
+*    autohv_bicmos180_case.lib   PDK device models (pulls in ..._models.inc)
+*    inv.spice                   INV         (single CMOS inverter)
+*    buffer.spice                BUFFER      (2x INV, non-inverting)  -> INV
+*    delay_cell.spice            DELAY_CELL  (2 chains: invx2-R-C-invx3) -> INV
+*    levelshifter.spice          LEVELSHIFTER (main circuit) -> BUFFER, DELAY_CELL
+*
+*  Device class: HV = 200V (NDMOS200/PDMOS200), LV = 5V (NMOS50/PMOS50).
+*  Corner defaults to TT (case=0); no mismatch/process (MM_ON=PROC_ON=0).
+* ===========================================================================
+
+.include "autohv_bicmos180_case.lib"
+
+* ----------------------- tunable device sizes (global) ---------------------
+.param wp   = 20u      $ LV PMOS width  (latch / mirror / buffer / delay inv)
+.param wn   = 10u      $ LV NMOS width
+.param llv  = 1u       $ LV channel length
+.param whv  = 40u      $ HV NMOS (NDMOS200) width
+.param lhv  = 8u       $ HV drift length (NDMOS200 / PDMOS200)
+.param whvp = 40u      $ HV PMOS (PDMOS200) width
+.param rl   = 100u     $ bias-resistor length  (R1,R2) - size for bias I
+.param rw   = 2u       $ bias-resistor width
+.param rdl  = 100u     $ DELAY-CELL series resistor length (RPOLY_HI)
+.param rdw  = 2u       $ DELAY-CELL series resistor width
+.param cdl  = 20u      $ DELAY-CELL capacitor length (CMIM_STD)
+.param cdw  = 20u      $ DELAY-CELL capacitor width   - delay R/C set the delay
+
+* ----------------------- subcircuit definitions ----------------------------
+.include "inv.spice"
+.include "buffer.spice"
+.include "delay_cell.spice"
+.include "levelshifter.spice"
+
+* ===========================================================================
+*  EXAMPLE TEST BENCH  (uncomment to simulate)
+* ---------------------------------------------------------------------------
+* .param VHV=200          $ high-side rail the SW node can swing to
+* .param VBOOT=12         $ bootstrap supply (BOOT - SW)
+* .param VDDL=5
+*
+* Vgnd  GND 0   0
+* Vvdd  VDD GND {VDDL}
+* Vsw   SW  GND PWL(0 0  1u 0  2u {VHV}  20u {VHV})   $ high-side floats up
+* Vboot BOOT SW  {VBOOT}                              $ floating bootstrap
+* Von   ON  GND PULSE(0 {VDDL} 3u 10n 10n 1u 5u)
+* Voff  OFF GND PULSE(0 {VDDL} 5.5u 10n 10n 1u 5u)
+*
+* X1 BOOT SW VDD GND ON OFF ON_HS OFF_HS LEVELSHIFTER
+*
+* .tran 10n 25u
+* .control
+*   run
+*   plot ON OFF v(X1.Q) v(X1.QB) ON_HS OFF_HS
+* .endc
+* ===========================================================================
+
+.end
