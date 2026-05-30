@@ -95,90 +95,220 @@ M0 d g s b PMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
+.param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
+.param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_NDMOS20*V(TJ)}
+Vsense d d_sense DC 0
+M0 d_sense g_th s NDMOS20_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 d g_int s NDMOS20_INT m={mtot}
+.endif
 .ends NDMOS20
 .subckt PDMOS20 d g s params: W=10u M=1
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
+.param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
+.param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_PDMOS20*V(TJ)}
+Vsense d d_sense DC 0
+M0 d_sense g_th s PDMOS20_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 d g_int s PDMOS20_INT m={mtot}
+.endif
 .ends PDMOS20
 .subckt NDMOS60 d g s params: W=10u M=1
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6))}
+.param Rth=150        ; K/W: thermal R, default for 60V class (override per-instance)
+.param Cth=2e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_NDMOS60*V(TJ)}
+Vsense d d_sense DC 0
+M0 d_sense g_th s NDMOS60_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 d g_int s NDMOS60_INT m={mtot}
+.endif
 .ends NDMOS60
 .subckt PDMOS60 d g s params: W=10u M=1
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6))}
+.param Rth=150        ; K/W: thermal R, default for 60V class (override per-instance)
+.param Cth=2e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_PDMOS60*V(TJ)}
+Vsense d d_sense DC 0
+M0 d_sense g_th s PDMOS60_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 d g_int s PDMOS60_INT m={mtot}
+.endif
 .ends PDMOS60
 .subckt NDMOS120 d g s params: W=10u M=1
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6))}
+.param Rth=100        ; K/W: thermal R, default for 120V class (override per-instance)
+.param Cth=4e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_NDMOS120*V(TJ)}
+Vsense d d_sense DC 0
+M0 d_sense g_th s NDMOS120_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 d g_int s NDMOS120_INT m={mtot}
+.endif
 .ends NDMOS120
 .subckt PDMOS120 d g s params: W=10u M=1
 * HV DMOS p-channel: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6))}
+.param Rth=100        ; K/W: thermal R, default for 120V class (override per-instance)
+.param Cth=4e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_PDMOS120*V(TJ)}
+Vsense d d_sense DC 0
+M0 d_sense g_th s PDMOS120_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 d g_int s PDMOS120_INT m={mtot}
+.endif
 .ends PDMOS120
 .subckt NDMOS40 d g s params: W=10u M=1
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6))}
+.param Rth=180        ; K/W: thermal R, default for 40V class (override per-instance)
+.param Cth=1.5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_NDMOS40*V(TJ)}
+Vsense d d_sense DC 0
+M0 d_sense g_th s NDMOS40_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 d g_int s NDMOS40_INT m={mtot}
+.endif
 .ends NDMOS40
 .subckt PDMOS40 d g s params: W=10u M=1
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6))}
+.param Rth=180        ; K/W: thermal R, default for 40V class (override per-instance)
+.param Cth=1.5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_PDMOS40*V(TJ)}
+Vsense d d_sense DC 0
+M0 d_sense g_th s PDMOS40_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 d g_int s PDMOS40_INT m={mtot}
+.endif
 .ends PDMOS40
 .subckt NDMOS80 d g s params: W=10u M=1
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6))}
+.param Rth=120        ; K/W: thermal R, default for 80V class (override per-instance)
+.param Cth=3e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_NDMOS80*V(TJ)}
+Vsense d d_sense DC 0
+M0 d_sense g_th s NDMOS80_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 d g_int s NDMOS80_INT m={mtot}
+.endif
 .ends NDMOS80
 .subckt PDMOS80 d g s params: W=10u M=1
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6))}
+.param Rth=120        ; K/W: thermal R, default for 80V class (override per-instance)
+.param Cth=3e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_PDMOS80*V(TJ)}
+Vsense d d_sense DC 0
+M0 d_sense g_th s PDMOS80_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 d g_int s PDMOS80_INT m={mtot}
+.endif
 .ends PDMOS80
 .subckt NDMOS200 d g s params: W=10u L=8u M=1
 * 200V LDMOS: W free (m=W/W_REF); L = drift length. Recommended RESURF window ~5u..16u.
@@ -190,10 +320,23 @@ M0 d g_int s PDMOS80_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6))}
 .param RDRIFT={max(1.2*(Leff/L_REF-1)/mtot, 1e-6)}
+.param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
+.param Cth=5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rdrift d dd {RDRIFT}
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_NDMOS200*V(TJ)}
+Vsense dd dd_sense DC 0
+M0 dd_sense g_th s NDMOS200_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 dd g_int s NDMOS200_INT m={mtot}
+.endif
 .ends NDMOS200
 .subckt PDMOS200 d g s params: W=10u L=8u M=1
 * 200V LDMOS p-channel: W free (m=W/W_REF); L = drift length. Recommended RESURF window ~5u..16u.
@@ -207,19 +350,45 @@ M0 dd g_int s NDMOS200_INT m={mtot}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6))}
 .param RDRIFT={max(3.0*(Leff/L_REF-1)/mtot, 1e-6)}
+.param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
+.param Cth=5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rdrift d dd {RDRIFT}
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_PDMOS200*V(TJ)}
+Vsense dd dd_sense DC 0
+M0 dd_sense g_th s PDMOS200_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 dd g_int s PDMOS200_INT m={mtot}
+.endif
 .ends PDMOS200
 .subckt DNMOS20 d g s params: W=10u M=1
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
+.param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
+.param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+.if (SH_ON==1)
+* Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
+B_thvth g_int g_th V={TC_VTO_DNMOS20*V(TJ)}
+Vsense d d_sense DC 0
+M0 d_sense g_th s DNMOS20_INT m={mtot}
+B_pdiss 0 TJ I={V(d,s)*i(Vsense)}
+Rth_n TJ 0 {Rth}
+Cth_n TJ 0 {Cth} IC=0
+.else
+* Self-heating OFF (default): original M0 path, no thermal elements added.
 M0 d g_int s DNMOS20_INT m={mtot}
+.endif
 .ends DNMOS20
 .subckt NPN_LV c b e params: AREA=1
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}

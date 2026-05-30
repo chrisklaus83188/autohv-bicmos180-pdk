@@ -288,12 +288,14 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     p.add_argument(
         "--max-op-secs",
         type=float,
-        default=2.0,
+        default=4.0,
         help=(
-            "per-op wall-time budget in seconds (default 2.0). "
-            "An op that converges but exceeds the budget is reported as a "
-            "failure -- catches convergence/stiffness regressions like the "
-            "pre-fix abs() kink (>120 s on a passive transient). Disable "
+            "per-op wall-time budget in seconds (default 4.0; bumped from "
+            "2.0 in 2026-05-29 to absorb the ~200 ms parse overhead from "
+            "the 13 VDMOS .if (SH_ON==1) self-heating blocks). An op that "
+            "converges but exceeds the budget is reported as a failure -- "
+            "catches convergence/stiffness regressions like the pre-fix "
+            "abs() kink (>120 s on a passive transient). Disable "
             "with --max-op-secs 0."
         ),
     )

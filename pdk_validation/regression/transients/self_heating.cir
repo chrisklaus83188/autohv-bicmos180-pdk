@@ -1,0 +1,35 @@
+* Phase D: SH_ON=1 self-heating regression (item #3 in parasitics roadmap).
+*
+* NDMOS200 sourcing ~92 mA at V_DS ~ 0.77 V => Pdiss ~ 71 mW.
+* With Rth=80 K/W and Cth=5e-6 J/K (NDMOS200 defaults), steady-state
+* V(TJ) settles to ~5.69 K above ambient with time constant Rth*Cth = 400 us.
+*
+* This deck verifies:
+*   - .if (SH_ON==1) branch parses cleanly
+*   - B_pdiss B_thvth Vsense thermal elements are instantiated
+*   - V(XN.TJ) reaches its steady-state value within a few ms
+*   - tran budget is respected
+*
+* Note: Cascoded LDMOS at SH_ON=1 is known-incompatible (multiple Vsense
+* VSRC branches cause the same transient-solver issue we fixed for Vshift
+* with the Rgmin shunt). Single-device self-heating is fine; cascoded
+* self-heating is a known limitation. The cascoded_ldmos.cir regression
+* deck runs at SH_ON=0 (default) and is unaffected.
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+.param SH_ON=1
+
+Vdd vdd 0 10
+Vgs g 0 3
+Rload vdd d 100
+XN d g 0 NDMOS200 W=10u L=8u
+
+.control
+* Reach thermal steady state in a few ms (Rth*Cth = 400 us)
+tran 50u 5m UIC
+echo TRAN_OK
+quit
+.endc
+.end

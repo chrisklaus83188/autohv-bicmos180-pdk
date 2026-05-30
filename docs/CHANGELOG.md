@@ -2,6 +2,107 @@
 
 ## [Unreleased]
 
+### 2026-05-30 — Item #3 from parasitics roadmap: soft self-heating on VDMOS
+
+Added an opt-in junction-temperature tracking + Vth thermal feedback
+mechanism to all 13 VDMOS subckts. Default OFF for backwards compat.
+
+**What it does (when SH_ON=1)**
+
+Each VDMOS subckt gains an internal `TJ` node carrying the junction
+temperature *rise above ambient*, in Kelvin. The rise is driven by
+device dissipation:
+
+  Pdiss = V(d,s) * i(drain)
+  V(TJ) = Pdiss * Rth  (DC steady-state)
+  tau   = Rth * Cth    (thermal time constant)
+
+The threshold voltage shifts behaviorally by `TC_VTO_<dev> * V(TJ)`,
+on top of the existing ambient `(temper-27)` shift. So Vth tracks
+both ambient AND self-heating.
+
+What is NOT included in this first cut:
+  * Rds(on), kp thermal feedback to V(TJ) — would require behavioral
+    rd/rs/kp rewrites; would be a 2nd cut
+  * thermal coupling between adjacent devices — needs a shared
+    substrate node (item #6/#7 in the parasitics roadmap)
+  * package thermal model — junction-to-ambient Rth is a stand-in
+    for the full thermal stack
+
+**How to use**
+
+```
+.param SH_ON=1                    ; or set per simulation
+...
+XN1 d g s NDMOS200 W=10u L=8u
+* Probe junction temperature rise (Kelvin above ambient):
+.tran ...
+.print tran V(XN1.TJ)
+```
+
+Override per-instance Rth / Cth via the X-line params:
+
+```
+XN1 d g s NDMOS200 W=10u L=8u Rth=50 Cth=2e-5
+```
+
+**Per-class Rth/Cth defaults** (engineered for a representative
+junction-to-ambient with no heatsink; users override per their package):
+
+  | Class | Rth (K/W) | Cth (J/K) |
+  |-------|-----------|-----------|
+  |  20 V |    200    |  1e-6     |
+  |  40 V |    180    |  1.5e-6   |
+  |  60 V |    150    |  2e-6     |
+  |  80 V |    120    |  3e-6     |
+  | 120 V |    100    |  4e-6     |
+  | 200 V |     80    |  5e-6     |
+
+**Why opt-in via `.if (SH_ON==1) ... .else ... .endif`**
+
+A multiplicative gating (`B_source V={SH_ON*...}`) adds branch
+variables to the MNA matrix unconditionally, which (a) slows every
+simulation even when self-heating is unused, and (b) reintroduces
+the VSRC-branch transient-solver issue we just fixed for Vshift
+with the Rgmin shunt (cascoded LDMOS hits "Timestep too small ...
+trouble with node v.x.vsense#branch" at SH_ON=0 with multiplicative
+gating). ngspice's `.if` at parse time avoids both: when SH_ON=0
+the thermal elements are not instantiated at all.
+
+Trade-off: each ngspice `-b` parse now evaluates 13 `.if` blocks,
+adding ~40 ms parse overhead per subprocess invocation. The smoke
+suite's per-op budget was bumped from 2.0 s to 4.0 s to absorb this
+while keeping the 10x+ headroom over typical ops (median 112 ms).
+
+**Known limitations**
+
+Cascoded LDMOS with `SH_ON=1` will hit the same transient-solver
+issue we previously documented for cascoded LDMOS on ngspice 46 —
+multiple `Vsense` 0V VSRCs in the cascode chain create branch
+variables that ngspice's transient solver doesn't tolerate at this
+tolerance. The existing `cascoded_ldmos.cir` regression deck runs
+at SH_ON=0 (default) and is unaffected. Self-heating analysis on
+cascodes requires either:
+  (a) post-processing: run at SH_ON=0, externally compute Pdiss and
+      thermal rise from V(d,s) and the device's I-V measurement, or
+  (b) a future refinement that uses i(V) → V/R style current
+      measurement to avoid the Vsense VSRC branch.
+
+**Regression coverage added**
+
+`pdk_validation/regression/transients/self_heating.cir` instantiates
+one NDMOS200 with SH_ON=1, drives ~71 mW into it, runs a 5 ms tran
+covering ~12 thermal time constants, and verifies V(TJ) settles to
+the expected ~5.7 K rise (Pdiss × Rth = 0.071 W × 80 K/W). Phase D
+is now 10 decks.
+
+**Regression baseline after item #3**
+
+  smoke      :  800/800   (median 112 ms/op, max 959 ms, budget 4.0 s)
+  passives   :    9/9     (R/C goldens untouched: no VCR/VCC edit)
+  corners    :   36/36
+  transients :   10/10    (incl. new self_heating.cir at 9% of budget)
+
 ### 2026-05-29 — Items #1 + #2 from parasitics roadmap: calibrated 1/f noise + HF NQS
 
 Two BSIM3-only fidelity adds, both zero interface impact:

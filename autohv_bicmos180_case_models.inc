@@ -8,6 +8,13 @@
 .param case=0
 .param PROC_ON=0
 .param MM_ON=0
+* Self-heating (item #3 in parasitics roadmap; default OFF for backwards-compat).
+* When 1: each VDMOS subckt's internal TJ node tracks Pdiss * Rth steady-state,
+* with thermal time constant Rth*Cth, and Vth shifts by TC_VTO * V(TJ).
+* Probe with V(X1.TJ) etc. Rds(on)/kp thermal coupling NOT included in this
+* first cut (would require behavioral rd/rs/kp rewrites). For most HV switching
+* analysis (charge pumps, gate drivers), Vth feedback is the dominant effect.
+.param SH_ON=0
 * --- one-hot corner selectors (exactly one is 1; TT is the default) ---
 .param _isFF={(case==1)}
 .param _isSS={(case==2)}
