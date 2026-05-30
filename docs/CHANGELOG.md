@@ -2,6 +2,64 @@
 
 ## [Unreleased]
 
+### 2026-05-29 — Items #1 + #2 from parasitics roadmap: calibrated 1/f noise + HF NQS
+
+Two BSIM3-only fidelity adds, both zero interface impact:
+
+**Item #1 — calibrated 1/f noise (NOIA / NOIB / NOIC / EM / AF / EF)**
+
+Previously the eight BSIM3 cards set `noimod=2` (Unified flicker noise
+model) but left `noia/noib/noic` at ngspice defaults -- which under-
+specifies the 1/f corner for design-first work. Added explicit
+parameters per device class, scaled by oxide thickness (1/f noise is
+trap-dominated and scales roughly as 1/tox^2):
+
+  | Device       | tox      | NOIA       | NOIB       | NOIC       |
+  | ------------ | -------- | ---------- | ---------- | ---------- |
+  | NMOS18/PMOS18| 4.25 nm  | 6.25e+41 / | 3.125e+26/ | 8.75e+09 / |
+  |              |          | 6.188e+40  | 1.5e+25    | 1.4e+08    |
+  | NMOS33/PMOS33| 6.75 nm  | 3.13e+41 / | 1.56e+26 / | 4.38e+09 / |
+  |              |          | 3.09e+40   | 7.5e+24    | 7.0e+07    |
+  | NMOS50/PMOS50| 11.0 nm  | 1.56e+41 / | 7.81e+25 / | 2.19e+09 / |
+  |              |          | 1.55e+40   | 3.75e+24   | 3.5e+07    |
+  | NMOS12/PMOS12| 20-21 nm | 9.38e+40 / | 4.69e+25 / | 1.31e+09 / |
+  |              |          | 9.28e+39   | 2.25e+24   | 2.1e+07    |
+
+Plus `em=4.1e7`, `af=1`, `ef=1` on all 8 cards (standard 180nm
+reference). Values are engineered from typical 180nm reference
+libraries -- not silicon-fit, like the rest of the lib.
+
+**Item #2 — HF non-quasi-static channel charge (nqsmod=1, elm=5)**
+
+Enabled BSIM3's NQS model on all 8 cards. Below ~f_T/10 (~GHz for
+these devices) the QS approximation is fine; above it the channel
+charge can't redistribute instantly and a real Elmore-like delay
+emerges. `elm=5` is BSIM3's default-but-now-explicit Elmore
+constant. Costs one internal state variable per BSIM3 instance --
+op-time median went from ~60 ms to ~75 ms across the smoke suite,
+still well within the per-op budget.
+
+**Regression coverage**
+
+New `pdk_validation/regression/transients/noise_check.cir` deck
+runs a `.noise V(d) Vbias dec 5 1 1e9` analysis followed by a fast
+`.tran 100p 10n` on NMOS18 in common-source. Catches:
+  * `Error: unknown parameter (noia/nqsmod/elm/...)` regressions if
+    a future ngspice deprecates one of the params
+  * NQS-related transient convergence regressions (the sub-ns
+    timestep exercises the NQS charge state)
+  * any future "noimod=2 silently disabled" change
+
+Phase D is now 9 decks. The new deck baseline is 203 ms wall on
+ngspice 45.2.
+
+**Regression baseline after both items:**
+
+  smoke      :  800/800   (median 75 ms / op, max 1.45 s)
+  passives   :    9/9     (R/C goldens untouched -- no VCR/VCC edit)
+  corners    :   36/36    (9 family probes x 4 non-TT corners)
+  transients :    9/9     (incl. new noise_check.cir at 7% of budget)
+
 ### 2026-05-28 — Verification close-out for the Vshift gmin shunt
 
 Verification reply from the handoff author

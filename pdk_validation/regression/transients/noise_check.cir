@@ -1,0 +1,30 @@
+* Phase D: noise model + NQS sanity check (items #1 and #2 in PARASITICS).
+*
+* Items being checked:
+*   #1: calibrated 1/f noise (NOIA, NOIB, NOIC, EM, AF, EF on noimod=2)
+*       - parses and runs without "Error: ..." or "unknown parameter"
+*       - .noise analysis from 1 Hz to 1 GHz completes
+*   #2: non-quasi-static channel charge (nqsmod=1, elm=5)
+*       - parses and doesn't break transient analysis
+*       - tran with sub-ns timesteps converges (NQS adds an internal
+*         channel-charge state variable, exercised by fast transients)
+*
+* Testbench: NMOS18 in common-source, light Rd load so V(d) is free to
+* respond to noise injected at the gate via Vbias.
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+Vdd  vdd 0 1.8
+Vbias g 0 1.0
+Rd   vdd d 100k
+X1   d g 0 0 NMOS18 W=10u L=1u M=1
+
+.control
+noise V(d) Vbias dec 5 1 1e9
+tran 100p 10n
+echo TRAN_OK
+quit
+.endc
+.end

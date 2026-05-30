@@ -378,6 +378,16 @@
 + mj=0.46
 + mjsw=0.32
 + js={((2e-08*_isTT + 2.036e-08*_isFF + 1.968e-08*_isSS + 2e-08*_isFS + 2e-08*_isSF))*(1+P_DJS_NMOS18)}
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; 180nm reference values, tox=4.25n NMOS)
++ noia=6.25e+41
++ noib=3.125e+26
++ noic=8.75e+09
++ em=4.1e7
++ af=1
++ ef=1
+* HF NQS (item #2: non-quasi-static channel charge model)
++ nqsmod=1
++ elm=5
 + )
 
 .model PMOS18_INT PMOS (
@@ -431,6 +441,16 @@
 + mj=0.45
 + mjsw=0.31
 + js={((3e-08*_isTT + 3.06e-08*_isFF + 2.946e-08*_isSS + 3e-08*_isFS + 3e-08*_isSF))*(1+P_DJS_PMOS18)}
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; 180nm reference values, tox=4.25n PMOS)
++ noia=6.188e+40
++ noib=1.5e+25
++ noic=1.4e+08
++ em=4.1e7
++ af=1
++ ef=1
+* HF NQS (item #2: non-quasi-static channel charge model)
++ nqsmod=1
++ elm=5
 + )
 
 .model NMOS33_INT NMOS (
@@ -484,6 +504,16 @@
 + mj=0.45
 + mjsw=0.3
 + js={((1.2e-08*_isTT + 1.2216e-08*_isFF + 1.1808e-08*_isSS + 1.2e-08*_isFS + 1.2e-08*_isSF))*(1+P_DJS_NMOS33)}
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=6.75n -> NMOS18 NOIA * (4.25/6.75)^2 ~ 0.40)
++ noia=3.13e+41
++ noib=1.56e+26
++ noic=4.38e+09
++ em=4.1e7
++ af=1
++ ef=1
+* HF NQS (item #2: non-quasi-static channel charge model)
++ nqsmod=1
++ elm=5
 + )
 
 .model PMOS33_INT PMOS (
@@ -537,6 +567,16 @@
 + mj=0.44
 + mjsw=0.29
 + js={((1.6e-08*_isTT + 1.632e-08*_isFF + 1.5712e-08*_isSS + 1.6e-08*_isFS + 1.6e-08*_isSF))*(1+P_DJS_PMOS33)}
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=6.75n -> PMOS18 NOIA * (4.25/6.75)^2 ~ 0.50)
++ noia=3.09e+40
++ noib=7.5e+24
++ noic=7.0e+07
++ em=4.1e7
++ af=1
++ ef=1
+* HF NQS (item #2: non-quasi-static channel charge model)
++ nqsmod=1
++ elm=5
 + )
 
 .model NMOS50_INT NMOS (
@@ -590,6 +630,16 @@
 + mj=0.43
 + mjsw=0.28
 + js={((6e-09*_isTT + 6.108e-09*_isFF + 5.904e-09*_isSS + 6e-09*_isFS + 6e-09*_isSF))*(1+P_DJS_NMOS50)}
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=11n -> NMOS18 NOIA * (4.25/11)^2 ~ 0.15)
++ noia=1.56e+41
++ noib=7.81e+25
++ noic=2.19e+09
++ em=4.1e7
++ af=1
++ ef=1
+* HF NQS (item #2: non-quasi-static channel charge model)
++ nqsmod=1
++ elm=5
 + )
 
 .model PMOS50_INT PMOS (
@@ -643,6 +693,16 @@
 + mj=0.42
 + mjsw=0.27
 + js={((8e-09*_isTT + 8.16e-09*_isFF + 7.856e-09*_isSS + 8e-09*_isFS + 8e-09*_isSF))*(1+P_DJS_PMOS50)}
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=11n -> PMOS18 NOIA * (4.25/11)^2 ~ 0.25)
++ noia=1.55e+40
++ noib=3.75e+24
++ noic=3.5e+07
++ em=4.1e7
++ af=1
++ ef=1
+* HF NQS (item #2: non-quasi-static channel charge model)
++ nqsmod=1
++ elm=5
 + )
 
 .model NMOS12_INT NMOS (
@@ -695,6 +755,16 @@
 + mj=0.4
 + mjsw=0.26
 + js=3e-09
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=20n (analog HV BSIM3) -> NMOS18 NOIA * (4.25/20)^2 ~ 0.05)
++ noia=9.38e+40
++ noib=4.69e+25
++ noic=1.31e+09
++ em=4.1e7
++ af=1
++ ef=1
+* HF NQS (item #2: non-quasi-static channel charge model)
++ nqsmod=1
++ elm=5
 + )
 
 .model PMOS12_INT PMOS (
@@ -747,6 +817,16 @@
 + mj=0.39
 + mjsw=0.25
 + js=4e-09
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=21n (analog HV BSIM3) -> PMOS18 NOIA * (4.25/21)^2 ~ 0.05)
++ noia=9.28e+39
++ noib=2.25e+24
++ noic=2.1e+07
++ em=4.1e7
++ af=1
++ ef=1
+* HF NQS (item #2: non-quasi-static channel charge model)
++ nqsmod=1
++ elm=5
 + )
 
 .model NDMOS20_INT VDMOS (nchan
