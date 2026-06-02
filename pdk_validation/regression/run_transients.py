@@ -54,6 +54,7 @@ TRANSIENTS = [
     ("bjt_breakdown_ramp.cir", "BJT BVCBO ramp (P2)",     2.0),
     ("cascoded_ldmos.cir",     "Cascoded LDMOS, MM_ON=0", 2.0),
     ("self_heating.cir",       "Self-heating (SH_ON=1)",  3.0),
+    ("coss_check.cir",         "NDMOS200 Coss < 1 pF",    2.0),
     ("diode_rectifier.cir",    "Diode rectifier",         2.0),
     ("r_thru_zero.cir",        "RNWELL AC thru 0 V",      3.0),
     ("c_thru_zero.cir",        "CMIM_HI AC thru 0 V",     3.0),

@@ -2,6 +2,78 @@
 
 ## [Unreleased]
 
+### 2026-06-01 — Fix VDMOS terminal capacitances (~1000x unit slip)
+
+Per `HANDOFF_vdmos_caps.md` — all 13 VDMOS `_INT` model cards had
+`cgs`, `cgdmax`, `cgdmin`, and `cjo` set ~1000x too large for the
+`W_REF=10um` reference cell. Direct AC measurement on a 40um x 8um
+NDMOS200 (typical cascode size) showed **105 pF of drain capacitance
+at low Vds**, where the physical number is ~100 fF.
+
+**Diagnosis** (corroborates the handoff author): the values are
+monotonic in voltage class, so they were generated systematically.
+A uniform 1/1000 scale lands every device in the physical range.
+That is the signature of a pF-vs-fF unit slip (`e-11` written where
+`e-14` was intended) applied across the VDMOS cap generator.
+
+**Verification.** Pre-fix vs post-fix Cdrain on the 40um NDMOS200
+at AC=1MHz:
+
+  | Vds   | Pre-fix  | Post-fix |
+  | ----- | -------- | -------- |
+  |  0.1V | 105 pF   | 105 fF   |
+  | 12V   | 29.5 pF  | 29.5 fF  |
+  | 100V  | 11.4 pF  | 11.4 fF  |
+  | 200V  | 8.84 pF  | 8.84 fF  |
+
+Exactly 1000x drop, as expected from the agent's diagnosis.
+
+**Why it mattered (per the handoff).** This produced a real SOA
+violation in any HV-cascode circuit: the oversized drain-source
+`cjo` couples HV drain slew straight onto high-impedance cascode
+source nodes, parking them far above the intended `VDD - Vth`
+self-limit (~14 V instead of ~4 V in the handoff's repro deck).
+With physical caps, the cascode self-limits correctly, switching
+speeds up, and the first-cycle latch-toggle miss in the original
+level-shifter testbench likely cleans up too.
+
+**Scope of edit.** 52 numbers: 4 cap params x 13 VDMOS `_INT`
+cards. Pure calibration update -- no new params, no behavioral
+change, no interface change. Mechanical Python pass; the relative
+ordering (monotonic decrease with voltage class) was preserved
+exactly, only the absolute scale changed.
+
+  NDMOS20_INT:   cgdmax 4.032e-10 -> 4.032e-13,  cgs 4.992e-10 -> 4.992e-13,  cjo 1.4e-10 -> 1.4e-13   (+ cgdmin)
+  ...                                                                                                  (similar for all 12 others)
+  NDMOS200_INT:  cgdmax 3.5e-11   -> 3.5e-14,    cgs 4.8e-11   -> 4.8e-14,    cjo 2.2e-11 -> 2.2e-14
+
+**Regression coverage added.**
+`pdk_validation/regression/transients/coss_check.cir` runs the
+handoff's Repro 1 (AC at 1 MHz, NDMOS200 W=40u L=8u, Vds=0.1V)
+and asserts `Cdrain < 1 pF`. Baseline post-fix: ~105 fF (~10x
+margin under the threshold). If anyone ever regenerates these
+cards with the old unit slip, this trips on the next CI run.
+
+**Out of scope (flagged for follow-up).**
+The handoff author noted "the zener `cjo` values (DZ_5V6/12/24)
+are larger -- worth a sanity glance while you're in there." On
+inspection: zener `cjo` (TT) is `1.2e-10` (5V6), `5.5e-11` (12V),
+`2.8e-11` (24V) -- 100-400x the corresponding signal-diode
+`cjo=2.8e-13`. That's NOT exactly 1000x like the VDMOS slip, so
+it's a different magnitude problem (and possibly a different
+generator step). The agent didn't have direct AC evidence on
+zeners, and I didn't add any here either. **Recommended: a
+separate dedicated investigation before adjusting zener caps.**
+
+**Regression baseline post-fix on ngspice 45.2.**
+
+  smoke      :  800/800   (median 120 ms/op, max 980 ms)
+  passives   :    9/9     (R/C goldens untouched)
+  corners    :   36/36
+  transients :   11/11    (incl. new coss_check.cir at 5% of budget;
+                           total Phase D wall dropped 1.3s -> 1.1s
+                           reflecting faster switching with physical caps)
+
 ### 2026-05-30 — Item #3 from parasitics roadmap: soft self-heating on VDMOS
 
 Added an opt-in junction-temperature tracking + Vth thermal feedback
