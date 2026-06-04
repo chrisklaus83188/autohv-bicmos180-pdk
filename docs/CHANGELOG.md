@@ -2,6 +2,81 @@
 
 ## [Unreleased]
 
+### 2026-06-04 — Deterministic mismatch corners (`MM_SIGMA` per-instance)
+
+Added a per-instance parameter `MM_SIGMA` (default 0) to every device
+subckt that lets you bypass `AGAUSS` and pin the device's mismatch
+parameters to a specified sigma multiple. Designers can now run
+deterministic worst-case corners alongside (or instead of) the
+existing AGAUSS-based MC harness.
+
+**Mechanism (additive form).** Each mismatch parameter is now:
+
+  X_MM = MM_ON*AGAUSS(0, X_3sigma, 3) / scale  +  MM_SIGMA*X_3sigma/3 / scale
+
+The two terms gate independently:
+
+  | MM_ON | MM_SIGMA | Mode                                     |
+  |-------|----------|------------------------------------------|
+  |   0   |    0     | No mismatch (default).                   |
+  |   1   |    0     | Random MC -- existing Phase E behavior.  |
+  |   0   |   +/-k   | Deterministic at +/-k sigma per device.  |
+  |   1   |   +/-k   | DON'T (sum of random + det; meaningless).|
+
+The HSPICE convention is preserved -- `AGAUSS(0, X, 3)` truncates at
++/-X (the 3-sigma bound), so true 1-sigma = X/3, and `MM_SIGMA=+3`
+lands the parameter at exactly the +X (3-sigma) bound. Matches the
+random-extreme draw.
+
+**Why this design.** Tested ngspice `.param` expression conditionals
+(`(X==0)*A + (X!=0)*B`) and confirmed they're not supported -- ngspice
+errors with "Cannot compute substitute" on `==`/`!=`/`<`/`>=`. Pivoted
+to the additive form, which is simpler and parses cleanly without any
+conditional logic. The cost is that AGAUSS still gets evaluated in
+corner mode (its result multiplied by 0) -- correctness-neutral,
+documented in `docs/MISMATCH_CORNERS.md` section 5.5.
+
+**Scope of edit.** 40 subckts touched (every device in the lib):
+
+  - 8 BSIM3 MOS: 3 mismatch params each (DVTH_MM, DWREL_MM, DLREL_MM)
+  - 13 VDMOS: 1 param (DVTH_MM)
+  - 4 BJT: 1 param (AREAEFF)
+  - 6 Diodes/Zeners: 1 param (AREAEFF)
+  - 5 R: 1 param (RMM)
+  - 4 C: 1 param (CMM)
+
+Total: 56 AGAUSS expressions extended + 40 subckt headers gain
+`MM_SIGMA=0`. Single Python pass; no interface change to existing
+deck instantiations (MM_SIGMA defaults to 0).
+
+**Documentation.** New `docs/MISMATCH_CORNERS.md` covers:
+  - Concept and intended flow (sensitivity scan -> compose worst-case
+    pattern -> lock as testbench corner suite)
+  - Canonical patterns (diff pair, simple mirror, cascoded mirror,
+    cascode chain) with worked invocations
+  - Caveats: joint-sigma probability, linear sensitivity assumption,
+    sensitivity sign across operating points, PROC/MM independence,
+    AGAUSS draw consumption
+  - Recommendation: corners every commit, MC at release boundaries
+
+**Regression coverage added.**
+`pdk_validation/regression/transients/mismatch_corner.cir` instantiates
+two NMOS50 at MM_SIGMA=+/-3, measures `log(I1/I2)`, asserts within
++/-10% of the analytic prediction (-1.44%). Baseline measured -1.48%
+(2.5% deviation from theory, well within tolerance). If the
+deterministic mechanism ever breaks, this trips on the next CI run.
+
+Backward compat verified: Phase A smoke 800/800 at MM_SIGMA=0 default
+(unchanged from pre-edit). Phase E MC harness (which never sets
+MM_SIGMA) is unaffected.
+
+**Phase D is now 12 decks.**
+
+  smoke      :  800/800   (median 93 ms/op)
+  passives   :    9/9
+  corners    :   36/36
+  transients :   12/12    (incl. new mismatch_corner.cir at 5% of budget)
+
 ### 2026-06-01 — Fix VDMOS terminal capacitances (~1000x unit slip)
 
 Per `HANDOFF_vdmos_caps.md` — all 13 VDMOS `_INT` model cards had

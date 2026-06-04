@@ -10,91 +10,91 @@
 
 * ============================ DEVICE SUBCIRCUITS ============================
 * Place these via the Qucs-S 'SPICE Library Device' (File Components group).
-.subckt NMOS18 d g s b params: W=10u L=1u M=1
+.subckt NMOS18 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0105/sqrt(AUM2+1e-12), 3)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0105/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0105/3/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
 M0 d g s b NMOS18_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends NMOS18
 
-.subckt PMOS18 d g s b params: W=10u L=1u M=1
+.subckt PMOS18 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0105/sqrt(AUM2+1e-12), 3)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0105/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0105/3/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
 M0 d g s b PMOS18_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends PMOS18
 
-.subckt NMOS33 d g s b params: W=10u L=1u M=1
+.subckt NMOS33 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.012/sqrt(AUM2+1e-12), 3)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.012/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
 M0 d g s b NMOS33_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends NMOS33
 
-.subckt PMOS33 d g s b params: W=10u L=1u M=1
+.subckt PMOS33 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.012/sqrt(AUM2+1e-12), 3)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.012/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
 M0 d g s b PMOS33_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends PMOS33
 
-.subckt NMOS50 d g s b params: W=10u L=1u M=1
+.subckt NMOS50 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.013499999999999998/sqrt(AUM2+1e-12), 3)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.013499999999999998/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.013499999999999998/3/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
 M0 d g s b NMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends NMOS50
 
-.subckt PMOS50 d g s b params: W=10u L=1u M=1
+.subckt PMOS50 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.013499999999999998/sqrt(AUM2+1e-12), 3)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.013499999999999998/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.013499999999999998/3/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
 M0 d g s b PMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends PMOS50
 
-.subckt NMOS12 d g s b params: W=10u L=1u M=1
+.subckt NMOS12 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.018000000000000002/sqrt(AUM2+1e-12), 3)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.018000000000000002/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.018000000000000002/3/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
 M0 d g s b NMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends NMOS12
 
-.subckt PMOS12 d g s b params: W=10u L=1u M=1
+.subckt PMOS12 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.018000000000000002/sqrt(AUM2+1e-12), 3)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.018000000000000002/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.018000000000000002/3/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
 M0 d g s b PMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .ends PMOS12
 
-.subckt NDMOS20 d g s params: W=10u M=1
+.subckt NDMOS20 d g s params: W=10u M=1 MM_SIGMA=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.024/3/sqrt(max(mtot,1e-6))}
 .param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
 .param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -112,11 +112,11 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s NDMOS20_INT m={mtot}
 .endif
 .ends NDMOS20
-.subckt PDMOS20 d g s params: W=10u M=1
+.subckt PDMOS20 d g s params: W=10u M=1 MM_SIGMA=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.024/3/sqrt(max(mtot,1e-6))}
 .param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
 .param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -134,11 +134,11 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s PDMOS20_INT m={mtot}
 .endif
 .ends PDMOS20
-.subckt NDMOS60 d g s params: W=10u M=1
+.subckt NDMOS60 d g s params: W=10u M=1 MM_SIGMA=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.027/3/sqrt(max(mtot,1e-6))}
 .param Rth=150        ; K/W: thermal R, default for 60V class (override per-instance)
 .param Cth=2e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -156,11 +156,11 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s NDMOS60_INT m={mtot}
 .endif
 .ends NDMOS60
-.subckt PDMOS60 d g s params: W=10u M=1
+.subckt PDMOS60 d g s params: W=10u M=1 MM_SIGMA=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.027/3/sqrt(max(mtot,1e-6))}
 .param Rth=150        ; K/W: thermal R, default for 60V class (override per-instance)
 .param Cth=2e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -178,11 +178,11 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s PDMOS60_INT m={mtot}
 .endif
 .ends PDMOS60
-.subckt NDMOS120 d g s params: W=10u M=1
+.subckt NDMOS120 d g s params: W=10u M=1 MM_SIGMA=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.03/3/sqrt(max(mtot,1e-6))}
 .param Rth=100        ; K/W: thermal R, default for 120V class (override per-instance)
 .param Cth=4e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -200,11 +200,11 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s NDMOS120_INT m={mtot}
 .endif
 .ends NDMOS120
-.subckt PDMOS120 d g s params: W=10u M=1
+.subckt PDMOS120 d g s params: W=10u M=1 MM_SIGMA=0
 * HV DMOS p-channel: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.03/3/sqrt(max(mtot,1e-6))}
 .param Rth=100        ; K/W: thermal R, default for 120V class (override per-instance)
 .param Cth=4e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -222,11 +222,11 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s PDMOS120_INT m={mtot}
 .endif
 .ends PDMOS120
-.subckt NDMOS40 d g s params: W=10u M=1
+.subckt NDMOS40 d g s params: W=10u M=1 MM_SIGMA=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0085/3/sqrt(max(mtot,1e-6))}
 .param Rth=180        ; K/W: thermal R, default for 40V class (override per-instance)
 .param Cth=1.5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -244,11 +244,11 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s NDMOS40_INT m={mtot}
 .endif
 .ends NDMOS40
-.subckt PDMOS40 d g s params: W=10u M=1
+.subckt PDMOS40 d g s params: W=10u M=1 MM_SIGMA=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0085, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0085/3/sqrt(max(mtot,1e-6))}
 .param Rth=180        ; K/W: thermal R, default for 40V class (override per-instance)
 .param Cth=1.5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -266,11 +266,11 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s PDMOS40_INT m={mtot}
 .endif
 .ends PDMOS40
-.subckt NDMOS80 d g s params: W=10u M=1
+.subckt NDMOS80 d g s params: W=10u M=1 MM_SIGMA=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0095/3/sqrt(max(mtot,1e-6))}
 .param Rth=120        ; K/W: thermal R, default for 80V class (override per-instance)
 .param Cth=3e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -288,11 +288,11 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s NDMOS80_INT m={mtot}
 .endif
 .ends NDMOS80
-.subckt PDMOS80 d g s params: W=10u M=1
+.subckt PDMOS80 d g s params: W=10u M=1 MM_SIGMA=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0095, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0095/3/sqrt(max(mtot,1e-6))}
 .param Rth=120        ; K/W: thermal R, default for 80V class (override per-instance)
 .param Cth=3e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -310,7 +310,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s PDMOS80_INT m={mtot}
 .endif
 .ends PDMOS80
-.subckt NDMOS200 d g s params: W=10u L=8u M=1
+.subckt NDMOS200 d g s params: W=10u L=8u M=1 MM_SIGMA=0
 * 200V LDMOS: W free (m=W/W_REF); L = drift length. Recommended RESURF window ~5u..16u.
 * L raises drift Rdson (~linear); breakdown is held at the model rating (see notes).
 .param W_REF=10u
@@ -318,7 +318,7 @@ M0 d g_int s PDMOS80_INT m={mtot}
 .param L_MIN=5u
 .param Leff={max(L,L_MIN)}
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.011/3/sqrt(max(mtot,1e-6))}
 .param RDRIFT={max(1.2*(Leff/L_REF-1)/mtot, 1e-6)}
 .param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
 .param Cth=5e-06     ; J/K: thermal capacitance
@@ -338,7 +338,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 dd g_int s NDMOS200_INT m={mtot}
 .endif
 .ends NDMOS200
-.subckt PDMOS200 d g s params: W=10u L=8u M=1
+.subckt PDMOS200 d g s params: W=10u L=8u M=1 MM_SIGMA=0
 * 200V LDMOS p-channel: W free (m=W/W_REF); L = drift length. Recommended RESURF window ~5u..16u.
 * L raises drift Rdson (~linear); breakdown is held at the model rating. RDRIFT scale factor
 * is 3.0 (vs 1.2 on NDMOS200): PMOS drift in n-well has ~2.5x higher per-um R, so the per-um
@@ -348,7 +348,7 @@ M0 dd g_int s NDMOS200_INT m={mtot}
 .param L_MIN=5u
 .param Leff={max(L,L_MIN)}
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.011/3/sqrt(max(mtot,1e-6))}
 .param RDRIFT={max(3.0*(Leff/L_REF-1)/mtot, 1e-6)}
 .param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
 .param Cth=5e-06     ; J/K: thermal capacitance
@@ -368,11 +368,11 @@ Cth_n TJ 0 {Cth} IC=0
 M0 dd g_int s PDMOS200_INT m={mtot}
 .endif
 .ends PDMOS200
-.subckt DNMOS20 d g s params: W=10u M=1
+.subckt DNMOS20 d g s params: W=10u M=1 MM_SIGMA=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.024/3/sqrt(max(mtot,1e-6))}
 .param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
 .param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -390,8 +390,8 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s DNMOS20_INT m={mtot}
 .endif
 .ends DNMOS20
-.subckt NPN_LV c b e params: AREA=1
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+.subckt NPN_LV c b e params: AREA=1 MM_SIGMA=0
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
 .param BVCBO={((14*_isTT + 13.3*_isFF + 14.7*_isSS + 13.3*_isFS + 14.7*_isSF))*(1+P_DBV_NPN_LV)}
 .param MAV_BJT=4
 Vsen c ci DC 0
@@ -399,8 +399,8 @@ Q0 ci b e NPN_LV_INT area={AREAEFF}
 Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(max(V(ci,b)/BVCBO,0),0.997))**MAV_BJT) - 1 ) }
 .ends NPN_LV
 
-.subckt PNP_LAT c b e params: AREA=1
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+.subckt PNP_LAT c b e params: AREA=1 MM_SIGMA=0
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
 .param BVCBO={((18*_isTT + 17.1*_isFF + 18.9*_isSS + 18.9*_isFS + 17.1*_isSF))*(1+P_DBV_PNP_LAT)}
 .param MAV_BJT=4
 Vsen c ci DC 0
@@ -408,8 +408,8 @@ Q0 ci b e PNP_LAT_INT area={AREAEFF}
 Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(max(V(ci,b)/BVCBO,0),0.997))**MAV_BJT) - 1 ) }
 .ends PNP_LAT
 
-.subckt NPN_HV c b e params: AREA=1
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+.subckt NPN_HV c b e params: AREA=1 MM_SIGMA=0
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
 .param BVCBO={((45*_isTT + 42.75*_isFF + 47.25*_isSS + 42.75*_isFS + 47.25*_isSF))*(1+P_DBV_NPN_HV)}
 .param MAV_BJT=4
 Vsen c ci DC 0
@@ -417,8 +417,8 @@ Q0 ci b e NPN_HV_INT area={AREAEFF}
 Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(max(V(ci,b)/BVCBO,0),0.997))**MAV_BJT) - 1 ) }
 .ends NPN_HV
 
-.subckt PNP_HV c b e params: AREA=1
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+.subckt PNP_HV c b e params: AREA=1 MM_SIGMA=0
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
 .param BVCBO={((32*_isTT + 30.4*_isFF + 33.6*_isSS + 33.6*_isFS + 30.4*_isSF))*(1+P_DBV_PNP_HV)}
 .param MAV_BJT=4
 Vsen c ci DC 0
@@ -426,42 +426,42 @@ Q0 ci b e PNP_HV_INT area={AREAEFF}
 Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(max(V(ci,b)/BVCBO,0),0.997))**MAV_BJT) - 1 ) }
 .ends PNP_HV
 
-.subckt DIO_PN a c params: AREA=1
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+.subckt DIO_PN a c params: AREA=1 MM_SIGMA=0
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
 D0 a c DIO_PN_INT area={AREAEFF}
 .ends DIO_PN
 
-.subckt DIO_FAST a c params: AREA=1
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+.subckt DIO_FAST a c params: AREA=1 MM_SIGMA=0
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
 D0 a c DIO_FAST_INT area={AREAEFF}
 .ends DIO_FAST
 
-.subckt DIO_SCH a c params: AREA=1
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+.subckt DIO_SCH a c params: AREA=1 MM_SIGMA=0
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
 D0 a c DIO_SCH_INT area={AREAEFF}
 .ends DIO_SCH
 
-.subckt DZ_5V6 a c params: AREA=1
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+.subckt DZ_5V6 a c params: AREA=1 MM_SIGMA=0
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
 D0 a c DZ_5V6_INT area={AREAEFF}
 .ends DZ_5V6
 
-.subckt DZ_12 a c params: AREA=1
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+.subckt DZ_12 a c params: AREA=1 MM_SIGMA=0
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
 D0 a c DZ_12_INT area={AREAEFF}
 .ends DZ_12
 
-.subckt DZ_24 a c params: AREA=1
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3))}
+.subckt DZ_24 a c params: AREA=1 MM_SIGMA=0
+.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
 D0 a c DZ_24_INT area={AREAEFF}
 .ends DZ_24
 
-.subckt RPOLY_HI p n params: L=100u W=10u
+.subckt RPOLY_HI p n params: L=100u W=10u MM_SIGMA=0
 * High-sheet poly: matching coeff worse than low-sheet poly (US Pat 12,464,737:
 * resistance and matching coeff are inversely related). VCR small (~200 ppm/V,
 * Allen poly ~100 ppm/V; higher-sheet/lower-doping poly trends a bit higher).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
 .param RSH0=1200
 .param VCR1=200e-6
 .param VCR2=10e-6
@@ -469,11 +469,11 @@ R0   p mid RPOLY_HI_INT L={L*RMM} W={W}
 BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 .ends RPOLY_HI
 
-.subckt RPOLY_LO p n params: L=100u W=10u
+.subckt RPOLY_LO p n params: L=100u W=10u MM_SIGMA=0
 * Low-sheet (heavily-doped) poly: best matching of the poly pair, very linear
 * (VCR ~50 ppm/V), but high tc1 (heavily-doped poly trends metallic/positive).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.003/sqrt(AUM2+1e-12), 3)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.003/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.003/3/sqrt(AUM2+1e-12)}
 .param RSH0=25
 .param VCR1=50e-6
 .param VCR2=2e-6
@@ -481,12 +481,12 @@ R0   p mid RPOLY_LO_INT L={L*RMM} W={W}
 BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 .ends RPOLY_LO
 
-.subckt RNWELL p n params: L=100u W=10u
+.subckt RNWELL p n params: L=100u W=10u MM_SIGMA=0
 * N-well resistor: worst matching of the set and a LARGE voltage coefficient
 * from junction-depletion modulation (~8000 ppm/V, Allen CMOS Analog Circuit
 * Design). R rises with terminal-voltage magnitude. Avoid on signal nodes.
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.013/sqrt(AUM2+1e-12), 3)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.013/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.013/3/sqrt(AUM2+1e-12)}
 .param RSH0=1800
 .param VCR1=8000e-6
 .param VCR2=400e-6
@@ -494,11 +494,11 @@ R0   p mid RNWELL_INT L={L*RMM} W={W}
 BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 .ends RNWELL
 
-.subckt RNPLUS p n params: L=100u W=10u
+.subckt RNPLUS p n params: L=100u W=10u MM_SIGMA=0
 * N+ diffusion resistor: moderate matching, moderate VCR from junction
 * depletion into the surrounding well/substrate (~1500 ppm/V).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.005/sqrt(AUM2+1e-12), 3)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.005/3/sqrt(AUM2+1e-12)}
 .param RSH0=32
 .param VCR1=1500e-6
 .param VCR2=80e-6
@@ -506,11 +506,11 @@ R0   p mid RNPLUS_INT L={L*RMM} W={W}
 BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 .ends RNPLUS
 
-.subckt RPPLUS p n params: L=100u W=10u
+.subckt RPPLUS p n params: L=100u W=10u MM_SIGMA=0
 * P+ diffusion resistor: moderate matching, moderate VCR (~1800 ppm/V),
 * slightly higher than N+ (opposite junction-side depletion behaviour).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.0055/sqrt(AUM2+1e-12), 3)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.0055/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0055/3/sqrt(AUM2+1e-12)}
 .param RSH0=58
 .param VCR1=1800e-6
 .param VCR2=90e-6
@@ -518,12 +518,12 @@ R0   p mid RPPLUS_INT L={L*RMM} W={W}
 BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 .ends RPPLUS
 
-.subckt CMIM_STD p n params: L=100u W=100u
+.subckt CMIM_STD p n params: L=100u W=100u MM_SIGMA=0
 * Standard MIM: best matching of the four (MIM >> MOM matching; measured
 * sigma ~0.1% vs ~0.65% for MOM, Subramanian et al.). Small VCC from the
 * nitride-like dielectric (~30 ppm/V + quadratic term).
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 3)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0015/3/sqrt(AUM2+1e-12)}
 .param LS={sqrt(CMM)}
 .param CJ0=0.001
 .param VCC1=30e-6
@@ -533,12 +533,12 @@ C0     p n CMIM_STD_INT L={L*LS} W={W*LS}
 Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 .ends CMIM_STD
 
-.subckt CMIM_HI p n params: L=100u W=100u
+.subckt CMIM_HI p n params: L=100u W=100u MM_SIGMA=0
 * High-density MIM: thinner dielectric -> slightly worse matching than STD and
 * a higher voltage coefficient (~60 ppm/V; higher field accentuates dielectric
 * nonlinearity). Still far better matched than the metal caps.
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.002/sqrt(AUM2+1e-12), 3)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.002/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.002/3/sqrt(AUM2+1e-12)}
 .param LS={sqrt(CMM)}
 .param CJ0=0.002
 .param VCC1=60e-6
@@ -548,11 +548,11 @@ C0     p n CMIM_HI_INT L={L*LS} W={W*LS}
 Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 .ends CMIM_HI
 
-.subckt CMOM p n params: L=100u W=100u
+.subckt CMOM p n params: L=100u W=100u MM_SIGMA=0
 * Metal-oxide-metal: matches worse than MIM (~0.65% sigma class) but the SiO2
 * dielectric is very linear, so VCC is tiny (~5 ppm/V).
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.006/sqrt(AUM2+1e-12), 3)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.006/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.006/3/sqrt(AUM2+1e-12)}
 .param LS={sqrt(CMM)}
 .param CJ0=0.00035
 .param VCC1=5e-6
@@ -562,12 +562,12 @@ C0     p n CMOM_INT L={L*LS} W={W*LS}
 Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 .ends CMOM
 
-.subckt CFRINGE p n params: L=100u W=100u
+.subckt CFRINGE p n params: L=100u W=100u MM_SIGMA=0
 * Lateral fringe cap: lowest density and worst matching of the four, but the
 * most linear (oxide dielectric, VCC ~3 ppm/V). C0NOM uses the area term only
 * as a first-order scale for the (very small) VCC increment.
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
 .param LS={sqrt(CMM)}
 .param CJ0=0.00018
 .param VCC1=3e-6

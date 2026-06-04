@@ -1,0 +1,50 @@
+* Phase D: deterministic mismatch corner check (MM_SIGMA mechanism).
+*
+* Two identical NMOS50 in saturation at Vds=3, Vgs=2. M1 gets MM_SIGMA=+3,
+* M2 gets MM_SIGMA=-3. With AGAUSS HSPICE convention (X is 3-sigma, true
+* 1-sigma = X/3), each instance's DVTH_MM lands at exactly +/-X = +/-13.5
+* mV / sqrt(W*L/um^2) = +/-13.5 mV / sqrt(10) = +/-4.27 mV at W=10u L=1u.
+*
+* For NMOS50 at this bias:
+*   Vth_TT_eff ~= 0.97 V (from Phase E gm probe)
+*   Vds_overdrive = 2 - 0.97 = 1.03 V
+*   gm/ID (empirical, Phase E) ~= 1.687 V^-1
+*
+* Pair Vth shift: dVth(M1) - dVth(M2) = +4.27 - (-4.27) = 8.54 mV
+* Expected log(I1/I2): (gm/ID) * dVth_pair = 1.687 * 8.54e-3 = 0.01441 (1.44 %)
+*
+* Sign: M1 has +3-sigma DVTH (higher Vth), so M1's current is LOWER.
+* Therefore log(I1/I2) is NEGATIVE. Magnitude ~1.44 %.
+*
+* Tolerance: +/-10 % of magnitude (allows for BSIM3 non-linear sensitivity
+* effects and quadratic terms at this bias).
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+.param SH_ON=0
+
+Vd1 d1 0 3
+Vg1 g1 0 2
+Vd2 d2 0 3
+Vg2 g2 0 2
+
+XM1 d1 g1 0 0 NMOS50 W=10u L=1u M=1 MM_SIGMA=+3
+XM2 d2 g2 0 0 NMOS50 W=10u L=1u M=1 MM_SIGMA=-3
+
+.control
+op
+let i1 = -i(Vd1)
+let i2 = -i(Vd2)
+let logr = log(i1/i2)
+print i1 i2 logr
+* Expected logr ~ -0.01441 (-1.44 %); tolerance +/- 0.0016 (= +/-10 % of 1.44 %)
+* Lower bound: -0.0160, upper bound: -0.0128.
+if (logr > -0.0160) & (logr < -0.0128)
+  echo TRAN_OK
+else
+  echo MM_SIGMA_DETERMINISTIC_FAIL
+end
+quit
+.endc
+.end
