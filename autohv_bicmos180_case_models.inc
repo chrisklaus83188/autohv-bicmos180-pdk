@@ -1138,7 +1138,7 @@
 + cjo=1.8e-14
 + is=3.6e-14
 + rb=0.82
-+ bv={((207*_isTT + 194.58*_isFF + 219.42*_isSS + 219.42*_isFS + 194.58*_isSF))*(1+P_DBV_PDMOS200)}
++ bv={((230*_isTT + 216.2*_isFF + 243.8*_isSS + 243.8*_isFS + 216.2*_isSF))*(1+P_DBV_PDMOS200)}
 + ibv=4e-06
 + nbv=2.27
 + tt=1.55e-07

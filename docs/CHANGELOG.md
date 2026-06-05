@@ -2,6 +2,75 @@
 
 ## [Unreleased]
 
+### 2026-06-05 — PDMOS200 breakdown re-rating (was sub-200 V at FF/SF)
+
+Per `HANDOFF_dmos200_breakdown.md` from the `chuba14f` task. PDMOS200's
+FF/SF corners were at 194.58 V -- below the 200 V class name. A
+high-side circuit putting the full rail across one PDMOS200 (e.g. a
+floating current mirror in a rail-threshold monitor) would avalanche
+at VIN ~ 195 V at FF/125 C.
+
+**Audit of the existing convention:** every other VDMOS in the lib
+has its worst-case corner *above* the class name in its device name.
+PDMOS200 was an outlier introduced on 2026-05-28:
+
+  | Device       | TT bv  | Worst (FF/SF) | Margin |
+  |--------------|--------|---------------|--------|
+  | PDMOS20      |  22 V  |  21.45 V      | +7.3 % |
+  | PDMOS60      |  70 V  |  67.55 V      | +12.6 % |
+  | PDMOS80      |  90 V  |  86.4 V       | +8.0 % |
+  | PDMOS200 OLD | 207 V  | 194.58 V      | **-2.7 %** <-- BUG |
+  | NDMOS200     | 225 V  | 211.5 V       | +5.8 % |
+
+When I added PDMOS200 last week I scaled bv correctly relative to
+NDMOS200 (~0.92x, matching the PDMOS80/NDMOS80 ratio) but didn't
+check that the resulting worst-case landed above the 200 V class
+name. The other PMOS HV devices have ~7-12 % margin; PDMOS200 alone
+had negative margin.
+
+**Fix:** bump TT from 207 V to 230 V with the existing +/-6 % corner
+spread:
+
+  PDMOS200 bv: 230 (TT), 216.2 (FF), 243.8 (SS), 243.8 (FS), 216.2 (SF)
+
+Worst-case (FF/SF) is now 216.2 V -- 8.1 % margin over 200 V, matches
+PDMOS80's pattern.
+
+**Direct verification on ngspice 45.2:** swept PDMOS200 (W=30u L=5u)
+Vds from 0 to -220 V at FF / 125 C with gate off (worst-case
+breakdown):
+
+  | Vds   | Pre-fix         | Post-fix          |
+  |-------|-----------------|-------------------|
+  | 195 V | Avalanche (mA+) | 29.8 nA leakage   |
+  | 200 V | Avalanche       | 29.8 nA leakage   |
+  | 215 V | --              | 59.6 nA leakage   |
+
+The previous avalanche at FF/125 C is gone with comfortable margin.
+
+**The N/P cross-corner asymmetry** noted in the handoff (NDMOS200
+weak at FF/FS, PDMOS200 weak at FF/SF) is correct physics, not a
+copy-paste error. FS = fast-N/slow-P -> P-weak; SF = slow-N/fast-P ->
+P-weak. NDMOS200's weak corners are FF/FS (fast-N); PDMOS200's are
+FF/SF (fast-P). The handoff author flagged this as worth a sanity
+check; the answer is "intended."
+
+**No regression suite changes.** Existing decks don't drive PDMOS200
+near breakdown (smoke bias is Vds=-3 V, corners measure ID at fixed
+bias). All 800/800 smoke + 9/9 passives + 12/12 transients + 36/36
+corners pass unchanged.
+
+**Out of scope (separate handoff):**
+`HANDOFF_dmos200_vshift_multiinstance.md` reports that the
+`vshift#branch` singularity from the earlier cascode-handoff thread
+also blocks 4+ floating-mirror multi-instance topologies at VIN >
+~12 V, beyond what the Rgmin shunt rescued. Their proposed
+`delvto`-on-M0 fix won't work for VDMOS (VDMOS rejects `delvto` --
+tested and documented 2026-05-28). A viable alternative is to bump
+`Rgmin` from 1 GOhm to ~1 MOhm to strengthen matrix conditioning at
+multi-instance scale. Not addressed in this commit -- separate
+investigation; `chuba14f` is unblocked at VINmax = 160 V meanwhile.
+
 ### 2026-06-04 — Deterministic mismatch corners (`MM_SIGMA` per-instance)
 
 > User-facing reference: **[`docs/MISMATCH_CORNERS.md`](MISMATCH_CORNERS.md)** —
