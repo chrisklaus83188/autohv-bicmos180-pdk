@@ -4,11 +4,23 @@
 
 ### 2026-06-04 — Deterministic mismatch corners (`MM_SIGMA` per-instance)
 
+> User-facing reference: **[`docs/MISMATCH_CORNERS.md`](MISMATCH_CORNERS.md)** —
+> concept, intended flow, canonical patterns (diff pair / mirror / cascode),
+> caveats. `README.md` and `QUICKSTART.md` have brief intros pointing into it.
+
 Added a per-instance parameter `MM_SIGMA` (default 0) to every device
 subckt that lets you bypass `AGAUSS` and pin the device's mismatch
 parameters to a specified sigma multiple. Designers can now run
 deterministic worst-case corners alongside (or instead of) the
 existing AGAUSS-based MC harness.
+
+**Quick usage** (full flow + caveats in `docs/MISMATCH_CORNERS.md`):
+
+```spice
+.param MM_ON=0                          ; turn OFF random MC
+XM1 d1 g1 s b NMOS50 W=100u L=2u MM_SIGMA=+3   ; +3-sigma per instance
+XM2 d2 g2 s b NMOS50 W=100u L=2u MM_SIGMA=-3   ; opposing direction
+```
 
 **Mechanism (additive form).** Each mismatch parameter is now:
 

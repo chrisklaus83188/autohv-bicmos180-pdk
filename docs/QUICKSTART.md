@@ -9,7 +9,7 @@ parameters, and worked examples, see
 Only two files are required to simulate:
 
 ```
-autohv_bicmos180_case.lib            # the 38 devices — this is what you .include
+autohv_bicmos180_case.lib            # the 40 devices — this is what you .include
 autohv_bicmos180_case_models.inc     # models, corners, statistics — pulled in by the .lib
 ```
 
@@ -44,18 +44,55 @@ ngspice -b mydeck.cir
 | Parameter | Default | Effect |
 |-----------|---------|--------|
 | `case`    | 0       | Selects one process corner for the whole run (0=TT, 1=FF, 2=SS, 3=FS, 4=SF) |
-| `PROC_ON` | 0       | Set to 1 to enable die-to-die process variation |
-| `MM_ON`   | 0       | Set to 1 to enable per-device local mismatch |
+| `PROC_ON` | 0       | Set to 1 to enable die-to-die process variation (Monte Carlo) |
+| `MM_ON`   | 0       | Set to 1 to enable per-device local mismatch (Monte Carlo, random) |
 
 Set them anywhere before the analysis line. `case` is global — one corner per run;
 sweep it across runs for a corner analysis.
+
+### Deterministic mismatch via `MM_SIGMA` (per-instance)
+
+Every device subckt also accepts a **per-instance** parameter `MM_SIGMA` (default 0).
+When set to a non-zero σ-multiple, the device's mismatch parameters (Vth, W/L, area,
+sheet R, or cap density depending on the device class) are pinned to a deterministic
+value instead of drawn randomly. This is the deterministic alternative to MM_ON=1
+random draws and is intended for:
+
+- worst-case bracketing (set ±3 on a matched pair to see the bound)
+- sensitivity analysis (sweep MM_SIGMA from -3 to +3 on one device, watch the metric)
+- CI-gating regression decks (deterministic results, no statistical noise)
+
+Set `MM_ON=0` when using `MM_SIGMA` — the two terms add in the expression, so
+enabling both at once gives a non-physical sum.
+
+| MM_ON | MM_SIGMA on instance | Mode |
+|-------|----------------------|------|
+| 0 | 0 | No mismatch (default) |
+| 1 | 0 | Random MC (the existing AGAUSS path) |
+| 0 | ±k | Deterministic at ±k σ on that instance |
+| 1 | ±k | **Don't do this** — random + deterministic summed |
+
+Quick example — worst-case differential pair offset:
+
+```spice
+.param MM_ON=0
+XM1 d1 g1 s b NMOS50 W=100u L=2u MM_SIGMA=+3
+XM2 d2 g2 s b NMOS50 W=100u L=2u MM_SIGMA=-3
+```
+
+The full flow (sensitivity scan → compose worst-case pattern → lock as a
+testbench corner suite), canonical patterns (diff pair, simple mirror, cascoded
+mirror, cascode chain), and the four caveats every designer should know before
+relying on this (joint-σ probability, linear-sensitivity assumption, sensitivity
+sign across operating points, PROC ⊥ MM independence) are in
+[`docs/MISMATCH_CORNERS.md`](MISMATCH_CORNERS.md).
 
 ## 4. Devices at a glance
 
 | Family | Examples | Ports (pin order) | Size parameters |
 |--------|----------|-------------------|-----------------|
 | Core MOSFET | NMOS/PMOS 12, 18, 33, 50 | d g s b | `W`, `L`, `M` |
-| HV DMOS/LDMOS | NDMOS 20–200, PDMOS 20–80, DNMOS20 | d g s | `W`, `M` (plus `L` on `NDMOS200`) |
+| HV DMOS/LDMOS | NDMOS 20–200, PDMOS 20–200, DNMOS20 | d g s | `W`, `M` (plus `L` on the 200 V LDMOSes) |
 | Bipolar | NPN_LV/HV, PNP_HV/LAT | c b e | `AREA` |
 | Diode / Zener | DIO_PN/FAST/SCH, DZ_5V6/12/24 | a c | `AREA` |
 | Resistor | RPOLY_HI/LO, RNWELL, RNPLUS, RPPLUS | p n | `L`, `W` |

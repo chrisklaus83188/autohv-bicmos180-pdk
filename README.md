@@ -5,10 +5,13 @@ for **schematic capture and netlisting in Qucs-S**. Place devices, wire them, se
 parameters, and export an ngspice-flavored SPICE netlist for simulation in your
 target simulator.
 
-- **38 devices** across seven families (core MOSFETs, HV DMOS/LDMOS, BJTs, diodes,
+- **40 devices** across seven families (core MOSFETs, HV DMOS/LDMOS, BJTs, diodes,
   Zeners, resistors, capacitors)
 - **5 process corners** selected by one global parameter
-- **Process + mismatch statistics** via two orthogonal switches
+- **Process + mismatch statistics** via two orthogonal global switches (Monte Carlo)
+- **Deterministic mismatch corners** via a per-instance `MM_SIGMA` knob — alternative
+  to MC for CI-gating and worst-case sign-off. See
+  [`docs/MISMATCH_CORNERS.md`](docs/MISMATCH_CORNERS.md)
 
 See **[docs/AutoHV_BiCMOS180_PDK_Reference.docx](docs/AutoHV_BiCMOS180_PDK_Reference.docx)**
 for the full device reference and user guide.
@@ -51,8 +54,8 @@ global parameters control everything:
 | Parameter | Default | Purpose |
 |-----------|---------|---------|
 | `case`    | 0       | Process corner: 0=TT, 1=FF, 2=SS, 3=FS, 4=SF |
-| `PROC_ON` | 0       | 1 = enable die-to-die process variation |
-| `MM_ON`   | 0       | 1 = enable local device mismatch |
+| `PROC_ON` | 0       | 1 = enable die-to-die process variation (Monte Carlo) |
+| `MM_ON`   | 0       | 1 = enable local device mismatch (Monte Carlo, per-instance random) |
 
 ```spice
 .include "autohv_bicmos180_case.lib"
@@ -67,6 +70,27 @@ X1  d g 0 0 NMOS18 W=10u L=1u M=1   ; d g s b
 .op
 .end
 ```
+
+### Deterministic mismatch corners (alternative to Monte Carlo)
+
+Every device subckt also accepts a per-instance parameter `MM_SIGMA` (default 0)
+that snaps the device's mismatch parameters to a specified σ-multiple — a
+deterministic alternative to `MM_ON=1` AGAUSS draws. Useful for worst-case
+bracketing, CI gating, and sensitivity analysis. Set `MM_ON=0` when using
+`MM_SIGMA` (the two terms add, so don't enable both at once).
+
+```spice
+* Worst-case differential pair input offset:
+.param case=0 PROC_ON=0 MM_ON=0
+XM1 d1 g1 s b NMOS50 W=100u L=2u MM_SIGMA=+3   ; +3σ Vth shift
+XM2 d2 g2 s b NMOS50 W=100u L=2u MM_SIGMA=-3   ; -3σ Vth shift, opposing
+```
+
+Full flow (sensitivity scan → compose worst-case pattern → lock as testbench
+corner suite), canonical patterns (diff pair, simple/cascoded current mirror,
+cascode chain), and caveats (joint-σ probability, linear sensitivity, sign-flip
+across operating points) are in
+**[`docs/MISMATCH_CORNERS.md`](docs/MISMATCH_CORNERS.md)**.
 
 ## Examples
 
@@ -87,13 +111,16 @@ ngspice -b 01_nominal_op.cir
 | Family | Ports | Size parameters |
 |--------|-------|-----------------|
 | Core MOSFET (NMOS/PMOS 12/18/33/50) | d g s b | `W`, `L`, `M` |
-| HV DMOS/LDMOS (N/PDMOS, DNMOS20)    | d g s   | `W`, `M` (plus `L` on `NDMOS200`) |
+| HV DMOS/LDMOS (N/PDMOS 20–200, DNMOS20) | d g s | `W`, `M` (plus `L` on `NDMOS200`/`PDMOS200`) |
 | Bipolar (NPN/PNP)                   | c b e   | `AREA` |
 | Diode / Zener                       | a c     | `AREA` |
 | Resistor                            | p n     | `L`, `W` |
 | Capacitor                           | p n     | `L`, `W` |
 
 Ports are listed in pin order; that order is what the generated netlist uses.
+Every device also accepts the optional per-instance knob `MM_SIGMA` (default 0)
+for deterministic mismatch corners — see the section above and
+[`docs/MISMATCH_CORNERS.md`](docs/MISMATCH_CORNERS.md).
 
 ## Notes
 
