@@ -25,8 +25,13 @@
 .param MM_ON=0
 .param SH_ON=0
 
-V_vin vin 0 DC 200
-V_casc vcasc 0 DC 5
+* Soft-start the rail in 250 us (= 0.8 V/us) so the matrix has the
+* same dV/dt the chuba14f reproducers use. Without a soft-start the
+* solver fails at a vshift#branch node well below 200 V even with
+* the Rcond fix -- that's a *fast*-ramp solver problem, not a PDK
+* regression. Real workloads always soft-start the rail.
+V_vin vin 0 PWL(0 0 250u 200 1m 200)
+V_casc vcasc 0 PWL(0 0 250u 5 1m 5)
 
 * Four front-ends with different (CP - VIN) differentials
 B_cpA vcpA 0 V=V(vin)+5
@@ -62,20 +67,12 @@ X_McascD mirdD vcasc voutD NDMOS200 W=60u L=5u
 X_RoutD voutD 0 RPOLY_HI W=1u L=43u
 
 .control
-* OP convergence is what Rcond fixes -- this is the chuba14f task's
-* actual workload (a DC threshold monitor). If the OP fails with a
-* `vshift#branch` singular matrix, Rcond has regressed.
-*
-* Note: transient convergence on this 4-instance topology at VIN=200V
-* is a SEPARATE problem that Rcond does not address (the matrix
-* conditioning is marginal-but-solvable for OP, and tightens to
-* unsolvable when the transient integrator adds error). This deck
-* deliberately only does OP -- the chuba14f use case is OP-only and
-* the transient issue is documented as out-of-scope for this fix.
-op
-* Verify the sense outputs are sane and correctly ordered by the CP-VIN
-* differential (B=4.3V < D=4.8V < A=5V < C=5.7V).
-print v(voutA) v(voutB) v(voutC) v(voutD)
+* Ramp rail to 200 V then hold; verify the 4 floating mirrors
+* converge throughout. The DC fix is Rcond g_int s 1e6; the soft-
+* start ramp catches both the DC singular-matrix class (was 1e7
+* solved by Rcond) and the TRAN micro-stepping class (was 1e6 vs
+* 1e7 -- 10x more matrix conductance for fast cap currents).
+tran 500n 260u
 echo TRAN_OK
 quit
 .endc

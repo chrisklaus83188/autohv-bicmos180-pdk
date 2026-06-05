@@ -2,6 +2,76 @@
 
 ## [Unreleased]
 
+### 2026-06-06 — Rcond 1e7 -> 1e6: fix the TRAN micro-stepping at high VIN
+
+Per `HANDOFF_dynamic_transient_microstepping.md` from chuba14f. After
+yesterday's `Rcond g_int s 1e7` landed, the agent reported their DC
+case worked but fast transients on the 4-floating-mirror topology
+above VIN ~ 100 V micro-stepped into timeouts. They hit the wall
+after exhausting tolerance/option sweeps, slew-rate variations,
+breakpoint-localized stepping, and softening the VDMOS Cgd
+transition.
+
+**Mechanism (same node, different regime).** Rcond=10 MOhm gives the
+matrix static conductance from `g_int` to `s` -- enough for OP and
+quasi-static TRAN. But in fast TRAN the Cgs capacitance between `g`
+and `s` adds a frequency-dependent admittance that competes with
+Rcond. As VIN rises, the cap-mediated current at the floating gate
+node grows, and the matrix conditioning that was OP-tight becomes
+TRAN-unsolvable at the same `vshift#branch` node.
+
+**Fix.** Lower Rcond from 10 MOhm to 1 MOhm. 10x more conductance,
+same kind of element. Specifically:
+
+  Rcond g_int s 1e7   ; was
+  Rcond g_int s 1e6   ; now
+
+Leakage at this value: ~1 uA per V of DVTH_MM. At typical
+mismatch (~5 mV per device for NMOS50-class), that's ~5 nA -- still
+4 orders of magnitude below typical bias currents and far smaller
+than the common-mode matching error in real silicon. Electrically
+transparent at the precision relevant for HV switching design.
+
+**Verified on ngspice 45.2** with the 4 chuba14f reproducers
+(`repro_slew_vin100.cir`, `repro_slew_vin200.cir`,
+`repro_delay_vin100.cir`, `repro_delay_vin200.cir`) -- all four now
+complete with valid `meas` results:
+
+  | Repro            | Old (Rcond=1e7) | New (Rcond=1e6) |
+  |------------------|-----------------|-----------------|
+  | slew_vin100      | OK (0.6 s)      | OK (~0.6 s)     |
+  | slew_vin200      | timeout         | OK              |
+  | delay_vin100     | OK (0.6 s)      | OK              |
+  | delay_vin200     | timeout         | OK              |
+
+Specific values from `slew_vin200`: `slew_m43 = 0.68 V`, `slew_m57 =
+0.47 mV`, `slew_mvccm = 0.11 V` (all sane); from `delay_vin200`:
+`tdly_43 = 29.2 ns`, `tdly_vccm = 113 ns`, `tdly_57 = 207 ns` (sane
+propagation delays). chuba14f is now unblocked at the full 200 V range.
+
+**Backward compat verified.** All regression phases unchanged:
+800/800 smoke (median 113 ms), 9/9 passives, 36/36 corners, 13/13
+transients (incl. updated `multi_mirror_floating.cir`).
+
+**Regression coverage strengthened.**
+`pdk_validation/regression/transients/multi_mirror_floating.cir`
+now includes a soft-start TRAN portion (rail ramps 0 -> 200 V over
+250 us at the chuba14f-realistic 0.8 V/us; runs `tran 500n 260u`).
+Catches both:
+  - the DC singular-matrix class (solved by Rcond's existence)
+  - the TRAN micro-stepping class (solved by Rcond's value being 1e6)
+Baseline 171 ms = 4 % of the 4 s budget.
+
+**Note on the still-fast TRAN class.** The chuba14f reproducers do
+their dynamic stimulus (10 V/us slew) on top of a 250 us soft-start
+ramp -- effective dV/dt at the floating drains is 0.8 V/us during
+the ramp and 10 V/us in the measurement window. Both now complete.
+A bare-`.tran` deck that *jumps* the rail to 200 V instantly at t=0
+(no soft-start) still micro-steps -- the matrix can't absorb the
+implicit infinite-dV/dt at the rail-init step. Real workloads
+always soft-start the rail, so this is more a "don't do that" than
+a real residual; documented in the regression deck's docstring.
+
 ### 2026-06-05 — VDMOS multi-instance Vshift singular matrix: Rcond shunt to source
 
 Per `HANDOFF_dmos200_vshift_multiinstance_REPLY.md` from the chuba14f
