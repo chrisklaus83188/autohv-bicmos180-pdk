@@ -2,6 +2,85 @@
 
 ## [Unreleased]
 
+### 2026-06-05 — VDMOS multi-instance Vshift singular matrix: Rcond shunt to source
+
+Per `HANDOFF_dmos200_vshift_multiinstance_REPLY.md` from the chuba14f
+task. They verified that both proposed fixes from the original
+cascode-singularity handoff are dead ends for VDMOS:
+
+- `delvto` on M0: ngspice rejects (`unknown parameter (delvto)`).
+  VDMOS has no per-instance Vth-offset; it's BSIM-only.
+- Lower Rgmin (tested 1e7, 1e6, 1e5): still singular on the
+  4-front-end multi-instance reproducer.
+
+Then they found a one-line fix that works: add a 10 MOhm shunt from
+`g_int` to **`s`** (source), not from `g_int` to `g` (gate).
+
+**Mechanism.** The vshift#branch row was singular because `g_int`
+had no DC path to a determined node. `Rgmin` shunts `g_int` to `g` --
+but in floating high-side mirror topologies, `g` is itself a
+floating node (a diode-connected mirror gate). So Rgmin shunts to
+nothing useful. Anchoring `g_int` to `s` works because `s` is
+connected to other device terminals via the M0 model and is
+generally a determined node. The matrix gets an independent KCL
+contribution at `g_int` regardless of how `g` is driven.
+
+**Edit scope.** Added one line per VDMOS subckt (13 subckts):
+
+```spice
+Vshift g g_int DC {-DVTH_MM}
+Rgmin  g g_int 1e9    ; existing -- to gate
+Rcond  g_int s 1e7    ; NEW -- to source, the determined node
+```
+
+Leakage through Rcond is ~0.1 uA per V of DVTH_MM (0.2% of typical
+mirror currents in the chuba14f workload). Common-mode and
+electrically transparent; Vshift / Rgmin are untouched.
+
+**Verified on ngspice 45.2** with the agent's 4-front-end acceptance
+test (4 floating PDMOS200 mirrors at VIN=200V):
+
+  v(voutA) = 2.19 V  (5.0 V differential)
+  v(voutB) = 1.79 V  (4.3 V differential)
+  v(voutC) = 2.59 V  (5.7 V differential)
+  v(voutD) = 2.07 V  (4.8 V differential)
+
+OP converges; outputs correctly ordered by CP-VIN differential
+(B<D<A<C). Without Rcond, the same deck hard-fails with
+`vshift#branch` going singular at any of the 12 instances.
+
+**Backward compat verified.**
+
+- `cascoded_ldmos.cir` (Phase D, the original Rgmin regression):
+  still passes -- Rcond doesn't disturb the cascoded-pair case.
+- `self_heating.cir` (SH_ON=1, the agent flagged as untested):
+  still passes (210 ms wall, no change). The SH_ON=1 path puts
+  thermal Vth shift between `g_int` and a new `g_th` node; Rcond
+  on `g_int` doesn't interact destructively.
+
+**Known transient limitation (out of scope for this fix).** Rcond
+fixes OP convergence on the multi-instance topology. The transient
+solver on the SAME topology (op solves, then `tran` starts) hits a
+DIFFERENT failure -- the OP-margin-but-solvable matrix becomes
+unsolvable when the transient integrator tightens tolerance. The
+chuba14f workload is OP-only (DC threshold monitor), so this is the
+right fix for their use case. A multi-instance VDMOS *transient* at
+VIN=200V remains an open problem that would require a deeper
+architectural change (e.g., eliminating the Vshift VSRC entirely).
+
+**Regression coverage added.**
+`pdk_validation/regression/transients/multi_mirror_floating.cir`
+re-runs the agent's 4-front-end acceptance test (OP-only, 4.0 s
+budget, baseline 519 ms = 13 % of budget). If anyone weakens or
+removes Rcond, this trips on the next CI run.
+
+**Phase D is now 13 decks.**
+
+  smoke      :  800/800   (median 102 ms/op)
+  passives   :    9/9     (untouched)
+  corners    :   36/36
+  transients :   13/13    (incl. new multi_mirror_floating.cir)
+
 ### 2026-06-05 — PDMOS200 breakdown re-rating (was sub-200 V at FF/SF)
 
 Per `HANDOFF_dmos200_breakdown.md` from the `chuba14f` task. PDMOS200's

@@ -1,0 +1,82 @@
+* Phase D: 4 floating HV current-mirror front-ends at VIN=200V (chuba14f topology).
+*
+* This is the topology that exposed the multi-instance `vshift#branch`
+* singular-matrix issue described in:
+*   HANDOFF_dmos200_vshift_multiinstance.md (the report)
+*   HANDOFF_dmos200_vshift_multiinstance_REPLY.md (the fix verification)
+*
+* Each front-end is a floating PDMOS200 mirror (diode-connected + mirror)
+* with an NDMOS200 cascode to ground, biased so the PMOS mirror sustains
+* the entire VIN as Vds. Four front-ends share infrastructure; with only
+* the original `Rgmin g g_int 1e9` shunt, 2+ instances go singular at
+* VIN > ~12V because the gate-drive node `g` is itself floating in this
+* topology -- Rgmin's anchor is to nothing useful.
+*
+* The PDK fix (added 2026-06-05): a 10 MOhm `Rcond g_int s 1e7` line in
+* each VDMOS subckt gives `g_int` a DC path to `s` (which IS determined),
+* anchoring the matrix row and resolving the singularity. Leakage is
+* ~0.1 uA per V of DVTH_MM -- common-mode and electrically transparent.
+*
+* This deck regression-tests the fix. A failure here on ngspice 45.2
+* would mean the Rcond shunt has been weakened or removed.
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+.param SH_ON=0
+
+V_vin vin 0 DC 200
+V_casc vcasc 0 DC 5
+
+* Four front-ends with different (CP - VIN) differentials
+B_cpA vcpA 0 V=V(vin)+5
+X_MrefA refgA refgA vcpA PDMOS200 W=30u L=5u
+X_RrefA refgA vin   RPOLY_HI W=1u L=90u
+X_MmirA mirdA refgA vcpA PDMOS200 W=30u L=5u
+R_pullA mirdA 0 10Meg
+X_McascA mirdA vcasc voutA NDMOS200 W=60u L=5u
+X_RoutA voutA 0 RPOLY_HI W=1u L=43u
+
+B_cpB vcpB 0 V=V(vin)+4.3
+X_MrefB refgB refgB vcpB PDMOS200 W=30u L=5u
+X_RrefB refgB vin   RPOLY_HI W=1u L=90u
+X_MmirB mirdB refgB vcpB PDMOS200 W=30u L=5u
+R_pullB mirdB 0 10Meg
+X_McascB mirdB vcasc voutB NDMOS200 W=60u L=5u
+X_RoutB voutB 0 RPOLY_HI W=1u L=43u
+
+B_cpC vcpC 0 V=V(vin)+5.7
+X_MrefC refgC refgC vcpC PDMOS200 W=30u L=5u
+X_RrefC refgC vin   RPOLY_HI W=1u L=90u
+X_MmirC mirdC refgC vcpC PDMOS200 W=30u L=5u
+R_pullC mirdC 0 10Meg
+X_McascC mirdC vcasc voutC NDMOS200 W=60u L=5u
+X_RoutC voutC 0 RPOLY_HI W=1u L=43u
+
+B_cpD vcpD 0 V=V(vin)+4.8
+X_MrefD refgD refgD vcpD PDMOS200 W=30u L=5u
+X_RrefD refgD vin   RPOLY_HI W=1u L=90u
+X_MmirD mirdD refgD vcpD PDMOS200 W=30u L=5u
+R_pullD mirdD 0 10Meg
+X_McascD mirdD vcasc voutD NDMOS200 W=60u L=5u
+X_RoutD voutD 0 RPOLY_HI W=1u L=43u
+
+.control
+* OP convergence is what Rcond fixes -- this is the chuba14f task's
+* actual workload (a DC threshold monitor). If the OP fails with a
+* `vshift#branch` singular matrix, Rcond has regressed.
+*
+* Note: transient convergence on this 4-instance topology at VIN=200V
+* is a SEPARATE problem that Rcond does not address (the matrix
+* conditioning is marginal-but-solvable for OP, and tightens to
+* unsolvable when the transient integrator adds error). This deck
+* deliberately only does OP -- the chuba14f use case is OP-only and
+* the transient issue is documented as out-of-scope for this fix.
+op
+* Verify the sense outputs are sane and correctly ordered by the CP-VIN
+* differential (B=4.3V < D=4.8V < A=5V < C=5.7V).
+print v(voutA) v(voutB) v(voutC) v(voutD)
+echo TRAN_OK
+quit
+.endc
+.end

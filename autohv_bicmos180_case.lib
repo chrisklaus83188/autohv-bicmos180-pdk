@@ -99,6 +99,7 @@ M0 d g s b PMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
 B_thvth g_int g_th V={TC_VTO_NDMOS20*V(TJ)}
@@ -121,6 +122,7 @@ M0 d g_int s NDMOS20_INT m={mtot}
 .param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
 B_thvth g_int g_th V={TC_VTO_PDMOS20*V(TJ)}
@@ -143,6 +145,7 @@ M0 d g_int s PDMOS20_INT m={mtot}
 .param Cth=2e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
 B_thvth g_int g_th V={TC_VTO_NDMOS60*V(TJ)}
@@ -165,6 +168,7 @@ M0 d g_int s NDMOS60_INT m={mtot}
 .param Cth=2e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
 B_thvth g_int g_th V={TC_VTO_PDMOS60*V(TJ)}
@@ -187,6 +191,7 @@ M0 d g_int s PDMOS60_INT m={mtot}
 .param Cth=4e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
 B_thvth g_int g_th V={TC_VTO_NDMOS120*V(TJ)}
@@ -209,6 +214,7 @@ M0 d g_int s NDMOS120_INT m={mtot}
 .param Cth=4e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
 B_thvth g_int g_th V={TC_VTO_PDMOS120*V(TJ)}
@@ -231,6 +237,7 @@ M0 d g_int s PDMOS120_INT m={mtot}
 .param Cth=1.5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
 B_thvth g_int g_th V={TC_VTO_NDMOS40*V(TJ)}
@@ -253,6 +260,7 @@ M0 d g_int s NDMOS40_INT m={mtot}
 .param Cth=1.5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
 B_thvth g_int g_th V={TC_VTO_PDMOS40*V(TJ)}
@@ -275,6 +283,7 @@ M0 d g_int s PDMOS40_INT m={mtot}
 .param Cth=3e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
 B_thvth g_int g_th V={TC_VTO_NDMOS80*V(TJ)}
@@ -297,6 +306,7 @@ M0 d g_int s NDMOS80_INT m={mtot}
 .param Cth=3e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
 B_thvth g_int g_th V={TC_VTO_PDMOS80*V(TJ)}
@@ -324,6 +334,7 @@ M0 d g_int s PDMOS80_INT m={mtot}
 .param Cth=5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 Rdrift d dd {RDRIFT}
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
@@ -354,6 +365,7 @@ M0 dd g_int s NDMOS200_INT m={mtot}
 .param Cth=5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 Rdrift d dd {RDRIFT}
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
@@ -377,6 +389,7 @@ M0 dd g_int s PDMOS200_INT m={mtot}
 .param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
+Rcond  g_int s 1e7   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
 * Self-heating ON (item #3): Vth shift + Pdiss-to-TJ thermal network.
 B_thvth g_int g_th V={TC_VTO_DNMOS20*V(TJ)}
