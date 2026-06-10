@@ -1,0 +1,25 @@
+.title ratio_AND2
+.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=1.8
+.param S=1.0
+.param R=0.3
+Vdd vdd 0 1.8
+Vin in 0 0.9
+X1 nd in vdd vdd PMOS18 W={(S*R)*1e-6} L=0.18u
+X2 nd in vdd vdd PMOS18 W={(S*R)*1e-6} L=0.18u
+X3 nd in n1 0 NMOS18 W={(S)*1e-6} L=0.18u
+X4 n1 in 0 0 NMOS18 W={(S)*1e-6} L=0.18u
+X5 out nd vdd vdd PMOS18 W={(S*2.0*4.6458365997477795)*1e-6} L=0.18u
+X6 out nd 0 0 NMOS18 W={(S*2.0)*1e-6} L=0.18u
+.control
+let half = 0.9
+foreach rr 0.3000 0.5000 0.8000 1.2000 1.8000 2.6000 3.6000 5.0000 7.0000 10.0000 14.0000 19.0000 25.0000 32.0000
+  alterparam R=$rr
+  reset
+  dc Vin 0 1.8 0.0045000000000000005
+  meas dc vm find v(in) when v(out)=$&half cross=1
+  echo "RES R=$rr vm=$&vm"
+end
+.endc
+.end

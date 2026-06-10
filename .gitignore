@@ -8,6 +8,11 @@ release/      # output of tools/make_release.py
 b3v33check.log
 *.out
 
+# Python build artefacts
+__pycache__/
+*.pyc
+*.pyo
+
 # OS / editor cruft
 .DS_Store
 Thumbs.db

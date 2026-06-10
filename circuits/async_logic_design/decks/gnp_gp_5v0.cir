@@ -1,0 +1,14 @@
+.title gp
+.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=5.0
+Vdd vdd 0 5.0
+Vd dd 0 2.5
+Vg g 0 2.5 AC 1
+X1 dd g vdd vdd PMOS50 W=10u L=0.5u
+.control
+ac lin 1 1e6 1e6
+let gpm = abs(imag(Vg#branch))/(2*PI*1e6)/10*1e15
+echo "RES gp=$&gpm"
+.endc
+.end

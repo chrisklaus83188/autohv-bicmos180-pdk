@@ -1,0 +1,27 @@
+.title vm_BUF_nom
+.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=1.8
+Vdd vdd 0 {VDD}
+Vin in 0 {VDD/2}
+X1 mid in vdd vdd PMOS18 W={(2.6560)*1e-6} L=0.18u
+X2 mid in 0 0 NMOS18 W={(0.5717)*1e-6} L=0.18u
+X3 out mid vdd vdd PMOS18 W={(7.9680)*1e-6} L=0.18u
+X4 out mid 0 0 NMOS18 W={(1.7151)*1e-6} L=0.18u
+.control
+foreach cs 0 1 2 3 4
+ foreach vd 1.620 1.800 1.980
+  foreach tp -55 27 150
+   alterparam case=$cs
+   alterparam VDD=$vd
+   reset
+   option temp=$tp
+   let half=$vd/2
+   dc Vin 0 $vd 0.00360
+   meas dc vm find v(in) when v(out)=$&half cross=1
+   echo "RES cfg=nom cs=$cs vd=$vd tp=$tp vm=$&vm"
+  end
+ end
+end
+.endc
+.end

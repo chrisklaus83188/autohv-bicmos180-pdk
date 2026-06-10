@@ -1,0 +1,30 @@
+.title tr_NAND2
+.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=1.8
+Vdd vdd 0 {VDD}
+Vin in 0 PULSE(0 {VDD} 2n 0.02n 0.02n 9n 20n)
+X1 out in vdd vdd PMOS18 W={(1.8277)*1e-6} L=0.18u
+X2 out vdd vdd vdd PMOS18 W={(1.8277)*1e-6} L=0.18u
+X3 out in n1 0 NMOS18 W={(1.4011)*1e-6} L=0.18u
+X4 n1 vdd 0 0 NMOS18 W={(1.4011)*1e-6} L=0.18u
+CL out 0 5.0f
+.control
+foreach cs 0 1 2 3 4
+ foreach vd 1.620 1.800 1.980
+  foreach tp -55 27 150
+   alterparam case=$cs
+   alterparam VDD=$vd
+   reset
+   option temp=$tp
+   let v10=0.1*$vd
+   let v90=0.9*$vd
+   tran 0.004n 20n
+   meas tran trise trig v(out) val=$&v10 rise=1 td=10.5n targ v(out) val=$&v90 rise=1 td=10.5n
+   meas tran tfall trig v(out) val=$&v90 fall=1 td=1.5n targ v(out) val=$&v10 fall=1 td=1.5n
+   echo "RES cs=$cs vd=$vd tp=$tp trise=$&trise tfall=$&tfall"
+  end
+ end
+end
+.endc
+.end

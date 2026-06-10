@@ -1,0 +1,38 @@
+.title tr_XOR2
+.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=1.8
+Vdd vdd 0 {VDD}
+Vin in 0 PULSE(0 {VDD} 2n 0.02n 0.02n 9n 20n)
+X1 abar in vdd vdd PMOS18 W={(1.2774)*1e-6} L=0.18u
+X2 abar in 0 0 NMOS18 W={(0.2750)*1e-6} L=0.18u
+X3 bbar 0 vdd vdd PMOS18 W={(1.2774)*1e-6} L=0.18u
+X4 bbar 0 0 0 NMOS18 W={(0.2750)*1e-6} L=0.18u
+X5 out in m1 0 NMOS18 W={(0.2750)*1e-6} L=0.18u
+X6 m1 0 0 0 NMOS18 W={(0.2750)*1e-6} L=0.18u
+X7 out abar m2 0 NMOS18 W={(0.2750)*1e-6} L=0.18u
+X8 m2 bbar 0 0 NMOS18 W={(0.2750)*1e-6} L=0.18u
+X9 out abar k1 vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+X10 k1 0 vdd vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+X11 out in k2 vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+X12 k2 bbar vdd vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+CL out 0 5.0f
+.control
+foreach cs 0 1 2 3 4
+ foreach vd 1.620 1.800 1.980
+  foreach tp -55 27 150
+   alterparam case=$cs
+   alterparam VDD=$vd
+   reset
+   option temp=$tp
+   let v10=0.1*$vd
+   let v90=0.9*$vd
+   tran 0.004n 20n
+   meas tran trise trig v(out) val=$&v10 rise=1 td=1.5n targ v(out) val=$&v90 rise=1 td=1.5n
+   meas tran tfall trig v(out) val=$&v90 fall=1 td=10.5n targ v(out) val=$&v10 fall=1 td=10.5n
+   echo "RES cs=$cs vd=$vd tp=$tp trise=$&trise tfall=$&tfall"
+  end
+ end
+end
+.endc
+.end

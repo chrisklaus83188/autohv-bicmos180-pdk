@@ -1,0 +1,20 @@
+.title cap_NOR2_b
+.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=1.8
+Vdd vdd 0 1.8
+V_a a 0 0.9
+V_b b 0 0.0 AC 1
+X1 p1 a vdd vdd PMOS18 W={(3.6533)*1e-6} L=0.18u
+X2 out b p1 vdd PMOS18 W={(3.6533)*1e-6} L=0.18u
+X3 out a 0 0 NMOS18 W={(0.2200)*1e-6} L=0.18u
+X4 out b 0 0 NMOS18 W={(0.2200)*1e-6} L=0.18u
+.control
+foreach vb 0 1.8
+  alter V_b dc=$vb
+  ac lin 1 1e6 1e6
+  let cpf = abs(imag(V_b#branch))/6283185.307*1e15
+  echo "RES cap=$&cpf"
+end
+.endc
+.end

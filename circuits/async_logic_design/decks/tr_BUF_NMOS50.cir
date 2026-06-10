@@ -1,0 +1,30 @@
+.title tr_BUF
+.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=5.0
+Vdd vdd 0 {VDD}
+Vin in 0 PULSE(0 {VDD} 2n 0.02n 0.02n 9n 20n)
+X1 mid in vdd vdd PMOS50 W={(2.2826)*1e-6} L=0.5u
+X2 mid in 0 0 NMOS50 W={(0.8402)*1e-6} L=0.5u
+X3 out mid vdd vdd PMOS50 W={(6.8477)*1e-6} L=0.5u
+X4 out mid 0 0 NMOS50 W={(2.5205)*1e-6} L=0.5u
+CL out 0 5.0f
+.control
+foreach cs 0 1 2 3 4
+ foreach vd 3.200 5.000 5.500
+  foreach tp -55 27 150
+   alterparam case=$cs
+   alterparam VDD=$vd
+   reset
+   option temp=$tp
+   let v10=0.1*$vd
+   let v90=0.9*$vd
+   tran 0.004n 20n
+   meas tran trise trig v(out) val=$&v10 rise=1 td=1.5n targ v(out) val=$&v90 rise=1 td=1.5n
+   meas tran tfall trig v(out) val=$&v90 fall=1 td=10.5n targ v(out) val=$&v10 fall=1 td=10.5n
+   echo "RES cs=$cs vd=$vd tp=$tp trise=$&trise tfall=$&tfall"
+  end
+ end
+end
+.endc
+.end

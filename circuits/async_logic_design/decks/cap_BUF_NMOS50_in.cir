@@ -1,0 +1,19 @@
+.title cap_BUF_in
+.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=5.0
+Vdd vdd 0 5.0
+V_in in 0 0.0 AC 1
+X1 mid in vdd vdd PMOS50 W={(2.2826)*1e-6} L=0.5u
+X2 mid in 0 0 NMOS50 W={(0.8402)*1e-6} L=0.5u
+X3 out mid vdd vdd PMOS50 W={(6.8477)*1e-6} L=0.5u
+X4 out mid 0 0 NMOS50 W={(2.5205)*1e-6} L=0.5u
+.control
+foreach vb 0 5.0
+  alter V_in dc=$vb
+  ac lin 1 1e6 1e6
+  let cpf = abs(imag(V_in#branch))/6283185.307*1e15
+  echo "RES cap=$&cpf"
+end
+.endc
+.end

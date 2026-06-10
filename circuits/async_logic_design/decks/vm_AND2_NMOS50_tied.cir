@@ -1,0 +1,29 @@
+.title vm_AND2_tied
+.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=5.0
+Vdd vdd 0 {VDD}
+Vin in 0 {VDD/2}
+X1 nd in vdd vdd PMOS50 W={(1.4067)*1e-6} L=0.5u
+X2 nd in vdd vdd PMOS50 W={(1.4067)*1e-6} L=0.5u
+X3 nd in n1 0 NMOS50 W={(1.7202)*1e-6} L=0.5u
+X4 n1 in 0 0 NMOS50 W={(1.7202)*1e-6} L=0.5u
+X5 out nd vdd vdd PMOS50 W={(2.2826)*1e-6} L=0.5u
+X6 out nd 0 0 NMOS50 W={(0.8402)*1e-6} L=0.5u
+.control
+foreach cs 0 1 2 3 4
+ foreach vd 3.200 5.000 5.500
+  foreach tp -55 27 150
+   alterparam case=$cs
+   alterparam VDD=$vd
+   reset
+   option temp=$tp
+   let half=$vd/2
+   dc Vin 0 $vd 0.01000
+   meas dc vm find v(in) when v(out)=$&half cross=1
+   echo "RES cfg=tied cs=$cs vd=$vd tp=$tp vm=$&vm"
+  end
+ end
+end
+.endc
+.end

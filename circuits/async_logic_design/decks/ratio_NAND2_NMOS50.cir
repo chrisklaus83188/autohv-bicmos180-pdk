@@ -1,0 +1,23 @@
+.title ratio_NAND2
+.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=5.0
+.param S=1.0
+.param R=0.3
+Vdd vdd 0 5.0
+Vin in 0 2.5
+X1 out in vdd vdd PMOS50 W={(S*R)*1e-6} L=0.5u
+X2 out in vdd vdd PMOS50 W={(S*R)*1e-6} L=0.5u
+X3 out in n1 0 NMOS50 W={(S)*1e-6} L=0.5u
+X4 n1 in 0 0 NMOS50 W={(S)*1e-6} L=0.5u
+.control
+let half = 2.5
+foreach rr 0.3000 0.5000 0.8000 1.2000 1.8000 2.6000 3.6000 5.0000 7.0000 10.0000 14.0000 19.0000 25.0000 32.0000
+  alterparam R=$rr
+  reset
+  dc Vin 0 5.0 0.0125
+  meas dc vm find v(in) when v(out)=$&half cross=1
+  echo "RES R=$rr vm=$&vm"
+end
+.endc
+.end

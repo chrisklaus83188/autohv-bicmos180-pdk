@@ -1,0 +1,31 @@
+.title ratio_XOR2
+.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.param case=0
+.param VDD=3.3
+.param S=1.0
+.param R=0.3
+Vdd vdd 0 3.3
+Vin in 0 1.65
+X1 abar in vdd vdd PMOS33 W={(S*3.270201963217871)*1e-6} L=0.35u
+X2 abar in 0 0 NMOS33 W={(S)*1e-6} L=0.35u
+X3 bbar 0 vdd vdd PMOS33 W={(S*3.270201963217871)*1e-6} L=0.35u
+X4 bbar 0 0 0 NMOS33 W={(S)*1e-6} L=0.35u
+X5 out in m1 0 NMOS33 W={(S)*1e-6} L=0.35u
+X6 m1 0 0 0 NMOS33 W={(S)*1e-6} L=0.35u
+X7 out abar m2 0 NMOS33 W={(S)*1e-6} L=0.35u
+X8 m2 bbar 0 0 NMOS33 W={(S)*1e-6} L=0.35u
+X9 out abar k1 vdd PMOS33 W={(S*R)*1e-6} L=0.35u
+X10 k1 0 vdd vdd PMOS33 W={(S*R)*1e-6} L=0.35u
+X11 out in k2 vdd PMOS33 W={(S*R)*1e-6} L=0.35u
+X12 k2 bbar vdd vdd PMOS33 W={(S*R)*1e-6} L=0.35u
+.control
+let half = 1.65
+foreach rr 0.3000 0.5000 0.8000 1.2000 1.8000 2.6000 3.6000 5.0000 7.0000 10.0000 14.0000 19.0000 25.0000 32.0000
+  alterparam R=$rr
+  reset
+  dc Vin 0 3.3 0.00825
+  meas dc vm find v(in) when v(out)=$&half cross=1
+  echo "RES R=$rr vm=$&vm"
+end
+.endc
+.end
