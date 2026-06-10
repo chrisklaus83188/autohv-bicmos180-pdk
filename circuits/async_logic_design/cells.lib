@@ -1,24 +1,33 @@
 * AutoHV BiCMOS 180 PDK -- asynchronous-logic cell library
 *
 * 24 static-CMOS cells: INV, BUF, NAND2, NOR2, AND2, OR2, XOR2, XNOR2
-* in three voltage domains (1.8 V / 3.3 V / 5 V), each sized for
-* V_M = Vdd/2 at the nominal corner with input-pin load <= 5 fF.
+* in three voltage domains (1.8 V / 3.3 V / 5 V).  Each cell is sized
+* for a switching threshold V_M = Vdd/2 at the nominal corner with
+* input-pin load <= 5 fF.  Full sizing methodology, characterized
+* widths, and PVT envelope (5 process corners x 3 temperatures x 3
+* supplies = 45 points/cell): see REPORT.md and SUMMARY.md in this
+* directory.
 *
-* GENERATED -- do not hand-edit. To refresh widths:
-*   python async_run.py        # re-characterize, updates results.json
-*   python gen_cells_lib.py    # regenerate this file from results.json
-*
-* Naming: <CELL>_<DOMAIN> where DOMAIN is 1V8 / 3V3 / 5V0
+* Naming convention: <CELL>_<DOMAIN> where DOMAIN is 1V8 / 3V3 / 5V0.
+* (Underscored form chosen so 'INV50' does not get confused with the
+* PDK's high-voltage device naming, where the trailing number is
+* breakdown voltage -- e.g. NDMOS200 = 200 V.)
 *
 * Port order:
 *   INV    in  out  vdd  gnd
 *   BUF    in  out  vdd  gnd
-*   gate2  a   b    out  vdd  gnd
+*   gate2  a   b    out  vdd  gnd     (NAND2, NOR2, AND2, OR2, XOR2, XNOR2)
 *
-* Usage example (from a deck two levels deep -- e.g. in decks/):
-*   .include "../../../autohv_bicmos180_case.lib"
-*   .include "../cells.lib"
+* Usage -- include this library and the PDK from a downstream deck,
+* then instantiate cells by name:
+*
+*   .include "<repo-root>/autohv_bicmos180_case.lib"
+*   .include "<repo-root>/circuits/async_logic_design/cells.lib"
 *   X1 a b o vdd 0 NAND2_3V3
+*
+* A complete working demonstration deck is in
+* examples/07_async_cells_usage.cir (3-cell chain at 3.3 V, measures
+* end-to-end propagation delay).
 *
 
 * ============================================================
