@@ -1,5 +1,5 @@
 .title cap_XOR2_a
-.include "C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
+.include "../../../autohv_bicmos180_case.lib"
 .param case=0
 .param VDD=5.0
 Vdd vdd 0 5.0
