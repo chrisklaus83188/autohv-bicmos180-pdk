@@ -1,0 +1,40 @@
+* Async-logic cell usage demo: drive a 3-cell chain at 3.3V and measure
+* end-to-end propagation delay.
+*
+* Demonstrates instantiating subckts from circuits/async_logic_design/cells.lib.
+* The cells library provides 24 sized + characterized static-CMOS logic gates
+* (8 cell types x 3 voltage domains).  See circuits/async_logic_design/REPORT.md
+* for the sizing methodology and PVT envelopes.
+
+.include "../autohv_bicmos180_case.lib"
+.include "../circuits/async_logic_design/cells.lib"
+
+* Power and stimulus.  Drive A as a 100ps-edge pulse, hold B high.
+Vdd vdd 0 3.3
+Va a 0 PULSE(0 3.3 1n 100p 100p 5n 10n)
+Vb b 0 3.3
+
+* 3-cell chain:  INV -> NAND2 (with B=1, behaves as INV) -> INV
+*   X1 inverts A          -> n1
+*   X2 NANDs n1 and B=1   -> n2  (== A)
+*   X3 inverts n2         -> out (== !A)
+X1 a   n1 vdd 0 INV_3V3
+X2 n1 b n2 vdd 0 NAND2_3V3
+X3 n2  out vdd 0 INV_3V3
+
+* Realistic next-stage load.  Cin of a 3.3V cell is ~5 fF (per REPORT.md).
+CL out 0 5f
+
+.control
+tran 0.01n 12n
+
+* End-to-end propagation delay, both polarities.
+* A rising at 1.05 ns -> output falls (3 inversions:  A -> !A overall).
+* A falling at 6.15 ns -> output rises.
+meas tran tphl trig v(a)   val=1.65 rise=1 td=0n   targ v(out) val=1.65 fall=1 td=0n
+meas tran tplh trig v(a)   val=1.65 fall=1 td=4n   targ v(out) val=1.65 rise=1 td=4n
+
+echo "RES tphl=$&tphl tplh=$&tplh"
+echo TRAN_OK
+.endc
+.end

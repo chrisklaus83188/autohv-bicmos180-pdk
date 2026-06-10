@@ -1,0 +1,259 @@
+* AutoHV BiCMOS 180 PDK -- asynchronous-logic cell library
+*
+* 24 static-CMOS cells: INV, BUF, NAND2, NOR2, AND2, OR2, XOR2, XNOR2
+* in three voltage domains (1.8 V / 3.3 V / 5 V), each sized for
+* V_M = Vdd/2 at the nominal corner with input-pin load <= 5 fF.
+*
+* GENERATED -- do not hand-edit. To refresh widths:
+*   python async_run.py        # re-characterize, updates results.json
+*   python gen_cells_lib.py    # regenerate this file from results.json
+*
+* Naming: <CELL>_<DOMAIN> where DOMAIN is 1V8 / 3V3 / 5V0
+*
+* Port order:
+*   INV    in  out  vdd  gnd
+*   BUF    in  out  vdd  gnd
+*   gate2  a   b    out  vdd  gnd
+*
+* Usage example (from a deck two levels deep -- e.g. in decks/):
+*   .include "../../../autohv_bicmos180_case.lib"
+*   .include "../cells.lib"
+*   X1 a b o vdd 0 NAND2_3V3
+*
+
+* ============================================================
+* 1V8 domain  --  NMOS18/PMOS18  L = 0.18 um
+* ============================================================
+
+.subckt INV_1V8 in out vdd gnd
+X1 out in vdd vdd PMOS18 W={(2.6560)*1e-6} L=0.18u
+X2 out in gnd gnd NMOS18 W={(0.5717)*1e-6} L=0.18u
+.ends INV_1V8
+
+.subckt BUF_1V8 in out vdd gnd
+X1 mid in vdd vdd PMOS18 W={(2.6560)*1e-6} L=0.18u
+X2 mid in gnd gnd NMOS18 W={(0.5717)*1e-6} L=0.18u
+X3 out mid vdd vdd PMOS18 W={(7.9680)*1e-6} L=0.18u
+X4 out mid gnd gnd NMOS18 W={(1.7151)*1e-6} L=0.18u
+.ends BUF_1V8
+
+.subckt NAND2_1V8 a b out vdd gnd
+X1 out a vdd vdd PMOS18 W={(1.8277)*1e-6} L=0.18u
+X2 out b vdd vdd PMOS18 W={(1.8277)*1e-6} L=0.18u
+X3 out a n1 gnd NMOS18 W={(1.4011)*1e-6} L=0.18u
+X4 n1 b gnd gnd NMOS18 W={(1.4011)*1e-6} L=0.18u
+.ends NAND2_1V8
+
+.subckt NOR2_1V8 a b out vdd gnd
+X1 p1 a vdd vdd PMOS18 W={(3.6533)*1e-6} L=0.18u
+X2 out b p1 vdd PMOS18 W={(3.6533)*1e-6} L=0.18u
+X3 out a gnd gnd NMOS18 W={(0.2200)*1e-6} L=0.18u
+X4 out b gnd gnd NMOS18 W={(0.2200)*1e-6} L=0.18u
+.ends NOR2_1V8
+
+.subckt AND2_1V8 a b out vdd gnd
+X1 nd a vdd vdd PMOS18 W={(1.8277)*1e-6} L=0.18u
+X2 nd b vdd vdd PMOS18 W={(1.8277)*1e-6} L=0.18u
+X3 nd a n1 gnd NMOS18 W={(1.4011)*1e-6} L=0.18u
+X4 n1 b gnd gnd NMOS18 W={(1.4011)*1e-6} L=0.18u
+X5 out nd vdd vdd PMOS18 W={(2.6560)*1e-6} L=0.18u
+X6 out nd gnd gnd NMOS18 W={(0.5717)*1e-6} L=0.18u
+.ends AND2_1V8
+
+.subckt OR2_1V8 a b out vdd gnd
+X1 p1 a vdd vdd PMOS18 W={(3.6533)*1e-6} L=0.18u
+X2 nr b p1 vdd PMOS18 W={(3.6533)*1e-6} L=0.18u
+X3 nr a gnd gnd NMOS18 W={(0.2200)*1e-6} L=0.18u
+X4 nr b gnd gnd NMOS18 W={(0.2200)*1e-6} L=0.18u
+X5 out nr vdd vdd PMOS18 W={(2.6560)*1e-6} L=0.18u
+X6 out nr gnd gnd NMOS18 W={(0.5717)*1e-6} L=0.18u
+.ends OR2_1V8
+
+.subckt XOR2_1V8 a b out vdd gnd
+X1 abar a vdd vdd PMOS18 W={(1.2774)*1e-6} L=0.18u
+X2 abar a gnd gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X3 bbar b vdd vdd PMOS18 W={(1.2774)*1e-6} L=0.18u
+X4 bbar b gnd gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X5 out a m1 gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X6 m1 b gnd gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X7 out abar m2 gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X8 m2 bbar gnd gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X9 out abar k1 vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+X10 k1 b vdd vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+X11 out a k2 vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+X12 k2 bbar vdd vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+.ends XOR2_1V8
+
+.subckt XNOR2_1V8 a b out vdd gnd
+X1 abar a vdd vdd PMOS18 W={(1.2774)*1e-6} L=0.18u
+X2 abar a gnd gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X3 bbar b vdd vdd PMOS18 W={(1.2774)*1e-6} L=0.18u
+X4 bbar b gnd gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X5 out a m1 gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X6 m1 bbar gnd gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X7 out abar m2 gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X8 m2 b gnd gnd NMOS18 W={(0.2750)*1e-6} L=0.18u
+X9 out abar k1 vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+X10 k1 bbar vdd vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+X11 out a k2 vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+X12 k2 b vdd vdd PMOS18 W={(1.4003)*1e-6} L=0.18u
+.ends XNOR2_1V8
+
+
+* ============================================================
+* 3V3 domain  --  NMOS33/PMOS33  L = 0.35 um
+* ============================================================
+
+.subckt INV_3V3 in out vdd gnd
+X1 out in vdd vdd PMOS33 W={(2.1378)*1e-6} L=0.35u
+X2 out in gnd gnd NMOS33 W={(0.6537)*1e-6} L=0.35u
+.ends INV_3V3
+
+.subckt BUF_3V3 in out vdd gnd
+X1 mid in vdd vdd PMOS33 W={(2.1378)*1e-6} L=0.35u
+X2 mid in gnd gnd NMOS33 W={(0.6537)*1e-6} L=0.35u
+X3 out mid vdd vdd PMOS33 W={(6.4134)*1e-6} L=0.35u
+X4 out mid gnd gnd NMOS33 W={(1.9612)*1e-6} L=0.35u
+.ends BUF_3V3
+
+.subckt NAND2_3V3 a b out vdd gnd
+X1 out a vdd vdd PMOS33 W={(1.3719)*1e-6} L=0.35u
+X2 out b vdd vdd PMOS33 W={(1.3719)*1e-6} L=0.35u
+X3 out a n1 gnd NMOS33 W={(1.4316)*1e-6} L=0.35u
+X4 n1 b gnd gnd NMOS33 W={(1.4316)*1e-6} L=0.35u
+.ends NAND2_3V3
+
+.subckt NOR2_3V3 a b out vdd gnd
+X1 p1 a vdd vdd PMOS33 W={(2.9068)*1e-6} L=0.35u
+X2 out b p1 vdd PMOS33 W={(2.9068)*1e-6} L=0.35u
+X3 out a gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X4 out b gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+.ends NOR2_3V3
+
+.subckt AND2_3V3 a b out vdd gnd
+X1 nd a vdd vdd PMOS33 W={(1.3719)*1e-6} L=0.35u
+X2 nd b vdd vdd PMOS33 W={(1.3719)*1e-6} L=0.35u
+X3 nd a n1 gnd NMOS33 W={(1.4316)*1e-6} L=0.35u
+X4 n1 b gnd gnd NMOS33 W={(1.4316)*1e-6} L=0.35u
+X5 out nd vdd vdd PMOS33 W={(2.1378)*1e-6} L=0.35u
+X6 out nd gnd gnd NMOS33 W={(0.6537)*1e-6} L=0.35u
+.ends AND2_3V3
+
+.subckt OR2_3V3 a b out vdd gnd
+X1 p1 a vdd vdd PMOS33 W={(2.9068)*1e-6} L=0.35u
+X2 nr b p1 vdd PMOS33 W={(2.9068)*1e-6} L=0.35u
+X3 nr a gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X4 nr b gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X5 out nr vdd vdd PMOS33 W={(2.1378)*1e-6} L=0.35u
+X6 out nr gnd gnd NMOS33 W={(0.6537)*1e-6} L=0.35u
+.ends OR2_3V3
+
+.subckt XOR2_3V3 a b out vdd gnd
+X1 abar a vdd vdd PMOS33 W={(0.9811)*1e-6} L=0.35u
+X2 abar a gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X3 bbar b vdd vdd PMOS33 W={(0.9811)*1e-6} L=0.35u
+X4 bbar b gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X5 out a m1 gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X6 m1 b gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X7 out abar m2 gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X8 m2 bbar gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X9 out abar k1 vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
+X10 k1 b vdd vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
+X11 out a k2 vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
+X12 k2 bbar vdd vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
+.ends XOR2_3V3
+
+.subckt XNOR2_3V3 a b out vdd gnd
+X1 abar a vdd vdd PMOS33 W={(0.9811)*1e-6} L=0.35u
+X2 abar a gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X3 bbar b vdd vdd PMOS33 W={(0.9811)*1e-6} L=0.35u
+X4 bbar b gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X5 out a m1 gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X6 m1 bbar gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X7 out abar m2 gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X8 m2 b gnd gnd NMOS33 W={(0.3000)*1e-6} L=0.35u
+X9 out abar k1 vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
+X10 k1 bbar vdd vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
+X11 out a k2 vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
+X12 k2 b vdd vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
+.ends XNOR2_3V3
+
+
+* ============================================================
+* 5V0 domain  --  NMOS50/PMOS50  L = 0.50 um
+* ============================================================
+
+.subckt INV_5V0 in out vdd gnd
+X1 out in vdd vdd PMOS50 W={(2.2826)*1e-6} L=0.5u
+X2 out in gnd gnd NMOS50 W={(0.8402)*1e-6} L=0.5u
+.ends INV_5V0
+
+.subckt BUF_5V0 in out vdd gnd
+X1 mid in vdd vdd PMOS50 W={(2.2826)*1e-6} L=0.5u
+X2 mid in gnd gnd NMOS50 W={(0.8402)*1e-6} L=0.5u
+X3 out mid vdd vdd PMOS50 W={(6.8477)*1e-6} L=0.5u
+X4 out mid gnd gnd NMOS50 W={(2.5205)*1e-6} L=0.5u
+.ends BUF_5V0
+
+.subckt NAND2_5V0 a b out vdd gnd
+X1 out a vdd vdd PMOS50 W={(1.4067)*1e-6} L=0.5u
+X2 out b vdd vdd PMOS50 W={(1.4067)*1e-6} L=0.5u
+X3 out a n1 gnd NMOS50 W={(1.7202)*1e-6} L=0.5u
+X4 n1 b gnd gnd NMOS50 W={(1.7202)*1e-6} L=0.5u
+.ends NAND2_5V0
+
+.subckt NOR2_5V0 a b out vdd gnd
+X1 p1 a vdd vdd PMOS50 W={(3.1042)*1e-6} L=0.5u
+X2 out b p1 vdd PMOS50 W={(3.1042)*1e-6} L=0.5u
+X3 out a gnd gnd NMOS50 W={(0.4000)*1e-6} L=0.5u
+X4 out b gnd gnd NMOS50 W={(0.4000)*1e-6} L=0.5u
+.ends NOR2_5V0
+
+.subckt AND2_5V0 a b out vdd gnd
+X1 nd a vdd vdd PMOS50 W={(1.4067)*1e-6} L=0.5u
+X2 nd b vdd vdd PMOS50 W={(1.4067)*1e-6} L=0.5u
+X3 nd a n1 gnd NMOS50 W={(1.7202)*1e-6} L=0.5u
+X4 n1 b gnd gnd NMOS50 W={(1.7202)*1e-6} L=0.5u
+X5 out nd vdd vdd PMOS50 W={(2.2826)*1e-6} L=0.5u
+X6 out nd gnd gnd NMOS50 W={(0.8402)*1e-6} L=0.5u
+.ends AND2_5V0
+
+.subckt OR2_5V0 a b out vdd gnd
+X1 p1 a vdd vdd PMOS50 W={(3.1042)*1e-6} L=0.5u
+X2 nr b p1 vdd PMOS50 W={(3.1042)*1e-6} L=0.5u
+X3 nr a gnd gnd NMOS50 W={(0.4000)*1e-6} L=0.5u
+X4 nr b gnd gnd NMOS50 W={(0.4000)*1e-6} L=0.5u
+X5 out nr vdd vdd PMOS50 W={(2.2826)*1e-6} L=0.5u
+X6 out nr gnd gnd NMOS50 W={(0.8402)*1e-6} L=0.5u
+.ends OR2_5V0
+
+.subckt XOR2_5V0 a b out vdd gnd
+X1 abar a vdd vdd PMOS50 W={(1.0892)*1e-6} L=0.5u
+X2 abar a gnd gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X3 bbar b vdd vdd PMOS50 W={(1.0892)*1e-6} L=0.5u
+X4 bbar b gnd gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X5 out a m1 gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X6 m1 b gnd gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X7 out abar m2 gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X8 m2 bbar gnd gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X9 out abar k1 vdd PMOS50 W={(1.2316)*1e-6} L=0.5u
+X10 k1 b vdd vdd PMOS50 W={(1.2316)*1e-6} L=0.5u
+X11 out a k2 vdd PMOS50 W={(1.2316)*1e-6} L=0.5u
+X12 k2 bbar vdd vdd PMOS50 W={(1.2316)*1e-6} L=0.5u
+.ends XOR2_5V0
+
+.subckt XNOR2_5V0 a b out vdd gnd
+X1 abar a vdd vdd PMOS50 W={(1.0892)*1e-6} L=0.5u
+X2 abar a gnd gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X3 bbar b vdd vdd PMOS50 W={(1.0892)*1e-6} L=0.5u
+X4 bbar b gnd gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X5 out a m1 gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X6 m1 bbar gnd gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X7 out abar m2 gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X8 m2 b gnd gnd NMOS50 W={(0.4009)*1e-6} L=0.5u
+X9 out abar k1 vdd PMOS50 W={(1.2316)*1e-6} L=0.5u
+X10 k1 bbar vdd vdd PMOS50 W={(1.2316)*1e-6} L=0.5u
+X11 out a k2 vdd PMOS50 W={(1.2316)*1e-6} L=0.5u
+X12 k2 b vdd vdd PMOS50 W={(1.2316)*1e-6} L=0.5u
+.ends XNOR2_5V0
+
