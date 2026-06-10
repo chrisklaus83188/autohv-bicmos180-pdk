@@ -1,5 +1,6 @@
 # Build / packaging artifacts
 *.zip
+release/      # output of tools/make_release.py
 
 # Simulator output & logs
 *.raw
