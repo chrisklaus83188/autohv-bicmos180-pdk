@@ -5,13 +5,44 @@ Generates ngspice decks, drives ngspice_con, parses results.
 Three voltage domains: 1.8V (NMOS18/PMOS18), 3.3V (NMOS33/PMOS33), 5.0V (NMOS50/PMOS50).
 Eight cells: INV, BUF, NAND2, NOR2, AND2, OR2, XOR2, XNOR2.
 """
-import subprocess, re, os, math, json
+import subprocess, re, os, math, json, shutil
+from pathlib import Path
 
-NGSPICE = r"C:/Users/chris/SPICE/Qucs-S-25.2.0-win64/bin/ngspice_con.exe"
-LIB     = r"C:/Users/chris/ngspice/Prompts/autohv_bicmos180_pdk/autohv_bicmos180_case.lib"
-WORK    = r"C:/Users/chris/ngspice/Prompts/async_logic_design"
-DECK    = os.path.join(WORK, "decks")
-os.makedirs(DECK, exist_ok=True)
+HERE = Path(__file__).resolve().parent       # .../circuits/async_logic_design/
+WORK = HERE
+DECK = WORK / "decks"
+DECK.mkdir(exist_ok=True)
+
+# Relative path emitted into each generated deck's .include directive.
+# ngspice resolves .include relative to the deck file's own directory
+# (DECK/), so "../../../autohv_bicmos180_case.lib" walks decks/ -> the
+# async_logic_design/ -> circuits/ -> repo root, where the PDK lives.
+# Regenerated decks are therefore portable across machines without edit.
+LIB = "../../../autohv_bicmos180_case.lib"
+
+def _find_ngspice() -> str:
+    """Locate the ngspice batch binary. Honour NGSPICE_BIN, else PATH,
+    else fall back to the well-known Windows install locations (same
+    discovery rules as pdk_validation/regression/run_transients.py)."""
+    cand = os.environ.get("NGSPICE_BIN")
+    if cand and Path(cand).exists():
+        return cand
+    for name in ("ngspice_con", "ngspice_con.exe", "ngspice"):
+        p = shutil.which(name)
+        if p:
+            return p
+    for p in (
+        r"C:\Spice64\bin\ngspice_con.exe",
+        r"C:\Program Files\ngspice\bin\ngspice_con.exe",
+    ):
+        if Path(p).exists():
+            return p
+    raise RuntimeError(
+        "ngspice not found. Set NGSPICE_BIN to the ngspice_con(.exe) "
+        "binary, or install ngspice and put it on PATH."
+    )
+
+NGSPICE = _find_ngspice()
 
 # ---------------------------------------------------------------- domains
 DOMAINS = {
@@ -34,10 +65,16 @@ NCOLS = {"INV":1, "BUF":2, "NAND2":2, "NOR2":2, "AND2":3, "OR2":3, "XOR2":6, "XN
 
 # ---------------------------------------------------------------- ngspice runner
 def run(deck_text, tag):
-    path = os.path.join(DECK, tag + ".cir")
+    path = DECK / (tag + ".cir")
     with open(path, "w", newline="\n") as f:
         f.write(deck_text)
-    r = subprocess.run([NGSPICE, "-b", path], capture_output=True, text=True, timeout=600)
+    # Run ngspice with cwd=DECK so the relative `.include` resolves to
+    # the repo's PDK regardless of where the harness was invoked from.
+    r = subprocess.run(
+        [NGSPICE, "-b", path.name],
+        cwd=str(DECK),
+        capture_output=True, text=True, timeout=600,
+    )
     return r.stdout + "\n" + r.stderr
 
 def parse_res(out):
