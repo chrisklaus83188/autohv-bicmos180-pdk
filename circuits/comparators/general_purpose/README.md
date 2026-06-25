@@ -60,11 +60,13 @@ referred 1σ offset, 60-run Monte Carlo. Iq = worst case over both output states
 | `nin_lo2` | NMOS | lowest offset| 40.9 | 0.56 | 99 | 66 / 36  | —    | 623 |
 | `nin_hyst`| NMOS | + hysteresis| 41.2 | 1.76 | 100 | 59 / 19  | 10.4 | 148 |
 | `nin_lp`  | NMOS | low power   | 8.9  | 1.90 | 95  | 217 / 50 | —    | 143 |
+| `nin_fast`| NMOS | fast        | 79.0 | 1.77 | 90  | 33 / 13  | —    | 143 |
 | `pin_gp`  | PMOS | normal      | 38.3 | 2.14 | 93  | 13 / 36  | —    | **188** |
 | `pin_lo`  | PMOS | lower offset| 38.3 | 1.13 | 98  | 20 / 43  | —    | 458 |
 | `pin_lo2` | PMOS | lowest offset| 38.3 | 0.70 | 97 | 29 / 50  | —    | 908 |
 | `pin_hyst`| PMOS | + hysteresis| 38.7 | 2.18 | 100 | 15 / 44  | 13.2 | 200 |
 | `pin_lp`  | PMOS | low power   | 8.0  | 2.35 | 94  | 33 / 142 | —    | 188 |
+| `pin_fast`| PMOS | fast        | 75.2 | 1.93 | 90  | 10 / 22  | —    | 188 |
 
 `Vos_σ` is input-referred 1σ from **500-run Monte Carlo** (≈±3 % on σ). The
 ≈1/FIN trend (offset halves as stage-1 area quadruples) is exact.
@@ -97,11 +99,16 @@ e.g. `FIN=6` ≈ 0.3 mV for ~2300 µm². It's all passive matching, no auto-zero
   (~0.56–0.70 mV, ~4.5× area). Bump `FIN` further for less.
 - **Noisy input:** `*_hyst` — ~10–13 mV hysteresis at normal size.
 - **Power-critical:** `*_lp` — ~8 µA (slower; note offset rises in weak inversion).
+- **Speed-critical:** `*_fast` — ~1.6× faster than `gp` (NIN 33/13, PIN 10/22 ns)
+  at ~2× current, same area, holds Vds/Vdsat > 1.4 across 3.2–5.5 V — at a narrower ICMR.
 - N vs P by common mode (NIN high, PIN low; see sign-off for ICMR).
 
-A high-speed variant (high `IREF`) isn't shipped: at 20 µA the low-area devices
-fail the Vds/Vdsat > 1.4 rule at 3.2 V. A proper fast cell needs current **and**
-width scaled together (a current-scaled-up sibling) — easy to add on request.
+**On `fast`:** speed comes from current *density* (higher overdrive), **not** from
+current-scaling — scaling current and width together keeps I/C on the internal
+nodes constant and does not speed it up (verified: 4× current-scaled = 51 vs 54 ns).
+`fast` raises density ~2× (IREF 5→10 µA at the same widths): ~1.6× faster, but the
+higher Vdsat narrows the ICMR (e.g. PIN at 3.2 V → 0.24–0.95 V vs gp's 0.21–1.26 V).
+Pushing density to 4× is ~2.5× faster but fails the 1.4 rule at 3.2 V — not shipped.
 
 ## Saturation sign-off (Vds/Vdsat > 1.4)
 

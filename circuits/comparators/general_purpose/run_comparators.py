@@ -58,12 +58,14 @@ VARIANTS = {
     "nin_lo2":  dict(sub="CMP_NIN", cm=3.0, IREF=5e-6,  WSCALE=0.5, WIN=20e-6, LIN=1e-6, LANA=1e-6, FIN=3, HYSK=0),    # lowest offset
     "nin_hyst": dict(sub="CMP_NIN", cm=3.0, IREF=5e-6,  WSCALE=0.5, WIN=20e-6, LIN=1e-6, LANA=1e-6, FIN=1, HYSK=0.2),  # + hysteresis
     "nin_lp":   dict(sub="CMP_NIN", cm=3.0, IREF=1e-6,  WSCALE=0.5, WIN=20e-6, LIN=1e-6, LANA=1e-6, FIN=1, HYSK=0),    # low power
+    "nin_fast": dict(sub="CMP_NIN", cm=3.0, IREF=10e-6, WSCALE=0.5, WIN=20e-6, LIN=1e-6, LANA=1e-6, FIN=1, HYSK=0),   # fast: 2x current density (saturation-clean)
     # PMOS-input (senses low common mode); base WIN=40u (wider for lower mobility)
     "pin_gp":   dict(sub="CMP_PIN", cm=1.5, IREF=5e-6,  WSCALE=0.5, WIN=40e-6, LIN=1e-6, LANA=1e-6, FIN=1, HYSK=0),
     "pin_lo":   dict(sub="CMP_PIN", cm=1.5, IREF=5e-6,  WSCALE=0.5, WIN=40e-6, LIN=1e-6, LANA=1e-6, FIN=2, HYSK=0),
     "pin_lo2":  dict(sub="CMP_PIN", cm=1.5, IREF=5e-6,  WSCALE=0.5, WIN=40e-6, LIN=1e-6, LANA=1e-6, FIN=3, HYSK=0),
     "pin_hyst": dict(sub="CMP_PIN", cm=1.5, IREF=5e-6,  WSCALE=0.5, WIN=40e-6, LIN=1e-6, LANA=1e-6, FIN=1, HYSK=0.2),
     "pin_lp":   dict(sub="CMP_PIN", cm=1.5, IREF=1e-6,  WSCALE=0.5, WIN=40e-6, LIN=1e-6, LANA=1e-6, FIN=1, HYSK=0),
+    "pin_fast": dict(sub="CMP_PIN", cm=1.5, IREF=10e-6, WSCALE=0.5, WIN=40e-6, LIN=1e-6, LANA=1e-6, FIN=1, HYSK=0),  # fast: 2x current density
 }
 
 ERROR_PATTERNS = [

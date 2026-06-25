@@ -111,8 +111,9 @@ def worst_margin(v, devs, cm, vdd):
 def cm_band(v, devs, vdd, thresh):
     """The CM interval over which worst_margin >= thresh, by bisection from a
     known-good mid point toward each rail. Returns (lo, hi) or None."""
-    # seed: a CM in the part's strong half
-    seeds = [vdd * f for f in (0.6, 0.5, 0.4, 0.7, 0.3)]
+    # seed: a CM in the part's strong half. Include low absolute values so a
+    # narrow low-CM band (e.g. high-density PMOS-input at low VDD) isn't missed.
+    seeds = [vdd * f for f in (0.5, 0.4, 0.6, 0.3, 0.7, 0.2)] + [0.5, 0.4, 0.3]
     good = next((s for s in seeds if worst_margin(v, devs, round(s, 2), vdd) >= thresh), None)
     if good is None:
         return None

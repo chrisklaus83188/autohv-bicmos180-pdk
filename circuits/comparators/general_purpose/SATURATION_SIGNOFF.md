@@ -81,7 +81,9 @@ ICMR is set by device **overdrives** (Vgs_in, Vdsat_tail) → by current and W/L
 
 Within each band, all included input-stage devices hold Vds/Vdsat ≥ 1.4. The
 `gp`/`lo`/`lo2`/`hyst` set **shares an ICMR** (the `FIN` offset knob scales W and L
-together → overdrives unchanged); `lp` (lower current) is a touch wider.
+together → overdrives unchanged); `lp` (lower current) is a touch wider, and
+`fast` (2× current density → higher overdrive) is **narrower** — still ≥ 1.4 across
+3.2–5.5 V, but its 3.2 V band shrinks (PIN: 0.24–0.95 V).
 
 | Variant   | 3.2 V        | 5.0 V        | 5.5 V        |
 |-----------|--------------|--------------|--------------|
@@ -90,11 +92,13 @@ together → overdrives unchanged); `lp` (lower current) is a touch wider.
 | `nin_lo2` | 1.68–2.75 V  | 1.69–4.77 V  | 1.68–5.28 V  |
 | `nin_hyst`| 1.71–2.71 V  | 1.71–4.70 V  | 1.70–5.25 V  |
 | `nin_lp`  | 1.33–2.97 V  | 1.32–4.79 V  | 1.34–5.28 V  |
+| `nin_fast`| 2.00–2.51 V  | 1.98–4.51 V  | 1.97–5.04 V  |
 | `pin_gp`  | 0.21–1.26 V  | 0.22–3.07 V  | 0.22–3.58 V  |
 | `pin_lo`  | 0.21–1.29 V  | 0.22–3.08 V  | 0.22–3.58 V  |
 | `pin_lo2` | 0.21–1.29 V  | 0.22–3.10 V  | 0.22–3.60 V  |
 | `pin_hyst`| 0.21–1.3 V*  | 0.22–3.07 V  | 0.22–3.57 V  |
 | `pin_lp`  | 0.21–1.72 V  | 0.22–3.52 V  | 0.22–4.02 V  |
+| `pin_fast`| 0.24–0.95 V  | 0.22–2.75 V  | 0.22–3.25 V  |
 
 NIN low edge ~1.7 V (absolute, VDD-independent); high edge tracks the rail. PIN
 low edge ~0.2 V; its high edge is the PMOS-tail headroom limit, lower because PMOS
