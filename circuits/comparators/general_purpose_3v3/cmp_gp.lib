@@ -1,0 +1,93 @@
+* ============================================================================
+* General-purpose comparators - AutoHV BiCMOS 180, 3.3 V rail
+* ----------------------------------------------------------------------------
+* Topology (same for all variants): two-stage transconductance comparator with
+* a rail-to-rail CMOS output buffer.
+*   Stage 1 : differential pair + current-mirror load        (gm, single-ended)
+*   Stage 2 : common-source gain stage, self-biased load      (gain + level shift)
+*   Stage 3 : CMOS inverter                                    (rail-to-rail digital out)
+* Polarity : OUT is HIGH when V(inp) > V(inn)  (non-inverting).
+*
+* Two input flavours:
+*   CMP_NIN - NMOS input pair  -> senses HIGH common mode
+*   CMP_PIN - PMOS input pair  -> senses LOW  common mode
+*
+* Design knobs (per-instance params):
+*   IREF   - bias reference current pushed into the 'nb' pin (Itail=2*IREF,
+*            stage-2 = 4*IREF).
+*   WSCALE - width multiplier on the analog (mirror/tail/gain/buffer) devices.
+*   WIN/LIN- input-pair base geometry.
+*   LANA   - channel length of the mirror/gain/bias devices.
+*   FIN    - STAGE-1 MATCHING scale (default 1): multiplies BOTH the input pair
+*            and the stage-1 load-mirror W and L together. Keeps W/L (hence Vov,
+*            ICMR, gm) fixed; lowers input-referred offset ~1/FIN at the cost of
+*            stage-1 area ~FIN^2 (and a mild gain rise from longer L). This is the
+*            offset<->area knob: FIN=1 = low-area "normal", FIN>1 = lower-offset.
+*   HYSK   - hysteresis current as a fraction of IREF (0 = none). Digital output
+*            steers HYSK*IREF into the stage-1 nodes; bounded (HYSK<1), cannot latch.
+*
+* Sizing principle: ICMR is set by overdrives (current + W/L ratios); input offset
+* by absolute gate area (W*L). FIN scales stage-1 area at constant W/L -> offset
+* moves, ICMR/gain hold. (An earlier 'WB' bias-mirror-widening knob was removed --
+* trimming current / sizing the pair is more area-efficient. See SATURATION_SIGNOFF.md.)
+*
+* Saturation: every device intended to run in saturation keeps Vds/Vdsat > 1.4
+* across process corners, -40/+125 C, and 2.97-3.63 V over the rated ICMR (see
+* SATURATION_SIGNOFF.md / run_saturation.py --pvt). The output inverter (Xm7/Xm8)
+* and steering switches (Xmha/Xmhb) are excluded (switches).
+*
+* Bias: push IREF into 'nb' (source from vdd for CMP_NIN, sink to vss for CMP_PIN).
+* Ports:  inp inn out vdd vss nb
+* ============================================================================
+
+* ----------------------------------------------------------------------------
+* NMOS-input comparator (high common-mode)
+* ----------------------------------------------------------------------------
+.subckt CMP_NIN inp inn out vdd vss nb params: IREF=5u WSCALE=1 WIN=40u LIN=2u LANA=2u FIN=1 HYSK=0
+* --- bias mirror ---
+Xmb   nb  nb  vss vss NMOS33 W={10u*WSCALE} L={LANA} M=1   ; diode ref (carries IREF)
+* --- stage 1: NMOS pair, PMOS mirror load (both scaled by FIN for offset) ---
+Xtail tail nb vss vss NMOS33 W={10u*WSCALE} L={LANA} M=2   ; Itail = 2*IREF
+Xm1   n1  inp tail vss NMOS33 W={WIN*FIN} L={LIN*FIN} M=1
+Xm2   n2  inn tail vss NMOS33 W={WIN*FIN} L={LIN*FIN} M=1
+Xm3   n1  n1  vdd vdd  PMOS33 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
+Xm4   n2  n1  vdd vdd  PMOS33 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
+* --- optional steered-current hysteresis ---
+.if (HYSK > 0)
+Xhtail sh nb vss vss NMOS33 W={10u*WSCALE*HYSK} L={LANA} M=1
+Xmha   n1  out sh vss NMOS33 W={10u*WSCALE} L=0.5u M=1
+Xmhb   n2  o2  sh vss NMOS33 W={10u*WSCALE} L=0.5u M=1
+.endif
+* --- stage 2: PMOS common-source + NMOS current-source load ---
+Xm5   o2  n2  vdd vdd  PMOS33 W={80u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
+Xm6   o2  nb  vss vss  NMOS33 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
+* --- stage 3: CMOS output inverter (rail-to-rail) ---
+Xm7   out o2  vdd vdd  PMOS33 W={20u*WSCALE} L=0.5u M=1
+Xm8   out o2  vss vss  NMOS33 W={10u*WSCALE} L=0.5u M=1
+.ends CMP_NIN
+
+* ----------------------------------------------------------------------------
+* PMOS-input comparator (low common-mode) - vertical mirror of CMP_NIN
+* ----------------------------------------------------------------------------
+.subckt CMP_PIN inp inn out vdd vss nb params: IREF=5u WSCALE=1 WIN=80u LIN=2u LANA=2u FIN=1 HYSK=0
+* --- bias mirror (PMOS diode; ref current pulled from nb down toward vss) ---
+Xmb   nb  nb  vdd vdd  PMOS33 W={20u*WSCALE} L={LANA} M=1  ; diode ref (carries IREF)
+* --- stage 1: PMOS pair, NMOS mirror load (both scaled by FIN for offset) ---
+Xtail tail nb vdd vdd  PMOS33 W={20u*WSCALE} L={LANA} M=2  ; Itail = 2*IREF
+Xm1   n1  inp tail vdd PMOS33 W={WIN*FIN} L={LIN*FIN} M=1
+Xm2   n2  inn tail vdd PMOS33 W={WIN*FIN} L={LIN*FIN} M=1
+Xm3   n1  n1  vss vss  NMOS33 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
+Xm4   n2  n1  vss vss  NMOS33 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
+* --- optional steered-current hysteresis ---
+.if (HYSK > 0)
+Xhtail sh nb vdd vdd PMOS33 W={20u*WSCALE*HYSK} L={LANA} M=1
+Xmha   n1  out sh vdd PMOS33 W={20u*WSCALE} L=0.5u M=1
+Xmhb   n2  o2  sh vdd PMOS33 W={20u*WSCALE} L=0.5u M=1
+.endif
+* --- stage 2: NMOS common-source + PMOS current-source load ---
+Xm5   o2  n2  vss vss  NMOS33 W={40u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
+Xm6   o2  nb  vdd vdd  PMOS33 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
+* --- stage 3: CMOS output inverter (rail-to-rail) ---
+Xm7   out o2  vdd vdd  PMOS33 W={20u*WSCALE} L=0.5u M=1
+Xm8   out o2  vss vss  NMOS33 W={10u*WSCALE} L=0.5u M=1
+.ends CMP_PIN

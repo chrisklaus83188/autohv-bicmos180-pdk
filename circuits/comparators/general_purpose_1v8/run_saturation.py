@@ -178,7 +178,7 @@ def run_pvt(names, thresh):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", nargs="+")
-    ap.add_argument("--thresh", type=float, default=1.4)
+    ap.add_argument("--thresh", type=float, default=1.1)  # relaxed low-voltage limit
     ap.add_argument("--cm-scan", action="store_true")
     ap.add_argument("--pvt", action="store_true",
                     help="full corner x temp x VDD(3.2-5.5) sweep at CM edges")

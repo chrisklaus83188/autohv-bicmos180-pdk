@@ -1,0 +1,45 @@
+* ============================================================================
+* Example testbench: general-purpose comparator family (cmp_gp.lib), 1.8 V rail.
+* Shows the low-area "normal" NIN and PIN cells, plus a FIN=2 "lower offset"
+* NIN cell, responding to a +/-100 mV differential step. Run: ngspice -b tb_example.cir
+* Sizing matches the shipped variants: normal = WSCALE=0.5, WIN=20u(N)/40u(P),
+* LIN=1u, LANA=1u, FIN=1; lower-offset = same but FIN=2.
+* ============================================================================
+.include "../../../autohv_bicmos180_case.lib"
+.include "cmp_gp.lib"
+.param case=0 PROC_ON=0 MM_ON=0
+
+Vdd vdd 0 1.8
+
+* ---- NMOS-input "normal" (gp), common mode 3.0 V ----
+Vcmn cmn 0 1.1
+Vrefn refn cmn 0                                   ; V- reference = CM
+Vsign sign cmn PULSE(-0.1 0.1 1u 1n 1n 2u 4u)     ; V+ steps +/-100 mV
+Ibn  vdd nbn 5u                                    ; push IREF into nb (source from vdd)
+Xn   sign refn outn vdd 0 nbn CMP_NIN IREF=5u WSCALE=0.5 WIN=20u LIN=1u LANA=1u FIN=1
+CLn  outn 0 1p
+
+* ---- NMOS-input "lower offset" (FIN=2): same cell, bigger stage-1 ----
+Vcml cml 0 1.1
+Vrefl refl cml 0
+Vsigl sigl cml PULSE(-0.1 0.1 1u 1n 1n 2u 4u)
+Ibl  vdd nbl 5u
+Xl   sigl refl outl vdd 0 nbl CMP_NIN IREF=5u WSCALE=0.5 WIN=20u LIN=1u LANA=1u FIN=2
+CLl  outl 0 1p
+
+* ---- PMOS-input "normal" (gp), common mode 1.5 V ----
+Vcmp cmp 0 0.55
+Vrefp refp cmp 0
+Vsigp sigp cmp PULSE(-0.1 0.1 1u 1n 1n 2u 4u)
+Ibp  nbp 0 5u                                      ; sink IREF from nb (PMOS mirror sources from vdd)
+Xp   sigp refp outp vdd 0 nbp CMP_PIN IREF=5u WSCALE=0.5 WIN=40u LIN=1u LANA=1u FIN=1
+CLp  outp 0 1p
+
+.control
+  tran 0.5n 5u
+  meas tran tpd_nin TRIG v(sign) VAL=1.1 RISE=1 TARG v(outn) VAL=0.9 RISE=1
+  meas tran tpd_lo  TRIG v(sigl) VAL=1.1 RISE=1 TARG v(outl) VAL=0.9 RISE=1
+  meas tran tpd_pin TRIG v(sigp) VAL=0.55 RISE=1 TARG v(outp) VAL=0.9 RISE=1
+  * plot v(sign) v(outn) v(outl) v(outp)   ; uncomment for interactive waveforms
+.endc
+.end

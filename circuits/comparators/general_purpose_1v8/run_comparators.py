@@ -46,7 +46,7 @@ PDK_LIB = (HERE / ".." / ".." / ".." / "autohv_bicmos180_case.lib").resolve()
 CMP_LIB = (HERE / "cmp_gp.lib").resolve()
 
 # Nominal supply for this cell family (set per voltage-domain folder).
-VSUP = 5.0
+VSUP = 1.8
 TRIP = VSUP / 2          # output mid-rail (trip threshold for meas)
 VLO = 0.1 * VSUP         # 10% output level
 VHI = 0.9 * VSUP         # 90% output level
