@@ -129,6 +129,7 @@ if you need it.
 ## Files
 
 - `cmp_gp.lib` — the two parameterized cells (`CMP_NIN`, `CMP_PIN`).
+- `DESIGN_NOTES.md` — topology explanation + how to re-tune/re-architect for other specs.
 - `tb_example.cir` — runnable demo: `ngspice -b tb_example.cir`.
 - `run_comparators.py` — characterization (offset/gain/Iq/tpd/hyst, MC offset).
 - `run_saturation.py` — Vds/Vdsat sign-off (`--pvt`, `--cm-scan`, `--thresh`).
