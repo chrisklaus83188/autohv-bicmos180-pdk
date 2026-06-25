@@ -158,7 +158,7 @@ These use the existing knobs (`IREF`, `WSCALE`, `WIN/LIN`, `LANA`, `FIN`, `HYSK`
 | Sub-100 µV offset | Auto-zero (output/input offset storage) or chopper around this core |
 | Much higher gain | Cascode the loads, or telescopic/folded-cascode stage 1, or a 3rd stage |
 | ps-class speed, clocked | Replace with a StrongARM / double-tail dynamic latch (no static Iq) |
-| Full rail-to-rail input | Parallel NIN + PIN front ends with a combiner |
+| Full rail-to-rail input | Complementary input pairs summed in a folded cascode — **built**: see `../rail_to_rail_5v0/` and § 7 below |
 | Different supply class | Re-map devices: NMOS33/PMOS33 (3.3 V), NMOS18/PMOS18 (1.8 V), NMOS12/PMOS12 (12 V) — re-bias and re-check ICMR/saturation |
 | HV input sensing | Resistive/cascode attenuator (NDMOS) ahead of a low-voltage core |
 
@@ -181,3 +181,44 @@ low-Iq monitor, and 200 V HV-sense roles if you need those.
 
 Re-characterize any change with `run_comparators.py` (specs/offset) and
 `run_saturation.py --pvt` (ICMR / Vds·Vdsat sign-off).
+
+---
+
+## 7. Rail-to-rail input variant (`CMP_RR`, `../rail_to_rail_*`)
+
+The GP `CMP_NIN`/`CMP_PIN` pair covers the rail in two halves; where their ICMRs
+don't overlap (mid-rail at low VDD) there's a *coverage gap*. `CMP_RR` removes it
+by sensing rail to rail in one cell.
+
+**Architecture.** An NMOS pair (high CM) and a PMOS pair (low CM) run in parallel
+and their currents are **summed in a folded-cascode stage**: top fold current
+sources feed the NMOS-pair drains, PMOS cascodes fold those into the summing
+nodes where the PMOS pair also injects, and a bottom NMOS mirror converts to
+single-ended. Then the usual CS stage-2 + inverter. Near each rail one pair is
+cut off and contributes ~0 *current*; mid-rail both are active (gm roughly
+doubles).
+
+**Why not just OR two comparators?** A pair starved near a rail makes its
+preamp/output rail to a *stuck* level (and NIN vs PIN stick to opposite states),
+which corrupts any digital combine. Summing at the transconductance level is what
+lets the off pair drop out cleanly. You pay ~2× Iq for the second pair + fold.
+
+**The one bias rule that matters — reference the cascode bias to the rail it must
+track.** The PMOS cascode gate `vcp` is generated **VDD-referenced** (VDD − 2|Vsg|
+from PMOS diodes), not from ground-referenced NMOS diodes. A ground-referenced
+bias pins the NMOS-pair drains `x,y` at a fixed level; when VDD sags to brown-out
+the top fold sources (from VDD to `x`) lose all their Vds and fall out of
+saturation (seen: fold Vds/Vdsat 0.2 at 3.2 V). VDD-referencing makes `x` track
+the rail, holding the fold-source headroom ~constant across the whole supply
+(0.2 → 4.7). This is the single most headroom-critical spot in the cell.
+
+**Knob.** Only `FIN` — scales both input pairs and the bottom mirror (W&L
+together): offset ≈ 1/FIN, matching area ∝ FIN². gp/lo/lo2 = FIN 1/2/3.
+
+**Sign-off.** `run_saturation.py --pvt` checks every *always-on* device over the
+full 0→VDD CM (input pairs exempt in their hand-off, by design). Result: 5 V and
+3.3 V hold Vds/Vdsat > 1.4 rail-to-rail across PVT; 1.8 V holds > 1.1 (the
+low-voltage relaxation), and notably **closes the GP 1.8 V brown-out gap**.
+
+**Porting.** Same as the GP family — swap the device class, re-tune the `vcp`
+PMOS-diode count for the rail (1.8 V uses fewer drops), re-run the two scripts.

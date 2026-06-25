@@ -1,0 +1,37 @@
+# Rail-to-rail input comparator — 3.3 V rail (AutoHV BiCMOS 180)
+
+The 3.3 V port of the rail-to-rail [`CMP_RR`](../rail_to_rail_5v0/) cell — same
+topology, knobs, and tooling, devices swapped to the 3.3 V class
+(`NMOS33`/`PMOS33`), supply ±10 %. Input common mode spans the full rail (0 → VDD).
+Topology, the VDD-referenced-bias lesson, and tuning are in the 5 V folder:
+[`README`](../rail_to_rail_5v0/README.md) · [`DESIGN_NOTES`](../general_purpose/DESIGN_NOTES.md).
+
+`FIN` is the offset↔area knob (scales both input pairs + the bottom mirror;
+offset ≈ 1/FIN, area ∝ FIN²). OUT high when V(inp) > V(inn).
+
+## Characterized variants
+
+ngspice-45, TT, 27 °C, VDD 3.3 V, CL 1 pF, ±100 mV overdrive. `Vos_σ` = input-
+referred 1σ, 200-run Monte Carlo at mid-rail. Iq = worst case over output states.
+
+| Variant | FIN | role | Iq (µA) | Vos_σ (mV) | Gain (dB) | tpd ↑/↓ (ns) | Area (µm²) |
+|---|---|---|---|---|---|---|---|
+| `gp`  | 1 | normal / low area | 81.5 | 1.72 | 96 | 9 / 45  | 725 |
+| `lo`  | 2 | lower offset      | 81.6 | 0.95 | 96 | 13 / 48 | 1565 |
+| `lo2` | 3 | lowest offset     | 81.6 | 0.92 | 96 | 20 / 51 | 2965 |
+
+(Iq ~2× a GP cell — dual-pair RR front end. tpd asymmetric, slow ↓ edge from the
+single-ended stage-2. Systematic offset small/CM-dependent: `gp` −1.6/−0.5/−0.3 mV
+low/mid/high.)
+
+## Rail-to-rail saturation sign-off (Vds/Vdsat > 1.4)
+
+`python run_saturation.py --pvt` — every always-on device holds **> 1.4 over the
+full 0→3.3 V CM, all corners, −40/+125 °C, 2.97–3.63 V** (min **3.63** at
+SS/+125 °C/2.97 V — very comfortable; 3.3 V has ample headroom). Input pairs exempt
+in hand-off, as in the 5 V part.
+
+## Files
+`cmp_rr.lib` (NMOS33/PMOS33) · `run_rr.py` · `run_saturation.py` ·
+`tb_example.cir` · `comparator_results.json`. Topology/tuning: the 5 V
+`DESIGN_NOTES.md`.

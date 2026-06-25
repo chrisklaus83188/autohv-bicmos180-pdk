@@ -1,0 +1,29 @@
+* CMP_RR rail-to-rail comparator demo - AutoHV BiCMOS 180 (5 V)
+* The SAME cell resolves correctly with the input common mode near the BOTTOM
+* rail (0.3 V) and near the TOP rail (4.7 V) - the rail-to-rail point.
+* OUT is HIGH when V(inp) > V(inn).
+.include "../../../autohv_bicmos180_case.lib"
+.include "cmp_rr.lib"
+.param case=0 PROC_ON=0 MM_ON=0
+Vdd vdd 0 5
+
+* --- instance 1: common mode near the BOTTOM rail ---
+X1 inp1 inn1 out1 vdd 0 nb1 CMP_RR IREF=5u FIN=1
+Ib1 vdd nb1 5u
+Vrefl inn1 0 0.3
+Vinl  inp1 0 PULSE(0.25 0.35 1u 10n 10n 2u 4u)
+CL1 out1 0 1p
+
+* --- instance 2: common mode near the TOP rail ---
+X2 inp2 inn2 out2 vdd 0 nb2 CMP_RR IREF=5u FIN=1
+Ib2 vdd nb2 5u
+Vrefh inn2 0 4.7
+Vinh  inp2 0 PULSE(4.65 4.75 1u 10n 10n 2u 4u)
+CL2 out2 0 1p
+
+.control
+  tran 2n 5u
+  meas tran tpd_lo TRIG v(inp1) VAL=0.3 RISE=1 TARG v(out1) VAL=2.5 RISE=1
+  meas tran tpd_hi TRIG v(inp2) VAL=4.7 RISE=1 TARG v(out2) VAL=2.5 RISE=1
+.endc
+.end

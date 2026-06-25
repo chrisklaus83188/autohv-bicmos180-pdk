@@ -1,0 +1,75 @@
+* ============================================================================
+* Rail-to-rail INPUT comparator - AutoHV BiCMOS 180, 3.3 V rail
+* ----------------------------------------------------------------------------
+* One cell (CMP_RR) whose input common-mode range spans the FULL supply,
+* rail to rail, by running an NMOS and a PMOS input pair in parallel and
+* summing their transconductances through a folded-cascode stage. Near the
+* bottom rail the PMOS pair carries the signal; near the top rail the NMOS
+* pair does; in the middle both contribute (gm roughly doubles). The starved
+* pair contributes ~zero CURRENT (not a stuck voltage), which is why the two
+* pairs can share one signal path - simply OR-ing two complementary
+* comparators does NOT work (the off pair's output rails and corrupts).
+*
+* Topology:
+*   Stage 1 : complementary input pairs (Xn1/2 high-CM, Xp1/2 low-CM)
+*             -> top fold current sources (Xf1/2) + PMOS cascodes (Xcp1/2)
+*             -> bottom NMOS current-mirror load (Xmm1/2). Single-ended at 'b'.
+*   Stage 2 : NMOS common-source gain stage (Xs2n) + PMOS current-source load.
+*   Stage 3 : CMOS inverter -> rail-to-rail digital output.
+* Polarity : OUT is HIGH when V(inp) > V(inn)  (non-inverting).
+*
+* Design knobs (per-instance params):
+*   IREF - bias reference current pushed into the 'nb' pin. Sets both pair
+*          tails (~2*IREF) and the fold/mirror branch currents.
+*   FIN  - MATCHING scale (default 1): multiplies the W AND L of BOTH input
+*          pairs and the bottom load mirror together. Keeps W/L (hence Vov,
+*          gm, the rail-to-rail hand-off points) fixed; lowers input-referred
+*          offset ~1/FIN at the cost of stage-1 area ~FIN^2. This is the
+*          offset<->area knob: FIN=1 = low-area "normal" (gp), FIN>1 = lower
+*          offset (lo, lo2).
+*
+* Bias note: the PMOS cascode gate 'vcp' is generated VDD-REFERENCED (VDD - 2|Vsg|,
+* two stacked PMOS diodes). This is deliberate: a ground-referenced bias pins the
+* NMOS-pair drains (x,y) at a fixed level, so when VDD sags to its brown-out limit
+* the top fold sources lose all their Vds and drop out of saturation. Referencing
+* vcp to VDD makes x track the rail, holding the fold-source Vds (the single most
+* headroom-critical spot in this cell) ~constant across the whole supply range.
+*
+* Saturation: every device intended to run in saturation keeps Vds/Vdsat > 1.4
+* across PVT over the full rail-to-rail input CM. The input pairs and their
+* tails are EXEMPT where they intentionally hand off (an off pair near a rail
+* is cutoff by design, not a violation); they are checked where active. The
+* output inverter (Xbp/Xbn) is a switch and is excluded.
+*
+* Bias: push IREF into 'nb' (sourced from vdd).
+* Ports:  inp inn out vdd vss nb
+* ============================================================================
+
+.subckt CMP_RR inp inn out vdd vss nb params: IREF=5u FIN=1
+* --- bias generation ---
+Xrbn  nb  nb  vss vss NMOS33 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
+Xmir  pmd nb  vss vss NMOS33 W=10u L=1u M=1            ; mirror IREF up
+Xrbp  pmd pmd vdd vdd PMOS33 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
+Xvc1  k   k   vdd vdd PMOS33 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
+Xvc2  vcp vcp k   vdd PMOS33 W=20u L=1u M=1            ;   cascode bias: x tracks the rail so
+Xisk  vcp nb  vss vss NMOS33 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
+* --- rail-to-rail folded-cascode input stage ---
+Xmtn  sn  nb  vss vss NMOS33 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
+Xn1   x   inp sn  vss NMOS33 W={40u*FIN} L={1u*FIN} M=1
+Xn2   y   inn sn  vss NMOS33 W={40u*FIN} L={1u*FIN} M=1
+Xmtp  sp  pmd vdd vdd PMOS33 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)
+Xp1   a   inp sp  vdd PMOS33 W={80u*FIN} L={1u*FIN} M=1
+Xp2   b   inn sp  vdd PMOS33 W={80u*FIN} L={1u*FIN} M=1
+Xf1   x   pmd vdd vdd PMOS33 W=60u L=1u M=1            ; top fold sources
+Xf2   y   pmd vdd vdd PMOS33 W=60u L=1u M=1
+Xcp1  a   vcp x   vdd PMOS33 W=40u L=1u M=1            ; PMOS cascodes x->a, y->b
+Xcp2  b   vcp y   vdd PMOS33 W=40u L=1u M=1
+Xmm1  a   a   vss vss NMOS33 W={20u*FIN} L={1u*FIN} M=1 ; bottom mirror diode (a)
+Xmm2  b   a   vss vss NMOS33 W={20u*FIN} L={1u*FIN} M=1 ; mirror out -> stage-1 out = b
+* --- stage 2: common-source gain + current-source load ---
+Xs2n  o2  b   vss vss NMOS33 W=40u L=1u M=1
+Xs2p  o2  pmd vdd vdd PMOS33 W=40u L=1u M=1
+* --- stage 3: CMOS inverter (rail-to-rail digital out) ---
+Xbp   out o2  vdd vdd PMOS33 W=20u L=0.5u M=1
+Xbn   out o2  vss vss NMOS33 W=10u L=0.5u M=1
+.ends CMP_RR

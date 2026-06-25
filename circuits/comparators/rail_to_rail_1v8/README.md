@@ -1,0 +1,53 @@
+# Rail-to-rail input comparator — 1.8 V rail (AutoHV BiCMOS 180)
+
+The 1.8 V port of the rail-to-rail [`CMP_RR`](../rail_to_rail_5v0/) cell — same
+topology, knobs, and tooling, devices swapped to the 1.8 V class
+(`NMOS18`/`PMOS18`), supply ±10 %. Topology, the VDD-referenced-bias lesson, and
+tuning: [`../rail_to_rail_5v0/README`](../rail_to_rail_5v0/README.md) ·
+[`DESIGN_NOTES`](../general_purpose/DESIGN_NOTES.md).
+
+**Why this part exists:** the complementary GP pair at 1.8 V has a mid-rail
+*coverage gap* at the 1.62 V brown-out corner (PMOS-in high edge < NMOS-in low
+edge). This rail-to-rail cell **closes that gap** — its input CM spans the full
+0 → VDD at every corner, including 1.62 V. OUT high when V(inp) > V(inn).
+
+`FIN` is the offset↔area knob (offset ≈ 1/FIN, area ∝ FIN²).
+
+## Characterized variants
+
+ngspice-45, TT, 27 °C, VDD 1.8 V, CL 1 pF, ±100 mV overdrive. `Vos_σ` = input-
+referred 1σ, 200-run Monte Carlo at mid-rail. Iq = worst case over output states.
+
+| Variant | FIN | role | Iq (µA) | Vos_σ (mV) | Gain (dB) | tpd ↑/↓ (ns) | Area (µm²) |
+|---|---|---|---|---|---|---|---|
+| `gp`  | 1 | normal / low area | 74.5 | 1.55 | 91 | 8 / 40  | 725 |
+| `lo`  | 2 | lower offset      | 74.6 | 1.06 | 91 | 12 / 40 | 1565 |
+| `lo2` | 3 | lowest offset     | 74.6 | 0.84 | 91 | 18 / 41 | 2965 |
+
+(Iq ~2× a GP cell — dual-pair RR front end. Systematic offset `gp`
+−1.3/−0.4/−0.3 mV low/mid/high.)
+
+## Rail-to-rail saturation sign-off (Vds/Vdsat > 1.1)
+
+**Saturation rule: > 1.1** — the deliberate low-voltage relaxation from the 5 V
+rule of 1.4, same as the GP 1.8 V family (at 1.8 V, |Vth| ≈ ⅓ of the rail). The
+RR cell gets *much* closer to 1.4 than a single-pair stage would, but the
+brown-out worst corner just misses it.
+
+`python run_saturation.py --pvt` — every always-on device holds **> 1.1 over the
+full 0→1.8 V CM, all corners, −40/+125 °C, 1.62–1.98 V**:
+
+| VDD | always-on min Vds/Vdsat |
+|---|---|
+| 1.62 V (−10 %) | **1.28** |
+| 1.80 V | 1.82 |
+| 1.98 V | 2.72 |
+
+So unlike the GP 1.8 V part (continuous only at nominal/+10 %, gap at 1.62 V), this
+cell covers mid-rail at **all** corners — that's the whole point of the rail-to-rail
+front end here. Input pairs exempt in hand-off, as in the 5 V part.
+
+## Files
+`cmp_rr.lib` (NMOS18/PMOS18) · `run_rr.py` · `run_saturation.py` ·
+`tb_example.cir` · `comparator_results.json`. Topology/tuning: the 5 V
+`DESIGN_NOTES.md`.
