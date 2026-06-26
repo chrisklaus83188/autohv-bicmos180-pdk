@@ -21,6 +21,24 @@ what sets each spec, tuning recipes, gotchas, knob reference, and § 7 on the
 rail-to-rail variant). Each folder's own `README.md` has the characterized numbers
 for that cell.
 
+### One-file library
+
+For convenience, **[`comparators_all.lib`](comparators_all.lib)** is a single
+consolidated SPICE library holding **all nine subckts** — every cell renamed with
+a rail suffix so they coexist: `CMP_{NIN,PIN}_{5V0,3V3,1V8}` (general-purpose) and
+`CMP_RR_{5V0,3V3,1V8}` (rail-to-rail). Drop-in usage:
+
+```
+.include "<...>/autohv_bicmos180_case.lib"   ; PDK device models
+.include "comparators_all.lib"               ; all comparators
+X1 inp inn out vdd 0 nb CMP_RR_5V0 IREF=5u FIN=1
+Ib vdd nb 5u
+```
+
+It is auto-generated (bodies copied verbatim, so it's electrically identical to
+the per-folder libs). Edit the per-folder `.lib` files and regenerate with
+`python gen_comparators_all.py` — don't hand-edit the combined file.
+
 ## The two architectures
 
 ### 1. General-purpose two-stage (`CMP_NIN` / `CMP_PIN`)
