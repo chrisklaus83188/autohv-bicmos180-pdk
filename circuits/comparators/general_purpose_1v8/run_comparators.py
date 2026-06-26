@@ -109,7 +109,7 @@ NG = None  # filled in main()
 
 def inst_line(v: dict) -> str:
     """The X-line instantiating the comparator under test as X1."""
-    return (f"X1 inp inn out vdd 0 {('ibp_5uA' if v['sub']=='CMP_NIN' else 'ibn_5uA')} {v['sub']} IREF={v['IREF']:g} "
+    return (f"X1 inp inn out vdd 0 {('ibp_5uA' if v['sub']=='CMP_NIN' else 'ibn_5uA')} vdd {v['sub']} IREF={v['IREF']:g} "
             f"WSCALE={v['WSCALE']:g} WIN={v['WIN']:g} LIN={v['LIN']:g} "
             f"LANA={v['LANA']:g} FIN={v.get('FIN', 1):g} HYSK={v['HYSK']:g}")
 

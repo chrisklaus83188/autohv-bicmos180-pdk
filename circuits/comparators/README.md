@@ -31,7 +31,7 @@ a rail suffix so they coexist: `CMP_{NIN,PIN}_{5V0,3V3,1V8}` (general-purpose) a
 ```
 .include "<...>/autohv_bicmos180_case.lib"   ; PDK device models
 .include "comparators_all.lib"               ; all comparators
-X1 inp inn out vdd 0 ibp_5uA CMP_RR_5V0 IREF=5u FIN=1
+X1 inp inn out vdd 0 ibp_5uA vdd CMP_RR_5V0 IREF=5u FIN=1   ; last net = EN (vdd = enabled)
 Ib vdd ibp_5uA 5u
 ```
 
@@ -105,10 +105,14 @@ DESIGN_NOTES §§ 3–5):
 
 ## Conventions (all cells)
 
-- **Ports:** `inp inn out vdd vss <bias>` — the bias pin is **`ibp_5uA`** on `CMP_NIN`/`CMP_RR`
+- **Ports:** `inp inn out vdd vss <bias> EN` — the bias pin is **`ibp_5uA`** on `CMP_NIN`/`CMP_RR`
   (source 5 uA *into* it, from vdd) or **`ibn_5uA`** on `CMP_PIN` (sink 5 uA *out* of it, to vss).
   Drive it with a matching current source (e.g. `Ib vdd ibp_5uA 5u`); `vdd`/`vss` are the only
   supply rails (`vss` = ground). The `lp`/`fast` GP variants push 1 uA/10 uA into that same pin.
+- **Enable (`EN`):** active-high. `EN=1` = normal; `EN=0` disables the cell — an
+  on-chip 2-inverter buffer (`ENB=/EN`, `ENbuf=EN`) drives a PMOS header + NMOS footer
+  that power-gate the analog core (**zero static Iq**, leakage only) and **force `OUT`
+  low**. Tie `EN` high if unused; the external bias should also be gated off when `EN=0`.
 - **Saturation sign-off:** every device meant to be saturated keeps **Vds/Vdsat >
   1.4** (5 V & 3.3 V) or **> 1.1** (1.8 V, the documented low-voltage relaxation),
   across process corners, −40/+125 °C, and the rail's supply range. Switches

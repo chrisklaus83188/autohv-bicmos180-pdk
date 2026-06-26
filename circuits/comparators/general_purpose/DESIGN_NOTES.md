@@ -40,9 +40,14 @@ PMOS-input (`CMP_PIN`, low common mode) is the vertical mirror (swap N↔P, gnd�
   internal swing into a rail-to-rail logic edge and drives the load.
 - **Bias (Xmb, Xtail, Xm6).** One mirror off the bias pin (`ibp_5uA` on CMP_NIN, `ibn_5uA` on CMP_PIN) distributes the
   external reference: `Xmb` = IREF (diode), `Xtail` = 2·IREF, `Xm6` = 4·IREF.
+- **Enable (`EN`).** Active-high power-down: a 2-inverter buffer (`ENB=/EN`, `ENbuf=EN`)
+  drives a PMOS header (`vdd→vdda`) + NMOS footer (`vssa→vss`) that isolate the core when
+  `EN=0` (zero static Iq), with `OUT` forced low. The EN buffer runs on the true rails;
+  the header/footer are sized wide so their IR drop doesn't eat the saturation margin
+  (verified to still pass, incl. the 1.8 V brown-out corner).
 
 Nodes: `n1` (mirror diode), `n2` (stage-1 output / stage-2 input), `o2` (stage-2
-output / buffer input), `tail` (pair source). Ports: `inp inn out vdd vss <bias>` (`ibp_5uA` for CMP_NIN, `ibn_5uA` for CMP_PIN).
+output / buffer input), `tail` (pair source). Ports: `inp inn out vdd vss <bias> EN` (`ibp_5uA`/`ibn_5uA` bias; `EN` = active-high enable).
 
 ### Polarity (OUT high when V(inp) > V(inn))
 inp↑ → I(Xm1)↑ → mirror copies it to Xm4, which pushes `n2` **up** → Xm5 (PMOS)

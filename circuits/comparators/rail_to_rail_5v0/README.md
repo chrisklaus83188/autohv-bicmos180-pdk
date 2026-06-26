@@ -33,6 +33,12 @@ sources lose all their Vds and drop out of saturation. Referencing `vcp` to VDD
 makes that node track the rail, holding the fold-source headroom across the whole
 supply range (the single most headroom-critical spot in the cell).
 
+## Enable (EN)
+
+Active-high enable pin. `EN=1` = normal; `EN=0` power-gates the core via an on-chip
+2-inverter buffer + PMOS header/NMOS footer (**zero static Iq**, leakage only) and forces
+`OUT` low. Tie `EN` high if unused; gate the external bias off too for true zero current.
+
 ## Offset ↔ area knob
 
 The only knob is `FIN`, which scales **both input pairs and the bottom load

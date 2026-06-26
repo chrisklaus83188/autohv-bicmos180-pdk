@@ -38,7 +38,12 @@
 *
 * Bias: CMP_NIN sources IREF into 'ibp_5uA' (from vdd); CMP_PIN sinks IREF out of
 *        'ibn_5uA' (to vss).
-* Ports:  inp inn out vdd vss <bias>   (<bias> = ibp_5uA for CMP_NIN, ibn_5uA for CMP_PIN)
+* Ports:  inp inn out vdd vss <bias> EN   (<bias> = ibp_5uA for CMP_NIN, ibn_5uA for CMP_PIN)
+* Enable (EN): active-high. EN=1 = normal operation. EN=0 = disabled -> two on-chip
+*   inverters form ENB=/EN and ENbuf=EN; a PMOS header (gate ENB) and an NMOS footer
+*   (gate ENbuf) open to isolate the analog core from vdd/vss -> ZERO static Iq
+*   (leakage only), and OUT is forced LOW. Tie EN high if unused. (Assumes the
+*   external bias into the bias pin is also gated off when EN=0.)
 * Pin-name convention: the bias pin encodes the expected current + sense --
 * '5uA' = nominal IREF; 'ibp' = current SOURCED into the block (diode-tied NMOS
 * ref, from vdd); 'ibn' = current SUNK out of the block (diode-tied PMOS ref, to
@@ -48,51 +53,69 @@
 * ----------------------------------------------------------------------------
 * NMOS-input comparator (high common-mode)
 * ----------------------------------------------------------------------------
-.subckt CMP_NIN inp inn out vdd vss ibp_5uA params: IREF=5u WSCALE=1 WIN=40u LIN=2u LANA=2u FIN=1 HYSK=0
+.subckt CMP_NIN inp inn out vdd vss ibp_5uA EN params: IREF=5u WSCALE=1 WIN=40u LIN=2u LANA=2u FIN=1 HYSK=0
 * --- bias mirror ---
-Xmb   ibp_5uA  ibp_5uA  vss vss NMOS33 W={10u*WSCALE} L={LANA} M=1   ; diode ref (carries IREF)
+Xmb   ibp_5uA  ibp_5uA  vssa vss NMOS33 W={10u*WSCALE} L={LANA} M=1   ; diode ref (carries IREF)
 * --- stage 1: NMOS pair, PMOS mirror load (both scaled by FIN for offset) ---
-Xtail tail ibp_5uA vss vss NMOS33 W={10u*WSCALE} L={LANA} M=2   ; Itail = 2*IREF
+Xtail tail ibp_5uA vssa vss NMOS33 W={10u*WSCALE} L={LANA} M=2   ; Itail = 2*IREF
 Xm1   n1  inp tail vss NMOS33 W={WIN*FIN} L={LIN*FIN} M=1
 Xm2   n2  inn tail vss NMOS33 W={WIN*FIN} L={LIN*FIN} M=1
-Xm3   n1  n1  vdd vdd  PMOS33 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
-Xm4   n2  n1  vdd vdd  PMOS33 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
+Xm3   n1  n1  vdda vdd  PMOS33 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
+Xm4   n2  n1  vdda vdd  PMOS33 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
 * --- optional steered-current hysteresis ---
 .if (HYSK > 0)
-Xhtail sh ibp_5uA vss vss NMOS33 W={10u*WSCALE*HYSK} L={LANA} M=1
+Xhtail sh ibp_5uA vssa vss NMOS33 W={10u*WSCALE*HYSK} L={LANA} M=1
 Xmha   n1  out sh vss NMOS33 W={10u*WSCALE} L=0.5u M=1
 Xmhb   n2  o2  sh vss NMOS33 W={10u*WSCALE} L=0.5u M=1
 .endif
 * --- stage 2: PMOS common-source + NMOS current-source load ---
-Xm5   o2  n2  vdd vdd  PMOS33 W={80u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
-Xm6   o2  ibp_5uA  vss vss  NMOS33 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
+Xm5   o2  n2  vdda vdd  PMOS33 W={80u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
+Xm6   o2  ibp_5uA  vssa vss  NMOS33 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
 * --- stage 3: CMOS output inverter (rail-to-rail) ---
-Xm7   out o2  vdd vdd  PMOS33 W={20u*WSCALE} L=0.5u M=1
-Xm8   out o2  vss vss  NMOS33 W={10u*WSCALE} L=0.5u M=1
+Xm7   out o2  vdda vdd  PMOS33 W={20u*WSCALE} L=0.5u M=1
+Xm8   out o2  vssa vss  NMOS33 W={10u*WSCALE} L=0.5u M=1
+* --- enable: 2-inverter buffer (always-on rails) + power-gating switches ---
+* EN=1 normal; EN=0 disables: header/footer open -> core isolated (zero Iq), OUT forced low.
+Xei1p ENB   EN    vdd vdd PMOS33 W=4u L=0.5u M=1            ; INV1: ENB = /EN
+Xei1n ENB   EN    vss vss NMOS33 W=2u L=0.5u M=1
+Xei2p ENbuf ENB   vdd vdd PMOS33 W=4u L=0.5u M=1            ; INV2: ENbuf = EN (buffered)
+Xei2n ENbuf ENB   vss vss NMOS33 W=2u L=0.5u M=1
+Xenhdr vdda ENB   vdd vdd PMOS33 W=400u L=0.5u M=1          ; PMOS header (off when EN=0)
+Xenftr vssa ENbuf vss vss NMOS33 W=200u L=0.5u M=1          ; NMOS footer (off when EN=0)
+Xenpd  out  ENB   vss vss NMOS33 W=20u L=0.5u M=1           ; force OUT low when EN=0
 .ends CMP_NIN
 
 * ----------------------------------------------------------------------------
 * PMOS-input comparator (low common-mode) - vertical mirror of CMP_NIN
 * ----------------------------------------------------------------------------
-.subckt CMP_PIN inp inn out vdd vss ibn_5uA params: IREF=5u WSCALE=1 WIN=80u LIN=2u LANA=2u FIN=1 HYSK=0
+.subckt CMP_PIN inp inn out vdd vss ibn_5uA EN params: IREF=5u WSCALE=1 WIN=80u LIN=2u LANA=2u FIN=1 HYSK=0
 * --- bias mirror (PMOS diode; ref current pulled from ibn_5uA down toward vss) ---
-Xmb   ibn_5uA  ibn_5uA  vdd vdd  PMOS33 W={20u*WSCALE} L={LANA} M=1  ; diode ref (carries IREF)
+Xmb   ibn_5uA  ibn_5uA  vdda vdd  PMOS33 W={20u*WSCALE} L={LANA} M=1  ; diode ref (carries IREF)
 * --- stage 1: PMOS pair, NMOS mirror load (both scaled by FIN for offset) ---
-Xtail tail ibn_5uA vdd vdd  PMOS33 W={20u*WSCALE} L={LANA} M=2  ; Itail = 2*IREF
+Xtail tail ibn_5uA vdda vdd  PMOS33 W={20u*WSCALE} L={LANA} M=2  ; Itail = 2*IREF
 Xm1   n1  inp tail vdd PMOS33 W={WIN*FIN} L={LIN*FIN} M=1
 Xm2   n2  inn tail vdd PMOS33 W={WIN*FIN} L={LIN*FIN} M=1
-Xm3   n1  n1  vss vss  NMOS33 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
-Xm4   n2  n1  vss vss  NMOS33 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
+Xm3   n1  n1  vssa vss  NMOS33 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
+Xm4   n2  n1  vssa vss  NMOS33 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
 * --- optional steered-current hysteresis ---
 .if (HYSK > 0)
-Xhtail sh ibn_5uA vdd vdd PMOS33 W={20u*WSCALE*HYSK} L={LANA} M=1
+Xhtail sh ibn_5uA vdda vdd PMOS33 W={20u*WSCALE*HYSK} L={LANA} M=1
 Xmha   n1  out sh vdd PMOS33 W={20u*WSCALE} L=0.5u M=1
 Xmhb   n2  o2  sh vdd PMOS33 W={20u*WSCALE} L=0.5u M=1
 .endif
 * --- stage 2: NMOS common-source + PMOS current-source load ---
-Xm5   o2  n2  vss vss  NMOS33 W={40u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
-Xm6   o2  ibn_5uA  vdd vdd  PMOS33 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
+Xm5   o2  n2  vssa vss  NMOS33 W={40u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
+Xm6   o2  ibn_5uA  vdda vdd  PMOS33 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
 * --- stage 3: CMOS output inverter (rail-to-rail) ---
-Xm7   out o2  vdd vdd  PMOS33 W={20u*WSCALE} L=0.5u M=1
-Xm8   out o2  vss vss  NMOS33 W={10u*WSCALE} L=0.5u M=1
+Xm7   out o2  vdda vdd  PMOS33 W={20u*WSCALE} L=0.5u M=1
+Xm8   out o2  vssa vss  NMOS33 W={10u*WSCALE} L=0.5u M=1
+* --- enable: 2-inverter buffer (always-on rails) + power-gating switches ---
+* EN=1 normal; EN=0 disables: header/footer open -> core isolated (zero Iq), OUT forced low.
+Xei1p ENB   EN    vdd vdd PMOS33 W=4u L=0.5u M=1            ; INV1: ENB = /EN
+Xei1n ENB   EN    vss vss NMOS33 W=2u L=0.5u M=1
+Xei2p ENbuf ENB   vdd vdd PMOS33 W=4u L=0.5u M=1            ; INV2: ENbuf = EN (buffered)
+Xei2n ENbuf ENB   vss vss NMOS33 W=2u L=0.5u M=1
+Xenhdr vdda ENB   vdd vdd PMOS33 W=400u L=0.5u M=1          ; PMOS header (off when EN=0)
+Xenftr vssa ENbuf vss vss NMOS33 W=200u L=0.5u M=1          ; NMOS footer (off when EN=0)
+Xenpd  out  ENB   vss vss NMOS33 W=20u L=0.5u M=1           ; force OUT low when EN=0
 .ends CMP_PIN

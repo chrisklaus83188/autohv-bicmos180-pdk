@@ -119,7 +119,7 @@ def sat_deck(variant: str, case: int, cm: float, vdd: float, temp: float) -> str
             f".param case={case} PROC_ON=0 MM_ON=0\n.options temp={temp}\n"
             f"Vdd vdd 0 {vdd:g}\nVcm cm 0 {cm:g}\n"
             "Vinn inn cm 0\nVinp inp cm 0\n"
-            f"X1 inp inn out vdd 0 ibp_5uA CMP_RR IREF=5u FIN={FIN[variant]:g}\n"
+            f"X1 inp inn out vdd 0 ibp_5uA vdd CMP_RR IREF=5u FIN={FIN[variant]:g}\n"
             "Ib vdd ibp_5uA 5u\nCL out 0 1p\n"
             ".control\n"
             f"  save {saves} v(x1.o2)\n"

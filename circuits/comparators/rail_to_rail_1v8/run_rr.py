@@ -90,7 +90,7 @@ NG = None  # filled in main()
 
 
 def inst_line(v: dict) -> str:
-    return (f"X1 inp inn out vdd 0 ibp_5uA CMP_RR "
+    return (f"X1 inp inn out vdd 0 ibp_5uA vdd CMP_RR "
             f"IREF={v['IREF']:g} FIN={v.get('FIN', 1):g}")
 
 
