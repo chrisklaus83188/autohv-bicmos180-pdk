@@ -15,24 +15,24 @@ Vdd vdd 0 3.3
 Vcmn cmn 0 2.0
 Vrefn refn cmn 0                                   ; V- reference = CM
 Vsign sign cmn PULSE(-0.1 0.1 1u 1n 1n 2u 4u)     ; V+ steps +/-100 mV
-Ibn  vdd nbn 5u                                    ; push IREF into nb (source from vdd)
-Xn   sign refn outn vdd 0 nbn CMP_NIN IREF=5u WSCALE=0.5 WIN=20u LIN=1u LANA=1u FIN=1
+Ibn  vdd ibp_n 5u                                  ; source IREF into ibp_5uA pin (from vdd)
+Xn   sign refn outn vdd 0 ibp_n CMP_NIN IREF=5u WSCALE=0.5 WIN=20u LIN=1u LANA=1u FIN=1
 CLn  outn 0 1p
 
 * ---- NMOS-input "lower offset" (FIN=2): same cell, bigger stage-1 ----
 Vcml cml 0 2.0
 Vrefl refl cml 0
 Vsigl sigl cml PULSE(-0.1 0.1 1u 1n 1n 2u 4u)
-Ibl  vdd nbl 5u
-Xl   sigl refl outl vdd 0 nbl CMP_NIN IREF=5u WSCALE=0.5 WIN=20u LIN=1u LANA=1u FIN=2
+Ibl  vdd ibp_l 5u
+Xl   sigl refl outl vdd 0 ibp_l CMP_NIN IREF=5u WSCALE=0.5 WIN=20u LIN=1u LANA=1u FIN=2
 CLl  outl 0 1p
 
 * ---- PMOS-input "normal" (gp), common mode 1.5 V ----
 Vcmp cmp 0 1.0
 Vrefp refp cmp 0
 Vsigp sigp cmp PULSE(-0.1 0.1 1u 1n 1n 2u 4u)
-Ibp  nbp 0 5u                                      ; sink IREF from nb (PMOS mirror sources from vdd)
-Xp   sigp refp outp vdd 0 nbp CMP_PIN IREF=5u WSCALE=0.5 WIN=40u LIN=1u LANA=1u FIN=1
+Ibp  ibn_p 0 5u                                    ; sink IREF from ibn_5uA pin (to vss)
+Xp   sigp refp outp vdd 0 ibn_p CMP_PIN IREF=5u WSCALE=0.5 WIN=40u LIN=1u LANA=1u FIN=1
 CLp  outp 0 1p
 
 .control

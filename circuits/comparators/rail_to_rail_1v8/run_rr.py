@@ -90,12 +90,12 @@ NG = None  # filled in main()
 
 
 def inst_line(v: dict) -> str:
-    return (f"X1 inp inn out vdd 0 nb CMP_RR "
+    return (f"X1 inp inn out vdd 0 ibp_5uA CMP_RR "
             f"IREF={v['IREF']:g} FIN={v.get('FIN', 1):g}")
 
 
 def bias_line(v: dict) -> str:
-    return f"Ib vdd nb {v['IREF']:g}"   # IREF sourced from vdd into nb
+    return f"Ib vdd ibp_5uA {v['IREF']:g}"   # IREF sourced from vdd into ibp_5uA
 
 
 def header(case: int, proc: int, mm: int) -> str:

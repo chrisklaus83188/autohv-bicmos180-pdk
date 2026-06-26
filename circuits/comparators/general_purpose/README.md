@@ -24,7 +24,8 @@ Two-stage transconductance comparator with a rail-to-rail CMOS output:
 - **Polarity:** OUT is HIGH when V(inp) > V(inn) (non-inverting).
 - **Output:** full rail-to-rail (VOH 5.000 / VOL 0.000) — drives logic directly.
 - **DC gain:** ~90–100 dB.
-- **Bias:** one reference current `IREF` into `nb` (`Itail = 2·IREF`, stage-2 = `4·IREF`).
+- **Bias:** one reference current `IREF` into the bias pin — `ibp_5uA` (CMP_NIN, sourced from vdd) /
+  `ibn_5uA` (CMP_PIN, sunk to vss) (`Itail = 2·IREF`, stage-2 = `4·IREF`). `lp`/`fast` drive 1 uA/10 uA in.
 
 Two input flavours: `CMP_NIN` (NMOS pair, high common mode) and `CMP_PIN`
 (PMOS pair, low common mode); as a pair they cover the rail (see sign-off).
@@ -141,5 +142,5 @@ if you need it.
 
 - Sizings are validated against the PDK BSIM3 models, not silicon.
 - No ESD/clamp, glitch suppression, or offset trim — add per application.
-- Bias `nb` expects a clean `IREF` (PTAT/bandgap-derived in a real system).
+- The bias pin (`ibp_5uA` / `ibn_5uA`) expects a clean `IREF` (PTAT/bandgap-derived in a real system).
 - `NGSPICE_BIN` is auto-detected; override if your `ngspice_con` is elsewhere.

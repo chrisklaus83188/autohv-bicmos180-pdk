@@ -19,7 +19,7 @@
 * Polarity : OUT is HIGH when V(inp) > V(inn)  (non-inverting).
 *
 * Design knobs (per-instance params):
-*   IREF - bias reference current pushed into the 'nb' pin. Sets both pair
+*   IREF - bias reference current pushed into the 'ibp_5uA' pin. Sets both pair
 *          tails (~2*IREF) and the fold/mirror branch currents.
 *   FIN  - MATCHING scale (default 1): multiplies the W AND L of BOTH input
 *          pairs and the bottom load mirror together. Keeps W/L (hence Vov,
@@ -41,20 +41,24 @@
 * is cutoff by design, not a violation); they are checked where active. The
 * output inverter (Xbp/Xbn) is a switch and is excluded.
 *
-* Bias: push IREF into 'nb' (sourced from vdd).
-* Ports:  inp inn out vdd vss nb
+* Bias: source IREF into 'ibp_5uA' (from vdd).
+* Ports:  inp inn out vdd vss ibp_5uA
+* Pin-name convention: the bias pin encodes the expected current + sense --
+* '5uA' = nominal IREF; 'ibp' = current SOURCED into the block (diode-tied NMOS
+* ref, from vdd); 'ibn' = current SUNK out of the block (diode-tied PMOS ref, to
+* vss). lp/fast variants drive a different current (1u/10u) into the SAME pin.
 * ============================================================================
 
-.subckt CMP_RR inp inn out vdd vss nb params: IREF=5u FIN=1
+.subckt CMP_RR inp inn out vdd vss ibp_5uA params: IREF=5u FIN=1
 * --- bias generation ---
-Xrbn  nb  nb  vss vss NMOS33 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
-Xmir  pmd nb  vss vss NMOS33 W=10u L=1u M=1            ; mirror IREF up
+Xrbn  ibp_5uA  ibp_5uA  vss vss NMOS33 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
+Xmir  pmd ibp_5uA  vss vss NMOS33 W=10u L=1u M=1            ; mirror IREF up
 Xrbp  pmd pmd vdd vdd PMOS33 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
 Xvc1  k   k   vdd vdd PMOS33 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
 Xvc2  vcp vcp k   vdd PMOS33 W=20u L=1u M=1            ;   cascode bias: x tracks the rail so
-Xisk  vcp nb  vss vss NMOS33 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
+Xisk  vcp ibp_5uA  vss vss NMOS33 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
 * --- rail-to-rail folded-cascode input stage ---
-Xmtn  sn  nb  vss vss NMOS33 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
+Xmtn  sn  ibp_5uA  vss vss NMOS33 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
 Xn1   x   inp sn  vss NMOS33 W={40u*FIN} L={1u*FIN} M=1
 Xn2   y   inn sn  vss NMOS33 W={40u*FIN} L={1u*FIN} M=1
 Xmtp  sp  pmd vdd vdd PMOS33 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)

@@ -109,16 +109,16 @@ NG = None  # filled in main()
 
 def inst_line(v: dict) -> str:
     """The X-line instantiating the comparator under test as X1."""
-    return (f"X1 inp inn out vdd 0 nb {v['sub']} IREF={v['IREF']:g} "
+    return (f"X1 inp inn out vdd 0 {('ibp_5uA' if v['sub']=='CMP_NIN' else 'ibn_5uA')} {v['sub']} IREF={v['IREF']:g} "
             f"WSCALE={v['WSCALE']:g} WIN={v['WIN']:g} LIN={v['LIN']:g} "
             f"LANA={v['LANA']:g} FIN={v.get('FIN', 1):g} HYSK={v['HYSK']:g}")
 
 
 def bias_line(v: dict) -> str:
-    """Push IREF into nb: source from vdd for NIN, sink to vss for PIN."""
+    """Drive the bias pin: source IREF into ibp_5uA (NIN); sink IREF from ibn_5uA (PIN)."""
     if v["sub"] == "CMP_NIN":
-        return f"Ib vdd nb {v['IREF']:g}"
-    return f"Ib nb 0 {v['IREF']:g}"
+        return f"Ib vdd ibp_5uA {v['IREF']:g}"
+    return f"Ib ibn_5uA 0 {v['IREF']:g}"
 
 
 def header(case: int, proc: int, mm: int) -> str:

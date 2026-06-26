@@ -102,4 +102,4 @@ device-role analysis, and the dropped-`WB`/`fast` rationale are in
 - `fast` is density-limited by the 1.4 rule (see the `fast` note in §3): ~1.6× over
   `gp` is the saturation-clean ceiling across 3.2–5.5 V; more speed needs a higher
   supply floor or a different topology.
-- `nb` expects a clean `IREF` (PTAT/bandgap-derived in a real system).
+- The bias pin (`ibp_5uA` / `ibn_5uA`) expects a clean `IREF` (PTAT/bandgap-derived in a real system).

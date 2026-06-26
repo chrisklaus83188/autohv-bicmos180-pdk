@@ -26,7 +26,7 @@ PMOS-input (`CMP_PIN`, low common mode) is the vertical mirror (swap N↔P, gnd�
                 |     M=2                  4*IREF)          gnd
                gnd                            |
                                              gnd
-   nb (bias) --||Xmb diode, IREF;  nb drives Xtail, Xm6, Xhtail
+   bias pin --||Xmb diode, IREF;  drives Xtail, Xm6, Xhtail
 ```
 
 - **Stage 1 — transconductor (Xm1/Xm2 + Xm3/Xm4 + Xtail).** NMOS differential
@@ -38,11 +38,11 @@ PMOS-input (`CMP_PIN`, low common mode) is the vertical mirror (swap N↔P, gnd�
   two currents match without a separate bias.
 - **Stage 3 — output buffer (Xm7/Xm8).** Plain CMOS inverter; squares the slow
   internal swing into a rail-to-rail logic edge and drives the load.
-- **Bias (Xmb, Xtail, Xm6).** One NMOS mirror off the `nb` pin distributes the
+- **Bias (Xmb, Xtail, Xm6).** One mirror off the bias pin (`ibp_5uA` on CMP_NIN, `ibn_5uA` on CMP_PIN) distributes the
   external reference: `Xmb` = IREF (diode), `Xtail` = 2·IREF, `Xm6` = 4·IREF.
 
 Nodes: `n1` (mirror diode), `n2` (stage-1 output / stage-2 input), `o2` (stage-2
-output / buffer input), `tail` (pair source). Ports: `inp inn out vdd vss nb`.
+output / buffer input), `tail` (pair source). Ports: `inp inn out vdd vss <bias>` (`ibp_5uA` for CMP_NIN, `ibn_5uA` for CMP_PIN).
 
 ### Polarity (OUT high when V(inp) > V(inn))
 inp↑ → I(Xm1)↑ → mirror copies it to Xm4, which pushes `n2` **up** → Xm5 (PMOS)

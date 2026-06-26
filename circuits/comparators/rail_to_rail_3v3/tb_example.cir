@@ -8,15 +8,15 @@
 Vdd vdd 0 3.3
 
 * --- instance 1: common mode near the BOTTOM rail ---
-X1 inp1 inn1 out1 vdd 0 nb1 CMP_RR IREF=5u FIN=1
-Ib1 vdd nb1 5u
+X1 inp1 inn1 out1 vdd 0 ibp_1 CMP_RR IREF=5u FIN=1
+Ib1 vdd ibp_1 5u
 Vrefl inn1 0 0.2
 Vinl  inp1 0 PULSE(0.15 0.25 1u 10n 10n 2u 4u)
 CL1 out1 0 1p
 
 * --- instance 2: common mode near the TOP rail ---
-X2 inp2 inn2 out2 vdd 0 nb2 CMP_RR IREF=5u FIN=1
-Ib2 vdd nb2 5u
+X2 inp2 inn2 out2 vdd 0 ibp_2 CMP_RR IREF=5u FIN=1
+Ib2 vdd ibp_2 5u
 Vrefh inn2 0 3.1
 Vinh  inp2 0 PULSE(3.05 3.15 1u 10n 10n 2u 4u)
 CL2 out2 0 1p

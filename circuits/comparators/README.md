@@ -31,8 +31,8 @@ a rail suffix so they coexist: `CMP_{NIN,PIN}_{5V0,3V3,1V8}` (general-purpose) a
 ```
 .include "<...>/autohv_bicmos180_case.lib"   ; PDK device models
 .include "comparators_all.lib"               ; all comparators
-X1 inp inn out vdd 0 nb CMP_RR_5V0 IREF=5u FIN=1
-Ib vdd nb 5u
+X1 inp inn out vdd 0 ibp_5uA CMP_RR_5V0 IREF=5u FIN=1
+Ib vdd ibp_5uA 5u
 ```
 
 It is auto-generated (bodies copied verbatim, so it's electrically identical to
@@ -105,8 +105,10 @@ DESIGN_NOTES §§ 3–5):
 
 ## Conventions (all cells)
 
-- **Ports:** `inp inn out vdd vss nb`. Push the reference current `IREF` into `nb`
-  (e.g. `Ib vdd nb 5u`); `vdd`/`vss` are the only supply rails (`vss` = ground).
+- **Ports:** `inp inn out vdd vss <bias>` — the bias pin is **`ibp_5uA`** on `CMP_NIN`/`CMP_RR`
+  (source 5 uA *into* it, from vdd) or **`ibn_5uA`** on `CMP_PIN` (sink 5 uA *out* of it, to vss).
+  Drive it with a matching current source (e.g. `Ib vdd ibp_5uA 5u`); `vdd`/`vss` are the only
+  supply rails (`vss` = ground). The `lp`/`fast` GP variants push 1 uA/10 uA into that same pin.
 - **Saturation sign-off:** every device meant to be saturated keeps **Vds/Vdsat >
   1.4** (5 V & 3.3 V) or **> 1.1** (1.8 V, the documented low-voltage relaxation),
   across process corners, −40/+125 °C, and the rail's supply range. Switches
