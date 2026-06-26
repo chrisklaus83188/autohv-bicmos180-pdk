@@ -43,11 +43,14 @@
 *
 * Bias: source IREF into 'ibp_5uA' (from vdd).
 * Ports:  inp inn out vdd vss ibp_5uA EN
-* Enable (EN): active-high. EN=1 = normal operation. EN=0 = disabled -> two on-chip
-*   inverters form ENB=/EN and ENbuf=EN; a PMOS header (gate ENB) and an NMOS footer
-*   (gate ENbuf) open to isolate the analog core from vdd/vss -> ZERO static Iq
-*   (leakage only), and OUT is forced LOW. Tie EN high if unused. (Assumes the
-*   external bias into the bias pin is also gated off when EN=0.)
+* Enable (EN): active-high. EN=1 = normal. EN=0 = disabled by BIAS SHUTDOWN -- the
+*   core stays on the true rails; small switches kill the current instead. A
+*   2-inverter buffer makes ENB=/EN and ENbuf=EN; a SERIES switch (Xser) feeds the
+*   diode-tied mirror reference from the bias pin, and a GATE-SHORT (Xsh) ties that
+*   mirror gate to its rail -> every mirror branch off -> ZERO static Iq (leakage).
+*   The series switch also disconnects the bias pin, so Iq is ~0 even if the
+*   external bias stays on. A clamp (Xsho2) on the stage-2 output o2 holds OUT
+*   defined when disabled (CMP_NIN low; CMP_PIN/CMP_RR high). Tie EN high if unused.
 * Pin-name convention: the bias pin encodes the expected current + sense --
 * '5uA' = nominal IREF; 'ibp' = current SOURCED into the block (diode-tied NMOS
 * ref, from vdd); 'ibn' = current SUNK out of the block (diode-tied PMOS ref, to
@@ -56,38 +59,38 @@
 
 .subckt CMP_RR inp inn out vdd vss ibp_5uA EN params: IREF=5u FIN=1
 * --- bias generation ---
-Xrbn  ibp_5uA  ibp_5uA  vssa vss NMOS18 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
-Xmir  pmd ibp_5uA  vssa vss NMOS18 W=10u L=1u M=1            ; mirror IREF up
-Xrbp  pmd pmd vdda vdd PMOS18 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
-Xvc1  k   k   vdda vdd PMOS18 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
+Xrbn  ibg_n  ibg_n  vss vss NMOS18 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
+Xmir  pmd ibg_n  vss vss NMOS18 W=10u L=1u M=1            ; mirror IREF up
+Xrbp  pmd pmd vdd vdd PMOS18 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
+Xvc1  k   k   vdd vdd PMOS18 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
 Xvc2  vcp vcp k   vdd PMOS18 W=20u L=1u M=1            ;   cascode bias: x tracks the rail so
-Xisk  vcp ibp_5uA  vssa vss NMOS18 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
+Xisk  vcp ibg_n  vss vss NMOS18 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
 * --- rail-to-rail folded-cascode input stage ---
-Xmtn  sn  ibp_5uA  vssa vss NMOS18 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
+Xmtn  sn  ibg_n  vss vss NMOS18 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
 Xn1   x   inp sn  vss NMOS18 W={40u*FIN} L={1u*FIN} M=1
 Xn2   y   inn sn  vss NMOS18 W={40u*FIN} L={1u*FIN} M=1
-Xmtp  sp  pmd vdda vdd PMOS18 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)
+Xmtp  sp  pmd vdd vdd PMOS18 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)
 Xp1   a   inp sp  vdd PMOS18 W={80u*FIN} L={1u*FIN} M=1
 Xp2   b   inn sp  vdd PMOS18 W={80u*FIN} L={1u*FIN} M=1
-Xf1   x   pmd vdda vdd PMOS18 W=60u L=1u M=1            ; top fold sources
-Xf2   y   pmd vdda vdd PMOS18 W=60u L=1u M=1
+Xf1   x   pmd vdd vdd PMOS18 W=60u L=1u M=1            ; top fold sources
+Xf2   y   pmd vdd vdd PMOS18 W=60u L=1u M=1
 Xcp1  a   vcp x   vdd PMOS18 W=40u L=1u M=1            ; PMOS cascodes x->a, y->b
 Xcp2  b   vcp y   vdd PMOS18 W=40u L=1u M=1
-Xmm1  a   a   vssa vss NMOS18 W={20u*FIN} L={1u*FIN} M=1 ; bottom mirror diode (a)
-Xmm2  b   a   vssa vss NMOS18 W={20u*FIN} L={1u*FIN} M=1 ; mirror out -> stage-1 out = b
+Xmm1  a   a   vss vss NMOS18 W={20u*FIN} L={1u*FIN} M=1 ; bottom mirror diode (a)
+Xmm2  b   a   vss vss NMOS18 W={20u*FIN} L={1u*FIN} M=1 ; mirror out -> stage-1 out = b
 * --- stage 2: common-source gain + current-source load ---
-Xs2n  o2  b   vssa vss NMOS18 W=40u L=1u M=1
-Xs2p  o2  pmd vdda vdd PMOS18 W=40u L=1u M=1
+Xs2n  o2  b   vss vss NMOS18 W=40u L=1u M=1
+Xs2p  o2  pmd vdd vdd PMOS18 W=40u L=1u M=1
 * --- stage 3: CMOS inverter (rail-to-rail digital out) ---
-Xbp   out o2  vdda vdd PMOS18 W=20u L=0.5u M=1
-Xbn   out o2  vssa vss NMOS18 W=10u L=0.5u M=1
-* --- enable: 2-inverter buffer (always-on rails) + power-gating switches ---
-* EN=1 normal; EN=0 disables: header/footer open -> core isolated (zero Iq), OUT forced low.
-Xei1p ENB   EN    vdd vdd PMOS18 W=4u L=0.5u M=1            ; INV1: ENB = /EN
+Xbp   out o2  vdd vdd PMOS18 W=20u L=0.5u M=1
+Xbn   out o2  vss vss NMOS18 W=10u L=0.5u M=1
+* --- enable / bias-shutdown disable (small switches; core on true rails) ---
+Xei1p ENB   EN    vdd vdd PMOS18 W=4u L=0.5u M=1            ; ENB = /EN
 Xei1n ENB   EN    vss vss NMOS18 W=2u L=0.5u M=1
-Xei2p ENbuf ENB   vdd vdd PMOS18 W=4u L=0.5u M=1            ; INV2: ENbuf = EN (buffered)
+Xei2p ENbuf ENB   vdd vdd PMOS18 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
 Xei2n ENbuf ENB   vss vss NMOS18 W=2u L=0.5u M=1
-Xenhdr vdda ENB   vdd vdd PMOS18 W=400u L=0.5u M=1          ; PMOS header (off when EN=0)
-Xenftr vssa ENbuf vss vss NMOS18 W=200u L=0.5u M=1          ; NMOS footer (off when EN=0)
-Xenpd  out  ENB   vss vss NMOS18 W=20u L=0.5u M=1           ; force OUT low when EN=0
+Xser  ibg_n ENbuf ibp_5uA vss NMOS18 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
+Xshn  ibg_n ENB   vss     vss NMOS18 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
+Xshp  pmd   ENbuf vdd     vdd PMOS18 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
+Xsho2 o2    ENB   vss     vss NMOS18 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)
 .ends CMP_RR

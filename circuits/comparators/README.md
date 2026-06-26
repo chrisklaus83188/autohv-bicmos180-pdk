@@ -109,10 +109,13 @@ DESIGN_NOTES §§ 3–5):
   (source 5 uA *into* it, from vdd) or **`ibn_5uA`** on `CMP_PIN` (sink 5 uA *out* of it, to vss).
   Drive it with a matching current source (e.g. `Ib vdd ibp_5uA 5u`); `vdd`/`vss` are the only
   supply rails (`vss` = ground). The `lp`/`fast` GP variants push 1 uA/10 uA into that same pin.
-- **Enable (`EN`):** active-high. `EN=1` = normal; `EN=0` disables the cell — an
-  on-chip 2-inverter buffer (`ENB=/EN`, `ENbuf=EN`) drives a PMOS header + NMOS footer
-  that power-gate the analog core (**zero static Iq**, leakage only) and **force `OUT`
-  low**. Tie `EN` high if unused; the external bias should also be gated off when `EN=0`.
+- **Enable (`EN`):** active-high. `EN=1` = normal; `EN=0` disables the cell by **bias
+  shutdown** — a 2-inverter buffer (`ENB=/EN`, `ENbuf=EN`) drives small switches that kill
+  the mirror references (a series switch isolates the bias pin + a gate-short ties the
+  mirror gate to its rail), so every branch → **zero static Iq** (leakage only). A clamp on
+  the stage-2 output keeps **`OUT` defined** (low for `CMP_NIN`, high for `CMP_PIN`/`CMP_RR`).
+  The core stays on the true rails (no supply droop); the series switch also isolates the
+  bias pin, so Iq is ~0 even if the external bias stays on. Tie `EN` high if unused.
 - **Saturation sign-off:** every device meant to be saturated keeps **Vds/Vdsat >
   1.4** (5 V & 3.3 V) or **> 1.1** (1.8 V, the documented low-voltage relaxation),
   across process corners, −40/+125 °C, and the rail's supply range. Switches

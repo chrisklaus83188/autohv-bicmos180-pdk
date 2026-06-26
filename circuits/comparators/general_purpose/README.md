@@ -26,7 +26,7 @@ Two-stage transconductance comparator with a rail-to-rail CMOS output:
 - **DC gain:** ~90–100 dB.
 - **Bias:** one reference current `IREF` into the bias pin — `ibp_5uA` (CMP_NIN, sourced from vdd) /
   `ibn_5uA` (CMP_PIN, sunk to vss) (`Itail = 2·IREF`, stage-2 = `4·IREF`). `lp`/`fast` drive 1 uA/10 uA in.
-- **Enable (`EN`):** active-high. `EN=0` power-gates the cell (zero static Iq) and forces `OUT` low; tie high if unused.
+- **Enable (`EN`):** active-high. `EN=0` shuts down the bias (series switch + gate-short on the mirror reference) → zero static Iq, core left on the true rails; an `o2` clamp keeps `OUT` defined (NIN low, PIN high). Tie high if unused.
 
 Two input flavours: `CMP_NIN` (NMOS pair, high common mode) and `CMP_PIN`
 (PMOS pair, low common mode); as a pair they cover the rail (see sign-off).

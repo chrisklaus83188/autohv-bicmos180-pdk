@@ -40,11 +40,15 @@ PMOS-input (`CMP_PIN`, low common mode) is the vertical mirror (swap N↔P, gnd�
   internal swing into a rail-to-rail logic edge and drives the load.
 - **Bias (Xmb, Xtail, Xm6).** One mirror off the bias pin (`ibp_5uA` on CMP_NIN, `ibn_5uA` on CMP_PIN) distributes the
   external reference: `Xmb` = IREF (diode), `Xtail` = 2·IREF, `Xm6` = 4·IREF.
-- **Enable (`EN`).** Active-high power-down: a 2-inverter buffer (`ENB=/EN`, `ENbuf=EN`)
-  drives a PMOS header (`vdd→vdda`) + NMOS footer (`vssa→vss`) that isolate the core when
-  `EN=0` (zero static Iq), with `OUT` forced low. The EN buffer runs on the true rails;
-  the header/footer are sized wide so their IR drop doesn't eat the saturation margin
-  (verified to still pass, incl. the 1.8 V brown-out corner).
+- **Enable (`EN`).** Active-high. `EN=0` shuts the cell down by **killing the bias**, not by
+  gating the supply: a 2-inverter buffer (`ENB=/EN`, `ENbuf=EN`) drives a series switch
+  (`Xser`, bias pin → mirror gate) + a gate-short (`Xsh`, mirror gate → its rail), so the
+  diode reference and every mirrored branch turn off → zero static Iq. The series switch also
+  isolates the bias pin (Iq ~0 even with the external bias on). A clamp (`Xsho2`) on the
+  stage-2 output `o2` keeps `OUT` defined (NIN low; PIN/RR high). The core stays on the true
+  rails — no series-switch droop, saturation sign-off unchanged. NB: clamp `o2`, **not** the
+  diff node `n2` — grounding `n2` opens a sideways path through the always-on input pair, and
+  pulling it to the mirror rail floats `o2` into output-buffer shoot-through.
 
 Nodes: `n1` (mirror diode), `n2` (stage-1 output / stage-2 input), `o2` (stage-2
 output / buffer input), `tail` (pair source). Ports: `inp inn out vdd vss <bias> EN` (`ibp_5uA`/`ibn_5uA` bias; `EN` = active-high enable).
