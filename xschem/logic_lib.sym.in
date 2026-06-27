@@ -1,0 +1,17 @@
+v {xschem version=3.4.8RC file_version=1.3}
+G {}
+K {type=netlist_commands
+format="
+.include __HOME__/autohv_pdk/circuits/async_logic_design/cells.lib
+.global vdd
+"
+template="name=LOGICLIB only_toplevel=true"
+}
+V {}
+S {}
+E {}
+L 4 0 -12 180 -12 {}
+L 4 0 -12 0 8 {}
+L 4 180 -12 180 8 {}
+T {AutoHV logic cells (cells.lib) + .global vdd} 6 -28 0 0 0.22 0.22 {layer=8}
+T {@name} 6 -6 0 0 0.25 0.25 {}

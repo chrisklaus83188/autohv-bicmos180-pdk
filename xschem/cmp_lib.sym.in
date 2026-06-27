@@ -1,0 +1,17 @@
+v {xschem version=3.4.8RC file_version=1.3}
+G {}
+K {type=netlist_commands
+format="
+.include __HOME__/autohv_pdk/circuits/comparators/comparators_all.lib
+.global vdd
+"
+template="name=CMPLIB only_toplevel=true"
+}
+V {}
+S {}
+E {}
+L 4 0 -12 200 -12 {}
+L 4 0 -12 0 8 {}
+L 4 200 -12 200 8 {}
+T {AutoHV comparators (comparators_all.lib) + .global vdd} 6 -28 0 0 0.2 0.2 {layer=8}
+T {@name} 6 -6 0 0 0.25 0.25 {}
