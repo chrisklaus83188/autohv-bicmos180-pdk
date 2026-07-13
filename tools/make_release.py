@@ -17,6 +17,7 @@ What's INCLUDED in the export:
     autohv_bicmos180_case.lib            the device library
     autohv_bicmos180_case_models.inc     the model cards
     qucs-s_symbols/                      schematic symbols for Qucs-S
+    xschem/                              schematic symbols + generators for Xschem
     README.md
     docs/QUICKSTART.md
     docs/MISMATCH_CORNERS.md
@@ -66,6 +67,7 @@ INCLUDE = [
     "autohv_bicmos180_case.lib",
     "autohv_bicmos180_case_models.inc",
     "qucs-s_symbols/",
+    "xschem/",
     "README.md",
     "docs/QUICKSTART.md",
     "docs/MISMATCH_CORNERS.md",
