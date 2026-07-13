@@ -1,0 +1,50 @@
+* Delay / pulse-generator cell usage demo (3.3 V domain).
+*
+* Shows all four edge-asymmetric archetypes from
+* circuits/delay_pulse_design/cells.lib driven by one input edge pair, and
+* measures each cell's 20 ns timing metric at the nominal corner.
+* See circuits/delay_pulse_design/REPORT.md for the full methodology and PVT.
+
+.include "../autohv_bicmos180_case.lib"
+.include "../circuits/delay_pulse_design/cells.lib"
+.param case=0
+* Gear integration: when several RC cells (built on the PDK's behavioral-source
+* RPOLY_HI / CMIM devices) share one deck, trapezoidal ringing can collapse the
+* timestep at t=0.  Gear is the standard, robust choice here.
+.option method=gear maxord=2
+
+Vdd vdd 0 3.3
+* input: rises at 20 ns, high 80 ns, falls at 100 ns
+Vin in 0 PULSE(0 3.3 20n 0.02n 0.02n 80n 400n)
+
+X1 in d_r vdd 0 DLYR_3V3      ; rising-edge delay, falling passthrough
+X2 in d_f vdd 0 DLYF_3V3      ; falling-edge delay, rising passthrough
+X3 in p_h vdd 0 PHI_3V3       ; HIGH pulse on rising edge
+X4 in p_l vdd 0 PLO_3V3       ; LOW  pulse on falling edge
+
+* fanout-of-1 loads
+Cr d_r 0 5f
+Cf d_f 0 5f
+Ch p_h 0 5f
+Cl p_l 0 5f
+
+.control
+tran 0.02n 200n
+
+* DLYR: output rising edge delayed ~20 ns, falling edge passes through (~fast)
+meas tran dlyr_delay trig v(in)  val=1.65 rise=1 targ v(d_r) val=1.65 rise=1
+meas tran dlyr_pass  trig v(in)  val=1.65 fall=1 targ v(d_r) val=1.65 fall=1
+* DLYF: output falling edge delayed ~20 ns, rising edge passes through
+meas tran dlyf_delay trig v(in)  val=1.65 fall=1 targ v(d_f) val=1.65 fall=1
+meas tran dlyf_pass  trig v(in)  val=1.65 rise=1 targ v(d_f) val=1.65 rise=1
+* PHI: ~20 ns HIGH pulse triggered by the input rising edge
+meas tran phi_width  trig v(p_h) val=1.65 rise=1 td=19n targ v(p_h) val=1.65 fall=1 td=19n
+* PLO: ~20 ns LOW pulse triggered by the input falling edge
+meas tran plo_width  trig v(p_l) val=1.65 fall=1 td=99n targ v(p_l) val=1.65 rise=1 td=99n
+
+echo "RES dlyr_delay=$&dlyr_delay dlyr_pass=$&dlyr_pass"
+echo "RES dlyf_delay=$&dlyf_delay dlyf_pass=$&dlyf_pass"
+echo "RES phi_width=$&phi_width plo_width=$&plo_width"
+echo TRAN_OK
+.endc
+.end
