@@ -1,0 +1,49 @@
+.title pvt_PHI
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.option num_threads=2
+Vdd vdd 0 1.8
+Vin in 0 PULSE(0 1.8 20n 0.02n 0.02n 80n 400n)
+XI1 nIN in vdd vdd PMOS18 W=0.7u L=0.18u
+XI2 nIN in 0   0   NMOS18 W=0.3u L=0.18u
+XR nIN nC RPOLY_HI L=55.9375u W=0.5u
+XC nC 0 CMIM_HI L=5.3600u W=5.3600u
+XBP nC in vdd vdd PMOS18 W=0.6u L=0.18u
+XS1 s1 nC 0   0   NMOS18 W=0.3u L=0.18u
+XS2 dco nC s1 0 NMOS18 W=0.3u L=0.18u
+XS3 s2 nC vdd vdd PMOS18 W=0.7u L=0.18u
+XS4 dco nC s2 vdd PMOS18 W=0.7u L=0.18u
+XS5 vdd dco s1 0   NMOS18 W=0.3u L=0.18u
+XS6 0   dco s2 vdd PMOS18 W=0.7u L=0.18u
+XPI1 dbar dco vdd vdd PMOS18 W=0.7u L=0.18u
+XPI2 dbar dco 0   0   NMOS18 W=0.3u L=0.18u
+XG1 nnd in   vdd vdd PMOS18 W=0.7u L=0.18u
+XG2 nnd dbar vdd vdd PMOS18 W=0.7u L=0.18u
+XG3 nnd in   q   0   NMOS18 W=0.3u L=0.18u
+XG4 q   dbar 0   0   NMOS18 W=0.3u L=0.18u
+XO1 out nnd vdd vdd PMOS18 W=0.7u L=0.18u
+XO2 out nnd 0   0   NMOS18 W=0.3u L=0.18u
+CL out 0 5.0f
+.control
+foreach cs 0 1 2 3 4
+ foreach vd 1.620 1.800 1.980
+  foreach tp -55 27 150
+   alterparam case=$cs
+   reset
+   alter Vdd dc=$vd
+   alter Vin pulse=[ 0 $vd 20n 0.02n 0.02n 80n 400n ]
+   option temp=$tp
+   let h=$vd/2
+   let v10=0.1*$vd
+   let v90=0.9*$vd
+   tran 0.05n 200n
+   meas tran m trig v(out) val=$&h rise=1 td=19n targ v(out) val=$&h fall=1 td=19n
+   meas tran fe trig v(in) val=$&h fall=1 targ v(out) val=$&h fall=1
+   meas tran tr trig v(out) val=$&v10 rise=1 td=19n targ v(out) val=$&v90 rise=1 td=19n
+   meas tran tf trig v(out) val=$&v90 fall=1 td=19n targ v(out) val=$&v10 fall=1 td=19n
+   echo "RES cs=$cs vd=$vd tp=$tp m=$&m fe=$&fe tr=$&tr tf=$&tf"
+  end
+ end
+end
+.endc
+.end

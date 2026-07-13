@@ -1,0 +1,52 @@
+* AutoHV BiCMOS 180 PDK -- edge-asymmetric delay & pulse-generator cell library
+*
+* 12 cells = 4 archetypes x 3 voltage domains (1.8 / 3.3 / 5 V).
+* Every cell delivers a 20 ns delay or 20 ns pulse width at the NOMINAL corner
+* (case=0 / TT, nominal supply, 27 C).  See REPORT.md / SUMMARY.md for the full
+* sizing methodology, area breakdown and PVT envelope.
+*
+* Archetypes:
+*   DLYR_<D>  rising-edge delay,  falling-edge passthrough   (non-inverting)
+*   DLYF_<D>  falling-edge delay, rising-edge  passthrough   (non-inverting)
+*   PHI_<D>   logic-HIGH pulse on rising edge, falling-edge passthrough
+*   PLO_<D>   logic-LOW  pulse on falling edge, rising-edge  passthrough
+*   <D> = 1V8 / 3V3 / 5V0
+*
+* Timing element: a high-sheet poly resistor (RPOLY_HI) charges a high-density
+* MIM cap (CMIM_HI); a 6T Schmitt trigger restores a clean fast output edge.
+* A single bypass transistor across the RC node makes one edge fast (the
+* passthrough edge) while the other is RC-delayed.  Resistor and cap areas are
+* balanced near the analytic minimum for a fixed RC.
+*
+* Port order (all cells):   in  out  vdd  gnd
+*
+* Usage:
+*   .include "<repo-root>/autohv_bicmos180_case.lib"
+*   .include "<repo-root>/circuits/delay_pulse_design/cells.lib"
+*   X1 a y vdd 0 DLYR_3V3
+*
+* NOTE: the timing target is met at the nominal corner only; the delay/width
+* tracks RC and spreads roughly -20%/+40% over the full PVT matrix (see REPORT).
+
+
+* This bundle simply includes the 12 per-cell files in cells/.
+* Each subcircuit also lives in its own file cells/<NAME>.lib.
+
+
+* ---- 1.8 V domain ----
+.include "cells/DLYR_1V8.lib"
+.include "cells/DLYF_1V8.lib"
+.include "cells/PHI_1V8.lib"
+.include "cells/PLO_1V8.lib"
+
+* ---- 3.3 V domain ----
+.include "cells/DLYR_3V3.lib"
+.include "cells/DLYF_3V3.lib"
+.include "cells/PHI_3V3.lib"
+.include "cells/PLO_3V3.lib"
+
+* ---- 5.0 V domain ----
+.include "cells/DLYR_5V0.lib"
+.include "cells/DLYF_5V0.lib"
+.include "cells/PHI_5V0.lib"
+.include "cells/PLO_5V0.lib"

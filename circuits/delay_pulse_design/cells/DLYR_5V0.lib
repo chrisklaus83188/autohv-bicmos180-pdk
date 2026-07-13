@@ -1,0 +1,26 @@
+* DLYR_5V0 -- rising-edge delay / falling passthrough
+* AutoHV BiCMOS 180 PDK | 5.0 V domain (NMOS50/PMOS50, L = 0.5 um)
+* ~20 ns delay at the nominal corner (case=0/TT, nominal Vdd, 27 C).
+* Methodology, area and PVT/Monte-Carlo envelope: ../REPORT.md, ../CHARACTERIZATION.md.
+*
+* Port order:  in  out  vdd  gnd
+* The calling deck must also include the PDK device library, e.g.:
+*   .include "<repo-root>/autohv_bicmos180_case.lib"
+*   .include "<this-dir>/DLYR_5V0.lib"
+*   X1 a y vdd 0 DLYR_5V0
+*
+* When several RC cells share one transient deck, add `.option method=gear maxord=2`.
+
+.subckt DLYR_5V0 in out vdd gnd
+XI1 nIN in vdd vdd PMOS50 W=1.15u L=0.5u
+XI2 nIN in gnd gnd NMOS50 W=0.5u L=0.5u
+XR  nIN nC RPOLY_HI L=51.5625u W=0.5u
+XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
+XBP nC in vdd vdd PMOS50 W=1.0u L=0.5u   $ pull-up bypass (fast falling out)
+XS1 s1 nC gnd gnd NMOS50 W=0.5u L=0.5u
+XS2 out nC s1 gnd NMOS50 W=0.5u L=0.5u
+XS3 s2 nC vdd vdd PMOS50 W=1.15u L=0.5u
+XS4 out nC s2 vdd PMOS50 W=1.15u L=0.5u
+XS5 vdd out s1 gnd NMOS50 W=0.5u L=0.5u
+XS6 gnd out s2 vdd PMOS50 W=1.15u L=0.5u
+.ends DLYR_5V0

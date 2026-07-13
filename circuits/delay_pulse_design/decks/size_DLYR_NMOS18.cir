@@ -1,0 +1,25 @@
+.title size_DLYR_NMOS18
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+Vdd vdd 0 1.8
+Vin in 0 PULSE(0 1.8 20n 0.02n 0.02n 80n 200n)
+XI1 nIN in vdd vdd PMOS18 W=0.7u L=0.18u
+XI2 nIN in 0   0   NMOS18 W=0.3u L=0.18u
+XR nIN nC RPOLY_HI L=53.7500u W=0.5u
+XC nC 0 CMIM_HI L=5.3600u W=5.3600u
+XBP nC in vdd vdd PMOS18 W=0.6u L=0.18u
+XS1 s1 nC 0   0   NMOS18 W=0.3u L=0.18u
+XS2 out nC s1 0 NMOS18 W=0.3u L=0.18u
+XS3 s2 nC vdd vdd PMOS18 W=0.7u L=0.18u
+XS4 out nC s2 vdd PMOS18 W=0.7u L=0.18u
+XS5 vdd out s1 0   NMOS18 W=0.3u L=0.18u
+XS6 0   out s2 vdd PMOS18 W=0.7u L=0.18u
+CL out 0 5.0f
+.control
+option temp=27
+tran 0.02n 200n
+meas tran tdr trig v(in) val=0.9 rise=1 targ v(out) val=0.9 rise=1
+meas tran tdf trig v(in) val=0.9 fall=1 targ v(out) val=0.9 fall=1
+echo "RES tdr=$&tdr tdf=$&tdf"
+.endc
+.end

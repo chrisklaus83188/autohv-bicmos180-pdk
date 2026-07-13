@@ -1,0 +1,18 @@
+.title verify DLYF_1V8
+.include "../../../autohv_bicmos180_case.lib"
+.include "../cells.lib"
+.param case=0
+Vd v 0 1.8
+Vi i 0 PULSE(0 1.8 20n 0.02n 0.02n 80n 400n)
+X1 i o v 0 DLYF_1V8
+CL o 0 5f
+.control
+option temp=27
+tran 0.02n 220n
+meas tran tmd trig v(i) val=0.9 fall=1 targ v(o) val=0.9 fall=1
+meas tran tmp trig v(i) val=0.9 rise=1 targ v(o) val=0.9 rise=1
+meas tran lo find v(o) at=10n
+meas tran hi find v(o) at=90n
+echo "RES tmd=$&tmd tmp=$&tmp lo=$&lo hi=$&hi"
+.endc
+.end

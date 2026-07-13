@@ -1,0 +1,26 @@
+* DLYR_1V8 -- rising-edge delay / falling passthrough
+* AutoHV BiCMOS 180 PDK | 1.8 V domain (NMOS18/PMOS18, L = 0.18 um)
+* ~20 ns delay at the nominal corner (case=0/TT, nominal Vdd, 27 C).
+* Methodology, area and PVT/Monte-Carlo envelope: ../REPORT.md, ../CHARACTERIZATION.md.
+*
+* Port order:  in  out  vdd  gnd
+* The calling deck must also include the PDK device library, e.g.:
+*   .include "<repo-root>/autohv_bicmos180_case.lib"
+*   .include "<this-dir>/DLYR_1V8.lib"
+*   X1 a y vdd 0 DLYR_1V8
+*
+* When several RC cells share one transient deck, add `.option method=gear maxord=2`.
+
+.subckt DLYR_1V8 in out vdd gnd
+XI1 nIN in vdd vdd PMOS18 W=0.7u L=0.18u
+XI2 nIN in gnd gnd NMOS18 W=0.3u L=0.18u
+XR  nIN nC RPOLY_HI L=53.7500u W=0.5u
+XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
+XBP nC in vdd vdd PMOS18 W=0.6u L=0.18u   $ pull-up bypass (fast falling out)
+XS1 s1 nC gnd gnd NMOS18 W=0.3u L=0.18u
+XS2 out nC s1 gnd NMOS18 W=0.3u L=0.18u
+XS3 s2 nC vdd vdd PMOS18 W=0.7u L=0.18u
+XS4 out nC s2 vdd PMOS18 W=0.7u L=0.18u
+XS5 vdd out s1 gnd NMOS18 W=0.3u L=0.18u
+XS6 gnd out s2 vdd PMOS18 W=0.7u L=0.18u
+.ends DLYR_1V8

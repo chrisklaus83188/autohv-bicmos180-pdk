@@ -1,0 +1,71 @@
+* Self-check: instantiate every cells.lib subckt and measure its 20 ns metric
+* plus the passthrough edge / idle rest level at the nominal corner.
+.include "../../../autohv_bicmos180_case.lib"
+.include "../cells.lib"
+.param case=0
+* Gear integration: many parallel behavioral-source RC cells in one deck need it
+.option method=gear maxord=2
+
+* one supply per domain
+Vd18 v18 0 1.8
+Vd33 v33 0 3.3
+Vd50 v50 0 5.0
+
+* one stimulus per domain (rise@20n, fall@100n, period 400n)
+Vi18 i18 0 PULSE(0 1.8 20n 0.02n 0.02n 80n 400n)
+Vi33 i33 0 PULSE(0 3.3 20n 0.02n 0.02n 80n 400n)
+Vi50 i50 0 PULSE(0 5.0 20n 0.02n 0.02n 80n 400n)
+
+* ---- 1.8 V ----
+Xa i18 oa v18 0 DLYR_1V8
+Xb i18 ob v18 0 DLYF_1V8
+Xc i18 oc v18 0 PHI_1V8
+Xd i18 od v18 0 PLO_1V8
+* ---- 3.3 V ----
+Xe i33 oe v33 0 DLYR_3V3
+Xf i33 of v33 0 DLYF_3V3
+Xg i33 og v33 0 PHI_3V3
+Xh i33 oh v33 0 PLO_3V3
+* ---- 5.0 V ----
+Xi i50 oi v50 0 DLYR_5V0
+Xj i50 oj v50 0 DLYF_5V0
+Xk i50 ok v50 0 PHI_5V0
+Xl i50 ol v50 0 PLO_5V0
+
+Ca oa 0 5f
+Cb ob 0 5f
+Cc oc 0 5f
+Cd od 0 5f
+Ce oe 0 5f
+Cf of 0 5f
+Cg og 0 5f
+Ch oh 0 5f
+Ci oi 0 5f
+Cj oj 0 5f
+Ck ok 0 5f
+Cl ol 0 5f
+
+.control
+option temp=27
+tran 0.02n 200n
+* delay cells: timed edge + passthrough edge
+meas tran dlyr_d  trig v(i18) val=0.9 rise=1 targ v(oa) val=0.9 rise=1
+meas tran dlyr_p  trig v(i18) val=0.9 fall=1 targ v(oa) val=0.9 fall=1
+meas tran dlyf_d  trig v(i18) val=0.9 fall=1 targ v(ob) val=0.9 fall=1
+meas tran dlyf_p  trig v(i18) val=0.9 rise=1 targ v(ob) val=0.9 rise=1
+* pulse cells: width + idle rest level on the passthrough edge
+meas tran phi_w   trig v(oc) val=0.9 rise=1 td=19n targ v(oc) val=0.9 fall=1 td=19n
+meas tran phi_rest find v(oc) at=190n
+meas tran plo_w   trig v(od) val=0.9 fall=1 td=99n targ v(od) val=0.9 rise=1 td=99n
+meas tran plo_rest find v(od) at=80n
+* 3.3 V spot check
+meas tran dlyr3_d trig v(i33) val=1.65 rise=1 targ v(oe) val=1.65 rise=1
+meas tran phi3_w  trig v(og) val=1.65 rise=1 td=19n targ v(og) val=1.65 fall=1 td=19n
+* 5.0 V spot check
+meas tran dlyf5_d trig v(i50) val=2.5 fall=1 targ v(oj) val=2.5 fall=1
+meas tran plo5_w  trig v(ol) val=2.5 fall=1 td=99n targ v(ol) val=2.5 rise=1 td=99n
+echo "RES dlyr_d=$&dlyr_d dlyr_p=$&dlyr_p dlyf_d=$&dlyf_d dlyf_p=$&dlyf_p"
+echo "RES phi_w=$&phi_w phi_rest=$&phi_rest plo_w=$&plo_w plo_rest=$&plo_rest"
+echo "RES dlyr3_d=$&dlyr3_d phi3_w=$&phi3_w dlyf5_d=$&dlyf5_d plo5_w=$&plo5_w"
+.endc
+.end

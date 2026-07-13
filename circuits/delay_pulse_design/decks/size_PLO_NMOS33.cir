@@ -1,0 +1,35 @@
+.title size_PLO_NMOS33
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+Vdd vdd 0 3.3
+Vin in 0 PULSE(0 3.3 20n 0.02n 0.02n 80n 200n)
+XI1 nIN in vdd vdd PMOS33 W=0.95u L=0.35u
+XI2 nIN in 0   0   NMOS33 W=0.4u L=0.35u
+XR nIN nC RPOLY_HI L=58.1250u W=0.5u
+XC nC 0 CMIM_HI L=5.3600u W=5.3600u
+XBP nC in 0 0 NMOS33 W=0.8u L=0.35u
+XS1 s1 nC 0   0   NMOS33 W=0.4u L=0.35u
+XS2 dco nC s1 0 NMOS33 W=0.4u L=0.35u
+XS3 s2 nC vdd vdd PMOS33 W=0.95u L=0.35u
+XS4 dco nC s2 vdd PMOS33 W=0.95u L=0.35u
+XS5 vdd dco s1 0   NMOS33 W=0.4u L=0.35u
+XS6 0   dco s2 vdd PMOS33 W=0.95u L=0.35u
+XPI1 dbar dco vdd vdd PMOS33 W=0.95u L=0.35u
+XPI2 dbar dco 0   0   NMOS33 W=0.4u L=0.35u
+XG1 p1  in   vdd vdd PMOS33 W=0.95u L=0.35u
+XG2 nnr dbar p1  vdd PMOS33 W=0.95u L=0.35u
+XG3 nnr in   0   0   NMOS33 W=0.4u L=0.35u
+XG4 nnr dbar 0   0   NMOS33 W=0.4u L=0.35u
+XO1 out nnr vdd vdd PMOS33 W=0.95u L=0.35u
+XO2 out nnr 0   0   NMOS33 W=0.4u L=0.35u
+CL out 0 5.0f
+.control
+option temp=27
+tran 0.02n 200n
+meas tran tdr trig v(in) val=1.65 rise=1 targ v(out) val=1.65 rise=1
+meas tran tdf trig v(in) val=1.65 fall=1 targ v(out) val=1.65 fall=1
+meas tran pw trig v(out) val=1.65 fall=1 td=99n targ v(out) val=1.65 rise=1 td=99n
+meas tran vrest find v(out) at=80n
+echo "RES tdr=$&tdr tdf=$&tdf pw=$&pw vrest=$&vrest"
+.endc
+.end

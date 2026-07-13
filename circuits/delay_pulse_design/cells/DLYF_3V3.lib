@@ -1,0 +1,26 @@
+* DLYF_3V3 -- falling-edge delay / rising passthrough
+* AutoHV BiCMOS 180 PDK | 3.3 V domain (NMOS33/PMOS33, L = 0.35 um)
+* ~20 ns delay at the nominal corner (case=0/TT, nominal Vdd, 27 C).
+* Methodology, area and PVT/Monte-Carlo envelope: ../REPORT.md, ../CHARACTERIZATION.md.
+*
+* Port order:  in  out  vdd  gnd
+* The calling deck must also include the PDK device library, e.g.:
+*   .include "<repo-root>/autohv_bicmos180_case.lib"
+*   .include "<this-dir>/DLYF_3V3.lib"
+*   X1 a y vdd 0 DLYF_3V3
+*
+* When several RC cells share one transient deck, add `.option method=gear maxord=2`.
+
+.subckt DLYF_3V3 in out vdd gnd
+XI1 nIN in vdd vdd PMOS33 W=0.95u L=0.35u
+XI2 nIN in gnd gnd NMOS33 W=0.4u L=0.35u
+XR  nIN nC RPOLY_HI L=58.1250u W=0.5u
+XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
+XBP nC in gnd gnd NMOS33 W=0.8u L=0.35u   $ pull-down bypass (fast rising out)
+XS1 s1 nC gnd gnd NMOS33 W=0.4u L=0.35u
+XS2 out nC s1 gnd NMOS33 W=0.4u L=0.35u
+XS3 s2 nC vdd vdd PMOS33 W=0.95u L=0.35u
+XS4 out nC s2 vdd PMOS33 W=0.95u L=0.35u
+XS5 vdd out s1 gnd NMOS33 W=0.4u L=0.35u
+XS6 gnd out s2 vdd PMOS33 W=0.95u L=0.35u
+.ends DLYF_3V3
