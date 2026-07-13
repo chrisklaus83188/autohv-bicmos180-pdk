@@ -31,7 +31,10 @@ What's INCLUDED in the export:
     .github/workflows/regression.yml
 
 What's EXCLUDED:
-    HANDOFF_*.md at repo root            task-specific handoffs
+    HANDOFF_*.md                         task-specific handoffs (archived under
+                                         docs/handoffs/ and docs/backlog/; the
+                                         whole docs/ tree is excluded except the
+                                         handful of files in INCLUDE)
     repro_*.cir  at repo root            task-specific reproducer decks
     tools/                               maintainer scripts (this one)
     release/                             prior export outputs
