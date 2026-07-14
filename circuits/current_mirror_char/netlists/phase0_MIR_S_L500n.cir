@@ -1,0 +1,14 @@
+.title p0_MIR_S_L500n
+.include "/Users/christopherklaus/Documents/ngspice/autohv-bicmos180-pdk/autohv_bicmos180_case.lib"
+.param case=0 PROC_ON=0 MM_ON=0 MM_SIGMA=0
+.options temp=27
+Vdd vdd 0 5
+Iin nin 0 1e-05
+Xin nin nin vdd vdd PMOS50 W=1.61573e-05 L=5e-07 M=1
+Xout nout nin vdd vdd PMOS50 W=1.61573e-05 L=5e-07 M=1
+Vout nout 0 0
+.control
+dc Vout 0 3 0.01
+wrdata /Users/christopherklaus/Documents/ngspice/autohv-bicmos180-pdk/circuits/current_mirror_char/raw/dc.dat i(Vout)
+.endc
+.end

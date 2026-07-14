@@ -1,0 +1,224 @@
+{
+  "locked_L_um": 2.0,
+  "Wmin_um": 0.5,
+  "Vov_target_mV": 200,
+  "Vdd_nominal": 5.0,
+  "designs": {
+    "B_100n": {
+      "name": "B_100n",
+      "strategy": "B",
+      "note": "sized for Vov=200mV at this current",
+      "Iin": 1e-07,
+      "geometry": {
+        "W_um": 0.876825413118452,
+        "L_um": 2.0,
+        "M": 1,
+        "note": "input diode, output, and cascode devices all identical"
+      },
+      "device_op": {
+        "Vov_mV": 201.66299999999993,
+        "VDSAT_mV": 169.54749999999999,
+        "gm_ID": 10.151803852006994,
+        "IC": 5.660977292843097,
+        "VSG_mV": 1431.239,
+        "Vth_mV": 1229.576,
+        "clamped_Wmin": false
+      },
+      "vbias_CW": 1.9000000000000004,
+      "area_um2": {
+        "MIR_S": 3.5073016524738074,
+        "MIR_CS": 7.014603304947615,
+        "MIR_CW": 7.014603304947615
+      }
+    },
+    "B_1u": {
+      "name": "B_1u",
+      "strategy": "B",
+      "note": "sized for Vov=200mV at this current",
+      "Iin": 1e-06,
+      "geometry": {
+        "W_um": 8.29250277017519,
+        "L_um": 2.0,
+        "M": 1,
+        "note": "input diode, output, and cascode devices all identical"
+      },
+      "device_op": {
+        "Vov_mV": 199.00699999999995,
+        "VDSAT_mV": 167.46720000000002,
+        "gm_ID": 10.28632,
+        "IC": 5.476054825915459,
+        "VSG_mV": 1277.9799999999998,
+        "Vth_mV": 1078.973,
+        "clamped_Wmin": false
+      },
+      "vbias_CW": 1.7000000000000002,
+      "area_um2": {
+        "MIR_S": 33.17001108070075,
+        "MIR_CS": 66.3400221614015,
+        "MIR_CW": 66.3400221614015
+      }
+    },
+    "B_10u": {
+      "name": "B_10u",
+      "strategy": "B",
+      "note": "sized for Vov=200mV at this current",
+      "Iin": 1e-05,
+      "geometry": {
+        "W_um": 81.22777689368634,
+        "L_um": 2.0,
+        "M": 1,
+        "note": "input diode, output, and cascode devices all identical"
+      },
+      "device_op": {
+        "Vov_mV": 198.71600000000012,
+        "VDSAT_mV": 167.23160000000001,
+        "gm_ID": 10.298759684341466,
+        "IC": 5.459343879639885,
+        "VSG_mV": 1218.426,
+        "Vth_mV": 1019.7099999999999,
+        "clamped_Wmin": false
+      },
+      "vbias_CW": 1.6,
+      "area_um2": {
+        "MIR_S": 324.91110757474536,
+        "MIR_CS": 649.8222151494907,
+        "MIR_CW": 649.8222151494907
+      }
+    },
+    "B_100u": {
+      "name": "B_100u",
+      "strategy": "B",
+      "note": "sized for Vov=200mV at this current",
+      "Iin": 0.0001,
+      "geometry": {
+        "W_um": 795.652642145707,
+        "L_um": 2.0,
+        "M": 1,
+        "note": "input diode, output, and cascode devices all identical"
+      },
+      "device_op": {
+        "Vov_mV": 200.42500000000007,
+        "VDSAT_mV": 168.5487,
+        "gm_ID": 10.220108239134087,
+        "IC": 5.566102167134876,
+        "VSG_mV": 1212.305,
+        "Vth_mV": 1011.8799999999999,
+        "clamped_Wmin": false
+      },
+      "vbias_CW": 1.6500000000000001,
+      "area_um2": {
+        "MIR_S": 3182.610568582828,
+        "MIR_CS": 6365.221137165656,
+        "MIR_CW": 6365.221137165656
+      }
+    },
+    "A_100n": {
+      "name": "A_100n",
+      "strategy": "A",
+      "note": "10uA-B geometry driven unchanged at this current",
+      "Iin": 1e-07,
+      "geometry": {
+        "W_um": 81.22777689368634,
+        "L_um": 2.0,
+        "M": 1,
+        "note": "input diode, output, and cascode devices all identical"
+      },
+      "device_op": {
+        "Vov_mV": -76.39390000000002,
+        "VDSAT_mV": 42.26597,
+        "gm_ID": 20.413276742714892,
+        "IC": 0.6672871638919691,
+        "VSG_mV": 943.3231,
+        "Vth_mV": 1019.717,
+        "clamped_Wmin": false
+      },
+      "vbias_CW": 1.5,
+      "area_um2": {
+        "MIR_S": 324.91110757474536,
+        "MIR_CS": 649.8222151494907,
+        "MIR_CW": 649.8222151494907
+      }
+    },
+    "A_1u": {
+      "name": "A_1u",
+      "strategy": "A",
+      "note": "10uA-B geometry driven unchanged at this current",
+      "Iin": 1e-06,
+      "geometry": {
+        "W_um": 81.22777689368634,
+        "L_um": 2.0,
+        "M": 1,
+        "note": "input diode, output, and cascode devices all identical"
+      },
+      "device_op": {
+        "Vov_mV": 40.0529999999999,
+        "VDSAT_mV": 68.26203,
+        "gm_ID": 18.49692988148843,
+        "IC": 0.979391375350432,
+        "VSG_mV": 1059.7669999999998,
+        "Vth_mV": 1019.714,
+        "clamped_Wmin": false
+      },
+      "vbias_CW": 1.5,
+      "area_um2": {
+        "MIR_S": 324.91110757474536,
+        "MIR_CS": 649.8222151494907,
+        "MIR_CW": 649.8222151494907
+      }
+    },
+    "A_10u": {
+      "name": "A_10u",
+      "strategy": "A",
+      "note": "10uA-B geometry driven unchanged at this current",
+      "Iin": 1e-05,
+      "geometry": {
+        "W_um": 81.22777689368634,
+        "L_um": 2.0,
+        "M": 1,
+        "note": "input diode, output, and cascode devices all identical"
+      },
+      "device_op": {
+        "Vov_mV": 198.71600000000012,
+        "VDSAT_mV": 167.23160000000001,
+        "gm_ID": 10.298759684341466,
+        "IC": 5.459343879639885,
+        "VSG_mV": 1218.426,
+        "Vth_mV": 1019.7099999999999,
+        "clamped_Wmin": false
+      },
+      "vbias_CW": 1.6,
+      "area_um2": {
+        "MIR_S": 324.91110757474536,
+        "MIR_CS": 649.8222151494907,
+        "MIR_CW": 649.8222151494907
+      }
+    },
+    "A_100u": {
+      "name": "A_100u",
+      "strategy": "A",
+      "note": "10uA-B geometry driven unchanged at this current",
+      "Iin": 0.0001,
+      "geometry": {
+        "W_um": 81.22777689368634,
+        "L_um": 2.0,
+        "M": 1,
+        "note": "input diode, output, and cascode devices all identical"
+      },
+      "device_op": {
+        "Vov_mV": 640.8800000000001,
+        "VDSAT_mV": 508.111,
+        "gm_ID": 2.8675756621216895,
+        "IC": 97.30956485270069,
+        "VSG_mV": 1660.579,
+        "Vth_mV": 1019.699,
+        "clamped_Wmin": false
+      },
+      "vbias_CW": 2.5500000000000007,
+      "area_um2": {
+        "MIR_S": 324.91110757474536,
+        "MIR_CS": 649.8222151494907,
+        "MIR_CW": 649.8222151494907
+      }
+    }
+  }
+}

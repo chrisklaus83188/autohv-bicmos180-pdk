@@ -1,0 +1,70 @@
+{
+  "vsd_collapse_residual": {
+    "B_100n:MIR_S": 0.0,
+    "B_100n:MIR_CS": 0.0,
+    "B_100n:MIR_CW": 0.0,
+    "B_1u:MIR_S": 0.0,
+    "B_1u:MIR_CS": 0.0,
+    "B_1u:MIR_CW": 0.0,
+    "B_10u:MIR_S": 0.0,
+    "B_10u:MIR_CS": 0.0,
+    "B_10u:MIR_CW": 0.0,
+    "B_100u:MIR_S": 0.0,
+    "B_100u:MIR_CS": 0.0,
+    "B_100u:MIR_CW": 0.0,
+    "A_100n:MIR_S": 0.0,
+    "A_100n:MIR_CS": 0.0,
+    "A_100n:MIR_CW": 0.0,
+    "A_1u:MIR_S": 0.0,
+    "A_1u:MIR_CS": 0.0,
+    "A_1u:MIR_CW": 0.0,
+    "A_10u:MIR_S": 0.0,
+    "A_10u:MIR_CS": 0.0,
+    "A_10u:MIR_CW": 0.0,
+    "A_100u:MIR_S": 0.0,
+    "A_100u:MIR_CS": 0.0,
+    "A_100u:MIR_CW": 2.9291250716984574e-16
+  },
+  "uvlo_compliance_vdd3v2": {
+    "MIR_S": {
+      "design": "B_10u",
+      "gain_at_vddhalf": 1.00698066,
+      "droop_0_to_vddhalf_pct": 2.7961518352110803,
+      "vmax_1pct": 0.5729099020313233,
+      "vmax_0p1pct": 0.05712772305653155
+    },
+    "MIR_CS": {
+      "design": "B_10u",
+      "gain_at_vddhalf": 0.999967689,
+      "droop_0_to_vddhalf_pct": 0.004236057427620121,
+      "vmax_1pct": 2.4880482745370855,
+      "vmax_0p1pct": 1.9429280423130588
+    },
+    "MIR_CW": {
+      "design": "B_10u",
+      "gain_at_vddhalf": 1.00004446,
+      "droop_0_to_vddhalf_pct": 0.017661094955301326,
+      "vmax_1pct": 2.9008776721782663,
+      "vmax_0p1pct": 2.7702968266616375
+    }
+  },
+  "leakage_projection": {
+    "B_100n": {
+      "W_um": 0.876825413118452,
+      "AD_um2": 0.5260952478710711,
+      "PD_um": 2.9536508262369034,
+      "Ileak_est_A": 4.107301652473807e-15,
+      "Iin_A": 1e-07,
+      "leak_frac_of_Iin_pct": 4.1073016524738075e-06
+    },
+    "A_100n": {
+      "W_um": 81.22777689368633,
+      "AD_um2": 48.736666136211795,
+      "PD_um": 163.65555378737267,
+      "Ileak_est_A": 3.2551110757474533e-13,
+      "Iin_A": 1e-07,
+      "leak_frac_of_Iin_pct": 0.0003255111075747453
+    },
+    "_note": "[PROJECTION] Js/Jsw are plausible HV p+/nwell values at 150C; the PDK models set AD/AS/PD/PS=0 so simulated leakage is exactly zero. This estimate is walled off and feeds no measured number."
+  }
+}
