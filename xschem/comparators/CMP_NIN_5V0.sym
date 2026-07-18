@@ -1,7 +1,8 @@
 v {xschem version=3.4.8RC file_version=1.3}
 G {}
-K {type=comparator
+K {type=subcircuit
 format="@spiceprefix@name @@inp @@inn @@out @VPWR @VGND @@ibp_5uA @@EN @symname IREF=@IREF WSCALE=@WSCALE WIN=@WIN LIN=@LIN LANA=@LANA FIN=@FIN HYSK=@HYSK"
+spice_sym_def="* CMP_NIN_5V0 body is defined in circuits/comparators/comparators_all.lib"
 template="name=U1 VPWR=vdd VGND=0 spiceprefix=x IREF=5u WSCALE=1 WIN=40u LIN=2u LANA=2u FIN=1 HYSK=0"
 }
 V {}

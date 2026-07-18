@@ -68,7 +68,7 @@ Xei1p ENB   EN    vdd vdd PMOS50 W=4u L=0.5u M=1            ; ENB = /EN
 Xei1n ENB   EN    vss vss NMOS50 W=2u L=0.5u M=1
 Xei2p ENbuf ENB   vdd vdd PMOS50 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
 Xei2n ENbuf ENB   vss vss NMOS50 W=2u L=0.5u M=1
-Xser  ibg ENbuf ibp_5uA vss NMOS50 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xser  ibp_5uA ENbuf ibg vss NMOS50 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
 Xsh   ibg ENB   vss     vss NMOS50 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
 Xsho2 o2  ENbuf vdd     vdd PMOS50 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
 .ends CMP_NIN_5V0
@@ -130,7 +130,7 @@ Xei1p ENB   EN    vdd vdd PMOS33 W=4u L=0.5u M=1            ; ENB = /EN
 Xei1n ENB   EN    vss vss NMOS33 W=2u L=0.5u M=1
 Xei2p ENbuf ENB   vdd vdd PMOS33 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
 Xei2n ENbuf ENB   vss vss NMOS33 W=2u L=0.5u M=1
-Xser  ibg ENbuf ibp_5uA vss NMOS33 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xser  ibp_5uA ENbuf ibg vss NMOS33 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
 Xsh   ibg ENB   vss     vss NMOS33 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
 Xsho2 o2  ENbuf vdd     vdd PMOS33 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
 .ends CMP_NIN_3V3
@@ -192,7 +192,7 @@ Xei1p ENB   EN    vdd vdd PMOS18 W=4u L=0.5u M=1            ; ENB = /EN
 Xei1n ENB   EN    vss vss NMOS18 W=2u L=0.5u M=1
 Xei2p ENbuf ENB   vdd vdd PMOS18 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
 Xei2n ENbuf ENB   vss vss NMOS18 W=2u L=0.5u M=1
-Xser  ibg ENbuf ibp_5uA vss NMOS18 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xser  ibp_5uA ENbuf ibg vss NMOS18 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
 Xsh   ibg ENB   vss     vss NMOS18 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
 Xsho2 o2  ENbuf vdd     vdd PMOS18 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
 .ends CMP_NIN_1V8

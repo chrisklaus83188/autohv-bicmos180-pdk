@@ -14,8 +14,13 @@ emit() {
   local biaslbl="${bias%_5uA}"
   {
     echo "$VER"; echo 'G {}'
-    echo 'K {type=comparator'
+    # type=subcircuit is what lets xschem descend (E) into <name>.sch.  It would
+    # normally also make xschem emit a .subckt from that schematic, colliding
+    # with the real one; spice_sym_def as a COMMENT suppresses that while adding
+    # no second .include.  comparators_all.lib stays the netlist authority.
+    echo 'K {type=subcircuit'
     echo "format=\"@spiceprefix@name @@inp @@inn @@out @VPWR @VGND @@$bias @@EN @symname $pf\""
+    echo "spice_sym_def=\"* $name body is defined in circuits/comparators/comparators_all.lib\""
     echo "template=\"name=U1 VPWR=vdd VGND=0 spiceprefix=x $pt\""
     echo '}'
     echo 'V {}'; echo 'S {}'; echo 'F {}'; echo 'E {}'
