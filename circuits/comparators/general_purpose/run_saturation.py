@@ -55,7 +55,7 @@ def sat_deck(v: dict, case: int, cm: float, vdd: float = 5.0, temp: float = 27) 
     trip = vdd / 2.0
     meass = "\n".join(
         f"  meas dc rat_{d} find r_{d} when v(x1.o2)={trip}" for d in devs)
-    head = (f'.include "{rc.PDK_LIB}"\n.include "{rc.CMP_LIB}"\n'
+    head = (f'.include "{rc.PDK_LIB}"\n.include "{rc.CELLS_LIB}"\n.include "{rc.CMP_LIB}"\n'
             f".param case={case} PROC_ON=0 MM_ON=0\n"
             f".options temp={temp}\n"
             f"Vdd vdd 0 {vdd}\n")

@@ -43,6 +43,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 PDK_LIB = (HERE / ".." / ".." / ".." / "autohv_bicmos180_case.lib").resolve()
 CMP_LIB = (HERE / "cmp_rr.lib").resolve()
+CELLS_LIB = (HERE / ".." / ".." / "async_logic_design" / "cells.lib").resolve()   # EN buffer: PDK INV cells
 
 # Nominal supply for this cell family (overridden per voltage-domain folder).
 VSUP = 1.8
@@ -99,7 +100,7 @@ def bias_line(v: dict) -> str:
 
 
 def header(case: int, proc: int, mm: int) -> str:
-    return (f'.include "{PDK_LIB}"\n.include "{CMP_LIB}"\n'
+    return (f'.include "{PDK_LIB}"\n.include "{CELLS_LIB}"\n.include "{CMP_LIB}"\n'
             f".param case={case} PROC_ON={proc} MM_ON={mm}\n"
             f".param VDD={VSUP:g}\nVdd vdd 0 {VSUP:g}\n")
 

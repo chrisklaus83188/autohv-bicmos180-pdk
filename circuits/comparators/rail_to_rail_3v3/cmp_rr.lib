@@ -51,6 +51,11 @@
 *   The series switch also disconnects the bias pin, so Iq is ~0 even if the
 *   external bias stays on. A clamp (Xsho2) on the stage-2 output o2 holds OUT
 *   defined when disabled (CMP_NIN low; CMP_PIN/CMP_RR high). Tie EN high if unused.
+* Dependency: the EN buffer instantiates the PDK async-logic INV cell, so any deck
+*   using these comparators must ALSO include the cell library:
+*     .include "<repo>/circuits/async_logic_design/cells.lib"
+*   (left as a deck-level include so it cannot collide with a deck that already
+*   includes cells.lib for its own logic.)
 * Pin-name convention: the bias pin encodes the expected current + sense --
 * '5uA' = nominal IREF; 'ibp' = current SOURCED into the block (diode-tied NMOS
 * ref, from vdd); 'ibn' = current SUNK out of the block (diode-tied PMOS ref, to
@@ -85,11 +90,9 @@ Xs2p  o2  pmd vdd vdd PMOS33 W=40u L=1u M=1
 Xbp   out o2  vdd vdd PMOS33 W=20u L=0.5u M=1
 Xbn   out o2  vss vss NMOS33 W=10u L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
-Xei1p ENB   EN    vdd vdd PMOS33 W=4u L=0.5u M=1            ; ENB = /EN
-Xei1n ENB   EN    vss vss NMOS33 W=2u L=0.5u M=1
-Xei2p ENbuf ENB   vdd vdd PMOS33 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
-Xei2n ENbuf ENB   vss vss NMOS33 W=2u L=0.5u M=1
-Xser  ibg_n ENbuf ibp_5uA vss NMOS33 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
+Xei1  EN    ENB   vdd vss INV_3V3                          ; ENB   = /EN  (PDK cell)
+Xei2  ENB   ENbuf vdd vss INV_3V3                          ; ENbuf = EN   (PDK cell)
+Xser  ibp_5uA ENbuf ibg_n vss NMOS33 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
 Xshn  ibg_n ENB   vss     vss NMOS33 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
 Xshp  pmd   ENbuf vdd     vdd PMOS33 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
 Xsho2 o2    ENB   vss     vss NMOS33 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)

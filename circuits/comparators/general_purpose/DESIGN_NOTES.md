@@ -49,6 +49,8 @@ PMOS-input (`CMP_PIN`, low common mode) is the vertical mirror (swap N↔P, gnd�
   rails — no series-switch droop, saturation sign-off unchanged. NB: clamp `o2`, **not** the
   diff node `n2` — grounding `n2` opens a sideways path through the always-on input pair, and
   pulling it to the mirror rail floats `o2` into output-buffer shoot-through.
+  The two inverters are PDK async-logic cells (`INV_5V0`/`INV_3V3`/`INV_1V8`), not discrete
+  devices — so decks must also include `circuits/async_logic_design/cells.lib`.
 
 Nodes: `n1` (mirror diode), `n2` (stage-1 output / stage-2 input), `o2` (stage-2
 output / buffer input), `tail` (pair source). Ports: `inp inn out vdd vss <bias> EN` (`ibp_5uA`/`ibn_5uA` bias; `EN` = active-high enable).

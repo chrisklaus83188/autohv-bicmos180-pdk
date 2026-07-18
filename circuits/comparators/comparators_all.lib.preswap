@@ -7,9 +7,8 @@
 * (electrically identical) -- edit the per-folder libs and regenerate; do not
 * hand-edit this file.
 *
-* Use:  .include the PDK models, the async-logic cell lib, AND this file:
+* Use:  .include the PDK model lib AND this file, then instance by name:
 *   .include "<...>/autohv_bicmos180_case.lib"
-*   .include "<...>/circuits/async_logic_design/cells.lib"   (EN-buffer INV cells)
 *   .include "comparators_all.lib"
 *   X1 inp inn out vdd 0 ibp_5uA vdd CMP_RR_5V0 IREF=5u FIN=1   (last net EN, high=enabled)
 *   Ib vdd ibp_5uA 5u
@@ -65,9 +64,11 @@ Xm6   o2  ibg  vss vss  NMOS50 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
 Xm7   out o2  vdd vdd  PMOS50 W={20u*WSCALE} L=0.5u M=1
 Xm8   out o2  vss vss  NMOS50 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
-Xei1  EN    ENB   vdd vss INV_5V0                          ; ENB   = /EN  (PDK cell)
-Xei2  ENB   ENbuf vdd vss INV_5V0                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg vss NMOS50 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xei1p ENB   EN    vdd vdd PMOS50 W=4u L=0.5u M=1            ; ENB = /EN
+Xei1n ENB   EN    vss vss NMOS50 W=2u L=0.5u M=1
+Xei2p ENbuf ENB   vdd vdd PMOS50 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
+Xei2n ENbuf ENB   vss vss NMOS50 W=2u L=0.5u M=1
+Xser  ibg ENbuf ibp_5uA vss NMOS50 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
 Xsh   ibg ENB   vss     vss NMOS50 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
 Xsho2 o2  ENbuf vdd     vdd PMOS50 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
 .ends CMP_NIN_5V0
@@ -94,9 +95,11 @@ Xm6   o2  ibg  vdd vdd  PMOS50 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
 Xm7   out o2  vdd vdd  PMOS50 W={20u*WSCALE} L=0.5u M=1
 Xm8   out o2  vss vss  NMOS50 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
-Xei1  EN    ENB   vdd vss INV_5V0                          ; ENB   = /EN  (PDK cell)
-Xei2  ENB   ENbuf vdd vss INV_5V0                          ; ENbuf = EN   (PDK cell)
-Xser  ibn_5uA ENB   ibg vdd PMOS50 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xei1p ENB   EN    vdd vdd PMOS50 W=4u L=0.5u M=1            ; ENB = /EN
+Xei1n ENB   EN    vss vss NMOS50 W=2u L=0.5u M=1
+Xei2p ENbuf ENB   vdd vdd PMOS50 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
+Xei2n ENbuf ENB   vss vss NMOS50 W=2u L=0.5u M=1
+Xser  ibg ENB   ibn_5uA vdd PMOS50 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
 Xsh   ibg ENbuf vdd     vdd PMOS50 W=4u L=0.5u M=1          ; gate-short: ibg -> vdd (EN=0)
 Xsho2 o2  ENB   vss     vss NMOS50 W=4u L=0.5u M=1          ; clamp o2 -> vss (OUT high when EN=0)
 .ends CMP_PIN_5V0
@@ -123,9 +126,11 @@ Xm6   o2  ibg  vss vss  NMOS33 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
 Xm7   out o2  vdd vdd  PMOS33 W={20u*WSCALE} L=0.5u M=1
 Xm8   out o2  vss vss  NMOS33 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
-Xei1  EN    ENB   vdd vss INV_3V3                          ; ENB   = /EN  (PDK cell)
-Xei2  ENB   ENbuf vdd vss INV_3V3                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg vss NMOS33 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xei1p ENB   EN    vdd vdd PMOS33 W=4u L=0.5u M=1            ; ENB = /EN
+Xei1n ENB   EN    vss vss NMOS33 W=2u L=0.5u M=1
+Xei2p ENbuf ENB   vdd vdd PMOS33 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
+Xei2n ENbuf ENB   vss vss NMOS33 W=2u L=0.5u M=1
+Xser  ibg ENbuf ibp_5uA vss NMOS33 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
 Xsh   ibg ENB   vss     vss NMOS33 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
 Xsho2 o2  ENbuf vdd     vdd PMOS33 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
 .ends CMP_NIN_3V3
@@ -152,9 +157,11 @@ Xm6   o2  ibg  vdd vdd  PMOS33 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
 Xm7   out o2  vdd vdd  PMOS33 W={20u*WSCALE} L=0.5u M=1
 Xm8   out o2  vss vss  NMOS33 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
-Xei1  EN    ENB   vdd vss INV_3V3                          ; ENB   = /EN  (PDK cell)
-Xei2  ENB   ENbuf vdd vss INV_3V3                          ; ENbuf = EN   (PDK cell)
-Xser  ibn_5uA ENB   ibg vdd PMOS33 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xei1p ENB   EN    vdd vdd PMOS33 W=4u L=0.5u M=1            ; ENB = /EN
+Xei1n ENB   EN    vss vss NMOS33 W=2u L=0.5u M=1
+Xei2p ENbuf ENB   vdd vdd PMOS33 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
+Xei2n ENbuf ENB   vss vss NMOS33 W=2u L=0.5u M=1
+Xser  ibg ENB   ibn_5uA vdd PMOS33 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
 Xsh   ibg ENbuf vdd     vdd PMOS33 W=4u L=0.5u M=1          ; gate-short: ibg -> vdd (EN=0)
 Xsho2 o2  ENB   vss     vss NMOS33 W=4u L=0.5u M=1          ; clamp o2 -> vss (OUT high when EN=0)
 .ends CMP_PIN_3V3
@@ -181,9 +188,11 @@ Xm6   o2  ibg  vss vss  NMOS18 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
 Xm7   out o2  vdd vdd  PMOS18 W={20u*WSCALE} L=0.5u M=1
 Xm8   out o2  vss vss  NMOS18 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
-Xei1  EN    ENB   vdd vss INV_1V8                          ; ENB   = /EN  (PDK cell)
-Xei2  ENB   ENbuf vdd vss INV_1V8                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg vss NMOS18 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xei1p ENB   EN    vdd vdd PMOS18 W=4u L=0.5u M=1            ; ENB = /EN
+Xei1n ENB   EN    vss vss NMOS18 W=2u L=0.5u M=1
+Xei2p ENbuf ENB   vdd vdd PMOS18 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
+Xei2n ENbuf ENB   vss vss NMOS18 W=2u L=0.5u M=1
+Xser  ibg ENbuf ibp_5uA vss NMOS18 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
 Xsh   ibg ENB   vss     vss NMOS18 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
 Xsho2 o2  ENbuf vdd     vdd PMOS18 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
 .ends CMP_NIN_1V8
@@ -210,9 +219,11 @@ Xm6   o2  ibg  vdd vdd  PMOS18 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
 Xm7   out o2  vdd vdd  PMOS18 W={20u*WSCALE} L=0.5u M=1
 Xm8   out o2  vss vss  NMOS18 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
-Xei1  EN    ENB   vdd vss INV_1V8                          ; ENB   = /EN  (PDK cell)
-Xei2  ENB   ENbuf vdd vss INV_1V8                          ; ENbuf = EN   (PDK cell)
-Xser  ibn_5uA ENB   ibg vdd PMOS18 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xei1p ENB   EN    vdd vdd PMOS18 W=4u L=0.5u M=1            ; ENB = /EN
+Xei1n ENB   EN    vss vss NMOS18 W=2u L=0.5u M=1
+Xei2p ENbuf ENB   vdd vdd PMOS18 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
+Xei2n ENbuf ENB   vss vss NMOS18 W=2u L=0.5u M=1
+Xser  ibg ENB   ibn_5uA vdd PMOS18 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
 Xsh   ibg ENbuf vdd     vdd PMOS18 W=4u L=0.5u M=1          ; gate-short: ibg -> vdd (EN=0)
 Xsho2 o2  ENB   vss     vss NMOS18 W=4u L=0.5u M=1          ; clamp o2 -> vss (OUT high when EN=0)
 .ends CMP_PIN_1V8
@@ -250,9 +261,11 @@ Xs2p  o2  pmd vdd vdd PMOS50 W=40u L=1u M=1
 Xbp   out o2  vdd vdd PMOS50 W=20u L=0.5u M=1
 Xbn   out o2  vss vss NMOS50 W=10u L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
-Xei1  EN    ENB   vdd vss INV_5V0                          ; ENB   = /EN  (PDK cell)
-Xei2  ENB   ENbuf vdd vss INV_5V0                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg_n vss NMOS50 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
+Xei1p ENB   EN    vdd vdd PMOS50 W=4u L=0.5u M=1            ; ENB = /EN
+Xei1n ENB   EN    vss vss NMOS50 W=2u L=0.5u M=1
+Xei2p ENbuf ENB   vdd vdd PMOS50 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
+Xei2n ENbuf ENB   vss vss NMOS50 W=2u L=0.5u M=1
+Xser  ibg_n ENbuf ibp_5uA vss NMOS50 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
 Xshn  ibg_n ENB   vss     vss NMOS50 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
 Xshp  pmd   ENbuf vdd     vdd PMOS50 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
 Xsho2 o2    ENB   vss     vss NMOS50 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)
@@ -286,9 +299,11 @@ Xs2p  o2  pmd vdd vdd PMOS33 W=40u L=1u M=1
 Xbp   out o2  vdd vdd PMOS33 W=20u L=0.5u M=1
 Xbn   out o2  vss vss NMOS33 W=10u L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
-Xei1  EN    ENB   vdd vss INV_3V3                          ; ENB   = /EN  (PDK cell)
-Xei2  ENB   ENbuf vdd vss INV_3V3                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg_n vss NMOS33 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
+Xei1p ENB   EN    vdd vdd PMOS33 W=4u L=0.5u M=1            ; ENB = /EN
+Xei1n ENB   EN    vss vss NMOS33 W=2u L=0.5u M=1
+Xei2p ENbuf ENB   vdd vdd PMOS33 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
+Xei2n ENbuf ENB   vss vss NMOS33 W=2u L=0.5u M=1
+Xser  ibg_n ENbuf ibp_5uA vss NMOS33 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
 Xshn  ibg_n ENB   vss     vss NMOS33 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
 Xshp  pmd   ENbuf vdd     vdd PMOS33 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
 Xsho2 o2    ENB   vss     vss NMOS33 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)
@@ -322,9 +337,11 @@ Xs2p  o2  pmd vdd vdd PMOS18 W=40u L=1u M=1
 Xbp   out o2  vdd vdd PMOS18 W=20u L=0.5u M=1
 Xbn   out o2  vss vss NMOS18 W=10u L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
-Xei1  EN    ENB   vdd vss INV_1V8                          ; ENB   = /EN  (PDK cell)
-Xei2  ENB   ENbuf vdd vss INV_1V8                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg_n vss NMOS18 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
+Xei1p ENB   EN    vdd vdd PMOS18 W=4u L=0.5u M=1            ; ENB = /EN
+Xei1n ENB   EN    vss vss NMOS18 W=2u L=0.5u M=1
+Xei2p ENbuf ENB   vdd vdd PMOS18 W=4u L=0.5u M=1            ; ENbuf = EN (buffered)
+Xei2n ENbuf ENB   vss vss NMOS18 W=2u L=0.5u M=1
+Xser  ibg_n ENbuf ibp_5uA vss NMOS18 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
 Xshn  ibg_n ENB   vss     vss NMOS18 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
 Xshp  pmd   ENbuf vdd     vdd PMOS18 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
 Xsho2 o2    ENB   vss     vss NMOS18 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)

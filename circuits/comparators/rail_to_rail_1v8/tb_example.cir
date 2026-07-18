@@ -3,6 +3,7 @@
 * rail (0.15 V) and near the TOP rail (1.65 V) - the rail-to-rail point.
 * OUT is HIGH when V(inp) > V(inn).
 .include "../../../autohv_bicmos180_case.lib"
+.include "../../async_logic_design/cells.lib"   ; PDK INV cells (EN buffer)
 .include "cmp_rr.lib"
 .param case=0 PROC_ON=0 MM_ON=0
 Vdd vdd 0 1.8

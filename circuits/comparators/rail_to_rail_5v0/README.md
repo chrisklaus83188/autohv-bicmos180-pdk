@@ -40,6 +40,8 @@ Active-high enable pin. `EN=1` = normal; `EN=0` shuts the cell down by **killing
 on the bias references (`ibp`/`pmd`) → every branch off → **zero static Iq** (leakage only).
 The series switch also isolates the bias pin, so Iq is ~0 even with the external bias on. A
 clamp on the stage-2 output holds `OUT` high when disabled. Tie `EN` high if unused.
+The EN buffer uses the PDK async-logic `INV_*` cells, so decks must also include
+`circuits/async_logic_design/cells.lib`.
 
 ## Offset ↔ area knob
 

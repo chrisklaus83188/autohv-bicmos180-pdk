@@ -30,6 +30,7 @@ a rail suffix so they coexist: `CMP_{NIN,PIN}_{5V0,3V3,1V8}` (general-purpose) a
 
 ```
 .include "<...>/autohv_bicmos180_case.lib"   ; PDK device models
+.include "<...>/circuits/async_logic_design/cells.lib"   ; PDK INV cells (EN buffer)
 .include "comparators_all.lib"               ; all comparators
 X1 inp inn out vdd 0 ibp_5uA vdd CMP_RR_5V0 IREF=5u FIN=1   ; last net = EN (vdd = enabled)
 Ib vdd ibp_5uA 5u
@@ -116,6 +117,9 @@ DESIGN_NOTES §§ 3–5):
   the stage-2 output keeps **`OUT` defined** (low for `CMP_NIN`, high for `CMP_PIN`/`CMP_RR`).
   The core stays on the true rails (no supply droop); the series switch also isolates the
   bias pin, so Iq is ~0 even if the external bias stays on. Tie `EN` high if unused.
+  The EN buffer instantiates the PDK async-logic **`INV_5V0`/`INV_3V3`/`INV_1V8`** cells
+  rather than discrete transistors, so a deck must also include
+  `circuits/async_logic_design/cells.lib` alongside the PDK models.
 - **Saturation sign-off:** every device meant to be saturated keeps **Vds/Vdsat >
   1.4** (5 V & 3.3 V) or **> 1.1** (1.8 V, the documented low-voltage relaxation),
   across process corners, −40/+125 °C, and the rail's supply range. Switches

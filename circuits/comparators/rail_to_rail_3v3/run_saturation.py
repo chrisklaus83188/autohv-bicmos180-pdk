@@ -39,6 +39,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 PDK_LIB = (HERE / ".." / ".." / ".." / "autohv_bicmos180_case.lib").resolve()
 CMP_LIB = (HERE / "cmp_rr.lib").resolve()
+CELLS_LIB = (HERE / ".." / ".." / "async_logic_design" / "cells.lib").resolve()   # EN buffer: PDK INV cells
 
 VSUP = 3.3
 FIN = {"gp": 1, "lo": 2, "lo2": 3}
@@ -115,7 +116,7 @@ def sat_deck(variant: str, case: int, cm: float, vdd: float, temp: float) -> str
         f"  let r_{d}=abs(@m.x1.{d}.m0[vds])/abs(@m.x1.{d}.m0[vdsat])" for d in devs)
     meass = "\n".join(
         f"  meas dc rat_{d} find r_{d} when v(x1.o2)={trip:g}" for d in devs)
-    return (f'.include "{PDK_LIB}"\n.include "{CMP_LIB}"\n'
+    return (f'.include "{PDK_LIB}"\n.include "{CELLS_LIB}"\n.include "{CMP_LIB}"\n'
             f".param case={case} PROC_ON=0 MM_ON=0\n.options temp={temp}\n"
             f"Vdd vdd 0 {vdd:g}\nVcm cm 0 {cm:g}\n"
             "Vinn inn cm 0\nVinp inp cm 0\n"
