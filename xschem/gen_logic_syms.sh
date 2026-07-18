@@ -97,9 +97,15 @@ EOF
 emit_gate() {
   local gtype="$1" nin="$2" f="$LIB/$3.sym"
   {
+    # type=subcircuit so 'e' descends into the .sch implementation in the GUI.
+    # spice_sym_def is a COMMENT, which suppresses xschem's auto-generated
+    # .subckt (the body stays in cells.lib, included once by logic_lib) without
+    # emitting a second .include. The .sch exposes only the signal ports, so the
+    # symbol's pin count matches and no pin-mismatch errors are raised.
     echo "$VER"; echo 'G {}'
-    echo 'K {type=logicgate'
+    echo 'K {type=subcircuit'
     echo 'format="@spiceprefix@name @pinlist @VPWR @VGND @symname"'
+    echo "spice_sym_def=\"* $3 body is defined in circuits/async_logic_design/cells.lib\""
     echo 'template="name=U1 VPWR=vdd VGND=0 spiceprefix=x"'
     echo '}'
     echo 'V {}'; echo 'S {}'; echo 'F {}'; echo 'E {}'

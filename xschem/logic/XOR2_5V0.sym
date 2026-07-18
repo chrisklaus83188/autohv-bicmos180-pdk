@@ -1,7 +1,8 @@
 v {xschem version=3.4.8RC file_version=1.3}
 G {}
-K {type=logicgate
+K {type=subcircuit
 format="@spiceprefix@name @pinlist @VPWR @VGND @symname"
+spice_sym_def="* XOR2_5V0 body is defined in circuits/async_logic_design/cells.lib"
 template="name=U1 VPWR=vdd VGND=0 spiceprefix=x"
 }
 V {}
