@@ -12,8 +12,8 @@ L 4 0 5 0 30 {}
 L 4 0 -30 0 -5 {}
 L 4 -10 5 10 5 {}
 P 4 4 -0 5 -10 -5 10 -5 0 5 {fill=true}
-B 5 -2.5 -32.5 2.5 -27.5 {name=a dir=inout}
-B 5 -2.5 27.5 2.5 32.5 {name=c dir=inout}
+B 5 -3 -33 3 -27 {name=a dir=inout}
+B 5 -3 27 3 33 {name=c dir=inout}
 T {@spiceprefix@name} 26 -6 0 0 0.2 0.2 {}
 T {@symname} 26 6 0 0 0.18 0.18 {layer=8}
 T {AREA=@AREA} 26 18 0 0 0.16 0.16 {}

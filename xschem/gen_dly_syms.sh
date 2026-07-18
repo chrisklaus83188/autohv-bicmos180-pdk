@@ -25,8 +25,8 @@ emit() {
     echo 'L 4 -32 20 -32 -20 {}'
     echo 'L 4 -50 0 -32 0 {}'
     echo 'L 4 32 0 50 0 {}'
-    echo 'B 5 -52.5 -2.5 -47.5 2.5 {name=in dir=in}'
-    echo 'B 5 47.5 -2.5 52.5 2.5 {name=out dir=out}'
+    echo 'B 5 -53 -3 -47 3 {name=in dir=in}'
+    echo 'B 5 47 -3 53 3 {name=out dir=out}'
     # inner two-row in->out waveform (in = layer 7, out = layer 8)
     echo "P 7 $inw {}"
     echo "P 8 $outw {}"

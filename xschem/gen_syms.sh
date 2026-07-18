@@ -25,9 +25,11 @@ emit_mos() {
     L8)  fmt='W=@W L=@L M=@M MM_SIGMA=@MM_SIGMA'; tdef='W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X'; plabel='W=@W L=@L M=@M';;
     NOL) fmt='W=@W M=@M MM_SIGMA=@MM_SIGMA';      tdef='W=10u M=1 MM_SIGMA=0 spiceprefix=X';      plabel='W=@W M=@M';;
   esac
-  # drain lead sticks out a touch further on HV (clears the drift box)
-  local DTOP=-35 DLO=-37.5 DHI=-32.5
-  [ "$hv" = 1 ] && { DTOP=-40; DLO=-42.5; DHI=-37.5; }
+  # drain lead sticks out a touch further on HV (clears the drift box).
+  # GRID RULE: every pin center is a multiple of 10; pin boxes are 6x6 with
+  # integer edges (center +/-3) so no fractional coords appear in a pin.
+  local DTOP=-40 DLO=-43 DHI=-37
+  [ "$hv" = 1 ] && { DTOP=-60; DLO=-63; DHI=-57; }
   # NOTE: type is a PRIMITIVE (nmos/pmos), NOT subcircuit. type=subcircuit makes
   # xschem emit a spurious empty ".subckt NMOSxx" that collides with the real
   # model in the .lib. A primitive type + @spiceprefix forces the X-prefixed
@@ -44,39 +46,39 @@ emit_mos() {
     #     right rail reached by stretched horizontal drain/source lines; bulk a
     #     short stub tucked in on the right (LV only) ---
     if [ "$pol" = P ]; then
-      echo 'L 4 -30 0 -15 0 {}'        # gate lead (stops at inversion bubble)
-      echo 'A 4 -12.5 0 2.5 0 360 {}'  # PMOS gate inversion bubble
+      echo 'L 4 -40 0 -28 0 {}'       # gate lead (stops at inversion bubble)
+      echo 'A 4 -24 0 4 0 360 {}'     # PMOS gate inversion bubble
     else
-      echo 'L 4 -30 0 -10 0 {}'        # gate lead
+      echo 'L 4 -40 0 -20 0 {}'       # gate lead
     fi
-    echo 'L 4 -10 -15 -10 15 {}'   # gate plate (parallel bar, offset gap)
-    echo 'L 4 -5 -15 -5 15 {}'     # channel/active bar
-    echo 'L 4 -5 -15 15 -15 {}'    # drain horizontal (stretched)
-    echo "L 4 15 -15 15 $DTOP {}"   # drain lead up to pin (extended; HV a touch more)
-    echo 'L 4 -5 15 15 15 {}'      # source horizontal (stretched)
-    echo 'L 4 15 15 15 30 {}'      # source lead down to pin
+    echo 'L 4 -20 -20 -20 20 {}'   # gate plate (parallel bar, offset gap)
+    echo 'L 4 -10 -20 -10 20 {}'   # channel/active bar
+    echo 'L 4 -10 -20 20 -20 {}'   # drain horizontal (stretched)
+    echo "L 4 20 -20 20 $DTOP {}"  # drain lead up to pin (extended; HV a touch more)
+    echo 'L 4 -10 20 20 20 {}'     # source horizontal (stretched)
+    echo 'L 4 20 20 20 40 {}'      # source lead down to pin
     if [ "$hv" = 0 ]; then
-      echo 'L 4 -5 0 10 0 {}'      # bulk stub (short, LV 4-terminal only)
+      echo 'L 4 -10 0 20 0 {}'     # bulk stub (LV 4-terminal only)
     else
-      echo 'L 4 -5 -20 15 -20 {}'  # HV drift line (bisects the box)
-      echo 'L 4 -5 -25 15 -25 {}'  # HV drift box top edge
-      echo 'L 4 -5 -25 -5 -15 {}'  # HV drift box left edge (closes the box; right edge = drain lead)
+      echo 'L 4 -10 -30 20 -30 {}'  # HV drift line (bisects the box)
+      echo 'L 4 -10 -40 20 -40 {}'  # HV drift box top edge
+      echo 'L 4 -10 -40 -10 -20 {}' # HV drift box left edge (right edge = drain lead)
     fi
     # --- source arrow encodes polarity; tip sits at the end of the source line ---
     if [ "$pol" = N ]; then
-      echo 'P 4 4 15 15 10 12 10 18 15 15 {fill=true}'   # NMOS: tip at right edge (outward)
+      echo 'P 4 4 20 20 12 15 12 25 20 20 {fill=true}'    # NMOS: tip at right edge (outward)
     else
-      echo 'P 4 4 -5 15 0 12 0 18 -5 15 {fill=true}'     # PMOS: tip at left edge (inward)
+      echo 'P 4 4 -10 20 -2 15 -2 25 -10 20 {fill=true}'  # PMOS: tip at left edge (inward)
     fi
-    # --- pins: record order = subckt port order  d g s [b] ---
-    echo "B 5 12.5 $DLO 17.5 $DHI {name=d dir=inout}"
-    echo 'B 5 -32.5 -2.5 -27.5 2.5 {name=g dir=in}'
-    echo 'B 5 12.5 27.5 17.5 32.5 {name=s dir=inout}'
-    [ "$hv" = 0 ] && echo 'B 5 7.5 -2.5 12.5 2.5 {name=b dir=in}'
+    # --- pins: record order = subckt port order  d g s [b]; centers on the 10-grid ---
+    echo "B 5 17 $DLO 23 $DHI {name=d dir=inout}"
+    echo 'B 5 -43 -3 -37 3 {name=g dir=in}'
+    echo 'B 5 17 37 23 43 {name=s dir=inout}'
+    [ "$hv" = 0 ] && echo 'B 5 17 -3 23 3 {name=b dir=in}'
     # --- labels: instance, model/symbol, geometry ---
-    echo 'T {@spiceprefix@name} 20 -22 0 0 0.2 0.2 {}'
-    echo 'T {@symname} 20 -10 0 0 0.18 0.18 {layer=8}'
-    echo "T {$plabel} 20 20 0 0 0.16 0.16 {}"
+    echo 'T {@spiceprefix@name} 26 -28 0 0 0.2 0.2 {}'
+    echo 'T {@symname} 26 -14 0 0 0.18 0.18 {layer=8}'
+    echo "T {$plabel} 26 24 0 0 0.16 0.16 {}"
   } > "$f"
   echo "wrote $name.sym (MOS $pol hv=$hv $lmode)"
 }
@@ -167,25 +169,25 @@ glyph_res_poly1() { glyph_res; printf 'L 4 -3 -24 3 -24 {}\n'; }
 glyph_res_poly2() { glyph_res; printf 'L 4 -3 -23 3 -23 {}\nL 4 -3 -26 3 -26 {}\n'; }
 glyph_res_tub() { glyph_res; printf 'L 4 -11 -10 -11 10 {}\nL 4 -11 -10 -9 -10 {}\nL 4 -11 10 -9 10 {}\nL 4 11 -10 11 10 {}\nL 4 11 -10 9 -10 {}\nL 4 11 10 9 10 {}\n'; }
 pins_npn() { cat <<'EOF'
-B 5 17.5 -32.5 22.5 -27.5 {name=c dir=inout}
-B 5 -22.5 -2.5 -17.5 2.5 {name=b dir=in}
-B 5 17.5 27.5 22.5 32.5 {name=e dir=inout}
+B 5 17 -33 23 -27 {name=c dir=inout}
+B 5 -23 -3 -17 3 {name=b dir=in}
+B 5 17 27 23 33 {name=e dir=inout}
 EOF
 }
 pins_pnp() { cat <<'EOF'
-B 5 17.5 27.5 22.5 32.5 {name=c dir=inout}
-B 5 -22.5 -2.5 -17.5 2.5 {name=b dir=in}
-B 5 17.5 -32.5 22.5 -27.5 {name=e dir=inout}
+B 5 17 27 23 33 {name=c dir=inout}
+B 5 -23 -3 -17 3 {name=b dir=in}
+B 5 17 -33 23 -27 {name=e dir=inout}
 EOF
 }
 pins_ac() { cat <<'EOF'
-B 5 -2.5 -32.5 2.5 -27.5 {name=a dir=inout}
-B 5 -2.5 27.5 2.5 32.5 {name=c dir=inout}
+B 5 -3 -33 3 -27 {name=a dir=inout}
+B 5 -3 27 3 33 {name=c dir=inout}
 EOF
 }
 pins_pn() { cat <<'EOF'
-B 5 -2.5 -32.5 2.5 -27.5 {name=p dir=inout}
-B 5 -2.5 27.5 2.5 32.5 {name=n dir=inout}
+B 5 -3 -33 3 -27 {name=p dir=inout}
+B 5 -3 27 3 33 {name=n dir=inout}
 EOF
 }
 # Same idiom as the MOS symbols: primitive type (NOT subcircuit), @spiceprefix

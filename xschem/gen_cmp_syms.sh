@@ -19,36 +19,37 @@ emit() {
     echo "template=\"name=U1 VPWR=vdd VGND=0 spiceprefix=x $pt\""
     echo '}'
     echo 'V {}'; echo 'S {}'; echo 'F {}'; echo 'E {}'
-    # box + inner comparator triangle
-    echo 'L 4 -30 -28 30 -28 {}'
-    echo 'L 4 30 -28 30 28 {}'
-    echo 'L 4 30 28 -30 28 {}'
-    echo 'L 4 -30 28 -30 -28 {}'
-    echo 'L 4 -12 -11 -12 11 {}'
-    echo 'L 4 -12 -11 9 0 {}'
-    echo 'L 4 -12 11 9 0 {}'
+    # box (-30..30 square) + inner comparator triangle
+    echo 'L 4 -30 -30 30 -30 {}'
+    echo 'L 4 30 -30 30 30 {}'
+    echo 'L 4 30 30 -30 30 {}'
+    echo 'L 4 -30 30 -30 -30 {}'
+    echo 'L 4 -12 -12 -12 12 {}'
+    echo 'L 4 -12 -12 10 0 {}'
+    echo 'L 4 -12 12 10 0 {}'
     # inputs (+ top, - bottom), single output; bias + EN on the bottom
-    echo 'L 4 -45 -12 -30 -12 {}'
-    echo 'L 4 -45 12 -30 12 {}'
-    echo 'L 4 30 0 45 0 {}'
-    echo 'L 4 -12 28 -12 42 {}'
-    echo 'L 4 12 28 12 42 {}'
-    echo 'B 5 -47.5 -14.5 -42.5 -9.5 {name=inp dir=in}'
-    echo 'B 5 -47.5 9.5 -42.5 14.5 {name=inn dir=in}'
-    echo 'B 5 42.5 -2.5 47.5 2.5 {name=out dir=out}'
-    echo "B 5 -14.5 39.5 -9.5 44.5 {name=$bias dir=in}"
-    echo 'B 5 9.5 39.5 14.5 44.5 {name=EN dir=in}'
-    echo 'T {+} -27 -16 0 0 0.3 0.3 {}'
-    echo 'T {-} -27 8 0 0 0.4 0.4 {}'
-    echo "T {$biaslbl} -19 31 0 0 0.11 0.11 {}"
-    echo 'T {EN} 7 31 0 0 0.11 0.11 {}'
+    echo 'L 4 -50 -20 -30 -20 {}'
+    echo 'L 4 -50 20 -30 20 {}'
+    echo 'L 4 30 0 50 0 {}'
+    echo 'L 4 -20 30 -20 50 {}'
+    echo 'L 4 20 30 20 50 {}'
+    # pins: centers on the 10-grid, 6x6 boxes with integer edges
+    echo 'B 5 -53 -23 -47 -17 {name=inp dir=in}'
+    echo 'B 5 -53 17 -47 23 {name=inn dir=in}'
+    echo 'B 5 47 -3 53 3 {name=out dir=out}'
+    echo "B 5 -23 47 -17 53 {name=$bias dir=in}"
+    echo 'B 5 17 47 23 53 {name=EN dir=in}'
+    echo 'T {+} -27 -24 0 0 0.3 0.3 {}'
+    echo 'T {-} -27 16 0 0 0.4 0.4 {}'
+    echo "T {$biaslbl} -34 45 0 0 0.11 0.11 {}"
+    echo 'T {EN} 24 45 0 0 0.11 0.11 {}'
     echo "T {$tag} -8 -4 0 0 0.16 0.16 {layer=7}"
     # power BY TEXT
-    echo 'T {@VPWR} 11 -25 0 0 0.16 0.16 {layer=4}'
-    echo 'T {@VGND} 11 18 0 0 0.16 0.16 {layer=4}'
+    echo 'T {@VPWR} 12 -26 0 0 0.16 0.16 {layer=4}'
+    echo 'T {@VGND} 12 20 0 0 0.16 0.16 {layer=4}'
     # names
-    echo 'T {@symname} -30 -37 0 0 0.18 0.18 {layer=8}'
-    echo 'T {@spiceprefix@name} 16 -37 0 0 0.15 0.15 {}'
+    echo 'T {@symname} -30 -40 0 0 0.18 0.18 {layer=8}'
+    echo 'T {@spiceprefix@name} 16 -40 0 0 0.15 0.15 {}'
   } > "$f"
   echo "wrote $name.sym"
 }

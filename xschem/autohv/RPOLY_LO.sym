@@ -20,8 +20,8 @@ L 4 -7.5 -17.5 7.5 -12.5 {}
 L 4 -7.5 -17.5 0 -20 {}
 L 4 0 -30 0 -20 {}
 L 4 -3 -24 3 -24 {}
-B 5 -2.5 -32.5 2.5 -27.5 {name=p dir=inout}
-B 5 -2.5 27.5 2.5 32.5 {name=n dir=inout}
+B 5 -3 -33 3 -27 {name=p dir=inout}
+B 5 -3 27 3 33 {name=n dir=inout}
 T {@spiceprefix@name} 26 -6 0 0 0.2 0.2 {}
 T {@symname} 26 6 0 0 0.18 0.18 {layer=8}
 T {L=@L W=@W} 26 18 0 0 0.16 0.16 {}

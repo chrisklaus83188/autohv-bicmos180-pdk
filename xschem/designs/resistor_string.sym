@@ -13,18 +13,18 @@ L 4 30 60 -30 60 {}
 L 4 -30 60 -30 -60 {}
 L 4 0 -60 0 -80 {}
 L 4 0 60 0 80 {}
-L 4 30 -30 50 -30 {}
+L 4 30 -40 50 -40 {}
 L 4 30 0 50 0 {}
-L 4 30 30 50 30 {}
-B 5 -2.5 -82.5 2.5 -77.5 {name=RP dir=inout}
-B 5 -2.5 77.5 2.5 82.5 {name=RN dir=inout}
-B 5 47.5 27.5 52.5 32.5 {name=UV dir=inout}
-B 5 47.5 -32.5 52.5 -27.5 {name=OV dir=inout}
-B 5 47.5 -2.5 52.5 2.5 {name=REG dir=inout}
+L 4 30 40 50 40 {}
+B 5 -3 -83 3 -77 {name=RP dir=inout}
+B 5 -3 77 3 83 {name=RN dir=inout}
+B 5 47 37 53 43 {name=UV dir=inout}
+B 5 47 -43 53 -37 {name=OV dir=inout}
+B 5 47 -3 53 3 {name=REG dir=inout}
 T {RP} -9 -57 0 0 0.22 0.22 {}
 T {RN} -9 45 0 0 0.22 0.22 {}
-T {OV} 8 -40 0 0 0.2 0.2 {}
+T {OV} 8 -50 0 0 0.2 0.2 {}
 T {REG} 2 -10 0 0 0.2 0.2 {}
-T {UV} 8 20 0 0 0.2 0.2 {}
+T {UV} 8 30 0 0 0.2 0.2 {}
 T {@name} -54 -4 0 0 0.25 0.25 {}
 T {@symname} -34 92 0 0 0.16 0.16 {layer=8}
