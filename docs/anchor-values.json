@@ -1,0 +1,4262 @@
+{
+  "_meta": {
+    "title": "AutoHV BiCMOS180 PDK - phase-1 anchor values",
+    "purpose": "Golden figures of merit with tolerance bands. Phase 2 measures each and asserts against lo/hi.",
+    "companion_report": "docs/model-realism-audit.md",
+    "sigma_convention_note": "PDK mismatch literals are 3-sigma (HSPICE AGAUSS). Sigma anchors here are 1-SIGMA unless stated.",
+    "tags": {
+      "model": "read from the PDK",
+      "physics": "derived, formula in the .md",
+      "industry": "typical published/experience value",
+      "inventory": "cited from characterization-inventory.md"
+    },
+    "qualification_temperature_range_proposed": {
+      "lo": -40,
+      "hi": 150,
+      "units": "degC",
+      "basis": "automotive BCD default; the PDK model files state NO range at all (inventory 4.4)",
+      "tag": "industry"
+    },
+    "read_only": true
+  },
+  "NMOS18": {
+    "cox": {
+      "target": 8.125,
+      "lo": 7.719,
+      "hi": 8.531,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+      "tag": "physics"
+    },
+    "vth_lin": {
+      "target": 0.48,
+      "lo": 0.42,
+      "hi": 0.54,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model vth0; band is the +/-60 mV process-corner expectation for the class",
+      "tag": "industry"
+    },
+    "idsat_density": {
+      "target": 0.575,
+      "lo": 0.55,
+      "hi": 0.6,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "at Vgs=Vrated=1.8 V, L=Lmin for the class",
+      "tag": "industry"
+    },
+    "subthreshold_swing": {
+      "target": 80,
+      "lo": 72,
+      "hi": 96,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "S=n*ln10*kT/q at 300K, n=1.2-1.6",
+      "tag": "industry"
+    },
+    "avt_1sigma": {
+      "target": 4.25,
+      "lo": 2.12,
+      "hi": 6.38,
+      "units": "mV.um",
+      "sigma_convention": "1-sigma",
+      "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 3.50",
+      "tag": "industry"
+    },
+    "cj_area": {
+      "target": 1.0,
+      "lo": 0.7,
+      "hi": 1.4,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "junction area cap at 180nm-era doping",
+      "tag": "industry"
+    },
+    "cjsw_sidewall": {
+      "target": 0.28,
+      "lo": 0.168,
+      "hi": 0.448,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "junction sidewall cap",
+      "tag": "industry"
+    },
+    "cgso_overlap": {
+      "target": 0.22,
+      "lo": 0.132,
+      "hi": 0.352,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "gate overlap cap",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 200000.0,
+      "lo": 20000.0,
+      "hi": 1000000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "W/L=10/0.18-class at Id=10 uA, input-referred; thick-oxide devices lower",
+      "tag": "industry"
+    },
+    "idsat_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 20,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS drive-current spread vs TT",
+      "tag": "industry"
+    },
+    "vth_corner_spread": {
+      "target": 50,
+      "lo": 40,
+      "hi": 60,
+      "units": "mV",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS Vth spread vs TT",
+      "tag": "industry"
+    },
+    "vth_tempco": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT for a bulk MOS",
+      "tag": "industry"
+    },
+    "mobility_tempco_exponent": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.2,
+      "units": "exponent",
+      "sigma_convention": "n/a",
+      "basis": "mu ~ T^x, phonon-limited",
+      "tag": "physics"
+    },
+    "junction_perimeter_set": {
+      "target": 1,
+      "lo": 1,
+      "hi": 1,
+      "units": "boolean",
+      "sigma_convention": "n/a",
+      "basis": "AD/AS/PD/PS must be non-zero on the M0 line; currently 0 on all 8 (audit 3.5)",
+      "tag": "model"
+    }
+  },
+  "PMOS18": {
+    "cox": {
+      "target": 8.125,
+      "lo": 7.719,
+      "hi": 8.531,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+      "tag": "physics"
+    },
+    "vth_lin": {
+      "target": 0.52,
+      "lo": 0.46,
+      "hi": 0.58,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model vth0; band is the +/-60 mV process-corner expectation for the class",
+      "tag": "industry"
+    },
+    "idsat_density": {
+      "target": 0.275,
+      "lo": 0.25,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "at Vgs=Vrated=1.8 V, L=Lmin for the class",
+      "tag": "industry"
+    },
+    "subthreshold_swing": {
+      "target": 80,
+      "lo": 72,
+      "hi": 96,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "S=n*ln10*kT/q at 300K, n=1.2-1.6",
+      "tag": "industry"
+    },
+    "avt_1sigma": {
+      "target": 4.25,
+      "lo": 2.12,
+      "hi": 6.38,
+      "units": "mV.um",
+      "sigma_convention": "1-sigma",
+      "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 3.50",
+      "tag": "industry"
+    },
+    "cj_area": {
+      "target": 1.05,
+      "lo": 0.735,
+      "hi": 1.47,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "junction area cap at 180nm-era doping",
+      "tag": "industry"
+    },
+    "cjsw_sidewall": {
+      "target": 0.3,
+      "lo": 0.18,
+      "hi": 0.48,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "junction sidewall cap",
+      "tag": "industry"
+    },
+    "cgso_overlap": {
+      "target": 0.24,
+      "lo": 0.144,
+      "hi": 0.384,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "gate overlap cap",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 200000.0,
+      "lo": 20000.0,
+      "hi": 1000000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "W/L=10/0.18-class at Id=10 uA, input-referred; thick-oxide devices lower",
+      "tag": "industry"
+    },
+    "idsat_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 20,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS drive-current spread vs TT",
+      "tag": "industry"
+    },
+    "vth_corner_spread": {
+      "target": 50,
+      "lo": 40,
+      "hi": 60,
+      "units": "mV",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS Vth spread vs TT",
+      "tag": "industry"
+    },
+    "vth_tempco": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT for a bulk MOS",
+      "tag": "industry"
+    },
+    "mobility_tempco_exponent": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.2,
+      "units": "exponent",
+      "sigma_convention": "n/a",
+      "basis": "mu ~ T^x, phonon-limited",
+      "tag": "physics"
+    },
+    "junction_perimeter_set": {
+      "target": 1,
+      "lo": 1,
+      "hi": 1,
+      "units": "boolean",
+      "sigma_convention": "n/a",
+      "basis": "AD/AS/PD/PS must be non-zero on the M0 line; currently 0 on all 8 (audit 3.5)",
+      "tag": "model"
+    }
+  },
+  "NMOS33": {
+    "cox": {
+      "target": 5.116,
+      "lo": 4.86,
+      "hi": 5.372,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+      "tag": "physics"
+    },
+    "vth_lin": {
+      "target": 0.66,
+      "lo": 0.6,
+      "hi": 0.72,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model vth0; band is the +/-60 mV process-corner expectation for the class",
+      "tag": "industry"
+    },
+    "idsat_density": {
+      "target": 0.5,
+      "lo": 0.45,
+      "hi": 0.55,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "at Vgs=Vrated=3.3 V, L=Lmin for the class",
+      "tag": "industry"
+    },
+    "subthreshold_swing": {
+      "target": 80,
+      "lo": 72,
+      "hi": 96,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "S=n*ln10*kT/q at 300K, n=1.2-1.6",
+      "tag": "industry"
+    },
+    "avt_1sigma": {
+      "target": 6.75,
+      "lo": 3.38,
+      "hi": 10.12,
+      "units": "mV.um",
+      "sigma_convention": "1-sigma",
+      "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 4.00",
+      "tag": "industry"
+    },
+    "cj_area": {
+      "target": 0.82,
+      "lo": 0.574,
+      "hi": 1.148,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "junction area cap at 180nm-era doping",
+      "tag": "industry"
+    },
+    "cjsw_sidewall": {
+      "target": 0.24,
+      "lo": 0.144,
+      "hi": 0.384,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "junction sidewall cap",
+      "tag": "industry"
+    },
+    "cgso_overlap": {
+      "target": 0.2,
+      "lo": 0.12,
+      "hi": 0.32,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "gate overlap cap",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 200000.0,
+      "lo": 20000.0,
+      "hi": 1000000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "W/L=10/0.18-class at Id=10 uA, input-referred; thick-oxide devices lower",
+      "tag": "industry"
+    },
+    "idsat_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 20,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS drive-current spread vs TT",
+      "tag": "industry"
+    },
+    "vth_corner_spread": {
+      "target": 50,
+      "lo": 40,
+      "hi": 60,
+      "units": "mV",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS Vth spread vs TT",
+      "tag": "industry"
+    },
+    "vth_tempco": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT for a bulk MOS",
+      "tag": "industry"
+    },
+    "mobility_tempco_exponent": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.2,
+      "units": "exponent",
+      "sigma_convention": "n/a",
+      "basis": "mu ~ T^x, phonon-limited",
+      "tag": "physics"
+    },
+    "junction_perimeter_set": {
+      "target": 1,
+      "lo": 1,
+      "hi": 1,
+      "units": "boolean",
+      "sigma_convention": "n/a",
+      "basis": "AD/AS/PD/PS must be non-zero on the M0 line; currently 0 on all 8 (audit 3.5)",
+      "tag": "model"
+    }
+  },
+  "PMOS33": {
+    "cox": {
+      "target": 5.116,
+      "lo": 4.86,
+      "hi": 5.372,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+      "tag": "physics"
+    },
+    "vth_lin": {
+      "target": 0.74,
+      "lo": 0.68,
+      "hi": 0.8,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model vth0; band is the +/-60 mV process-corner expectation for the class",
+      "tag": "industry"
+    },
+    "idsat_density": {
+      "target": 0.24,
+      "lo": 0.2,
+      "hi": 0.28,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "at Vgs=Vrated=3.3 V, L=Lmin for the class",
+      "tag": "industry"
+    },
+    "subthreshold_swing": {
+      "target": 80,
+      "lo": 72,
+      "hi": 96,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "S=n*ln10*kT/q at 300K, n=1.2-1.6",
+      "tag": "industry"
+    },
+    "avt_1sigma": {
+      "target": 6.75,
+      "lo": 3.38,
+      "hi": 10.12,
+      "units": "mV.um",
+      "sigma_convention": "1-sigma",
+      "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 4.00",
+      "tag": "industry"
+    },
+    "cj_area": {
+      "target": 0.88,
+      "lo": 0.616,
+      "hi": 1.232,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "junction area cap at 180nm-era doping",
+      "tag": "industry"
+    },
+    "cjsw_sidewall": {
+      "target": 0.26,
+      "lo": 0.156,
+      "hi": 0.416,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "junction sidewall cap",
+      "tag": "industry"
+    },
+    "cgso_overlap": {
+      "target": 0.22,
+      "lo": 0.132,
+      "hi": 0.352,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "gate overlap cap",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 200000.0,
+      "lo": 20000.0,
+      "hi": 1000000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "W/L=10/0.18-class at Id=10 uA, input-referred; thick-oxide devices lower",
+      "tag": "industry"
+    },
+    "idsat_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 20,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS drive-current spread vs TT",
+      "tag": "industry"
+    },
+    "vth_corner_spread": {
+      "target": 50,
+      "lo": 40,
+      "hi": 60,
+      "units": "mV",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS Vth spread vs TT",
+      "tag": "industry"
+    },
+    "vth_tempco": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT for a bulk MOS",
+      "tag": "industry"
+    },
+    "mobility_tempco_exponent": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.2,
+      "units": "exponent",
+      "sigma_convention": "n/a",
+      "basis": "mu ~ T^x, phonon-limited",
+      "tag": "physics"
+    },
+    "junction_perimeter_set": {
+      "target": 1,
+      "lo": 1,
+      "hi": 1,
+      "units": "boolean",
+      "sigma_convention": "n/a",
+      "basis": "AD/AS/PD/PS must be non-zero on the M0 line; currently 0 on all 8 (audit 3.5)",
+      "tag": "model"
+    }
+  },
+  "NMOS50": {
+    "cox": {
+      "target": 3.139,
+      "lo": 2.982,
+      "hi": 3.296,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+      "tag": "physics"
+    },
+    "vth_lin": {
+      "target": 0.88,
+      "lo": 0.82,
+      "hi": 0.94,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model vth0; band is the +/-60 mV process-corner expectation for the class",
+      "tag": "industry"
+    },
+    "idsat_density": {
+      "target": 0.45,
+      "lo": 0.4,
+      "hi": 0.5,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "at Vgs=Vrated=5.0 V, L=Lmin for the class",
+      "tag": "industry"
+    },
+    "subthreshold_swing": {
+      "target": 80,
+      "lo": 72,
+      "hi": 96,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "S=n*ln10*kT/q at 300K, n=1.2-1.6",
+      "tag": "industry"
+    },
+    "avt_1sigma": {
+      "target": 11.0,
+      "lo": 5.5,
+      "hi": 16.5,
+      "units": "mV.um",
+      "sigma_convention": "1-sigma",
+      "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 4.50",
+      "tag": "industry"
+    },
+    "cj_area": {
+      "target": 0.6,
+      "lo": 0.42,
+      "hi": 0.84,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "junction area cap at 180nm-era doping",
+      "tag": "industry"
+    },
+    "cjsw_sidewall": {
+      "target": 0.18,
+      "lo": 0.108,
+      "hi": 0.288,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "junction sidewall cap",
+      "tag": "industry"
+    },
+    "cgso_overlap": {
+      "target": 0.18,
+      "lo": 0.108,
+      "hi": 0.288,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "gate overlap cap",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 200000.0,
+      "lo": 20000.0,
+      "hi": 1000000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "W/L=10/0.18-class at Id=10 uA, input-referred; thick-oxide devices lower",
+      "tag": "industry"
+    },
+    "idsat_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 20,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS drive-current spread vs TT",
+      "tag": "industry"
+    },
+    "vth_corner_spread": {
+      "target": 50,
+      "lo": 40,
+      "hi": 60,
+      "units": "mV",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS Vth spread vs TT",
+      "tag": "industry"
+    },
+    "vth_tempco": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT for a bulk MOS",
+      "tag": "industry"
+    },
+    "mobility_tempco_exponent": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.2,
+      "units": "exponent",
+      "sigma_convention": "n/a",
+      "basis": "mu ~ T^x, phonon-limited",
+      "tag": "physics"
+    },
+    "junction_perimeter_set": {
+      "target": 1,
+      "lo": 1,
+      "hi": 1,
+      "units": "boolean",
+      "sigma_convention": "n/a",
+      "basis": "AD/AS/PD/PS must be non-zero on the M0 line; currently 0 on all 8 (audit 3.5)",
+      "tag": "model"
+    }
+  },
+  "PMOS50": {
+    "cox": {
+      "target": 3.139,
+      "lo": 2.982,
+      "hi": 3.296,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+      "tag": "physics"
+    },
+    "vth_lin": {
+      "target": 0.98,
+      "lo": 0.92,
+      "hi": 1.04,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model vth0; band is the +/-60 mV process-corner expectation for the class",
+      "tag": "industry"
+    },
+    "idsat_density": {
+      "target": 0.215,
+      "lo": 0.18,
+      "hi": 0.25,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "at Vgs=Vrated=5.0 V, L=Lmin for the class",
+      "tag": "industry"
+    },
+    "subthreshold_swing": {
+      "target": 80,
+      "lo": 72,
+      "hi": 96,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "S=n*ln10*kT/q at 300K, n=1.2-1.6",
+      "tag": "industry"
+    },
+    "avt_1sigma": {
+      "target": 11.0,
+      "lo": 5.5,
+      "hi": 16.5,
+      "units": "mV.um",
+      "sigma_convention": "1-sigma",
+      "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 4.50",
+      "tag": "industry"
+    },
+    "cj_area": {
+      "target": 0.64,
+      "lo": 0.448,
+      "hi": 0.896,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "junction area cap at 180nm-era doping",
+      "tag": "industry"
+    },
+    "cjsw_sidewall": {
+      "target": 0.19,
+      "lo": 0.114,
+      "hi": 0.304,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "junction sidewall cap",
+      "tag": "industry"
+    },
+    "cgso_overlap": {
+      "target": 0.19,
+      "lo": 0.114,
+      "hi": 0.304,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "gate overlap cap",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 200000.0,
+      "lo": 20000.0,
+      "hi": 1000000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "W/L=10/0.18-class at Id=10 uA, input-referred; thick-oxide devices lower",
+      "tag": "industry"
+    },
+    "idsat_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 20,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS drive-current spread vs TT",
+      "tag": "industry"
+    },
+    "vth_corner_spread": {
+      "target": 50,
+      "lo": 40,
+      "hi": 60,
+      "units": "mV",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS Vth spread vs TT",
+      "tag": "industry"
+    },
+    "vth_tempco": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT for a bulk MOS",
+      "tag": "industry"
+    },
+    "mobility_tempco_exponent": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.2,
+      "units": "exponent",
+      "sigma_convention": "n/a",
+      "basis": "mu ~ T^x, phonon-limited",
+      "tag": "physics"
+    },
+    "junction_perimeter_set": {
+      "target": 1,
+      "lo": 1,
+      "hi": 1,
+      "units": "boolean",
+      "sigma_convention": "n/a",
+      "basis": "AD/AS/PD/PS must be non-zero on the M0 line; currently 0 on all 8 (audit 3.5)",
+      "tag": "model"
+    }
+  },
+  "NMOS12": {
+    "cox": {
+      "target": 1.727,
+      "lo": 1.64,
+      "hi": 1.813,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+      "tag": "physics"
+    },
+    "vth_lin": {
+      "target": 1.35,
+      "lo": 1.29,
+      "hi": 1.41,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model vth0; band is the +/-60 mV process-corner expectation for the class",
+      "tag": "industry"
+    },
+    "idsat_density": {
+      "target": 0.3,
+      "lo": 0.2,
+      "hi": 0.4,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "at Vgs=Vrated=12.0 V, L=Lmin for the class",
+      "tag": "industry"
+    },
+    "subthreshold_swing": {
+      "target": 80,
+      "lo": 72,
+      "hi": 96,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "S=n*ln10*kT/q at 300K, n=1.2-1.6",
+      "tag": "industry"
+    },
+    "avt_1sigma": {
+      "target": 20.0,
+      "lo": 10.0,
+      "hi": 30.0,
+      "units": "mV.um",
+      "sigma_convention": "1-sigma",
+      "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 6.00",
+      "tag": "industry"
+    },
+    "cj_area": {
+      "target": 0.35,
+      "lo": 0.245,
+      "hi": 0.49,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "junction area cap at 180nm-era doping",
+      "tag": "industry"
+    },
+    "cjsw_sidewall": {
+      "target": 0.12,
+      "lo": 0.072,
+      "hi": 0.192,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "junction sidewall cap",
+      "tag": "industry"
+    },
+    "cgso_overlap": {
+      "target": 0.15,
+      "lo": 0.09,
+      "hi": 0.24,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "gate overlap cap",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 200000.0,
+      "lo": 20000.0,
+      "hi": 1000000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "W/L=10/0.18-class at Id=10 uA, input-referred; thick-oxide devices lower",
+      "tag": "industry"
+    },
+    "idsat_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 20,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS drive-current spread vs TT",
+      "tag": "industry"
+    },
+    "vth_corner_spread": {
+      "target": 50,
+      "lo": 40,
+      "hi": 60,
+      "units": "mV",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS Vth spread vs TT",
+      "tag": "industry"
+    },
+    "vth_tempco": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT for a bulk MOS",
+      "tag": "industry"
+    },
+    "mobility_tempco_exponent": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.2,
+      "units": "exponent",
+      "sigma_convention": "n/a",
+      "basis": "mu ~ T^x, phonon-limited",
+      "tag": "physics"
+    },
+    "junction_perimeter_set": {
+      "target": 1,
+      "lo": 1,
+      "hi": 1,
+      "units": "boolean",
+      "sigma_convention": "n/a",
+      "basis": "AD/AS/PD/PS must be non-zero on the M0 line; currently 0 on all 8 (audit 3.5)",
+      "tag": "model"
+    }
+  },
+  "PMOS12": {
+    "cox": {
+      "target": 1.644,
+      "lo": 1.562,
+      "hi": 1.727,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+      "tag": "physics"
+    },
+    "vth_lin": {
+      "target": 1.55,
+      "lo": 1.49,
+      "hi": 1.61,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model vth0; band is the +/-60 mV process-corner expectation for the class",
+      "tag": "industry"
+    },
+    "idsat_density": {
+      "target": 0.185,
+      "lo": 0.12,
+      "hi": 0.25,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "at Vgs=Vrated=12.0 V, L=Lmin for the class",
+      "tag": "industry"
+    },
+    "subthreshold_swing": {
+      "target": 80,
+      "lo": 72,
+      "hi": 96,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "S=n*ln10*kT/q at 300K, n=1.2-1.6",
+      "tag": "industry"
+    },
+    "avt_1sigma": {
+      "target": 21.0,
+      "lo": 10.5,
+      "hi": 31.5,
+      "units": "mV.um",
+      "sigma_convention": "1-sigma",
+      "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 6.00",
+      "tag": "industry"
+    },
+    "cj_area": {
+      "target": 0.38,
+      "lo": 0.266,
+      "hi": 0.532,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "junction area cap at 180nm-era doping",
+      "tag": "industry"
+    },
+    "cjsw_sidewall": {
+      "target": 0.13,
+      "lo": 0.078,
+      "hi": 0.208,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "junction sidewall cap",
+      "tag": "industry"
+    },
+    "cgso_overlap": {
+      "target": 0.16,
+      "lo": 0.096,
+      "hi": 0.256,
+      "units": "fF/um",
+      "sigma_convention": "n/a",
+      "basis": "gate overlap cap",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 200000.0,
+      "lo": 20000.0,
+      "hi": 1000000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "W/L=10/0.18-class at Id=10 uA, input-referred; thick-oxide devices lower",
+      "tag": "industry"
+    },
+    "idsat_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 20,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS drive-current spread vs TT",
+      "tag": "industry"
+    },
+    "vth_corner_spread": {
+      "target": 50,
+      "lo": 40,
+      "hi": 60,
+      "units": "mV",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS Vth spread vs TT",
+      "tag": "industry"
+    },
+    "vth_tempco": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT for a bulk MOS",
+      "tag": "industry"
+    },
+    "mobility_tempco_exponent": {
+      "target": -1.5,
+      "lo": -2.0,
+      "hi": -1.2,
+      "units": "exponent",
+      "sigma_convention": "n/a",
+      "basis": "mu ~ T^x, phonon-limited",
+      "tag": "physics"
+    },
+    "junction_perimeter_set": {
+      "target": 1,
+      "lo": 1,
+      "hi": 1,
+      "units": "boolean",
+      "sigma_convention": "n/a",
+      "basis": "AD/AS/PD/PS must be non-zero on the M0 line; currently 0 on all 8 (audit 3.5)",
+      "tag": "model"
+    }
+  },
+  "NDMOS20": {
+    "rsp_specific_ron": {
+      "target": 0.0583,
+      "lo": 0.0333,
+      "hi": 0.0832,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.0166 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 5 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 1053.0,
+      "lo": 665.9,
+      "hi": 1664.9,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 24,
+      "lo": 22.1,
+      "hi": 26.4,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 1.2,
+      "lo": 0.96,
+      "hi": 1.6,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 49.7,
+      "lo": 19.9,
+      "hi": 124.2,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 8.0,
+      "lo": 4.8,
+      "hi": 12.8,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0240; implied A_VT 19.6 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 3e-08,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "PDMOS20": {
+    "rsp_specific_ron": {
+      "target": 0.0469,
+      "lo": 0.0268,
+      "hi": 0.067,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.0134 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 5 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 847.1,
+      "lo": 535.8,
+      "hi": 1339.4,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 22,
+      "lo": 20.2,
+      "hi": 24.2,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 1.1,
+      "lo": 0.88,
+      "hi": 1.47,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 51.9,
+      "lo": 20.8,
+      "hi": 129.8,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 8.0,
+      "lo": 4.8,
+      "hi": 12.8,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0240; implied A_VT 19.6 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 3e-08,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "DNMOS20": {
+    "rsp_specific_ron": {
+      "target": 0.0583,
+      "lo": 0.0333,
+      "hi": 0.0832,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.0166 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 5 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 1053.0,
+      "lo": 665.9,
+      "hi": 1664.9,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 24,
+      "lo": 22.1,
+      "hi": 26.4,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 1.2,
+      "lo": 0.96,
+      "hi": 1.6,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 49.7,
+      "lo": 19.9,
+      "hi": 124.2,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 8.0,
+      "lo": 4.8,
+      "hi": 12.8,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0240; implied A_VT 19.6 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 3e-08,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "NDMOS40": {
+    "rsp_specific_ron": {
+      "target": 0.3296,
+      "lo": 0.1884,
+      "hi": 0.4709,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.0942 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 7 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 4254.6,
+      "lo": 2690.8,
+      "hi": 6727.1,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 48,
+      "lo": 44.2,
+      "hi": 52.8,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 2.4,
+      "lo": 1.92,
+      "hi": 3.2,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 49.2,
+      "lo": 19.7,
+      "hi": 123.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 8.5,
+      "lo": 5.1,
+      "hi": 13.6,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0255; implied A_VT 20.8 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 3e-08,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "PDMOS40": {
+    "rsp_specific_ron": {
+      "target": 0.2805,
+      "lo": 0.1603,
+      "hi": 0.4007,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.0801 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 7 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 3620.6,
+      "lo": 2289.9,
+      "hi": 5724.7,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 45,
+      "lo": 41.4,
+      "hi": 49.5,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 2.25,
+      "lo": 1.8,
+      "hi": 3.0,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 50.8,
+      "lo": 20.3,
+      "hi": 127.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 8.5,
+      "lo": 5.1,
+      "hi": 13.6,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0255; implied A_VT 20.8 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 3e-08,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "NDMOS60": {
+    "rsp_specific_ron": {
+      "target": 1.0059,
+      "lo": 0.5748,
+      "hi": 1.4371,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.2874 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 9 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 10098.6,
+      "lo": 6386.9,
+      "hi": 15967.3,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 75,
+      "lo": 69.0,
+      "hi": 82.5,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 3.75,
+      "lo": 3.0,
+      "hi": 5.0,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 50.6,
+      "lo": 20.2,
+      "hi": 126.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 9.0,
+      "lo": 5.4,
+      "hi": 14.4,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0270; implied A_VT 22.0 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 3e-08,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "PDMOS60": {
+    "rsp_specific_ron": {
+      "target": 0.8466,
+      "lo": 0.4838,
+      "hi": 1.2094,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.2419 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 9 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 8498.7,
+      "lo": 5375.1,
+      "hi": 13437.7,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 70,
+      "lo": 64.4,
+      "hi": 77.0,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 3.5,
+      "lo": 2.8,
+      "hi": 4.67,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 52.4,
+      "lo": 21.0,
+      "hi": 131.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 9.0,
+      "lo": 5.4,
+      "hi": 14.4,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0270; implied A_VT 22.0 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 3e-08,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "NDMOS80": {
+    "rsp_specific_ron": {
+      "target": 1.8165,
+      "lo": 1.038,
+      "hi": 2.595,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.5190 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 11 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 14920.0,
+      "lo": 9436.2,
+      "hi": 23590.6,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 95,
+      "lo": 87.4,
+      "hi": 104.5,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 4.75,
+      "lo": 3.8,
+      "hi": 6.33,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 55.0,
+      "lo": 22.0,
+      "hi": 137.4,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 9.5,
+      "lo": 5.7,
+      "hi": 15.2,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0285; implied A_VT 23.3 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 3e-08,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "PDMOS80": {
+    "rsp_specific_ron": {
+      "target": 1.5868,
+      "lo": 0.9068,
+      "hi": 2.2669,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.4534 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 11 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 13033.6,
+      "lo": 8243.2,
+      "hi": 20608.0,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 90,
+      "lo": 82.8,
+      "hi": 99.0,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 4.5,
+      "lo": 3.6,
+      "hi": 6.0,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 56.5,
+      "lo": 22.6,
+      "hi": 141.2,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 9.5,
+      "lo": 5.7,
+      "hi": 15.2,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0285; implied A_VT 23.3 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 3e-08,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "NDMOS120": {
+    "rsp_specific_ron": {
+      "target": 4.3727,
+      "lo": 2.4987,
+      "hi": 6.2468,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 1.2494 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 15 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 26338.8,
+      "lo": 16658.1,
+      "hi": 41645.2,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 135,
+      "lo": 124.2,
+      "hi": 148.5,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 6.75,
+      "lo": 5.4,
+      "hi": 9.0,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 62.9,
+      "lo": 25.1,
+      "hi": 157.2,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 10.0,
+      "lo": 6.0,
+      "hi": 16.0,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0300; implied A_VT 24.5 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 1.3e-07,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "PDMOS120": {
+    "rsp_specific_ron": {
+      "target": 3.8278,
+      "lo": 2.1873,
+      "hi": 5.4682,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 1.0936 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 15 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 23056.1,
+      "lo": 14582.0,
+      "hi": 36454.9,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 128,
+      "lo": 117.8,
+      "hi": 140.8,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 6.4,
+      "lo": 5.12,
+      "hi": 8.53,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 64.6,
+      "lo": 25.8,
+      "hi": 161.4,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 10.0,
+      "lo": 6.0,
+      "hi": 16.0,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0300; implied A_VT 24.5 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 1.3e-07,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "NDMOS200": {
+    "rsp_specific_ron": {
+      "target": 15.6811,
+      "lo": 8.9606,
+      "hi": 22.4016,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 4.4803 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 22 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 64400.0,
+      "lo": 40730.1,
+      "hi": 101825.3,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 225,
+      "lo": 207.0,
+      "hi": 247.5,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 11.25,
+      "lo": 9.0,
+      "hi": 15.0,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 71.4,
+      "lo": 28.6,
+      "hi": 178.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 11.0,
+      "lo": 6.6,
+      "hi": 17.6,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0330; implied A_VT 26.9 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 1.3e-07,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "PDMOS200": {
+    "rsp_specific_ron": {
+      "target": 16.5668,
+      "lo": 9.4668,
+      "hi": 23.6669,
+      "units": "mOhm.cm^2",
+      "sigma_convention": "n/a",
+      "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 4.7334 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 22 um",
+      "tag": "physics"
+    },
+    "ron_times_w": {
+      "target": 68037.6,
+      "lo": 43030.8,
+      "hi": 107576.9,
+      "units": "Ohm.um",
+      "sigma_convention": "n/a",
+      "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+      "tag": "physics"
+    },
+    "idsat_density": {
+      "target": 0.15,
+      "lo": 0.05,
+      "hi": 0.3,
+      "units": "mA/um",
+      "sigma_convention": "n/a",
+      "basis": "HV LDMOS saturation current density at rated Vgs",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 230,
+      "lo": 211.6,
+      "hi": 253.0,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "model rating; the worst corner must stay above the class name",
+      "tag": "model"
+    },
+    "l_drift_for_bv": {
+      "target": 11.5,
+      "lo": 9.2,
+      "hi": 15.33,
+      "units": "um",
+      "sigma_convention": "n/a",
+      "basis": "lateral sustaining field 15-25 V/um; BV must scale with Leff, currently constant (audit 2.9)",
+      "tag": "physics"
+    },
+    "cgs_per_cell": {
+      "target": 10.4,
+      "lo": 3.5,
+      "hi": 31.0,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*(L_ch+L_ov_s), tox 20-50nm, L_ch=0.6u, L_ov_s=0.3u",
+      "tag": "physics"
+    },
+    "cgdmax_per_cell": {
+      "target": 11.5,
+      "lo": 3.8,
+      "hi": 34.5,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox*W_REF*L_gd, L_gd=1.0 um",
+      "tag": "physics"
+    },
+    "cgdmin_per_cell": {
+      "target": 2.9,
+      "lo": 1.0,
+      "hi": 8.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "Cox_fieldplate*W_REF*L_gd, fp oxide ~4x gate oxide",
+      "tag": "physics"
+    },
+    "cjo_per_cell": {
+      "target": 70.6,
+      "lo": 28.3,
+      "hi": 176.6,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+      "tag": "physics"
+    },
+    "sigma_vth_1sigma_at_wref": {
+      "target": 11.0,
+      "lo": 6.6,
+      "hi": 17.6,
+      "units": "mV",
+      "sigma_convention": "1-sigma",
+      "basis": "proposed unified ladder X(3sigma)=0.0330; implied A_VT 26.9 mV.um vs ~30 expected at tox=30nm",
+      "tag": "physics"
+    },
+    "subthreshold_swing": {
+      "target": 85,
+      "lo": 72,
+      "hi": 100,
+      "units": "mV/dec",
+      "sigma_convention": "n/a",
+      "basis": "n=1+Cdep/Cox must RISE with voltage class; PDK ladder currently falls to n=1.01 (audit 2.8)",
+      "tag": "industry"
+    },
+    "theta": {
+      "target": 0.06,
+      "lo": 0.02,
+      "hi": 0.15,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+      "tag": "physics"
+    },
+    "gm_over_id_ceiling": {
+      "target": 28,
+      "lo": 24,
+      "hi": 32,
+      "units": "1/V",
+      "sigma_convention": "n/a",
+      "basis": "subthreshold ceiling 1/(n*kT/q) for n=1.2-1.5",
+      "tag": "physics"
+    },
+    "body_diode_tt": {
+      "target": 1.3e-07,
+      "lo": 1e-08,
+      "hi": 5e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "HV drift body diode; PDK values 18-155 ns are IN BAND - no action (audit 2.10)",
+      "tag": "industry"
+    },
+    "vto_tempco": {
+      "target": -2.0,
+      "lo": -3.0,
+      "hi": -1.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "dVth/dT; PDK TC_VTO_* is -2.0e-3..-2.8e-3 per degC RELATIVE, self-flagged CALIBRATE",
+      "tag": "industry"
+    },
+    "rd_tempco": {
+      "target": 6500,
+      "lo": 4000,
+      "hi": 9000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
+      "tag": "physics"
+    }
+  },
+  "_vdmos_kp_conditional": {
+    "note": "kp target depends on an unresolved maintainer decision (audit fix #2).",
+    "decision_A_10um_cell": {
+      "description": "W_REF=10u is a genuine drawn 10 um cell - the convention the June-2 cap fix established. RECOMMENDED.",
+      "kp_n": {
+        "target": 0.000767,
+        "lo": 0.00046,
+        "hi": 0.00115,
+        "units": "A/V^2",
+        "sigma_convention": "n/a",
+        "basis": "mu_n*Cox*(W/L_ch), mu_n=400 cm2/Vs, tox 20-50nm, W/L=10/0.6",
+        "tag": "physics"
+      },
+      "kp_p": {
+        "target": 0.000249,
+        "lo": 0.00015,
+        "hi": 0.00037,
+        "units": "A/V^2",
+        "sigma_convention": "n/a",
+        "basis": "mu_p*Cox*(W/L_ch), mu_p=130 cm2/Vs",
+        "tag": "physics"
+      },
+      "kp_from_idsat_density": {
+        "target": 0.00025,
+        "lo": 8e-05,
+        "hi": 0.0005,
+        "units": "A/V^2",
+        "sigma_convention": "n/a",
+        "basis": "kp=2*Id/Vov^2 at Id=(0.05-0.3 mA/um)*10 um, Vov=4 V",
+        "tag": "industry"
+      },
+      "cross_check": "the mu*Cox route and the Idsat-density route differ by ~3x; the drift region rather than the channel limits LDMOS Isat, so prefer the Idsat-density band."
+    },
+    "decision_B_power_die": {
+      "description": "W_REF is a label on a much larger multi-cell power device.",
+      "consequence": "kp/rd/rs stay as-is, but cgs/cgdmax/cjo and the mismatch coefficients must scale UP by the same factor, and the wrapper W_REF=10u comment plus the device_limits.csv W ranges become wrong.",
+      "verdict": "NOT recommended - it contradicts the cjo and body-diode groups, which independently land on the 10 um cell (audit 1)."
+    }
+  },
+  "NPN_LV": {
+    "beta": {
+      "target": 140,
+      "lo": 84,
+      "hi": 224,
+      "units": "",
+      "sigma_convention": "n/a",
+      "basis": "forward beta; band is typical process spread",
+      "tag": "industry"
+    },
+    "beta_corner_spread": {
+      "target": 25,
+      "lo": 20,
+      "hi": 30,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS beta spread",
+      "tag": "industry"
+    },
+    "early_voltage": {
+      "target": 80,
+      "lo": 40,
+      "hi": 160,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "VAF",
+      "tag": "industry"
+    },
+    "ft_at_peak": {
+      "target": 3.54,
+      "lo": 1.77,
+      "hi": 7.07,
+      "units": "GHz",
+      "sigma_convention": "n/a",
+      "basis": "1/(2*pi*tf) upper bound; effective fT is lower once cje+cjc load gm (audit 4.1)",
+      "tag": "physics"
+    },
+    "ft_times_bvceo_johnson": {
+      "target": 14.4,
+      "lo": 0,
+      "hi": 200,
+      "units": "GHz.V",
+      "sigma_convention": "n/a",
+      "basis": "Johnson limit E_max*v_sat/(2*pi) ~ 200 GHz.V for silicon; must not exceed",
+      "tag": "physics"
+    },
+    "bvcbo": {
+      "target": 14,
+      "lo": 12.6,
+      "hi": 15.4,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "subckt .param BVCBO",
+      "tag": "model"
+    },
+    "bvceo_implied": {
+      "target": 4.07,
+      "lo": 3.5,
+      "hi": 7.0,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "BVCBO/beta^(1/n), n=MAV_BJT=4; NOT modelled or documented anywhere (audit 4.1)",
+      "tag": "physics"
+    },
+    "is_current_density": {
+      "target": 5e-18,
+      "lo": 1e-18,
+      "hi": 1e-17,
+      "units": "A/um^2",
+      "sigma_convention": "n/a",
+      "basis": "requires a DECLARED emitter area for AREA=1, which the PDK does not state (audit 4.3)",
+      "tag": "industry"
+    },
+    "cje_density": {
+      "target": 3.0,
+      "lo": 1.0,
+      "hi": 5.0,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "emitter junction, same declared area as is",
+      "tag": "industry"
+    },
+    "cjc_density": {
+      "target": 1.0,
+      "lo": 0.5,
+      "hi": 1.5,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "collector junction",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 3000.0,
+      "lo": 100.0,
+      "hi": 10000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "BJT 1/f corner; PDK gives 3.12 MHz and bias-INDEPENDENT because af=1 (audit 4.2). Needs af 1.5-2.0.",
+      "tag": "industry"
+    },
+    "is_corner_spread": {
+      "target": 20,
+      "lo": 10,
+      "hi": 30,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "should give 5-15 mV of Vbe corner spread; PDK gives 6 percent = 1.5 mV",
+      "tag": "industry"
+    },
+    "vbe_at_100uA": {
+      "target": 0.7,
+      "lo": 0.62,
+      "hi": 0.78,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "n*Vt*ln(I/is)",
+      "tag": "physics"
+    }
+  },
+  "PNP_LAT": {
+    "beta": {
+      "target": 35,
+      "lo": 21,
+      "hi": 56,
+      "units": "",
+      "sigma_convention": "n/a",
+      "basis": "forward beta; band is typical process spread",
+      "tag": "industry"
+    },
+    "beta_corner_spread": {
+      "target": 25,
+      "lo": 20,
+      "hi": 30,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS beta spread",
+      "tag": "industry"
+    },
+    "early_voltage": {
+      "target": 35,
+      "lo": 18,
+      "hi": 70,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "VAF",
+      "tag": "industry"
+    },
+    "ft_at_peak": {
+      "target": 0.88,
+      "lo": 0.44,
+      "hi": 1.77,
+      "units": "GHz",
+      "sigma_convention": "n/a",
+      "basis": "1/(2*pi*tf) upper bound; effective fT is lower once cje+cjc load gm (audit 4.1)",
+      "tag": "physics"
+    },
+    "ft_times_bvceo_johnson": {
+      "target": 6.5,
+      "lo": 0,
+      "hi": 200,
+      "units": "GHz.V",
+      "sigma_convention": "n/a",
+      "basis": "Johnson limit E_max*v_sat/(2*pi) ~ 200 GHz.V for silicon; must not exceed",
+      "tag": "physics"
+    },
+    "bvcbo": {
+      "target": 18,
+      "lo": 16.2,
+      "hi": 19.8,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "subckt .param BVCBO",
+      "tag": "model"
+    },
+    "bvceo_implied": {
+      "target": 7.4,
+      "lo": 4.5,
+      "hi": 9.0,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "BVCBO/beta^(1/n), n=MAV_BJT=4; NOT modelled or documented anywhere (audit 4.1)",
+      "tag": "physics"
+    },
+    "is_current_density": {
+      "target": 5e-18,
+      "lo": 1e-18,
+      "hi": 1e-17,
+      "units": "A/um^2",
+      "sigma_convention": "n/a",
+      "basis": "requires a DECLARED emitter area for AREA=1, which the PDK does not state (audit 4.3)",
+      "tag": "industry"
+    },
+    "cje_density": {
+      "target": 3.0,
+      "lo": 1.0,
+      "hi": 5.0,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "emitter junction, same declared area as is",
+      "tag": "industry"
+    },
+    "cjc_density": {
+      "target": 1.0,
+      "lo": 0.5,
+      "hi": 1.5,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "collector junction",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 3000.0,
+      "lo": 100.0,
+      "hi": 10000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "BJT 1/f corner; PDK gives 3.12 MHz and bias-INDEPENDENT because af=1 (audit 4.2). Needs af 1.5-2.0.",
+      "tag": "industry"
+    },
+    "is_corner_spread": {
+      "target": 20,
+      "lo": 10,
+      "hi": 30,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "should give 5-15 mV of Vbe corner spread; PDK gives 6 percent = 1.5 mV",
+      "tag": "industry"
+    },
+    "vbe_at_100uA": {
+      "target": 0.7,
+      "lo": 0.62,
+      "hi": 0.78,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "n*Vt*ln(I/is)",
+      "tag": "physics"
+    }
+  },
+  "NPN_HV": {
+    "beta": {
+      "target": 80,
+      "lo": 48,
+      "hi": 128,
+      "units": "",
+      "sigma_convention": "n/a",
+      "basis": "forward beta; band is typical process spread",
+      "tag": "industry"
+    },
+    "beta_corner_spread": {
+      "target": 25,
+      "lo": 20,
+      "hi": 30,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS beta spread",
+      "tag": "industry"
+    },
+    "early_voltage": {
+      "target": 120,
+      "lo": 60,
+      "hi": 240,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "VAF",
+      "tag": "industry"
+    },
+    "ft_at_peak": {
+      "target": 1.77,
+      "lo": 0.88,
+      "hi": 3.54,
+      "units": "GHz",
+      "sigma_convention": "n/a",
+      "basis": "1/(2*pi*tf) upper bound; effective fT is lower once cje+cjc load gm (audit 4.1)",
+      "tag": "physics"
+    },
+    "ft_times_bvceo_johnson": {
+      "target": 26.6,
+      "lo": 0,
+      "hi": 200,
+      "units": "GHz.V",
+      "sigma_convention": "n/a",
+      "basis": "Johnson limit E_max*v_sat/(2*pi) ~ 200 GHz.V for silicon; must not exceed",
+      "tag": "physics"
+    },
+    "bvcbo": {
+      "target": 45,
+      "lo": 40.5,
+      "hi": 49.5,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "subckt .param BVCBO",
+      "tag": "model"
+    },
+    "bvceo_implied": {
+      "target": 15.03,
+      "lo": 11.25,
+      "hi": 22.5,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "BVCBO/beta^(1/n), n=MAV_BJT=4; NOT modelled or documented anywhere (audit 4.1)",
+      "tag": "physics"
+    },
+    "is_current_density": {
+      "target": 5e-18,
+      "lo": 1e-18,
+      "hi": 1e-17,
+      "units": "A/um^2",
+      "sigma_convention": "n/a",
+      "basis": "requires a DECLARED emitter area for AREA=1, which the PDK does not state (audit 4.3)",
+      "tag": "industry"
+    },
+    "cje_density": {
+      "target": 3.0,
+      "lo": 1.0,
+      "hi": 5.0,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "emitter junction, same declared area as is",
+      "tag": "industry"
+    },
+    "cjc_density": {
+      "target": 1.0,
+      "lo": 0.5,
+      "hi": 1.5,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "collector junction",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 3000.0,
+      "lo": 100.0,
+      "hi": 10000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "BJT 1/f corner; PDK gives 3.12 MHz and bias-INDEPENDENT because af=1 (audit 4.2). Needs af 1.5-2.0.",
+      "tag": "industry"
+    },
+    "is_corner_spread": {
+      "target": 20,
+      "lo": 10,
+      "hi": 30,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "should give 5-15 mV of Vbe corner spread; PDK gives 6 percent = 1.5 mV",
+      "tag": "industry"
+    },
+    "vbe_at_100uA": {
+      "target": 0.7,
+      "lo": 0.62,
+      "hi": 0.78,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "n*Vt*ln(I/is)",
+      "tag": "physics"
+    }
+  },
+  "PNP_HV": {
+    "beta": {
+      "target": 18,
+      "lo": 11,
+      "hi": 29,
+      "units": "",
+      "sigma_convention": "n/a",
+      "basis": "forward beta; band is typical process spread",
+      "tag": "industry"
+    },
+    "beta_corner_spread": {
+      "target": 25,
+      "lo": 20,
+      "hi": 30,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS beta spread",
+      "tag": "industry"
+    },
+    "early_voltage": {
+      "target": 50,
+      "lo": 25,
+      "hi": 100,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "VAF",
+      "tag": "industry"
+    },
+    "ft_at_peak": {
+      "target": 0.64,
+      "lo": 0.32,
+      "hi": 1.27,
+      "units": "GHz",
+      "sigma_convention": "n/a",
+      "basis": "1/(2*pi*tf) upper bound; effective fT is lower once cje+cjc load gm (audit 4.1)",
+      "tag": "physics"
+    },
+    "ft_times_bvceo_johnson": {
+      "target": 9.9,
+      "lo": 0,
+      "hi": 200,
+      "units": "GHz.V",
+      "sigma_convention": "n/a",
+      "basis": "Johnson limit E_max*v_sat/(2*pi) ~ 200 GHz.V for silicon; must not exceed",
+      "tag": "physics"
+    },
+    "bvcbo": {
+      "target": 32,
+      "lo": 28.8,
+      "hi": 35.2,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "subckt .param BVCBO",
+      "tag": "model"
+    },
+    "bvceo_implied": {
+      "target": 15.52,
+      "lo": 8.0,
+      "hi": 16.0,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "BVCBO/beta^(1/n), n=MAV_BJT=4; NOT modelled or documented anywhere (audit 4.1)",
+      "tag": "physics"
+    },
+    "is_current_density": {
+      "target": 5e-18,
+      "lo": 1e-18,
+      "hi": 1e-17,
+      "units": "A/um^2",
+      "sigma_convention": "n/a",
+      "basis": "requires a DECLARED emitter area for AREA=1, which the PDK does not state (audit 4.3)",
+      "tag": "industry"
+    },
+    "cje_density": {
+      "target": 3.0,
+      "lo": 1.0,
+      "hi": 5.0,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "emitter junction, same declared area as is",
+      "tag": "industry"
+    },
+    "cjc_density": {
+      "target": 1.0,
+      "lo": 0.5,
+      "hi": 1.5,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "collector junction",
+      "tag": "industry"
+    },
+    "flicker_corner": {
+      "target": 3000.0,
+      "lo": 100.0,
+      "hi": 10000.0,
+      "units": "Hz",
+      "sigma_convention": "n/a",
+      "basis": "BJT 1/f corner; PDK gives 3.12 MHz and bias-INDEPENDENT because af=1 (audit 4.2). Needs af 1.5-2.0.",
+      "tag": "industry"
+    },
+    "is_corner_spread": {
+      "target": 20,
+      "lo": 10,
+      "hi": 30,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "should give 5-15 mV of Vbe corner spread; PDK gives 6 percent = 1.5 mV",
+      "tag": "industry"
+    },
+    "vbe_at_100uA": {
+      "target": 0.7,
+      "lo": 0.62,
+      "hi": 0.78,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "n*Vt*ln(I/is)",
+      "tag": "physics"
+    }
+  },
+  "DIO_PN": {
+    "vf_at_1mA": {
+      "target": 0.669,
+      "lo": 0.569,
+      "hi": 0.769,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "n*Vt*ln(I/is)",
+      "tag": "physics"
+    },
+    "n_ideality": {
+      "target": 1.05,
+      "lo": 1.0,
+      "hi": 1.12,
+      "units": "",
+      "sigma_convention": "n/a",
+      "basis": "PN ~1.0, Schottky 1.05-1.1",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 100,
+      "lo": 85.0,
+      "hi": 115.0,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "reverse breakdown",
+      "tag": "model"
+    },
+    "tt_transit_time": {
+      "target": 6e-09,
+      "lo": 1.8e-09,
+      "hi": 1.8e-08,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "PN 10-100 ns, fast-recovery 1-10 ns",
+      "tag": "industry"
+    },
+    "cjo_density": {
+      "target": 1.0,
+      "lo": 0.5,
+      "hi": 2.0,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "PN junction at 180nm doping; needs a declared AREA=1 cell (audit 4.3)",
+      "tag": "industry"
+    }
+  },
+  "DIO_FAST": {
+    "vf_at_1mA": {
+      "target": 0.558,
+      "lo": 0.474,
+      "hi": 0.642,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "n*Vt*ln(I/is)",
+      "tag": "physics"
+    },
+    "n_ideality": {
+      "target": 1.03,
+      "lo": 0.98,
+      "hi": 1.1,
+      "units": "",
+      "sigma_convention": "n/a",
+      "basis": "PN ~1.0, Schottky 1.05-1.1",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 80,
+      "lo": 68.0,
+      "hi": 92.0,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "reverse breakdown",
+      "tag": "model"
+    },
+    "tt_transit_time": {
+      "target": 2e-09,
+      "lo": 6e-10,
+      "hi": 6.000000000000001e-09,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "PN 10-100 ns, fast-recovery 1-10 ns",
+      "tag": "industry"
+    },
+    "cjo_density": {
+      "target": 1.0,
+      "lo": 0.5,
+      "hi": 2.0,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "PN junction at 180nm doping; needs a declared AREA=1 cell (audit 4.3)",
+      "tag": "industry"
+    }
+  },
+  "DIO_SCH": {
+    "vf_at_1mA": {
+      "target": 0.291,
+      "lo": 0.247,
+      "hi": 0.335,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "n*Vt*ln(I/is)",
+      "tag": "physics"
+    },
+    "n_ideality": {
+      "target": 1.08,
+      "lo": 1.03,
+      "hi": 1.15,
+      "units": "",
+      "sigma_convention": "n/a",
+      "basis": "PN ~1.0, Schottky 1.05-1.1",
+      "tag": "industry"
+    },
+    "bv": {
+      "target": 45,
+      "lo": 38.2,
+      "hi": 51.7,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "reverse breakdown",
+      "tag": "model"
+    },
+    "tt_transit_time": {
+      "target": 0.0,
+      "lo": 0.0,
+      "hi": 1e-12,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "Schottky is majority-carrier: tt MUST be 0. PDK has 3e-10, adding 107 pF of spurious diffusion cap at 10 mA (audit 4.6)",
+      "tag": "physics"
+    },
+    "cjo_density": {
+      "target": 1.0,
+      "lo": 0.5,
+      "hi": 2.0,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "PN junction at 180nm doping; needs a declared AREA=1 cell (audit 4.3)",
+      "tag": "industry"
+    }
+  },
+  "DZ_5V6": {
+    "bv": {
+      "target": 5.6,
+      "lo": 5.32,
+      "hi": 5.88,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "zener breakdown, +/-5 percent process",
+      "tag": "model"
+    },
+    "cjo_density": {
+      "target": 3.326,
+      "lo": 1.663,
+      "hi": 6.652,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "sqrt(q*eps_si*Neff/(2*Vbi)), Neff=1e18 cm^-3, Vbi=0.75. PDK cjo implies 0.027-0.053 mm^2 (audit 4.4)",
+      "tag": "physics"
+    },
+    "cjo_at_100um2_cell": {
+      "target": 332.6,
+      "lo": 166.3,
+      "hi": 665.2,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "IF AREA=1 is declared as 100 um^2. Note DZ_12 and DZ_24 land nearly EQUAL - the physics ladder is not geometric.",
+      "tag": "physics",
+      "conditional_on": "BJT/diode reference cell must be declared first (audit 4.3)"
+    },
+    "bv_tempco": {
+      "target": 0.25,
+      "lo": 0.12,
+      "hi": 0.4,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "tunneling below ~5V (negative), avalanche above ~6V (positive); DZ_5V6 sits at the crossover ~0. NOT modelled at all (audit 4.5)",
+      "tag": "industry"
+    },
+    "tt_transit_time": {
+      "target": 5e-08,
+      "lo": 1e-08,
+      "hi": 1e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "heavily-doped zener carries stored charge; PDK 40-75 ns IN BAND - no action",
+      "tag": "industry"
+    }
+  },
+  "DZ_12": {
+    "bv": {
+      "target": 12,
+      "lo": 11.4,
+      "hi": 12.6,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "zener breakdown, +/-5 percent process",
+      "tag": "model"
+    },
+    "cjo_density": {
+      "target": 1.031,
+      "lo": 0.515,
+      "hi": 2.062,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "sqrt(q*eps_si*Neff/(2*Vbi)), Neff=1e17 cm^-3, Vbi=0.78. PDK cjo implies 0.027-0.053 mm^2 (audit 4.4)",
+      "tag": "physics"
+    },
+    "cjo_at_100um2_cell": {
+      "target": 103.1,
+      "lo": 51.5,
+      "hi": 206.2,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "IF AREA=1 is declared as 100 um^2. Note DZ_12 and DZ_24 land nearly EQUAL - the physics ladder is not geometric.",
+      "tag": "physics",
+      "conditional_on": "BJT/diode reference cell must be declared first (audit 4.3)"
+    },
+    "bv_tempco": {
+      "target": 8.0,
+      "lo": 4.0,
+      "hi": 12.8,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "tunneling below ~5V (negative), avalanche above ~6V (positive); DZ_5V6 sits at the crossover ~0. NOT modelled at all (audit 4.5)",
+      "tag": "industry"
+    },
+    "tt_transit_time": {
+      "target": 5e-08,
+      "lo": 1e-08,
+      "hi": 1e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "heavily-doped zener carries stored charge; PDK 40-75 ns IN BAND - no action",
+      "tag": "industry"
+    }
+  },
+  "DZ_24": {
+    "bv": {
+      "target": 24,
+      "lo": 22.8,
+      "hi": 25.2,
+      "units": "V",
+      "sigma_convention": "n/a",
+      "basis": "zener breakdown, +/-5 percent process",
+      "tag": "model"
+    },
+    "cjo_density": {
+      "target": 1.019,
+      "lo": 0.509,
+      "hi": 2.038,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "sqrt(q*eps_si*Neff/(2*Vbi)), Neff=1e17 cm^-3, Vbi=0.80. PDK cjo implies 0.027-0.053 mm^2 (audit 4.4)",
+      "tag": "physics"
+    },
+    "cjo_at_100um2_cell": {
+      "target": 101.9,
+      "lo": 50.9,
+      "hi": 203.8,
+      "units": "fF",
+      "sigma_convention": "n/a",
+      "basis": "IF AREA=1 is declared as 100 um^2. Note DZ_12 and DZ_24 land nearly EQUAL - the physics ladder is not geometric.",
+      "tag": "physics",
+      "conditional_on": "BJT/diode reference cell must be declared first (audit 4.3)"
+    },
+    "bv_tempco": {
+      "target": 20.0,
+      "lo": 10.0,
+      "hi": 32.0,
+      "units": "mV/degC",
+      "sigma_convention": "n/a",
+      "basis": "tunneling below ~5V (negative), avalanche above ~6V (positive); DZ_5V6 sits at the crossover ~0. NOT modelled at all (audit 4.5)",
+      "tag": "industry"
+    },
+    "tt_transit_time": {
+      "target": 5e-08,
+      "lo": 1e-08,
+      "hi": 1e-07,
+      "units": "s",
+      "sigma_convention": "n/a",
+      "basis": "heavily-doped zener carries stored charge; PDK 40-75 ns IN BAND - no action",
+      "tag": "industry"
+    }
+  },
+  "RPOLY_HI": {
+    "rsh": {
+      "target": 1200,
+      "lo": 1000,
+      "hi": 2000,
+      "units": "Ohm/sq",
+      "sigma_convention": "n/a",
+      "basis": "sheet resistance for the layer",
+      "tag": "industry"
+    },
+    "tc1": {
+      "target": -1000,
+      "lo": -1500,
+      "hi": -500,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "lightly-doped poly conducts over grain-boundary barriers, rho ~ exp(qPhiB/kT) -> NEGATIVE. PDK has +600 (audit 5.1)",
+      "tag": "industry"
+    },
+    "vcr1": {
+      "target": 200,
+      "lo": 100,
+      "hi": 400,
+      "units": "ppm/V",
+      "sigma_convention": "n/a",
+      "basis": "voltage coefficient; PDK values all match their comments and are in band",
+      "tag": "industry"
+    },
+    "matching_A_R_pair_1sigma": {
+      "target": 1.5,
+      "lo": 0.9,
+      "hi": 2.7,
+      "units": "%.um",
+      "sigma_convention": "1-sigma",
+      "basis": "sigma(dR/R)=A/sqrt(W*L), pair convention. PDK is 3-14x optimistic (audit 5.2)",
+      "tag": "industry"
+    },
+    "rsh_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 25,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS sheet spread",
+      "tag": "industry"
+    }
+  },
+  "RPOLY_LO": {
+    "rsh": {
+      "target": 250,
+      "lo": 100,
+      "hi": 400,
+      "units": "Ohm/sq",
+      "sigma_convention": "n/a",
+      "basis": "sheet resistance for the layer",
+      "tag": "industry"
+    },
+    "tc1": {
+      "target": 1000,
+      "lo": 500,
+      "hi": 3000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "layer-typical linear temperature coefficient",
+      "tag": "industry"
+    },
+    "vcr1": {
+      "target": 50,
+      "lo": 25,
+      "hi": 100,
+      "units": "ppm/V",
+      "sigma_convention": "n/a",
+      "basis": "voltage coefficient; PDK values all match their comments and are in band",
+      "tag": "industry"
+    },
+    "matching_A_R_pair_1sigma": {
+      "target": 1.5,
+      "lo": 0.9,
+      "hi": 2.7,
+      "units": "%.um",
+      "sigma_convention": "1-sigma",
+      "basis": "sigma(dR/R)=A/sqrt(W*L), pair convention. PDK is 3-14x optimistic (audit 5.2)",
+      "tag": "industry"
+    },
+    "rsh_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 25,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS sheet spread",
+      "tag": "industry"
+    }
+  },
+  "RNWELL": {
+    "rsh": {
+      "target": 1800,
+      "lo": 1000,
+      "hi": 2000,
+      "units": "Ohm/sq",
+      "sigma_convention": "n/a",
+      "basis": "sheet resistance for the layer",
+      "tag": "industry"
+    },
+    "tc1": {
+      "target": 4000,
+      "lo": 3000,
+      "hi": 6000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "layer-typical linear temperature coefficient",
+      "tag": "industry"
+    },
+    "vcr1": {
+      "target": 8000,
+      "lo": 4000,
+      "hi": 16000,
+      "units": "ppm/V",
+      "sigma_convention": "n/a",
+      "basis": "voltage coefficient; PDK values all match their comments and are in band",
+      "tag": "industry"
+    },
+    "matching_A_R_pair_1sigma": {
+      "target": 4.0,
+      "lo": 2.4,
+      "hi": 7.2,
+      "units": "%.um",
+      "sigma_convention": "1-sigma",
+      "basis": "sigma(dR/R)=A/sqrt(W*L), pair convention. PDK is 3-14x optimistic (audit 5.2)",
+      "tag": "industry"
+    },
+    "rsh_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 25,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS sheet spread",
+      "tag": "industry"
+    }
+  },
+  "RNPLUS": {
+    "rsh": {
+      "target": 100,
+      "lo": 50,
+      "hi": 150,
+      "units": "Ohm/sq",
+      "sigma_convention": "n/a",
+      "basis": "sheet resistance for the layer",
+      "tag": "industry"
+    },
+    "tc1": {
+      "target": 1500,
+      "lo": 1000,
+      "hi": 2000,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "layer-typical linear temperature coefficient",
+      "tag": "industry"
+    },
+    "vcr1": {
+      "target": 1500,
+      "lo": 750,
+      "hi": 3000,
+      "units": "ppm/V",
+      "sigma_convention": "n/a",
+      "basis": "voltage coefficient; PDK values all match their comments and are in band",
+      "tag": "industry"
+    },
+    "matching_A_R_pair_1sigma": {
+      "target": 2.5,
+      "lo": 1.5,
+      "hi": 4.5,
+      "units": "%.um",
+      "sigma_convention": "1-sigma",
+      "basis": "sigma(dR/R)=A/sqrt(W*L), pair convention. PDK is 3-14x optimistic (audit 5.2)",
+      "tag": "industry"
+    },
+    "rsh_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 25,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS sheet spread",
+      "tag": "industry"
+    }
+  },
+  "RPPLUS": {
+    "rsh": {
+      "target": 100,
+      "lo": 50,
+      "hi": 150,
+      "units": "Ohm/sq",
+      "sigma_convention": "n/a",
+      "basis": "sheet resistance for the layer",
+      "tag": "industry"
+    },
+    "tc1": {
+      "target": 1500,
+      "lo": 1000,
+      "hi": 2500,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "layer-typical linear temperature coefficient",
+      "tag": "industry"
+    },
+    "vcr1": {
+      "target": 1800,
+      "lo": 900,
+      "hi": 3600,
+      "units": "ppm/V",
+      "sigma_convention": "n/a",
+      "basis": "voltage coefficient; PDK values all match their comments and are in band",
+      "tag": "industry"
+    },
+    "matching_A_R_pair_1sigma": {
+      "target": 2.5,
+      "lo": 1.5,
+      "hi": 4.5,
+      "units": "%.um",
+      "sigma_convention": "1-sigma",
+      "basis": "sigma(dR/R)=A/sqrt(W*L), pair convention. PDK is 3-14x optimistic (audit 5.2)",
+      "tag": "industry"
+    },
+    "rsh_corner_spread": {
+      "target": 15,
+      "lo": 10,
+      "hi": 25,
+      "units": "percent",
+      "sigma_convention": "n/a",
+      "basis": "FF/SS sheet spread",
+      "tag": "industry"
+    }
+  },
+  "CMIM_STD": {
+    "density": {
+      "target": 1.0,
+      "lo": 1.0,
+      "hi": 2.0,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "capacitance per unit area",
+      "tag": "industry"
+    },
+    "implied_dielectric_thickness": {
+      "target": 62.0,
+      "lo": 43.4,
+      "hi": 86.8,
+      "units": "nm",
+      "sigma_convention": "n/a",
+      "basis": "t = eps_r*eps_0/C, eps_r=7 nitride MIM / 4 SiO2 MOM+fringe. MIM nitride 30-60 nm buildable, below ~15 nm leaks.",
+      "tag": "physics"
+    },
+    "vcc1": {
+      "target": 30,
+      "lo": 12,
+      "hi": 60,
+      "units": "ppm/V",
+      "sigma_convention": "n/a",
+      "basis": "voltage coefficient of capacitance; a good MIM is below 100",
+      "tag": "industry"
+    },
+    "tcc_tc1": {
+      "target": 35,
+      "lo": 14,
+      "hi": 88,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "temperature coefficient; |TCC| below 100 for MIM. PDK models this correctly - no action.",
+      "tag": "industry"
+    },
+    "matching_A_C_pair_1sigma": {
+      "target": 0.75,
+      "lo": 0.45,
+      "hi": 1.35,
+      "units": "%.um",
+      "sigma_convention": "1-sigma",
+      "basis": "sigma(dC/C)=A/sqrt(W*L), pair convention. PDK is 3-14x optimistic (audit 5.2)",
+      "tag": "industry"
+    }
+  },
+  "CMIM_HI": {
+    "density": {
+      "target": 2.0,
+      "lo": 2.0,
+      "hi": 4.0,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "capacitance per unit area",
+      "tag": "industry"
+    },
+    "implied_dielectric_thickness": {
+      "target": 31.0,
+      "lo": 21.7,
+      "hi": 43.4,
+      "units": "nm",
+      "sigma_convention": "n/a",
+      "basis": "t = eps_r*eps_0/C, eps_r=7 nitride MIM / 4 SiO2 MOM+fringe. MIM nitride 30-60 nm buildable, below ~15 nm leaks.",
+      "tag": "physics"
+    },
+    "vcc1": {
+      "target": 60,
+      "lo": 24,
+      "hi": 120,
+      "units": "ppm/V",
+      "sigma_convention": "n/a",
+      "basis": "voltage coefficient of capacitance; a good MIM is below 100",
+      "tag": "industry"
+    },
+    "tcc_tc1": {
+      "target": 45,
+      "lo": 18,
+      "hi": 112,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "temperature coefficient; |TCC| below 100 for MIM. PDK models this correctly - no action.",
+      "tag": "industry"
+    },
+    "matching_A_C_pair_1sigma": {
+      "target": 0.75,
+      "lo": 0.45,
+      "hi": 1.35,
+      "units": "%.um",
+      "sigma_convention": "1-sigma",
+      "basis": "sigma(dC/C)=A/sqrt(W*L), pair convention. PDK is 3-14x optimistic (audit 5.2)",
+      "tag": "industry"
+    }
+  },
+  "CMOM": {
+    "density": {
+      "target": 0.35,
+      "lo": 0.3,
+      "hi": 1.0,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "capacitance per unit area",
+      "tag": "industry"
+    },
+    "implied_dielectric_thickness": {
+      "target": 101.2,
+      "lo": 70.8,
+      "hi": 141.7,
+      "units": "nm",
+      "sigma_convention": "n/a",
+      "basis": "t = eps_r*eps_0/C, eps_r=7 nitride MIM / 4 SiO2 MOM+fringe. MIM nitride 30-60 nm buildable, below ~15 nm leaks.",
+      "tag": "physics"
+    },
+    "vcc1": {
+      "target": 5,
+      "lo": 2,
+      "hi": 10,
+      "units": "ppm/V",
+      "sigma_convention": "n/a",
+      "basis": "voltage coefficient of capacitance; a good MIM is below 100",
+      "tag": "industry"
+    },
+    "tcc_tc1": {
+      "target": 20,
+      "lo": 8,
+      "hi": 50,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "temperature coefficient; |TCC| below 100 for MIM. PDK models this correctly - no action.",
+      "tag": "industry"
+    },
+    "matching_A_C_pair_1sigma": {
+      "target": 1.5,
+      "lo": 0.9,
+      "hi": 2.7,
+      "units": "%.um",
+      "sigma_convention": "1-sigma",
+      "basis": "sigma(dC/C)=A/sqrt(W*L), pair convention. PDK is 3-14x optimistic (audit 5.2)",
+      "tag": "industry"
+    }
+  },
+  "CFRINGE": {
+    "density": {
+      "target": 0.18,
+      "lo": 0.1,
+      "hi": 0.5,
+      "units": "fF/um^2",
+      "sigma_convention": "n/a",
+      "basis": "capacitance per unit area",
+      "tag": "industry"
+    },
+    "implied_dielectric_thickness": {
+      "target": 196.8,
+      "lo": 137.8,
+      "hi": 275.5,
+      "units": "nm",
+      "sigma_convention": "n/a",
+      "basis": "t = eps_r*eps_0/C, eps_r=7 nitride MIM / 4 SiO2 MOM+fringe. MIM nitride 30-60 nm buildable, below ~15 nm leaks.",
+      "tag": "physics"
+    },
+    "vcc1": {
+      "target": 3,
+      "lo": 1,
+      "hi": 6,
+      "units": "ppm/V",
+      "sigma_convention": "n/a",
+      "basis": "voltage coefficient of capacitance; a good MIM is below 100",
+      "tag": "industry"
+    },
+    "tcc_tc1": {
+      "target": 15,
+      "lo": 6,
+      "hi": 38,
+      "units": "ppm/degC",
+      "sigma_convention": "n/a",
+      "basis": "temperature coefficient; |TCC| below 100 for MIM. PDK models this correctly - no action.",
+      "tag": "industry"
+    },
+    "matching_A_C_pair_1sigma": {
+      "target": 1.5,
+      "lo": 0.9,
+      "hi": 2.7,
+      "units": "%.um",
+      "sigma_convention": "1-sigma",
+      "basis": "sigma(dC/C)=A/sqrt(W*L), pair convention. PDK is 3-14x optimistic (audit 5.2)",
+      "tag": "industry"
+    }
+  },
+  "_known_artifacts": {
+    "note": "Deliberate model artifacts. Phase 2 must NOT file these as bugs. Each entry gives its magnitude and the measurements it corrupts.",
+    "Rcond_gate_leakage": {
+      "where": "all 13 VDMOS subckts: Rcond g_int s 1e6",
+      "magnitude": "1.8 uA at Vgs=1.8 V; 5.0 uA at 5 V; 12.0 uA at 12 V",
+      "physical_truth": "a real MOS gate draws tunnelling current only, below 1 pA/um^2 at tox above 20nm, so the artifact is ~6 orders too large",
+      "corrupts": [
+        "VDMOS gate-drive static current",
+        "any Iq or standby-current measurement on an HV gate node",
+        "high-impedance gate-node DC levels"
+      ],
+      "why_present": "fixes the multi-instance floating-mirror singular matrix (inventory 3, commits 4b05308 / 454959e)",
+      "tag": "model"
+    },
+    "Rgmin_gate_shunt": {
+      "where": "all 13 VDMOS subckts: Rgmin g g_int 1e9",
+      "magnitude": "1.8 nA at 1.8 V, 5.0 nA at 5 V",
+      "physical_truth": "same mechanism as Rcond but 1000x smaller; negligible",
+      "corrupts": [
+        "nothing measurable"
+      ],
+      "why_present": "fixes the cascoded-LDMOS singular matrix at MM_ON=0 (commit 0ceabc3)",
+      "tag": "model"
+    },
+    "self_heating_scope": {
+      "where": "SH_ON=1 branch, all 13 VDMOS",
+      "magnitude": "Vth thermal feedback only",
+      "physical_truth": "Rds(on) and kp also have strong thermal feedback",
+      "corrupts": [
+        "thermal runaway prediction",
+        "Rdson vs T under self-heating",
+        "inter-device thermal coupling (absent entirely)"
+      ],
+      "why_present": "documented first-cut limitation in the .inc header",
+      "tag": "model"
+    },
+    "B_pdiss_includes_rdrift": {
+      "where": "NDMOS200/PDMOS200 SH_ON=1 branch",
+      "magnitude": "Vsense spans dd..dd_sense but power uses V(d,s), which includes the external Rdrift drop",
+      "physical_truth": "the drift resistor is outside the transistor model, so its dissipation should not drive TJ",
+      "corrupts": [
+        "junction temperature on the 200 V parts, overestimated by the Rdrift share of total dissipation"
+      ],
+      "why_present": "artifact of the Rdrift wrapper construction (inventory 6.5 #16)",
+      "tag": "inventory"
+    },
+    "vdmos_caps_not_corner_parametrized": {
+      "where": "all 13 VDMOS cards",
+      "magnitude": "cgs/cgdmax/cgdmin/cjo are fixed across all 5 corners",
+      "physical_truth": "diode cjo IS corner-parametrized in the same file; VDMOS should be too",
+      "corrupts": [
+        "switching-time corner spread on every VDMOS (identically zero)"
+      ],
+      "why_present": "HANDOFF_vdmos_caps.md suggestion #3, never implemented (inventory 6.2)",
+      "tag": "inventory"
+    },
+    "nmos12_pmos12_frozen_params": {
+      "where": "NMOS12_INT / PMOS12_INT",
+      "magnitude": "tox, cj, cjsw, js are bare constants with no corner or statistical term",
+      "physical_truth": "the other six BSIM3 cards corner all four",
+      "corrupts": [
+        "all 12 V dynamic corner spread (identically zero)",
+        "internal consistency of the 12 V corner set (FF mobility on TT oxide)"
+      ],
+      "why_present": "Level-3 to BSIM3 migration residue (inventory 6.5 #17)",
+      "tag": "inventory"
+    },
+    "agauss_evaluated_when_mm_sigma_set": {
+      "where": "all 40 subckts",
+      "magnitude": "the AGAUSS draw is still consumed when MM_SIGMA is nonzero, perturbing the RNG sequence",
+      "physical_truth": "numerical bookkeeping, not physics",
+      "corrupts": [
+        "reproducibility of an MC sequence run alongside corner sims"
+      ],
+      "why_present": "ngspice .param has no comparison operators, forcing the additive form (MISMATCH_CORNERS.md 5.5)",
+      "tag": "inventory"
+    },
+    "mm_on_and_mm_sigma_add": {
+      "where": "all 40 subckts",
+      "magnitude": "the random and deterministic terms SUM",
+      "physical_truth": "n/a",
+      "corrupts": [
+        "any run with MM_ON=1 and MM_SIGMA nonzero simultaneously - explicitly do-not-do-this"
+      ],
+      "why_present": "documented contract, MISMATCH_CORNERS.md four-mode table",
+      "tag": "inventory"
+    }
+  },
+  "_open_maintainer_decisions": {
+    "vdmos_scale": "Is W_REF=10u a genuine 10 um cell (audit recommends yes) or a label on a power die? Sets the kp/rd/rs targets. See _vdmos_kp_conditional.",
+    "bjt_diode_reference_cell": "What physical area does AREA=1 mean? Currently undeclared and mutually inconsistent between devices (is implies 4-80 um^2, cje/cjc implies 300-900). Sets the is/cje/cjc/cjo targets.",
+    "bsim3_vs_bsim4": "Fix noia/noib/noic to the BSIM3 convention, or migrate the cards to level=54? The current values are exactly right for BSIM4 and ~6.25e21x wrong for BSIM3.",
+    "nmos12_device_type": "True thick-oxide 12 V gate (the wrapper says yes, so tox should be 24-30 nm) or drain-extended (xj=500nm hints yes, so tox ~11 nm)? Sets tox, rdsw, Lmin.",
+    "qualification_temperature_range": "No range is stated anywhere in the model files. The audit proposes -40 to +150 degC."
+  }
+}
