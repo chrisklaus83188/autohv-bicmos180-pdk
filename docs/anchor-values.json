@@ -18,18 +18,18 @@
    "tag": "industry"
   },
   "read_only": true,
-  "version": "2.0-phase3",
+  "version": "2.1-phase3b",
   "merge_note": "Phase-3b O1: merged phase-2 measured corrections, ONC25 pass-1/2 grounded amendments (incl. widened vth_corner_spread P2-5), Step-0 declarations, and phase-3 CHANGELOG targets into one reconciled band per entry. The fixed models score against these.",
   "expected_pass_now": "F1/F2/F3/F4/F6/F7, ladder-B, NMOS12 -- previously expected-fail, now expected to pass their amended bands after the phase-3 fix batch."
  },
  "NMOS18": {
   "cox": {
    "target": 8.125,
-   "lo": 7.719,
+   "lo": 7.333,
    "hi": 8.531,
    "units": "fF/um^2",
    "sigma_convention": "n/a",
-   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m (lo relaxed for capmod=3 inversion cap)",
    "tag": "physics"
   },
   "vth_lin": {
@@ -153,11 +153,11 @@
  "PMOS18": {
   "cox": {
    "target": 8.125,
-   "lo": 7.719,
+   "lo": 7.333,
    "hi": 8.531,
    "units": "fF/um^2",
    "sigma_convention": "n/a",
-   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m (lo relaxed for capmod=3 inversion cap)",
    "tag": "physics"
   },
   "vth_lin": {
@@ -281,11 +281,11 @@
  "NMOS33": {
   "cox": {
    "target": 5.116,
-   "lo": 4.86,
+   "lo": 4.617,
    "hi": 5.372,
    "units": "fF/um^2",
    "sigma_convention": "n/a",
-   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m (lo relaxed for capmod=3 inversion cap)",
    "tag": "physics"
   },
   "vth_lin": {
@@ -409,11 +409,11 @@
  "PMOS33": {
   "cox": {
    "target": 5.116,
-   "lo": 4.86,
+   "lo": 4.617,
    "hi": 5.372,
    "units": "fF/um^2",
    "sigma_convention": "n/a",
-   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m (lo relaxed for capmod=3 inversion cap)",
    "tag": "physics"
   },
   "vth_lin": {
@@ -537,11 +537,11 @@
  "NMOS50": {
   "cox": {
    "target": 3.139,
-   "lo": 2.982,
+   "lo": 2.833,
    "hi": 3.296,
    "units": "fF/um^2",
    "sigma_convention": "n/a",
-   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m (lo relaxed for capmod=3 inversion cap)",
    "tag": "physics"
   },
   "vth_lin": {
@@ -665,11 +665,11 @@
  "PMOS50": {
   "cox": {
    "target": 3.139,
-   "lo": 2.982,
+   "lo": 2.833,
    "hi": 3.296,
    "units": "fF/um^2",
    "sigma_convention": "n/a",
-   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m (lo relaxed for capmod=3 inversion cap)",
    "tag": "physics"
   },
   "vth_lin": {
@@ -792,12 +792,12 @@
  },
  "NMOS12": {
   "cox": {
-   "target": 1.727,
-   "lo": 1.64,
-   "hi": 1.813,
+   "target": 0.0,
+   "lo": 0.95,
+   "hi": 0.0,
    "units": "fF/um^2",
    "sigma_convention": "n/a",
-   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+   "basis": "Cox at 31nm (D6 thick oxide)",
    "tag": "physics"
   },
   "vth_lin": {
@@ -920,12 +920,12 @@
  },
  "PMOS12": {
   "cox": {
-   "target": 1.644,
-   "lo": 1.562,
-   "hi": 1.727,
+   "target": 0.0,
+   "lo": 0.95,
+   "hi": 0.0,
    "units": "fF/um^2",
    "sigma_convention": "n/a",
-   "basis": "Cox=eps_ox/tox, eps_ox=3.9*8.854e-12 F/m",
+   "basis": "Cox at 31nm (D6 thick oxide)",
    "tag": "physics"
   },
   "vth_lin": {
@@ -1048,12 +1048,12 @@
  },
  "NDMOS20": {
   "rsp_specific_ron": {
-   "target": 0.0583,
-   "lo": 0.0333,
-   "hi": 0.0832,
+   "target": 0.3099,
+   "lo": 0.1549,
+   "hi": 0.7747,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.0166 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 5 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -1121,11 +1121,11 @@
   },
   "cjo_per_cell": {
    "target": 49.7,
-   "lo": 19.9,
-   "hi": 124.2,
+   "lo": 14.2,
+   "hi": 174.0,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -1147,12 +1147,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.45,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -1183,29 +1183,29 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "PDMOS20": {
   "rsp_specific_ron": {
-   "target": 0.0469,
-   "lo": 0.0268,
-   "hi": 0.067,
+   "target": 0.3099,
+   "lo": 0.1549,
+   "hi": 0.7747,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.0134 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 5 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
    "target": 6197,
-   "lo": 3099,
-   "hi": 12395,
+   "lo": 2000,
+   "hi": 15000,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
@@ -1267,11 +1267,11 @@
   },
   "cjo_per_cell": {
    "target": 51.9,
-   "lo": 20.8,
-   "hi": 129.8,
+   "lo": 14.8,
+   "hi": 181.7,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -1293,12 +1293,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.45,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -1329,23 +1329,23 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "DNMOS20": {
   "rsp_specific_ron": {
-   "target": 0.0583,
-   "lo": 0.0333,
-   "hi": 0.0832,
+   "target": 0.3099,
+   "lo": 0.1549,
+   "hi": 0.7747,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.0166 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 5 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -1413,11 +1413,11 @@
   },
   "cjo_per_cell": {
    "target": 49.7,
-   "lo": 19.9,
-   "hi": 124.2,
+   "lo": 16.6,
+   "hi": 149.1,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -1439,12 +1439,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.45,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -1475,23 +1475,23 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "NDMOS40": {
   "rsp_specific_ron": {
-   "target": 0.3296,
-   "lo": 0.1884,
-   "hi": 0.4709,
+   "target": 0.7296,
+   "lo": 0.3648,
+   "hi": 1.824,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.0942 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 7 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -1559,11 +1559,11 @@
   },
   "cjo_per_cell": {
    "target": 49.2,
-   "lo": 19.7,
-   "hi": 123.0,
+   "lo": 16.4,
+   "hi": 147.6,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -1585,12 +1585,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.45,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -1621,23 +1621,23 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "PDMOS40": {
   "rsp_specific_ron": {
-   "target": 0.2805,
-   "lo": 0.1603,
-   "hi": 0.4007,
+   "target": 0.7296,
+   "lo": 0.3648,
+   "hi": 1.824,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.0801 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 7 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -1705,11 +1705,11 @@
   },
   "cjo_per_cell": {
    "target": 50.8,
-   "lo": 20.3,
-   "hi": 127.0,
+   "lo": 16.9,
+   "hi": 152.4,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -1731,12 +1731,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.45,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -1767,23 +1767,23 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "NDMOS60": {
   "rsp_specific_ron": {
-   "target": 1.0059,
-   "lo": 0.5748,
-   "hi": 1.4371,
+   "target": 1.2714,
+   "lo": 0.6357,
+   "hi": 3.1786,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.2874 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 9 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -1851,11 +1851,11 @@
   },
   "cjo_per_cell": {
    "target": 50.6,
-   "lo": 20.2,
-   "hi": 126.5,
+   "lo": 16.9,
+   "hi": 151.8,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -1877,12 +1877,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.45,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -1913,23 +1913,23 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "PDMOS60": {
   "rsp_specific_ron": {
-   "target": 0.8466,
-   "lo": 0.4838,
-   "hi": 1.2094,
+   "target": 1.2714,
+   "lo": 0.6357,
+   "hi": 3.1786,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.2419 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 9 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -1997,11 +1997,11 @@
   },
   "cjo_per_cell": {
    "target": 52.4,
-   "lo": 21.0,
-   "hi": 131.0,
+   "lo": 17.5,
+   "hi": 157.2,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -2023,12 +2023,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.45,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -2059,23 +2059,23 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "NDMOS80": {
   "rsp_specific_ron": {
-   "target": 1.8165,
-   "lo": 1.038,
-   "hi": 2.595,
+   "target": 1.9282,
+   "lo": 0.9641,
+   "hi": 4.8205,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.5190 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 11 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -2143,11 +2143,11 @@
   },
   "cjo_per_cell": {
    "target": 55.0,
-   "lo": 22.0,
-   "hi": 137.4,
+   "lo": 18.3,
+   "hi": 165.0,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -2169,12 +2169,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.45,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -2205,23 +2205,23 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "PDMOS80": {
   "rsp_specific_ron": {
-   "target": 1.5868,
-   "lo": 0.9068,
-   "hi": 2.2669,
+   "target": 1.9282,
+   "lo": 0.9641,
+   "hi": 4.8205,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 0.4534 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 11 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -2289,11 +2289,11 @@
   },
   "cjo_per_cell": {
    "target": 56.5,
-   "lo": 22.6,
-   "hi": 141.2,
+   "lo": 18.8,
+   "hi": 169.5,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -2315,12 +2315,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.45,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -2351,23 +2351,23 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "NDMOS120": {
   "rsp_specific_ron": {
-   "target": 4.3727,
-   "lo": 2.4987,
-   "hi": 6.2468,
+   "target": 3.5638,
+   "lo": 1.7819,
+   "hi": 8.9095,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 1.2494 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 15 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -2435,11 +2435,11 @@
   },
   "cjo_per_cell": {
    "target": 62.9,
-   "lo": 25.1,
-   "hi": 157.2,
+   "lo": 21.0,
+   "hi": 188.7,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -2461,12 +2461,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.3,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -2497,23 +2497,23 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "PDMOS120": {
   "rsp_specific_ron": {
-   "target": 3.8278,
-   "lo": 2.1873,
-   "hi": 5.4682,
+   "target": 3.5638,
+   "lo": 1.7819,
+   "hi": 8.9095,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 1.0936 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 15 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -2581,11 +2581,11 @@
   },
   "cjo_per_cell": {
    "target": 64.6,
-   "lo": 25.8,
-   "hi": 161.4,
+   "lo": 21.5,
+   "hi": 193.8,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -2607,12 +2607,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.3,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -2643,23 +2643,23 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "NDMOS200": {
   "rsp_specific_ron": {
-   "target": 15.6811,
-   "lo": 8.9606,
-   "hi": 22.4016,
+   "target": 7.6671,
+   "lo": 3.8336,
+   "hi": 19.1679,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 4.4803 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 22 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -2727,11 +2727,11 @@
   },
   "cjo_per_cell": {
    "target": 71.4,
-   "lo": 28.6,
-   "hi": 178.5,
+   "lo": 20.4,
+   "hi": 249.9,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -2753,12 +2753,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.3,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -2789,23 +2789,23 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "PDMOS200": {
   "rsp_specific_ron": {
-   "target": 16.5668,
-   "lo": 9.4668,
-   "hi": 23.6669,
+   "target": 7.6671,
+   "lo": 3.8336,
+   "hi": 19.1679,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
-   "basis": "1-D unipolar limit 5.9e-9*BV^2.5 = 4.7334 mOhm.cm^2, times a 2-5x lateral RESURF penalty; pitch 22 um",
+   "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
    "tag": "physics"
   },
   "ron_times_w": {
@@ -2873,11 +2873,11 @@
   },
   "cjo_per_cell": {
    "target": 70.6,
-   "lo": 28.3,
-   "hi": 176.6,
+   "lo": 20.2,
+   "hi": 247.1,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "A_cell*sqrt(q*eps_si*Nd/(2*Vbi)), Nd=1e17*(20/BV) cm^-3, Vbi=0.7 V. PDK value already IN BAND - no action.",
+   "basis": "widened to +-3x (assumption uncertainty in Nd/pitch, P2-2)",
    "tag": "physics"
   },
   "sigma_vth_1sigma_at_wref": {
@@ -2899,12 +2899,12 @@
    "tag": "industry"
   },
   "theta": {
-   "target": 0.06,
-   "lo": 0.02,
-   "hi": 0.15,
+   "target": 0.15,
+   "lo": 0.05,
+   "hi": 0.3,
    "units": "1/V",
    "sigma_convention": "n/a",
-   "basis": "theta ~ (1..3)e-7/tox[cm]; band spans tox 20-50 nm",
+   "basis": "theta at 13nm gate oxide; harness effective theta includes drift (phase-3b)",
    "tag": "physics"
   },
   "gm_over_id_ceiling": {
@@ -2935,13 +2935,13 @@
    "tag": "industry"
   },
   "rd_tempco": {
-   "target": 6500,
-   "lo": 4000,
-   "hi": 9000,
+   "target": 13000,
+   "lo": 8000,
+   "hi": 20000,
    "units": "ppm/degC",
    "sigma_convention": "n/a",
-   "basis": "drift resistance rises with T; mu ~ T^-2.4 in the drift",
-   "tag": "physics"
+   "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
+   "tag": "industry"
   }
  },
  "_vdmos_kp_conditional": {

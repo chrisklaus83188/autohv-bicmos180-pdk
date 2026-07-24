@@ -1,0 +1,27 @@
+{
+ "supply": 10.0,
+ "vdmos": true,
+ "idss_per_um_A": 5.474234e-05,
+ "points": {
+  "1e-06": {
+   "W_um": 0.018,
+   "Vgs": 0.0,
+   "gm_id": null,
+   "sigma_dI_pct": 26.47,
+   "note": "W<1um drawn-min: use W=1um + source-degen R to trim Idss to target"
+  },
+  "1e-05": {
+   "W_um": 0.183,
+   "Vgs": 0.0,
+   "gm_id": null,
+   "sigma_dI_pct": 8.37,
+   "note": "W<1um drawn-min: use W=1um + source-degen R to trim Idss to target"
+  },
+  "0.0001": {
+   "W_um": 1.8,
+   "Vgs": 0.0,
+   "gm_id": null,
+   "sigma_dI_pct": 2.65
+  }
+ }
+}

@@ -126,31 +126,27 @@ def mc_sigma_di(dev, W, Ibias, vdmos, supply, n=100):
 def measure_idss(dev, W, supply):
     """Depletion device (DNMOS20, vto<0): Idss per um at Vgs=0."""
     d=cl.header(f"idss {dev} W={W}",instruments="Vd drain, Vg=0")
-    d+=f"Vd d 0 {supply}
-Vg g 0 0
-Vs s 0 0
-X1 d g s {dev} W={W:g}u
-"
-    d+=".control
-set noaskquit
-op
-print abs(i(Vd))
-.endc
-.end
-"
+    d+=f"Vd d 0 {supply}\nVg g 0 0\nVs s 0 0\nX1 d g s {dev} W={W:g}u\n"
+    d+=".control\nset noaskquit\nop\nprint abs(i(Vd))\n.endc\n.end\n"
     out,_=cl.run_deck(d,f"idss_{dev}_W{W:g}","sizing")
-    return abs(cl.parse_prints(out).get("v(d)",0) or 0), abs(cl.parse_prints(out).get("i(vd)",float("nan")) or float("nan"))
+    return 0.0, abs(cl.parse_prints(out).get("abs(i(vd))",float("nan")) or float("nan"))
 
 def run_depletion(dev="DNMOS20", supply=10.0):
     """DNMOS20: Idss/um at Vgs=0, and W for 1/10/100 uA self-biased current-source."""
     _,idss1=measure_idss(dev,10.0,supply)         # 10um reference
     idss_per_um=idss1/10.0 if idss1==idss1 else float("nan")
     rows={"supply":supply,"vdmos":True,"idss_per_um_A":idss_per_um,"points":{}}
+    WMIN=1.0   # practical drawn minimum for this power cell
     for I in (1e-6,10e-6,100e-6):
         W=I/idss_per_um if idss_per_um and idss_per_um>0 else float("nan")   # self-biased at Vgs=0
         X=0.024; sig=math.sqrt(2)*(X/3)/math.sqrt(max(W/10.0,1e-9))*100 if W==W else float("nan")
-        rows["points"][f"{I:g}"]={"W_um":round(W,1) if W==W else None,
-            "Vgs":0.0,"gm_id":None,"sigma_dI_pct":round(sig,2) if sig==sig else None}
+        wr = round(W,3) if (W==W and W<1) else (round(W,1) if W==W else None)
+        note=None
+        if W==W and W<WMIN:
+            note=f"W<{WMIN:g}um drawn-min: use W={WMIN:g}um + source-degen R to trim Idss to target"
+        rows["points"][f"{I:g}"]={"W_um":wr,
+            "Vgs":0.0,"gm_id":None,"sigma_dI_pct":round(sig,2) if sig==sig else None,
+            **({"note":note} if note else {})}
         print(f"  {dev:9s} I={I*1e6:6.1f}uA (Vgs=0 self-bias)  W={W:7.1f}um  Idss/um={idss_per_um*1e6:.3f}uA/um")
     return rows
 

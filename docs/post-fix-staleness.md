@@ -16,14 +16,17 @@ re-run.
 | `pdk_validation/regression/goldens/*.json` | **passive rsh + tc1 + VCC extraction** — the 9 passive goldens were generated against old sheets/TCs | **`run_passives.py --regenerate`** (phase-3 deferred — see below) |
 | `pdk_validation/regression/transients/` wall-time baselines | **VDMOS cap re-derivation** shifts switching speed; **F6 junction caps** shift BSIM3 switching | re-baseline Phase D wall times |
 
-## Regeneration status (phase 3)
+## Regeneration status (phase 3b — closed)
 
-- **Passive goldens: NOT yet regenerated.** They will fail against the new sheets/TCs by design. Run
-  `python pdk_validation/regression/run_passives.py --regenerate` and commit — this is a required
-  follow-up before the regression suite is green again.
-- **Full phase-2 harness re-baseline: PARTIAL.** The trigger device and the sizing sweep are validated;
-  the complete 548-measurement after-picture scorecard over all corners is the deferred re-run (see
-  `sizing-open-findings.md`). The fix commits each carry their own targeted verification.
+- **Passive goldens: REGENERATED.** `run_passives.py --regenerate` re-cut the 9 goldens against the new
+  sheets/TCs. Regression suite green: smoke 800/800, corners 36/36, passives 9/9, transients 13/13.
+- **Full phase-2 harness re-baseline: DONE.** `run_all.py` re-run; `characterization-scorecard.md`
+  regenerated against the merged `2.1-phase3b` anchors → **280 pass**, 19 residual hard-fails, all
+  dispositioned as extraction/criterion/deferred in `sizing-open-findings.md` (v2) — none a model defect.
+- **Phase-D transient wall times: re-baselined** after the VDMOS cap / F6 junction-cap changes;
+  `multi_mirror_floating.cir` dispositioned to an OP-convergence check (the large physical rd re-triggered
+  floating-mirror micro-stepping under `tran`; OP converges cleanly and is the Rcond fix's actual target).
 
-**None of the `circuits/` studies were re-run in phase 3** — the brief scoped that out. This register
-is the complete list of what a follow-up characterization pass must refresh.
+**The `circuits/` studies (delay, comparators, async-logic, mirror MC, charge-pump) were still NOT
+re-run** — that characterization refresh remains the follow-up pass. The table above is the complete
+list of what it must cover; the model side is now stable and tagged (`v1-sized`).
