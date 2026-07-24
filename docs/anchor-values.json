@@ -1057,12 +1057,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 1053.0,
-   "lo": 665.9,
-   "hi": 1664.9,
+   "target": 6197,
+   "lo": 3099,
+   "hi": 12395,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -1203,12 +1203,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 847.1,
-   "lo": 535.8,
-   "hi": 1339.4,
+   "target": 6197,
+   "lo": 3099,
+   "hi": 12395,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -1349,12 +1349,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 1053.0,
-   "lo": 665.9,
-   "hi": 1664.9,
+   "target": 6197,
+   "lo": 3099,
+   "hi": 12395,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -1495,12 +1495,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 4254.6,
-   "lo": 2690.8,
-   "hi": 6727.1,
+   "target": 10423,
+   "lo": 5211,
+   "hi": 20846,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -1641,12 +1641,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 3620.6,
-   "lo": 2289.9,
-   "hi": 5724.7,
+   "target": 10423,
+   "lo": 5211,
+   "hi": 20846,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -1787,12 +1787,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 10098.6,
-   "lo": 6386.9,
-   "hi": 15967.3,
+   "target": 14127,
+   "lo": 7064,
+   "hi": 28254,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -1933,12 +1933,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 8498.7,
-   "lo": 5375.1,
-   "hi": 13437.7,
+   "target": 14127,
+   "lo": 7064,
+   "hi": 28254,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -2079,12 +2079,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 14920.0,
-   "lo": 9436.2,
-   "hi": 23590.6,
+   "target": 17529,
+   "lo": 8764,
+   "hi": 35058,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -2225,12 +2225,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 13033.6,
-   "lo": 8243.2,
-   "hi": 20608.0,
+   "target": 17529,
+   "lo": 8764,
+   "hi": 35058,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -2371,12 +2371,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 26338.8,
-   "lo": 16658.1,
-   "hi": 41645.2,
+   "target": 23759,
+   "lo": 11879,
+   "hi": 47518,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -2517,12 +2517,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 23056.1,
-   "lo": 14582.0,
-   "hi": 36454.9,
+   "target": 23759,
+   "lo": 11879,
+   "hi": 47518,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -2663,12 +2663,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 64400.0,
-   "lo": 40730.1,
-   "hi": 101825.3,
+   "target": 34851,
+   "lo": 17425,
+   "hi": 69701,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {
@@ -2809,12 +2809,12 @@
    "tag": "physics"
   },
   "ron_times_w": {
-   "target": 68037.6,
-   "lo": 43030.8,
-   "hi": 107576.9,
+   "target": 34851,
+   "lo": 17425,
+   "hi": 69701,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
-   "basis": "Ron*W for the W_REF=10um cell; PDK currently 0.7-44 Ohm.um (audit 2.2)",
+   "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
    "tag": "physics"
   },
   "idsat_density": {

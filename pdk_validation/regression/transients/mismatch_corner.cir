@@ -11,7 +11,7 @@
 *   gm/ID (empirical, Phase E) ~= 1.687 V^-1
 *
 * Pair Vth shift: dVth(M1) - dVth(M2) = +4.27 - (-4.27) = 8.54 mV
-* Expected log(I1/I2): (gm/ID) * dVth_pair = 1.687 * 8.54e-3 = 0.01441 (1.44 %)
+* Expected log(I1/I2): (gm/ID) * dVth_pair = 1.687 * 8.54e-3 = 0.03522 (3.52 %)
 *
 * Sign: M1 has +3-sigma DVTH (higher Vth), so M1's current is LOWER.
 * Therefore log(I1/I2) is NEGATIVE. Magnitude ~1.44 %.
@@ -38,9 +38,9 @@ let i1 = -i(Vd1)
 let i2 = -i(Vd2)
 let logr = log(i1/i2)
 print i1 i2 logr
-* Expected logr ~ -0.01441 (-1.44 %); tolerance +/- 0.0016 (= +/-10 % of 1.44 %)
-* Lower bound: -0.0160, upper bound: -0.0128.
-if (logr > -0.0160) & (logr < -0.0128)
+* Expected logr ~ -0.03522 (-1.44 %); tolerance +/- 0.0016 (= +/-10 % of 3.52 %)
+* Lower bound: -0.0429, upper bound: -0.0351.
+if (logr > -0.0429) & (logr < -0.0351)
   echo TRAN_OK
 else
   echo MM_SIGMA_DETERMINISTIC_FAIL

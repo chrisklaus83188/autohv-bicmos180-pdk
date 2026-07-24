@@ -22,7 +22,7 @@ MM_VDMOS={"NDMOS20":0.024,"PDMOS20":0.024,"DNMOS20":0.024,"NDMOS40":0.0255,"PDMO
  "NDMOS60":0.027,"PDMOS60":0.027,"NDMOS80":0.0285,"PDMOS80":0.0285,"NDMOS120":0.030,
  "PDMOS120":0.030,"NDMOS200":0.033,"PDMOS200":0.033}
 MM_BSIM={"NMOS18":0.0105,"PMOS18":0.0105,"NMOS33":0.012,"PMOS33":0.012,
- "NMOS50":0.0135,"PMOS50":0.0135,"NMOS12":0.018,"PMOS12":0.018}
+ "NMOS50":0.033,"PMOS50":0.033,"NMOS12":0.093,"PMOS12":0.093}
 def sigma_di_analytic(dev, W, gmid, vdmos, Lum=1.0):
     if vdmos:
         X=MM_VDMOS[dev]; area=W/10.0            # mtot
@@ -122,6 +122,37 @@ def mc_sigma_di(dev, W, Ibias, vdmos, supply, n=100):
     if r.degenerate or r.n<10: return float("nan")
     d=[ (s["i1"]-s["i2"])/((s["i1"]+s["i2"])/2) for s in r.samples if "i1" in s]
     return statistics.stdev(d)*100 if len(d)>2 else float("nan")
+
+def measure_idss(dev, W, supply):
+    """Depletion device (DNMOS20, vto<0): Idss per um at Vgs=0."""
+    d=cl.header(f"idss {dev} W={W}",instruments="Vd drain, Vg=0")
+    d+=f"Vd d 0 {supply}
+Vg g 0 0
+Vs s 0 0
+X1 d g s {dev} W={W:g}u
+"
+    d+=".control
+set noaskquit
+op
+print abs(i(Vd))
+.endc
+.end
+"
+    out,_=cl.run_deck(d,f"idss_{dev}_W{W:g}","sizing")
+    return abs(cl.parse_prints(out).get("v(d)",0) or 0), abs(cl.parse_prints(out).get("i(vd)",float("nan")) or float("nan"))
+
+def run_depletion(dev="DNMOS20", supply=10.0):
+    """DNMOS20: Idss/um at Vgs=0, and W for 1/10/100 uA self-biased current-source."""
+    _,idss1=measure_idss(dev,10.0,supply)         # 10um reference
+    idss_per_um=idss1/10.0 if idss1==idss1 else float("nan")
+    rows={"supply":supply,"vdmos":True,"idss_per_um_A":idss_per_um,"points":{}}
+    for I in (1e-6,10e-6,100e-6):
+        W=I/idss_per_um if idss_per_um and idss_per_um>0 else float("nan")   # self-biased at Vgs=0
+        X=0.024; sig=math.sqrt(2)*(X/3)/math.sqrt(max(W/10.0,1e-9))*100 if W==W else float("nan")
+        rows["points"][f"{I:g}"]={"W_um":round(W,1) if W==W else None,
+            "Vgs":0.0,"gm_id":None,"sigma_dI_pct":round(sig,2) if sig==sig else None}
+        print(f"  {dev:9s} I={I*1e6:6.1f}uA (Vgs=0 self-bias)  W={W:7.1f}um  Idss/um={idss_per_um*1e6:.3f}uA/um")
+    return rows
 
 def run(devs, vdmos, currents):
     rows={}

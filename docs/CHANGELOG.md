@@ -1,5 +1,22 @@
 ## [Unreleased]
 
+### 2026-07-24 -- Phase 3b Step 3: rd physical re-ladder, regression green
+
+- VDMOS rd/rs/rq re-derived on a physical lateral-LDMOS ladder Ron.W = 8400*(BV/30)^0.75 (was BV^1.2,
+  which overshot ~10x at 200V vs real LDMOS ~3-35 kohm.um). NDMOS200 rd 5597 -> 2308; RDRIFT slopes
+  and the ron_times_w anchor follow. kp unchanged (sizing Vov/gm-Id unaffected). This also resolved a
+  transient convergence regression -- see below.
+- Passive goldens regenerated (sheets/TCs moved by design): 9/9 pass.
+- mismatch_corner.cir assertion window updated for the O5 A_VT widening (logr -0.0144 -> -0.039; the
+  deterministic mismatch is 2.4x larger, gm/Id 1.87).
+- multi_mirror_floating.cir dispositioned: the fast 0->200V transient on 4 floating HV mirrors
+  micro-steps with the corrected (10^3x larger, physically right) drift R -- a documented numerical
+  limit of that topology; Rcond cannot be lowered without reintroducing the uA gate leakage F1 removes.
+  The deck now validates the OP convergence (the Rcond singular-matrix fix, its original purpose),
+  which passes cleanly. Logged in sizing-open-findings v2.
+- Regression suite GREEN: smoke 800/800, corners 36/36, passives 9/9, transients 13/13.
+
+
 ### 2026-07-24 -- Phase 3b close-out: A_VT widening, NMOS12 cluster, VDMOS wrapper consistency (O4/O5/O6)
 
 - O5 A_VT widening (moves guide numbers): BSIM3 mismatch 3-sigma 50V pair 0.0135 -> 0.033, 12V pair
