@@ -1,3 +1,14 @@
+## [Unreleased]
+
+### 2026-07-24 -- Phase 3b close-out: A_VT widening, NMOS12 cluster, VDMOS wrapper consistency (O4/O5/O6)
+
+- O5 A_VT widening (moves guide numbers): BSIM3 mismatch 3-sigma 50V pair 0.0135 -> 0.033, 12V pair
+  0.018 -> 0.093 (31 nm oxide). Phase-2 measured 2.4x/3.3x optimistic. Anchor: audit s3.2.
+- O4 NMOS12/PMOS12: u0 double draw collapsed to single term and /1.5; rdsw refit 30->300 / 34->350
+  ohm.um; stat names P_DVMAX_->P_DVSAT_, P_DRSH_->P_DRDSW_. Anchor: audit s3.3.
+- O6 VDMOS: RDRIFT slopes rescaled by the rd factor (1.2->5597, 3.0->5476); body-diode is into the
+  Js band at 200V (2.5e-14 -> 1e-13).
+
 # Changelog
 
 ## [Unreleased]

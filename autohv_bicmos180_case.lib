@@ -53,7 +53,7 @@ M0 d g s b PMOS33_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS
 
 .subckt NMOS50 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.013499999999999998/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.013499999999999998/3/sqrt(AUM2+1e-12)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.033/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.033/3/sqrt(AUM2+1e-12)}
 .param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
@@ -63,7 +63,7 @@ M0 d g s b NMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS
 
 .subckt PMOS50 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.013499999999999998/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.013499999999999998/3/sqrt(AUM2+1e-12)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.033/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.033/3/sqrt(AUM2+1e-12)}
 .param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
@@ -73,7 +73,7 @@ M0 d g s b PMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS
 
 .subckt NMOS12 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.018000000000000002/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.018000000000000002/3/sqrt(AUM2+1e-12)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.093/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.093/3/sqrt(AUM2+1e-12)}
 .param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
@@ -83,7 +83,7 @@ M0 d g s b NMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS
 
 .subckt PMOS12 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
 .param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.018000000000000002/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.018000000000000002/3/sqrt(AUM2+1e-12)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.093/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.093/3/sqrt(AUM2+1e-12)}
 .param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
@@ -330,7 +330,7 @@ M0 d g_int s PDMOS80_INT m={mtot}
 .param Leff={max(L,L_MIN)}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.033, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.033/3/sqrt(max(mtot,1e-6))}
-.param RDRIFT={max(1.2*(Leff/L_REF-1)/mtot, 1e-6)}
+.param RDRIFT={max(5597*(Leff/L_REF-1)/mtot, 1e-6)}
 .param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
 .param Cth=5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -361,7 +361,7 @@ M0 dd g_int s NDMOS200_INT m={mtot}
 .param Leff={max(L,L_MIN)}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.033, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.033/3/sqrt(max(mtot,1e-6))}
-.param RDRIFT={max(3.0*(Leff/L_REF-1)/mtot, 1e-6)}
+.param RDRIFT={max(5476*(Leff/L_REF-1)/mtot, 1e-6)}
 .param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
 .param Cth=5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
