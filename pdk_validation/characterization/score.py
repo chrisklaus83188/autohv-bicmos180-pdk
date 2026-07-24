@@ -63,6 +63,9 @@ def _expand(devices, fom, ref):
 # they must be asserted (so a future fix is detected) but reported as expected
 # rather than as news. Anything NOT in here that fails is a phase-2 discovery.
 EXPECTED_FAIL: dict[tuple[str, str], str] = {}
+# PHASE3_FIXED: the fix batch closed F1/F2/F3/F4/F6/F7, ladder-B, NMOS12.
+# They now score as normal pass/fail against the merged (v2) anchor bands.
+_PHASE3_NEUTRALIZE = True
 EXPECTED_FAIL.update(_expand(BSIM3_DEVICES, "flicker_corner",
                              "F3 (BSIM4 noise defaults in BSIM3 cards)"))
 EXPECTED_FAIL.update(_expand(BSIM3_DEVICES, "junction_perimeter_set",
@@ -101,6 +104,9 @@ EXPECTED_FAIL.update(_expand(PASSIVES_C, "matching_A_C_pair_1sigma",
                              "audit 5.2"))
 
 # FoM whose anchor band the audit itself flags as contested -> descriptive only.
+if _PHASE3_NEUTRALIZE:
+    EXPECTED_FAIL = {}
+
 DESCRIPTIVE = {("*", "ft_at_peak"): "anchor band contested (BCD junction BJT "
                                     "vs SiGe-class) -- open maintainer decision"}
 
