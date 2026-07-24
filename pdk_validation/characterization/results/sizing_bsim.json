@@ -1,0 +1,194 @@
+{
+ "NMOS18": {
+  "supply": 1.8,
+  "vdmos": false,
+  "points": {
+   "1e-06": {
+    "W_um": 1.0,
+    "Vgs": 0.694,
+    "gm_id": 16.86,
+    "sigma_dI_pct": 8.28
+   },
+   "1e-05": {
+    "W_um": 1.3,
+    "Vgs": 0.883,
+    "gm_id": 6.37,
+    "sigma_dI_pct": 2.77
+   },
+   "0.0001": {
+    "W_um": 10.3,
+    "Vgs": 0.86,
+    "gm_id": 5.67,
+    "sigma_dI_pct": 0.87
+   }
+  }
+ },
+ "PMOS18": {
+  "supply": 1.8,
+  "vdmos": false,
+  "points": {
+   "1e-06": {
+    "W_um": 1.0,
+    "Vgs": 0.832,
+    "gm_id": 10.01,
+    "sigma_dI_pct": 4.91
+   },
+   "1e-05": {
+    "W_um": 3.7,
+    "Vgs": 0.925,
+    "gm_id": 5.8,
+    "sigma_dI_pct": 1.5
+   },
+   "0.0001": {
+    "W_um": 37.7,
+    "Vgs": 0.875,
+    "gm_id": 6.01,
+    "sigma_dI_pct": 0.48
+   }
+  }
+ },
+ "NMOS33": {
+  "supply": 3.3,
+  "vdmos": false,
+  "points": {
+   "1e-06": {
+    "W_um": 1.0,
+    "Vgs": 0.983,
+    "gm_id": 12.86,
+    "sigma_dI_pct": 7.21
+   },
+   "1e-05": {
+    "W_um": 2.2,
+    "Vgs": 1.126,
+    "gm_id": 5.77,
+    "sigma_dI_pct": 2.21
+   },
+   "0.0001": {
+    "W_um": 22.4,
+    "Vgs": 1.035,
+    "gm_id": 6.01,
+    "sigma_dI_pct": 0.72
+   }
+  }
+ },
+ "PMOS33": {
+  "supply": 3.3,
+  "vdmos": false,
+  "points": {
+   "1e-06": {
+    "W_um": 1.0,
+    "Vgs": 1.187,
+    "gm_id": 7.22,
+    "sigma_dI_pct": 4.05
+   },
+   "1e-05": {
+    "W_um": 6.1,
+    "Vgs": 1.18,
+    "gm_id": 5.57,
+    "sigma_dI_pct": 1.27
+   },
+   "0.0001": {
+    "W_um": 63.2,
+    "Vgs": 1.124,
+    "gm_id": 5.75,
+    "sigma_dI_pct": 0.41
+   }
+  }
+ },
+ "NMOS50": {
+  "supply": 5.0,
+  "vdmos": false,
+  "points": {
+   "1e-06": {
+    "W_um": 1.0,
+    "Vgs": 1.366,
+    "gm_id": 8.61,
+    "sigma_dI_pct": 5.44
+   },
+   "1e-05": {
+    "W_um": 4.7,
+    "Vgs": 1.36,
+    "gm_id": 5.7,
+    "sigma_dI_pct": 1.67
+   },
+   "0.0001": {
+    "W_um": 48.8,
+    "Vgs": 1.264,
+    "gm_id": 5.91,
+    "sigma_dI_pct": 0.54
+   }
+  }
+ },
+ "PMOS50": {
+  "supply": 5.0,
+  "vdmos": false,
+  "points": {
+   "1e-06": {
+    "W_um": 1.3,
+    "Vgs": 1.578,
+    "gm_id": 5.55,
+    "sigma_dI_pct": 3.1
+   },
+   "1e-05": {
+    "W_um": 13.4,
+    "Vgs": 1.413,
+    "gm_id": 5.9,
+    "sigma_dI_pct": 1.03
+   },
+   "0.0001": {
+    "W_um": 137.6,
+    "Vgs": 1.364,
+    "gm_id": 6.06,
+    "sigma_dI_pct": 0.33
+   }
+  }
+ },
+ "NMOS12": {
+  "supply": 12.0,
+  "vdmos": false,
+  "points": {
+   "1e-06": {
+    "W_um": 1.3,
+    "Vgs": 2.053,
+    "gm_id": 5.89,
+    "sigma_dI_pct": 4.39
+   },
+   "1e-05": {
+    "W_um": 13.4,
+    "Vgs": 1.777,
+    "gm_id": 6.24,
+    "sigma_dI_pct": 1.45
+   },
+   "0.0001": {
+    "W_um": 137.6,
+    "Vgs": 1.698,
+    "gm_id": 6.4,
+    "sigma_dI_pct": 0.46
+   }
+  }
+ },
+ "PMOS12": {
+  "supply": 12.0,
+  "vdmos": false,
+  "points": {
+   "1e-06": {
+    "W_um": 2.8,
+    "Vgs": 2.198,
+    "gm_id": 5.75,
+    "sigma_dI_pct": 2.91
+   },
+   "1e-05": {
+    "W_um": 29.1,
+    "Vgs": 1.968,
+    "gm_id": 6.02,
+    "sigma_dI_pct": 0.95
+   },
+   "0.0001": {
+    "W_um": 299.5,
+    "Vgs": 1.923,
+    "gm_id": 6.15,
+    "sigma_dI_pct": 0.3
+   }
+  }
+ }
+}

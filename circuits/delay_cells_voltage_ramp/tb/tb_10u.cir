@@ -1,0 +1,38 @@
+.title delay-cell voltage ramp -- 10u bias, MIR_S / MIR_CS / MIR_CW
+* Three mirror topologies charging ~1 pF at 10u; RST resets the ramp.
+.include "../../../autohv_bicmos180_case.lib"
+.include "../../../circuits/async_logic_design/cells.lib"
+.include "../cells/dlyramp_s_10u.lib"
+.include "../cells/dlyramp_cs_10u.lib"
+.include "../cells/dlyramp_cw_10u.lib"
+
+Vdd vdd 0 5
+* RST: reset held (5V), released to 0V at 100n for the ramp, re-asserted at end
+Vrst rst 0 PULSE(5 0 100n 1n 1n 500n 2u)
+
+Xs  rst ramp_s  vdd 0 DLYRAMP_S_10U
+Xcs rst ramp_cs vdd 0 DLYRAMP_CS_10U
+Xcw rst ramp_cw vdd 0 DLYRAMP_CW_10U
+
+* UIC: start from t=0 with the ramp held at 0 by reset.  This avoids a DC
+* operating-point interaction between the simple mirror and CMIM_STD's
+* behavioral voltage-coefficient branch that otherwise stalls the transient
+* when all three topologies share one deck.  The reset hold (TD above) gives
+* the cascode bias time to settle before the ramp is released.
+.tran 0.2n 620n uic
+.control
+run
+meas tran t1_s when v(ramp_s)=1 rise=1
+meas tran t3_s when v(ramp_s)=3 rise=1
+let slope_s = 2/(t3_s-t1_s)
+print slope_s
+meas tran t1_cs when v(ramp_cs)=1 rise=1
+meas tran t3_cs when v(ramp_cs)=3 rise=1
+let slope_cs = 2/(t3_cs-t1_cs)
+print slope_cs
+meas tran t1_cw when v(ramp_cw)=1 rise=1
+meas tran t3_cw when v(ramp_cw)=3 rise=1
+let slope_cw = 2/(t3_cw-t1_cw)
+print slope_cw
+.endc
+.end

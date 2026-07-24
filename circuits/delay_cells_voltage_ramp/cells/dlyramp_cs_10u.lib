@@ -1,0 +1,13 @@
+.subckt DLYRAMP_CS_10U RST RAMP VDD GND
+* Standard diode-stack cascode mirror -> RAMP (recommended: flat I over PVT).
+Iref n2 GND 10u
+Xin    n1   n1 VDD VDD PMOS50 W=81.22778u L=2u M=1
+Xincs  n2   n2 n1  VDD PMOS50 W=81.22778u L=2u M=1
+Xout   n3   n1 VDD VDD PMOS50 W=81.22778u L=2u M=1
+Xoutcs RAMP n2 n3  VDD PMOS50 W=81.22778u L=2u M=1
+* --- ramp capacitor: PDK MIM, ~1 pF ---
+Xcap RAMP GND CMIM_STD L=31.623u W=31.623u
+* --- reset switch across the cap; gate = buffered RST (active-high) ---
+Xrst RAMP nrstb GND GND NMOS50 W=100u L=0.5u M=1
+Xbuf RST nrstb VDD GND BUF_5V0
+.ends DLYRAMP_CS_10U

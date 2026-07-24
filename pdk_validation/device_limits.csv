@@ -1,8 +1,8 @@
 device,param,min,max,note
-NMOS12,L,0.15,50.0,drawn channel length (um)
+NMOS12,L,0.5,50.0,drawn channel length (um)
 NMOS12,W,0.22,100.0,drawn channel width per device (um); use M for arrays
 NMOS12,M,1,1000,integer device multiplier
-PMOS12,L,0.15,50.0,drawn channel length (um)
+PMOS12,L,0.5,50.0,drawn channel length (um)
 PMOS12,W,0.22,100.0,drawn channel width per device (um); use M for arrays
 PMOS12,M,1,1000,integer device multiplier
 NMOS18,L,0.18,50.0,drawn channel length (um)
@@ -85,3 +85,8 @@ PDMOS40,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK 
 PDMOS60,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
 PDMOS80,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
 DNMOS20,LCH,0.6,1.0,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+PDMOS120,W,2.0,100000.0,total drawn width (um)
+PDMOS120,M,1,10000,integer device multiplier
+PDMOS200,W,2.0,100000.0,total drawn width (um)
+PDMOS200,M,1,10000,integer device multiplier
+PDMOS200,L,5.4,10.0,"drift/extended-drain length (um)"

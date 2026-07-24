@@ -1,4 +1,5 @@
 * ============================================================================
+* Qualification range: -40 to +150 degC (automotive BCD, declaration D7, phase 3).
 * AutoHV_BiCMOS180 - case-parameterized models + params (include file).
 * Pulled in by autohv_bicmos180_case.lib. Keep these two files together.
 * Kept separate so the Qucs-S library palette lists only the 76 devices,
@@ -731,7 +732,7 @@
 + mobmod=1
 + capmod=3
 + noimod=2
-+ tox=2e-08
++ tox=3.1e-08
 + xj=5e-07
 + nch=9e+16
 + nsub=2e+16
@@ -795,7 +796,7 @@
 + mobmod=1
 + capmod=3
 + noimod=2
-+ tox=2.1e-08
++ tox=3.1e-08
 + xj=5.5e-07
 + nch=1.1e+17
 + nsub=2.4e+16
