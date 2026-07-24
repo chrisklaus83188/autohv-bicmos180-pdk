@@ -18,3 +18,8 @@ __pycache__/
 Thumbs.db
 *~
 .*.swp
+
+# Local, uncommitted working files (contain third-party process data —
+# must never be committed to a public repo). Added for the ONC25 grounding
+# extraction; the committed docs carry derived/scaled values only.
+LOCAL_*
