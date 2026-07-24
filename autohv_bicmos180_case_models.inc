@@ -1414,7 +1414,7 @@
 
 .model RPOLY_HI_INT R (
 + rsh={((1200*_isTT + 1080*_isFF + 1344*_isSS + 1200*_isFS + 1200*_isSF))*(1+P_DRSH_RPOLY_HI)}
-+ tc1=0.0006
++ tc1=-0.0014
 + tc2=1e-06
 + defw=1e-06
 + narrow=1.2e-07
@@ -1427,8 +1427,8 @@
 + )
 
 .model RPOLY_LO_INT R (
-+ rsh={((25*_isTT + 22.5*_isFF + 28*_isSS + 25*_isFS + 25*_isSF))*(1+P_DRSH_RPOLY_LO)}
-+ tc1=0.001
++ rsh={((300*_isTT + 270*_isFF + 336*_isSS + 300*_isFS + 300*_isSF))*(1+P_DRSH_RPOLY_LO)}
++ tc1=-0.0001
 + tc2=2e-06
 + defw=2e-06
 + narrow=1.5e-07
@@ -1455,7 +1455,7 @@
 + )
 
 .model RNPLUS_INT R (
-+ rsh={((32*_isTT + 28.8*_isFF + 35.84*_isSS + 32*_isFS + 32*_isSF))*(1+P_DRSH_RNPLUS)}
++ rsh={((60*_isTT + 54*_isFF + 67.2*_isSS + 60*_isFS + 60*_isSF))*(1+P_DRSH_RNPLUS)}
 + tc1=0.0009
 + tc2=1.5e-06
 + defw=2e-06
@@ -1469,7 +1469,7 @@
 + )
 
 .model RPPLUS_INT R (
-+ rsh={((58*_isTT + 52.2*_isFF + 64.96*_isSS + 58*_isFS + 58*_isSF))*(1+P_DRSH_RPPLUS)}
++ rsh={((110*_isTT + 99*_isFF + 123.2*_isSS + 110*_isFS + 110*_isSF))*(1+P_DRSH_RPPLUS)}
 + tc1=0.0011
 + tc2=1.6e-06
 + defw=2e-06

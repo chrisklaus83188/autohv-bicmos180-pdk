@@ -474,7 +474,7 @@ D0 a c DZ_24_INT area={AREAEFF}
 * resistance and matching coeff are inversely related). VCR small (~200 ppm/V,
 * Allen poly ~100 ppm/V; higher-sheet/lower-doping poly trends a bit higher).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.03182/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.03182/3/sqrt(AUM2+1e-12)}
 .param RSH0=1200
 .param VCR1=200e-6
 .param VCR2=10e-6
@@ -486,7 +486,7 @@ BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 * Low-sheet (heavily-doped) poly: best matching of the poly pair, very linear
 * (VCR ~50 ppm/V), but high tc1 (heavily-doped poly trends metallic/positive).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.003/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.003/3/sqrt(AUM2+1e-12)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.03182/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.03182/3/sqrt(AUM2+1e-12)}
 .param RSH0=25
 .param VCR1=50e-6
 .param VCR2=2e-6
@@ -499,7 +499,7 @@ BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 * from junction-depletion modulation (~8000 ppm/V, Allen CMOS Analog Circuit
 * Design). R rises with terminal-voltage magnitude. Avoid on signal nodes.
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.013/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.013/3/sqrt(AUM2+1e-12)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.08485/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.08485/3/sqrt(AUM2+1e-12)}
 .param RSH0=1800
 .param VCR1=8000e-6
 .param VCR2=400e-6
@@ -511,7 +511,7 @@ BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 * N+ diffusion resistor: moderate matching, moderate VCR from junction
 * depletion into the surrounding well/substrate (~1500 ppm/V).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.005/3/sqrt(AUM2+1e-12)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.05303/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.05303/3/sqrt(AUM2+1e-12)}
 .param RSH0=32
 .param VCR1=1500e-6
 .param VCR2=80e-6
@@ -523,7 +523,7 @@ BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 * P+ diffusion resistor: moderate matching, moderate VCR (~1800 ppm/V),
 * slightly higher than N+ (opposite junction-side depletion behaviour).
 .param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.0055/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0055/3/sqrt(AUM2+1e-12)}
+.param RMM={1+MM_ON*AGAUSS(0, 0.05303/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.05303/3/sqrt(AUM2+1e-12)}
 .param RSH0=58
 .param VCR1=1800e-6
 .param VCR2=90e-6
@@ -536,7 +536,7 @@ BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 * sigma ~0.1% vs ~0.65% for MOM, Subramanian et al.). Small VCC from the
 * nitride-like dielectric (~30 ppm/V + quadratic term).
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0015/3/sqrt(AUM2+1e-12)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.01591/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.01591/3/sqrt(AUM2+1e-12)}
 .param LS={sqrt(CMM)}
 .param CJ0=0.001
 .param VCC1=30e-6
@@ -551,7 +551,7 @@ Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 * a higher voltage coefficient (~60 ppm/V; higher field accentuates dielectric
 * nonlinearity). Still far better matched than the metal caps.
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.002/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.002/3/sqrt(AUM2+1e-12)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.01591/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.01591/3/sqrt(AUM2+1e-12)}
 .param LS={sqrt(CMM)}
 .param CJ0=0.002
 .param VCC1=60e-6
@@ -565,7 +565,7 @@ Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 * Metal-oxide-metal: matches worse than MIM (~0.65% sigma class) but the SiO2
 * dielectric is very linear, so VCC is tiny (~5 ppm/V).
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.006/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.006/3/sqrt(AUM2+1e-12)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.03182/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.03182/3/sqrt(AUM2+1e-12)}
 .param LS={sqrt(CMM)}
 .param CJ0=0.00035
 .param VCC1=5e-6
@@ -580,7 +580,7 @@ Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 * most linear (oxide dielectric, VCC ~3 ppm/V). C0NOM uses the area term only
 * as a first-order scale for the (very small) VCC increment.
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
+.param CMM={1+MM_ON*AGAUSS(0, 0.03182/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.03182/3/sqrt(AUM2+1e-12)}
 .param LS={sqrt(CMM)}
 .param CJ0=0.00018
 .param VCC1=3e-6
