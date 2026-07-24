@@ -1,0 +1,11 @@
+.subckt DLYRAMP_S_10U RST RAMP VDD GND
+* Simple PMOS current mirror -> RAMP.  Iref: ideal reference (instrument).
+Iref nin GND 10u
+Xin  nin  nin VDD VDD PMOS50 W=81.22778u L=2u M=1
+Xout RAMP nin VDD VDD PMOS50 W=81.22778u L=2u M=1
+* --- ramp capacitor: PDK MIM, ~1 pF ---
+Xcap RAMP GND CMIM_STD L=31.623u W=31.623u
+* --- reset switch across the cap; gate = buffered RST (active-high) ---
+Xrst RAMP nrstb GND GND NMOS50 W=100u L=0.5u M=1
+Xbuf RST nrstb VDD GND BUF_5V0
+.ends DLYRAMP_S_10U

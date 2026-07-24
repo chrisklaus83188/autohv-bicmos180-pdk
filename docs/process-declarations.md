@@ -1,5 +1,23 @@
 # Process Declarations — AutoHV BiCMOS180 PDK
 
+## Declarations in force — RULED (phase 3, status `[ruled]`)
+
+The maintainer has ruled. These are fixed inputs to phase 3 and every later phase.
+
+1. **`W_REF = 10 um` is a genuine drawn cell** (D1). `[ruled]`
+2. **All VDMOS are 5 V-gate devices: tox = 13 nm, flat across drain classes** (D2). Rated |Vgs| <= 5 V; the harness rated-drive condition is Vov = 3 V. `[ruled]`
+3. **BJT/diode `AREA = 1 = 100 um^2`** (D3); `is` kept, cje/cjc reconciled to it. `[ruled]`
+4. **BJTs are BCD junction devices** (D4): fT anchor 0.5-2 GHz; `tf` stands. `[ruled]`
+5. **F3 fixed in place: BSIM3-convention noise on the level=49 cards** -- no BSIM4 migration this phase. `[ruled]`
+6. **NMOS12/PMOS12 are thick-oxide planar 12 V devices: tox = 31 nm, Lmin = 0.5 um** (D6). `[ruled]`
+7. **Qualification range -40 to +150 C** (D7), stated in both model-file headers. `[ruled]`
+8. **VDMOS Rsp per class -- grounded (P2-1):** anchored to the measured 30 V LDMOS, scaled per class; 80-200 V via silicon-limit scaling anchored at 30 V. `[ruled]`
+
+**Phase 3 applied these** (F1/F2/F-VD3 VDMOS; F6/F3 BSIM3; F7 passives; BJT; D6 NMOS12). See `CHANGELOG.md`, `sizing-guide.md`, and `sizing-open-findings.md`.
+
+---
+
+
 **What this is.** The AutoHV realism audit (phases 0–2) surfaced a set of *open maintainer
 declarations* — process facts the synthetic PDK never states, that several fixes depend on. This
 document answers all seven, grounding each against a real commercial process where the evidence

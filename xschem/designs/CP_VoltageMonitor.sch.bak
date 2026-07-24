@@ -1,0 +1,158 @@
+v {xschem version=3.4.8RC file_version=1.3}
+G {}
+K {}
+V {}
+S {}
+F {}
+E {}
+N 2670 -1235 2670 -1185 {lab=#net1}
+N 1465 -1115 1465 -1085 {lab=#net2}
+N 1545 -1155 1545 -1085 {lab=#net2}
+N 1465 -1255 1465 -1185 {lab=VIN}
+N 1510 -1155 1515 -1155 {lab=#net2}
+N 1465 -1085 1545 -1085 {lab=#net2}
+N 2670 -1485 2670 -1395 {lab=CP}
+N 1960 -1485 2670 -1485 {lab=CP}
+N 2670 -925 2670 -900 {lab=#net3}
+N 2595 -925 2670 -925 {lab=#net3}
+N 2595 -925 2595 -860 {lab=#net3}
+N 2595 -860 2625 -860 {lab=#net3}
+N 2670 -1115 2670 -925 {lab=#net3}
+N 2410 -1255 2410 -905 {lab=VIN}
+N 2040 -1255 2410 -1255 {lab=VIN}
+N 2460 -860 2595 -860 {lab=#net3}
+N 2455 -860 2460 -860 {lab=#net3}
+N 2410 -905 2410 -900 {lab=VIN}
+N 2410 -600 2410 -580 {lab=#net4}
+N 2345 -600 2410 -600 {lab=#net4}
+N 2345 -600 2345 -545 {lab=#net4}
+N 2345 -545 2365 -545 {lab=#net4}
+N 2410 -635 2410 -600 {lab=#net4}
+N 2410 -830 2410 -795 {lab=#net5}
+N 2670 -825 2670 -790 {lab=#net6}
+N 2670 -830 2670 -825 {lab=#net6}
+N 2410 -545 2410 -515 {lab=GND}
+N 2405 -545 2410 -545 {lab=GND}
+N 2670 -775 2670 -755 {lab=#net6}
+N 2605 -775 2670 -775 {lab=#net6}
+N 2605 -775 2605 -720 {lab=#net6}
+N 2605 -720 2625 -720 {lab=#net6}
+N 2670 -790 2670 -755 {lab=#net6}
+N 2665 -720 2670 -720 {lab=#net7}
+N 2670 -720 2670 -690 {lab=#net7}
+N 2670 -690 2670 -665 {lab=#net7}
+N 1570 -600 1570 -580 {lab=#net8}
+N 1570 -635 1570 -600 {lab=#net8}
+N 1570 -545 1570 -515 {lab=GND}
+N 1570 -545 1575 -545 {lab=GND}
+N 1400 -545 1420 -545 {lab=IBIAS}
+N 1465 -545 1465 -515 {lab=GND}
+N 1460 -545 1465 -545 {lab=GND}
+N 1570 -515 1570 -475 {lab=GND}
+N 1465 -515 1465 -475 {lab=GND}
+N 1465 -1085 1465 -900 {lab=#net2}
+N 1465 -830 1465 -580 {lab=#net8}
+N 1185 -515 1185 -475 {lab=GND}
+N 1185 -545 1190 -545 {lab=GND}
+N 1185 -545 1185 -515 {lab=GND}
+N 1185 -600 1185 -580 {lab=IBIAS}
+N 1185 -600 1240 -600 {lab=IBIAS}
+N 1240 -600 1245 -600 {lab=IBIAS}
+N 1245 -600 1245 -545 {lab=IBIAS}
+N 2090 -545 2345 -545 {lab=#net4}
+N 1465 -635 1570 -635 {lab=#net8}
+N 1230 -545 1400 -545 {lab=IBIAS}
+N 1185 -475 1465 -475 {lab=GND}
+N 1185 -675 1185 -600 {lab=IBIAS}
+N 1465 -1255 2040 -1255 {lab=VIN}
+N 1615 -545 2090 -545 {lab=#net4}
+N 1465 -475 2100 -475 {lab=GND}
+N 1570 -475 2100 -475 {lab=GND}
+N 1515 -1155 1545 -1155 {lab=#net2}
+N 2214 -1155 2214 -1150 {lab=#net9}
+N 2214 -1155 2244 -1155 {lab=#net9}
+N 2274 -1155 2274 -1140 {lab=#net9}
+N 2214 -1065 2274 -1065 {lab=#net10}
+N 2244 -1155 2274 -1155 {lab=#net9}
+N 2214 -1110 2214 -1065 {lab=#net10}
+N 2274 -1080 2274 -1065 {lab=#net10}
+N 2550 -1485 2550 -1385 {lab=CP}
+N 2550 -1325 2550 -1155 {lab=#net9}
+N 2350 -1485 2550 -1485 {lab=CP}
+N 2350 -1155 2550 -1155 {lab=#net9}
+N 2285 -1155 2290 -1155 {lab=#net9}
+N 2550 -1155 2625 -1155 {lab=#net9}
+N 2214 -1065 2214 -1025 {lab=#net10}
+N 2214 -955 2214 -930 {lab=#net11}
+N 1130 -475 1185 -475 {lab=GND}
+N 1135 -1255 1465 -1255 {lab=VIN}
+N 1135 -1485 1960 -1485 {lab=CP}
+N 2214 -870 2214 -840 {lab=GND}
+N 1130 -860 1160 -860 {lab=VDD}
+N 2214 -840 2214 -830 {lab=GND}
+N 2161 -985 2169 -985 {lab=ENbb}
+N 2120 -985 2161 -985 {lab=ENbb}
+N 2274 -1155 2285 -1155 {lab=#net9}
+N 2290 -1155 2350 -1155 {lab=#net9}
+N 1545 -1155 2179 -1155 {lab=#net2}
+N 1411 -860 1419 -860 {lab=ENbb}
+N 1370 -860 1411 -860 {lab=ENbb}
+N 2550 -545 2555 -545 {lab=GND}
+N 2555 -545 2555 -515 {lab=GND}
+N 2555 -515 2555 -475 {lab=GND}
+N 2410 -515 2410 -475 {lab=GND}
+N 2670 -505 2670 -475 {lab=GND}
+N 2100 -475 2430 -475 {lab=GND}
+N 2555 -475 2670 -475 {lab=GND}
+N 2430 -475 2555 -475 {lab=GND}
+N 2501 -545 2509 -545 {lab=ENb}
+N 2460 -545 2501 -545 {lab=ENb}
+N 2555 -860 2555 -580 {lab=#net3}
+N 1170 -395 1200 -395 {lab=EN}
+N 1270 -395 1310 -395 {lab=ENb}
+N 1310 -395 1320 -395 {lab=ENb}
+N 1390 -395 1435 -395 {lab=ENbb}
+C {designs/resistor_string.sym} 2670 -1315 0 0 {name=x1}
+C {autohv/PDMOS200.sym} 1480 -1155 2 0 {name=M1 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/PDMOS200.sym} 2655 -1155 2 1 {name=M2 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
+C {noconn.sym} 2720 -1285 2 0 {name=l1}
+C {noconn.sym} 2720 -1315 2 0 {name=l2}
+C {noconn.sym} 2720 -1345 2 0 {name=l3}
+C {autohv/NDMOS200.sym} 2655 -860 0 0 {name=M3 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
+C {designs/resistor_string.sym} 2670 -585 0 0 {name=LS_SNS[2:0]}
+C {autohv/NDMOS200.sym} 1450 -860 0 0 {name=M4 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NDMOS200.sym} 2425 -860 0 1 {name=M5 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
+C {designs/resistor_string.sym} 2410 -715 0 0 {name=LS_SNS1[2:0]}
+C {noconn.sym} 2460 -745 2 0 {name=l4}
+C {noconn.sym} 2460 -715 2 0 {name=l5}
+C {noconn.sym} 2460 -685 2 0 {name=l6}
+C {autohv/NMOS50.sym} 2395 -545 0 0 {name=M6 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS50.sym} 2655 -720 0 0 {name=M8 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS50.sym} 1585 -545 0 1 {name=M7 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS50.sym} 1450 -545 0 0 {name=M9 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS50.sym} 1200 -545 0 1 {name=M10 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {ipin.sym} 1185 -675 1 0 {name=p3 lab=IBIAS}
+C {noconn.sym} 2720 -615 2 0 {name=l7}
+C {noconn.sym} 2720 -585 2 0 {name=l8}
+C {noconn.sym} 2720 -555 2 0 {name=l9}
+C {autohv/PMOS50.sym} 2214 -1140 3 0 {name=M11 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/RPOLY_HI.sym} 2274 -1110 0 0 {name=R1 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
+C {autohv/RPOLY_HI.sym} 2550 -1355 0 0 {name=R2 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
+C {autohv/RPOLY_HI.sym} 2214 -900 0 0 {name=R3 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
+C {autohv/NDMOS200.sym} 2199 -985 0 0 {name=M12 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
+C {iopin.sym} 1135 -1485 2 0 {name=p5 lab=CP}
+C {iopin.sym} 1135 -1255 2 0 {name=p4 lab=VIN}
+C {iopin.sym} 1130 -475 2 0 {name=p1 lab=GND}
+C {iopin.sym} 1130 -860 2 0 {name=p2 lab=VDD}
+C {noconn.sym} 1160 -860 2 0 {name=l10}
+C {lab_wire.sym} 2214 -865 3 0 {name=p6 sig_type=std_logic lab=GND}
+C {lab_wire.sym} 2161 -985 0 0 {name=p10 sig_type=std_logic lab=ENbb}
+C {lab_wire.sym} 1411 -860 0 0 {name=p11 sig_type=std_logic lab=ENbb}
+C {autohv/NMOS50.sym} 2540 -545 0 0 {name=M13 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {lab_wire.sym} 2501 -545 0 0 {name=p12 sig_type=std_logic lab=ENb}
+C {comparators/CMP_PIN_5V0.sym} 2955 -790 0 0 {name=U3 VPWR=VDD VGND=GND spiceprefix=x IREF=5u WSCALE=1 WIN=80u LIN=2u LANA=2u FIN=1 HYSK=0}
+C {logic/INV_5V0.sym} 1235 -395 0 0 {name=U1 VPWR=VDD VGND=GND spiceprefix=x}
+C {ipin.sym} 1170 -395 0 0 {name=p9 lab=EN}
+C {lab_wire.sym} 1310 -395 0 0 {name=p13 sig_type=std_logic lab=ENb}
+C {logic/INV_5V0.sym} 1355 -395 0 0 {name=U2 VPWR=VDD VGND=GND spiceprefix=x}
+C {lab_wire.sym} 1435 -395 0 0 {name=p7 sig_type=std_logic lab=ENbb}

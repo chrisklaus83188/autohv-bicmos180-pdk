@@ -1,0 +1,14 @@
+.subckt DLYRAMP_CW_10U RST RAMP VDD GND
+* Wide-swing cascode mirror -> RAMP.  Vbcw: ideal Vdd-referenced bias (instrument).
+Iref ng GND 10u
+Vbcw VDD ncw 1.6
+Xin    nA ng  VDD VDD PMOS50 W=81.22778u L=2u M=1
+Xincw  ng ncw nA  VDD PMOS50 W=81.22778u L=2u M=1
+Xout   nB ng  VDD VDD PMOS50 W=81.22778u L=2u M=1
+Xoutcw RAMP ncw nB VDD PMOS50 W=81.22778u L=2u M=1
+* --- ramp capacitor: PDK MIM, ~1 pF ---
+Xcap RAMP GND CMIM_STD L=31.623u W=31.623u
+* --- reset switch across the cap; gate = buffered RST (active-high) ---
+Xrst RAMP nrstb GND GND NMOS50 W=100u L=0.5u M=1
+Xbuf RST nrstb VDD GND BUF_5V0
+.ends DLYRAMP_CW_10U

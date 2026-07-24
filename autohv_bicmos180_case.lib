@@ -1,4 +1,5 @@
 * ============================================================================
+* Qualification range: -40 to +150 degC (automotive BCD, declaration D7, phase 3).
 * AutoHV_BiCMOS180 - device subcircuit library for Qucs-S (case-parameterized).
 * Drop this file + autohv_bicmos180_case_models.inc + the autohv_bicmos180_case/
 * symbol folder into a Qucs-S library directory (e.g. ~/.qucs/user_lib or
