@@ -2,6 +2,32 @@
 
 ## [Unreleased]
 
+### 2026-07-24 — Phase 3 VDMOS DC realism: kp/rd re-derived, mismatch ladder unified (F1, F2, F-VD3)
+
+The trigger for the whole audit. A 200 V NMOS mirror at 10-55 uA read "always in
+subthreshold" (sigma(trip) 340-440 mV). Root cause was F1: the VDMOS `kp` ladder was scaled
+to a discrete power die (287x-5213x too high, non-uniform), so uA-level currents produced a
+near-zero overdrive. Fixed at the declared 10 um / 13 nm-gate-oxide cell (declarations D1/D2):
+
+- **kp re-derived, flat across drain classes** (13 nm oxide -> Cox 2.66 fF/um2 -> kp =
+  mu*Cox*(W_REF/L_ch), L_ch 0.6 um): N-channel 1.77e-3, P-channel 5.76e-4 A/V^2, replacing the
+  monotonic 0.088-2.8 ladder. Convention Id=(kp/2)Vov^2 (phase-2 D1). Anchor: model-realism-audit
+  s2.1, anchor-amendments P2-1.
+- **rd/rs re-derived after kp** to the grounded Ron*W ladder (P2-1: measured 30 V LDMOS
+  Ron*W ~8400 ohm.um, scaled BV^1.2 for lateral RESURF, anchored at 30 V): NDMOS200 rd 1.2 -> 5597,
+  NDMOS20 0.045 -> 230 ohm. rq preserved rd-ratio; rescaled with rd.
+- **Mismatch ladder unified on ladder-A slope** (co-landed with kp so sigma(trip) never passes a
+  half-fixed state): 40/80/200 V 3-sigma 0.0085/0.0095/0.011 -> 0.0255/0.0285/0.033. Ladder A
+  (20/60/120) was already physical. Anchor: audit s2.6.
+- **Caps re-derived at 13 nm** (F2): cgs/cgdmax/cgdmin recomputed = Cox*W*(L_ch+Lov) etc.,
+  flat across classes (NDMOS20 cgs 499 -> 23.9 fF). cjo held (already in band). Anchor: audit s2.4.
+- **theta re-fit to 13 nm** (~0.12-0.20 /V) and **ksubthres re-laddered** so measured S rises
+  85 -> 95 mV/dec with class (phase-2 D2 mapping S ~= 1.17*1000*ksubthres).
+
+Verified: NDMOS200 W=10 um diode-connected at 100 uA now sits at Vov ~0.57 V, gm/Id 5.6 -- an
+ordinary strong-inversion mirror, not subthreshold. The original front end re-runs as normal.
+
+
 ### 2026-06-06 â€” Rcond 1e7 -> 1e6: fix the TRAN micro-stepping at high VIN
 
 Per `HANDOFF_dynamic_transient_microstepping.md` from chuba14f. After
