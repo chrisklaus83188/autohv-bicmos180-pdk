@@ -17,7 +17,7 @@
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS18_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
+M0 d g s b NMOS18_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
 .ends NMOS18
 
 .subckt PMOS18 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
@@ -27,7 +27,7 @@ M0 d g s b NMOS18_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS18_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
+M0 d g s b PMOS18_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
 .ends PMOS18
 
 .subckt NMOS33 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
@@ -37,7 +37,7 @@ M0 d g s b PMOS18_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS33_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
+M0 d g s b NMOS33_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
 .ends NMOS33
 
 .subckt PMOS33 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
@@ -47,7 +47,7 @@ M0 d g s b NMOS33_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS33_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
+M0 d g s b PMOS33_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
 .ends PMOS33
 
 .subckt NMOS50 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
@@ -57,7 +57,7 @@ M0 d g s b PMOS33_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
+M0 d g s b NMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
 .ends NMOS50
 
 .subckt PMOS50 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
@@ -67,7 +67,7 @@ M0 d g s b NMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
+M0 d g s b PMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
 .ends PMOS50
 
 .subckt NMOS12 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
@@ -77,7 +77,7 @@ M0 d g s b PMOS50_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
+M0 d g s b NMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
 .ends NMOS12
 
 .subckt PMOS12 d g s b params: W=10u L=1u M=1 MM_SIGMA=0
@@ -87,7 +87,7 @@ M0 d g s b NMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 .param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
 .param WEFF={W*(1+DWREL_MM)}
 .param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
+M0 d g s b PMOS12_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
 .ends PMOS12
 
 .subckt NDMOS20 d g s params: W=10u M=1 MM_SIGMA=0
