@@ -1209,22 +1209,22 @@
 + rbm=5
 + re={((0.6*_isTT + 0.5*_isFF + 0.73170732*_isSS + 0.5*_isFS + 0.73170732*_isSF))*(1+P_DRE_NPN_LV)}
 + rc={((0.7*_isTT + 0.58333333*_isFF + 0.85365854*_isSS + 0.58333333*_isFS + 0.85365854*_isSF))*(1+P_DRC_NPN_LV)}
-+ cje=1.6e-12
++ cje=3.019e-13
 + vje=0.78
 + mje=0.33
 + tf={((4.5e-11*_isTT + 3.75e-11*_isFF + 5.4878e-11*_isSS + 3.75e-11*_isFS + 5.4878e-11*_isSF))*(1+P_DTF_NPN_LV)}
 + xtf=3
 + vtf=4
 + itf=0.08
-+ cjc=5.5e-13
++ cjc=1e-13
 + vjc=0.65
 + mjc=0.28
 + tr={((1.2e-08*_isTT + 1e-08*_isFF + 1.46341e-08*_isSS + 1e-08*_isFS + 1.46341e-08*_isSF))*(1+P_DTR_NPN_LV)}
 + eg=1.11
 + xti=3
 + xtb=1.5
-+ kf=1e-12
-+ af=1
++ kf=1e-15
++ af=1.7
 + )
 
 .model PNP_LAT_INT PNP (
@@ -1246,22 +1246,22 @@
 + rbm=20
 + re={((2*_isTT + 1.6666667*_isFF + 2.4390244*_isSS + 2.4390244*_isFS + 1.6666667*_isSF))*(1+P_DRE_PNP_LAT)}
 + rc={((3*_isTT + 2.5*_isFF + 3.6585366*_isSS + 3.6585366*_isFS + 2.5*_isSF))*(1+P_DRC_PNP_LAT)}
-+ cje=2.8e-12
++ cje=5.283e-13
 + vje=0.76
 + mje=0.35
 + tf={((1.8e-10*_isTT + 1.5e-10*_isFF + 2.19512e-10*_isSS + 2.19512e-10*_isFS + 1.5e-10*_isSF))*(1+P_DTF_PNP_LAT)}
 + xtf=1.8
 + vtf=2
 + itf=0.02
-+ cjc=8e-13
++ cjc=1.455e-13
 + vjc=0.6
 + mjc=0.3
 + tr={((2.5e-08*_isTT + 2.08333e-08*_isFF + 3.04878e-08*_isSS + 3.04878e-08*_isFS + 2.08333e-08*_isSF))*(1+P_DTR_PNP_LAT)}
 + eg=1.11
 + xti=3
 + xtb=1.7
-+ kf=1e-12
-+ af=1
++ kf=1e-15
++ af=1.7
 + )
 
 .model NPN_HV_INT NPN (
@@ -1283,22 +1283,22 @@
 + rbm=10
 + re={((1.5*_isTT + 1.25*_isFF + 1.8292683*_isSS + 1.25*_isFS + 1.8292683*_isSF))*(1+P_DRE_NPN_HV)}
 + rc={((1*_isTT + 0.83333333*_isFF + 1.2195122*_isSS + 0.83333333*_isFS + 1.2195122*_isSF))*(1+P_DRC_NPN_HV)}
-+ cje=9e-13
++ cje=1.698e-13
 + vje=0.79
 + mje=0.31
 + tf={((9e-11*_isTT + 7.5e-11*_isFF + 1.09756e-10*_isSS + 7.5e-11*_isFS + 1.09756e-10*_isSF))*(1+P_DTF_NPN_HV)}
 + xtf=2
 + vtf=6
 + itf=0.03
-+ cjc=3.5e-13
++ cjc=6.364e-14
 + vjc=0.7
 + mjc=0.25
 + tr={((1.8e-08*_isTT + 1.5e-08*_isFF + 2.19512e-08*_isSS + 1.5e-08*_isFS + 2.19512e-08*_isSF))*(1+P_DTR_NPN_HV)}
 + eg=1.11
 + xti=3
 + xtb=1.4
-+ kf=1e-12
-+ af=1
++ kf=1e-15
++ af=1.7
 + )
 
 .model PNP_HV_INT PNP (
@@ -1320,22 +1320,22 @@
 + rbm=25
 + re={((2.2*_isTT + 1.8333333*_isFF + 2.6829268*_isSS + 2.6829268*_isFS + 1.8333333*_isSF))*(1+P_DRE_PNP_HV)}
 + rc={((1.8*_isTT + 1.5*_isFF + 2.195122*_isSS + 2.195122*_isFS + 1.5*_isSF))*(1+P_DRC_PNP_HV)}
-+ cje=1.4e-12
++ cje=2.642e-13
 + vje=0.77
 + mje=0.34
 + tf={((2.5e-10*_isTT + 2.08333e-10*_isFF + 3.04878e-10*_isSS + 3.04878e-10*_isFS + 2.08333e-10*_isSF))*(1+P_DTF_PNP_HV)}
 + xtf=1.6
 + vtf=3
 + itf=0.01
-+ cjc=4.5e-13
++ cjc=8.182e-14
 + vjc=0.62
 + mjc=0.28
 + tr={((3e-08*_isTT + 2.5e-08*_isFF + 3.65854e-08*_isSS + 3.65854e-08*_isFS + 2.5e-08*_isSF))*(1+P_DTR_PNP_HV)}
 + eg=1.11
 + xti=3
 + xtb=1.8
-+ kf=1e-12
-+ af=1
++ kf=1e-15
++ af=1.7
 + )
 
 .model DIO_PN_INT D (
