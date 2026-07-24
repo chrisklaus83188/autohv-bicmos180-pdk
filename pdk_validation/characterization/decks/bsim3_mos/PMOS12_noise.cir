@@ -9,7 +9,7 @@
 XM1 d g 0 0 PMOS12 W=10u L=0.15u
 Vdd dd 0 dc -6.0
 Lb dd d 1e9
-Vg g 0 dc -1.16 ac 1
+Vg g 0 dc -1.23 ac 1
 .control
 op
 print @m.xm1.m0[id] @m.xm1.m0[gm]

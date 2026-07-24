@@ -1,5 +1,19 @@
 ## [Unreleased]
 
+### 2026-07-24 -- Phase 3b close-out: green suite, complete guide, one snapshot (v1-sized)
+
+- Scorecard re-baselined against the merged 2.1-phase3b anchors: 280 pass (was 157), 19 residual
+  hard-fails -- all dispositioned as measurement-extraction limits (theta folds in the now-large
+  physical rd; cox capmod-3 effective), BJT breakdown soft-knee criterion, or explicitly-deferred
+  zener/Schottky families. None is a sizing-relevant model defect. See sizing-open-findings.md v2.
+- Regression suite green: smoke 800/800, corners 36/36, passives 9/9, transients 13/13.
+- sizing-guide.{md,json} regenerated post-O5 (50V/12V sigma columns now realistic), resistor table
+  defaults to RPOLY_HI with RNWELL only as a flagged area-saving alternative, DNMOS20 depletion row
+  added (Idss 54.7 uA/um at Vgs=0; sub-drawn-min widths annotated). 40/40 devices, no known-wrong columns.
+- sizing-open-findings.md -> v2 (O1-O9 all closed; 19 residuals dispositioned).
+  post-fix-staleness.md regeneration-status flipped to done (goldens + scorecard regenerated).
+- Snapshot tagged v1-sized: models + merged anchors + goldens + scorecard + guide as one consistent state.
+
 ### 2026-07-24 -- Phase 3b Step 3: rd physical re-ladder, regression green
 
 - VDMOS rd/rs/rq re-derived on a physical lateral-LDMOS ladder Ron.W = 8400*(BV/30)^0.75 (was BV^1.2,
