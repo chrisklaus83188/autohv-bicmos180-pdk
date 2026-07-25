@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+### 2026-07-25 -- Phase 4 Step 2.3: DIO_SCH tt -> ~0 (majority-carrier)
+
+- DIO_SCH transit time 300 ps -> 1e-13 s (~0). Schottky is majority-carrier: no minority stored
+  charge -> no reverse-recovery/transit term (the reference catalog specs Schottkys by Cj+Vf, no
+  trr row). Removes the v1-sized scorecard residual. Anchor: DIO_SCH tt_transit_time [0,1e-12].
+
 ### 2026-07-25 -- Phase 4 Step 2.2: lambda re-fit on 120/200V VDMOS (output conductance)
 
 - Raised channel-length-modulation lambda on the four HV cards so measured VA (gds extraction at
