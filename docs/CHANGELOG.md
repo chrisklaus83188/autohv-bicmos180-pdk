@@ -1,5 +1,17 @@
 ## [Unreleased]
 
+### 2026-07-25 -- Phase 4 Step 1: anchor merge + Step-0 two-regime 200V ladder
+
+- anchor-values.json -> 4.0-phase4-grounded. Merged pass-3 amendments (P3-1..P3-5) and the Step-0
+  public-literature ladder ruling: per-width Ron.W two-regime, 0.73 below 40V [grounded], ~1.0-1.2
+  above 40V [literature]. N ron_times_w 60/80/120/200V = 15/21/32/45 kohm.um (200V band 33-60);
+  P = N x 2.5->3.0 rising mobility penalty. 20-40V rungs and all kp unchanged (grounded).
+- Added VDMOS va_class output-conductance anchors (MV 130-2000V; 120/200 re-fit 300-1000V) and
+  DNMOS20 depletion idss_per_um_at_vgs0 (100, band 80-120) + vth_depletion (-1.6). DIO_SCH tt tag->grounded.
+- declarations: D1 gets the Step-0 ruling + 3 open citations (Appels-Vaes RESURF; Hu silicon-limit;
+  Baliga). Synthetic-residue statement finalized to 3 items: 200V scale (literature-bracketed +-35%),
+  BJT/diode per-area at 100um2 cell, resistor VCR. Anchor cite: anchor-values.json ron_times_w/va_class.
+
 ### 2026-07-24 -- Phase 3b close-out: green suite, complete guide, one snapshot (v1-sized)
 
 - Scorecard re-baselined against the merged 2.1-phase3b anchors: 280 pass (was 157), 19 residual
