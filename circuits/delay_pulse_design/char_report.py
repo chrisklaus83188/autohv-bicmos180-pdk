@@ -15,6 +15,23 @@ def ps(x): return f"{x*1e12:.0f}" if isinstance(x, (int, float)) else "n/a"
 def cell(dk, a): return f"{a}_{TAG[dk]}"
 
 
+def pvt_dir(res):
+    """Dominant slowest/fastest corner + relative spread, from char.json pvt['m'].
+    Tracks the actual models (RPOLY_HI tc1 sign-flip moved slowest hot->cold)."""
+    from collections import Counter
+    slow, fast, los, his = Counter(), Counter(), [], []
+    for dk in ("1v8", "3v3", "5v0"):
+        for a in D.ARCHES:
+            pm = res[dk][a]["pvt"]["m"]; nomv = res[dk][a]["nominal"].get("m")
+            if not pm or not nomv:
+                continue
+            slow[pm["max_at"].split(",")[-1]] += 1
+            fast[pm["min_at"].split(",")[-1]] += 1
+            los.append(pm["min"] / nomv - 1); his.append(pm["max"] / nomv - 1)
+    return dict(lo_pct=min(los) * 100, hi_pct=max(his) * 100,
+                slow=slow.most_common(1)[0][0], fast=fast.most_common(1)[0][0])
+
+
 def area_exact(arch, dkey, lr, cl, cw):
     """Area = sum over every device of (length x width), in um^2.
     Transistors contribute W*L (channel area); the poly resistor and MIM cap
@@ -59,6 +76,9 @@ def report(res):
     L = []; A = L.append
     A("# Delay & Pulse-Generator Cell Characterization Report")
     A("### AutoHV BiCMOS 180 PDK | 12 cells (4 archetypes x 3 voltage domains)\n")
+    _p = res.get("_provenance", {})
+    A(f"<sub>Models: **{_p.get('model_tag','v2-grounded')}** (frozen) · simulator: "
+      f"**{_p.get('ngspice_version','ngspice-45')}** · {_p.get('n_mc',200)}-run MC.</sub>\n")
     A("Full PVT corner characterization plus 200-run Monte Carlo for the "
       "edge-asymmetric delay and pulse cells in "
       "`circuits/delay_pulse_design/cells.lib`. All results are from ngspice "
@@ -188,24 +208,29 @@ def report(res):
     # ------------------------------------------------------------ observations
     A("## 7. Observations\n")
     # compute some cross-cell aggregates
+    _DOMS = ("1v8", "3v3", "5v0")
     def allmc(stat):
-        return [res[dk][a]["mc"]["m"][stat] for dk in res for a in D.ARCHES
+        return [res[dk][a]["mc"]["m"][stat] for dk in _DOMS for a in D.ARCHES
                 if res[dk][a]["mc"]["m"]]
-    rels = [res[dk][a]["mc"]["m"]["rel"]*100 for dk in res for a in D.ARCHES
+    rels = [res[dk][a]["mc"]["m"]["rel"]*100 for dk in _DOMS for a in D.ARCHES
             if res[dk][a]["mc"]["m"]]
     A(f"- **MC spread is tight**: 1-sigma on the delay/width is "
       f"{min(rels):.1f}-{max(rels):.1f}% of the mean across all 12 cells. The "
       "timing is an RC product and the MIM cap (sigma_Cj ~ 0.1%) and poly Rsh "
       "are well controlled; most of the statistical spread comes from the "
       "Schmitt-trip (device Vth mismatch) rather than the RC itself.")
-    A("- **PVT dominates over statistics**: the corner-to-corner delay swing "
-      "(roughly -20%/+40% of nominal, worst case SS / hot / low-Vdd) is much "
-      "larger than the +-3-sigma MC band. For a fixed-corner design the MC band "
-      "is what matters; for a multi-corner design, budget the PVT envelope.")
-    A("- **Temperature & supply**: delay increases at hot / low-supply (slower "
-      "devices, higher poly Rsh via tc1) and shortens at cold / high-supply. "
-      "The 5 V domain shows the widest PVT envelope because its supply axis "
-      "(3.2-5.5 V) is the widest.")
+    _pd = pvt_dir(res)
+    A(f"- **PVT dominates over statistics**: the corner-to-corner delay swing "
+      f"(roughly {_pd['lo_pct']:.0f}%/+{_pd['hi_pct']:.0f}% of nominal, worst case "
+      f"SS / {_pd['slow']} / low-Vdd) is much larger than the +-3-sigma MC band. For "
+      f"a fixed-corner design the MC band is what matters; for a multi-corner design, "
+      f"budget the PVT envelope.")
+    A(f"- **Temperature & supply**: under v2-grounded the `RPOLY_HI` tc1 is negative, "
+      f"so poly Rsh is *highest at cold* and the slowest corner is **{_pd['slow']} / "
+      f"low-supply** (the resistor's cold-increase now outweighs the opposing device "
+      f"tempco). This flipped the worst-case temperature from hot to cold vs the "
+      f"pre-tc1-sign-flip characterization. The 5 V domain still shows the widest PVT "
+      f"envelope because its supply axis (3.2-5.5 V) is the widest.")
     A("- **Output edges stay sharp**: the Schmitt output drives clean 10-90% "
       "edges (tens to a few hundred ps into 5 fF) regardless of the slow RC "
       "ramp, so downstream timing sees a real digital edge, not the RC slope.")

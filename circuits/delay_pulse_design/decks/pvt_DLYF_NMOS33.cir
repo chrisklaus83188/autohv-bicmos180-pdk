@@ -6,7 +6,7 @@ Vdd vdd 0 3.3
 Vin in 0 PULSE(0 3.3 20n 0.02n 0.02n 80n 400n)
 XI1 nIN in vdd vdd PMOS33 W=0.95u L=0.35u
 XI2 nIN in 0   0   NMOS33 W=0.4u L=0.35u
-XR nIN nC RPOLY_HI L=58.1250u W=0.5u
+XR nIN nC RPOLY_HI L=55.9375u W=0.5u
 XC nC 0 CMIM_HI L=5.3600u W=5.3600u
 XBP nC in 0 0 NMOS33 W=0.8u L=0.35u
 XS1 s1 nC 0   0   NMOS33 W=0.4u L=0.35u

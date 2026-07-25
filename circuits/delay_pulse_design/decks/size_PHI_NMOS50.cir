@@ -5,7 +5,7 @@ Vdd vdd 0 5.0
 Vin in 0 PULSE(0 5.0 20n 0.02n 0.02n 80n 200n)
 XI1 nIN in vdd vdd PMOS50 W=1.15u L=0.5u
 XI2 nIN in 0   0   NMOS50 W=0.5u L=0.5u
-XR nIN nC RPOLY_HI L=53.7500u W=0.5u
+XR nIN nC RPOLY_HI L=51.5625u W=0.5u
 XC nC 0 CMIM_HI L=5.3600u W=5.3600u
 XBP nC in vdd vdd PMOS50 W=1.0u L=0.5u
 XS1 s1 nC 0   0   NMOS50 W=0.5u L=0.5u

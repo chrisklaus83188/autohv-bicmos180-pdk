@@ -114,9 +114,10 @@ def main(domains=("1v8", "3v3", "5v0"), arches=D.ARCHES, workers=8, threads=2):
                 nominal=nominal_from_pvt(pvt, dom["vdd"]),
                 pvt={k: pvt_stat(pvt, k) for k in METRICS},
                 mc={k: mc_stat(mc, k, keep_samples=(k == "m")) for k in METRICS})
+    out["_provenance"] = D.provenance({"n_mc": NMC, "cl_um": CL, "cw_um": CW})
     with open(D.WORK / "char.json", "w") as f:
         json.dump(out, f, indent=1, default=str)
-    print("saved char.json")
+    print(f"saved char.json  [model={D.MODEL_TAG} ngspice={D.ngspice_version()} n_mc={NMC}]")
     return out
 
 

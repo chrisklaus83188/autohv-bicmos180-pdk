@@ -7,8 +7,8 @@ re-run.
 
 | circuit study | invalidated by | what to re-run |
 |---|---|---|
-| `circuits/delay_pulse_design/` | **RPOLY_LO rsh 25→300 Ω/□** (12× resistance change) — the delay RC is set by RPOLY_HI + CMIM_HI, but any cell using RPOLY_LO shifts; also RPOLY_HI **tc1 sign flip** changes the delay's temperature drift qualitatively | re-run `dp_run.py` / `dp_char.py`; the 20 ns targets and the −20 %/+40 % PVT spread will move |
-| `circuits/delay_cells_voltage_ramp/` (untracked) | PMOS50 **kt1/ute added** (Vth tempco was ~0, now −1.6 mV/°C) + junction caps (F6) — the mirror ramp slope and its temperature drift change | re-run `gen_delay_cells.py` measurements |
+| ~~`circuits/delay_pulse_design/`~~ **✅ DONE (v2.1-circuits Phase C)** | RPOLY_HI **tc1 sign flip** (+0.0006→−0.0014) changes the delay's temperature drift. (The RPOLY_LO 12× note does **not** apply — this design uses RPOLY_HI, sheet unchanged; see finding.) | re-ran full pipeline: nominal L_R unchanged (no ÷12), slowest corner flipped hot→cold, verify.py ALL OK. See `circuits-requalification.md` Phase C |
+| ~~`circuits/delay_cells_voltage_ramp/`~~ **✅ DONE (v2.1-circuits Phase C)** | junction caps (F6) load the RAMP node → ramp slope drops ~9–26 % | re-ran `gen_delay_cells.py` (netlists identical) + re-measured slopes; README updated, 2 findings preserved. See `circuits-requalification.md` Phase C.2 |
 | ~~`circuits/comparators/` (9 cells)~~ **◑ DATA DONE, reports pending (v2.1-circuits Phase B)** | matching widened → offset σ increases; PMOS50 tempco → offset drift | re-ran `run_comparators.py`/`run_rr.py` at N=200: 5 V σ ×2.1–2.8 (median 2.4), 3.3/1.8 V flat. Saturation orphan fixed (writes JSON). `.md` reports await ruling — see `circuits-requalification.md` Phase B + `handoffs/HANDOFF_comparator_report_regeneration.md` |
 | ~~`circuits/async_logic_design/` (24 cells)~~ **✅ DONE (v2.1-circuits Phase A)** | BSIM3 **junction caps (F6)** → input-cap contract re-verified; **drive** unaffected (Idsat cards unchanged for BSIM3) | re-ran `async_run.py` under the 6.5 fF contract; see `circuits-requalification.md` Phase A |
 | `circuits/current_mirror_char/` (PMOS50 study) | PMOS50 **kt1/ute** (tempco), **matching widened**, **junction caps** — λ/r_out mostly unaffected (DC), but MC σ and temperature behaviour change | re-run `run_mc.py`; the σ(λ)/matching clouds widen |
@@ -64,4 +64,10 @@ The follow-up pass is now in progress. Program summary + old-vs-new tables:
   The hand-authored `.md` reports have no generator scripts (conflict with ground rule 2) — escalated
   to the orchestrator (`handoffs/HANDOFF_comparator_report_regeneration.md`); report regeneration
   finishes once ruled. No model-defect findings.
-- **Phases C–E** (delay/pulse + voltage-ramp, mirror MC, HV charge pump): pending.
+- **Phase C — `delay_pulse_design/` + `delay_cells_voltage_ramp/`: ✅ CLEARED.** delay_pulse: re-ran
+  full pipeline (dp_run→dp_char 200-MC→gen_lib→verify→reports) against `v2-grounded`; verify.py ALL OK.
+  **Finding filed:** the pre-registered "L_R ÷12" is a brief-premise error — the design uses RPOLY_HI
+  (sheet unchanged), not RPOLY_LO; nominal L_R unchanged, slowest corner flipped hot→cold via the
+  RPOLY_HI tc1 sign-flip. voltage-ramp: re-measured (slopes ↓9–26 % from F6 RAMP-node junction caps),
+  README updated with both findings preserved. No model-defect findings.
+- **Phases D–E** (mirror MC, HV charge pump): pending.

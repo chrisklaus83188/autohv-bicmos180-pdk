@@ -14,10 +14,10 @@ Four edge-asymmetric cells -- two delays and two one-shot pulse generators -- in
 
 | Cell | 1.8 V | 3.3 V | 5.0 V |
 |---|---|---|---|
-| DLYR | 20.4 ns / 16-28 ns / 56 um^2 | 20.2 ns / 17-27 ns / 59 um^2 | 19.7 ns / 16-33 ns / 58 um^2 |
-| DLYF | 20.1 ns / 16-28 ns / 58 um^2 | 20.4 ns / 17-28 ns / 60 um^2 | 20.1 ns / 16-34 ns / 59 um^2 |
-| PHI | 20.2 ns / 16-27 ns / 58 um^2 | 19.8 ns / 16-26 ns / 61 um^2 | 20.1 ns / 16-33 ns / 63 um^2 |
-| PLO | 20.1 ns / 16-27 ns / 59 um^2 | 19.8 ns / 16-27 ns / 62 um^2 | 20.2 ns / 16-34 ns / 64 um^2 |
+| DLYR | 20.0 ns / 14-29 ns / 55 um^2 | 20.0 ns / 15-26 ns / 58 um^2 | 20.3 ns / 16-30 ns / 58 um^2 |
+| DLYF | 19.8 ns / 14-29 ns / 56 um^2 | 20.2 ns / 15-27 ns / 59 um^2 | 20.0 ns / 16-30 ns / 58 um^2 |
+| PHI | 20.1 ns / 14-29 ns / 57 um^2 | 19.6 ns / 15-26 ns / 60 um^2 | 20.0 ns / 16-29 ns / 62 um^2 |
+| PLO | 19.8 ns / 14-29 ns / 58 um^2 | 20.4 ns / 15-27 ns / 62 um^2 | 20.2 ns / 16-30 ns / 63 um^2 |
 
 <sub>Each cell: nominal delay/width / full-PVT min-max / active area.</sub>
 

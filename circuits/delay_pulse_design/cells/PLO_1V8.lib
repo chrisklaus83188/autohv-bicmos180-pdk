@@ -14,7 +14,7 @@
 .subckt PLO_1V8 in out vdd gnd
 XI1 nIN in vdd vdd PMOS18 W=0.7u L=0.18u
 XI2 nIN in gnd gnd NMOS18 W=0.3u L=0.18u
-XR  nIN nC RPOLY_HI L=58.1250u W=0.5u
+XR  nIN nC RPOLY_HI L=55.9375u W=0.5u
 XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
 XBP nC in gnd gnd NMOS18 W=0.6u L=0.18u   $ pull-down bypass (fast rising out)
 XS1 s1 nC gnd gnd NMOS18 W=0.3u L=0.18u

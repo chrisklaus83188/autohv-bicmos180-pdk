@@ -26,12 +26,12 @@ at measured values; (4) HV charge pump = minimal first qualification, not deleti
 
 | Pre-registered mover | Phase | Status |
 |---|---|---|
-| Delay/pulse cells ~12× off 20 ns target until re-bisected | C | ☐ pending |
+| Delay/pulse cells ~12× off 20 ns target until re-bisected | C | ⚠ **did NOT move — premise error.** The design uses **RPOLY_HI** (sheet unchanged at 1200 Ω/□), never RPOLY_LO; the ÷12 was RPOLY_LO's change. Nominal L_R unchanged; what moved is the **slowest corner (hot→cold)** via RPOLY_HI tc1 sign-flip. Finding filed. |
 | Async worst pins (NOR2/OR2) `cap_limited` + off-centre V_M → centre under 6.5 fF | A | ☑ **confirmed** — NOR2 `cap_limited True→False` all 3 domains; V_M low-end lifted |
 | Comparator σ(offset) ×~2.4 on GP (NMOS50/PMOS50) cells | B | ☑ **confirmed** — 5 V cells ×2.1–2.8 (median 2.4); 3.3/1.8 V cells flat ×0.9–1.2 (correct: only the 50 V pair widened) |
 | Anything biased from NDMOS200/PDMOS200 drive ↓ ~35 % (phase-4 rd) | B,C,E | ☐ pending |
 | Mirror-study MC σ ×~2.4; DC conclusions (L=2 µm, cascode λ_eff) hold | D | ☐ pending |
-| Anything sized on RPOLY_LO: 12× resistance shift | C | ☐ pending |
+| Anything sized on RPOLY_LO: 12× resistance shift | C | ☑ **N/A in circuits/** — the delay design (the only RPOLY user) uses RPOLY_HI, not RPOLY_LO. No circuits library sizes on RPOLY_LO. |
 | *(observed, not pre-registered)* async rise/fall net shift from F6 junction caps | A | ☑ noted — NOR/OR/XOR fall +45–60 %, simple cells ±10 % |
 
 ---
@@ -189,6 +189,63 @@ does not apply here.
 `comparators_all.lib`; run scripts gained provenance + the saturation JSON writer. **Pending the
 ruling:** the 9 `.md` report files. Staleness register: comparators entry marked *data-done,
 reports-pending*.
-## Phase C — `delay_pulse_design/` + `delay_cells_voltage_ramp/` · re-generate — ☐ pending
+## Phase C — `delay_pulse_design/` + `delay_cells_voltage_ramp/` · activity: **re-generate + re-measure**
+
+### C.1 `delay_pulse_design/` (re-generate)
+
+**Scope.** 4 archetypes (DLYR/DLYF/PHI/PLO) × 3 domains = 12 cells. Re-ran the full pipeline against
+`v2-grounded`: `dp_run.py` (L_R bisection + 45-pt PVT) → `dp_char.py` (PVT + **200-run MC**) →
+`gen_lib.py` (cells.lib) → `verify.py` → `report.py`/`char_report.py`. Provenance stamped in
+results.json/char.json and both reports. `verify.py`: **ALL 12 CELLS OK** (nominal 20 ns hit, cross-
+checked vs results.json).
+
+**⚠ FINDING — the pre-registered "L_R ÷~12" mover is a brief premise error (filed against the brief,
+not the frozen models).** Step-0 decision 2 and the staleness register attribute a ~12× L_R shrink to
+RPOLY_LO going 25→300 Ω/□. **But this design uses `RPOLY_HI` exclusively, never RPOLY_LO** (verified:
+`dp_lib.py:141`, `gen_lib.py:20` both instantiate `RPOLY_HI`; zero RPOLY_LO references anywhere in the
+directory). `RPOLY_HI`'s **sheet is unchanged at 1200 Ω/□** (identical at the delay-characterization
+commit `7da15ad` and at `v2-grounded`). So:
+
+- **Nominal L_R is essentially unchanged** — re-bisection lands within one bisection quantum of the old
+  values (e.g. 5v0 DLYR 51.56→51.56 µm; the largest move is one step, ~4 %). **No ÷12.** This is not a
+  model defect — the models are correct; the *brief's expectation* mis-attributed the mechanism.
+- **What actually moved: the temperature drift.** `RPOLY_HI` `tc1` flipped sign **+0.0006 → −0.0014**
+  (also ~2.3× larger). The resistor is now highest at *cold*, and this outweighs the opposing device
+  tempco, so **the slowest PVT corner flipped from hot (150 °C) to cold (−55 °C) on all 12 cells.** The
+  report narratives were made data-driven so they state the actual worst-case corner.
+
+**Old-vs-new (representative; full 12 in results.json):**
+
+| Cell | L_R old→new (µm) | nom old→new (ns) | PVT old→new (ns) | slowest corner old→new | MC σ old→new |
+|---|---|---|---|---|---|
+| 5v0 DLYR | 51.56→51.56 | 19.7→20.3 | 16.0–32.7 → 16.3–29.9 | SS,3.2V,**150C** → SS,3.2V,**−55C** | 5.4%→5.4% |
+| 5v0 PLO | 55.94→53.75 | 20.2→20.2 | 16.5–34.2 → 16.1–30.5 | 150C → **−55C** | 5.1%→5.4% |
+| 1v8 DLYR | 53.75→51.56 | 20.0→20.0 | 16.2–27.8 → 14.1–28.9 | 150C → **−55C** | 5.5%→5.7% |
+
+**PVT spread change (tc1 flip):** 1.8 V/3.3 V domains *widen* +3…+36 %; 5 V domain *narrows* −19…−22 %
+(the now-negative resistor tc partly cancels the 5 V device tempco). **MC σ essentially unchanged**
+(5.1–6.3 % → 5.3–6.1 %): the delay's statistical spread is RC-/Schmitt-trip-dominated, not sensitive to
+the 50 V A_VT widening. Nominal metric preserved (all within ±2 % of 20 ns).
+
+### C.2 `delay_cells_voltage_ramp/` (re-measure)
+
+Re-ran `gen_delay_cells.py` — netlists regenerate **identically** (sizing comes from the unchanged
+`current_mirror_char/designs.json`; frozen models). Re-measured the ramp slopes by running the 4
+testbenches against `v2-grounded`; updated the README table (old values kept in parentheses) and
+**preserved both documented simulation findings verbatim** (`.tran … uic` requirement; 100 µm reset
+switch). Every slope **dropped ~9 % (low I) to ~26 % (100 µA)**: the F6 junction caps now load the
+`RAMP` node (PMOS50 mirror drain + NMOS50 switch drain), raising C_eff ~10 % so dV/dt = I/C_eff falls —
+the same F6 mechanism as the async output slowdown. Design unchanged → re-measure, not re-design.
+
+> Note on ordering: this sub-directory nominally depends on Phase D (`designs.json`). The mirror DC
+> design is pre-registered to hold, and `designs.json` is unchanged, so the re-measure is valid now; if
+> Phase D perturbs `designs.json` it will be re-run.
+
+**Findings filed against frozen anchors:** none (the tc1 flip and F6 loading are intended `v2-grounded`
+behaviour). The one filed finding is the **brief-premise error** on L_R ÷12 above.
+
+**Files regenerated:** `delay_pulse_design/{results.json, char.json, cells.lib, cells/*, REPORT.md,
+SUMMARY.md, CHARACTERIZATION.md, decks/*}`; `delay_cells_voltage_ramp/README.md` (+ regenerated,
+identical netlists). Staleness register: both delay entries cleared.
 ## Phase D — `current_mirror_char/` · re-measure — ☐ pending
 ## Phase E — `hv_charge_pump/hv_up_lvlsh/` · first qualification — ☐ pending

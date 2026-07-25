@@ -19,6 +19,31 @@ def load():
         return json.load(f)
 
 
+def pvt_direction(res):
+    """Data-driven PVT envelope: relative spread + the dominant slowest/fastest
+    corner conditions, read from each cell's pvt_metric so the narrative always
+    tracks the actual models (e.g. the RPOLY_HI tc1 sign-flip moved the slowest
+    corner from hot to cold)."""
+    from collections import Counter
+    slow, fast, los, his = Counter(), Counter(), [], []
+    for dk in ("1v8", "3v3", "5v0"):
+        for a in D.ARCHES:
+            pm = res[dk][a]["pvt_metric"]; nomns = res[dk][a]["metric_ns"]
+            slow[pm["max_at"].split(",")[-1]] += 1
+            fast[pm["min_at"].split(",")[-1]] += 1
+            los.append(pm["min"] * 1e9 / nomns - 1)
+            his.append(pm["max"] * 1e9 / nomns - 1)
+    return dict(lo_pct=min(los) * 100, hi_pct=max(his) * 100,
+                slow=slow.most_common(1)[0][0], fast=fast.most_common(1)[0][0])
+
+
+def prov_line(res):
+    p = res.get("_provenance", {})
+    return (f"<sub>Models: **{p.get('model_tag','v2-grounded')}** (frozen) · simulator: "
+            f"**{p.get('ngspice_version','ngspice-45')}** · 20 ns nominal target · "
+            f"45-pt PVT + 200-run MC.</sub>")
+
+
 def metric_label(arch):
     return {"DLYR": "rise delay", "DLYF": "fall delay",
             "PHI": "high-pulse width", "PLO": "low-pulse width"}[arch]
@@ -37,6 +62,7 @@ def report(res):
     A = L.append
     A("# Edge-Asymmetric Delay & Pulse-Generator Cell Family")
     A("### AutoHV BiCMOS 180 PDK | 4 archetypes x 3 voltage domains = 12 cells\n")
+    A(prov_line(res) + "\n")
     A("A compact cell set that delays one input edge while passing the other "
       "through, plus two single-shot pulse generators built on the same delay "
       "core. Every cell is sized for a **20 ns** delay / pulse width at the "
@@ -135,13 +161,17 @@ def report(res):
       + " | ".join(pvtspread(dk) for dk in ('1v8','3v3','5v0')) + " |")
 
     A("\n## 6. Notes & trade-offs\n")
-    A("- **Timing target is nominal-only**, as specified. The delay/width is an "
-      "RC product, so it tracks process (poly Rsh +/-12%, MIM Cj +/-3%), "
-      "temperature (poly tc1) and the Schmitt trip. Across the full 45-point "
-      "matrix the timing spans roughly **-20% / +40%** of nominal "
-      "(slowest = SS, hot, low Vdd; fastest = FF, cold). If a PVT-stable delay "
-      "is needed, a current-reference-biased starved core or a trimmed R can be "
-      "added at extra area.")
+    _d = pvt_direction(res)
+    A(f"- **Timing target is nominal-only**, as specified. The delay/width is an "
+      f"RC product, so it tracks process (poly Rsh +/-12%, MIM Cj +/-3%), "
+      f"temperature (poly tc1) and the Schmitt trip. Across the full 45-point "
+      f"matrix the timing spans roughly **{_d['lo_pct']:.0f}% / +{_d['hi_pct']:.0f}%** "
+      f"of nominal (slowest = SS, {_d['slow']}, low Vdd; fastest = FF, {_d['fast']}). "
+      f"Note the slowest corner is at **{_d['slow']}**: `RPOLY_HI` tc1 is negative "
+      f"under v2-grounded, so the resistor is highest at cold and this now sets the "
+      f"worst case (it was the hot corner before the tc1 sign-flip). If a PVT-stable "
+      f"delay is needed, a current-reference-biased starved core or a trimmed R can "
+      f"be added at extra area.")
     A("- **Area is dominated by the RC** (~57 um^2 of the ~57-62 um^2 active "
       "area is the poly resistor + MIM cap; the ~15 transistors add only a few "
       "um^2). Resistor and cap areas are balanced (~28-30 um^2 each) at the "
