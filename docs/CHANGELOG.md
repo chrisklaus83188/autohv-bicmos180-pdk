@@ -1,5 +1,14 @@
 ## [Unreleased]
 
+### 2026-07-25 -- Phase 4 Step 2.6: device_limits v2 + harness pre-flight reader
+
+- device_limits.csv adopted the v2 schema (docs/device-limits-v2-proposal.md): geometry rows plus
+  V/I/P/T abs-max ratings for all 40 devices (Vds/Vgs/Vgd/Vce/Vcb/Vr abs-max & dc-max, Idc/Ipulse
+  density, Tj, Viso). Header -> device,param,min,max,unit,basis,note. 331 rows.
+- New pdk_validation/preflight.py READS the CSV (parses ratings, checks bias-in-SOA + self-consistency),
+  wired into run_all.py at startup. Closes the phase-0 finding that device_limits.csv had zero readers.
+  Self-test: 40 devices, ratings self-consistent, rated operating points within SOA.
+
 ### 2026-07-25 -- Phase 4 Step 2.5: DNMOS20 depletion recentre
 
 - DNMOS20 depletion vto -0.9 -> -1.6 V (band -1.5..-1.7) and kp x0.693 (STAT dot-products, corner
