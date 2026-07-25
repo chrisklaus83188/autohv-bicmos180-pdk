@@ -25,7 +25,9 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import sys
+from pathlib import Path
 
 import run_comparators as rc
 
@@ -165,14 +167,23 @@ def run_pvt(names, thresh):
                   + (f"[{b[0]:.2f}, {b[1]:.2f}] V" if b else "none"))
         print()
     # joint NIN+PIN ICMR for the gp pair, if both present
+    joint = {}
     if "nin_gp" in bands and "pin_gp" in bands:
         print("Joint NIN+PIN ICMR (gp pair):")
         for vdd in VDDS:
             n, p = bands["nin_gp"][vdd], bands["pin_gp"][vdd]
             if n and p:
+                joint[vdd] = [min(n[0], p[0]), max(n[1], p[1]), bool(p[1] < n[0])]
                 print(f"   VDD={vdd:>3} V   [{min(n[0],p[0]):.2f}, {max(n[1],p[1]):.2f}] V"
                       + ("   (gap!)" if p[1] < n[0] else ""))
-    return True
+    # structured results (mode='icmr'): per variant, ICMR band per VDD
+    results = [{"variant": name,
+                "input": "NMOS" if rc.VARIANTS[name]["sub"] == "CMP_NIN" else "PMOS",
+                "icmr_by_vdd": {str(vdd): bands[name][vdd] for vdd in VDDS}}
+               for name in names]
+    return {"mode": "icmr", "thresh": thresh, "vdds": VDDS,
+            "results": results,
+            "joint_gp_icmr_by_vdd": {str(k): v for k, v in joint.items()}}
 
 
 def main():
@@ -182,6 +193,9 @@ def main():
     ap.add_argument("--cm-scan", action="store_true")
     ap.add_argument("--pvt", action="store_true",
                     help="full corner x temp x VDD(3.2-5.5) sweep at CM edges")
+    ap.add_argument("--json", default=None,
+                    help="results JSON path (default saturation_icmr.json in --pvt "
+                         "mode, else saturation_margin.json)")
     args = ap.parse_args()
 
     rc.NG = rc.find_ngspice()
@@ -189,11 +203,19 @@ def main():
     corner_name = CN
 
     if args.pvt:
-        sys.exit(0 if run_pvt(names, args.thresh) else 1)
+        report = run_pvt(names, args.thresh)
+        payload = {"_provenance": rc.provenance({"mode": "icmr", "thresh": args.thresh,
+                                                 "vsup": rc.VSUP}),
+                   **report}
+        outp = Path(rc.HERE / (args.json or "saturation_icmr.json"))
+        outp.write_text(json.dumps(payload, indent=2))
+        print(f"\nWrote {outp.name}  [model={rc.MODEL_TAG} ngspice={rc.ngspice_version()}]")
+        sys.exit(0 if report["results"] else 1)
 
     print(f"Saturation margin Vds/Vdsat  (rule: > {args.thresh})  evaluated at "
           f"trip (v(o2)=VDD/2)\n")
     overall_ok = True
+    rows = []
     for name in names:
         v = rc.VARIANTS[name]
         devs = SAT_DEVS_HYST if v["HYSK"] > 0 else SAT_DEVS
@@ -221,9 +243,17 @@ def main():
         detail = "  ".join(f"{LABEL.get(d, d)}:{per_dev_min[d]:.1f}" for d in devs)
         print(f"            {detail}")
 
+        row = {"variant": name, "input": "NMOS" if v["sub"] == "CMP_NIN" else "PMOS",
+               "cm": v["cm"], "min_ratio": None if vmin > 1e8 else round(vmin, 3),
+               "worst_dev": vdev, "worst_dev_label": LABEL.get(vdev, vdev),
+               "worst_corner": vcorner, "thresh": args.thresh, "pass": bool(ok),
+               "per_dev_min": {d: (None if per_dev_min[d] > 1e8 else round(per_dev_min[d], 3))
+                               for d in devs}}
+
         if args.cm_scan:
-            # rated input-CM range over which the >1.4 rule is guaranteed
+            # rated input-CM range over which the >thresh rule is guaranteed
             lo, hi = (1.5, 4.5) if v["sub"] == "CMP_NIN" else (0.5, 3.2)
+            row["cm_scan"] = {}
             for cm in (lo, hi):
                 cworst = (1e9, None)
                 for case in range(5):
@@ -235,12 +265,21 @@ def main():
                             cworst = (ratios[d], d)
                 cok = cworst[0] >= args.thresh
                 overall_ok &= cok
+                row["cm_scan"][str(cm)] = {"min": None if cworst[0] > 1e8 else round(cworst[0], 3),
+                                           "dev": cworst[1], "pass": bool(cok)}
                 print(f"            CM={cm}V: min {cworst[0]:5.2f} "
                       f"({LABEL.get(cworst[1], cworst[1])})  "
                       f"{'PASS' if cok else '**FAIL**'}")
+        rows.append(row)
         print()
 
+    payload = {"_provenance": rc.provenance({"mode": "margin", "thresh": args.thresh,
+                                             "cm_scan": bool(args.cm_scan), "vsup": rc.VSUP}),
+               "mode": "margin", "overall_pass": bool(overall_ok), "results": rows}
+    outp = Path(rc.HERE / (args.json or "saturation_margin.json"))
+    outp.write_text(json.dumps(payload, indent=2))
     print("ALL PASS" if overall_ok else "SOME FAILURES — see **FAIL** above")
+    print(f"Wrote {outp.name}  [model={rc.MODEL_TAG} ngspice={rc.ngspice_version()}]")
     sys.exit(0 if overall_ok else 1)
 
 

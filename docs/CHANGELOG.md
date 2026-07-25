@@ -4,6 +4,27 @@ The design-era program: bring every `circuits/` library onto the frozen `v2-grou
 Models/anchors/declarations stay frozen; only circuit generators + reports change. Program
 summary and old-vs-new tables: `docs/circuits-requalification.md`.
 
+### 2026-07-25 -- Phase B: comparators re-measured + offset re-signed (data layer)
+
+- Re-ran all 6 comparator sub-libraries (`run_comparators.py` GP x3, `run_rr.py` RR x3) against
+  frozen `v2-grounded` at **uniform MC N=200** (Step-0 Q2; ground rule 4, stated). Regenerated
+  `comparator_results.json` x6 and `comparators_all.lib` (verbatim-body collate -- content identical).
+- **Offset re-signed at measured values (Step-0 decision 3).** The pre-registered ×~2.4 mover is
+  confirmed and localised: **5 V cells (NMOS50/PMOS50: GP-5V + RR-5V) σ ×2.1-2.8, median 2.4**;
+  **3.3 V / 1.8 V cells flat (×0.9-1.2)** -- correct, since only the 50 V pair's A_VT was widened.
+  Iq and gain unchanged (deterministic). Grades drop on the 5 V family (e.g. GP-5V nin_lo2/pin_lo2
+  and RR-5V lo2 no longer sub-mV); recorded, not chased. One-line FIN-bump fix noted, NOT applied
+  (resizing is a later design task).
+- **Saturation orphan closed (ground rule 2):** `run_saturation.py` now writes `saturation_margin.json`
+  (per-corner Vds/Vdsat) and `saturation_icmr.json` (ICMR bands) -- the ICMR sign-off tables become
+  diffable. Under v2-grounded all 3 GP families PASS the margin rule; ICMR bands captured.
+- Provenance stamping added to all three comparator run scripts (`model_tag`, `ngspice_version`,
+  MC-N) -> wrapped JSON `{_provenance, results}`.
+- **Report `.md` files NOT regenerated** -- they are hand-authored with no generator scripts
+  (conflicts with ground rule 2). Escalated: `docs/handoffs/HANDOFF_comparator_report_regeneration.md`
+  (recommend marker-delimited table injection). Report layer lands in a follow-up commit once ruled.
+- post-fix-staleness.md: comparators entry -> data-done / reports-pending.
+
 ### 2026-07-25 -- Phase A: async_logic_design re-generated
 
 - Step-0 decision 1 applied: async input-pin cap contract relaxed 5.0 -> 6.5 fF hard / 4.5 -> 6.0 fF

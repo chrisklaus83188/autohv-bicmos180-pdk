@@ -1,0 +1,269 @@
+{
+  "_provenance": {
+    "model_tag": "v2-grounded",
+    "ngspice_version": "ngspice-45",
+    "pdk_lib": "autohv_bicmos180_case.lib",
+    "mode": "margin",
+    "thresh": 1.1,
+    "cm_scan": false,
+    "vsup": 1.8
+  },
+  "mode": "margin",
+  "overall_pass": true,
+  "results": [
+    {
+      "variant": "nin_gp",
+      "input": "NMOS",
+      "cm": 1.08,
+      "min_ratio": 3.25,
+      "worst_dev": "xtail",
+      "worst_dev_label": "tail",
+      "worst_corner": "SS",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 5.753,
+        "xtail": 3.25,
+        "xm1": 58.919,
+        "xm2": 59.174,
+        "xm3": 5.389,
+        "xm4": 5.279,
+        "xm5": 17.118,
+        "xm6": 21.678
+      }
+    },
+    {
+      "variant": "nin_lo",
+      "input": "NMOS",
+      "cm": 1.08,
+      "min_ratio": 3.373,
+      "worst_dev": "xtail",
+      "worst_dev_label": "tail",
+      "worst_corner": "SS",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 5.753,
+        "xtail": 3.373,
+        "xm1": 56.324,
+        "xm2": 55.899,
+        "xm3": 5.14,
+        "xm4": 5.332,
+        "xm5": 17.157,
+        "xm6": 21.677
+      }
+    },
+    {
+      "variant": "nin_lo2",
+      "input": "NMOS",
+      "cm": 1.08,
+      "min_ratio": 3.413,
+      "worst_dev": "xtail",
+      "worst_dev_label": "tail",
+      "worst_corner": "SS",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 5.753,
+        "xtail": 3.413,
+        "xm1": 55.26,
+        "xm2": 54.667,
+        "xm3": 5.053,
+        "xm4": 5.352,
+        "xm5": 17.209,
+        "xm6": 21.677
+      }
+    },
+    {
+      "variant": "nin_hyst",
+      "input": "NMOS",
+      "cm": 1.08,
+      "min_ratio": 3.277,
+      "worst_dev": "xtail",
+      "worst_dev_label": "tail",
+      "worst_corner": "SS",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 5.753,
+        "xtail": 3.277,
+        "xm1": 58.668,
+        "xm2": 62.999,
+        "xm3": 5.266,
+        "xm4": 3.82,
+        "xm5": 31.03,
+        "xm6": 21.66,
+        "xhtail": 24.918
+      }
+    },
+    {
+      "variant": "nin_lp",
+      "input": "NMOS",
+      "cm": 1.08,
+      "min_ratio": 6.45,
+      "worst_dev": "xtail",
+      "worst_dev_label": "tail",
+      "worst_corner": "SS",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 8.139,
+        "xtail": 6.45,
+        "xm1": 77.106,
+        "xm2": 77.372,
+        "xm3": 8.061,
+        "xm4": 7.855,
+        "xm5": 31.716,
+        "xm6": 37.63
+      }
+    },
+    {
+      "variant": "nin_fast",
+      "input": "NMOS",
+      "cm": 1.08,
+      "min_ratio": 2.263,
+      "worst_dev": "xtail",
+      "worst_dev_label": "tail",
+      "worst_corner": "SS",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 4.72,
+        "xtail": 2.263,
+        "xm1": 47.765,
+        "xm2": 47.954,
+        "xm3": 4.375,
+        "xm4": 4.298,
+        "xm5": 12.602,
+        "xm6": 16.234
+      }
+    },
+    {
+      "variant": "pin_gp",
+      "input": "PMOS",
+      "cm": 0.54,
+      "min_ratio": 4.96,
+      "worst_dev": "xm4",
+      "worst_dev_label": "mir-out",
+      "worst_corner": "FF",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 5.378,
+        "xtail": 22.982,
+        "xm1": 8.029,
+        "xm2": 8.475,
+        "xm3": 5.378,
+        "xm4": 4.96,
+        "xm5": 22.405,
+        "xm6": 17.755
+      }
+    },
+    {
+      "variant": "pin_lo",
+      "input": "PMOS",
+      "cm": 0.54,
+      "min_ratio": 4.958,
+      "worst_dev": "xm4",
+      "worst_dev_label": "mir-out",
+      "worst_corner": "FF",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 5.378,
+        "xtail": 23.146,
+        "xm1": 8.164,
+        "xm2": 8.271,
+        "xm3": 5.054,
+        "xm4": 4.958,
+        "xm5": 23.485,
+        "xm6": 17.755
+      }
+    },
+    {
+      "variant": "pin_lo2",
+      "input": "PMOS",
+      "cm": 0.54,
+      "min_ratio": 4.933,
+      "worst_dev": "xm3",
+      "worst_dev_label": "mir-diode",
+      "worst_corner": "FF",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 5.378,
+        "xtail": 23.204,
+        "xm1": 8.222,
+        "xm2": 8.144,
+        "xm3": 4.933,
+        "xm4": 4.999,
+        "xm5": 22.488,
+        "xm6": 17.754
+      }
+    },
+    {
+      "variant": "pin_hyst",
+      "input": "PMOS",
+      "cm": 0.54,
+      "min_ratio": 4.943,
+      "worst_dev": "xm2",
+      "worst_dev_label": "in-",
+      "worst_corner": "SF",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 5.378,
+        "xtail": 22.949,
+        "xm1": 8.093,
+        "xm2": 4.943,
+        "xm3": 5.326,
+        "xm4": 8.365,
+        "xm5": 28.611,
+        "xm6": 17.753,
+        "xhtail": 32.35
+      }
+    },
+    {
+      "variant": "pin_lp",
+      "input": "PMOS",
+      "cm": 0.54,
+      "min_ratio": 7.084,
+      "worst_dev": "xm4",
+      "worst_dev_label": "mir-out",
+      "worst_corner": "FF",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 8.07,
+        "xtail": 43.408,
+        "xm1": 12.411,
+        "xm2": 12.996,
+        "xm3": 7.767,
+        "xm4": 7.084,
+        "xm5": 38.59,
+        "xm6": 32.856
+      }
+    },
+    {
+      "variant": "pin_fast",
+      "input": "PMOS",
+      "cm": 0.54,
+      "min_ratio": 4.083,
+      "worst_dev": "xm4",
+      "worst_dev_label": "mir-out",
+      "worst_corner": "FF",
+      "thresh": 1.1,
+      "pass": true,
+      "per_dev_min": {
+        "xmb": 4.359,
+        "xtail": 16.681,
+        "xm1": 6.187,
+        "xm2": 6.555,
+        "xm3": 4.425,
+        "xm4": 4.083,
+        "xm5": 16.68,
+        "xm6": 13.036
+      }
+    }
+  ]
+}

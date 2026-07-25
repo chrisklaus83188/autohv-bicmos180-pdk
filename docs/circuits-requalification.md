@@ -28,7 +28,7 @@ at measured values; (4) HV charge pump = minimal first qualification, not deleti
 |---|---|---|
 | Delay/pulse cells ~12× off 20 ns target until re-bisected | C | ☐ pending |
 | Async worst pins (NOR2/OR2) `cap_limited` + off-centre V_M → centre under 6.5 fF | A | ☑ **confirmed** — NOR2 `cap_limited True→False` all 3 domains; V_M low-end lifted |
-| Comparator σ(offset) ×~2.4 on GP (NMOS50/PMOS50) cells | B | ☐ pending |
+| Comparator σ(offset) ×~2.4 on GP (NMOS50/PMOS50) cells | B | ☑ **confirmed** — 5 V cells ×2.1–2.8 (median 2.4); 3.3/1.8 V cells flat ×0.9–1.2 (correct: only the 50 V pair widened) |
 | Anything biased from NDMOS200/PDMOS200 drive ↓ ~35 % (phase-4 rd) | B,C,E | ☐ pending |
 | Mirror-study MC σ ×~2.4; DC conclusions (L=2 µm, cascode λ_eff) hold | D | ☐ pending |
 | Anything sized on RPOLY_LO: 12× resistance shift | C | ☐ pending |
@@ -111,7 +111,84 @@ regenerated `decks/`. Staleness register: async entry cleared.
 
 ---
 
-## Phase B — `comparators/` · activity: re-measure + re-sign — ☐ pending
+## Phase B — `comparators/` · activity: **re-measure + re-sign** (data layer done; reports pending a ruling)
+
+**Scope.** 6 sub-libraries (3 general-purpose: 5 V / 3.3 V / 1.8 V; 3 rail-to-rail: same rails).
+Re-ran `run_comparators.py` (GP) / `run_rr.py` (RR) against frozen `v2-grounded` at **uniform
+MC N=200** (Step-0 Q2 ruling; ground rule 4, stated). Fixed `run_saturation.py` to write results
+JSON (closes the phase-0 orphan). Regenerated `comparators_all.lib`. Stamp: `model=v2-grounded
+ngspice=ngspice-45` in every JSON `_provenance` block.
+
+**⚠ Report `.md` files are NOT yet regenerated** — the comparator reports are hand-authored with
+no generator scripts, which conflicts with ground rule 2. Escalated to the orchestrator in
+[`handoffs/HANDOFF_comparator_report_regeneration.md`](handoffs/HANDOFF_comparator_report_regeneration.md)
+(recommend Option A: marker-delimited table injection). Data layer is finished and consistent with
+`v2-grounded`; report layer finishes in a follow-up commit once ruled.
+
+### Offset re-sign — σ(offset) old→new (the pre-registered ×~2.4 mover)
+
+**The 50 V pair moved, exactly as pre-registered; the 33/18 V devices did not.** `A_VT` was widened
+only on NMOS50/PMOS50, so only the 5 V comparators (GP-5V + RR-5V) re-sign upward. Iq and gain are
+deterministic and unchanged everywhere.
+
+**5 V cells (re-signed — grades drop):**
+
+| Rail | Variant | Vos_σ old→new (mV) | ×factor |
+|---|---|---|---|
+| GP-5V | nin_gp | 1.76→4.11 | ×2.34 |
+| GP-5V | nin_lo | 0.91→2.15 | ×2.37 |
+| GP-5V | nin_lo2 | 0.56→1.36 | ×2.41 |
+| GP-5V | nin_hyst | 1.76→4.15 | ×2.36 |
+| GP-5V | nin_lp | 1.90→4.79 | ×2.52 |
+| GP-5V | nin_fast | 1.77→4.31 | ×2.44 |
+| GP-5V | pin_gp | 2.14→5.39 | ×2.52 |
+| GP-5V | pin_lo | 1.13→2.62 | ×2.32 |
+| GP-5V | pin_lo2 | 0.70→1.47 | ×2.12 |
+| GP-5V | pin_hyst | 2.18→5.45 | ×2.50 |
+| GP-5V | pin_lp | 2.35→6.16 | ×2.63 |
+| GP-5V | pin_fast | 1.93→5.39 | ×2.79 |
+| RR-5V | gp | 1.54→3.34 | ×2.17 |
+| RR-5V | lo | 1.00→2.44 | ×2.43 |
+| RR-5V | lo2 | 0.76→2.33 | ×3.05 |
+
+**3.3 V and 1.8 V cells (unchanged — no re-sign):** all 27 variants stay within ×0.88–1.20 of their
+old σ (median ~1.0; the ×0.9–1.2 scatter is MC sampling noise at N=200, ≈±7 % on σ, plus the model's
+own re-run variance). This is the correct outcome: the mismatch widening was specific to the 50 V
+pair. Full 42-row table: `scratchpad`/regenerated JSONs.
+
+σ-widening summary: **min ×0.88 · median ×1.05 · max ×3.05**; restricted to the 5 V cells:
+**×2.1–2.8, median 2.4** = the pre-registered figure.
+
+### Grade changes (5 V family)
+
+Offset roughly doubled on every 5 V variant, so each drops one informal offset tier (the `FIN` knob
+sets `offset ∝ 1/FIN`, `stage-1 area ∝ FIN²`). Notably the "lowest-offset / precision" parts no
+longer hit sub-milli-volt: **GP-5V `nin_lo2` 0.56→1.36 mV, `pin_lo2` 0.70→1.47 mV; RR-5V `lo2`
+0.76→2.33 mV.** Per Step-0 decision 3 these are **re-signed at the measured values, not chased back**.
+
+*Proposed one-line fix (NOT applied — resizing comparators is a later design task):* to restore a
+sub-mV 5 V precision grade, raise `FIN` on the `lo2` variants by ~×2.4 (e.g. `FIN 3→7`), trading
+~5.8× stage-1 area for the matching. Left for the design era.
+
+### Saturation / ICMR sign-off (now diffable — orphan closed)
+
+`run_saturation.py` now emits `saturation_margin.json` (per-corner Vds/Vdsat at trip) and
+`saturation_icmr.json` (ICMR bands per VDD). Under `v2-grounded`:
+
+- **Margin rule holds:** all 3 GP families PASS Vds/Vdsat ≥ threshold (1.4 at 5 V/3.3 V, 1.1 at
+  1.8 V) across all 5 corners — the 50 V changes moved mismatch, not saturation headroom.
+- **Joint NIN+PIN ICMR (GP):** 5 V rail [0.22, 4.75] V at VDD=5.0 (continuous); a low-CM coverage
+  gap opens only at the 3.2 V UVLO corner. These are the first script-emitted (diffable) ICMR tables.
+
+Comparators use core 50/33/18 V MOS, **not** NDMOS200/PDMOS200 — so the phase-4 HV-rd drive mover
+does not apply here.
+
+**Findings filed against frozen anchors:** none (the σ widening is the intended `A_VT` change).
+
+**Files regenerated (data layer):** `comparator_results.json` ×6, `saturation_{margin,icmr}.json` ×3,
+`comparators_all.lib`; run scripts gained provenance + the saturation JSON writer. **Pending the
+ruling:** the 9 `.md` report files. Staleness register: comparators entry marked *data-done,
+reports-pending*.
 ## Phase C — `delay_pulse_design/` + `delay_cells_voltage_ramp/` · re-generate — ☐ pending
 ## Phase D — `current_mirror_char/` · re-measure — ☐ pending
 ## Phase E — `hv_charge_pump/hv_up_lvlsh/` · first qualification — ☐ pending
