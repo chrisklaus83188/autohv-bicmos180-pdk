@@ -79,6 +79,20 @@ been committed that would pre-empt the ruling.
 
 ---
 
+## Same pattern elsewhere (the ruling should generalize)
+
+The comparator reports are the largest instance, but the hand-authored-report-with-no-generator
+pattern recurs in the circuits layer. The ruling requested below should apply to all of them:
+
+- **`circuits/current_mirror_char/MIRROR_CHAR.md`** (Phase D) — hand-authored; no `.py` emits it. Its
+  DC tables (metrics.csv-derived) and MC σ tables (mc_results.json-derived) are exactly the kind of
+  thing table-injection (Option A) would regenerate + make diffable. Data layer (metrics.csv,
+  mc_results.json, plots) is regenerated; `MIRROR_CHAR.md` prose is left untouched pending this ruling.
+- *(For contrast:* `circuits/delay_cells_voltage_ramp/README.md` was updated in Phase C because the
+  brief **explicitly** instructed "regenerated README … preserve its two documented simulation
+  findings" — a small, brief-sanctioned number refresh with the findings kept verbatim. The reports
+  above have no such explicit instruction and are far larger, hence this escalation.)
+
 ## Decision requested
 
 1. Which option (A / B / C) for regenerating the comparator reports?

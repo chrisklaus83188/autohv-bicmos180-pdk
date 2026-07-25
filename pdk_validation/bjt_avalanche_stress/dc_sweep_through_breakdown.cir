@@ -14,7 +14,7 @@ XQ  cc b e NPN_LV AREA=1
 .control
 dc Vcc 0 17 0.05
 echo NPN_LV_DC_OK
-wrdata C:/Users/christopherklaus/AppData/Local/Temp/bjt_dc.data v(cc) i(Vcc)
+wrdata bjt_dc.data v(cc) i(Vcc)
 quit
 .endc
 .end

@@ -30,7 +30,7 @@ at measured values; (4) HV charge pump = minimal first qualification, not deleti
 | Async worst pins (NOR2/OR2) `cap_limited` + off-centre V_M → centre under 6.5 fF | A | ☑ **confirmed** — NOR2 `cap_limited True→False` all 3 domains; V_M low-end lifted |
 | Comparator σ(offset) ×~2.4 on GP (NMOS50/PMOS50) cells | B | ☑ **confirmed** — 5 V cells ×2.1–2.8 (median 2.4); 3.3/1.8 V cells flat ×0.9–1.2 (correct: only the 50 V pair widened) |
 | Anything biased from NDMOS200/PDMOS200 drive ↓ ~35 % (phase-4 rd) | B,C,E | ☐ pending |
-| Mirror-study MC σ ×~2.4; DC conclusions (L=2 µm, cascode λ_eff) hold | D | ☐ pending |
+| Mirror-study MC σ ×~2.4; DC conclusions (L=2 µm, cascode λ_eff) hold | D | ☑ **confirmed** — mismatch-mode σ ×2.21–2.61 (median 2.47); DC λ_eff/gain/r_out identical old→new (L=2 µm, cascode flattening hold) |
 | Anything sized on RPOLY_LO: 12× resistance shift | C | ☑ **N/A in circuits/** — the delay design (the only RPOLY user) uses RPOLY_HI, not RPOLY_LO. No circuits library sizes on RPOLY_LO. |
 | *(observed, not pre-registered)* async rise/fall net shift from F6 junction caps | A | ☑ noted — NOR/OR/XOR fall +45–60 %, simple cells ±10 % |
 
@@ -247,5 +247,56 @@ behaviour). The one filed finding is the **brief-premise error** on L_R ÷12 abo
 **Files regenerated:** `delay_pulse_design/{results.json, char.json, cells.lib, cells/*, REPORT.md,
 SUMMARY.md, CHARACTERIZATION.md, decks/*}`; `delay_cells_voltage_ramp/README.md` (+ regenerated,
 identical netlists). Staleness register: both delay entries cleared.
-## Phase D — `current_mirror_char/` · re-measure — ☐ pending
+## Phase D — `current_mirror_char/` · activity: **re-measure** (+ portability fix) (data done; MIRROR_CHAR.md pending ruling)
+
+### Portability fixes (closes the phase-0 finding for this directory + the two riders)
+
+- **`mirror_lib.py:20`** hardcoded `ROOT = "/Users/christopherklaus/Documents/…"` — a **third party's macOS
+  home directory**. On this Windows machine the path doesn't exist, so **the mirror pipeline had never
+  run here**. Fixed: `ROOT` derived from `__file__` (two dirs up); the `.include` stamped into all 65
+  netlists is now the **relative** `../../../autohv_bicmos180_case.lib` (ngspice resolves it from the
+  deck's own directory), so the netlists are portable across machines without edit.
+- **Two more bugs surfaced while making it run** (the pipeline was Mac-only before): (a) three scripts
+  (`mirror_lib.py`, `run_dc.py`, `run_mc.py`) called bare `"ngspice"` — added the standard `NGSPICE_BIN`
+  discovery; (b) **`wrdata <absolute-path>` silently failed because the repo path contains spaces**
+  ("BiCMOS Process - Automotive") — ngspice splits the filename on whitespace. Fixed by emitting the
+  **basename** to `wrdata` and running with `cwd=RAW`.
+- **Two riders in `pdk_validation/`** (the "two remaining hardcoded paths"): `wrdata` output paths in
+  `bjt_avalanche_stress/dc_sweep_through_breakdown.cir` and `switched_cap_audit/sample_and_hold.cir`,
+  both hardcoded to `C:/Users/christopherklaus/AppData/Local/Temp/…` — made relative (bare basename).
+
+### Re-measure (DC verify + MC re-sign at reduced N)
+
+Re-ran the pipeline against `v2-grounded`: `build_designs.py` → `run_phase0.py` → `run_dc.py` (1440
+DC sweeps) → `compute_metrics.py` → `run_mc.py` (**N reduced 500→200**, ground rule 4) → `make_plots.py`.
+Provenance stamped in mc_results.json.
+
+- **DC conclusions HOLD (verified exactly).** `designs.json` W-sizing stable (only a 12th-significant-
+  digit gm_ID/IC wiggle); the L = 2 µm lock and the cascode λ_eff flattening are **identical** old→new
+  (PMOS50 λ was not touched, as pre-registered):
+
+  | topo (B_10u, TT, 27 °C) | gain | λ_eff (/V) | r_out | old→new |
+  |---|---|---|---|---|
+  | MIR_S (simple) | 1.028 | 2.2e−2 | 4.3 MΩ | identical |
+  | MIR_CS (std cascode) | 1.0000 | **2.3e−5** | **4290 MΩ** | identical |
+  | MIR_CW (wide-swing) | 1.0002 | 1.2e−4 | 848 MΩ | identical |
+
+  V_SD collapse residual ~machine-ε; UVLO (3.2 V) compliance holds (MIR_CS vmax 2.49 V, MIR_CW 2.90 V).
+
+- **MC σ re-signed — the pre-registered ×~2.4 mover confirmed.** Mismatch-mode σ/µ of I_out@Vdd/2
+  **widened ×2.21–2.61 (median 2.47)** across all 3 designs × 3 topologies; procmm mode tracks it. Every
+  mirror is PMOS50-based, so the 50 V A_VT widening flows straight through. Example (B_10u MIR_S,
+  mismatch): 0.52 % → 1.26 % σ/µ. The DC conclusions holding while σ doubles is exactly the
+  pre-registered split (matching widened; λ/r_out did not).
+
+**⚠ `MIRROR_CHAR.md` NOT regenerated** — hand-authored, no generator script (same ground-rule-2 conflict
+as the comparator reports). Folded into the same escalation
+([`handoffs/HANDOFF_comparator_report_regeneration.md`](handoffs/HANDOFF_comparator_report_regeneration.md)).
+Data layer (metrics.csv, mc_results.json, plots, netlists) is regenerated and consistent.
+
+**Findings filed against frozen anchors:** none. (The σ widening is the intended A_VT change; DC unchanged.)
+
+**Files regenerated:** `designs.json`, `_geoms.json`, `results.json`, `metrics.csv`, `crosscheck.json`,
+`mc_results.json`, `netlists/*` (now portable), `plots/*`; `mirror_lib.py`/`run_dc.py`/`run_mc.py` +
+2 pdk_validation decks (portability). Staleness register: mirror entry marked data-done / report-pending.
 ## Phase E — `hv_charge_pump/hv_up_lvlsh/` · first qualification — ☐ pending
