@@ -11,7 +11,7 @@ XH1 d g 0 DNMOS20 W=10u
 Vd d 0 dc 0.1
 Vg g 0 dc 0
 .control
-dc Vg -2.4 4.1 0.02
+dc Vg -3.1 3.4 0.02
 echo TBL_BEGIN
 print abs(i(Vd))
 echo TBL_END

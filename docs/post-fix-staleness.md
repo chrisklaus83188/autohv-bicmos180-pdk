@@ -27,6 +27,22 @@ re-run.
   `multi_mirror_floating.cir` dispositioned to an OP-convergence check (the large physical rd re-triggered
   floating-mirror micro-stepping under `tran`; OP converges cleanly and is the Rcond fix's actual target).
 
+## Regeneration status (phase 4 — freeze)
+
+- **Regression suite: GREEN** — smoke 800/800, corners 36/36, passives 9/9, transients 13/13. The
+  phase-4 HV rd re-anchor (P 200 V rd ~4.5×) did **not** re-trigger the floating-mirror convergence
+  issue. Passive goldens **not** regenerated (no fix moved them); their version stamp refreshed to the
+  actual `ngspice --version` (ngspice-45).
+- **Full harness re-baseline: DONE** — `run_all.py` re-run (561 measurements) → `characterization-scorecard.md`
+  regenerated against `anchor-values.json` v4.0-phase4-grounded → **298 pass** (was 280), 20 hard-fail +
+  6 error, all dispositioned in `sizing-open-findings.md` (v3). Movers vs v1: DIO_SCH tt resolved,
+  va_class ×11 now pass, zener bv-vs-T non-flat, DNMOS20 recentred; theta-extraction count 7→9 (larger
+  rd) — all expected. New: `va_class` (2-point gds Early voltage) added to the VDMOS family module.
+- **Sizing guide: REGENERATED** from the final model state (`sizing-guide.{md,json}` v4.0-phase4). DNMOS20
+  self-bias W ~2× smaller (Idss 54.7→106 µA/µm); VDMOS mirror points stable (the gm/Id≈6 point is
+  insensitive to rd); md now assembled by a single correct writer (interleave bug fixed).
+- **device_limits.csv v2** adopted (geometry + V/I/P/T SOA) with a real pre-flight reader in `run_all.py`.
+
 **The `circuits/` studies (delay, comparators, async-logic, mirror MC, charge-pump) were still NOT
 re-run** — that characterization refresh remains the follow-up pass. The table above is the complete
-list of what it must cover; the model side is now stable and tagged (`v1-sized`).
+list of what it must cover; the model side is now **frozen and tagged (`v2-grounded`)**.

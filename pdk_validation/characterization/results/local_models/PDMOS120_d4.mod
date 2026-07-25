@@ -8,16 +8,16 @@
 .model PDMOS120_D4 VDMOS (pchan
 + vto={VTO_PDMOS120_STAT+TC_VTO_PDMOS120*(temper-27)}
 + kp={KP_PDMOS120_STAT*(1+TC_KP_PDMOS120*(temper-27))}
-+ lambda=0.0018
-+ theta=0.025
++ lambda=0.003
++ theta=0.13
 + rd=1e-09
 + rs=1e-09
 + rg=6
 + rds=1e+10
-+ cgdmax=4.7e-14
-+ cgdmin=4e-15
++ cgdmax=2.65626e-14
++ cgdmin=6.64064e-15
 + a=0.225
-+ cgs=6.1e-14
++ cgs=2.39063e-14
 + cjo=2.9e-14
 + is=7e-14
 + rb=0.45
@@ -25,8 +25,8 @@
 + ibv=8e-06
 + nbv=2.15
 + tt=9.5e-08
-+ rq=0.79
++ rq=4145.31
 + vq=153
 + mtriode=0.47
-+ ksubthres=0.077
++ ksubthres=0.0794872
 + )

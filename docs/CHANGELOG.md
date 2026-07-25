@@ -1,5 +1,18 @@
 ## [Unreleased]
 
+### 2026-07-25 -- Phase 4 Step 4: re-baseline + regenerate (one snapshot)
+
+- Regression suite GREEN: smoke 800/800, corners 36/36, passives 9/9, transients 13/13 (goldens
+  unchanged; the P 200V rd ~4.5x did not re-trigger floating-mirror convergence).
+- Full harness re-run (561 measurements) -> characterization-scorecard.md v4: 298 pass (was 280),
+  20 hard-fail + 6 error, all dispositioned in sizing-open-findings.md v3. va_class (2-point gds
+  Early voltage) added to the VDMOS family: NDMOS200 887V / PDMOS200 889V (grounded 300-1000V; was
+  ~2400-3900V). DIO_SCH tt residual resolved; zener bv-vs-T non-flat; DNMOS20 recentred.
+- sizing-guide.{md,json} v4.0-phase4 regenerated (DNMOS20 self-bias W ~2x smaller; VDMOS mirror
+  points stable; single correct md writer). sizing_guide.py gains a 'depletion' mode.
+- DNMOS20 idsat_density anchor widened to [0.2,0.5] (depletion full-drive Idsat). post-fix-staleness
+  regen-status -> phase-4 done. Committed pass-3 anchor-amendments-onc25.md.
+
 ### 2026-07-25 -- Phase 4 Step 3: hygiene riders
 
 - Sizing-guide L policy: BSIM3 rows relabeled 'L=1.0um (2xLmin-class, analog default)' (were mislabeled

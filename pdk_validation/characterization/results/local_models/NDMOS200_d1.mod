@@ -8,18 +8,18 @@
 .model NDMOS200_D1 VDMOS (nchan
 + vto={VTO_NDMOS200_STAT+TC_VTO_NDMOS200*(temper-27)}
 + kp={KP_NDMOS200_STAT*(1+TC_KP_NDMOS200*(temper-27))}
-+ lambda=0.0012
-+ theta=0.018
++ lambda=0.005
++ theta=0.12
 + rd=1e-09
 + rs=1e-09
 + rg=6
 + rds=2e+10
-+ cgdmax=3.5e-14
-+ cgdmin=3e-15
++ cgdmax=2.65626e-14
++ cgdmin=6.64064e-15
 + a=0.22
-+ cgs=4.8e-14
++ cgs=2.39063e-14
 + cjo=2.2e-14
-+ is=2.5e-14
++ is=1e-13
 + rb=0.65
 + bv={((225*_isTT + 211.5*_isFF + 238.5*_isSS + 211.5*_isFS + 238.5*_isSF))*(1+P_DBV_NDMOS200)}
 + ibv=4e-06
@@ -28,5 +28,5 @@
 + rq=1e-09
 + vq=260
 + mtriode=0.45
-+ ksubthres=0.060
++ ksubthres=0.0811966
 + )

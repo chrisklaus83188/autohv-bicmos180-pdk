@@ -172,6 +172,9 @@ if __name__=="__main__":
     if which=="vdmos":
         print("VDMOS sizing (mirror target gm/Id~6):")
         r=run(VDMOS, True, [10e-6,100e-6,1e-3])
+    elif which=="depletion":
+        print("DNMOS20 depletion (Vgs=0 self-biased current source):")
+        r=run_depletion("DNMOS20")
     else:
         print("BSIM3 sizing:")
         r=run(BSIM, False, [1e-6,10e-6,100e-6])
