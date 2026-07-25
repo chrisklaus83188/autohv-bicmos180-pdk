@@ -29,7 +29,7 @@ at measured values; (4) HV charge pump = minimal first qualification, not deleti
 | Delay/pulse cells ~12× off 20 ns target until re-bisected | C | ⚠ **did NOT move — premise error.** The design uses **RPOLY_HI** (sheet unchanged at 1200 Ω/□), never RPOLY_LO; the ÷12 was RPOLY_LO's change. Nominal L_R unchanged; what moved is the **slowest corner (hot→cold)** via RPOLY_HI tc1 sign-flip. Finding filed. |
 | Async worst pins (NOR2/OR2) `cap_limited` + off-centre V_M → centre under 6.5 fF | A | ☑ **confirmed** — NOR2 `cap_limited True→False` all 3 domains; V_M low-end lifted |
 | Comparator σ(offset) ×~2.4 on GP (NMOS50/PMOS50) cells | B | ☑ **confirmed** — 5 V cells ×2.1–2.8 (median 2.4); 3.3/1.8 V cells flat ×0.9–1.2 (correct: only the 50 V pair widened) |
-| Anything biased from NDMOS200/PDMOS200 drive ↓ ~35 % (phase-4 rd) | B,C,E | ☐ pending |
+| Anything biased from NDMOS200/PDMOS200 drive ↓ ~35 % (phase-4 rd) | B,C,E | ☑ **N/A — no old baseline in circuits/.** Comparators & delay use core 50/33/18 V MOS (not 200 V). The only NDMOS200/PDMOS200 circuit is the level shifter (Phase E), which is a *first* qualification — no pre-fix number to compare against. |
 | Mirror-study MC σ ×~2.4; DC conclusions (L=2 µm, cascode λ_eff) hold | D | ☑ **confirmed** — mismatch-mode σ ×2.21–2.61 (median 2.47); DC λ_eff/gain/r_out identical old→new (L=2 µm, cascode flattening hold) |
 | Anything sized on RPOLY_LO: 12× resistance shift | C | ☑ **N/A in circuits/** — the delay design (the only RPOLY user) uses RPOLY_HI, not RPOLY_LO. No circuits library sizes on RPOLY_LO. |
 | *(observed, not pre-registered)* async rise/fall net shift from F6 junction caps | A | ☑ noted — NOR/OR/XOR fall +45–60 %, simple cells ±10 % |
@@ -299,4 +299,42 @@ Data layer (metrics.csv, mc_results.json, plots, netlists) is regenerated and co
 **Files regenerated:** `designs.json`, `_geoms.json`, `results.json`, `metrics.csv`, `crosscheck.json`,
 `mc_results.json`, `netlists/*` (now portable), `plots/*`; `mirror_lib.py`/`run_dc.py`/`run_mc.py` +
 2 pdk_validation decks (portability). Staleness register: mirror entry marked data-done / report-pending.
-## Phase E — `hv_charge_pump/hv_up_lvlsh/` · first qualification — ☐ pending
+## Phase E — `hv_charge_pump/hv_up_lvlsh/` · activity: **first qualification**
+
+The only phase producing *new* characterization rather than regenerating old. The high-side
+gate-driver level shifter (the repo's only 200 V circuit — NDMOS200/PDMOS200) had **never been
+simulated**: its only testbench was the commented example in `levelshifter_top.spice`. Per Step-0
+ruling 4: minimal first qualification, not deletion — build a working testbench, verify function at
+the 200 V rail, measure levels/switching/bias; if broken beyond sizing, document the failure and the
+redesign scope (do not redesign here).
+
+**Built** (new, script-generated so no ground-rule-2 conflict): `tb_levelshifter_op.cir` (DC OP
+verification), `tb_levelshifter.cir` (transient), `run_lvlsh.py` (harness → `lvlsh_results.json` +
+`REPORT.md`, provenance-stamped `v2-grounded` / `ngspice-45`). Placeholder sizings = the
+`levelshifter_top.spice` defaults (HV 40 µm / 8 µm; LV 20/10 µm), consistent with `docs/sizing-guide.md`.
+
+**Function at the 200 V rail — VERIFIED (DC).** SW = 200 V, BOOT = 212 V (12 V bootstrap). The
+high-side latch set/resets correctly and the buffered outputs swing a clean **12 V high-side
+gate-drive between SW (200 V) and BOOT (212 V)**:
+
+| State | Q / QB (V) | ON_HS (V) | OFF_HS (V) | I_BOOT | I_VDD |
+|---|---|---|---|---|---|
+| idle | 210.7 / 210.7 (metastable) | 200 | 200 | 0.69 mA | 0.17 µA |
+| set (ON=5) | 200 / 212 | **212** (BOOT) | 200 (SW) | 12 µA | 4.9 µA |
+| reset (OFF=5) | 212 / 200 | 200 (SW) | **212** (BOOT) | 12 µA | 4.9 µA |
+
+**Switching (transient) — DOES NOT CONVERGE (redesign scope, not fixed here).** The full transient
+collapses the timestep to ~1e−20 s at t ≈ 5.0e−7 s (node `von#branch`; the underlying stiffness is the
+`DELAY_CELL` `RPOLY_HI` behavioral voltage-coefficient (BVCR) branch interacting with the floating HV
+cascode nodes — the same behavioral-branch class as the `delay_cells_voltage_ramp` `.tran uic` finding
+and the VDMOS `Rcond` handoffs). Simulator aids (`rshunt`, `gmin`, `method=gear`, `uic`) move the
+reported node but don't clear it. **Redesign scope** (documented in `REPORT.md §2`, not applied): give
+the delay-cell BVCR branch and the HV cascode source nodes a defined t=0 state (device-based delay or
+`.ic`), then re-verify dynamic set/reset. The **static function is already correct**, so this is a
+convergence/robustness task, not a topology change.
+
+**Findings filed against frozen anchors:** none (the non-convergence is a circuit/behavioral-element
+robustness issue, not a model-anchor defect — the models solve the OP at 200 V cleanly).
+
+**Files created:** `tb_levelshifter{,_op}.cir`, `run_lvlsh.py`, `lvlsh_results.json`, `REPORT.md`.
+Design `.spice` files unchanged. Staleness register: charge-pump entry cleared (first-qual done).

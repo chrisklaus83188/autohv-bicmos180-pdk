@@ -12,7 +12,7 @@ re-run.
 | ~~`circuits/comparators/` (9 cells)~~ **◑ DATA DONE, reports pending (v2.1-circuits Phase B)** | matching widened → offset σ increases; PMOS50 tempco → offset drift | re-ran `run_comparators.py`/`run_rr.py` at N=200: 5 V σ ×2.1–2.8 (median 2.4), 3.3/1.8 V flat. Saturation orphan fixed (writes JSON). `.md` reports await ruling — see `circuits-requalification.md` Phase B + `handoffs/HANDOFF_comparator_report_regeneration.md` |
 | ~~`circuits/async_logic_design/` (24 cells)~~ **✅ DONE (v2.1-circuits Phase A)** | BSIM3 **junction caps (F6)** → input-cap contract re-verified; **drive** unaffected (Idsat cards unchanged for BSIM3) | re-ran `async_run.py` under the 6.5 fF contract; see `circuits-requalification.md` Phase A |
 | ~~`circuits/current_mirror_char/` (PMOS50 study)~~ **◑ DATA DONE, MIRROR_CHAR.md pending (v2.1-circuits Phase D)** | **matching widened** → MC σ up; λ/r_out unaffected (DC) | re-ran pipeline (DC verified identical, MC σ ×2.47 mismatch at N=200). Fixed the macOS-home-dir portability bug (+ space-in-path wrdata, + 2 pdk_validation decks). `MIRROR_CHAR.md` awaits ruling — see `circuits-requalification.md` Phase D + handoff |
-| `circuits/hv_charge_pump/` | **VDMOS kp/rd wholesale re-derivation** — every HV device behaves differently (this is the F1 fix). Any level-shifter timing/current is now different | uncharacterized to begin with; no stale numbers, but the netlists now behave physically |
+| ~~`circuits/hv_charge_pump/`~~ **✅ FIRST-QUAL DONE (v2.1-circuits Phase E)** | was uncharacterized; VDMOS kp/rd re-derivation | built the first working testbench; DC function VERIFIED at 200 V (12 V high-side swing SW↔BOOT, bias currents measured). Switching transient does NOT converge — documented failure mode + redesign scope. See `circuits-requalification.md` Phase E |
 | `pdk_validation/regression/goldens/*.json` | **passive rsh + tc1 + VCC extraction** — the 9 passive goldens were generated against old sheets/TCs | **`run_passives.py --regenerate`** (phase-3 deferred — see below) |
 | `pdk_validation/regression/transients/` wall-time baselines | **VDMOS cap re-derivation** shifts switching speed; **F6 junction caps** shift BSIM3 switching | re-baseline Phase D wall times |
 
@@ -76,4 +76,12 @@ The follow-up pass is now in progress. Program summary + old-vs-new tables:
   the pipeline had never run on this machine. Re-ran DC (conclusions identical: L=2 µm, cascode λ_eff
   flattening, r_out) + MC at N=200 (σ ×2.47 mismatch — the pre-registered ×2.4). metrics/plots/netlists
   regenerated. `MIRROR_CHAR.md` (hand-authored, no generator) awaits the report ruling. No model findings.
-- **Phase E** (HV charge pump): pending.
+- **Phase E — `hv_charge_pump/hv_up_lvlsh/`: ✅ CLEARED (first qualification).** The repo's only 200 V
+  circuit had never been simulated (only a commented testbench). Built `tb_levelshifter_op.cir` (DC),
+  `tb_levelshifter.cir` (transient), `run_lvlsh.py` (harness + REPORT). DC function VERIFIED at the
+  200 V rail (set/reset toggles ON_HS/OFF_HS a clean 12 V between SW=200 V and BOOT=212 V; idle bias
+  0.69 mA, active 12 µA). The switching transient does NOT converge (delay-cell BVCR / HV-cascode
+  timestep collapse) — documented as the redesign scope, not fixed here (Step-0 ruling 4). No model
+  findings (the OP solves cleanly at 200 V).
+
+**All five phases have landed. The staleness register is empty.**

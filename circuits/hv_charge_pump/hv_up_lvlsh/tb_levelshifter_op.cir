@@ -1,0 +1,63 @@
+* ===========================================================================
+*  tb_levelshifter_op.cir -- DC operating-point first-qualification of the
+*  high-side gate-driver LEVEL SHIFTER at the 200 V rail (AutoHV_BiCMOS180).
+*
+*  Companion to tb_levelshifter.cir (transient). The full transient does not
+*  converge (timestep collapses ~0.5 us on the delay-cell behavioral-R / HV
+*  cascode nodes -- see REPORT). This deck verifies the *static* function at
+*  the 200 V rail, which the Rcond fix does support: hold SW = 200 V (BOOT =
+*  212 V) and solve the operating point in three input states --
+*     idle  (ON=0, OFF=0), set (ON=VDDL, OFF=0), reset (ON=0, OFF=VDDL) --
+*  reporting the high-side latch (Q/QB), the buffered outputs (ON_HS/OFF_HS),
+*  and the bootstrap bias current in each state.
+*
+*  Run: ngspice -b tb_levelshifter_op.cir
+* ===========================================================================
+
+.include "../../../autohv_bicmos180_case.lib"
+
+.param wp=20u wn=10u llv=1u whv=40u lhv=8u whvp=40u
+.param rl=100u rw=2u rdl=100u rdw=2u cdl=20u cdw=20u
+
+.include "inv.spice"
+.include "buffer.spice"
+.include "delay_cell.spice"
+.include "levelshifter.spice"
+
+.param VHV=200 VBOOT=12 VDDL=5
+
+Vsw   SW  0   {VHV}
+Vboot BOOT SW  {VBOOT}
+Vvdd  VDD 0   {VDDL}
+Von   ON  0   0
+Voff  OFF 0   0
+
+X1 BOOT SW VDD 0 ON OFF ON_HS OFF_HS LEVELSHIFTER
+
+.control
+  * ---- idle ----
+  op
+  let q=v(X1.Q)
+  let qb=v(X1.QB)
+  let ib=abs(i(Vboot))
+  let iv=abs(i(Vvdd))
+  echo "RESULT state=idle q=$&q qb=$&qb onhs=$&ON_HS offhs=$&OFF_HS sw=$&SW boot=$&BOOT iboot=$&ib ivdd=$&iv"
+  * ---- set : ON=VDDL ----
+  alter Von = 5
+  op
+  let q=v(X1.Q)
+  let qb=v(X1.QB)
+  let ib=abs(i(Vboot))
+  let iv=abs(i(Vvdd))
+  echo "RESULT state=set q=$&q qb=$&qb onhs=$&ON_HS offhs=$&OFF_HS iboot=$&ib ivdd=$&iv"
+  * ---- reset : OFF=VDDL, ON=0 ----
+  alter Von = 0
+  alter Voff = 5
+  op
+  let q=v(X1.Q)
+  let qb=v(X1.QB)
+  let ib=abs(i(Vboot))
+  let iv=abs(i(Vvdd))
+  echo "RESULT state=reset q=$&q qb=$&qb onhs=$&ON_HS offhs=$&OFF_HS iboot=$&ib ivdd=$&iv"
+.endc
+.end
