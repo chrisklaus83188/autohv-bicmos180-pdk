@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+### 2026-07-25 -- Phase 4 Step 2.5: DNMOS20 depletion recentre
+
+- DNMOS20 depletion vto -0.9 -> -1.6 V (band -1.5..-1.7) and kp x0.693 (STAT dot-products, corner
+  ratios preserved) so Idss at Vgs=0 lands 106 uA/um (band 80-120, was 54.7). Verified by the
+  sizing-guide extraction (measure_idss). Guide DNMOS20 self-bias row (W shifts ~2x) regenerates in
+  the Step-4 guide rebuild. Anchor cite: anchor-values.json DNMOS20 idss_per_um_at_vgs0 / vth_depletion.
+
 ### 2026-07-25 -- Phase 4 Step 2.4: zener bv temperature coefficients
 
 - Added positive bv tempcos via a series B-source in each zener subckt (the built-in ngspice-45
