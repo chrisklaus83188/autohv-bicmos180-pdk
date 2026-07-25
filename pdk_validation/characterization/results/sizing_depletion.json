@@ -1,27 +1,28 @@
 {
  "supply": 10.0,
  "vdmos": true,
- "idss_per_um_A": 5.474234e-05,
+ "idss_per_um_A": 0.0001063531,
  "points": {
   "1e-06": {
-   "W_um": 0.018,
+   "W_um": 0.009,
    "Vgs": 0.0,
    "gm_id": null,
-   "sigma_dI_pct": 26.47,
+   "sigma_dI_pct": 36.9,
    "note": "W<1um drawn-min: use W=1um + source-degen R to trim Idss to target"
   },
   "1e-05": {
-   "W_um": 0.183,
+   "W_um": 0.094,
    "Vgs": 0.0,
    "gm_id": null,
-   "sigma_dI_pct": 8.37,
+   "sigma_dI_pct": 11.67,
    "note": "W<1um drawn-min: use W=1um + source-degen R to trim Idss to target"
   },
   "0.0001": {
-   "W_um": 1.8,
+   "W_um": 0.94,
    "Vgs": 0.0,
    "gm_id": null,
-   "sigma_dI_pct": 2.65
+   "sigma_dI_pct": 3.69,
+   "note": "W<1um drawn-min: use W=1um + source-degen R to trim Idss to target"
   }
  }
 }

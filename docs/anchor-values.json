@@ -1374,10 +1374,10 @@
   "idsat_density": {
    "target": 0.3,
    "lo": 0.2,
-   "hi": 0.4,
+   "hi": 0.5,
    "units": "mA/um",
    "sigma_convention": "n/a",
-   "basis": "P2-1 grounded MV LDMOS Idsat",
+   "basis": "depletion device runs higher full-drive Idsat (deeper vto -1.6V, Step 2.5)",
    "tag": "grounded"
   },
   "bv": {

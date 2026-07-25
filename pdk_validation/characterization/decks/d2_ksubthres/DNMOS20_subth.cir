@@ -11,7 +11,7 @@ Vd d 0 dc 0.1
 Vg g 0 dc 0
 .control
 set width=1000
-dc Vg -2.1 -0.7 0.004
+dc Vg -2.8 -1.4000000000000001 0.004
 echo TBL_BEGIN
 print abs(i(Vd))
 echo TBL_END

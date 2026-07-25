@@ -8,16 +8,16 @@
 .model NDMOS120_D4 VDMOS (nchan
 + vto={VTO_NDMOS120_STAT+TC_VTO_NDMOS120*(temper-27)}
 + kp={KP_NDMOS120_STAT*(1+TC_KP_NDMOS120*(temper-27))}
-+ lambda=0.002
-+ theta=0.022
++ lambda=0.0033
++ theta=0.13
 + rd=1e-09
 + rs=1e-09
 + rg=5
 + rds=1e+10
-+ cgdmax=6.24e-14
-+ cgdmin=5e-15
++ cgdmax=2.65626e-14
++ cgdmin=6.64064e-15
 + a=0.24
-+ cgs=8.64e-14
++ cgs=2.39063e-14
 + cjo=3.5e-14
 + is=5e-14
 + rb=0.35
@@ -25,8 +25,8 @@
 + ibv=8e-06
 + nbv=2.1
 + tt=8e-08
-+ rq=0.65
++ rq=2491.56
 + vq=160
 + mtriode=0.5
-+ ksubthres=0.07
++ ksubthres=0.0794872
 + )

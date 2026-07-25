@@ -269,3 +269,90 @@ refinement, not required for the fix.
 9. Apply **P2-3** (tempco/mobility) — grounds the phase-2 `vth_tempco` finding with per-class `kt1`.
 10. Apply **P2-5** (corner spreads) — **widen `vth_corner_spread`**; it was too tight.
 11. **P2-6 is a text fix already applied in `process-declarations.md` D5**, not an anchor change.
+
+---
+
+# Pass 3 — the Device Catalog (per-device datasheet sections)
+
+A third reference source — the process's full **device catalog** (per-device datasheet sections:
+ratings, SOA, characterized electricals with LSL/target/USL, model parameters, mismatch) — was mined
+for the items passes 1–2 marked "silent for simulation" (the ≥40 V LDMOS, whose drift is a Verilog-A
+module this build can't run) or "not stated electrically" (specific Ron, BVdss, cell pitch, emitter
+geometry, zener/Schottky detail). All values below are derived/rounded and attributed to **a commercial
+0.25 µm automotive BCD process**. Format unchanged: anchor · current band · proposed band · derivation · tag.
+
+## P3-1. The HV Ron·W ladder — exponent ruling + N/P re-grade (T1)
+
+Extracted per drain class (N: 12/24/30/40 V; P-extended: 24/30/40 V), 5 V-gate primary: characterized
+specific on-resistance Rsp (mΩ·mm²), linear current density (→ per-width Ron·W), and BVdss. Combined
+with the pass-2 simulated 30 V point (Ron·W 8444 Ω·µm, which lands exactly on the catalog 30 V point).
+
+**Fit (log-log least squares, specific-Ron vs nominal drain class, architecturally-consistent RESURF
+LDMOS family):** exponent **+0.73 ± 0.07, R² = 0.99**. Per-width Ron·W and Rsp-vs-actual-BVdss fits are
+noisier (width-normalization / an over-margined isolated variant) but bracket the same value; the P
+ladder gives 0.76–0.89.
+
+| anchor | current | proposed `[grounded]` / `[extrapolated-fitted]` | derivation | tag |
+|---|---|---|---|---|
+| Ron·W ladder **exponent** | phase-3 BV^1.2 → phase-3b **BV^0.75** | **BV^0.75 — CONFIRMED (fitted 0.73 ± 0.07)** | RESURF specific-Ron scales as class^0.73 across the real 24–40 V ladder. BV^1.2 is 2.35× too high at 200 V and lies far outside the 0.73±0.07 band. **The phase-3b ruling stands; phase-3's BV^1.2 is retired.** | `[grounded]` (exponent) |
+| N 30 V Ron·W anchor | 8400 Ω·µm | **hold (8400–8700)** | Reference 30 V: Ron·W 8500–8700 Ω·µm (catalog) / 8444 (sim). AutoHV's 8400 anchor is dead-on. | `[grounded]` |
+| N ladder, 20–40 V classes | per phase-3b | **20 V ~6.5, 30 V 8.5, 40 V 9.5 kΩ·µm** (per-width); Rsp ≈ 2.8·class^0.73 mΩ·mm² | direct in-range interpolation of the real 12–40 V data | `[grounded]` |
+| N ladder, 60–120 V classes | per phase-3b | **8400·(class/30)^0.73** (fitted) | exponent grounded, absolute value extrapolated above the 40 V data ceiling | `[extrapolated-fitted]` |
+| N 200 V class Ron·W | per phase-3b | **≈ 33 kΩ·µm, band 29–38** | 8400·(200/30)^0.73, band from the ±0.07 exponent uncertainty | `[extrapolated-fitted]` |
+| P/N per-µm penalty | ~2.5× (wrapper) | **hold 2.5× (area basis); note it rises to ~2.7–3.2× by 40 V** | Rsp P/N = 2.45× (24 V) → 2.67× (40 V); per-width 2.4× → 3.2× | `[grounded]` |
+| LDMOS Idsat (drive) density | per phase-2 | **~0.3 mA/µm (MV class)** | unchanged from pass-2 sim (0.328 mA/µm @30 V); catalog gives linear JDLIN 10–12 µA/µm @Vgs=5 | `[grounded]` |
+
+No claim of grounding above 40 V: the 60–200 V rungs ride a **grounded exponent** on **extrapolated
+absolute values**. See the declarations doc for the D2 two-gate-flavor validation.
+
+## P3-2. Depletion LDMOS → DNMOS20 (T3)
+
+| anchor | current | proposed | derivation | tag |
+|---|---|---|---|---|
+| DNMOS20 `idss_per_um` | 54.7 µA/µm (convention-only) | **~80–120 µA/µm** (central ~100) | Reference 40 V depletion LDMOS: Idss (Vgs=0, saturation) = **103 µA/µm**. A 20 V depletion (shorter drift) should exceed the 40 V, so AutoHV's 54.7 is ~2× low. | `[grounded]` (family), `[extrapolated]` (20 V value) |
+| DNMOS20 depletion `vth` | (negative, per model) | **−1.5 … −1.7 V** | reference depletion Vth −1.65 V (−2.2 / −1.1 range) | `[grounded]` |
+
+## P3-3. Zeners & Schottkys (T4)
+
+| anchor | current | proposed `[grounded]` | derivation | tag |
+|---|---|---|---|---|
+| Zener `bv_tempco` DZ_5V6 (5.6 V) | 0 mV/°C | **+1.5 mV/°C** | reference 5.5 V zener TCBV +1.488; 5.15 V +1.11 | `[grounded]` |
+| Zener `bv_tempco` DZ_12 (12 V) | 0 mV/°C | **~+6 … +10 mV/°C** | avalanche regime; ref slope ~+3 mV/°C·V above the 6.2 V zero-TC crossover | `[extrapolated]` |
+| Zener `bv_tempco` DZ_24 (24 V) | 0 mV/°C | **~+15 … +25 mV/°C** | same slope extrapolated; large positive avalanche TC | `[extrapolated]` |
+| Zener zero-TC reference | (none) | **~6.2 V is the BVTC=0 crossover** | reference explicitly models a BVTC=0 point at the 6.2 V device | `[grounded]` |
+| Schottky `bv` (18/30/40 V) | per audit | **25 / 38 / 50 V** | reference Schottky BV @50 µA: 24.8 / 38 / 50 | `[grounded]` |
+| Schottky `vf` @ rated | per audit | **~0.2 V @1 µA, ~0.33 V @2 µA/µm** | reference Vf(1 µA) 0.197–0.203; forward Ip 2.9–8.4 mA @Vf=1 V | `[grounded]` |
+| DIO_SCH `tt` (transit time) | **300 ps** | **≈ 0 (≤ ~10 ps)** | **Schottky is majority-carrier: no minority stored charge, hence no reverse-recovery/transit term. The reference specs Schottkys by Cj + Vf with NO trr/recovery row at all.** 300 ps is unphysical for a Schottky; drop to ~0 (junction-C charging only). | `[grounded]` |
+
+Zener `cjo` per area: **still not grounded** — the reference buries it in a subcircuit (no density row);
+recorded as a residual miss, not closed (see declarations gaps table).
+
+## P3-4. Output conductance λ / VA (T6 — closes the last flattering parameter)
+
+Reference λ taken from the model parameters and independently reproduced by local simulation (5 V CMOS
+and the runnable 30 V LDMOS; terminal gds/Id).
+
+| anchor | current | proposed | derivation | tag |
+|---|---|---|---|---|
+| NMOS50/PMOS50 `lambda` (Lmin) | (implicit) | **~0.05–0.06 /V → VA ~17–20 V** | catalog λ 0.06 @Vds=2 V; sim 0.050 (VA 20 V). Confirms a low VA at Lmin — grows with L. | `[grounded]` |
+| MV LDMOS `va_class` (30–40 V) | (implicit) | **VA ~130 V (strong drive) … ~1800 V (near-threshold)** | ref/sim λ 0.0079 @Vgs=5 (VA 127 V); λ 5.6e-4 @Vgs≈Vth (VA 1786 V) | `[grounded]` |
+| **200 V LDMOS `va_class`** | **measured VA ≈ 3900 V (too flat)** | **VA ~300–1000 V (λ ~1e-3 … 3e-3)** | AutoHV's 3900 V exceeds the entire real MV/HV envelope at every bias → the 200 V device's output is unphysically flat. Re-fit λ up so VA lands in the low-hundreds-to-~1 kV. | `[extrapolated-fitted]` |
+
+## P3-5. Per-device matching cross-check (T7 — confirmation, no new bands)
+
+Reference single-device σ(Vth): 5 V NMOS 2.84 mV @10×0.5 → **AVT ≈ 6.3 mV·µm**; 5 V PMOS 2.30 mV →
+**5.1 mV·µm**. LDMOS σ(ΔVth) 8.2 mV @12 µm² → **AVT ≈ 20 mV·µm** (≈3× the CMOS coefficient). These sit
+**inside** AutoHV's v1-sized (post phase-3b) mismatch coefficients — the phase-3b A_VT widening for the
+5 V pair and the LDMOS moved AutoHV toward exactly these values. **No amendment; the widening is confirmed
+correct.** The 1 mV·µm-per-nm-oxide rule (pass-1) is re-confirmed per-device.
+
+---
+
+## Application order (pass-3 additions) — for the phase-4 fix batch
+
+12. **P3-1**: retire BV^1.2 permanently; keep BV^0.75 (now fitted-grounded). Re-grade 20–40 V N/P ladder
+    rungs to `[grounded]`, 60–200 V to `[extrapolated-fitted]` with the ±0.07 band. Hold the 2.5× P/N penalty.
+13. **P3-3 DIO_SCH tt → ~0** is the highest-value single amendment here (a 300 ps → ~0 correction, and it
+    removes a residual on the v1-sized scorecard). Apply the zener `bv_tempco` ladder alongside.
+14. **P3-4**: re-fit the 200 V LDMOS λ upward (VA 3900 → ~300–1000 V) — the last flattering parameter.
+15. **P3-2** (DNMOS20 Idss ~2× up), **P3-5** (matching — no change, confirmation only).

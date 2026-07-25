@@ -8,8 +8,8 @@
 .param MM_ON=1
 XA da ga 0 DNMOS20 W=10u
 XB db gb 0 DNMOS20 W=10u
-Vga ga 0 dc -0.4
-Vgb gb 0 dc -0.4
+Vga ga 0 dc -1.1
+Vgb gb 0 dc -1.1
 Vda da 0 dc 1.0
 Vdb db 0 dc 1.0
 .control

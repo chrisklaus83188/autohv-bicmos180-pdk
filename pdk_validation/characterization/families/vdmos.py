@@ -1378,6 +1378,49 @@ def _do_cap_reconciliation(col: Collector) -> None:
 
 
 # --------------------------------------------------------------------------
+# output conductance / Early voltage (phase-4 Step 4)
+# --------------------------------------------------------------------------
+
+def _do_va(col: Collector, dev: str, pol: float, card: dict) -> None:
+    """va_class: Early voltage from a 2-point gds extraction at moderate drive
+    (Vov ~ 1.5 V). VA = Id / (dId/dVds). Grounds the output-conductance anchor
+    (phase-4: the 200 V flattery was VA ~ 3900 V; re-fit lands 300-1000 V)."""
+    vto = card.get("vto", pol * 1.0)
+    vgs = vto + pol * 1.5
+    vcls = _vclass(dev)
+    vds1 = pol * max(5.0, vcls * 0.3)
+    vds2 = pol * max(10.0, vcls * 0.6)
+    ids: dict[str, float] = {}
+    decks: dict[str, str] = {}
+    for tag, vds in (("1", vds1), ("2", vds2)):
+        nm = f"{dev}_va_{tag}"
+        decks[tag] = deck_path(nm, SUBDIR)
+        try:
+            out, _ = run_deck(_deck_bias(dev, pol, vgs, vds,
+                                         title=f"VA gds point {tag}"), nm, SUBDIR)
+            _check(out, nm)
+            ids[tag] = abs(_need(parse_prints(out), "@m.xh1.m0[id]", nm))
+        except Exception:                                             # noqa: BLE001
+            pass
+    cond = dict(W_um=W_UM, vgs_V=vgs, vov_V=1.5, vds1_V=vds1, vds2_V=vds2,
+                temp_C=27, corner="TT", method="VA = Id / (dId/dVds), 2-point gds")
+    try:
+        if "1" not in ids or "2" not in ids:
+            raise RuntimeError("VA bias points unavailable")
+        gds = (ids["2"] - ids["1"]) / abs(vds2 - vds1)
+        if gds <= 0:
+            raise RuntimeError("non-positive gds")
+        va = ((ids["1"] + ids["2"]) / 2.0) / gds
+        col.measured(dev, "va_class", va, "V",
+                     conditions=dict(cond, gds_S=gds, id1_A=ids["1"], id2_A=ids["2"]),
+                     deck=decks["1"],
+                     note="output-conductance Early voltage at moderate drive")
+    except Exception as e:                                            # noqa: BLE001
+        col.measured(dev, "va_class", None, "V", conditions=cond,
+                     error=f"_do_va aborted: {e}")
+
+
+# --------------------------------------------------------------------------
 # per-device driver
 # --------------------------------------------------------------------------
 
@@ -1386,7 +1429,7 @@ def _run_device(col: Collector, dev: str, anchors: dict) -> None:
     card, card_deck = _read_card(dev)
 
     for fn in (_do_idvg, _do_strong, _do_vto_tempco, _do_theta, _do_caps,
-               _do_bv):
+               _do_bv, _do_va):
         try:
             fn(col, dev, pol, card)
         except Exception as e:                                    # noqa: BLE001
