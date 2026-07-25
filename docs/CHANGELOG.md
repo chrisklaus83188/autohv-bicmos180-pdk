@@ -1,5 +1,14 @@
 ## [Unreleased]
 
+### 2026-07-25 -- Phase 4 Step 2.4: zener bv temperature coefficients
+
+- Added positive bv tempcos via a series B-source in each zener subckt (the built-in ngspice-45
+  diode model silently ignores tbv1; a temper expression is invalid in a .model D param). Zero at
+  27C (no nominal side effect): DZ_5V6 +1.5 mV/C [grounded], DZ_12 +8 mV/C, DZ_24 +20 mV/C
+  [extrapolated]. Verified (reverse-breakdown at 27/125C): +1.50/+7.97/+20.04 mV/C. The ~6.2V
+  zero-TC crossover recorded in the subckt comment. Fixed stale DZ_5V6 bv_tempco anchor 0.25->1.5
+  (grounded). Anchor cite: anchor-values.json DZ_* bv_tempco.
+
 ### 2026-07-25 -- Phase 4 Step 2.3: DIO_SCH tt -> ~0 (majority-carrier)
 
 - DIO_SCH transit time 300 ps -> 1e-13 s (~0). Schottky is majority-carrier: no minority stored

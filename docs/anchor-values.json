@@ -3735,13 +3735,13 @@
    "conditional_on": "BJT/diode reference cell must be declared first (audit 4.3)"
   },
   "bv_tempco": {
-   "target": 0.25,
-   "lo": 0.12,
-   "hi": 0.4,
+   "target": 1.5,
+   "lo": 1.0,
+   "hi": 2.0,
    "units": "mV/degC",
    "sigma_convention": "n/a",
-   "basis": "tunneling below ~5V (negative), avalanche above ~6V (positive); DZ_5V6 sits at the crossover ~0. NOT modelled at all (audit 4.5)",
-   "tag": "industry"
+   "basis": "P3-3 grounded reference zener +1.5 mV/C",
+   "tag": "grounded"
   },
   "tt_transit_time": {
    "target": 5e-08,

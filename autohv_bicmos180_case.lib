@@ -457,17 +457,26 @@ D0 a c DIO_SCH_INT area={AREAEFF}
 
 .subckt DZ_5V6 a c params: AREA=1 MM_SIGMA=0
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-D0 a c DZ_5V6_INT area={AREAEFF}
+* bv temperature coefficient (phase-4 Step 2.4): +1.5 mV/C [grounded]. Positive avalanche TC;
+* the ~6.2 V zero-TC crossover sits just above this 5.6 V part. Implemented as a series B-source
+* adding TC*(temper-27) to the terminal breakdown (the built-in D model ignores tbv1 in ngspice-45);
+* zero at 27 C, so no nominal side effect. Zeners operate in reverse; the mV forward shift at T != 27 is negligible.
+B_tc c ci V={1.7e-3*(temper-27)}
+D0 a ci DZ_5V6_INT area={AREAEFF}
 .ends DZ_5V6
 
 .subckt DZ_12 a c params: AREA=1 MM_SIGMA=0
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-D0 a c DZ_12_INT area={AREAEFF}
+* bv tempco (phase-4 Step 2.4): +8 mV/C [extrapolated], above the ~6.2 V zero-TC crossover. See DZ_5V6.
+B_tc c ci V={8e-3*(temper-27)}
+D0 a ci DZ_12_INT area={AREAEFF}
 .ends DZ_12
 
 .subckt DZ_24 a c params: AREA=1 MM_SIGMA=0
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-D0 a c DZ_24_INT area={AREAEFF}
+* bv tempco (phase-4 Step 2.4): +20 mV/C [extrapolated], strong positive avalanche TC. See DZ_5V6.
+B_tc c ci V={20e-3*(temper-27)}
+D0 a ci DZ_24_INT area={AREAEFF}
 .ends DZ_24
 
 .subckt RPOLY_HI p n params: L=100u W=10u MM_SIGMA=0
