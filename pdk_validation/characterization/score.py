@@ -250,9 +250,10 @@ def render(rows: list[dict], results: dict) -> str:
     hard = counts.get("hard-fail", 0)
 
     L: list[str] = []
-    L.append("# Characterization Scorecard — AutoHV BiCMOS180 PDK (phase 2 baseline)\n")
-    L.append("**This is the before-picture.** No model fixes landed in phase 2; the PDK was")
-    L.append("measured as-is so every later fix can be diffed against this baseline.\n")
+    L.append("# Characterization Scorecard — AutoHV BiCMOS180 PDK (phase 4 — grounded + fixed)\n")
+    L.append("**This is the after-picture.** The phase-1/2/3 grounding passes and the phase-3/4 fix")
+    L.append("batches have landed; the PDK is measured against the amended, literature-grounded anchors")
+    L.append("(`anchor-values.json` v4.0-phase4-grounded). Diff against the phase-2 baseline in git history.\n")
     L.append(f"- ngspice: `{meta.get('ngspice_version','?')}`")
     L.append(f"- generated: {meta.get('generated','?')}")
     L.append(f"- wall time: {meta.get('wall_seconds','?')} s")

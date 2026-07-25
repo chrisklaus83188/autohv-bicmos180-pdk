@@ -1,7 +1,7 @@
 {
   "device": "CMOM",
   "type": "c",
-  "ngspice_version": "45.2",
+  "ngspice_version": "ngspice-45",
   "v_grid": [
     0.0,
     0.25,

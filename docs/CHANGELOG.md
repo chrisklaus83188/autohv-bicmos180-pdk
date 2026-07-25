@@ -1,5 +1,17 @@
 ## [Unreleased]
 
+### 2026-07-25 -- Phase 4 Step 3: hygiene riders
+
+- Sizing-guide L policy: BSIM3 rows relabeled 'L=1.0um (2xLmin-class, analog default)' (were mislabeled
+  'Lmin'; all BSIM3 rows are in fact generated at L=1.0um -- verified, no data change).
+- gen_sizing_docs.py now emits a single correctly-ordered sizing-guide.md (MOS -> DNMOS20 depletion ->
+  resistors -> caps -> BJT); fixes the section-interleave / duplicated-DNMOS20-rows md-assembly bug
+  (JSON was always correct). Guide meta -> 4.0-phase4.
+- Scorecard header: 'phase 2 baseline / before-picture' -> 'phase 4 -- grounded + fixed / after-picture'.
+- CI ngspice discipline: write_golden now stamps the actual `ngspice --version` (ngspice-45) instead of
+  the hardcoded '45.2'; 9 goldens re-stamped; run_smoke TARGET_NGSPICE -> ngspice-45; regression.yml
+  records the runner's ngspice version.
+
 ### 2026-07-25 -- Phase 4 Step 2.6: device_limits v2 + harness pre-flight reader
 
 - device_limits.csv adopted the v2 schema (docs/device-limits-v2-proposal.md): geometry rows plus
