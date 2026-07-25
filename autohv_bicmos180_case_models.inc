@@ -328,8 +328,8 @@
 .param KP_PDMOS200_STAT={(((0.000575522*_isTT + 0.000627188*_isFF + 0.000529742*_isSS + 0.000529742*_isFS + 0.000627188*_isSF))*(1+P_DKP_PDMOS200))}
 .param RD_PDMOS200_STAT={(((9303.12*_isTT + 8651.92*_isFF + 10233.4*_isSS + 10233.4*_isFS + 8651.92*_isSF))*(1+P_DRD_PDMOS200))}
 .param RS_PDMOS200_STAT={(((3617.87*_isTT + 3363.58*_isFF + 3979.67*_isSS + 3979.67*_isFS + 3363.58*_isSF))*(1+P_DRS_PDMOS200))}
-.param VTO_DNMOS20_STAT={(((-0.9*_isTT + -0.94*_isFF + -0.85*_isSS + -0.94*_isFS + -0.85*_isSF))+P_DVTO_DNMOS20)}
-.param KP_DNMOS20_STAT={(((0.00177084*_isTT + 0.00198334*_isFF + 0.00159375*_isSS + 0.00198334*_isFS + 0.00159375*_isSF))*(1+P_DKP_DNMOS20))}
+.param VTO_DNMOS20_STAT={(((-1.6*_isTT + -1.67111*_isFF + -1.51111*_isSS + -1.67111*_isFS + -1.51111*_isSF))+P_DVTO_DNMOS20)}
+.param KP_DNMOS20_STAT={(((0.0012279*_isTT + 0.00137525*_isFF + 0.00110511*_isSS + 0.00137525*_isFS + 0.00110511*_isSF))*(1+P_DKP_DNMOS20))}
 .param RD_DNMOS20_STAT={(((302.067*_isTT + 271.861*_isFF + 338.315*_isSS + 271.861*_isFS + 338.315*_isSF))*(1+P_DRD_DNMOS20))}
 .param RS_DNMOS20_STAT={(((129.457*_isTT + 116.512*_isFF + 144.992*_isSS + 116.512*_isFS + 144.992*_isSF))*(1+P_DRS_DNMOS20))}
 * =========================================================================
