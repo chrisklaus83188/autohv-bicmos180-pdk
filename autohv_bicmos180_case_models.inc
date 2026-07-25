@@ -1379,7 +1379,10 @@
 + cjo={((1.4e-13*_isTT + 1.442e-13*_isFF + 1.358e-13*_isSS + 1.4e-13*_isFS + 1.4e-13*_isSF))*(1+P_DCJO_DIO_SCH)}
 + vj=0.45
 + m=0.22
-+ tt={((3e-10*_isTT + 2.5e-10*_isFF + 3.65854e-10*_isSS + 3e-10*_isFS + 3e-10*_isSF))*(1+P_DTT_DIO_SCH)}
++ tt=1e-13
+* tt ~ 0 (phase-4 Step 2.3): Schottky is a majority-carrier device -- no minority-carrier stored
+* charge, hence no reverse-recovery/transit term. The reference catalog specs Schottkys by Cj + Vf
+* with NO trr row. Was 300 ps (unphysical for a Schottky). Anchor: DIO_SCH tt_transit_time [0,1e-12].
 + eg=0.69
 + xti=2
 + )
