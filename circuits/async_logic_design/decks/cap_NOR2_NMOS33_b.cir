@@ -5,8 +5,8 @@
 Vdd vdd 0 3.3
 V_a a 0 1.65
 V_b b 0 0.0 AC 1
-X1 p1 a vdd vdd PMOS33 W={(2.9068)*1e-6} L=0.35u
-X2 out b p1 vdd PMOS33 W={(2.9068)*1e-6} L=0.35u
+X1 p1 a vdd vdd PMOS33 W={(3.5886)*1e-6} L=0.35u
+X2 out b p1 vdd PMOS33 W={(3.5886)*1e-6} L=0.35u
 X3 out a 0 0 NMOS33 W={(0.3000)*1e-6} L=0.35u
 X4 out b 0 0 NMOS33 W={(0.3000)*1e-6} L=0.35u
 .control

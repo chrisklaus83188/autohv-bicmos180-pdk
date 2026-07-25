@@ -4,10 +4,10 @@
 .param VDD=3.3
 Vdd vdd 0 {VDD}
 Vin in 0 PULSE(0 {VDD} 2n 0.02n 0.02n 9n 20n)
-X1 mid in vdd vdd PMOS33 W={(2.1378)*1e-6} L=0.35u
-X2 mid in 0 0 NMOS33 W={(0.6537)*1e-6} L=0.35u
-X3 out mid vdd vdd PMOS33 W={(6.4134)*1e-6} L=0.35u
-X4 out mid 0 0 NMOS33 W={(1.9612)*1e-6} L=0.35u
+X1 mid in vdd vdd PMOS33 W={(2.8504)*1e-6} L=0.35u
+X2 mid in 0 0 NMOS33 W={(0.8716)*1e-6} L=0.35u
+X3 out mid vdd vdd PMOS33 W={(8.5512)*1e-6} L=0.35u
+X4 out mid 0 0 NMOS33 W={(2.6149)*1e-6} L=0.35u
 CL out 0 5.0f
 .control
 foreach cs 0 1 2 3 4

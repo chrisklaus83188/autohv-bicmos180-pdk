@@ -4,10 +4,10 @@
 .param VDD=1.8
 Vdd vdd 0 {VDD}
 Vin in 0 PULSE(0 {VDD} 2n 0.02n 0.02n 9n 20n)
-X1 out in vdd vdd PMOS18 W={(1.8277)*1e-6} L=0.18u
-X2 out vdd vdd vdd PMOS18 W={(1.8277)*1e-6} L=0.18u
-X3 out in n1 0 NMOS18 W={(1.4011)*1e-6} L=0.18u
-X4 n1 vdd 0 0 NMOS18 W={(1.4011)*1e-6} L=0.18u
+X1 out in vdd vdd PMOS18 W={(2.4369)*1e-6} L=0.18u
+X2 out vdd vdd vdd PMOS18 W={(2.4369)*1e-6} L=0.18u
+X3 out in n1 0 NMOS18 W={(1.8682)*1e-6} L=0.18u
+X4 n1 vdd 0 0 NMOS18 W={(1.8682)*1e-6} L=0.18u
 CL out 0 5.0f
 .control
 foreach cs 0 1 2 3 4

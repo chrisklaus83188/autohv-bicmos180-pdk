@@ -1,3 +1,26 @@
+## [v2.1-circuits] -- unreleased  (circuits re-qualification onto v2-grounded)
+
+The design-era program: bring every `circuits/` library onto the frozen `v2-grounded` models.
+Models/anchors/declarations stay frozen; only circuit generators + reports change. Program
+summary and old-vs-new tables: `docs/circuits-requalification.md`.
+
+### 2026-07-25 -- Phase A: async_logic_design re-generated
+
+- Step-0 decision 1 applied: async input-pin cap contract relaxed 5.0 -> 6.5 fF hard / 4.5 -> 6.0 fF
+  sizing target (`CAP_HARD`/`CAP_MODEL_TGT` in `async_run.py`). Old contract was met with 0.022 fF
+  margin (NOR2 = 4.978 fF vs a 5.0 fF wall).
+- Re-ran the generator chain (`async_lib.py`/`async_run.py`) against v2-grounded: all 24 cells
+  (8 x 3 domains) re-sized + full 45-pt PVT + rise/fall. `results.json`/`REPORT.md`/`SUMMARY.md`
+  regenerated. Added provenance stamping: `async_lib.ngspice_version()` + `MODEL_TAG`, written to a
+  `_provenance` block in results.json (model=v2-grounded, ngspice=ngspice-45, contract). report.py /
+  summary.py now pull the contract from that block (no more hardcoded "5 fF").
+- Movers confirmed: NOR2 `cap_limited` **True->False** in all 3 domains (the relaxed budget lets the
+  series PMOS reach its ideal ratio and re-centre V_M). NOR2/OR2/XOR2/XNOR2 fall edges **+45-60%**
+  (F6 drain/source junction caps now load the output); simpler cells stay within +/-10% as the wider
+  devices the budget allows offset the added load. Input-*pin* cap unmoved (<0.01 fF) -- it is a gate
+  load, insensitive to junction caps. No model-defect findings filed.
+- post-fix-staleness.md: async entry cleared.
+
 ## [v2-grounded] -- 2026-07-25  (realism program freeze)
 
 ### 2026-07-25 -- Phase 4 Step 4: re-baseline + regenerate (one snapshot)
@@ -130,7 +153,7 @@
 
 # Changelog
 
-### 2026-07-24 — Phase 3 VDMOS DC realism: kp/rd re-derived, mismatch ladder unified (F1, F2, F-VD3)
+### 2026-07-24 ï¿½ Phase 3 VDMOS DC realism: kp/rd re-derived, mismatch ladder unified (F1, F2, F-VD3)
 
 The trigger for the whole audit. A 200 V NMOS mirror at 10-55 uA read "always in
 subthreshold" (sigma(trip) 340-440 mV). Root cause was F1: the VDMOS `kp` ladder was scaled

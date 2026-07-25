@@ -4,8 +4,8 @@
 .param VDD=3.3
 Vdd vdd 0 3.3
 V_in in 0 0.0 AC 1
-X1 out in vdd vdd PMOS33 W={(2.1378)*1e-6} L=0.35u
-X2 out in 0 0 NMOS33 W={(0.6537)*1e-6} L=0.35u
+X1 out in vdd vdd PMOS33 W={(2.8504)*1e-6} L=0.35u
+X2 out in 0 0 NMOS33 W={(0.8716)*1e-6} L=0.35u
 .control
 foreach vb 0 3.3
   alter V_in dc=$vb

@@ -44,6 +44,30 @@ def _find_ngspice() -> str:
 
 NGSPICE = _find_ngspice()
 
+# ---------------------------------------------------------------- provenance
+# Frozen model tag these decks characterise (Step-0 ground rule 1: the models,
+# anchors and declarations are frozen at v2-grounded for this program).
+MODEL_TAG = "v2-grounded"
+
+_NGVER = None
+def ngspice_version() -> str:
+    """Actual `ngspice --version` banner token (e.g. 'ngspice-45'), stamped into
+    results.json instead of a hardcoded string (ground rule 3). Same discovery
+    rule as pdk_validation/regression/run_passives.py."""
+    global _NGVER
+    if _NGVER:
+        return _NGVER
+    _NGVER = "unknown"
+    try:
+        out = subprocess.run([NGSPICE, "--version"], capture_output=True,
+                             text=True, timeout=30).stdout
+        m = re.search(r"ngspice-?\s*[\d.]+", out, re.IGNORECASE)
+        if m:
+            _NGVER = m.group(0).replace(" ", "")
+    except Exception:
+        pass
+    return _NGVER
+
 # ---------------------------------------------------------------- domains
 DOMAINS = {
     "1v8": dict(n="NMOS18", p="PMOS18", L=0.18, vdd=1.8, vlist=[1.62, 1.80, 1.98],

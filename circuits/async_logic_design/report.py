@@ -2,8 +2,17 @@
 import json, async_lib as A
 
 r=json.load(open(A.os.path.join(A.WORK,"results.json")))
+PROV=r.get("_provenance",{})
+CAP_HARD=PROV.get("cap_hard_ff",6.5)
+CAP_TGT=PROV.get("cap_target_ff",6.0)
 DOMN={"1v8":"1.8 V (NMOS18/PMOS18)","3v3":"3.3 V (NMOS33/PMOS33)","5v0":"5.0 V (NMOS50/PMOS50)"}
 ORDER=["INV","BUF","NAND2","NOR2","AND2","OR2","XOR2","XNOR2"]
+DOMKEYS=["1v8","3v3","5v0"]
+def hh(x): return f"{x:.1f}"
+# actual worst-pin Cin envelope across the whole family (data-driven, not hardcoded)
+_allcin=[max(r[dk][c]["caps"].values()) for dk in DOMKEYS for c in ORDER]
+CIN_LO,CIN_HI=min(_allcin),max(_allcin)
+_caplim=[f"{c} ({dk})" for dk in DOMKEYS for c in ORDER if r[dk][c].get("cap_limited")]
 PRETTY={"INV":"Inverter","BUF":"Buffer","NAND2":"NAND2","NOR2":"NOR2","AND2":"AND2",
         "OR2":"OR2","XOR2":"XOR2","XNOR2":"XNOR2"}
 def ps(x): return f"{x*1e12:.0f}"
@@ -14,9 +23,14 @@ def w(s=""): out.append(s)
 
 w("# Asynchronous Logic Cell Family - AutoHV BiCMOS 180 PDK")
 w()
-w("Static CMOS standard-cell set (8 cells x 3 voltage domains = 24 cells), each sized "
-  "for a mid-supply switching threshold with <=5 fF input-pin load, characterized across "
-  "the full PVT matrix in ngspice.")
+w(f"Static CMOS standard-cell set (8 cells x 3 voltage domains = 24 cells), each sized "
+  f"for a mid-supply switching threshold with <={hh(CAP_HARD)} fF input-pin load, "
+  f"characterized across the full PVT matrix in ngspice.")
+w()
+w(f"<sub>Models: **{PROV.get('model_tag','v2-grounded')}** (frozen) · "
+  f"simulator: **{PROV.get('ngspice_version','ngspice-45')}** · "
+  f"input-cap contract: **<={hh(CAP_HARD)} fF hard / {hh(CAP_TGT)} fF sizing target** "
+  f"(Step-0 decision 1: relaxed from 5.0 fF for the v2-grounded re-qualification).</sub>")
 w()
 w("## 1. Design approach & test conditions")
 w()
@@ -35,7 +49,7 @@ w()
 w("**Sizing strategy.** Each cell is built in static CMOS. The P/N width ratio is tuned "
   "(via a DC ratio sweep) so the switching threshold V_M = Vdd/2 at the nominal corner "
   "(TT, 27 C, nominal Vdd). Absolute device widths are then scaled so each input pin "
-  "presents <=5 fF. AND2/OR2 = NAND2/NOR2 + inverter; BUF = inverter + 3x inverter; "
+  f"presents <={hh(CAP_HARD)} fF. AND2/OR2 = NAND2/NOR2 + inverter; BUF = inverter + 3x inverter; "
   "XOR2/XNOR2 = 12-transistor static gates (two input inverters generate complementary "
   "inputs). Minimum drawn width 0.22/0.30/0.40 um (1.8/3.3/5 V).")
 w()
@@ -50,8 +64,11 @@ w("**Switching threshold V_M** = input voltage at which the output crosses 50% o
   "held at 0 and at Vdd; both thresholds are reported.")
 w()
 w(f"**Rise/fall** = output 10%->90% (rise) and 90%->10% (fall) of Vdd, driving a "
-  f"{A.CL_FF:.0f} fF load (= fanout-of-1, since each input pin is <=5 fF) with a 20 ps "
-  f"input edge. Min = fastest corner, Max = slowest corner across PVT.")
+  f"fixed {A.CL_FF:.0f} fF load (~fanout-of-1; the load is held constant old-vs-new so the "
+  f"comparison is not muddied by a load change) with a 20 ps input edge. The old-vs-new "
+  f"shift is the *net* of two effects: the F6 drain/source junction caps add real output "
+  f"load (slower), while the relaxed cap budget allows wider devices (faster). "
+  f"Min = fastest corner, Max = slowest corner across PVT.")
 w()
 w("**Area.** No layout was produced; area is a transparent estimate. *Active gate area* = "
   "sum of W*L over all transistors. *Layout estimate* = (poly columns x contacted-poly "
@@ -115,15 +132,25 @@ for dk in ("1v8","3v3","5v0"):
 # notes
 w("## 3. Notes and trade-offs")
 w()
-w("- **All input pins meet the <=5 fF target** (worst pin 4.1-5.0 fF). ")
-w("- **NOR2 / OR2 are capacitance-limited** (marked *cap-limited). Centering V_M exactly at "
-  "Vdd/2 with tied inputs needs a very wide series-PMOS stack (Wp/Wn ~ 8-17); at minimum "
-  "NMOS width that pushes Cin above 5 fF. The PMOS was therefore backed off to hold Cin "
-  "<=5 fF, which lands V_M a few % below mid-supply at nominal (still ~0.45-0.50 Vdd). "
-  "Relaxing the 5 fF limit would allow exact centering.")
+w(f"- **All input pins meet the <={hh(CAP_HARD)} fF target** (worst pin {CIN_LO:.1f}-{CIN_HI:.1f} fF). "
+  f"Input-pin cap is a gate load, so it is essentially unchanged by the F6 junction caps "
+  f"(which sit on drain/source diffusions); raising the budget to {hh(CAP_HARD)} fF simply "
+  f"lets each cell use wider devices for the same relative loading.")
+if _caplim:
+    w(f"- **Still capacitance-limited under the {hh(CAP_HARD)} fF contract:** {', '.join(_caplim)}. "
+      f"Centering V_M with tied inputs needs a very wide series-PMOS stack (Wp/Wn ~ 8-18); "
+      f"the PMOS is held back to keep Cin <={hh(CAP_HARD)} fF, landing V_M a few % below "
+      f"mid-supply at nominal.")
+else:
+    w(f"- **No cell is capacitance-limited under the {hh(CAP_HARD)} fF contract.** Under the old "
+      f"5.0 fF limit NOR2/OR2 had to back off their series PMOS (V_M off-centre); the relaxed "
+      f"budget lets them reach their ideal P/N ratio and centre V_M at nominal.")
 w("- **NOR2/OR2 and XOR2/XNOR2 are intrinsically slower**: the series-PMOS pull-up (NOR/OR) "
   "and the small cap-budgeted core devices feeding a 2-high stack (XOR/XNOR) limit drive. "
-  "This is fundamental to a <=5 fF, mid-supply static design, not a sizing error.")
+  "This is fundamental to a light-input-load, mid-supply static design, not a sizing error. "
+  "Their fall edge slowed ~45-60% vs the pre-F6 characterization (series-PMOS/2-high pull "
+  "networks now loaded by real drain/source junction caps); simpler cells are roughly flat "
+  "(+/-~10%) as the wider devices the relaxed budget allows offset the added junction load.")
 w("- **V_M tracks supply well**: across all corners/temperatures V_M stays ~0.45-0.56 of the "
   "instantaneous supply for INV/BUF/NAND/AND/XOR/XNOR; temperature drift of V_M is small "
   "(the design is close to the zero-temp-coefficient bias).")
