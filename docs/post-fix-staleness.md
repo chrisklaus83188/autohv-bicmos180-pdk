@@ -11,7 +11,7 @@ re-run.
 | ~~`circuits/delay_cells_voltage_ramp/`~~ **✅ DONE (v2.1-circuits Phase C)** | junction caps (F6) load the RAMP node → ramp slope drops ~9–26 % | re-ran `gen_delay_cells.py` (netlists identical) + re-measured slopes; README updated, 2 findings preserved. See `circuits-requalification.md` Phase C.2 |
 | ~~`circuits/comparators/` (9 cells)~~ **◑ DATA DONE, reports pending (v2.1-circuits Phase B)** | matching widened → offset σ increases; PMOS50 tempco → offset drift | re-ran `run_comparators.py`/`run_rr.py` at N=200: 5 V σ ×2.1–2.8 (median 2.4), 3.3/1.8 V flat. Saturation orphan fixed (writes JSON). `.md` reports await ruling — see `circuits-requalification.md` Phase B + `handoffs/HANDOFF_comparator_report_regeneration.md` |
 | ~~`circuits/async_logic_design/` (24 cells)~~ **✅ DONE (v2.1-circuits Phase A)** | BSIM3 **junction caps (F6)** → input-cap contract re-verified; **drive** unaffected (Idsat cards unchanged for BSIM3) | re-ran `async_run.py` under the 6.5 fF contract; see `circuits-requalification.md` Phase A |
-| `circuits/current_mirror_char/` (PMOS50 study) | PMOS50 **kt1/ute** (tempco), **matching widened**, **junction caps** — λ/r_out mostly unaffected (DC), but MC σ and temperature behaviour change | re-run `run_mc.py`; the σ(λ)/matching clouds widen |
+| ~~`circuits/current_mirror_char/` (PMOS50 study)~~ **◑ DATA DONE, MIRROR_CHAR.md pending (v2.1-circuits Phase D)** | **matching widened** → MC σ up; λ/r_out unaffected (DC) | re-ran pipeline (DC verified identical, MC σ ×2.47 mismatch at N=200). Fixed the macOS-home-dir portability bug (+ space-in-path wrdata, + 2 pdk_validation decks). `MIRROR_CHAR.md` awaits ruling — see `circuits-requalification.md` Phase D + handoff |
 | `circuits/hv_charge_pump/` | **VDMOS kp/rd wholesale re-derivation** — every HV device behaves differently (this is the F1 fix). Any level-shifter timing/current is now different | uncharacterized to begin with; no stale numbers, but the netlists now behave physically |
 | `pdk_validation/regression/goldens/*.json` | **passive rsh + tc1 + VCC extraction** — the 9 passive goldens were generated against old sheets/TCs | **`run_passives.py --regenerate`** (phase-3 deferred — see below) |
 | `pdk_validation/regression/transients/` wall-time baselines | **VDMOS cap re-derivation** shifts switching speed; **F6 junction caps** shift BSIM3 switching | re-baseline Phase D wall times |
@@ -70,4 +70,10 @@ The follow-up pass is now in progress. Program summary + old-vs-new tables:
   (sheet unchanged), not RPOLY_LO; nominal L_R unchanged, slowest corner flipped hot→cold via the
   RPOLY_HI tc1 sign-flip. voltage-ramp: re-measured (slopes ↓9–26 % from F6 RAMP-node junction caps),
   README updated with both findings preserved. No model-defect findings.
-- **Phases D–E** (mirror MC, HV charge pump): pending.
+- **Phase D — `current_mirror_char/`: ◑ DATA CLEARED, MIRROR_CHAR.md pending.** Fixed the hardcoded
+  macOS home-dir path (mirror_lib ROOT → `__file__`-derived; 65 netlists now use a relative include),
+  the bare-`ngspice` calls, the space-in-repo-path `wrdata` failure, and 2 pdk_validation deck paths —
+  the pipeline had never run on this machine. Re-ran DC (conclusions identical: L=2 µm, cascode λ_eff
+  flattening, r_out) + MC at N=200 (σ ×2.47 mismatch — the pre-registered ×2.4). metrics/plots/netlists
+  regenerated. `MIRROR_CHAR.md` (hand-authored, no generator) awaits the report ruling. No model findings.
+- **Phase E** (HV charge pump): pending.

@@ -41,7 +41,7 @@ tran 10n 11u 0 50n UIC
 echo SC_RUN_OK
 * Use the Windows TEMP path explicitly. The harness substitutes
 * this if it needs a different location.
-wrdata C:/Users/christopherklaus/AppData/Local/Temp/sc_sample_hold.data v(in) v(phi) v(hnode)
+wrdata sc_sample_hold.data v(in) v(phi) v(hnode)
 quit
 .endc
 .end

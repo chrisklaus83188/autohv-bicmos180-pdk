@@ -14,13 +14,56 @@ the same as the output device. Only the cascode device differs.
 
 I_in is an ideal forced current source (instrument). No resistors anywhere.
 """
-import os, subprocess, tempfile, re
+import os, shutil, subprocess, tempfile, re
+from pathlib import Path
 import numpy as np
 
-ROOT = "/Users/christopherklaus/Documents/ngspice/autohv-bicmos180-pdk"
-LIB  = os.path.join(ROOT, "autohv_bicmos180_case.lib")
+# Repo-relative paths (portability fix, v2.1-circuits Phase D). mirror_lib.py lives at
+# <root>/circuits/current_mirror_char/. The .include stamped into every generated deck is
+# a RELATIVE path: decks live in netlists/ or raw/ (both three levels below the repo root),
+# and ngspice resolves .include relative to the deck file's own directory, so the 65 netlists
+# are now portable across machines without edit. Was a hardcoded third-party home directory.
 HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(HERE))       # -> repo root (for local file reads only)
+LIB  = "../../../autohv_bicmos180_case.lib"          # relative .include (from netlists/ or raw/)
 NETLISTS = os.path.join(HERE, "netlists")
+
+MODEL_TAG = "v2-grounded"       # frozen model tag (requal ground rule 1)
+
+
+def _find_ngspice():
+    cand = os.environ.get("NGSPICE_BIN")
+    if cand and Path(cand).exists():
+        return cand
+    for name in ("ngspice_con", "ngspice_con.exe", "ngspice"):
+        p = shutil.which(name)
+        if p:
+            return p
+    for p in (r"C:\Program Files\Qucs-S-25.2.0-win64\bin\ngspice_con.exe",
+              r"C:\Spice64\bin\ngspice_con.exe"):
+        if Path(p).exists():
+            return p
+    return "ngspice"
+
+
+NGSPICE = _find_ngspice()
+_NGVER = None
+
+
+def ngspice_version():
+    global _NGVER
+    if _NGVER:
+        return _NGVER
+    _NGVER = "unknown"
+    try:
+        out = subprocess.run([NGSPICE, "--version"], capture_output=True, text=True,
+                             timeout=30).stdout
+        m = re.search(r"ngspice-?\s*[\d.]+", out, re.IGNORECASE)
+        if m:
+            _NGVER = m.group(0).replace(" ", "")
+    except Exception:
+        pass
+    return _NGVER
 RAW  = os.path.join(HERE, "raw")
 for d in (NETLISTS, RAW):
     os.makedirs(d, exist_ok=True)
@@ -118,10 +161,15 @@ def deck_dc(title, topo, geom, Iin, Vdd, vstart, vstop, vstep,
     lines.append(f"Vout {outn} 0 0")
     if outfile is None:
         outfile = os.path.join(RAW, "dc.dat")
+    # ngspice `wrdata` splits its filename on whitespace, and the repo path contains
+    # spaces ("BiCMOS Process - Automotive"), so an absolute path silently breaks. run()
+    # uses cwd=RAW, so emit only the BASENAME (no spaces) here; readers use the absolute
+    # `outfile`. All callers place outfile inside RAW, so the basename lands there.
+    wr_name = os.path.basename(outfile)
     lines += [
         ".control",
         f"dc Vout {vstart:.6g} {vstop:.6g} {vstep:.6g}",
-        f"wrdata {outfile} i(Vout)",   # i(Vout)>0 = current delivered into the load
+        f"wrdata {wr_name} i(Vout)",   # i(Vout)>0 = current delivered into the load
         ".endc",
         ".end",
     ]
@@ -154,12 +202,13 @@ def deck_op(title, topo, geom, Iin, Vdd, vout, case=0, proc=0, mm=0, temp=27):
 # ngspice invocation
 # ---------------------------------------------------------------------------
 def run(deck, tag="deck"):
-    """Run a deck through ngspice -b; return stdout text."""
+    """Run a deck through ngspice -b; return stdout text. cwd=RAW so the relative
+    .include (../../../autohv_bicmos180_case.lib) resolves from the deck's directory."""
     path = os.path.join(RAW, f"_{tag}.cir")
     with open(path, "w") as f:
         f.write(deck)
-    p = subprocess.run(["ngspice", "-b", path], capture_output=True, text=True,
-                       timeout=600)
+    p = subprocess.run([NGSPICE, "-b", os.path.basename(path)], cwd=RAW,
+                       capture_output=True, text=True, timeout=600)
     return p.stdout + "\n" + p.stderr
 
 

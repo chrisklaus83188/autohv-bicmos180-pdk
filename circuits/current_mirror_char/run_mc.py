@@ -18,7 +18,10 @@ import mirror_lib as ML
 import analysis as AN
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-NRUN = 500
+# Reduced 500 -> 200 for the v2.1-circuits re-run (ground rule 4: MC counts may be
+# reduced where runtime demands, stated explicitly). 200 gives ~+/-5% on sigma/mu --
+# ample to confirm the pre-registered ~x2.4 mismatch widening on the 50 V pair.
+NRUN = 200
 TOPOS = ["MIR_S", "MIR_CS", "MIR_CW"]
 DESIGNS = ["B_10u", "B_100n", "A_100n"]
 MODES = {"mismatch": (1, 0), "procmm": (1, 1)}
@@ -41,8 +44,8 @@ def job(args):
     dpath = os.path.join(ML.RAW, f"_{tag}.cir")
     with open(dpath, "w") as f:
         f.write(deck)
-    subprocess.run(["ngspice", "-b", dpath], capture_output=True, text=True,
-                   timeout=600)
+    subprocess.run([ML.NGSPICE, "-b", dpath], cwd=ML.RAW, capture_output=True,
+                   text=True, timeout=600)
     v, i = ML.read_wrdata(outf)
     m = AN.band_metrics(v, i, Vdd, Iin)
     os.remove(outf); os.remove(dpath)
@@ -80,6 +83,8 @@ def main():
     with open(os.path.join(HERE, "mc_results.json"), "w") as f:
         json.dump(dict(nrun=NRUN, designs=DESIGNS, topos=TOPOS,
                        modes=list(MODES), vdd=Vdd, anchor="Vout=Vdd/2",
+                       _provenance=dict(model_tag=ML.MODEL_TAG,
+                                        ngspice_version=ML.ngspice_version(), nrun=NRUN),
                        results=out), f)
     # report
     print("\n=== MC summary (sigma/mu of Iout@Vdd/2, and lambda spread) ===")

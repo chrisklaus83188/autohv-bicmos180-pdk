@@ -49,8 +49,8 @@ def job(args):
     with open(dpath, "w") as f:
         f.write(deck)
     import subprocess
-    subprocess.run(["ngspice", "-b", dpath], capture_output=True, text=True,
-                   timeout=600)
+    subprocess.run([ML.NGSPICE, "-b", dpath], cwd=ML.RAW, capture_output=True,
+                   text=True, timeout=600)
     v, i = ML.read_wrdata(outf)
     # subsample the 100 mV grid (data of record)
     grid_v = np.round(np.arange(0.0, Vdd+1e-9, GRID_STEP), 3)

@@ -4,6 +4,26 @@ The design-era program: bring every `circuits/` library onto the frozen `v2-grou
 Models/anchors/declarations stay frozen; only circuit generators + reports change. Program
 summary and old-vs-new tables: `docs/circuits-requalification.md`.
 
+### 2026-07-25 -- Phase D: current_mirror_char re-measured + portability fix
+
+- **Portability (closes the phase-0 finding for this dir + 2 riders):** mirror_lib.py:20 hardcoded a
+  third party's macOS home dir (ROOT="/Users/christopherklaus/..."), so the mirror pipeline had NEVER
+  run on this Windows machine. Fixed ROOT to be __file__-derived; the .include stamped into all 65
+  netlists is now relative (../../../autohv_bicmos180_case.lib). While making it run, fixed two more:
+  (a) mirror_lib/run_dc/run_mc called bare "ngspice" -> added NGSPICE_BIN discovery; (b) wrdata with an
+  absolute path silently failed because the repo path has spaces ("BiCMOS Process - Automotive") ->
+  emit basename + cwd=RAW. Two pdk_validation decks (bjt_avalanche_stress/dc_sweep_through_breakdown.cir,
+  switched_cap_audit/sample_and_hold.cir) had christopherklaus wrdata paths -> made relative.
+- **Re-measure vs v2-grounded:** re-ran build_designs -> run_phase0 -> run_dc (1440 sweeps) ->
+  compute_metrics -> run_mc (N reduced 500->200, ground rule 4) -> make_plots. DC conclusions HOLD
+  exactly (designs.json W-sizing stable to 12th digit; L=2um lock + cascode λ_eff flattening: MIR_CS
+  λ 2.3e-5 / r_out 4290 MΩ, identical old->new -- PMOS50 λ untouched). **MC σ re-signed: mismatch-mode
+  σ/µ x2.21-2.61 (median 2.47)** across all designs/topos -- the pre-registered ~x2.4. Provenance
+  stamped in mc_results.json.
+- **MIRROR_CHAR.md NOT regenerated:** hand-authored, no generator (same ground-rule-2 conflict as the
+  comparator reports); folded into the existing handoff escalation.
+- post-fix-staleness.md: mirror entry -> data-done / report-pending.
+
 ### 2026-07-25 -- Phase C: delay_pulse_design re-generated + voltage-ramp re-measured
 
 - delay_pulse_design: re-ran full pipeline against v2-grounded -- dp_run.py (L_R bisection + 45-pt PVT)

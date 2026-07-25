@@ -1,5 +1,5 @@
 .title A_100u_MIR_S
-.include "/Users/christopherklaus/Documents/ngspice/autohv-bicmos180-pdk/autohv_bicmos180_case.lib"
+.include "../../../autohv_bicmos180_case.lib"
 .param case=0 PROC_ON=0 MM_ON=0 MM_SIGMA=0
 .options temp=27
 Vdd vdd 0 5
@@ -9,6 +9,6 @@ Xout nout nin vdd vdd PMOS50 W=8.12278e-05 L=2e-06 M=1
 Vout nout 0 0
 .control
 dc Vout 0 5 0.01
-wrdata /Users/christopherklaus/Documents/ngspice/autohv-bicmos180-pdk/circuits/current_mirror_char/raw/ignore.dat i(Vout)
+wrdata ignore.dat i(Vout)
 .endc
 .end
