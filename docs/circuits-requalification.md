@@ -36,6 +36,37 @@ at measured values; (4) HV charge pump = minimal first qualification, not deleti
 
 ---
 
+## Program status (close-out)
+
+All five phases' **data layers** are complete, committed (one commit per phase), and consistent with
+`v2-grounded`. Every pre-registered mover is accounted for (table above): three confirmed as expected,
+one confirmed ×2.4 (mirror σ), one localised (comparator σ — 5 V only), one **premise error caught**
+(delay L_R ÷12 — the design uses RPOLY_HI), and the NDMOS200 drive-down marked N/A (no old baseline in
+`circuits/`). Two things that *didn't* move were also verified: async input-pin cap (gate load,
+insensitive to F6) and the mirror DC conclusions (PMOS50 λ untouched). **Nothing moved that wasn't
+expected.**
+
+**One item is intentionally open, by maintainer direction:** the **hand-authored reports that have no
+generator scripts** — the 6 comparator subdir READMEs (+ the 3 deeper GP-5V docs) and
+`current_mirror_char/MIRROR_CHAR.md` — were **not** regenerated. This conflicts with ground rule 2, and
+per the maintainer's ruling the mechanism decision was escalated rather than guessed:
+[`handoffs/HANDOFF_comparator_report_regeneration.md`](handoffs/HANDOFF_comparator_report_regeneration.md)
+(recommend Option A: marker-delimited table injection). Their **data layers are regenerated**; only the
+prose report files await that ruling. Every *script-generated* report in the tree (async, delay,
+delay-ramp README, HV level-shifter) **has** been regenerated against `v2-grounded`.
+
+**Therefore:** the acceptance items "every circuit REPORT regenerated" and "staleness register empty"
+are met for all script-backed libraries and **pending the report-mechanism ruling** for the two
+hand-authored-report directories (comparators, mirror), which are marked *data-done / reports-pending*
+in the staleness register. The `v2.1-circuits` tag should be applied once those land.
+
+**Regression suite: GREEN** (re-run after all five phases) — smoke 800/800, passives 9/9, transients
+13/13, corners 36/36, matching the `v2-grounded` baseline. The circuits re-qualification touched only
+`circuits/` generators/results and two `pdk_validation/` deck output paths; it did not perturb the
+models, anchors, or goldens, exactly as required by ground rule 1.
+
+---
+
 ## Phase A — `async_logic_design/` · activity: **re-generate**
 
 **Scope.** 8 static-CMOS cells × 3 voltage domains (24 cells). Re-ran the generator chain
