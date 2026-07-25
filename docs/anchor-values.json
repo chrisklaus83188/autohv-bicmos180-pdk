@@ -1219,12 +1219,12 @@
    "tag": "grounded"
   },
   "idsat_density": {
-   "target": 0.3,
-   "lo": 0.2,
-   "hi": 0.4,
+   "target": 0.12,
+   "lo": 0.05,
+   "hi": 0.25,
    "units": "mA/um",
    "sigma_convention": "n/a",
-   "basis": "P2-1 grounded MV LDMOS Idsat",
+   "basis": "P/N mobility penalty: Idsat = N MV/(2.5-3x)",
    "tag": "grounded"
   },
   "bv": {
@@ -1692,12 +1692,12 @@
    "tag": "grounded"
   },
   "idsat_density": {
-   "target": 0.3,
-   "lo": 0.2,
-   "hi": 0.4,
+   "target": 0.12,
+   "lo": 0.05,
+   "hi": 0.25,
    "units": "mA/um",
    "sigma_convention": "n/a",
-   "basis": "P2-1 grounded MV LDMOS Idsat",
+   "basis": "P/N mobility penalty: Idsat = N MV/(2.5-3x)",
    "tag": "grounded"
   },
   "bv": {
@@ -1998,12 +1998,12 @@
    "tag": "literature"
   },
   "idsat_density": {
-   "target": 0.3,
-   "lo": 0.2,
-   "hi": 0.4,
+   "target": 0.12,
+   "lo": 0.05,
+   "hi": 0.25,
    "units": "mA/um",
    "sigma_convention": "n/a",
-   "basis": "P2-1 grounded MV LDMOS Idsat",
+   "basis": "P/N mobility penalty: Idsat = N MV/(2.5-3x)",
    "tag": "grounded"
   },
   "bv": {
@@ -2304,12 +2304,12 @@
    "tag": "literature"
   },
   "idsat_density": {
-   "target": 0.3,
-   "lo": 0.2,
-   "hi": 0.4,
+   "target": 0.12,
+   "lo": 0.05,
+   "hi": 0.25,
    "units": "mA/um",
    "sigma_convention": "n/a",
-   "basis": "P2-1 grounded MV LDMOS Idsat",
+   "basis": "P/N mobility penalty: Idsat = N MV/(2.5-3x)",
    "tag": "grounded"
   },
   "bv": {
@@ -2458,11 +2458,11 @@
   },
   "idsat_density": {
    "target": 0.3,
-   "lo": 0.2,
+   "lo": 0.1,
    "hi": 0.4,
    "units": "mA/um",
    "sigma_convention": "n/a",
-   "basis": "P2-1 grounded MV LDMOS Idsat",
+   "basis": "HV rd-limited Idsat (200V class)",
    "tag": "grounded"
   },
   "bv": {
@@ -2610,12 +2610,12 @@
    "tag": "literature"
   },
   "idsat_density": {
-   "target": 0.3,
-   "lo": 0.2,
-   "hi": 0.4,
+   "target": 0.12,
+   "lo": 0.05,
+   "hi": 0.25,
    "units": "mA/um",
    "sigma_convention": "n/a",
-   "basis": "P2-1 grounded MV LDMOS Idsat",
+   "basis": "P/N mobility penalty: Idsat = N MV/(2.5-3x)",
    "tag": "grounded"
   },
   "bv": {
@@ -2764,11 +2764,11 @@
   },
   "idsat_density": {
    "target": 0.3,
-   "lo": 0.2,
+   "lo": 0.1,
    "hi": 0.4,
    "units": "mA/um",
    "sigma_convention": "n/a",
-   "basis": "P2-1 grounded MV LDMOS Idsat",
+   "basis": "HV rd-limited Idsat (200V class)",
    "tag": "grounded"
   },
   "bv": {
@@ -2916,12 +2916,12 @@
    "tag": "literature"
   },
   "idsat_density": {
-   "target": 0.3,
-   "lo": 0.2,
-   "hi": 0.4,
+   "target": 0.12,
+   "lo": 0.05,
+   "hi": 0.25,
    "units": "mA/um",
    "sigma_convention": "n/a",
-   "basis": "P2-1 grounded MV LDMOS Idsat",
+   "basis": "P/N mobility penalty: Idsat = N MV/(2.5-3x)",
    "tag": "grounded"
   },
   "bv": {

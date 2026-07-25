@@ -1,5 +1,16 @@
 ## [Unreleased]
 
+### 2026-07-25 -- Phase 4 Step 2.1: HV resistive ladder re-anchor (60/80/120/200 N&P)
+
+- rd/rs (STAT dot-products, corner ratios preserved) + rq scaled to the Step-0 rungs for N/P
+  60/80/120/200V. N per-width Ron.W lands 15/21/32/45 kohm.um; P carries the 2.5->3.0x rising
+  penalty (37.5/55.6/89.6/135 kohm.um). 200V wrapper RDRIFT slopes rescaled by the same factor
+  (N 2308->3018.5, P 2092->9302.1). 20-40V rungs, all kp, and all lambda UNTOUCHED.
+- Idsat verified: N MV 40/60/80 hold 0.23-0.35 mA/um; N120/200 and all P drop per the penalty
+  (P200 ~0.05, N200 ~0.13 mA/um) -- physical and expected. Anchor idsat_density regraded to match:
+  P VDMOS -> [0.05,0.25] (Idsat=N/2.5-3), N120/200 -> [0.10,0.40] (HV rd-limited). Anchor cite:
+  anchor-values.json ron_times_w / idsat_density (4.0-phase4-grounded).
+
 ### 2026-07-25 -- Phase 4 Step 1: anchor merge + Step-0 two-regime 200V ladder
 
 - anchor-values.json -> 4.0-phase4-grounded. Merged pass-3 amendments (P3-1..P3-5) and the Step-0
