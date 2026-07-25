@@ -66,6 +66,14 @@ def main() -> int:
     print(f"ngspice : {ver}")
     print(f"PDK lib : {cl.LIB_PATH}")
     print(f"anchors : {cl.ANCHOR_PATH}")
+    # Pre-flight: read device_limits.csv and check rated bias points are within SOA
+    # (phase-4 Step 2.6 -- closes the phase-0 "device_limits.csv has zero readers" finding).
+    try:
+        sys.path.insert(0, str(cl.REPO_ROOT / "pdk_validation"))
+        from preflight import preflight_report
+        preflight_report()
+    except Exception as e:  # a preflight problem must not block characterization
+        print(f"[preflight] skipped: {e}")
     print()
 
     timings: dict[str, float] = {}
