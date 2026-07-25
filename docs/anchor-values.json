@@ -18,8 +18,8 @@
    "tag": "industry"
   },
   "read_only": true,
-  "version": "2.1-phase3b",
-  "merge_note": "Phase-3b O1: merged phase-2 measured corrections, ONC25 pass-1/2 grounded amendments (incl. widened vth_corner_spread P2-5), Step-0 declarations, and phase-3 CHANGELOG targets into one reconciled band per entry. The fixed models score against these.",
+  "version": "4.0-phase4-grounded",
+  "merge_note": "Phase-4 Step-1: merged pass-3 catalog amendments (P3-1..P3-5) and the Step-0 two-regime 200V ladder (0.73 below 40V grounded; ~1.0-1.2 above 40V literature). N 60/80/120/200V ron_times_w = 15/21/32/45 kohm.um; P = N x 2.5->3.0 rising penalty. Added VDMOS va_class and DNMOS20 depletion Idss/Vth anchors. 20-40V rungs and all kp grounded/unchanged.",
   "expected_pass_now": "F1/F2/F3/F4/F6/F7, ladder-B, NMOS12 -- previously expected-fail, now expected to pass their amended bands after the phase-3 fix batch."
  },
  "NMOS18": {
@@ -1063,7 +1063,7 @@
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "grounded"
   },
   "idsat_density": {
    "target": 0.3,
@@ -1190,6 +1190,13 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 130,
+   "hi": 2000,
+   "target": 500,
+   "tag": "grounded",
+   "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
  "PDMOS20": {
@@ -1209,7 +1216,7 @@
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "grounded"
   },
   "idsat_density": {
    "target": 0.3,
@@ -1336,6 +1343,13 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 130,
+   "hi": 2000,
+   "target": 500,
+   "tag": "grounded",
+   "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
  "DNMOS20": {
@@ -1355,7 +1369,7 @@
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "grounded"
   },
   "idsat_density": {
    "target": 0.3,
@@ -1482,6 +1496,27 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 130,
+   "hi": 2000,
+   "target": 500,
+   "tag": "grounded",
+   "basis": "MV depletion output envelope"
+  },
+  "idss_per_um_at_vgs0": {
+   "lo": 80,
+   "hi": 120,
+   "target": 100,
+   "tag": "grounded",
+   "basis": "P3-2: real 40V depletion Idss 103 uA/um; 20V class >= that"
+  },
+  "vth_depletion": {
+   "lo": -1.7,
+   "hi": -1.5,
+   "target": -1.6,
+   "tag": "grounded",
+   "basis": "P3-2: reference depletion Vth -1.65V"
   }
  },
  "NDMOS40": {
@@ -1501,7 +1536,7 @@
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "grounded"
   },
   "idsat_density": {
    "target": 0.3,
@@ -1628,6 +1663,13 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 130,
+   "hi": 2000,
+   "target": 500,
+   "tag": "grounded",
+   "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
  "PDMOS40": {
@@ -1647,7 +1689,7 @@
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "grounded"
   },
   "idsat_density": {
    "target": 0.3,
@@ -1774,26 +1816,33 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 130,
+   "hi": 2000,
+   "target": 500,
+   "tag": "grounded",
+   "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
  "NDMOS60": {
   "rsp_specific_ron": {
-   "target": 1.2714,
-   "lo": 0.6357,
-   "hi": 3.1786,
+   "target": 1.35,
+   "lo": 0.675,
+   "hi": 3.375,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
    "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
-   "tag": "physics"
+   "tag": "literature"
   },
   "ron_times_w": {
-   "target": 14127,
-   "lo": 7064,
-   "hi": 28254,
+   "target": 15000,
+   "lo": 10950,
+   "hi": 19950,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "literature"
   },
   "idsat_density": {
    "target": 0.3,
@@ -1920,26 +1969,33 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 130,
+   "hi": 2000,
+   "target": 500,
+   "tag": "grounded",
+   "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
  "PDMOS60": {
   "rsp_specific_ron": {
-   "target": 1.2714,
-   "lo": 0.6357,
-   "hi": 3.1786,
+   "target": 3.3749,
+   "lo": 1.6875,
+   "hi": 8.4376,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
    "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
-   "tag": "physics"
+   "tag": "literature"
   },
   "ron_times_w": {
-   "target": 14127,
-   "lo": 7064,
-   "hi": 28254,
+   "target": 37500,
+   "lo": 27375,
+   "hi": 49875,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "literature"
   },
   "idsat_density": {
    "target": 0.3,
@@ -2066,26 +2122,33 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 130,
+   "hi": 2000,
+   "target": 500,
+   "tag": "grounded",
+   "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
  "NDMOS80": {
   "rsp_specific_ron": {
-   "target": 1.9282,
-   "lo": 0.9641,
-   "hi": 4.8205,
+   "target": 2.31,
+   "lo": 1.155,
+   "hi": 5.775,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
    "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
-   "tag": "physics"
+   "tag": "literature"
   },
   "ron_times_w": {
-   "target": 17529,
-   "lo": 8764,
-   "hi": 35058,
+   "target": 21000,
+   "lo": 15330,
+   "hi": 27930,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "literature"
   },
   "idsat_density": {
    "target": 0.3,
@@ -2212,26 +2275,33 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 130,
+   "hi": 2000,
+   "target": 500,
+   "tag": "grounded",
+   "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
  "PDMOS80": {
   "rsp_specific_ron": {
-   "target": 1.9282,
-   "lo": 0.9641,
-   "hi": 4.8205,
+   "target": 6.1215,
+   "lo": 3.0608,
+   "hi": 15.3038,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
    "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
-   "tag": "physics"
+   "tag": "literature"
   },
   "ron_times_w": {
-   "target": 17529,
-   "lo": 8764,
-   "hi": 35058,
+   "target": 55650,
+   "lo": 40624,
+   "hi": 74014,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "literature"
   },
   "idsat_density": {
    "target": 0.3,
@@ -2358,26 +2428,33 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 130,
+   "hi": 2000,
+   "target": 500,
+   "tag": "grounded",
+   "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
  "NDMOS120": {
   "rsp_specific_ron": {
-   "target": 3.5638,
-   "lo": 1.7819,
-   "hi": 8.9095,
+   "target": 4.7999,
+   "lo": 2.4,
+   "hi": 11.9998,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
    "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
-   "tag": "physics"
+   "tag": "literature"
   },
   "ron_times_w": {
-   "target": 23759,
-   "lo": 11879,
-   "hi": 47518,
+   "target": 32000,
+   "lo": 23360,
+   "hi": 42560,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "literature"
   },
   "idsat_density": {
    "target": 0.3,
@@ -2504,26 +2581,33 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 300,
+   "hi": 1000,
+   "target": 600,
+   "tag": "literature",
+   "basis": "P3-4 re-fit target: 200V VA 300-1000V (was ~3900V, too flat)"
   }
  },
  "PDMOS120": {
   "rsp_specific_ron": {
-   "target": 3.5638,
-   "lo": 1.7819,
-   "hi": 8.9095,
+   "target": 13.4398,
+   "lo": 6.7199,
+   "hi": 33.5995,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
    "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
-   "tag": "physics"
+   "tag": "literature"
   },
   "ron_times_w": {
-   "target": 23759,
-   "lo": 11879,
-   "hi": 47518,
+   "target": 89600,
+   "lo": 65408,
+   "hi": 119168,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "literature"
   },
   "idsat_density": {
    "target": 0.3,
@@ -2650,26 +2734,33 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 300,
+   "hi": 1000,
+   "target": 600,
+   "tag": "literature",
+   "basis": "P3-4 re-fit target: 200V VA 300-1000V (was ~3900V, too flat)"
   }
  },
  "NDMOS200": {
   "rsp_specific_ron": {
-   "target": 7.6671,
-   "lo": 3.8336,
-   "hi": 19.1679,
+   "target": 9.8998,
+   "lo": 4.95,
+   "hi": 24.7498,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
    "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
-   "tag": "physics"
+   "tag": "literature"
   },
   "ron_times_w": {
-   "target": 34851,
-   "lo": 17425,
-   "hi": 69701,
+   "target": 45000,
+   "lo": 33000,
+   "hi": 60000,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "literature"
   },
   "idsat_density": {
    "target": 0.3,
@@ -2796,26 +2887,33 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 300,
+   "hi": 1000,
+   "target": 600,
+   "tag": "literature",
+   "basis": "P3-4 re-fit target: 200V VA 300-1000V (was ~3900V, too flat)"
   }
  },
  "PDMOS200": {
   "rsp_specific_ron": {
-   "target": 7.6671,
-   "lo": 3.8336,
-   "hi": 19.1679,
+   "target": 29.6995,
+   "lo": 14.85,
+   "hi": 74.2494,
    "units": "mOhm.cm^2",
    "sigma_convention": "n/a",
    "basis": "Rsp = Ron.W x pitch (correct mOhm.cm2 unit), measured-anchored ladder, RESURF penalty in band",
-   "tag": "physics"
+   "tag": "literature"
   },
   "ron_times_w": {
-   "target": 34851,
-   "lo": 17425,
-   "hi": 69701,
+   "target": 135000,
+   "lo": 98550,
+   "hi": 179550,
    "units": "Ohm.um",
    "sigma_convention": "n/a",
    "basis": "physical lateral-LDMOS Ron.W ~ 8400*(BV/30)^0.75 anchored at measured 30V (phase-3b)",
-   "tag": "physics"
+   "tag": "literature"
   },
   "idsat_density": {
    "target": 0.3,
@@ -2942,6 +3040,13 @@
    "sigma_convention": "n/a",
    "basis": "TOTAL Ron tempco (channel+drift, as measured); was drift-only (phase-2 s7 split)",
    "tag": "industry"
+  },
+  "va_class": {
+   "lo": 300,
+   "hi": 1000,
+   "target": 600,
+   "tag": "literature",
+   "basis": "P3-4 re-fit target: 200V VA 300-1000V (was ~3900V, too flat)"
   }
  },
  "_vdmos_kp_conditional": {
@@ -3588,7 +3693,7 @@
    "units": "s",
    "sigma_convention": "n/a",
    "basis": "Schottky is majority-carrier: tt MUST be 0. PDK has 3e-10, adding 107 pF of spurious diffusion cap at 10 mA (audit 4.6)",
-   "tag": "physics"
+   "tag": "grounded"
   },
   "cjo_density": {
    "target": 1.0,

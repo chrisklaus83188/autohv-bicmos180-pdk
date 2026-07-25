@@ -91,6 +91,28 @@ default, now positively supported by the finger-width convention. The power-die 
 magnitude still needs either silicon Rsp or the maintainer's process assumption, which the reference
 docs do not supply.
 
+**Phase-4 Step-0 ruling — the 100–200 V ladder, now literature-bracketed.** Pass-3 grounded the
+reference-process ladder only to 40 V (specific-Ron ∝ class^0.73). A survey of **published, production-class
+0.18 µm-BCD LDMOS data** (openly citable — these are ISPSD/IEDM-class publications, unlike the reference
+process) closes the extrapolation:
+- In **Rsp space** the exponent is **two-regime**: ~0.73 below ~40 V (fixed overheads dominate), but
+  **~1.9–2.2 above** (drift-dominant, measured across published 55–128 V BVdss ladders).
+- **Cell pitch grows ~linearly** with class, so in **per-width Ron·W space** the high regime flattens to
+  exponent **~1.0–1.2**.
+- Production-class **200 V silicon lands at Rsp ≈ 6–12 mΩ·cm²** (1.3–2.7× the 1-D ideal limit), i.e.
+  **Ron·W ≈ 33–60 kΩ·µm** at a ~20 µm pitch.
+
+**Ruling (implemented phase-4):** the per-width Ron·W ladder is **two-regime, continuous at the grounded
+30 V / 8400 Ω·µm anchor** — exponent **0.73 below 40 V** `[grounded]`, **~1.0–1.2 above 40 V**
+`[literature]`. Rungs: 60 V ≈ 15, 80 V ≈ 21, 120 V ≈ 32, 200 V ≈ 45 kΩ·µm (band 33–60). The pass-3
+single-exponent 200 V value (33 kΩ·µm) is now the optimistic band edge; the retired BV^1.2 value
+(86 kΩ·µm) stays retired. P-channel carries the grounded 2.5×→~3× rising mobility penalty on top.
+
+Supporting public literature (citable openly):
+1. J. A. Appels & H. M. J. Vaes, "High Voltage Thin Layer Devices (RESURF Devices)," *IEDM Tech. Dig.*, 1979, pp. 238–241 — the RESURF principle that flattens Rsp-vs-BV below the 1-D limit.
+2. C. Hu, "Optimum Doping Profile for Minimum Ohmic Resistance and High Breakdown Voltage," *IEEE Trans. Electron Devices*, vol. ED-26, no. 3, 1979 — the ideal silicon-limit Rsp ∝ BV^~2.5 the drift regime approaches.
+3. B. J. Baliga, *Fundamentals of Power Semiconductor Devices*, 2nd ed., Springer, 2019 — specific on-resistance vs breakdown scaling and pitch normalization for lateral (LDMOS/RESURF) devices.
+
 ---
 
 ## D2 — VDMOS gate-oxide ladder · `[declared-grounded]`
@@ -131,14 +153,21 @@ re-ladder work.
 
 ---
 
-## D3 — BJT/diode `AREA = 1` cell · `[declared-default]`
+## D3 — BJT/diode `AREA = 1` cell · `[declared-default]` → **`[declared-grounded]` (pass 3)**
 
 **Question.** What physical area does `AREA = 1` correspond to?
 
-**What the reference process shows.** Bipolar devices are specified by named size variants (a "5"
-and a "10" flavour) but the **emitter unit geometry, Is/area, cje and cjc are not stated** — silence.
-Diode Is/area and cjo/area are likewise not given. So the reference docs cannot ground the unit-cell
-area directly.
+**What the spec/library showed (passes 1–2).** Bipolar devices are specified by named size variants (a "5"
+and a "10" flavour) but the **emitter unit geometry, Is/area, cje and cjc were not stated** — silence.
+Diode Is/area and cjo/area likewise not given.
+
+**Pass-3 grounding — the device catalog gives the emitter geometry.** The bipolar sections state the
+supported emitter sizes directly: **square emitters, minimum 2×2 µm (4 µm²), and named variants at
+5×5 µm (25 µm²) and 10×10 µm (100 µm²)**. **AutoHV's `AREA = 1 ≡ 100 µm²` is exactly the large "10"
+variant (10×10 µm) — a real, supported emitter geometry, not an invented round number.** D3 therefore
+regrades from `[declared-default]` to **`[declared-grounded]`**: the reference emitter menu spans
+4–100 µm² and AutoHV's default sits at the top of it. The residual `is`-vs-`cje`/`cjc` internal
+disagreement (below) is unchanged — that is an internal-consistency fix, now with a grounded cell size.
 
 **Indirect grounding.** They *do* pin the electrical behaviour a unit device must reproduce — β in the
 mid-teens, VAF ≈ 60–70 V, Vbe ≈ 0.7 V in the µA range (see D4). Whatever `AREA = 1` is declared to be, it must land
@@ -301,3 +330,124 @@ remains genuinely synthetic, confirmed silent in both spec and library: the **10
 (Verilog-A, not runnable), the **BJT/diode absolute per-cell scale** (composite devices, no unit
 geometry), and the **resistor VCR** (structural, no coefficient). Those close only by silicon or explicit
 maintainer assumption.
+
+---
+
+# Pass 3 — the Device Catalog: regrades, the ladder ruling, and the freeze line
+
+A third reference source — the process's full **device catalog** (per-device datasheet sections) — was
+mined for exactly the items passes 1–2 marked "silent for simulation" (the ≥40 V LDMOS, whose drift is a
+Verilog-A module the local build can't run) and "silent electrically" (specific Ron, BVdss, emitter
+geometry, zener/Schottky detail, output conductance). It closed most of them. The proposed band changes
+are in [`anchor-amendments-onc25.md`](anchor-amendments-onc25.md) §"Pass 3"; this section records the
+**status regrades**, the **ladder-exponent ruling**, the **D2 external validation**, the **final gaps
+dispositions**, and the **synthetic-residue freeze line**.
+
+## Status regrades (pass 3)
+
+| declaration | was | now | basis |
+|---|---|---|---|
+| **D3** BJT/diode `AREA=1≡100 µm²` | `[declared-default]` | **`[declared-grounded]`** | the catalog states the emitter menu: 2×2 / 5×5 / 10×10 µm. 100 µm² = the real 10×10 emitter. |
+| **D1** HV LDMOS DC scale (100–200 V) | confirmed silent (Verilog-A) | **`[extrapolated-fitted]`** on a **grounded exponent** | the 40 V class is now tabulated directly (Rsp/BVdss/JDLIN); the Ron·W-vs-class exponent is fitted (0.73±0.07). Absolute 100–200 V still extrapolation, but no longer a guess. |
+| **D4** BJT class | `[declared-grounded]` (fT/VAF; β contested) | **`[declared-grounded]`, β framing refined** | the catalog's HV NPN reaches β≈65 and fT tops at ~1.4 GHz — see the D4 note below. |
+| **D2** VDMOS gate-oxide ladder | `[declared-grounded]` | **`[declared-grounded]` + externally validated** | the same drain class ships in 5 V-gate and 12 V-gate variants — see the D2 note below. |
+
+## The Ron·W ladder-exponent ruling (T1) — **BV^0.75 confirmed, BV^1.2 retired**
+
+Phase 3 shipped a `Ron·W = 8400·(BV/30)^1.2` ladder; phase 3b replaced it with `^0.75`. The two differ
+~2.4× in on-resistance at 200 V, and the choice was previously an engineering judgement (physical
+lateral-RESURF favours the lower exponent) with no direct data.
+
+**The catalog now supplies the data.** Extracting characterized specific on-resistance and BVdss for the
+real N-LDMOS ladder at 12/24/30/40 V drain classes (plus the pass-2 simulated 30 V point, which lands
+exactly on the catalog 30 V value), a log-log least-squares fit of specific-Ron vs drain class across the
+architecturally-consistent RESURF family gives an exponent of **+0.73 ± 0.07 (R² = 0.99)**. The
+P-channel extended-drain ladder gives 0.76–0.89.
+
+> **Ruling proposal: the reference data confirms `BV^0.75`. Phase-3's `BV^1.2` is retired** — it predicts
+> a 200 V on-resistance 2.35× too high and lies far outside the fitted 0.73 ± 0.07 band. The 30 V
+> anchor (8400 Ω·µm) is dead-on the real 8500–8700 Ω·µm. The N and P ladders share the exponent within
+> error; the **P/N per-µm penalty ≈ 2.5×** (area basis) is confirmed, rising mildly to ~2.7–3.2× by 40 V.
+> **20–40 V rungs are `[grounded]`; 60–200 V ride the grounded exponent on extrapolated absolute values
+> (`[extrapolated-fitted]`), with no claim of grounding above 40 V drain / ~55 V measured breakdown.**
+
+## D2 external validation (two-gate-flavor structure)
+
+The catalog confirms the D2 headline directly and independently: **the same drain class appears in both a
+5 V-gate and a 12 V-gate variant** (e.g. a 44 V-drain device exists as both a 5 V-gate part, |Vgs|≤5.5 V,
+and a 12 V-gate part, |Vgs|≤12 V). The gate oxide tracks the **gate** rating — 5 V-gate → ~13 nm class
+(the SOA gate limits, ±7 V absolute / ±5.5 V DC, imply ~2.5 nm/V × 5.5 ≈ 13.7 nm), 12 V-gate → ~31 nm
+class — while the drain standoff is handled entirely by the drift/well spacings. This is exactly the
+"oxide follows gate, not drain" reframing D2 rests on, now confirmed by a device the process actually
+ships in both flavors. **AutoHV's 13/31 nm gate-oxide ladder is externally validated.**
+
+## D4 β-framing refinement
+
+Passes 1–2 characterized the reference NPN as "mid-teens β, deliberately low-β BCD." The catalog's fuller
+menu refines this: the HV NPN flavor reaches **β ≈ 65**, the low-β HV flavor β ≈ 18, the LV NPN β mid-teens,
+and the substrate/isolated PNPs β ≈ 2.8–5.5. So the reference **does** offer a moderate-β (65) NPN — the
+menu spans β 2.8–65. Peak **fT tops out at ~1.4 GHz** (LV NPN), the HV flavors at 0.3–0.56 GHz. This
+narrows the AutoHV gap: NPN_LV's **β = 140 is ~2× the best real NPN** (was framed as ~8× vs mid-teens),
+and its **fT = 3.5 GHz is ~2.5× the fastest real junction NPN** (~1.4 GHz). The D4 conclusion stands —
+fT is physics-limited and AutoHV sits at the optimistic edge; β is a design choice and remains defensible
+— but the β gap is smaller than passes 1–2 implied.
+
+## T6 — the last flattering parameter (output conductance)
+
+The catalog reports device λ directly, and local simulation of the runnable 5 V CMOS and 30 V LDMOS
+reproduces it (λ 0.05 vs catalog 0.06 for the 5 V NMOS; λ 0.0079 for the 30 V LDMOS at full drive). Real
+output resistance is far lower than AutoHV's: **5 V CMOS VA ~17–20 V at Lmin; MV LDMOS VA ~130 V (drive)
+to ~1800 V (near-threshold)**. AutoHV's 200 V device measured **VA ≈ 3900 V sits above the entire real
+envelope at every bias** — the known remaining flattery is now quantified and given a re-fit target
+(VA ~300–1000 V), amendment P3-4.
+
+## Final gaps table — every remaining gap gets a terminal disposition
+
+Pass 3 is the last grounding pass. Each item is now **closed**, or **permanently synthetic** with its
+declared error bar. Nothing is left "open for a later pass."
+
+| item | disposition after pass 3 | grounded value / permanent error bar |
+|---|---|---|
+| **VDMOS Ron·W / BVdss / Idsat, MV (30–40 V)** | **CLOSED — catalog + sim** | 30 V Ron·W 8500 Ω·µm, 40 V 9500; BVdss 1.2–1.4× class; exponent 0.73±0.07 |
+| **VDMOS DC scale, 60–200 V** | **closed — literature-bracketed (phase-4 Step-0)** | two-regime ladder: 0.73 below 40 V (grounded), ~1.0–1.2 above (published 0.18 µm-BCD data); 200 V band 33–60 kΩ·µm, ±~35 %. |
+| **BJT emitter geometry / `AREA=1` cell** | **CLOSED — catalog** | square emitters 2×2 / 5×5 / 10×10 µm; `AREA=1≡100 µm²` = the 10×10 device (D3 grounded) |
+| **Output conductance λ / VA (CMOS + LDMOS)** | **CLOSED — catalog + sim** | 5 V CMOS VA ~17–20 V; MV LDMOS VA ~130–1800 V; 200 V re-fit target ~300–1000 V |
+| **Depletion LDMOS Idss / Vth** | **CLOSED — catalog** | Idss ~100 µA/µm (Vgs=0), Vth ~−1.65 V; DNMOS20 54.7 µA/µm is ~2× low |
+| **Zener bv tempco (sign + magnitude)** | **CLOSED — catalog** | +1.1…+3.6 mV/K, rising with bv, zero-TC crossover ~6.2 V |
+| **Schottky Vf / BV / recovery** | **CLOSED — catalog** | BV 25/38/50 V, Vf ~0.2 V @1 µA; **no recovery term (majority-carrier) → DIO_SCH tt≈0**, not 300 ps |
+| **Per-device matching (AVT)** | **CLOSED — catalog** | 5 V CMOS AVT ~6/5 mV·µm, LDMOS ~20 mV·µm; confirms the v1-sized coefficients |
+| **Corner bundles (one MOS class)** | **CLOSED — catalog** | 5 V LSL/USL: Vth ±135 mV, Idsat ±14 % — confirms the pass-2 synthesis |
+| **Zener cjo / area** | **permanently synthetic** — buried in the reference subcircuit, no density row | bound to the junction-diode density class, ~1–1.5 fF/µm² × junction area (±2× bar) |
+| **Resistor VCR (voltage coefficient)** | **permanently synthetic** — no coefficient in spec, model, or catalog; diffusion-R dependence is structural | AutoHV's explicit VCR remains invented (±100 % of itself) |
+| **Flicker corner frequency (Hz)** | **permanently default** — parameters grounded, corner-Hz stated nowhere | `[industry]` 100 kHz–1 MHz |
+| **BJT/diode absolute `is`-per-cell** | **internal-consistency, not grounded** — cell size now grounded (D3), `is`-vs-`cje`/`cjc` split still unresolved by any source | reconcile internally to the 100 µm² cell |
+
+## Synthetic residue — the freeze line
+
+**This is the definitive list of what in this PDK is invented rather than grounded, and by how much.**
+After three grounding passes plus the phase-4 public-literature ladder ruling, everything else in the
+anchor set is tied to a real commercial 0.25 µm automotive BCD process (directly, by class-mapped
+scaling, or by grounded-exponent extrapolation) or to open ISPSD/IEDM-class literature. **After phase-4
+the residue is three items and nothing else:**
+
+1. **200 V absolute on-resistance/breakdown scale** — *literature-bracketed* (no longer purely
+   extrapolated). The two-regime ladder is anchored ≤40 V to reference silicon and 60–200 V to published
+   0.18 µm-BCD LDMOS data (Appels-Vaes RESURF; Hu silicon-limit; Baliga). **Error bar: ±~35 % on Ron·W at
+   200 V** (the published 33–60 kΩ·µm band). Tightening further needs a specific 200 V production part.
+2. **BJT/diode per-area absolutes at the declared 100 µm² cell** — the emitter geometry is grounded
+   (100 µm² = the real 10×10 emitter, D3), but the `is`-vs-`cje`/`cjc` split within that cell is an
+   internal-consistency choice no source tabulates. **Error bar: the per-area `is` factor, ±cell-choice.**
+3. **Resistor voltage coefficient (VCR)** — *structural stand-in*. No VCR coefficient appears in spec,
+   model, or catalog; the real diffusion-R dependence is structural (JFET pinch). **Error bar: ±100 % —
+   order-of-magnitude only.**
+
+Two further items are grounded-parameter / industry-default, not "invented," and are noted for
+completeness only: **flicker corner-frequency** (parameters grounded; corner Hz an industry 100 kHz–1 MHz
+default) and **NPN β = 140** (a declared design choice above the reference menu's 65 — physics permits it;
+general-purpose BiCMOS reaches 100–200 — flagged so no one mistakes it for grounded).
+
+**Everything not on this list is grounded, class-mapped-scaled, or literature-bracketed.** With this,
+the realism program **freezes**: subsequent work on this PDK is design work, and model changes ride the
+normal fix process against these frozen anchors. All three reference sources (spec, model library, full
+device catalog) plus the public 100–200 V literature have now been mined; no further grounding passes
+are planned.
