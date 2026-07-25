@@ -1,7 +1,7 @@
 {
   "device": "RNPLUS",
   "type": "r",
-  "ngspice_version": "45.2",
+  "ngspice_version": "ngspice-45",
   "v_grid": [
     -5.0,
     -4.75,

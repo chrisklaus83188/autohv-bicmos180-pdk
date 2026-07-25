@@ -39,7 +39,9 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 LIB_PATH = REPO_ROOT / "autohv_bicmos180_case.lib"
-TARGET_NGSPICE = "45.2"
+# Development baseline; the harness records the actually-detected `ngspice --version`
+# at runtime rather than asserting this string (phase-4 Step 3).
+TARGET_NGSPICE = "ngspice-45"
 
 CORNERS = [0, 1, 2, 3, 4]
 STAT_COMBOS = [(0, 0), (0, 1), (1, 0), (1, 1)]  # (PROC_ON, MM_ON)

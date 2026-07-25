@@ -20,20 +20,26 @@ jobs:
           python-version: '3.12'
 
       # Install ngspice from the apt repository. The local development
-      # baseline is ngspice 45.2 on Windows; Ubuntu 24.04 ships an
+      # baseline is ngspice-45 (Qucs-S bundle) on Windows; Ubuntu 24.04 ships an
       # older release (~41-42). For phases A/B/D this should be fine
       # (they test structural / convergence behavior), and the
       # AGAUSS HSPICE convention is stable across versions. Phase C
-      # diffs against pinned goldens generated on 45.2, so it may
-      # show small drift on a different ngspice; if that becomes a
-      # problem we can switch to building ngspice 45.2 from source
+      # diffs against pinned goldens stamped with the generating ngspice
+      # version (goldens carry ngspice-45); it may show small drift on a
+      # different ngspice, in which case rebuild ngspice-45 from source
       # in CI with caching.
       - name: Install ngspice
         run: |
           sudo apt-get update
           sudo apt-get install -y ngspice
-          ngspice --help | head -1 || true
           which ngspice
+
+      # Record the actual ngspice version this CI run used (phase-4 Step 3):
+      # the goldens are stamped with their generating version, so pin/record
+      # the runner's version for cross-referencing any golden drift.
+      - name: Record ngspice version
+        run: |
+          ngspice --version | grep -i ngspice | head -1 | tee ngspice-version.txt
 
       - name: Phase A+B - device instantiation smoke (760 ops, ~45 s)
         run: python pdk_validation/regression/run_smoke.py

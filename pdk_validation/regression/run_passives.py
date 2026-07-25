@@ -276,13 +276,36 @@ def golden_path(name: str) -> Path:
     return GOLDEN_DIR / f"{name}.json"
 
 
+_NGVER: str | None = None
+
+
+def ngspice_version_string() -> str:
+    """The actual `ngspice --version` banner token (e.g. 'ngspice-45'), stamped into
+    goldens instead of a hardcoded string (phase-4 Step 3)."""
+    global _NGVER
+    if _NGVER:
+        return _NGVER
+    _NGVER = "unknown"
+    ng = find_ngspice()
+    if ng:
+        try:
+            out = subprocess.run([ng, "--version"], capture_output=True,
+                                 text=True, timeout=30).stdout
+            m = re.search(r"ngspice-?\s*[\d.]+", out, re.IGNORECASE)
+            if m:
+                _NGVER = m.group(0).replace(" ", "")
+        except Exception:
+            pass
+    return _NGVER
+
+
 def write_golden(name: str, kind: str, grid: list[float],
                  ys: list[float]) -> None:
     GOLDEN_DIR.mkdir(parents=True, exist_ok=True)
     data = {
         "device": name,
         "type": kind,
-        "ngspice_version": "45.2",
+        "ngspice_version": ngspice_version_string(),
         "v_grid": grid,
         "values": ys,
     }
