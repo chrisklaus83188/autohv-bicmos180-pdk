@@ -14,7 +14,7 @@
 .subckt PHI_5V0 in out vdd gnd
 XI1 nIN in vdd vdd PMOS50 W=1.15u L=0.5u
 XI2 nIN in gnd gnd NMOS50 W=0.5u L=0.5u
-XR  nIN nC RPOLY_HI L=53.7500u W=0.5u
+XR  nIN nC RPOLY_HI L=51.5625u W=0.5u
 XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
 XBP nC in vdd vdd PMOS50 W=1.0u L=0.5u   $ pull-up bypass (fast falling out)
 XS1 s1 nC gnd gnd NMOS50 W=0.5u L=0.5u

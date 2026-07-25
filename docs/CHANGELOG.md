@@ -4,6 +4,23 @@ The design-era program: bring every `circuits/` library onto the frozen `v2-grou
 Models/anchors/declarations stay frozen; only circuit generators + reports change. Program
 summary and old-vs-new tables: `docs/circuits-requalification.md`.
 
+### 2026-07-25 -- Phase C: delay_pulse_design re-generated + voltage-ramp re-measured
+
+- delay_pulse_design: re-ran full pipeline against v2-grounded -- dp_run.py (L_R bisection + 45-pt PVT)
+  -> dp_char.py (PVT + 200-run MC) -> gen_lib.py -> verify.py -> report.py/char_report.py. verify.py
+  ALL 12 CELLS OK. Provenance stamped in results.json/char.json + both reports.
+- **FINDING (brief-premise error, not a model defect):** the pre-registered "L_R ÷~12" does NOT occur.
+  Step-0 dec. 2 attributes it to RPOLY_LO (25->300), but this design uses RPOLY_HI exclusively (sheet
+  unchanged at 1200 ohm/sq since the delay-char commit). Nominal L_R unchanged (<=1 bisection quantum).
+  What moved: RPOLY_HI tc1 flipped +0.0006->-0.0014, so the slowest PVT corner flipped hot->cold on all
+  12 cells. report.py/char_report.py narratives made data-driven (compute worst-case corner from data).
+  MC sigma essentially unchanged (5-6%, RC/Schmitt-dominated). Nominal 20 ns preserved.
+- delay_cells_voltage_ramp: re-ran gen_delay_cells.py (netlists regenerate identically -- designs.json
+  unchanged); re-measured ramp slopes vs v2-grounded (dropped ~9-26% from F6 junction caps loading the
+  RAMP node). README table updated (old values in parens); both simulation findings preserved verbatim.
+- post-fix-staleness.md: both delay entries cleared. Movers checklist: L_R-÷12 marked did-not-move
+  (premise error); RPOLY_LO shift marked N/A in circuits/.
+
 ### 2026-07-25 -- Phase B: comparators re-measured + offset re-signed (data layer)
 
 - Re-ran all 6 comparator sub-libraries (`run_comparators.py` GP x3, `run_rr.py` RR x3) against

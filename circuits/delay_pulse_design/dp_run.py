@@ -48,9 +48,10 @@ def main(domains=("1v8", "3v3", "5v0"), arches=D.ARCHES):
             print(f"[{dkey}] {arch:4s} lr={lr:6.2f}u  nom={achieved*1e9:5.2f}ns  "
                   f"PVT={mt}ns  pass<={fe}ns  area={ar['active_um2']:.1f}um2",
                   flush=True)
+    results["_provenance"] = D.provenance({"target_ns": 20.0, "cl_um": CL, "cw_um": CW})
     with open(D.WORK / "results.json", "w") as f:
         json.dump(results, f, indent=1, default=str)
-    print("saved results.json")
+    print(f"saved results.json  [model={D.MODEL_TAG} ngspice={D.ngspice_version()}]")
     return results
 
 

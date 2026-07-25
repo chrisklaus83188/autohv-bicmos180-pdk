@@ -49,18 +49,24 @@ Run from the `tb/` directory (relative `.include`s resolve from the deck):
 cd tb && ngspice -b tb_10u.cir
 ```
 
-As-built ramp slopes at TT / 5 V / 27 °C (dV/dt over the 1→3 V window):
+As-built ramp slopes at TT / 5 V / 27 °C (dV/dt over the 1→3 V window), **re-measured
+against `v2-grounded` (ngspice-45)**. Values in V/µs; the pre-`v2-grounded` numbers are
+shown in parentheses for reference:
 
 | bias | ideal I/C | S | CS | CW |
 |-----:|----------:|--:|---:|---:|
-| 100 nA | 0.10 V/µs | 0.100 | 0.097 | 0.097 |
-| 1 µA   | 1.0 V/µs  | 1.00  | 0.970 | 0.973 |
-| 10 µA  | 10 V/µs   | 9.64  | 9.34  | 9.54  |
-| 100 µA | 100 V/µs  | 70.8  | 69.4  | 80.3  |
+| 100 nA | 0.10 V/µs | 0.095 (0.100) | 0.092 (0.097) | 0.092 (0.097) |
+| 1 µA   | 1.0 V/µs  | 0.942 (1.00)  | 0.914 (0.970) | 0.916 (0.973) |
+| 10 µA  | 10 V/µs   | 8.79 (9.64)   | 8.51 (9.34)   | 8.68 (9.54)   |
+| 100 µA | 100 V/µs  | 52.7 (70.8)   | 51.3 (69.4)   | 57.3 (80.3)   |
 
-At 100 µA the ramp span reaches into the cascode compliance headroom, so the
-1→3 V average slope droops below I/C — expected, and a target of the coming
-characterization.
+**What moved (re-measure, not re-design):** the mirror sizing (`designs.json`, L = 2 µm,
+Strategy B) is unchanged, so this is a re-measure. Every slope dropped ~9 % (low current)
+to ~26 % (100 µA) because the F6 BSIM3 junction caps — now non-zero on the `PMOS50` mirror
+drain and the `NMOS50` reset-switch drain, both on the `RAMP` node — add ~10 % effective
+capacitance, so dV/dt = I/C_eff falls. At 100 µA the ramp span also reaches into the
+cascode compliance headroom, so the 1→3 V average slope droops further below I/C — expected,
+and a target of the coming detector-stage characterization.
 
 ## Two simulation notes (why the decks look the way they do)
 

@@ -1,6 +1,8 @@
 # Edge-Asymmetric Delay & Pulse-Generator Cell Family
 ### AutoHV BiCMOS 180 PDK | 4 archetypes x 3 voltage domains = 12 cells
 
+<sub>Models: **v2-grounded** (frozen) · simulator: **ngspice-45** · 20 ns nominal target · 45-pt PVT + 200-run MC.</sub>
+
 A compact cell set that delays one input edge while passing the other through, plus two single-shot pulse generators built on the same delay core. Every cell is sized for a **20 ns** delay / pulse width at the nominal corner and characterized across the full PVT matrix in ngspice.
 
 ## 1. Cells
@@ -39,36 +41,36 @@ For a fixed RC the total `area(R)+area(C)` is minimized when the two areas are e
 ### Sizing & area
 | Cell | L_R (um) | C (LxW um) | R area | C area | dev area | **active (um^2)** | # dev |
 |---|---|---|---|---|---|---|---|
-| DLYR_1V8 | 53.8 | 5.36x5.36 | 26.9 | 28.7 | 0.81 | **56.4** | 9 |
-| DLYF_1V8 | 55.9 | 5.36x5.36 | 28.0 | 28.7 | 0.81 | **57.5** | 9 |
-| PHI_1V8 | 55.9 | 5.36x5.36 | 28.0 | 28.7 | 1.53 | **58.2** | 17 |
-| PLO_1V8 | 58.1 | 5.36x5.36 | 29.1 | 28.7 | 1.53 | **59.3** | 17 |
+| DLYR_1V8 | 51.6 | 5.36x5.36 | 25.8 | 28.7 | 0.81 | **55.3** | 9 |
+| DLYF_1V8 | 53.8 | 5.36x5.36 | 26.9 | 28.7 | 0.81 | **56.4** | 9 |
+| PHI_1V8 | 53.8 | 5.36x5.36 | 26.9 | 28.7 | 1.53 | **57.1** | 17 |
+| PLO_1V8 | 55.9 | 5.36x5.36 | 28.0 | 28.7 | 1.53 | **58.2** | 17 |
 
 ### Timing across PVT
 | Cell | metric | nominal (ns) | PVT min..max (ns) | worst-case corner | passthrough |
 |---|---|---|---|---|---|
-| DLYR_1V8 | rise delay | 20.36 | 16.2..27.8 | SS,1.62V,150C | fast edge <= 3.2 ns |
-| DLYF_1V8 | fall delay | 20.15 | 16.0..27.6 | SS,1.62V,150C | fast edge <= 1.4 ns |
-| PHI_1V8 | high-pulse width | 20.23 | 16.4..27.1 | SS,1.62V,150C | no pulse (idle low) |
-| PLO_1V8 | low-pulse width | 20.06 | 16.1..27.2 | SS,1.62V,150C | no pulse (idle high) |
+| DLYR_1V8 | rise delay | 20.03 | 14.1..28.9 | SS,1.62V,-55C | fast edge <= 2.5 ns |
+| DLYF_1V8 | fall delay | 19.78 | 13.7..28.7 | SS,1.62V,-55C | fast edge <= 1.2 ns |
+| PHI_1V8 | high-pulse width | 20.09 | 14.2..28.7 | SS,1.62V,-55C | no pulse (idle low) |
+| PLO_1V8 | low-pulse width | 19.84 | 13.8..29.0 | SS,1.62V,-55C | no pulse (idle high) |
 
 ## 4.2  3.3 V domain -- NMOS33/PMOS33, L = 0.35 um, Wn/Wp = 0.4/0.95 um
 
 ### Sizing & area
 | Cell | L_R (um) | C (LxW um) | R area | C area | dev area | **active (um^2)** | # dev |
 |---|---|---|---|---|---|---|---|
-| DLYR_3V3 | 55.9 | 5.36x5.36 | 28.0 | 28.7 | 2.13 | **58.8** | 9 |
-| DLYF_3V3 | 58.1 | 5.36x5.36 | 29.1 | 28.7 | 2.13 | **59.9** | 9 |
-| PHI_3V3 | 55.9 | 5.36x5.36 | 28.0 | 28.7 | 4.02 | **60.7** | 17 |
+| DLYR_3V3 | 53.8 | 5.36x5.36 | 26.9 | 28.7 | 2.13 | **57.7** | 9 |
+| DLYF_3V3 | 55.9 | 5.36x5.36 | 28.0 | 28.7 | 2.13 | **58.8** | 9 |
+| PHI_3V3 | 53.8 | 5.36x5.36 | 26.9 | 28.7 | 4.02 | **59.6** | 17 |
 | PLO_3V3 | 58.1 | 5.36x5.36 | 29.1 | 28.7 | 4.02 | **61.8** | 17 |
 
 ### Timing across PVT
 | Cell | metric | nominal (ns) | PVT min..max (ns) | worst-case corner | passthrough |
 |---|---|---|---|---|---|
-| DLYR_3V3 | rise delay | 20.21 | 16.6..27.2 | SS,2.97V,150C | fast edge <= 4.1 ns |
-| DLYF_3V3 | fall delay | 20.39 | 16.6..27.6 | SS,2.97V,150C | fast edge <= 1.9 ns |
-| PHI_3V3 | high-pulse width | 19.81 | 16.4..26.4 | SS,2.97V,150C | no pulse (idle low) |
-| PLO_3V3 | low-pulse width | 19.83 | 16.3..26.6 | SS,2.97V,150C | no pulse (idle high) |
+| DLYR_3V3 | rise delay | 19.96 | 15.3..26.2 | SS,2.97V,-55C | fast edge <= 3.4 ns |
+| DLYF_3V3 | fall delay | 20.16 | 15.3..26.6 | SS,2.97V,-55C | fast edge <= 1.7 ns |
+| PHI_3V3 | high-pulse width | 19.64 | 15.1..25.7 | SS,2.97V,-55C | no pulse (idle low) |
+| PLO_3V3 | low-pulse width | 20.38 | 15.4..27.0 | SS,2.97V,-55C | no pulse (idle high) |
 
 ## 4.3  5.0 V domain -- NMOS50/PMOS50, L = 0.5 um, Wn/Wp = 0.5/1.15 um
 
@@ -76,30 +78,30 @@ For a fixed RC the total `area(R)+area(C)` is minimized when the two areas are e
 | Cell | L_R (um) | C (LxW um) | R area | C area | dev area | **active (um^2)** | # dev |
 |---|---|---|---|---|---|---|---|
 | DLYR_5V0 | 51.6 | 5.36x5.36 | 25.8 | 28.7 | 3.71 | **58.2** | 9 |
-| DLYF_5V0 | 53.8 | 5.36x5.36 | 26.9 | 28.7 | 3.71 | **59.3** | 9 |
-| PHI_5V0 | 53.8 | 5.36x5.36 | 26.9 | 28.7 | 7.01 | **62.6** | 17 |
-| PLO_5V0 | 55.9 | 5.36x5.36 | 28.0 | 28.7 | 7.01 | **63.7** | 17 |
+| DLYF_5V0 | 51.6 | 5.36x5.36 | 25.8 | 28.7 | 3.71 | **58.2** | 9 |
+| PHI_5V0 | 51.6 | 5.36x5.36 | 25.8 | 28.7 | 7.01 | **61.5** | 17 |
+| PLO_5V0 | 53.8 | 5.36x5.36 | 26.9 | 28.7 | 7.01 | **62.6** | 17 |
 
 ### Timing across PVT
 | Cell | metric | nominal (ns) | PVT min..max (ns) | worst-case corner | passthrough |
 |---|---|---|---|---|---|
-| DLYR_5V0 | rise delay | 19.70 | 16.0..32.7 | SS,3.2V,150C | fast edge <= 10.3 ns |
-| DLYF_5V0 | fall delay | 20.11 | 16.3..34.3 | SS,3.2V,150C | fast edge <= 5.5 ns |
-| PHI_5V0 | high-pulse width | 20.05 | 16.3..32.7 | SS,3.2V,150C | no pulse (idle low) |
-| PLO_5V0 | low-pulse width | 20.18 | 16.5..34.2 | SS,3.2V,150C | no pulse (idle high) |
+| DLYR_5V0 | rise delay | 20.29 | 16.3..29.9 | SS,3.2V,-55C | fast edge <= 8.5 ns |
+| DLYF_5V0 | fall delay | 20.00 | 16.0..30.1 | SS,3.2V,-55C | fast edge <= 4.7 ns |
+| PHI_5V0 | high-pulse width | 20.02 | 16.1..29.2 | SS,3.2V,-55C | no pulse (idle low) |
+| PLO_5V0 | low-pulse width | 20.17 | 16.1..30.5 | SS,3.2V,-55C | no pulse (idle high) |
 
 ## 5. Headline numbers
 
 | Metric | 1.8 V | 3.3 V | 5.0 V |
 |---|---|---|---|
-| Delay-cell active area (um^2) | 56 | 59 | 58 |
-| Pulse-cell active area (um^2) | 58 | 61 | 63 |
-| Nominal delay/width spread (ns) | 20.1-20.4 | 19.8-20.4 | 19.7-20.2 |
-| Full-PVT delay/width spread (ns) | 16-28 | 16-28 | 16-34 |
+| Delay-cell active area (um^2) | 55 | 58 | 58 |
+| Pulse-cell active area (um^2) | 57 | 60 | 62 |
+| Nominal delay/width spread (ns) | 19.8-20.1 | 19.6-20.4 | 20.0-20.3 |
+| Full-PVT delay/width spread (ns) | 14-29 | 15-27 | 16-30 |
 
 ## 6. Notes & trade-offs
 
-- **Timing target is nominal-only**, as specified. The delay/width is an RC product, so it tracks process (poly Rsh +/-12%, MIM Cj +/-3%), temperature (poly tc1) and the Schmitt trip. Across the full 45-point matrix the timing spans roughly **-20% / +40%** of nominal (slowest = SS, hot, low Vdd; fastest = FF, cold). If a PVT-stable delay is needed, a current-reference-biased starved core or a trimmed R can be added at extra area.
+- **Timing target is nominal-only**, as specified. The delay/width is an RC product, so it tracks process (poly Rsh +/-12%, MIM Cj +/-3%), temperature (poly tc1) and the Schmitt trip. Across the full 45-point matrix the timing spans roughly **-31% / +51%** of nominal (slowest = SS, -55C, low Vdd; fastest = FF, 150C). Note the slowest corner is at **-55C**: `RPOLY_HI` tc1 is negative under v2-grounded, so the resistor is highest at cold and this now sets the worst case (it was the hot corner before the tc1 sign-flip). If a PVT-stable delay is needed, a current-reference-biased starved core or a trimmed R can be added at extra area.
 - **Area is dominated by the RC** (~57 um^2 of the ~57-62 um^2 active area is the poly resistor + MIM cap; the ~15 transistors add only a few um^2). Resistor and cap areas are balanced (~28-30 um^2 each) at the analytic minimum for a 20 ns RC with W_R = 0.5 um and CMIM_HI.
 - **Even smaller area** is possible by trading predictability: replacing the poly resistor with a long-channel starved device shrinks the timing element ~10-20x but widens PVT spread to several-x. The poly+MIM RC was chosen so '20 ns' is a meaningful, repeatable number.
 - **Passthrough edge** is fast (sub-ns to ~10 ns depending on domain; the 5 V bypass FET is the slowest because the 5 V devices are slow and must overpower the resistor). It is always far shorter than the 20 ns timed edge, preserving the asymmetry.

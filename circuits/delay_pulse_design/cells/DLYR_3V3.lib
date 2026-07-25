@@ -14,7 +14,7 @@
 .subckt DLYR_3V3 in out vdd gnd
 XI1 nIN in vdd vdd PMOS33 W=0.95u L=0.35u
 XI2 nIN in gnd gnd NMOS33 W=0.4u L=0.35u
-XR  nIN nC RPOLY_HI L=55.9375u W=0.5u
+XR  nIN nC RPOLY_HI L=53.7500u W=0.5u
 XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
 XBP nC in vdd vdd PMOS33 W=0.8u L=0.35u   $ pull-up bypass (fast falling out)
 XS1 s1 nC gnd gnd NMOS33 W=0.4u L=0.35u

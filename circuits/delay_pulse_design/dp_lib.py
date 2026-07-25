@@ -49,6 +49,34 @@ def _find_ngspice() -> str:
 
 NGSPICE = _find_ngspice()
 
+# ---------------------------------------------------------------- provenance
+MODEL_TAG = "v2-grounded"       # frozen model tag (requal ground rule 1)
+_NGVER = None
+
+
+def ngspice_version() -> str:
+    """Actual `ngspice --version` token, stamped into results.json / char.json (ground rule 3)."""
+    global _NGVER
+    if _NGVER:
+        return _NGVER
+    _NGVER = "unknown"
+    try:
+        out = subprocess.run([NGSPICE, "--version"], capture_output=True,
+                             text=True, timeout=30).stdout
+        m = re.search(r"ngspice-?\s*[\d.]+", out, re.IGNORECASE)
+        if m:
+            _NGVER = m.group(0).replace(" ", "")
+    except Exception:
+        pass
+    return _NGVER
+
+
+def provenance(extra=None):
+    d = {"model_tag": MODEL_TAG, "ngspice_version": ngspice_version()}
+    if extra:
+        d.update(extra)
+    return d
+
 # ---------------------------------------------------------------- domains
 # wn/wp     : NMOS/PMOS width for inverters, Schmitt, logic gates (um)
 # wbp       : bypass transistor width (um) -- must be << R, easily met
