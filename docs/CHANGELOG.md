@@ -4,6 +4,22 @@ The design-era program: bring every `circuits/` library onto the frozen `v2-grou
 Models/anchors/declarations stay frozen; only circuit generators + reports change. Program
 summary and old-vs-new tables: `docs/circuits-requalification.md`.
 
+### 2026-07-25 -- Phase E: HV level shifter first qualification
+
+- The repo's only 200 V circuit (hv_charge_pump/hv_up_lvlsh, NDMOS200/PDMOS200) had NEVER been
+  simulated -- its only testbench was the commented example in levelshifter_top.spice. Per Step-0
+  ruling 4 (minimal first qualification, not deletion): built tb_levelshifter_op.cir (DC OP),
+  tb_levelshifter.cir (transient), and run_lvlsh.py (harness -> lvlsh_results.json + REPORT.md,
+  provenance-stamped). Design .spice files unchanged.
+- **Function at the 200 V rail VERIFIED (DC).** SW=200 V, BOOT=212 V (12 V bootstrap): the high-side
+  latch set/resets correctly and ON_HS/OFF_HS swing a clean 12 V between SW (200 V) and BOOT (212 V).
+  set: ON_HS->212/OFF_HS->200; reset flips. Bias current ~0.69 mA idle, ~12 µA active from BOOT.
+- **Switching (transient) DOES NOT CONVERGE** -- timestep collapses ~5e-7 s (delay-cell RPOLY_HI
+  behavioral-R BVCR branch + floating HV cascode nodes; rshunt/gmin/gear/uic don't clear it).
+  Documented as the redesign scope (defined t=0 for the BVCR/cascode nodes), NOT fixed here. The
+  static function is correct, so it's a convergence task not a topology change. No model findings.
+- post-fix-staleness.md: charge-pump entry cleared -> **register empty, all 5 phases landed.**
+
 ### 2026-07-25 -- Phase D: current_mirror_char re-measured + portability fix
 
 - **Portability (closes the phase-0 finding for this dir + 2 riders):** mirror_lib.py:20 hardcoded a

@@ -1,0 +1,87 @@
+* ===========================================================================
+*  tb_levelshifter.cir -- minimal first-qualification testbench for the
+*  high-side gate-driver LEVEL SHIFTER (AutoHV_BiCMOS180, 200 V class).
+*
+*  First characterization of this circuit (its only prior testbench was the
+*  commented example in levelshifter_top.spice). Scope (Step-0 ruling 4):
+*  build a minimal working testbench, verify function at the 200 V rail, and
+*  measure output levels, switching, and bias currents.
+*
+*  Method: the high-side reference SW is ramped slowly to VHV=200 V (quasi-
+*  static, to stay inside the Rcond-fixed convergence envelope -- fast >120 V
+*  HV edges are a known micro-stepping limitation, docs/backlog), BOOT floats
+*  VBOOT above SW. Once SW is settled at 200 V, an ON pulse then an OFF pulse
+*  toggle the high-side latch; we watch ON_HS / OFF_HS swing between SW and
+*  BOOT and record the BOOT bias current.
+*
+*  Sizing: the tunable placeholder params below are the levelshifter_top.spice
+*  defaults (HV whv/whvp=40u, lhv=8u; LV wp=20u/wn=10u; bias R 100u/2u), which
+*  are consistent with docs/sizing-guide.md HV-device guidance. Run:
+*     ngspice -b tb_levelshifter.cir
+* ===========================================================================
+
+.include "../../../autohv_bicmos180_case.lib"
+
+* ----------------------- tunable device sizes (global) ---------------------
+.param wp   = 20u
+.param wn   = 10u
+.param llv  = 1u
+.param whv  = 40u
+.param lhv  = 8u
+.param whvp = 40u
+.param rl   = 100u
+.param rw   = 2u
+.param rdl  = 100u
+.param rdw  = 2u
+.param cdl  = 20u
+.param cdw  = 20u
+
+.include "inv.spice"
+.include "buffer.spice"
+.include "delay_cell.spice"
+.include "levelshifter.spice"
+
+* ----------------------- test conditions -----------------------------------
+.param VHV=200          $ high-side rail SW swings to
+.param VBOOT=12         $ bootstrap supply (BOOT - SW)
+.param VDDL=5           $ low-side logic supply
+
+* SW ramps 0 -> 200 V over 0..10u (quasi-static), holds to 40u.
+Vsw   SW  0   PWL(0 0  10u {VHV}  40u {VHV})
+* BOOT floats VBOOT above SW (ideal bootstrap cap held charged).
+Vboot BOOT SW  {VBOOT}
+Vvdd  VDD 0   {VDDL}
+* ON / OFF one-shot commands AFTER SW has settled at 200 V:
+*   ON  pulse at 20u, OFF pulse at 30u (each 1u wide).
+Von   ON  0   PULSE(0 {VDDL} 20u 20n 20n 1u 100u)
+Voff  OFF 0   PULSE(0 {VDDL} 30u 20n 20n 1u 100u)
+
+X1 BOOT SW VDD 0 ON OFF ON_HS OFF_HS LEVELSHIFTER
+
+* Convergence aids for the delay-cell behavioral-R (BVCR) branch stiffness
+* (simulator options only -- no change to the circuit):
+.options rshunt=1e10 gmin=1e-11 reltol=2e-3 abstol=1e-10 method=gear
+
+.control
+  set filetype=ascii
+  tran 20n 40u uic
+* --- output high levels after ON (measure near 29u, latch set) and after OFF (39u) ---
+  meas tran onhs_set   FIND v(ON_HS)  AT=29u
+  meas tran offhs_set  FIND v(OFF_HS) AT=29u
+  meas tran onhs_rst   FIND v(ON_HS)  AT=39u
+  meas tran offhs_rst  FIND v(OFF_HS) AT=39u
+  meas tran sw_rail    FIND v(SW)     AT=29u
+  meas tran boot_rail  FIND v(BOOT)   AT=29u
+* --- high-side latch nodes ---
+  meas tran q_set      FIND v(X1.Q)   AT=29u
+  meas tran qb_set     FIND v(X1.QB)  AT=29u
+* --- switching: time from ON edge (20u) to ON_HS crossing mid (SW+VBOOT/2) ---
+  meas tran t_on_hs WHEN v(ON_HS)=206 RISE=1
+* --- bias current drawn from the bootstrap supply at the 200 V rail (settled, 29u) ---
+  meas tran iboot_set  FIND i(Vboot) AT=29u
+  meas tran iboot_idle FIND i(Vboot) AT=19u
+  echo "RESULT onhs_set=$&onhs_set offhs_set=$&offhs_set onhs_rst=$&onhs_rst offhs_rst=$&offhs_rst"
+  echo "RESULT sw_rail=$&sw_rail boot_rail=$&boot_rail q_set=$&q_set qb_set=$&qb_set"
+  echo "RESULT t_on_hs=$&t_on_hs iboot_set=$&iboot_set iboot_idle=$&iboot_idle"
+.endc
+.end
