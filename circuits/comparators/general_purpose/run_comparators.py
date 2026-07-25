@@ -107,6 +107,36 @@ def find_ngspice() -> str:
 
 NG = None  # filled in main()
 
+# Frozen model tag this characterization runs against (circuits requal ground rule 1).
+MODEL_TAG = "v2-grounded"
+_NGVER = None
+
+
+def ngspice_version() -> str:
+    """Actual `ngspice --version` banner token (e.g. 'ngspice-45'), stamped into the
+    results JSON (ground rule 3)."""
+    global _NGVER
+    if _NGVER:
+        return _NGVER
+    _NGVER = "unknown"
+    try:
+        out = subprocess.run([NG or find_ngspice(), "--version"], capture_output=True,
+                             text=True, timeout=30).stdout
+        m = re.search(r"ngspice-?\s*[\d.]+", out, re.IGNORECASE)
+        if m:
+            _NGVER = m.group(0).replace(" ", "")
+    except Exception:
+        pass
+    return _NGVER
+
+
+def provenance(extra: dict | None = None) -> dict:
+    d = {"model_tag": MODEL_TAG, "ngspice_version": ngspice_version(),
+         "pdk_lib": PDK_LIB.name}
+    if extra:
+        d.update(extra)
+    return d
+
 
 def inst_line(v: dict) -> str:
     """The X-line instantiating the comparator under test as X1."""
@@ -335,8 +365,12 @@ def main():
             cells.append(f"{fmt(val, spec):>11s}" if val is not None else f"{'--':>11s}")
         print(" ".join(cells))
 
-    Path(HERE / args.json).write_text(json.dumps(rows, indent=2))
-    print(f"\nWrote {args.json}")
+    payload = {"_provenance": provenance({"case": args.case, "mc_n": mc_n,
+                                          "vsup": VSUP}),
+               "results": rows}
+    Path(HERE / args.json).write_text(json.dumps(payload, indent=2))
+    print(f"\nWrote {args.json}  [model={MODEL_TAG} ngspice={ngspice_version()} "
+          f"mc_n={mc_n} case={args.case}]")
 
 
 if __name__ == "__main__":
