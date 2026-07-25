@@ -1,4 +1,4 @@
-## [Unreleased]
+## [v2-grounded] -- 2026-07-25  (realism program freeze)
 
 ### 2026-07-25 -- Phase 4 Step 4: re-baseline + regenerate (one snapshot)
 
@@ -129,8 +129,6 @@
   Js band at 200V (2.5e-14 -> 1e-13).
 
 # Changelog
-
-## [Unreleased]
 
 ### 2026-07-24 — Phase 3 VDMOS DC realism: kp/rd re-derived, mismatch ladder unified (F1, F2, F-VD3)
 
