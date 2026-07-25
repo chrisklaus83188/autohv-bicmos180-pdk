@@ -1,5 +1,14 @@
 ## [Unreleased]
 
+### 2026-07-25 -- Phase 4 Step 2.2: lambda re-fit on 120/200V VDMOS (output conductance)
+
+- Raised channel-length-modulation lambda on the four HV cards so measured VA (gds extraction at
+  Vds=40/80V, Vov=1.5) lands in the grounded 300-1000V class: NDMOS120 0.002->0.0033 (VA 1311->872V),
+  NDMOS200 0.0012->0.005 (2414->758V), PDMOS120 0.0018->0.003 (1335->873V), PDMOS200 0.0011->0.0046
+  (2500->768V). Closes the last flattering parameter (v1-sized 200V VA ~2400-3900V was unphysically flat).
+- 20-80V MV cards left alone (already inside the pass-3 VA 130-1800V envelope). Verified by gds, not
+  parameter readback. Anchor cite: anchor-values.json va_class (300-1000V for 120/200).
+
 ### 2026-07-25 -- Phase 4 Step 2.1: HV resistive ladder re-anchor (60/80/120/200 N&P)
 
 - rd/rs (STAT dot-products, corner ratios preserved) + rq scaled to the Step-0 rungs for N/P

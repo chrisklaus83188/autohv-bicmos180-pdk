@@ -960,7 +960,7 @@
 .model NDMOS120_INT VDMOS (nchan
 + vto={VTO_NDMOS120_STAT+TC_VTO_NDMOS120*(temper-27)}
 + kp={KP_NDMOS120_STAT*(1+TC_KP_NDMOS120*(temper-27))}
-+ lambda=0.002
++ lambda=0.0033
 + theta=0.13
 + rd={RD_NDMOS120_STAT*(1+TC_RD_NDMOS120*(temper-27))}
 + rs={RS_NDMOS120_STAT*(1+TC_RS_NDMOS120*(temper-27))}
@@ -986,7 +986,7 @@
 .model PDMOS120_INT VDMOS (pchan
 + vto={VTO_PDMOS120_STAT+TC_VTO_PDMOS120*(temper-27)}
 + kp={KP_PDMOS120_STAT*(1+TC_KP_PDMOS120*(temper-27))}
-+ lambda=0.0018
++ lambda=0.003
 + theta=0.13
 + rd={RD_PDMOS120_STAT*(1+TC_RD_PDMOS120*(temper-27))}
 + rs={RS_PDMOS120_STAT*(1+TC_RS_PDMOS120*(temper-27))}
@@ -1116,7 +1116,7 @@
 .model NDMOS200_INT VDMOS (nchan
 + vto={VTO_NDMOS200_STAT+TC_VTO_NDMOS200*(temper-27)}
 + kp={KP_NDMOS200_STAT*(1+TC_KP_NDMOS200*(temper-27))}
-+ lambda=0.0012
++ lambda=0.005
 + theta=0.12
 + rd={RD_NDMOS200_STAT*(1+TC_RD_NDMOS200*(temper-27))}
 + rs={RS_NDMOS200_STAT*(1+TC_RS_NDMOS200*(temper-27))}
@@ -1142,7 +1142,7 @@
 .model PDMOS200_INT VDMOS (pchan
 + vto={VTO_PDMOS200_STAT+TC_VTO_PDMOS200*(temper-27)}
 + kp={KP_PDMOS200_STAT*(1+TC_KP_PDMOS200*(temper-27))}
-+ lambda=0.0011
++ lambda=0.0046
 + theta=0.12
 + rd={RD_PDMOS200_STAT*(1+TC_RD_PDMOS200*(temper-27))}
 + rs={RS_PDMOS200_STAT*(1+TC_RS_PDMOS200*(temper-27))}
