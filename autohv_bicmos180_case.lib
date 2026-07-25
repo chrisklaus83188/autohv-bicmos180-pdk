@@ -330,7 +330,7 @@ M0 d g_int s PDMOS80_INT m={mtot}
 .param Leff={max(L,L_MIN)}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.033, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.033/3/sqrt(max(mtot,1e-6))}
-.param RDRIFT={max(2308*(Leff/L_REF-1)/mtot, 1e-6)}
+.param RDRIFT={max(3018.5*(Leff/L_REF-1)/mtot, 1e-6)}
 .param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
 .param Cth=5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
@@ -361,7 +361,7 @@ M0 dd g_int s NDMOS200_INT m={mtot}
 .param Leff={max(L,L_MIN)}
 .param mtot={(W/W_REF)*M}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.033, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.033/3/sqrt(max(mtot,1e-6))}
-.param RDRIFT={max(2092*(Leff/L_REF-1)/mtot, 1e-6)}
+.param RDRIFT={max(9302.1*(Leff/L_REF-1)/mtot, 1e-6)}
 .param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
 .param Cth=5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {-DVTH_MM}
