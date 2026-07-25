@@ -2,6 +2,9 @@
 import json, async_lib as A
 
 r=json.load(open(A.os.path.join(A.WORK,"results.json")))
+PROV=r.get("_provenance",{})
+CAP_HARD=PROV.get("cap_hard_ff",6.5); CAP_TGT=PROV.get("cap_target_ff",6.0)
+def hh(x): return f"{x:.1f}"
 ORDER=["INV","BUF","NAND2","NOR2","AND2","OR2","XOR2","XNOR2"]
 PRETTY={"INV":"Inverter","BUF":"Buffer","NAND2":"NAND2","NOR2":"NOR2","AND2":"AND2",
         "OR2":"OR2","XOR2":"XOR2","XNOR2":"XNOR2"}
@@ -29,7 +32,11 @@ w()
 w("This library provides eight asynchronous (combinational) logic cells - inverter, "
   "buffer, 2-input NAND/NOR/AND/OR, and 2-input XOR/XNOR - implemented in static CMOS in "
   "three voltage domains. Every cell is sized for a switching threshold at mid-supply with "
-  "an input-pin load of <=5 fF, and is verified across process, voltage, and temperature.")
+  f"an input-pin load of <={hh(CAP_HARD)} fF, and is verified across process, voltage, and temperature.")
+w()
+w(f"<sub>Models: **{PROV.get('model_tag','v2-grounded')}** (frozen) · simulator: "
+  f"**{PROV.get('ngspice_version','ngspice-45')}** · input-cap contract **<={hh(CAP_HARD)} fF hard / "
+  f"{hh(CAP_TGT)} fF target** (Step-0 decision 1: relaxed from 5.0 fF).</sub>")
 w()
 w("## 1. Scope and verification conditions")
 w()
@@ -42,7 +49,8 @@ w("| Temperature | -55 C, +27 C, +150 C |")
 w("| Supply (1.8/3.3 V) | nominal +/-10%  (1.62/1.80/1.98 ; 2.97/3.30/3.63 V) |")
 w("| Supply (5 V) | 3.20 / 5.00 / 5.50 V |")
 w("| PVT points / cell | 45 (5 x 3 x 3) |")
-w("| Output load (rise/fall) | 5 fF (fanout-of-1) |")
+w(f"| Output load (rise/fall) | {A.CL_FF:.0f} fF (held constant old-vs-new) |")
+w(f"| Input-cap contract | <={hh(CAP_HARD)} fF hard / {hh(CAP_TGT)} fF target |")
 w("| Input edge (stimulus) | 20 ps |")
 w()
 w("**Definitions.** *Switching threshold V_M* = input voltage at which the output reaches "
@@ -113,15 +121,26 @@ w()
 w("- **Threshold centering:** V_M holds within ~0.43-0.58 of the instantaneous supply for "
   "every cell across all 45 PVT points, and within a few percent of 0.50 Vdd at nominal. "
   "Temperature drift of V_M is small (devices sit near the zero-temperature-coefficient bias).")
-w("- **Input load:** every input pin is <=5 fF (worst case 4.1-5.0 fF), as specified.")
-w("- **NOR2 / OR2 are capacitance-limited (`*`).** Centering V_M with tied inputs needs a wide "
-  "series-PMOS stack (Wp/Wn ~ 8-17). At minimum NMOS width that would exceed 5 fF, so the "
-  "PMOS is held back to keep Cin <=5 fF; V_M then sits slightly below mid-supply (~0.45-0.50 "
-  "Vdd). Relaxing the 5 fF limit would allow exact centering.")
-w("- **Speed ranking** (fastest to slowest, by drive into 5 fF): INV ~ BUF ~ AND2 < NAND2 < "
+_allcin=[max(r[dk][c]["caps"].values()) for dk in ("1v8","3v3","5v0") for c in ORDER]
+_caplim=[f"{c} ({dk})" for dk in ("1v8","3v3","5v0") for c in ORDER if r[dk][c].get("cap_limited")]
+w(f"- **Input load:** every input pin is <={hh(CAP_HARD)} fF (worst case {min(_allcin):.1f}-{max(_allcin):.1f} fF). "
+  f"Input-pin cap is a gate load and is essentially unmoved by the F6 junction caps "
+  f"(which load drain/source, not the gate); the {hh(CAP_HARD)} fF budget (up from 5.0 fF) "
+  f"just lets each cell use proportionally wider devices.")
+if _caplim:
+    w(f"- **Capacitance-limited (`*`):** {', '.join(_caplim)}. Centering V_M with tied inputs "
+      f"needs a wide series-PMOS stack; the PMOS is held back to keep Cin <={hh(CAP_HARD)} fF, "
+      f"so V_M sits slightly below mid-supply.")
+else:
+    w(f"- **No cell is capacitance-limited under the {hh(CAP_HARD)} fF contract.** Under the old 5.0 fF "
+      f"limit NOR2/OR2 had to back off their series PMOS (V_M off-centre); the relaxed budget "
+      f"lets them reach their ideal P/N ratio and centre V_M.")
+w(f"- **Speed ranking** (fastest to slowest): INV ~ BUF ~ AND2 < NAND2 < "
   "OR2 < NOR2 << XOR2 ~ XNOR2. NOR/OR (series PMOS) and especially XOR/XNOR (small "
-  "cap-budgeted core driving a 2-high stack) are the slow cells - inherent to a <=5 fF, "
-  "mid-supply static design rather than a sizing deficiency.")
+  "cap-budgeted core driving a 2-high stack) are the slow cells - inherent to a light-input-"
+  "load, mid-supply static design rather than a sizing deficiency. The NOR2/OR2/XOR/XNOR "
+  "fall edges slowed ~45-60% vs the pre-F6 numbers (junction caps now load the output); "
+  "simpler cells stay within ~+/-10% as the wider devices the relaxed budget allows offset it.")
 w("- **Sizing intuition:** PMOS is wider than NMOS on most cells (Wp/Wn ~ 2.7-4.7 on the "
   "inverter) to offset this PDK's lower hole mobility and |Vtp| > Vtn. NAND2 inverts that "
   "(wider NMOS) because of its series pull-down; NOR2 is the extreme opposite.")

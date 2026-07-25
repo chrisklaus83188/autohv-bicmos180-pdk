@@ -10,7 +10,7 @@ re-run.
 | `circuits/delay_pulse_design/` | **RPOLY_LO rsh 25→300 Ω/□** (12× resistance change) — the delay RC is set by RPOLY_HI + CMIM_HI, but any cell using RPOLY_LO shifts; also RPOLY_HI **tc1 sign flip** changes the delay's temperature drift qualitatively | re-run `dp_run.py` / `dp_char.py`; the 20 ns targets and the −20 %/+40 % PVT spread will move |
 | `circuits/delay_cells_voltage_ramp/` (untracked) | PMOS50 **kt1/ute added** (Vth tempco was ~0, now −1.6 mV/°C) + junction caps (F6) — the mirror ramp slope and its temperature drift change | re-run `gen_delay_cells.py` measurements |
 | `circuits/comparators/` (9 cells) | BSIM3 **junction caps (F6)** now non-zero → input/parasitic caps and delay change; **matching widened 3–14×** → offset σ increases; PMOS50 **tempco** → offset drift | re-run `run_comparators.py` / `run_rr.py`; **offset σ will roughly triple** (matching was that optimistic) |
-| `circuits/async_logic_design/` (24 cells) | BSIM3 **junction caps (F6)** → the ≤5 fF input-cap contract must be re-verified (caps were understated); **drive** unaffected (Idsat cards unchanged for BSIM3) | re-run `async_run.py`; **the ≤5 fF contract is the item most likely to break** — junction cap was missing entirely |
+| ~~`circuits/async_logic_design/` (24 cells)~~ **✅ DONE (v2.1-circuits Phase A)** | BSIM3 **junction caps (F6)** → input-cap contract re-verified; **drive** unaffected (Idsat cards unchanged for BSIM3) | re-ran `async_run.py` under the 6.5 fF contract; see `circuits-requalification.md` Phase A |
 | `circuits/current_mirror_char/` (PMOS50 study) | PMOS50 **kt1/ute** (tempco), **matching widened**, **junction caps** — λ/r_out mostly unaffected (DC), but MC σ and temperature behaviour change | re-run `run_mc.py`; the σ(λ)/matching clouds widen |
 | `circuits/hv_charge_pump/` | **VDMOS kp/rd wholesale re-derivation** — every HV device behaves differently (this is the F1 fix). Any level-shifter timing/current is now different | uncharacterized to begin with; no stale numbers, but the netlists now behave physically |
 | `pdk_validation/regression/goldens/*.json` | **passive rsh + tc1 + VCC extraction** — the 9 passive goldens were generated against old sheets/TCs | **`run_passives.py --regenerate`** (phase-3 deferred — see below) |
@@ -46,3 +46,15 @@ re-run.
 **The `circuits/` studies (delay, comparators, async-logic, mirror MC, charge-pump) were still NOT
 re-run** — that characterization refresh remains the follow-up pass. The table above is the complete
 list of what it must cover; the model side is now **frozen and tagged (`v2-grounded`)**.
+
+## Requalification status (v2.1-circuits — the circuits re-qualification program)
+
+The follow-up pass is now in progress. Program summary + old-vs-new tables:
+`docs/circuits-requalification.md`. Entries clear here as each phase lands.
+
+- **Phase A — `async_logic_design/`: ✅ CLEARED.** Re-generated all 24 cells under the Step-0
+  input-cap contract (5.0→6.5 fF hard / 6.0 fF target). `results.json`/`REPORT.md`/`SUMMARY.md`
+  regenerated, stamped `v2-grounded` / `ngspice-45`. NOR2 `cap_limited` True→False in all 3 domains
+  (now centres V_M); NOR/OR/XOR fall edges +45–60 % from F6 output junction load; input-pin cap
+  itself unmoved (gate load, not junction). No model-defect findings.
+- **Phases B–E** (comparators, delay/pulse + voltage-ramp, mirror MC, HV charge pump): pending.

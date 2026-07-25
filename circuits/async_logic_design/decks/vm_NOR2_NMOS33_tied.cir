@@ -4,8 +4,8 @@
 .param VDD=3.3
 Vdd vdd 0 {VDD}
 Vin in 0 {VDD/2}
-X1 p1 in vdd vdd PMOS33 W={(2.9068)*1e-6} L=0.35u
-X2 out in p1 vdd PMOS33 W={(2.9068)*1e-6} L=0.35u
+X1 p1 in vdd vdd PMOS33 W={(3.5886)*1e-6} L=0.35u
+X2 out in p1 vdd PMOS33 W={(3.5886)*1e-6} L=0.35u
 X3 out in 0 0 NMOS33 W={(0.3000)*1e-6} L=0.35u
 X4 out in 0 0 NMOS33 W={(0.3000)*1e-6} L=0.35u
 .control

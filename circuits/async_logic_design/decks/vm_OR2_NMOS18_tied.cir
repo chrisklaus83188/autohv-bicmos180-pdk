@@ -4,12 +4,12 @@
 .param VDD=1.8
 Vdd vdd 0 {VDD}
 Vin in 0 {VDD/2}
-X1 p1 in vdd vdd PMOS18 W={(3.6533)*1e-6} L=0.18u
-X2 nr in p1 vdd PMOS18 W={(3.6533)*1e-6} L=0.18u
-X3 nr in 0 0 NMOS18 W={(0.2200)*1e-6} L=0.18u
-X4 nr in 0 0 NMOS18 W={(0.2200)*1e-6} L=0.18u
-X5 out nr vdd vdd PMOS18 W={(2.6560)*1e-6} L=0.18u
-X6 out nr 0 0 NMOS18 W={(0.5717)*1e-6} L=0.18u
+X1 p1 in vdd vdd PMOS18 W={(4.0816)*1e-6} L=0.18u
+X2 nr in p1 vdd PMOS18 W={(4.0816)*1e-6} L=0.18u
+X3 nr in 0 0 NMOS18 W={(0.2212)*1e-6} L=0.18u
+X4 nr in 0 0 NMOS18 W={(0.2212)*1e-6} L=0.18u
+X5 out nr vdd vdd PMOS18 W={(3.5413)*1e-6} L=0.18u
+X6 out nr 0 0 NMOS18 W={(0.7623)*1e-6} L=0.18u
 .control
 foreach cs 0 1 2 3 4
  foreach vd 1.620 1.800 1.980

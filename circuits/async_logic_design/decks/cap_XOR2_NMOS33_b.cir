@@ -5,18 +5,18 @@
 Vdd vdd 0 3.3
 V_a a 0 1.65
 V_b b 0 0.0 AC 1
-X1 abar a vdd vdd PMOS33 W={(0.9811)*1e-6} L=0.35u
-X2 abar a 0 0 NMOS33 W={(0.3000)*1e-6} L=0.35u
-X3 bbar b vdd vdd PMOS33 W={(0.9811)*1e-6} L=0.35u
-X4 bbar b 0 0 NMOS33 W={(0.3000)*1e-6} L=0.35u
-X5 out a m1 0 NMOS33 W={(0.3000)*1e-6} L=0.35u
-X6 m1 b 0 0 NMOS33 W={(0.3000)*1e-6} L=0.35u
-X7 out abar m2 0 NMOS33 W={(0.3000)*1e-6} L=0.35u
-X8 m2 bbar 0 0 NMOS33 W={(0.3000)*1e-6} L=0.35u
-X9 out abar k1 vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
-X10 k1 b vdd vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
-X11 out a k2 vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
-X12 k2 bbar vdd vdd PMOS33 W={(1.2367)*1e-6} L=0.35u
+X1 abar a vdd vdd PMOS33 W={(1.2955)*1e-6} L=0.35u
+X2 abar a 0 0 NMOS33 W={(0.3961)*1e-6} L=0.35u
+X3 bbar b vdd vdd PMOS33 W={(1.2955)*1e-6} L=0.35u
+X4 bbar b 0 0 NMOS33 W={(0.3961)*1e-6} L=0.35u
+X5 out a m1 0 NMOS33 W={(0.3961)*1e-6} L=0.35u
+X6 m1 b 0 0 NMOS33 W={(0.3961)*1e-6} L=0.35u
+X7 out abar m2 0 NMOS33 W={(0.3961)*1e-6} L=0.35u
+X8 m2 bbar 0 0 NMOS33 W={(0.3961)*1e-6} L=0.35u
+X9 out abar k1 vdd PMOS33 W={(1.6331)*1e-6} L=0.35u
+X10 k1 b vdd vdd PMOS33 W={(1.6331)*1e-6} L=0.35u
+X11 out a k2 vdd PMOS33 W={(1.6331)*1e-6} L=0.35u
+X12 k2 bbar vdd vdd PMOS33 W={(1.6331)*1e-6} L=0.35u
 .control
 foreach vb 0 3.3
   alter V_b dc=$vb

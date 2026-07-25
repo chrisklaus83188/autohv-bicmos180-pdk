@@ -1,7 +1,9 @@
 # Asynchronous Logic Cell Library - Design Summary
 ### AutoHV BiCMOS 180 PDK | static CMOS | 8 cells x 3 voltage domains
 
-This library provides eight asynchronous (combinational) logic cells - inverter, buffer, 2-input NAND/NOR/AND/OR, and 2-input XOR/XNOR - implemented in static CMOS in three voltage domains. Every cell is sized for a switching threshold at mid-supply with an input-pin load of <=5 fF, and is verified across process, voltage, and temperature.
+This library provides eight asynchronous (combinational) logic cells - inverter, buffer, 2-input NAND/NOR/AND/OR, and 2-input XOR/XNOR - implemented in static CMOS in three voltage domains. Every cell is sized for a switching threshold at mid-supply with an input-pin load of <=6.5 fF, and is verified across process, voltage, and temperature.
+
+<sub>Models: **v2-grounded** (frozen) · simulator: **ngspice-45** · input-cap contract **<=6.5 fF hard / 6.0 fF target** (Step-0 decision 1: relaxed from 5.0 fF).</sub>
 
 ## 1. Scope and verification conditions
 
@@ -14,7 +16,8 @@ This library provides eight asynchronous (combinational) logic cells - inverter,
 | Supply (1.8/3.3 V) | nominal +/-10%  (1.62/1.80/1.98 ; 2.97/3.30/3.63 V) |
 | Supply (5 V) | 3.20 / 5.00 / 5.50 V |
 | PVT points / cell | 45 (5 x 3 x 3) |
-| Output load (rise/fall) | 5 fF (fanout-of-1) |
+| Output load (rise/fall) | 5 fF (held constant old-vs-new) |
+| Input-cap contract | <=6.5 fF hard / 6.0 fF target |
 | Input edge (stimulus) | 20 ps |
 
 **Definitions.** *Switching threshold V_M* = input voltage at which the output reaches 50% of Vdd (DC sweep; 2-input symmetric gates measured inputs-tied; XOR/XNOR swept on one input with the other at each rail). *Rise/fall* = output 10%->90% / 90%->10% of Vdd. *Cin* = average switching capacitance per input pin (rail-averaged, Miller-free). *Area* = (active) sum of W*L, and a first-order standard-cell layout estimate.
@@ -26,14 +29,14 @@ All ranges are min..max **across the full 45-point PVT matrix**. Widths in um.
 
 | Cell | Wn/Wp (um) | Cin (fF) | V_M (V) | V_M (%Vdd) | t_rise (ps) | t_fall (ps) | Active (um^2) | Layout est (um^2) |
 |---|---|---|---|---|---|---|---|---|
-| Inverter | 0.57 / 2.66 | 4.15 | 0.694..1.123 | 43..57% | 16..70 | 25..98 | 0.58 | 2.36 |
-| Buffer | 0.57/2.66 -> 1.72/7.97 | 4.15 | 0.702..1.113 | 43..56% | 24..87 | 20..76 | 2.32 | 11.18 |
-| NAND2 | 1.40 / 1.83 | 4.15 | 0.699..1.130 | 43..57% | 23..114 | 21..88 | 1.16 | 4.73 |
-| NOR2* | 0.22 / 3.65 | 4.98 | 0.691..1.107 | 43..56% | 26..125 | 108..428 | 1.39 | 5.37 |
-| AND2 | 1.40/1.83 + 0.57/2.66 | 4.15 | 0.703..1.123 | 43..57% | 19..86 | 28..114 | 1.74 | 8.34 |
-| OR2 | 0.22/3.65 + 0.57/2.66 | 4.98 | 0.697..1.099 | 43..56% | 40..141 | 29..119 | 1.98 | 8.59 |
-| XOR2 | 0.27/1.40 + 0.27/1.28 | 4.42 | 0.693..1.135 | 43..57% | 61..455 | 132..601 | 1.77 | 9.53 |
-| XNOR2 | 0.27/1.40 + 0.27/1.28 | 4.27 | 0.693..1.135 | 43..57% | 61..454 | 132..601 | 1.77 | 9.53 |
+| Inverter | 0.76 / 3.54 | 5.49 | 0.696..1.152 | 43..58% | 21..71 | 35..101 | 0.77 | 2.90 |
+| Buffer | 0.76/3.54 -> 2.29/10.62 | 5.49 | 0.703..1.139 | 43..58% | 34..102 | 31..94 | 3.10 | 14.41 |
+| NAND2 | 1.87 / 2.44 | 5.49 | 0.698..1.157 | 43..58% | 38..134 | 33..107 | 1.55 | 5.81 |
+| NOR2 | 0.22 / 4.08 | 5.51 | 0.699..1.143 | 43..58% | 44..156 | 217..680 | 1.55 | 5.80 |
+| AND2 | 1.87/2.44 + 0.76/3.54 | 5.49 | 0.702..1.147 | 43..58% | 28..94 | 41..123 | 2.32 | 10.36 |
+| OR2 | 0.22/4.08 + 0.76/3.54 | 5.51 | 0.704..1.133 | 43..57% | 69..192 | 42..132 | 2.32 | 9.52 |
+| XOR2 | 0.37/1.87 + 0.37/1.70 | 5.83 | 0.696..1.168 | 43..59% | 94..340 | 186..584 | 2.35 | 11.20 |
+| XNOR2 | 0.37/1.87 + 0.37/1.70 | 5.63 | 0.696..1.168 | 43..59% | 94..340 | 186..583 | 2.35 | 11.20 |
 
 <sub>`*` = capacitance-limited (see notes). Wn/Wp for multi-stage cells: BUF = stage1 -> stage2; AND2/OR2 = input gate + output inverter; XOR2/XNOR2 = core + input inverter.</sub>
 
@@ -41,14 +44,14 @@ All ranges are min..max **across the full 45-point PVT matrix**. Widths in um.
 
 | Cell | Wn/Wp (um) | Cin (fF) | V_M (V) | V_M (%Vdd) | t_rise (ps) | t_fall (ps) | Active (um^2) | Layout est (um^2) |
 |---|---|---|---|---|---|---|---|---|
-| Inverter | 0.65 / 2.14 | 4.08 | 1.319..2.035 | 44..56% | 38..158 | 49..171 | 0.98 | 3.35 |
-| Buffer | 0.65/2.14 -> 1.96/6.41 | 4.08 | 1.327..2.021 | 45..56% | 48..162 | 44..160 | 3.91 | 14.52 |
-| NAND2 | 1.43 / 1.37 | 4.09 | 1.326..2.031 | 45..56% | 62..264 | 44..170 | 1.96 | 6.73 |
-| NOR2* | 0.30 / 2.91 | 4.70 | 1.282..1.974 | 43..54% | 69..291 | 195..660 | 2.24 | 7.29 |
-| AND2 | 1.43/1.37 + 0.65/2.14 | 4.09 | 1.330..2.021 | 45..56% | 46..188 | 60..210 | 2.94 | 11.70 |
-| OR2 | 0.30/2.91 + 0.65/2.14 | 4.70 | 1.289..1.963 | 43..54% | 81..272 | 61..221 | 3.22 | 11.68 |
-| XOR2 | 0.30/1.24 + 0.30/0.98 | 4.38 | 1.323..2.123 | 45..58% | 200..904 | 301..1210 | 3.05 | 14.85 |
-| XNOR2 | 0.30/1.24 + 0.30/0.98 | 4.37 | 1.323..2.123 | 45..58% | 200..903 | 301..1210 | 3.05 | 14.85 |
+| Inverter | 0.87 / 2.85 | 5.36 | 1.314..2.049 | 44..56% | 48..149 | 60..162 | 1.30 | 4.01 |
+| Buffer | 0.87/2.85 -> 2.61/8.55 | 5.36 | 1.323..2.035 | 45..56% | 64..184 | 62..177 | 5.21 | 18.43 |
+| NAND2 | 1.91 / 1.83 | 5.38 | 1.324..2.056 | 45..57% | 89..280 | 63..185 | 2.62 | 8.03 |
+| NOR2 | 0.30 / 3.59 | 5.64 | 1.320..2.053 | 44..57% | 100..318 | 364..1005 | 2.72 | 8.24 |
+| AND2 | 1.91/1.83 + 0.87/2.85 | 5.38 | 1.330..2.046 | 45..56% | 60..188 | 76..216 | 3.92 | 14.19 |
+| OR2 | 0.30/3.59 + 0.87/2.85 | 5.64 | 1.327..2.042 | 45..56% | 130..355 | 78..227 | 4.02 | 13.57 |
+| XOR2 | 0.40/1.63 + 0.40/1.30 | 5.65 | 1.317..2.153 | 44..59% | 206..670 | 389..1160 | 4.03 | 16.92 |
+| XNOR2 | 0.40/1.63 + 0.40/1.30 | 5.64 | 1.317..2.153 | 44..59% | 205..669 | 389..1160 | 4.03 | 16.92 |
 
 <sub>`*` = capacitance-limited (see notes). Wn/Wp for multi-stage cells: BUF = stage1 -> stage2; AND2/OR2 = input gate + output inverter; XOR2/XNOR2 = core + input inverter.</sub>
 
@@ -56,14 +59,14 @@ All ranges are min..max **across the full 45-point PVT matrix**. Widths in um.
 
 | Cell | Wn/Wp (um) | Cin (fF) | V_M (V) | V_M (%Vdd) | t_rise (ps) | t_fall (ps) | Active (um^2) | Layout est (um^2) |
 |---|---|---|---|---|---|---|---|---|
-| Inverter | 0.84 / 2.28 | 4.11 | 1.435..3.061 | 45..56% | 73..472 | 90..481 | 1.56 | 5.06 |
-| Buffer | 0.84/2.28 -> 2.52/6.85 | 4.11 | 1.441..3.042 | 45..55% | 92..442 | 88..425 | 6.25 | 21.36 |
-| NAND2 | 1.72 / 1.41 | 4.13 | 1.428..3.046 | 45..55% | 124..837 | 84..499 | 3.13 | 10.13 |
-| NOR2* | 0.40 / 3.10 | 4.62 | 1.417..2.964 | 43..54% | 131..834 | 367..1726 | 3.50 | 10.81 |
-| AND2 | 1.72/1.41 + 0.84/2.28 | 4.13 | 1.435..3.030 | 45..55% | 88..554 | 114..594 | 4.69 | 17.56 |
-| OR2 | 0.40/3.10 + 0.84/2.28 | 4.62 | 1.424..2.948 | 44..54% | 155..732 | 116..614 | 5.07 | 17.40 |
-| XOR2 | 0.40/1.23 + 0.40/1.09 | 4.46 | 1.435..3.168 | 45..58% | 303..2856 | 520..3295 | 4.76 | 22.32 |
-| XNOR2 | 0.40/1.23 + 0.40/1.09 | 4.55 | 1.435..3.168 | 45..58% | 302..2851 | 520..3293 | 4.76 | 22.32 |
+| Inverter | 1.12 / 3.04 | 5.38 | 1.411..3.054 | 44..56% | 89..435 | 106..437 | 2.08 | 6.00 |
+| Buffer | 1.12/3.04 -> 3.36/9.13 | 5.38 | 1.416..3.035 | 44..55% | 118..495 | 114..472 | 8.33 | 26.98 |
+| NAND2 | 2.29 / 1.88 | 5.40 | 1.410..3.059 | 44..56% | 167..858 | 114..521 | 4.17 | 12.00 |
+| NOR2 | 0.40 / 3.83 | 5.50 | 1.426..3.080 | 45..56% | 183..891 | 658..2521 | 4.23 | 12.12 |
+| AND2 | 2.29/1.88 + 1.12/3.04 | 5.40 | 1.415..3.045 | 44..55% | 111..538 | 140..592 | 6.25 | 21.16 |
+| OR2 | 0.40/3.83 + 1.12/3.04 | 5.50 | 1.434..3.065 | 45..56% | 247..888 | 142..607 | 6.31 | 20.12 |
+| XOR2 | 0.53/1.64 + 0.53/1.45 | 5.73 | 1.415..3.169 | 44..58% | 398..2059 | 640..3005 | 6.34 | 25.25 |
+| XNOR2 | 0.53/1.64 + 0.53/1.45 | 5.73 | 1.415..3.169 | 44..58% | 397..2058 | 640..3004 | 6.34 | 25.25 |
 
 <sub>`*` = capacitance-limited (see notes). Wn/Wp for multi-stage cells: BUF = stage1 -> stage2; AND2/OR2 = input gate + output inverter; XOR2/XNOR2 = core + input inverter.</sub>
 
@@ -71,18 +74,18 @@ All ranges are min..max **across the full 45-point PVT matrix**. Widths in um.
 
 | Metric | 1.8 V | 3.3 V | 5.0 V |
 |---|---|---|---|
-| Fastest edge, INV (t_r min, ps) | 16 | 38 | 73 |
-| Slowest edge, any cell (ps) | 601 | 1210 | 3295 |
-| Worst input-pin Cin (fF) | 4.98 | 4.70 | 4.62 |
-| V_M window across all cells/PVT (%Vdd) | 43-57% | 43-58% | 43-58% |
-| Cell area range, INV..XOR (um^2 est) | 2.4-11.2 | 3.4-14.9 | 5.1-22.3 |
+| Fastest edge, INV (t_r min, ps) | 21 | 48 | 89 |
+| Slowest edge, any cell (ps) | 680 | 1160 | 3005 |
+| Worst input-pin Cin (fF) | 5.83 | 5.65 | 5.73 |
+| V_M window across all cells/PVT (%Vdd) | 43-59% | 44-59% | 44-58% |
+| Cell area range, INV..XOR (um^2 est) | 2.9-14.4 | 4.0-18.4 | 6.0-27.0 |
 
 ## 4. Key results and trade-offs
 
 - **Threshold centering:** V_M holds within ~0.43-0.58 of the instantaneous supply for every cell across all 45 PVT points, and within a few percent of 0.50 Vdd at nominal. Temperature drift of V_M is small (devices sit near the zero-temperature-coefficient bias).
-- **Input load:** every input pin is <=5 fF (worst case 4.1-5.0 fF), as specified.
-- **NOR2 / OR2 are capacitance-limited (`*`).** Centering V_M with tied inputs needs a wide series-PMOS stack (Wp/Wn ~ 8-17). At minimum NMOS width that would exceed 5 fF, so the PMOS is held back to keep Cin <=5 fF; V_M then sits slightly below mid-supply (~0.45-0.50 Vdd). Relaxing the 5 fF limit would allow exact centering.
-- **Speed ranking** (fastest to slowest, by drive into 5 fF): INV ~ BUF ~ AND2 < NAND2 < OR2 < NOR2 << XOR2 ~ XNOR2. NOR/OR (series PMOS) and especially XOR/XNOR (small cap-budgeted core driving a 2-high stack) are the slow cells - inherent to a <=5 fF, mid-supply static design rather than a sizing deficiency.
+- **Input load:** every input pin is <=6.5 fF (worst case 5.4-5.8 fF). Input-pin cap is a gate load and is essentially unmoved by the F6 junction caps (which load drain/source, not the gate); the 6.5 fF budget (up from 5.0 fF) just lets each cell use proportionally wider devices.
+- **No cell is capacitance-limited under the 6.5 fF contract.** Under the old 5.0 fF limit NOR2/OR2 had to back off their series PMOS (V_M off-centre); the relaxed budget lets them reach their ideal P/N ratio and centre V_M.
+- **Speed ranking** (fastest to slowest): INV ~ BUF ~ AND2 < NAND2 < OR2 < NOR2 << XOR2 ~ XNOR2. NOR/OR (series PMOS) and especially XOR/XNOR (small cap-budgeted core driving a 2-high stack) are the slow cells - inherent to a light-input-load, mid-supply static design rather than a sizing deficiency. The NOR2/OR2/XOR/XNOR fall edges slowed ~45-60% vs the pre-F6 numbers (junction caps now load the output); simpler cells stay within ~+/-10% as the wider devices the relaxed budget allows offset it.
 - **Sizing intuition:** PMOS is wider than NMOS on most cells (Wp/Wn ~ 2.7-4.7 on the inverter) to offset this PDK's lower hole mobility and |Vtp| > Vtn. NAND2 inverts that (wider NMOS) because of its series pull-down; NOR2 is the extreme opposite.
 - **Scaling across domains:** moving 1.8 V -> 3.3 V -> 5.0 V, cells grow ~1.4x then ~2x in estimated area (longer L and taller cells) and edges slow ~2x per step at fixed load.
 

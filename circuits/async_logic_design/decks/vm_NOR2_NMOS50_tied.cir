@@ -4,8 +4,8 @@
 .param VDD=5.0
 Vdd vdd 0 {VDD}
 Vin in 0 {VDD/2}
-X1 p1 in vdd vdd PMOS50 W={(3.1042)*1e-6} L=0.5u
-X2 out in p1 vdd PMOS50 W={(3.1042)*1e-6} L=0.5u
+X1 p1 in vdd vdd PMOS50 W={(3.8323)*1e-6} L=0.5u
+X2 out in p1 vdd PMOS50 W={(3.8323)*1e-6} L=0.5u
 X3 out in 0 0 NMOS50 W={(0.4000)*1e-6} L=0.5u
 X4 out in 0 0 NMOS50 W={(0.4000)*1e-6} L=0.5u
 .control

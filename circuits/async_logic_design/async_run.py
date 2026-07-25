@@ -1,10 +1,21 @@
-"""Driver: size all 8 cells in all 3 domains to VM=VDD/2 with Cin<=5fF,
-then characterize VM, rise/fall across PVT. Writes results.json."""
+"""Driver: size all 8 cells in all 3 domains to VM=VDD/2 with Cin<=6.5fF,
+then characterize VM, rise/fall across PVT. Writes results.json.
+
+Re-qualification (v2-grounded): the input-cap contract was relaxed from
+5.0 -> 6.5 fF hard / 6.0 fF sizing target (Step-0 decision 1). The old
+5 fF number was met with only 0.022 fF margin against models with zero
+BSIM3 junction capacitance (F6); with real AD/PS junction caps on the
+output diffusions the cells that had to back off their PMOS to hold 5 fF
+(NOR2/OR2, cap-limited, off-centre V_M) could not centre V_M. The 6.5 fF
+limit preserves the contract's purpose (light input loading) while letting
+those cells re-centre. Input-*pin* cap itself is insensitive to F6 (junction
+caps load drain/source, not the gate) so the raw fF numbers move <0.01 fF;
+what moves is V_M centring and, via output junction load, rise/fall."""
 import async_lib as A
 import json, math, sys
 
-CAP_MODEL_TGT = 4.5     # predicted-cap sizing target (fF); rail-avg comes ~10% under
-CAP_HARD      = 5.0     # hard limit on measured rail-avg Cin (fF)
+CAP_MODEL_TGT = 6.0     # predicted-cap sizing target (fF); rail-avg comes ~10% under
+CAP_HARD      = 6.5     # hard limit on measured rail-avg Cin (fF)
 WMIN = {"1v8":0.22, "3v3":0.30, "5v0":0.40}
 K_BUF = 3.0             # output-stage drive multiplier for BUF
 K_AOI = 2.0             # output-inverter drive multiplier for AND2/OR2
@@ -142,9 +153,18 @@ def main(domains=("1v8","3v3","5v0"), cells=CELLS):
             print(f"[{dkey}] {cell:6s} R={s.get('R') and round(s['R'],2)} "
                   f"Cin<={cmax:.2f}fF VM/Vdd={vmtxt} area={ar['layout_um2']:.2f}um2 "
                   f"tr<={trmax:.0f}ps tf<={tfmax:.0f}ps", flush=True)
+    results["_provenance"] = dict(
+        model_tag=A.MODEL_TAG,
+        ngspice_version=A.ngspice_version(),
+        cap_hard_ff=CAP_HARD,
+        cap_target_ff=CAP_MODEL_TGT,
+        contract="input-pin Cin <= 6.5 fF hard / 6.0 fF sizing target (Step-0 decision 1; "
+                 "relaxed from 5.0 fF for the v2-grounded re-qualification)",
+    )
     with open(A.os.path.join(A.WORK,"results.json"),"w") as f:
         json.dump(results, f, indent=1, default=str)
-    print("saved results.json")
+    print("saved results.json  [model=%s ngspice=%s cap_hard=%.1ffF]" %
+          (A.MODEL_TAG, A.ngspice_version(), CAP_HARD))
     return results
 
 if __name__=="__main__":
