@@ -23,3 +23,7 @@ Thumbs.db
 # must never be committed to a public repo). Added for the ONC25 grounding
 # extraction; the committed docs carry derived/scaled values only.
 LOCAL_*
+
+# xschem scratch/backup siblings (created on save / grid-nudge) -- keep only the canonical .sch
+*.bak
+*.prenudge
