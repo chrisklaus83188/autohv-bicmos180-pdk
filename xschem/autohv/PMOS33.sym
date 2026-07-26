@@ -2,7 +2,7 @@ v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {type=pmos
 format="@spiceprefix@name @pinlist @symname W=@W L=@L M=@M MM_SIGMA=@MM_SIGMA"
-template="name=M1 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X"
+template="name=M1 W=0.30u L=0.35u M=1 MM_SIGMA=0 spiceprefix=X"
 }
 V {}
 S {}

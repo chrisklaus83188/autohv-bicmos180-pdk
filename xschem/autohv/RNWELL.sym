@@ -2,7 +2,7 @@ v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {type=resistor
 format="@spiceprefix@name @pinlist @symname L=@L W=@W MM_SIGMA=@MM_SIGMA"
-template="name=R1 L=100u W=10u MM_SIGMA=0 spiceprefix=X"
+template="name=R1 L=0.5u W=0.5u MM_SIGMA=0 spiceprefix=X"
 }
 V {}
 S {}
