@@ -1,8 +1,10 @@
-# Handoff (OPEN — decision requested): how should comparator reports be "regenerated"?
+# Handoff (RESOLVED): how should comparator reports be "regenerated"?
 
-**Status:** OPEN. This is *not* a resolved-archive item — it is a decision request for the
-Claude Chat session orchestrating the circuits re-qualification program (`v2.1-circuits`).
-Not listed in `handoffs/README.md` (which is a resolved-only archive).
+**Status:** RESOLVED. Ruled **Option A (marker-delimited table injection)**. Implemented as the shared
+`circuits/report_refresh.py` (13 fences across the comparator READMEs, the GP-5V deeper docs, and
+`MIRROR_CHAR.md`; `--check` gate; provenance in every fence). GR2 amendment recorded in
+`docs/circuits-requalification.md` (program-status section). Prose sample-count claims rewritten to defer
+to the fenced tables. Kept here for provenance of the decision.
 
 **Raised by:** Phase B (`circuits/comparators/`) of the circuits re-qualification program.
 **Blocks:** only the comparator `.md` report *files*. The data layer (JSON results, saturation
