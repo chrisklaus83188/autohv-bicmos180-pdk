@@ -136,7 +136,7 @@ def run_depletion(dev="DNMOS20", supply=10.0):
     _,idss1=measure_idss(dev,10.0,supply)         # 10um reference
     idss_per_um=idss1/10.0 if idss1==idss1 else float("nan")
     rows={"supply":supply,"vdmos":True,"idss_per_um_A":idss_per_um,"points":{}}
-    WMIN=1.0   # practical drawn minimum for this power cell
+    WMIN=3.0   # v2.2-defaults: VDMOS fab min gate finger (device_limits [grounded])
     for I in (1e-6,10e-6,100e-6):
         W=I/idss_per_um if idss_per_um and idss_per_um>0 else float("nan")   # self-biased at Vgs=0
         X=0.024; sig=math.sqrt(2)*(X/3)/math.sqrt(max(W/10.0,1e-9))*100 if W==W else float("nan")
