@@ -28,6 +28,7 @@ Env: NGSPICE_BIN path to ngspice_con(.exe); auto-detected if unset.
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import shutil
@@ -80,6 +81,24 @@ def find_ngspice() -> str:
 
 
 NG = None
+MODEL_TAG = "v2-grounded"       # frozen model tag (circuits requal ground rule 1)
+_NGVER = None
+
+
+def ngspice_version() -> str:
+    global _NGVER
+    if _NGVER:
+        return _NGVER
+    _NGVER = "unknown"
+    try:
+        out = subprocess.run([NG or find_ngspice(), "--version"], capture_output=True,
+                             text=True, timeout=30).stdout
+        m = re.search(r"ngspice-?\s*[\d.]+", out, re.IGNORECASE)
+        if m:
+            _NGVER = m.group(0).replace(" ", "")
+    except Exception:
+        pass
+    return _NGVER
 
 
 def run_deck(text: str) -> str:
@@ -160,6 +179,8 @@ def main():
     ap.add_argument("--variant", default="gp", choices=list(FIN))
     ap.add_argument("--thresh", type=float, default=1.4)
     ap.add_argument("--pvt", action="store_true")
+    ap.add_argument("--json", default="saturation_margin.json",
+                    help="results JSON path (per-VDD always-on min + binding corner)")
     args = ap.parse_args()
     NG = find_ngspice()
 
@@ -183,18 +204,35 @@ def main():
                       % args.thresh if ok else "FAIL: see above."))
         sys.exit(0 if ok else 1)
 
-    # summary: worst over the PVT_WORST set, per VDD
-    print(f"{'VDD':>6} {'always-on min':>15} {'active-pair min':>16}  result")
+    # summary: worst over the PVT_WORST set, per VDD (+ which corner binds)
+    print(f"{'VDD':>6} {'always-on min':>15} {'active-pair min':>16}  {'binding':>10}  result")
     ok = True
+    rows = []
     for vdd in VDDS:
-        wao, wpr = 1e9, 1e9
+        wao, wpr, bind = 1e9, 1e9, None
         for case, temp in PVT_WORST:
             ao, pr = worst_over_cm(args.variant, case, vdd, temp)
-            wao, wpr = min(wao, ao), min(wpr, pr)
-        res = "PASS" if wao >= args.thresh else "FAIL"
-        ok = ok and wao >= args.thresh
-        print(f"{vdd:6.2f} {wao:15.2f} {wpr:16.2f}  {res}")
-    print("\n" + ("Rail-to-rail saturation sign-off PASSED." if ok else "FAILED."))
+            if ao is not None and ao < wao:
+                wao, bind = ao, f"{CN[case]} / {temp:+d} C"
+            if pr is not None:
+                wpr = min(wpr, pr)
+        passed = wao >= args.thresh
+        ok = ok and passed
+        res = "PASS" if passed else "FAIL"
+        print(f"{vdd:6.2f} {wao:15.2f} {wpr:16.2f}  {bind:>10}  {res}")
+        rows.append({"vdd": vdd, "always_on_min": round(wao, 2),
+                     "active_pair_min": round(wpr, 2), "binding_corner": bind,
+                     "pass": bool(passed)})
+    payload = {"_provenance": {"model_tag": MODEL_TAG, "ngspice_version": ngspice_version(),
+                               "variant": args.variant, "thresh": args.thresh,
+                               "corners": [CN[c] for c, _ in dict.fromkeys((c, 0) for c, _ in PVT_WORST)],
+                               "temps_C": TEMPS, "vdds": VDDS,
+                               "icmr": "rail-to-rail by construction (full 0..VDD CM); "
+                                       "always-on-device margin is the sign-off, not an ICMR band"},
+               "mode": "rr_margin", "overall_pass": bool(ok), "results": rows}
+    Path(HERE / args.json).write_text(json.dumps(payload, indent=2))
+    print("\n" + ("Rail-to-rail saturation sign-off PASSED." if ok else "FAILED.")
+          + f"  [model={MODEL_TAG} ngspice={ngspice_version()}] -> {args.json}")
     sys.exit(0 if ok else 1)
 
 

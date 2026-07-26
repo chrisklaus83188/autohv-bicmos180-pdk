@@ -1,3 +1,25 @@
+## [unreleased] -- v2.2 close-out (merge to main; track designs; last unbacked table)
+
+Lands the three programs on `main` and closes the remaining loose ends. Models frozen at v2-grounded.
+
+### 2026-07-26 -- close-out T1/T2/T3/T4
+
+- **T1 merge to main:** fast-forwarded `main` from v2-grounded to the three-program tip (== v2.2-defaults
+  commit); all three tags reachable from main; deleted `phase3-fix-batch` (local + remote); pushed,
+  ls-remote verified (main == v2.2-defaults commit).
+- **T2 track designs:** brought the untracked design schematics under VC (xschem/delay_pulse/*.sch x12,
+  xschem/designs/{CP_PowerFETs,CP_PowerStage,LevelShifter,LevelShifter_DelayBlock}.sch + CP_PowerFETs.sym,
+  + the gen_dly_schematics/render_sch tooling). Added *.bak / *.prenudge to .gitignore and deleted the
+  two existing scratch siblings. No untracked .sch remain. Tracking only, no content edits.
+- **T3 RR-comparator saturation (the one real work item):** the RR-specific run_saturation.py (already
+  handles the complementary NMOS+PMOS pairs) was given JSON output + provenance -> saturation_margin.json
+  per RR subdir; the RR README tables brought under the report_refresh.py `rr_sat` fence (--check
+  enforceable, 16 fences pass). Ran vs v2-grounded: margins HOLD at every corner (no low-CM gap). The
+  hand-authored numbers were stale and are replaced by the fenced machine values (RR-5V brown-out
+  1.49->2.11; RR-1.8V 1.28->1.72; RR-3.3V prose "3.63" was wrong -> fenced 3.27). No model finding.
+- **T4 fence-on-touch ruling recorded** in circuits-requalification.md: the MIRROR_CHAR §1/§2/§5/§7
+  residual tables get fenced by whichever session next edits that directory, not as a standalone task.
+
 ## [v2.2-defaults] -- unreleased  (geometry minima & honest placement defaults)
 
 Establishes two size floors per device and flips placement defaults to the fabrication minimum.
