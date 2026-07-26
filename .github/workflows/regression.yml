@@ -41,6 +41,9 @@ jobs:
         run: |
           ngspice --version | grep -i ngspice | head -1 | tee ngspice-version.txt
 
+      - name: Pre-flight - device_limits reader (SOA self-consistency + defaults==minima)
+        run: python pdk_validation/preflight.py
+
       - name: Phase A+B - device instantiation smoke (760 ops, ~45 s)
         run: python pdk_validation/regression/run_smoke.py
 

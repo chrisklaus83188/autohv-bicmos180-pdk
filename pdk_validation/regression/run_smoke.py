@@ -301,6 +301,11 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
             "with --max-op-secs 0."
         ),
     )
+    p.add_argument(
+        "--no-preflight",
+        action="store_true",
+        help="skip the device_limits pre-flight gate (SOA + defaults==minima).",
+    )
     return p.parse_args(argv)
 
 
@@ -317,6 +322,15 @@ def main(argv: list[str] | None = None) -> int:
     if not LIB_PATH.exists():
         print(f"ERROR: lib not found at {LIB_PATH}", file=sys.stderr)
         return 2
+
+    # v2.2-defaults: gate on the device_limits pre-flight reader (SOA
+    # self-consistency + every wrapper default == its fabrication minimum).
+    if not args.no_preflight:
+        sys.path.insert(0, str(REPO_ROOT / "pdk_validation"))
+        import preflight
+        if preflight.preflight_report(check_rated=True) != 0:
+            print("ERROR: device_limits pre-flight failed (see above).", file=sys.stderr)
+            return 2
 
     devices = DEVICES
     if args.device:
