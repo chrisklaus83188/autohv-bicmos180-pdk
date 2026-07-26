@@ -1,5 +1,5 @@
 # Edge-Asymmetric Delay & Pulse-Generator Cell Family
-### AutoHV BiCMOS 180 PDK | 4 archetypes x 3 voltage domains = 12 cells
+### AutoHV BiCMOS 180 PDK | 4 edge-asymmetric archetypes x 3 domains = 12 cells, plus a two-sided DLY variant (+3)
 
 <sub>Models: **v2-grounded** (frozen) · simulator: **ngspice-45** · 20 ns nominal target · 45-pt PVT + 200-run MC.</sub>
 
@@ -13,6 +13,7 @@ A compact cell set that delays one input edge while passing the other through, p
 | `DLYF_<D>` | falling-edge **delay**, rising-edge passthrough (non-inverting) | follows in | falling | rising |
 | `PHI_<D>`  | logic-**HIGH pulse** on rising edge, falling-edge passthrough | low | rising -> 20 ns high pulse | falling (stays low) |
 | `PLO_<D>`  | logic-**LOW pulse** on falling edge, rising-edge passthrough | high | falling -> 20 ns low pulse | rising (stays high) |
+| `DLY_<D>`  | two-sided **delay**: BOTH edges RC-delayed (non-inverting) | follows in | rising + falling | none (see section 5) |
 
 `<D>` = `1V8` / `3V3` / `5V0`.  Port order (all cells): `in out vdd gnd`.
 
@@ -90,7 +91,19 @@ For a fixed RC the total `area(R)+area(C)` is minimized when the two areas are e
 | PHI_5V0 | high-pulse width | 20.02 | 16.1..29.2 | SS,3.2V,-55C | no pulse (idle low) |
 | PLO_5V0 | low-pulse width | 20.17 | 16.1..30.5 | SS,3.2V,-55C | no pulse (idle high) |
 
-## 5. Headline numbers
+## 5. Two-sided delay cells (DLY)
+
+`DLY_<D>` removes the single bypass FET from the delay core, so **both** edges are RC-delayed instead of one edge being a fast passthrough. It is otherwise identical to `DLYR`/`DLYF` -- same inverter, poly R, MIM cap and 6T Schmitt -- with one fewer transistor. The resistor length is centered between the `DLYR` rise-tuned and `DLYF` fall-tuned values so both edges land near 20 ns at nominal. Non-inverting.
+
+| Cell | L_R (um) | active (um^2) | # dev | rise delay (nom) | fall delay (nom) | rise PVT min..max | fall PVT min..max |
+|---|---|---|---|---|---|---|---|
+| DLY_1V8 | 52.7 | 55.8 | 8 | 20.1 ns | 19.0 ns | 14.1..29.0 ns | 13.2..27.5 ns |
+| DLY_3V3 | 54.8 | 58.0 | 8 | 19.9 ns | 19.2 ns | 15.2..26.1 ns | 14.7..25.3 ns |
+| DLY_5V0 | 51.6 | 57.8 | 8 | 19.8 ns | 19.4 ns | 15.9..29.2 ns | 15.6..29.1 ns |
+
+<sub>Both edges are real ~20 ns delays; the small rise-vs-fall offset is the Schmitt trip asymmetry (not removable by resizing R, which scales both edges equally). Full both-edge PVT + 200-run Monte-Carlo statistics are in CHARACTERIZATION.md section 8.</sub>
+
+## 6. Headline numbers
 
 | Metric | 1.8 V | 3.3 V | 5.0 V |
 |---|---|---|---|
@@ -99,7 +112,7 @@ For a fixed RC the total `area(R)+area(C)` is minimized when the two areas are e
 | Nominal delay/width spread (ns) | 19.8-20.1 | 19.6-20.4 | 20.0-20.3 |
 | Full-PVT delay/width spread (ns) | 14-29 | 15-27 | 16-30 |
 
-## 6. Notes & trade-offs
+## 7. Notes & trade-offs
 
 - **Timing target is nominal-only**, as specified. The delay/width is an RC product, so it tracks process (poly Rsh +/-12%, MIM Cj +/-3%), temperature (poly tc1) and the Schmitt trip. Across the full 45-point matrix the timing spans roughly **-31% / +51%** of nominal (slowest = SS, -55C, low Vdd; fastest = FF, 150C). Note the slowest corner is at **-55C**: `RPOLY_HI` tc1 is negative under v2-grounded, so the resistor is highest at cold and this now sets the worst case (it was the hot corner before the tc1 sign-flip). If a PVT-stable delay is needed, a current-reference-biased starved core or a trimmed R can be added at extra area.
 - **Area is dominated by the RC** (~57 um^2 of the ~57-62 um^2 active area is the poly resistor + MIM cap; the ~15 transistors add only a few um^2). Resistor and cap areas are balanced (~28-30 um^2 each) at the analytic minimum for a 20 ns RC with W_R = 0.5 um and CMIM_HI.
@@ -108,6 +121,6 @@ For a fixed RC the total `area(R)+area(C)` is minimized when the two areas are e
 - **Pulse cells** return cleanly to their idle rail on the passthrough edge (verified: no spurious pulse) and emit exactly one 20 ns pulse per active edge.
 - **Simulation note**: the RC uses the PDK's behavioral-source devices (`RPOLY_HI`/`CMIM_HI` carry B-source voltage-coefficient terms). A single cell sims fine with default trapezoidal integration (used for all characterization here); when several cells share one transient deck, add `.option method=gear maxord=2` to avoid a t=0 timestep collapse (standard ngspice practice for many parallel behavioral RC branches). See `examples/08_delay_pulse_cells_usage.cir`.
 
-## 7. Files
-- `dp_lib.py` - deck generators + ngspice driver. `dp_run.py` - sizing & PVT sweep. `gen_lib.py` - emits `cells.lib`. `report.py` - this report.
-- `cells/<NAME>.lib` - the 12 sized subckts, one file per cell. `cells.lib` - convenience bundle that `.include`s all 12. `results.json` - full numeric results. `decks/` - generated ngspice decks.
+## 8. Files
+- `dp_lib.py` - deck generators + ngspice driver. `dp_run.py` - sizing & PVT sweep. `dp_char_dly.py` - two-sided DLY characterization. `gen_lib.py` - emits `cells.lib`. `report.py` - this report.
+- `cells/<NAME>.lib` - the 15 sized subckts, one file per cell. `cells.lib` - convenience bundle that `.include`s all 15. `results.json` - full numeric results. `decks/` - generated ngspice decks.

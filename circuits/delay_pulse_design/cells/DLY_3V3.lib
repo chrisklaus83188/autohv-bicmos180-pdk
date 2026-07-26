@@ -1,0 +1,27 @@
+* DLY_3V3 -- two-sided delay: BOTH edges are RC-delayed (~20 ns each)
+* AutoHV BiCMOS 180 PDK | 3.3 V domain (NMOS33/PMOS33, L = 0.35 um)
+* Symmetric delay cell: the RC node has no bypass FET, so the rising AND the
+* falling edge each charge/discharge through R into the Schmitt trigger.
+* R is centered between the rise-tuned (DLYR) and fall-tuned (DLYF) resistors
+* so both edges land near 20 ns at the nominal corner (case=0/TT, nom Vdd, 27 C).
+* Non-inverting. Methodology / area / PVT: ../REPORT.md, ../CHARACTERIZATION.md.
+*
+* Port order:  in  out  vdd  gnd
+*   .include "<repo-root>/autohv_bicmos180_case.lib"
+*   .include "<this-dir>/DLY_3V3.lib"
+*   X1 a y vdd 0 DLY_3V3
+*
+* When several RC cells share one transient deck, add `.option method=gear maxord=2`.
+
+.subckt DLY_3V3 in out vdd gnd
+XI1 nIN in vdd vdd PMOS33 W=0.95u L=0.35u
+XI2 nIN in gnd gnd NMOS33 W=0.4u L=0.35u
+XR  nIN nC RPOLY_HI L=54.8438u W=0.5u
+XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
+XS1 s1 nC gnd gnd NMOS33 W=0.4u L=0.35u
+XS2 out nC s1 gnd NMOS33 W=0.4u L=0.35u
+XS3 s2 nC vdd vdd PMOS33 W=0.95u L=0.35u
+XS4 out nC s2 vdd PMOS33 W=0.95u L=0.35u
+XS5 vdd out s1 gnd NMOS33 W=0.4u L=0.35u
+XS6 gnd out s2 vdd PMOS33 W=0.95u L=0.35u
+.ends DLY_3V3

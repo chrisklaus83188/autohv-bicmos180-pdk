@@ -1,5 +1,5 @@
 # Delay & Pulse-Generator Cell Characterization Report
-### AutoHV BiCMOS 180 PDK | 12 cells (4 archetypes x 3 voltage domains)
+### AutoHV BiCMOS 180 PDK | 12 edge-asymmetric + 3 two-sided delay cells (5 archetypes x 3 voltage domains)
 
 <sub>Models: **v2-grounded** (frozen) · simulator: **ngspice-45** · 200-run MC.</sub>
 
@@ -13,6 +13,7 @@ Full PVT corner characterization plus 200-run Monte Carlo for the edge-asymmetri
 | `DLYF_<D>` | falling-edge delay, rising-edge passthrough |
 | `PHI_<D>`  | HIGH pulse on rising edge, falling-edge passthrough |
 | `PLO_<D>`  | LOW pulse on falling edge, rising-edge passthrough |
+| `DLY_<D>`  | two-sided delay: BOTH edges RC-delayed (no bypass) -- see section 8 |
 
 `<D>` = `1V8`/`3V3`/`5V0`. Each cell was sized for ~20 ns at nominal; this report measures how that timing moves over PVT and statistics.
 
@@ -339,13 +340,105 @@ Each histogram: 200 runs, x-axis bins in ns, bar length proportional to count.
 
 ## 7. Observations
 
-- **MC spread is tight**: 1-sigma on the delay/width is 5.3-6.1% of the mean across all 12 cells. The timing is an RC product and the MIM cap (sigma_Cj ~ 0.1%) and poly Rsh are well controlled; most of the statistical spread comes from the Schmitt-trip (device Vth mismatch) rather than the RC itself.
+- **MC spread is tight**: 1-sigma on the delay/width is 5.3-6.1% of the mean across the 12 edge-asymmetric cells (the two-sided DLY family is in section 8). The timing is an RC product and the MIM cap (sigma_Cj ~ 0.1%) and poly Rsh are well controlled; most of the statistical spread comes from the Schmitt-trip (device Vth mismatch) rather than the RC itself.
 - **PVT dominates over statistics**: the corner-to-corner delay swing (roughly -31%/+51% of nominal, worst case SS / -55C / low-Vdd) is much larger than the +-3-sigma MC band. For a fixed-corner design the MC band is what matters; for a multi-corner design, budget the PVT envelope.
 - **Temperature & supply**: under v2-grounded the `RPOLY_HI` tc1 is negative, so poly Rsh is *highest at cold* and the slowest corner is **-55C / low-supply** (the resistor's cold-increase now outweighs the opposing device tempco). This flipped the worst-case temperature from hot to cold vs the pre-tc1-sign-flip characterization. The 5 V domain still shows the widest PVT envelope because its supply axis (3.2-5.5 V) is the widest.
 - **Output edges stay sharp**: the Schmitt output drives clean 10-90% edges (tens to a few hundred ps into 5 fF) regardless of the slow RC ramp, so downstream timing sees a real digital edge, not the RC slope.
 - **Passthrough preserved over PVT**: the fast (non-delayed) edge stays far shorter than the timed edge at every corner, so the asymmetry holds.
 - **Area is RC-bound**: each cell is ~56-64 um^2, of which ~55 um^2 is the poly resistor + MIM cap that set the time constant; the transistors are ~1-3 um^2. Area scales with the target delay (longer delay -> larger RC -> more area), essentially independent of voltage domain.
+## 8. Two-sided delay cells (DLY)
 
-## 8. Files
+`DLY_<D>` is the delay core with the capacitor's shunt/bypass FET removed, so **both** the rising and the falling edge are RC-delayed -- there is no fast passthrough edge. The resistor is centered between the `DLYR` rise-tuned and `DLYF` fall-tuned values so each edge lands near 20 ns at nominal. Identical ngspice flow, PDK models and PVT/MC matrix as the cells above; rise and fall are reported as two real delays.
 
-- `char.json` - full numeric results (PVT envelopes, MC stats, raw MC samples). `dp_char.py` - characterization driver. `char_report.py` - this report. `decks/pvt_*`, `decks/mc_*` - the generated ngspice decks.
+### 8.1  Nominal both-edge delay & area
+
+| Cell | R L (um) | rise delay | fall delay | # devices | FETs (um^2) | resistor (um^2) | MIM cap (um^2) | **total (um^2)** |
+|---|---|---|---|---|---|---|---|---|
+| DLY_1V8 | 52.66 | 20.07 ns | 19.00 ns | 10 (8 FET + R + C) | 0.72 | 26.3 | 28.7 | **55.8** |
+| DLY_3V3 | 54.84 | 19.87 ns | 19.25 ns | 10 (8 FET + R + C) | 1.89 | 27.4 | 28.7 | **58.0** |
+| DLY_5V0 | 51.56 | 19.81 ns | 19.42 ns | 10 (8 FET + R + C) | 3.30 | 25.8 | 28.7 | **57.8** |
+
+<sub>One fewer transistor than `DLYR`/`DLYF` (the bypass FET is gone); area is otherwise identical -- still RC-bound at ~55 um^2.</sub>
+
+### 8.2  PVT envelope (both edges, 45 points/cell)
+
+| Cell | edge | nominal | min (corner) | max (corner) | t_rise/fall max |
+|---|---|---|---|---|---|
+| DLY_1V8 | rise delay | 20.07 ns | 14.10 ns (FF,1.98V,150C) | 28.99 ns (SS,1.62V,-55C) | 1703 ps |
+| DLY_1V8 | fall delay | 19.00 ns | 13.23 ns (FF,1.98V,150C) | 27.47 ns (SS,1.62V,-55C) | 1148 ps |
+| DLY_3V3 | rise delay | 19.87 ns | 15.20 ns (FF,3.63V,150C) | 26.13 ns (SS,2.97V,-55C) | 2156 ps |
+| DLY_3V3 | fall delay | 19.25 ns | 14.65 ns (FF,3.63V,150C) | 25.25 ns (SS,2.97V,-55C) | 1670 ps |
+| DLY_5V0 | rise delay | 19.81 ns | 15.89 ns (FF,5.5V,150C) | 29.23 ns (SS,3.2V,-55C) | 4858 ps |
+| DLY_5V0 | fall delay | 19.42 ns | 15.58 ns (FF,5.5V,150C) | 29.12 ns (SS,3.2V,-55C) | 3836 ps |
+
+### 8.3  Monte Carlo (TT, process + mismatch, 200 runs)
+
+| Cell | edge | mean | sigma | sigma/mean | min | max | 1%..99% |
+|---|---|---|---|---|---|---|---|
+| DLY_1V8 | rise delay | 20.28 ns | 1169 ps | 5.76% | 17.56 | 23.32 | 17.68..22.62 |
+| DLY_1V8 | fall delay | 19.18 ns | 1163 ps | 6.07% | 16.31 | 22.56 | 16.66..21.62 |
+| DLY_3V3 | rise delay | 19.90 ns | 1119 ps | 5.63% | 17.38 | 23.23 | 17.71..22.56 |
+| DLY_3V3 | fall delay | 19.28 ns | 1033 ps | 5.36% | 17.08 | 22.07 | 17.28..21.52 |
+| DLY_5V0 | rise delay | 19.80 ns | 1163 ps | 5.88% | 16.53 | 22.70 | 17.10..22.50 |
+| DLY_5V0 | fall delay | 19.42 ns | 1138 ps | 5.86% | 16.43 | 22.51 | 16.95..21.98 |
+
+### 8.4  Rising-edge delay distribution (Monte Carlo)
+
+**DLY_1V8** (rise delay): mean 20.28 ns, sigma 1169 ps (5.76%)
+```
+ 17.56 | ############ 8
+ 17.97 | ###### 4
+ 18.39 | ########### 7
+ 18.80 | ######################### 16
+ 19.21 | ################################ 21
+ 19.62 | ############################################## 30
+ 20.03 | ##################################### 24
+ 20.44 | ##################################### 24
+ 20.85 | ######################################### 27
+ 21.27 | ##################### 14
+ 21.68 | ##################### 14
+ 22.09 | ############ 8
+ 22.50 | ### 2
+ 22.91 | ## 1
+```
+
+**DLY_3V3** (rise delay): mean 19.90 ns, sigma 1119 ps (5.63%)
+```
+ 17.38 | ####### 5
+ 17.80 | ############### 11
+ 18.22 | #################### 15
+ 18.63 | ################### 14
+ 19.05 | ################################## 25
+ 19.47 | ###################################### 28
+ 19.89 | ################################## 25
+ 20.30 | ############################################## 34
+ 20.72 | ####################### 17
+ 21.14 | ################## 13
+ 21.56 | ######## 6
+ 21.97 | ##### 4
+ 22.39 | ### 2
+ 22.81 | # 1
+```
+
+**DLY_5V0** (rise delay): mean 19.80 ns, sigma 1163 ps (5.88%)
+```
+ 16.53 | ### 2
+ 16.97 | ### 2
+ 17.41 | ####### 5
+ 17.85 | ################# 12
+ 18.30 | ################### 13
+ 18.74 | ######################################## 28
+ 19.18 | ####################################### 27
+ 19.62 | ############################################## 32
+ 20.06 | ################################## 24
+ 20.50 | ################################ 22
+ 20.94 | ################### 13
+ 21.38 | ################# 12
+ 21.82 | #### 3
+ 22.26 | ###### 4
+```
+
+
+## 9. Files
+
+- `char.json` - full numeric results (PVT envelopes, MC stats, raw MC samples). `dp_char.py` - characterization driver for the 12 edge-asymmetric cells; `dp_char_dly.py` - the two-sided DLY driver (merges into `char.json`). `char_report.py` - this report. `decks/pvt_*`, `decks/mc_*` - the generated ngspice decks.

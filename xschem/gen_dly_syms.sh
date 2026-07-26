@@ -1,6 +1,7 @@
 #!/bin/bash
 # Generate Xschem symbols for the AutoHV delay/pulse cells in
-# circuits/delay_pulse_design/cells.lib (12 cells: {DLYR,DLYF,PHI,PLO}x{1V8,3V3,5V0}).
+# circuits/delay_pulse_design/cells.lib
+# (15 cells: {DLYR,DLYF,DLY,PHI,PLO}x{1V8,3V3,5V0}; DLY = two-sided delay).
 # Ports (all): in out vdd gnd.  Option-A "timing box": in/out pins, an inner
 # two-row in->out waveform, power BY TEXT (VPWR=vdd, VGND=0).
 set -e
@@ -46,10 +47,15 @@ DLYR_IN='4 -22 -5 -8 -5 -8 -14 22 -14';   DLYR_OUT='4 -22 14 2 14 2 5 22 5'
 DLYF_IN='4 -22 -14 -8 -14 -8 -5 22 -5';   DLYF_OUT='4 -22 5 2 5 2 14 22 14'
 PHI_IN='4 -22 -5 -8 -5 -8 -14 22 -14';    PHI_OUT='6 -22 14 -8 14 -8 5 2 5 2 14 22 14'
 PLO_IN='4 -22 -14 -8 -14 -8 -5 22 -5';    PLO_OUT='6 -22 5 -8 5 -8 14 2 14 2 5 22 5'
+# DLY (two-sided): a pulse whose BOTH edges are delayed -- out is the same
+# pulse shifted right (equal delay on the rising and the falling edge).
+DLY_IN='6 -22 -5 -14 -5 -14 -14 2 -14 2 -5 22 -5'
+DLY_OUT='6 -22 14 -6 14 -6 5 10 5 10 14 22 14'
 
 for d in 1V8 3V3 5V0; do
   emit "DLYR_$d" "$DLYR_IN" "$DLYR_OUT"
   emit "DLYF_$d" "$DLYF_IN" "$DLYF_OUT"
+  emit "DLY_$d"  "$DLY_IN"  "$DLY_OUT"
   emit "PHI_$d"  "$PHI_IN"  "$PHI_OUT"
   emit "PLO_$d"  "$PLO_IN"  "$PLO_OUT"
 done

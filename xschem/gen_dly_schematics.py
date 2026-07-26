@@ -135,19 +135,22 @@ def _core(cell, S, bus_x):
     # R (horizontal) on the y=500 spine: nIN -> nC
     r = place_pas(S, D["XR"], "XR", 560, 500, rot=3)
     S.hline(500, i1["d"][0], r["p"][0])
-    # nC bus -> Schmitt gate bus, taps for bypass & C
-    S.hline(500, r["n"][0], 1120, taps=[700, 780, 940])
+    # nC bus -> Schmitt gate bus, taps for bypass (if any) & C
+    has_bp = "XBP" in D
+    S.hline(500, r["n"][0], 1120, taps=[700] + ([780] if has_bp else []) + [940])
     S.label(700, 500, "nC")
     S.vline(1120, 260, 740, taps=[420, 500, 580])            # gate bus (mid on 500)
-    # bypass FET on nC (PMOS->vdd for DLYR/PHI, NMOS->gnd for DLYF/PLO)
-    bp = D["XBP"]; b_up = bp["s"] == "vdd"
-    b = place_mos(S, bp, "XBP", 760, 200 if b_up else 800)
-    if b_up:
-        S.wire(b["s"][0], VDDY, b["s"][0], b["s"][1])
-    else:
-        S.wire(b["s"][0], b["s"][1], b["s"][0], GNDY)
-    S.wire(b["d"][0], b["d"][1], b["d"][0], 500)             # XBP.d -> nC bus
-    S.label(b["g"][0], b["g"][1], "in")
+    # bypass FET on nC (PMOS->vdd for DLYR/PHI, NMOS->gnd for DLYF/PLO); the
+    # two-sided DLY cell omits it so BOTH edges see the RC delay.
+    if has_bp:
+        bp = D["XBP"]; b_up = bp["s"] == "vdd"
+        b = place_mos(S, bp, "XBP", 760, 200 if b_up else 800)
+        if b_up:
+            S.wire(b["s"][0], VDDY, b["s"][0], b["s"][1])
+        else:
+            S.wire(b["s"][0], b["s"][1], b["s"][0], GNDY)
+        S.wire(b["d"][0], b["d"][1], b["d"][0], 500)         # XBP.d -> nC bus
+        S.label(b["g"][0], b["g"][1], "in")
     # MIM cap: nC -> gnd
     c = place_pas(S, D["XC"], "XC", 940, 640)
     S.wire(c["p"][0], 500, c["p"][0], c["p"][1])
@@ -180,14 +183,17 @@ def _core(cell, S, bus_x):
     S.vline(f6["g"][0], f6["g"][1], 500)
     S.vline(f5["g"][0], 500, f5["g"][1])
     S.text("* input inverter", 200, VDDY - 140, 0.4)
-    S.text("* RC delay (R + MIM C) + bypass", 460, VDDY - 140, 0.4)
+    S.text("* RC delay (R + MIM C)" + (" + bypass" if has_bp else " -- both edges"),
+           460, VDDY - 140, 0.4)
     S.text("* Schmitt trigger + hysteresis", 1080, VDDY - 140, 0.4)
 
 
 def draw_delay(cell, name):
     """Delay cell: the core drives 'out' directly."""
+    edge = "XBP bypass (one fast edge)" if "XBP" in cell["devs"] \
+        else "no bypass -- two-sided (both edges delayed)"
     S = Sheet(name, "body: circuits/delay_pulse_design/cells.lib (authority) | "
-                    "in -> inverter -> R -> nC -> Schmitt -> out ; XBP bypass")
+                    "in -> inverter -> R -> nC -> Schmitt -> out ; " + edge)
     S.hline(VDDY, 120, 1580); port_once(S, 120, VDDY, "vdd")
     S.hline(GNDY, 120, 1580); port_once(S, 120, GNDY, "gnd")
     _core(cell, S, 1680)
@@ -213,7 +219,7 @@ def draw_pulse(cell, name):
     2-input gate (NAND2 for PHI / NOR2 for PLO combining 'in' and 'dbar'), and
     an output inverter -> 'out'. All stages wired; input signals joined by name."""
     D = cell["devs"]; arch = name.split("_")[0]
-    RR = 2620
+    RR = 2760
     S = Sheet(name, "body: circuits/delay_pulse_design/cells.lib (authority) | "
                     "delay core (out=dco) + inverter + 2-input gate + out inverter")
     S.hline(VDDY, 120, RR); port_once(S, 120, VDDY, "vdd")
@@ -225,50 +231,67 @@ def draw_pulse(cell, name):
     xp, _ = _inv(S, D, "XPI1", "XPI2", 1840, "dco", "dbar")
     S.hline(500, 1660, xp["g"][0])                          # dco bus -> XPI gate
 
-    # ---- 2-input gate: (in, dbar) -> nn ----------------------------------
-    if arch == "PHI":                                       # NAND2
-        g1 = place_mos(S, D["XG1"], "XG1", 2080, 280)       # PMOS in  (vdd->nnd)
-        g2 = place_mos(S, D["XG2"], "XG2", 2260, 280)       # PMOS dbar(vdd->nnd)
-        S.wire(g1["s"][0], VDDY, g1["s"][0], g1["s"][1])
+    # ---- 2-input gate ----------------------------------------------------
+    if arch == "PHI":            # NAND2: parallel PMOS + SERIES NMOS (stacked)
+        g1 = place_mos(S, D["XG1"], "XG1", 2160, 280)      # PMOS in  (|| pull-up)
+        g2 = place_mos(S, D["XG2"], "XG2", 2360, 280)      # PMOS dbar(|| pull-up)
+        g3 = place_mos(S, D["XG3"], "XG3", 2160, 560)      # NMOS in  (series, top)
+        g4 = place_mos(S, D["XG4"], "XG4", 2160, 740)      # NMOS dbar(series, bottom)
+        S.wire(g1["s"][0], VDDY, g1["s"][0], g1["s"][1])   # PMOS sources -> vdd
         S.wire(g2["s"][0], VDDY, g2["s"][0], g2["s"][1])
-        S.hline(g1["d"][1], g1["d"][0], g2["d"][0])         # nnd: join PMOS drains
-        g3 = place_mos(S, D["XG3"], "XG3", 2080, 580)       # NMOS in  (nnd->q)
-        g4 = place_mos(S, D["XG4"], "XG4", 2080, 740)       # NMOS dbar(q->gnd)
-        S.vline(g1["d"][0], g1["d"][1], g3["d"][1], taps=[500])  # nnd down to NMOS
-        S.wire(g3["s"][0], g3["s"][1], g4["d"][0], g4["d"][1])   # q
-        S.wire(g4["s"][0], g4["s"][1], g4["s"][0], GNDY)        # NMOS.s -> gnd
+        S.hline(g1["d"][1], g1["d"][0], g2["d"][0])        # nnd across PMOS drains
+        S.vline(g1["d"][0], g1["d"][1], g3["d"][1], taps=[500])  # nnd -> g3.d
+        S.vline(g3["s"][0], g3["s"][1], g4["d"][1])        # q (stacked series node)
+        S.label(g3["s"][0], (g3["s"][1] + g4["d"][1]) // 2, "q")
+        S.wire(g4["s"][0], g4["s"][1], g4["s"][0], GNDY)   # g4.s -> gnd
         nn, nn_x = "nnd", g1["d"][0]
-        S.label(g4["d"][0], (g3["s"][1] + g4["d"][1]) // 2, "q")
-    else:                                                   # PLO -> NOR2
-        g1 = place_mos(S, D["XG1"], "XG1", 2080, 280)       # PMOS in  (vdd->p1)
-        g2 = place_mos(S, D["XG2"], "XG2", 2080, 440)       # PMOS dbar(p1->nnr)
-        S.wire(g1["s"][0], VDDY, g1["s"][0], g1["s"][1])
-        S.wire(g1["d"][0], g1["d"][1], g2["s"][0], g2["s"][1])  # p1
-        g3 = place_mos(S, D["XG3"], "XG3", 2080, 700)       # NMOS in  (nnr->gnd)
-        g4 = place_mos(S, D["XG4"], "XG4", 2260, 700)       # NMOS dbar(nnr->gnd)
-        S.wire(g3["s"][0], g3["s"][1], g3["s"][0], GNDY)
-        S.wire(g4["s"][0], g4["s"][1], g4["s"][0], GNDY)
-        S.hline(g3["d"][1], g3["d"][0], g4["d"][0])         # nnr: join NMOS drains
-        S.vline(g2["d"][0], g2["d"][1], g3["d"][1], taps=[500])  # nnr PMOS->NMOS
-        nn, nn_x = "nnr", g2["d"][0]
+        # 'in' bus (g1.g over g3.g); dbar bracket to g2.g (top) and g4.g (bottom)
+        S.vline(g1["g"][0], g1["g"][1], g3["g"][1]); S.label(g1["g"][0], 420, "in")
+        S.wire(1860, 500, 2000, 500)
+        S.vline(2000, 180, 740, taps=[500])
+        S.wire(2000, 180, g2["g"][0], 180)
+        S.wire(g2["g"][0], 180, g2["g"][0], g2["g"][1])    # -> g2.g (top)
+        S.wire(2000, 740, g4["g"][0], 740)                 # -> g4.g (bottom)
+    else:                        # NOR2: SERIES PMOS (stacked) + parallel NMOS
+        g1 = place_mos(S, D["XG1"], "XG1", 2160, 280)      # PMOS in  (series, top)
+        g2 = place_mos(S, D["XG2"], "XG2", 2160, 460)      # PMOS dbar(series, bottom)
+        g3 = place_mos(S, D["XG3"], "XG3", 2160, 740)      # NMOS in  (|| pull-down)
+        g4 = place_mos(S, D["XG4"], "XG4", 2360, 740)      # NMOS dbar(|| pull-down)
+        S.wire(g1["s"][0], VDDY, g1["s"][0], g1["s"][1])   # g1.s -> vdd
+        S.vline(g1["d"][0], g1["d"][1], g2["s"][1])        # p1 (stacked series node)
         S.label(g1["d"][0], (g1["d"][1] + g2["s"][1]) // 2, "p1")
-    for gg, net in ((g1, "in"), (g2, "dbar"), (g3, "in"), (g4, "dbar")):
-        S.label(gg["g"][0], gg["g"][1], net)               # gate inputs by name
+        S.wire(g3["s"][0], g3["s"][1], g3["s"][0], GNDY)   # NMOS sources -> gnd
+        S.wire(g4["s"][0], g4["s"][1], g4["s"][0], GNDY)
+        S.hline(g3["d"][1], g3["d"][0], g4["d"][0])        # nnr across NMOS drains
+        S.vline(g2["d"][0], g2["d"][1], g3["d"][1], taps=[500])  # nnr g2.d -> g3.d
+        nn, nn_x = "nnr", g2["d"][0]
+        # 'in' bus (g1.g and g3.g), routed on the left around g2.g (the dbar
+        # gate sitting between them); dbar bracket to g2.g (middle) and g4.g.
+        ix = g1["g"][0] - 40
+        S.wire(g1["g"][0], g1["g"][1], ix, g1["g"][1])
+        S.vline(ix, g1["g"][1], g3["g"][1])
+        S.wire(ix, g3["g"][1], g3["g"][0], g3["g"][1])
+        S.label(ix, 500, "in")
+        S.wire(1860, 500, 2000, 500)
+        S.vline(2000, 460, 820, taps=[500])
+        S.wire(2000, 460, g2["g"][0], 460)                 # -> g2.g (middle dbar PMOS)
+        S.wire(2000, 820, g4["g"][0], 820)
+        S.wire(g4["g"][0], 820, g4["g"][0], g4["g"][1])    # -> g4.g (bottom)
     S.label(nn_x, 500, nn)
 
     # ---- output inverter: nn -> out --------------------------------------
-    xo, _ = _inv(S, D, "XO1", "XO2", 2480, nn, "out")
-    S.hline(500, nn_x, xo["g"][0])                          # nn bus -> XO gate
-    S.hline(500, xo["d"][0], 2600); port_once(S, 2600, 500, "out")
+    xo, _ = _inv(S, D, "XO1", "XO2", 2560, nn, "out")
+    S.hline(500, nn_x, xo["g"][0])                          # nn -> XO gate
+    S.hline(500, xo["d"][0], 2680); port_once(S, 2680, 500, "out")
 
     S.text("* inverter (dco->dbar)", 1780, VDDY - 140, 0.4)
-    S.text("* 2-input gate", 2080, VDDY - 140, 0.4)
-    S.text("* output inverter", 2440, VDDY - 140, 0.4)
+    S.text("* 2-input gate (in | dbar)", 2100, VDDY - 140, 0.4)
+    S.text("* output inverter", 2520, VDDY - 140, 0.4)
     return S
 
 
 ALL = [f"{a}_{d}" for d in ("1V8", "3V3", "5V0")
-       for a in ("DLYR", "DLYF", "PHI", "PLO")]
+       for a in ("DLYR", "DLYF", "DLY", "PHI", "PLO")]
 
 
 def main(names):
@@ -279,7 +302,7 @@ def main(names):
             print(f"  skip {name} (no {f})"); continue
         cell = parse_cell(f)
         arch = name.split("_")[0]
-        draw = draw_delay if arch in ("DLYR", "DLYF") else draw_pulse
+        draw = draw_delay if arch in ("DLYR", "DLYF", "DLY") else draw_pulse
         draw(cell, name).write(OUT / f"{name}.sch")
         print(f"  drew {name}.sch ({len(cell['devs'])} devices)")
         made += 1

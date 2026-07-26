@@ -1,0 +1,40 @@
+.title pvt_DLY
+.include "../../../autohv_bicmos180_case.lib"
+.param case=0
+.option num_threads=2
+Vdd vdd 0 3.3
+Vin in 0 PULSE(0 3.3 20n 0.02n 0.02n 80n 400n)
+XI1 nIN in vdd vdd PMOS33 W=0.95u L=0.35u
+XI2 nIN in 0   0   NMOS33 W=0.4u L=0.35u
+XR nIN nC RPOLY_HI L=54.8438u W=0.5u
+XC nC 0 CMIM_HI L=5.3600u W=5.3600u
+XS1 s1 nC 0   0   NMOS33 W=0.4u L=0.35u
+XS2 out nC s1 0 NMOS33 W=0.4u L=0.35u
+XS3 s2 nC vdd vdd PMOS33 W=0.95u L=0.35u
+XS4 out nC s2 vdd PMOS33 W=0.95u L=0.35u
+XS5 vdd out s1 0   NMOS33 W=0.4u L=0.35u
+XS6 0   out s2 vdd PMOS33 W=0.95u L=0.35u
+CL out 0 5.0f
+.control
+foreach cs 0 1 2 3 4
+ foreach vd 2.970 3.300 3.630
+  foreach tp -55 27 150
+   alterparam case=$cs
+   reset
+   alter Vdd dc=$vd
+   alter Vin pulse=[ 0 $vd 20n 0.02n 0.02n 80n 400n ]
+   option temp=$tp
+   let h=$vd/2
+   let v10=0.1*$vd
+   let v90=0.9*$vd
+   tran 0.05n 200n
+   meas tran m  trig v(in) val=$&h rise=1 targ v(out) val=$&h rise=1
+   meas tran fe trig v(in) val=$&h fall=1 targ v(out) val=$&h fall=1
+   meas tran tr trig v(out) val=$&v10 rise=1 td=19n targ v(out) val=$&v90 rise=1 td=19n
+   meas tran tf trig v(out) val=$&v90 fall=1 td=99n targ v(out) val=$&v10 fall=1 td=99n
+   echo "RES cs=$cs vd=$vd tp=$tp m=$&m fe=$&fe tr=$&tr tf=$&tf"
+  end
+ end
+end
+.endc
+.end

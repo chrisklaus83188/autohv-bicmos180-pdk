@@ -5,7 +5,7 @@ V {}
 S {}
 E {}
 T {DLYF_5V0} 620 -280 0 0 0.6 0.6 {}
-T {body: circuits/delay_pulse_design/cells.lib (authority) | in -> inverter -> R -> nC -> Schmitt -> out ; XBP bypass} 620 -220 0 0 0.3 0.3 {}
+T {body: circuits/delay_pulse_design/cells.lib (authority) | in -> inverter -> R -> nC -> Schmitt -> out ; XBP bypass (one fast edge)} 620 -220 0 0 0.3 0.3 {}
 N 120 100 1580 100 {}
 C {iopin.sym} 120 100 0 0 {name=pz1 lab=vdd sim_pinnumber=3}
 N 120 860 1580 860 {}
