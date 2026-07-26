@@ -12,10 +12,64 @@ CLI:
     python pdk_validation/preflight.py --check    # + check the rated operating points
 """
 from __future__ import annotations
-import csv, sys
+import csv, re, sys
 from pathlib import Path
 
 CSV_PATH = Path(__file__).resolve().parent / "device_limits.csv"
+LIB_PATH = Path(__file__).resolve().parents[1] / "autohv_bicmos180_case.lib"
+
+# v2.2-defaults: which wrapper `params:` defaults must equal a device_limits minimum.
+# (M / MM_SIGMA are not size floors; not asserted.)
+_DEFAULT_PARAMS = ("W", "L", "AREA")
+
+
+def _um(tok: str):
+    """Parse a SPICE default value token ('0.40u', '3u', '5.4u', '0.04') -> float
+    in the CSV's unit (um for W/L, unitless for AREA)."""
+    m = re.match(r"^([-+0-9.eE]+)\s*([a-zA-Z]*)$", tok.strip())
+    if not m:
+        return None
+    v = float(m.group(1))
+    suf = m.group(2).lower()
+    scale = {"": 1.0, "u": 1.0, "um": 1.0, "n": 1e-3, "m": 1e3}.get(suf)
+    return v * scale if scale is not None else None
+
+
+def parse_wrapper_defaults(path: Path = LIB_PATH) -> dict[str, dict[str, float]]:
+    """device -> {param: default_value} from every `.subckt NAME ... params: ...` line."""
+    out: dict[str, dict[str, float]] = {}
+    for line in path.read_text().splitlines():
+        m = re.match(r"\.subckt\s+(\S+)\s+.*params:(.*)$", line)
+        if not m:
+            continue
+        dev, tail = m.group(1), m.group(2)
+        d = {}
+        for p in _DEFAULT_PARAMS:
+            mm = re.search(rf"\b{p}=(\S+)", tail)
+            if mm:
+                val = _um(mm.group(1))
+                if val is not None:
+                    d[p] = val
+        if d:
+            out[dev] = d
+    return out
+
+
+def check_defaults_equal_minima(lim: dict, defaults: dict | None = None) -> list[str]:
+    """Assert every wrapper `params:` default equals its device_limits minimum
+    (the v2.2-defaults contract: placing a device yields the smallest buildable one)."""
+    defaults = defaults if defaults is not None else parse_wrapper_defaults()
+    out = []
+    for dev, params in defaults.items():
+        dl = lim.get(dev, {})
+        for p, dval in params.items():
+            row = dl.get(p)
+            if row is None or not isinstance(row["min"], (int, float)):
+                out.append(f"{dev}.{p}: default {dval:g} but no device_limits minimum row")
+                continue
+            if abs(dval - row["min"]) > 1e-9 * max(1.0, abs(row["min"])):
+                out.append(f"{dev}.{p}: default {dval:g} != device_limits min {row['min']:g} {row['unit']}")
+    return out
 
 
 def load_limits(path: Path = CSV_PATH) -> dict[str, dict[str, dict]]:
@@ -93,6 +147,12 @@ def preflight_report(check_rated: bool = True) -> int:
     print(f"[preflight] device_limits.csv: {len(lim)} devices, "
           f"{sum(len(v) for v in lim.values())} limit rows, {n_rat} with abs-max ratings")
     problems = self_consistency(lim)
+    # v2.2-defaults: wrapper defaults must equal their device_limits minima.
+    dflt = parse_wrapper_defaults()
+    dmin = check_defaults_equal_minima(lim, dflt)
+    problems += dmin
+    print(f"[preflight] defaults=minima check: {len(dflt)} wrappers, "
+          f"{'OK -- every default equals its fabrication minimum' if not dmin else str(len(dmin))+' MISMATCH'}")
     if check_rated:
         for dev, bias in _RATED.items():
             problems += check_bias(dev, bias, lim)
