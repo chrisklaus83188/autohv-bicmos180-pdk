@@ -1,3 +1,36 @@
+## [v2.2-defaults] -- unreleased  (geometry minima & honest placement defaults)
+
+Establishes two size floors per device and flips placement defaults to the fabrication minimum.
+Models/anchors frozen at v2-grounded (untouched). Summary: `docs/geometry-minima.md`.
+
+### 2026-07-26 -- T1/T4a: ground geometry minima in device_limits.csv
+
+- Every geometry row now carries a basis tag. VDMOS Wmin 2.0->3.0 um [grounded] (ONC25 DRM HV min
+  gate width; sub-3um not buildable -- clamped). BJT AREAmin [grounded] per device: NPN_LV 0.04
+  (2x2um emitter), NPN_HV/PNP_HV/PNP_LAT 0.10 (3.2x3.2um). Diode/zener AREAmin 0.04 [derived]
+  (catalog silent). CMOS W/L unchanged (already 180nm-grounded); R/C [derived]; M floors [declared].
+- LOCAL_onc25_extraction.md PASS 4 (gitignored) carries the verbatim DRM/catalog geometry + page refs.
+
+### 2026-07-26 -- T3: flip wrapper + symbol defaults to fabrication minima
+
+- Safety sweep FIRST: zero default-reliant instantiations repo-wide (grep-verified; the one gallery,
+  device_sheet.sch, made explicit). Then flipped 40 wrapper .subckt `params:` defaults + 40 xschem
+  symbol templates to the minima. Model cards/bodies untouched (ground rule 1). Regression GREEN with
+  UNCHANGED numbers (flip is electrically invisible): 800/9/13/36.
+
+### 2026-07-26 -- T4b: limits-reader asserts defaults==minima; wired into regression
+
+- preflight.py: parse_wrapper_defaults() + check_defaults_equal_minima() -- every default must equal
+  its fabrication minimum (enforceable, negative-tested). Wired as a hard gate in regression.yml and
+  at run_smoke.py startup.
+
+### 2026-07-26 -- T5: sizing guide analog floor + VDMOS 3um floor
+
+- Sizing guide v5.0-v2.2-defaults: "min sensible (matched)" analog column per device (sigma(dI/I)=20%
+  MOS / sigma(dR/R),sigma(dC/C)=1% passives; thresholds in header). VDMOS mirror rows Wmin-clamped to
+  3um (NDMOS200 1uA/10uA off the old 2um floor); no row below the fab floor. geometry-minima.md two-
+  floor table added.
+
 ## [v2.1-circuits] -- unreleased  (circuits re-qualification onto v2-grounded)
 
 The design-era program: bring every `circuits/` library onto the frozen `v2-grounded` models.
