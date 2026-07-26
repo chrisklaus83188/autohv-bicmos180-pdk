@@ -65,10 +65,35 @@ claim-about-the-data, per the ruling, not the hand-editing GR2 bans. A few prose
 now own and that had shifted under `v2-grounded` (e.g. the 3.2 V mid-rail ICMR gap) were likewise
 generalised to point at the fence.
 
-**Residual (optional, same mechanism):** a handful of `MIRROR_CHAR.md` geometry/PVT tables (§1 phase-0
-L-sweep, §2 strategy A/B, §5 PVT range, §7 UVLO) restate `phase0.json`/`designs.json`/`metrics.csv`/
-`crosscheck.json` and are **not yet** fenced; they can be brought under the same module incrementally.
-The headline DC/MC/ICMR sign-off tables — what the brief flagged as "diffable" — are fenced.
+**Residual → fence-on-touch ruling (v2.2 close-out T4).** A handful of `MIRROR_CHAR.md` geometry/PVT
+tables (§1 phase-0 L-sweep, §2 strategy A/B, §5 PVT range, §7 UVLO) restate `phase0.json`/`designs.json`/
+`metrics.csv`/`crosscheck.json` and are **not yet** fenced. **Ruling (recorded here):** these un-fenced
+restated-data tables get brought under `report_refresh.py` by whatever session next edits that directory
+for another reason — **not as a standalone task**. The headline DC/MC/ICMR sign-off tables are already
+fenced. This is the standing "fence-on-touch" convention for the repo.
+
+### v2.2 close-out addendum — RR-comparator saturation (T3): the last unbacked sign-off table
+
+The rail-to-rail comparator READMEs carried an "always-on min Vds/Vdsat" table (5 V, 1.8 V) / prose
+(3.3 V) with **no machine backing** — the last instance of the unverifiable-sign-off class this program
+existed to eliminate. Closed: the existing RR-specific `run_saturation.py` (already handles the
+complementary NMOS+PMOS pairs — always-on fold/cascode/mirror/stage-2 devices held saturated over the
+full 0→VDD CM; input pairs exempt in hand-off) was given **JSON output + provenance** (the same orphan
+fix as GP Phase B) → `saturation_margin.json` per RR subdir, and the README tables were brought under
+the **`report_refresh.py` `rr_sat` fence** (`--check`-enforceable). All 16 fences pass.
+
+**Finding — margins hold; the hand-authored numbers were stale.** Under `v2-grounded` every RR always-on
+device clears its rule at every corner (no low-CM gap), as expected — the 50 V A_VT change moved
+mismatch, not saturation headroom. But the previously hand-authored numbers **did not match** the
+machine output and are now replaced by the fenced values:
+
+| rail | 3.2/2.97/1.62 V (brown-out) | nominal | +hi | note |
+|---|---|---|---|---|
+| RR-5V (rule >1.4) | 1.49 → **2.11** | 3.41 → 3.09 | 3.36 → 3.04 | all PASS; brown-out margin better than claimed |
+| RR-1.8V (rule >1.1) | 1.28 → **1.72** | 1.82 → 2.27 | 2.72 → 2.96 | clears even the stricter 1.4 — prose "just misses" corrected |
+| RR-3.3V (prose "min 3.63") | — | — | — | was prose-only + wrong (min is 3.27 @ FF, not 3.63 @ SS); now a fenced table |
+
+No model finding (headroom holds). This is a *report*/harness fix, not a model change.
 
 **Therefore:** "every circuit REPORT regenerated against the tagged models" and "staleness register empty"
 are now met — the script-generated reports were regenerated per phase, and the hand-authored reports'

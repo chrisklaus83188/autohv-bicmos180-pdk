@@ -282,9 +282,27 @@ def gen_mirror_mc(args: dict) -> str:
     return "\n".join(out)
 
 
+def gen_rr_sat(args: dict) -> str:
+    """Rail-to-rail always-on Vds/Vdsat margin per VDD (from run_saturation.py's
+    saturation_margin.json). RR is rail-to-rail by construction, so the sign-off is
+    the always-on-device margin over the full 0..VDD CM, not an ICMR band."""
+    sub = args["subdir"]
+    path = CMP / sub / "saturation_margin.json"
+    d = json.load(open(path))
+    thr = d.get("_provenance", {}).get("thresh")
+    out = [f"| VDD | always-on min Vds/Vdsat | binding corner | rule |", "|---|---|---|---|"]
+    for r in d["results"]:
+        val = f"{r['always_on_min']}" if r["pass"] else f"**{r['always_on_min']} FAIL**"
+        out.append(f"| {r['vdd']:g} V | {val} | {r.get('binding_corner','')} | >{thr:g} |")
+    out.append("")
+    out.append(_prov_from(path))
+    return "\n".join(out)
+
+
 GENERATORS = {
     "cmp_variant": gen_cmp_variant, "cmp_fin": gen_cmp_fin,
     "sat_margin": gen_sat_margin, "sat_icmr": gen_sat_icmr, "sat_joint": gen_sat_joint,
+    "rr_sat": gen_rr_sat,
     "char_variant": gen_char_variant, "char_icmr": gen_char_icmr,
     "mirror_dc": gen_mirror_dc, "mirror_mc": gen_mirror_mc,
 }

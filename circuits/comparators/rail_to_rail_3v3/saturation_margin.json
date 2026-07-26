@@ -1,0 +1,50 @@
+{
+  "_provenance": {
+    "model_tag": "v2-grounded",
+    "ngspice_version": "ngspice-45",
+    "variant": "gp",
+    "thresh": 1.4,
+    "corners": [
+      "SS",
+      "FS",
+      "SF",
+      "FF"
+    ],
+    "temps_C": [
+      -40,
+      27,
+      125
+    ],
+    "vdds": [
+      2.97,
+      3.3,
+      3.63
+    ],
+    "icmr": "rail-to-rail by construction (full 0..VDD CM); always-on-device margin is the sign-off, not an ICMR band"
+  },
+  "mode": "rr_margin",
+  "overall_pass": true,
+  "results": [
+    {
+      "vdd": 2.97,
+      "always_on_min": 3.31,
+      "active_pair_min": 0.88,
+      "binding_corner": "FF / +125 C",
+      "pass": true
+    },
+    {
+      "vdd": 3.3,
+      "always_on_min": 3.29,
+      "active_pair_min": 1.27,
+      "binding_corner": "FF / +125 C",
+      "pass": true
+    },
+    {
+      "vdd": 3.63,
+      "always_on_min": 3.27,
+      "active_pair_min": 1.65,
+      "binding_corner": "FF / +125 C",
+      "pass": true
+    }
+  ]
+}
