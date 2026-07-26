@@ -46,19 +46,33 @@ one confirmed ×2.4 (mirror σ), one localised (comparator σ — 5 V only), one
 insensitive to F6) and the mirror DC conclusions (PMOS50 λ untouched). **Nothing moved that wasn't
 expected.**
 
-**One item is intentionally open, by maintainer direction:** the **hand-authored reports that have no
-generator scripts** — the 6 comparator subdir READMEs (+ the 3 deeper GP-5V docs) and
-`current_mirror_char/MIRROR_CHAR.md` — were **not** regenerated. This conflicts with ground rule 2, and
-per the maintainer's ruling the mechanism decision was escalated rather than guessed:
-[`handoffs/HANDOFF_comparator_report_regeneration.md`](handoffs/HANDOFF_comparator_report_regeneration.md)
-(recommend Option A: marker-delimited table injection). Their **data layers are regenerated**; only the
-prose report files await that ruling. Every *script-generated* report in the tree (async, delay,
-delay-ramp README, HV level-shifter) **has** been regenerated against `v2-grounded`.
+**Ground Rule 2 amendment (RULED + IMPLEMENTED).** The escalation
+([`handoffs/HANDOFF_comparator_report_regeneration.md`](handoffs/HANDOFF_comparator_report_regeneration.md))
+was ruled **Option A: marker-delimited table injection**. The amendment to GR2, recorded here as the
+standard for the repo: *where a report has no generator, its data tables live inside provenance-stamped
+`<!-- AUTOGEN:… -->` fences refreshed by the shared `circuits/report_refresh.py`; the hand-authored
+prose is preserved verbatim outside the fences; a `--check` mode makes staleness enforceable.* Every
+measured number thus traces to a script's output while the design prose (topology diagrams, rationale)
+— never GR2's target — is untouched. Backfilling the async reports (which already have generators) with
+this pattern is available but out of scope for this program.
 
-**Therefore:** the acceptance items "every circuit REPORT regenerated" and "staleness register empty"
-are met for all script-backed libraries and **pending the report-mechanism ruling** for the two
-hand-authored-report directories (comparators, mirror), which are marked *data-done / reports-pending*
-in the staleness register. The `v2.1-circuits` tag should be applied once those land.
+**Implemented:** `circuits/report_refresh.py` (one shared module; `--check` gate; provenance —
+`model_tag`/`ngspice_version`/`N` — inside every fence). **13 fences** across 8 reports: the 6 comparator
+README variant tables, the GP-5V FIN / CHARACTERIZATION §3+§4 / SATURATION_SIGNOFF ICMR+joint tables, and
+`MIRROR_CHAR.md` §3 (DC) + §6 (MC). Prose sample-count claims (GP-5V "500-run", MIRROR "9 000 runs", the
+per-domain "200-run", etc.) were rewritten to defer to the fenced table — the one-time removal of a stale
+claim-about-the-data, per the ruling, not the hand-editing GR2 bans. A few prose figures that the fences
+now own and that had shifted under `v2-grounded` (e.g. the 3.2 V mid-rail ICMR gap) were likewise
+generalised to point at the fence.
+
+**Residual (optional, same mechanism):** a handful of `MIRROR_CHAR.md` geometry/PVT tables (§1 phase-0
+L-sweep, §2 strategy A/B, §5 PVT range, §7 UVLO) restate `phase0.json`/`designs.json`/`metrics.csv`/
+`crosscheck.json` and are **not yet** fenced; they can be brought under the same module incrementally.
+The headline DC/MC/ICMR sign-off tables — what the brief flagged as "diffable" — are fenced.
+
+**Therefore:** "every circuit REPORT regenerated against the tagged models" and "staleness register empty"
+are now met — the script-generated reports were regenerated per phase, and the hand-authored reports'
+sign-off tables are regenerated via the fence mechanism. The `v2.1-circuits` tag can be applied.
 
 **Regression suite: GREEN** (re-run after all five phases) — smoke 800/800, passives 9/9, transients
 13/13, corners 36/36, matching the `v2-grounded` baseline. The circuits re-qualification touched only

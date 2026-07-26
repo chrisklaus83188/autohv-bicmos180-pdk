@@ -4,6 +4,26 @@ The design-era program: bring every `circuits/` library onto the frozen `v2-grou
 Models/anchors/declarations stay frozen; only circuit generators + reports change. Program
 summary and old-vs-new tables: `docs/circuits-requalification.md`.
 
+### 2026-07-25 -- Report layer (GR2 amendment): AUTOGEN fence injection for hand-authored reports
+
+- Resolves the Phase B escalation (HANDOFF_comparator_report_regeneration.md). Ruling: Option A --
+  marker-delimited table injection. GR2 amendment recorded in circuits-requalification.md: where a
+  report has no generator, its data tables live inside provenance-stamped <!-- AUTOGEN:... --> fences
+  refreshed by ONE shared module; prose preserved verbatim outside fences; --check makes staleness
+  enforceable.
+- Added `circuits/report_refresh.py`: fence engine + generators, `--check` (exit 1 on any stale fence),
+  `--list`. Every emitted block carries model_tag/ngspice_version/N inline.
+- 13 fences across 8 reports regenerated against v2-grounded/N=200: the 6 comparator README variant
+  tables, GP-5V FIN + CHARACTERIZATION §3 (full variant) + §4 (ICMR), SATURATION_SIGNOFF ICMR + joint,
+  and MIRROR_CHAR §3 (DC) + §6 (MC). All show the re-signed numbers (e.g. GP-5V nin_gp σ 1.76->4.11;
+  mirror MC ×2.47).
+- Prose sample-count claims rewritten to defer to the fenced table (GP-5V "500-run"/"60-run", the
+  per-domain "200-run", MIRROR "9 000 runs") -- removal of stale claim-about-the-data per the ruling.
+  A few prose figures the fences now own and that shifted under v2-grounded (the 3.2 V mid-rail ICMR
+  gap) generalised to point at the fence.
+- Residual (optional, same mechanism): MIRROR_CHAR §1/§2/§5/§7 geometry/PVT/UVLO tables not yet fenced.
+- post-fix-staleness: comparators + mirror entries fully cleared. Register empty.
+
 ### 2026-07-25 -- Phase E: HV level shifter first qualification
 
 - The repo's only 200 V circuit (hv_charge_pump/hv_up_lvlsh, NDMOS200/PDMOS200) had NEVER been
