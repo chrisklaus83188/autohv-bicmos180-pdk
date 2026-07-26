@@ -6,9 +6,9 @@ S {}
 E {}
 T {PLO_3V3} 620 -280 0 0 0.6 0.6 {}
 T {body: circuits/delay_pulse_design/cells.lib (authority) | delay core (out=dco) + inverter + 2-input gate + out inverter} 620 -220 0 0 0.3 0.3 {}
-N 120 100 2620 100 {}
+N 120 100 2760 100 {}
 C {iopin.sym} 120 100 0 0 {name=pz1 lab=vdd sim_pinnumber=3}
-N 120 860 2620 860 {}
+N 120 860 2760 860 {}
 C {iopin.sym} 120 860 0 0 {name=pz2 lab=gnd sim_pinnumber=4}
 C {autohv/PMOS33.sym} 280 280 2 1 {name=I1 model=PMOS33 W=0.95u L=0.35u}
 T {I1} 220 170 0 0 0.28 0.28 {}
@@ -104,47 +104,52 @@ N 1800 280 1800 500 {}
 N 1800 500 1800 720 {}
 C {lab_pin.sym} 1860 500 0 0 {name=lz14 lab=dbar}
 N 1660 500 1800 500 {}
-C {autohv/PMOS33.sym} 2080 280 2 1 {name=G1 model=PMOS33 W=0.95u L=0.35u}
-T {G1} 2020 170 0 0 0.28 0.28 {}
-N 2100 280 2100 240 {}
-C {autohv/PMOS33.sym} 2080 440 2 1 {name=G2 model=PMOS33 W=0.95u L=0.35u}
-T {G2} 2020 330 0 0 0.28 0.28 {}
-C {lab_pin.sym} 2100 440 0 0 {name=lz15 lab=vdd}
-N 2100 100 2100 240 {}
-N 2100 320 2100 400 {}
-C {autohv/NMOS33.sym} 2080 700 0 0 {name=G3 model=NMOS33 W=0.4u L=0.35u}
-T {G3} 2020 590 0 0 0.28 0.28 {}
-N 2100 700 2100 740 {}
-C {autohv/NMOS33.sym} 2260 700 0 0 {name=G4 model=NMOS33 W=0.4u L=0.35u}
-T {G4} 2200 590 0 0 0.28 0.28 {}
-N 2280 700 2280 740 {}
-N 2100 740 2100 860 {}
-N 2280 740 2280 860 {}
-N 2100 660 2280 660 {}
-N 2100 480 2100 500 {}
-N 2100 500 2100 660 {}
-C {lab_pin.sym} 2100 360 0 0 {name=lz16 lab=p1}
-C {lab_pin.sym} 2040 280 0 0 {name=lz17 lab=in}
-C {lab_pin.sym} 2040 440 0 0 {name=lz18 lab=dbar}
-C {lab_pin.sym} 2040 700 0 0 {name=lz19 lab=in}
-C {lab_pin.sym} 2220 700 0 0 {name=lz20 lab=dbar}
-C {lab_pin.sym} 2100 500 0 0 {name=lz21 lab=nnr}
-C {autohv/PMOS33.sym} 2480 280 2 1 {name=O1 model=PMOS33 W=0.95u L=0.35u}
-T {O1} 2420 170 0 0 0.28 0.28 {}
-N 2500 280 2500 240 {}
-C {autohv/NMOS33.sym} 2480 720 0 0 {name=O2 model=NMOS33 W=0.4u L=0.35u}
-T {O2} 2420 610 0 0 0.28 0.28 {}
-N 2500 720 2500 760 {}
-N 2500 100 2500 240 {}
-N 2500 760 2500 860 {}
-N 2500 320 2500 500 {}
-N 2500 500 2500 680 {}
-N 2440 280 2440 500 {}
-N 2440 500 2440 720 {}
-C {lab_pin.sym} 2500 500 0 0 {name=lz22 lab=out}
-N 2100 500 2440 500 {}
-N 2500 500 2600 500 {}
-C {opin.sym} 2600 500 0 0 {name=pz23 lab=out sim_pinnumber=2}
+C {autohv/PMOS33.sym} 2160 280 2 1 {name=G1 model=PMOS33 W=0.95u L=0.35u}
+T {G1} 2100 170 0 0 0.28 0.28 {}
+N 2180 280 2180 240 {}
+C {autohv/PMOS33.sym} 2160 460 2 1 {name=G2 model=PMOS33 W=0.95u L=0.35u}
+T {G2} 2100 350 0 0 0.28 0.28 {}
+C {lab_pin.sym} 2180 460 0 0 {name=lz15 lab=vdd}
+C {autohv/NMOS33.sym} 2160 740 0 0 {name=G3 model=NMOS33 W=0.4u L=0.35u}
+T {G3} 2100 630 0 0 0.28 0.28 {}
+N 2180 740 2180 780 {}
+C {autohv/NMOS33.sym} 2360 740 0 0 {name=G4 model=NMOS33 W=0.4u L=0.35u}
+T {G4} 2300 630 0 0 0.28 0.28 {}
+N 2380 740 2380 780 {}
+N 2180 100 2180 240 {}
+N 2180 320 2180 420 {}
+C {lab_pin.sym} 2180 370 0 0 {name=lz16 lab=p1}
+N 2180 780 2180 860 {}
+N 2380 780 2380 860 {}
+N 2180 700 2380 700 {}
+N 2180 500 2180 700 {}
+N 2120 280 2080 280 {}
+N 2080 280 2080 740 {}
+N 2080 740 2120 740 {}
+C {lab_pin.sym} 2080 500 0 0 {name=lz17 lab=in}
+N 1860 500 2000 500 {}
+N 2000 460 2000 500 {}
+N 2000 500 2000 820 {}
+N 2000 460 2120 460 {}
+N 2000 820 2320 820 {}
+N 2320 820 2320 740 {}
+C {lab_pin.sym} 2180 500 0 0 {name=lz18 lab=nnr}
+C {autohv/PMOS33.sym} 2560 280 2 1 {name=O1 model=PMOS33 W=0.95u L=0.35u}
+T {O1} 2500 170 0 0 0.28 0.28 {}
+N 2580 280 2580 240 {}
+C {autohv/NMOS33.sym} 2560 720 0 0 {name=O2 model=NMOS33 W=0.4u L=0.35u}
+T {O2} 2500 610 0 0 0.28 0.28 {}
+N 2580 720 2580 760 {}
+N 2580 100 2580 240 {}
+N 2580 760 2580 860 {}
+N 2580 320 2580 500 {}
+N 2580 500 2580 680 {}
+N 2520 280 2520 500 {}
+N 2520 500 2520 720 {}
+C {lab_pin.sym} 2580 500 0 0 {name=lz19 lab=out}
+N 2180 500 2520 500 {}
+N 2580 500 2680 500 {}
+C {opin.sym} 2680 500 0 0 {name=pz20 lab=out sim_pinnumber=2}
 T {* inverter (dco->dbar)} 1780 -40 0 0 0.4 0.4 {}
-T {* 2-input gate} 2080 -40 0 0 0.4 0.4 {}
-T {* output inverter} 2440 -40 0 0 0.4 0.4 {}
+T {* 2-input gate (in | dbar)} 2100 -40 0 0 0.4 0.4 {}
+T {* output inverter} 2520 -40 0 0 0.4 0.4 {}

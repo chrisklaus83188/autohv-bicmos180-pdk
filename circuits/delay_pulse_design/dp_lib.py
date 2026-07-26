@@ -102,15 +102,21 @@ CL_FF = 5.0          # output load (fF) = fanout-of-1
 
 # transistor count by archetype, for the layout-area estimate
 #   delay core = INV1(2) + bypass(1) + Schmitt(6) = 9
+#   two-sided DLY drops the bypass FET = 8
 #   PHI/PLO    = core(9) + inv(2) + 2-input gate(4) + out inv(2) = 17
-NDEV = {"DLYR": 9, "DLYF": 9, "PHI": 17, "PLO": 17}
+NDEV = {"DLYR": 9, "DLYF": 9, "DLY": 8, "PHI": 17, "PLO": 17}
 # poly columns (device-width pitch count) for the layout box estimate
-NCOLS = {"DLYR": 5, "DLYF": 5, "PHI": 9, "PLO": 9}
+NCOLS = {"DLYR": 5, "DLYF": 5, "DLY": 4, "PHI": 9, "PLO": 9}
 
+# The 4 edge-asymmetric archetypes drive all the 12-cell report loops. The
+# two-sided DLY cell is characterized alongside (TWO_SIDED) but kept out of
+# ARCHES so those loops -- built around a fast "passthrough" edge -- stay valid.
 ARCHES = ["DLYR", "DLYF", "PHI", "PLO"]
+TWO_SIDED = ["DLY"]
 ARCH_LONG = {
     "DLYR": "rising-edge delay / falling passthrough",
     "DLYF": "falling-edge delay / rising passthrough",
+    "DLY":  "two-sided delay: BOTH edges RC-delayed (no bypass)",
     "PHI":  "HIGH pulse on rising edge / falling passthrough",
     "PLO":  "LOW pulse on falling edge / rising passthrough",
 }
@@ -156,7 +162,8 @@ def parse_res(out):
 def core_netlist(arch, dom, lr, cl, cw, outnode):
     """Delay core: 'in' -> outnode (delayed copy of in).
     arch 'DLYR'/'PHI' use a pull-UP bypass (fast falling out);
-    arch 'DLYF'/'PLO' use a pull-DOWN bypass (fast rising out)."""
+    arch 'DLYF'/'PLO' use a pull-DOWN bypass (fast rising out);
+    arch 'DLY' has NO bypass -> both edges are RC-delayed (two-sided)."""
     n, p, Lg = dom["n"], dom["p"], dom["Lg"]
     wn, wp, wbp = dom["wn"], dom["wp"], dom["wbp"]
     up = arch in ("DLYR", "PHI")
@@ -168,11 +175,13 @@ def core_netlist(arch, dom, lr, cl, cw, outnode):
     # RC node
     s.append(f"XR nIN nC RPOLY_HI L={lr:.4f}u W={WR}u")
     s.append(f"XC nC 0 CMIM_HI L={cl:.4f}u W={cw:.4f}u")
-    # bypass for the fast edge
-    if up:
-        s.append(f"XBP nC in vdd vdd {p} W={wbp}u L={L}")   # pull up when in low
-    else:
-        s.append(f"XBP nC in 0 0 {n} W={wbp}u L={L}")       # pull down when in high
+    # bypass for the fast edge (omitted for the two-sided DLY cell so BOTH
+    # edges see the RC delay)
+    if arch != "DLY":
+        if up:
+            s.append(f"XBP nC in vdd vdd {p} W={wbp}u L={L}")   # pull up when in low
+        else:
+            s.append(f"XBP nC in 0 0 {n} W={wbp}u L={L}")       # pull down when in high
     # 6T Schmitt trigger (inverting): outnode = !nC
     s.append(f"XS1 s1 nC 0   0   {n} W={wn}u L={L}")
     s.append(f"XS2 {outnode} nC s1 0 {n} W={wn}u L={L}")
@@ -188,7 +197,7 @@ def cell_netlist(arch, dom, lr, cl, cw):
     n, p, Lg = dom["n"], dom["p"], dom["Lg"]
     wn, wp = dom["wn"], dom["wp"]
     L = f"{Lg}u"
-    if arch in ("DLYR", "DLYF"):
+    if arch in ("DLYR", "DLYF", "DLY"):
         return core_netlist(arch, dom, lr, cl, cw, "out")
     # pulse cells: core -> dco, invert -> dbar, combine with 'in'
     s = [core_netlist(arch, dom, lr, cl, cw, "dco")]
@@ -251,7 +260,8 @@ def meas_nominal(arch, dom, lr, cl, cw):
 
 def target_metric(arch):
     """Which measured quantity must equal 20 ns for this archetype."""
-    return {"DLYR": "tdr", "DLYF": "tdf", "PHI": "pw", "PLO": "pw"}[arch]
+    return {"DLYR": "tdr", "DLYF": "tdf", "DLY": "tdr",
+            "PHI": "pw", "PLO": "pw"}[arch]
 
 
 def size_lr(arch, dom, cl, cw, target_ns=20.0, lr_lo=10.0, lr_hi=150.0, tol=0.02):
@@ -297,6 +307,7 @@ def area(arch, dom, lr, cl, cw):
 # ---------------------------------------------------------------- measurement
 # Output-edge search windows (td) per archetype: (rise_td, fall_td).
 _EDGE_TD = {"DLYR": ("19n", "99n"), "DLYF": ("19n", "99n"),
+            "DLY": ("19n", "99n"),
             "PHI": ("19n", "19n"), "PLO": ("99n", "99n")}
 
 
@@ -318,6 +329,9 @@ def _loop_meas(arch):
     elif arch == "DLYR":
         L.append("meas tran m  trig v(in) val=$&h rise=1 targ v(out) val=$&h rise=1")
         L.append("meas tran fe trig v(in) val=$&h fall=1 targ v(out) val=$&h fall=1")
+    elif arch == "DLY":   # two-sided: m = rising-edge delay, fe = falling-edge
+        L.append("meas tran m  trig v(in) val=$&h rise=1 targ v(out) val=$&h rise=1")
+        L.append("meas tran fe trig v(in) val=$&h fall=1 targ v(out) val=$&h fall=1")
     else:  # DLYF
         L.append("meas tran m  trig v(in) val=$&h fall=1 targ v(out) val=$&h fall=1")
         L.append("meas tran fe trig v(in) val=$&h rise=1 targ v(out) val=$&h rise=1")
@@ -327,7 +341,7 @@ def _loop_meas(arch):
 
 
 # ---------------------------------------------------------------- PVT sweep
-def char_pvt(arch, dom, lr, cl, cw):
+def char_pvt(arch, dom, lr, cl, cw, timeout=900):
     """Full 5-corner x 3-supply x 3-temp transient sweep. Returns list of dicts.
     Supplies = dom['vlist'] (1.8/3.3 V: +-10%; 5 V: 3.2/5.0/5.5 V).
     Temperatures = -55 / 27 / 150 C. Process = TT,FF,SS,FS,SF."""
@@ -353,11 +367,11 @@ def char_pvt(arch, dom, lr, cl, cw):
             "   tran 0.05n 200n\n" + mlines +
             f'   echo "RES cs=$cs vd=$vd tp=$tp {keys}"\n'
             "  end\n end\nend\n.endc\n.end\n")
-    return parse_res(run(deck, f"pvt_{arch}_{dom['n']}"))
+    return parse_res(run(deck, f"pvt_{arch}_{dom['n']}", timeout=timeout))
 
 
 # ---------------------------------------------------------------- Monte Carlo
-def char_mc(arch, dom, lr, cl, cw, n=200):
+def char_mc(arch, dom, lr, cl, cw, n=200, timeout=900):
     """Monte Carlo at the typical corner (case=0/TT, nominal Vdd, 27 C) with
     BOTH die-to-die process (PROC_ON=1) and local mismatch (MM_ON=1) enabled.
     Each iteration does reset (re-randomizes all AGAUSS draws) + tran + meas.
@@ -381,4 +395,4 @@ def char_mc(arch, dom, lr, cl, cw, n=200):
             f'  echo "RES it=$&i {keys}"\n'
             "  let i = i + 1\n"
             "end\n.endc\n.end\n")
-    return parse_res(run(deck, f"mc_{arch}_{dom['n']}"))
+    return parse_res(run(deck, f"mc_{arch}_{dom['n']}", timeout=timeout))

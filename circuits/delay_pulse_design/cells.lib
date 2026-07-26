@@ -8,6 +8,7 @@
 * Archetypes:
 *   DLYR_<D>  rising-edge delay,  falling-edge passthrough   (non-inverting)
 *   DLYF_<D>  falling-edge delay, rising-edge  passthrough   (non-inverting)
+*   DLY_<D>   two-sided delay: BOTH edges RC-delayed (no bypass)  (non-inverting)
 *   PHI_<D>   logic-HIGH pulse on rising edge, falling-edge passthrough
 *   PLO_<D>   logic-LOW  pulse on falling edge, rising-edge  passthrough
 *   <D> = 1V8 / 3V3 / 5V0
@@ -36,17 +37,20 @@
 * ---- 1.8 V domain ----
 .include "cells/DLYR_1V8.lib"
 .include "cells/DLYF_1V8.lib"
+.include "cells/DLY_1V8.lib"
 .include "cells/PHI_1V8.lib"
 .include "cells/PLO_1V8.lib"
 
 * ---- 3.3 V domain ----
 .include "cells/DLYR_3V3.lib"
 .include "cells/DLYF_3V3.lib"
+.include "cells/DLY_3V3.lib"
 .include "cells/PHI_3V3.lib"
 .include "cells/PLO_3V3.lib"
 
 * ---- 5.0 V domain ----
 .include "cells/DLYR_5V0.lib"
 .include "cells/DLYF_5V0.lib"
+.include "cells/DLY_5V0.lib"
 .include "cells/PHI_5V0.lib"
 .include "cells/PLO_5V0.lib"

@@ -6,9 +6,9 @@ S {}
 E {}
 T {PHI_1V8} 620 -280 0 0 0.6 0.6 {}
 T {body: circuits/delay_pulse_design/cells.lib (authority) | delay core (out=dco) + inverter + 2-input gate + out inverter} 620 -220 0 0 0.3 0.3 {}
-N 120 100 2620 100 {}
+N 120 100 2760 100 {}
 C {iopin.sym} 120 100 0 0 {name=pz1 lab=vdd sim_pinnumber=3}
-N 120 860 2620 860 {}
+N 120 860 2760 860 {}
 C {iopin.sym} 120 860 0 0 {name=pz2 lab=gnd sim_pinnumber=4}
 C {autohv/PMOS18.sym} 280 280 2 1 {name=I1 model=PMOS18 W=0.7u L=0.18u}
 T {I1} 220 170 0 0 0.28 0.28 {}
@@ -104,47 +104,51 @@ N 1800 280 1800 500 {}
 N 1800 500 1800 720 {}
 C {lab_pin.sym} 1860 500 0 0 {name=lz14 lab=dbar}
 N 1660 500 1800 500 {}
-C {autohv/PMOS18.sym} 2080 280 2 1 {name=G1 model=PMOS18 W=0.7u L=0.18u}
-T {G1} 2020 170 0 0 0.28 0.28 {}
-N 2100 280 2100 240 {}
-C {autohv/PMOS18.sym} 2260 280 2 1 {name=G2 model=PMOS18 W=0.7u L=0.18u}
-T {G2} 2200 170 0 0 0.28 0.28 {}
-N 2280 280 2280 240 {}
-N 2100 100 2100 240 {}
-N 2280 100 2280 240 {}
-N 2100 320 2280 320 {}
-C {autohv/NMOS18.sym} 2080 580 0 0 {name=G3 model=NMOS18 W=0.3u L=0.18u}
-T {G3} 2020 470 0 0 0.28 0.28 {}
-C {lab_pin.sym} 2100 580 0 0 {name=lz15 lab=gnd}
-C {autohv/NMOS18.sym} 2080 740 0 0 {name=G4 model=NMOS18 W=0.3u L=0.18u}
-T {G4} 2020 630 0 0 0.28 0.28 {}
-N 2100 740 2100 780 {}
-N 2100 320 2100 500 {}
-N 2100 500 2100 540 {}
-N 2100 620 2100 700 {}
-N 2100 780 2100 860 {}
-C {lab_pin.sym} 2100 660 0 0 {name=lz16 lab=q}
-C {lab_pin.sym} 2040 280 0 0 {name=lz17 lab=in}
-C {lab_pin.sym} 2220 280 0 0 {name=lz18 lab=dbar}
-C {lab_pin.sym} 2040 580 0 0 {name=lz19 lab=in}
-C {lab_pin.sym} 2040 740 0 0 {name=lz20 lab=dbar}
-C {lab_pin.sym} 2100 500 0 0 {name=lz21 lab=nnd}
-C {autohv/PMOS18.sym} 2480 280 2 1 {name=O1 model=PMOS18 W=0.7u L=0.18u}
-T {O1} 2420 170 0 0 0.28 0.28 {}
-N 2500 280 2500 240 {}
-C {autohv/NMOS18.sym} 2480 720 0 0 {name=O2 model=NMOS18 W=0.3u L=0.18u}
-T {O2} 2420 610 0 0 0.28 0.28 {}
-N 2500 720 2500 760 {}
-N 2500 100 2500 240 {}
-N 2500 760 2500 860 {}
-N 2500 320 2500 500 {}
-N 2500 500 2500 680 {}
-N 2440 280 2440 500 {}
-N 2440 500 2440 720 {}
-C {lab_pin.sym} 2500 500 0 0 {name=lz22 lab=out}
-N 2100 500 2440 500 {}
-N 2500 500 2600 500 {}
-C {opin.sym} 2600 500 0 0 {name=pz23 lab=out sim_pinnumber=2}
+C {autohv/PMOS18.sym} 2160 280 2 1 {name=G1 model=PMOS18 W=0.7u L=0.18u}
+T {G1} 2100 170 0 0 0.28 0.28 {}
+N 2180 280 2180 240 {}
+C {autohv/PMOS18.sym} 2360 280 2 1 {name=G2 model=PMOS18 W=0.7u L=0.18u}
+T {G2} 2300 170 0 0 0.28 0.28 {}
+N 2380 280 2380 240 {}
+C {autohv/NMOS18.sym} 2160 560 0 0 {name=G3 model=NMOS18 W=0.3u L=0.18u}
+T {G3} 2100 450 0 0 0.28 0.28 {}
+C {lab_pin.sym} 2180 560 0 0 {name=lz15 lab=gnd}
+C {autohv/NMOS18.sym} 2160 740 0 0 {name=G4 model=NMOS18 W=0.3u L=0.18u}
+T {G4} 2100 630 0 0 0.28 0.28 {}
+N 2180 740 2180 780 {}
+N 2180 100 2180 240 {}
+N 2380 100 2380 240 {}
+N 2180 320 2380 320 {}
+N 2180 320 2180 500 {}
+N 2180 500 2180 520 {}
+N 2180 600 2180 700 {}
+C {lab_pin.sym} 2180 650 0 0 {name=lz16 lab=q}
+N 2180 780 2180 860 {}
+N 2120 280 2120 560 {}
+C {lab_pin.sym} 2120 420 0 0 {name=lz17 lab=in}
+N 1860 500 2000 500 {}
+N 2000 180 2000 500 {}
+N 2000 500 2000 740 {}
+N 2000 180 2320 180 {}
+N 2320 180 2320 280 {}
+N 2000 740 2120 740 {}
+C {lab_pin.sym} 2180 500 0 0 {name=lz18 lab=nnd}
+C {autohv/PMOS18.sym} 2560 280 2 1 {name=O1 model=PMOS18 W=0.7u L=0.18u}
+T {O1} 2500 170 0 0 0.28 0.28 {}
+N 2580 280 2580 240 {}
+C {autohv/NMOS18.sym} 2560 720 0 0 {name=O2 model=NMOS18 W=0.3u L=0.18u}
+T {O2} 2500 610 0 0 0.28 0.28 {}
+N 2580 720 2580 760 {}
+N 2580 100 2580 240 {}
+N 2580 760 2580 860 {}
+N 2580 320 2580 500 {}
+N 2580 500 2580 680 {}
+N 2520 280 2520 500 {}
+N 2520 500 2520 720 {}
+C {lab_pin.sym} 2580 500 0 0 {name=lz19 lab=out}
+N 2180 500 2520 500 {}
+N 2580 500 2680 500 {}
+C {opin.sym} 2680 500 0 0 {name=pz20 lab=out sim_pinnumber=2}
 T {* inverter (dco->dbar)} 1780 -40 0 0 0.4 0.4 {}
-T {* 2-input gate} 2080 -40 0 0 0.4 0.4 {}
-T {* output inverter} 2440 -40 0 0 0.4 0.4 {}
+T {* 2-input gate (in | dbar)} 2100 -40 0 0 0.4 0.4 {}
+T {* output inverter} 2520 -40 0 0 0.4 0.4 {}

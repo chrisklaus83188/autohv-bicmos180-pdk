@@ -5,6 +5,7 @@ import dp_lib as D
 DOMTAG = {"1v8": "1.8 V", "3v3": "3.3 V", "5v0": "5.0 V"}
 TAG = {"1v8": "1V8", "3v3": "3V3", "5v0": "5V0"}
 METRIC_NAME = {"DLYR": "rise delay", "DLYF": "fall delay",
+               "DLY": "delay (both edges)",
                "PHI": "HIGH-pulse width", "PLO": "LOW-pulse width"}
 
 
@@ -41,9 +42,13 @@ def area_exact(arch, dkey, lr, cl, cw):
     plus 1 resistor (lr x WR) and 1 MIM cap (cl x cw)."""
     dom = D.DOMAINS[dkey]
     Lg, wn, wp, wbp = dom["Lg"], dom["wn"], dom["wp"], dom["wbp"]
-    nwp, nwn = (4, 4) if arch in ("DLYR", "DLYF") else (8, 8)
-    a_fet = Lg * (nwp * wp + nwn * wn + wbp)
-    n_fet = 9 if arch in ("DLYR", "DLYF") else 17
+    if arch == "DLY":                       # two-sided: no bypass FET
+        nwp, nwn, nbp, n_fet = 4, 4, 0, 8
+    elif arch in ("DLYR", "DLYF"):
+        nwp, nwn, nbp, n_fet = 4, 4, 1, 9
+    else:
+        nwp, nwn, nbp, n_fet = 8, 8, 1, 17
+    a_fet = Lg * (nwp * wp + nwn * wn + nbp * wbp)
     a_res = lr * D.WR
     a_cap = cl * cw
     return dict(fet=a_fet, res=a_res, cap=a_cap, total=a_fet + a_res + a_cap,
@@ -72,10 +77,86 @@ def histogram(samples, width=46, bins=14):
     return out
 
 
+def dly_section(res):
+    """Dedicated section for the two-sided DLY cells: both edges are real RC
+    delays (no fast passthrough, no pulse), so rise and fall are reported as
+    two independent delays. Rendered only when char.json carries DLY data."""
+    doms = ("1v8", "3v3", "5v0")
+    if not all("DLY" in res.get(dk, {}) for dk in doms):
+        return []
+    L = []; A = L.append
+    A("## 8. Two-sided delay cells (DLY)\n")
+    A("`DLY_<D>` is the delay core with the capacitor's shunt/bypass FET "
+      "removed, so **both** the rising and the falling edge are RC-delayed -- "
+      "there is no fast passthrough edge. The resistor is centered between the "
+      "`DLYR` rise-tuned and `DLYF` fall-tuned values so each edge lands near "
+      "20 ns at nominal. Identical ngspice flow, PDK models and PVT/MC matrix "
+      "as the cells above; rise and fall are reported as two real delays.\n")
+
+    A("### 8.1  Nominal both-edge delay & area\n")
+    A("| Cell | R L (um) | rise delay | fall delay | # devices | FETs (um^2) "
+      "| resistor (um^2) | MIM cap (um^2) | **total (um^2)** |")
+    A("|---|---|---|---|---|---|---|---|---|")
+    for dk in doms:
+        r = res[dk]["DLY"]; nom = r["nominal"]
+        ar = area_exact("DLY", dk, float(r["lr_um"]), float(r["cl_um"]),
+                        float(r["cw_um"]))
+        A(f"| {cell(dk,'DLY')} | {float(r['lr_um']):.2f} | {ns(nom.get('m'))} ns "
+          f"| {ns(nom.get('fe'))} ns | {ar['n_dev']} ({ar['n_fet']} FET + R + C) "
+          f"| {ar['fet']:.2f} | {ar['res']:.1f} | {ar['cap']:.1f} "
+          f"| **{ar['total']:.1f}** |")
+    A("\n<sub>One fewer transistor than `DLYR`/`DLYF` (the bypass FET is gone); "
+      "area is otherwise identical -- still RC-bound at ~55 um^2.</sub>\n")
+
+    A("### 8.2  PVT envelope (both edges, 45 points/cell)\n")
+    A("| Cell | edge | nominal | min (corner) | max (corner) | t_rise/fall max |")
+    A("|---|---|---|---|---|---|")
+    for dk in doms:
+        r = res[dk]["DLY"]; nom = r["nominal"]
+        tr = r["pvt"]["tr"]; tf = r["pvt"]["tf"]
+        for edge, key, et in (("rise", "m", tr), ("fall", "fe", tf)):
+            pm = r["pvt"][key]
+            A(f"| {cell(dk,'DLY')} | {edge} delay | {ns(nom.get(key))} ns "
+              f"| {ns(pm['min'])} ns ({pm['min_at']}) "
+              f"| {ns(pm['max'])} ns ({pm['max_at']}) "
+              f"| {ps(et['max']) if et else '-'} ps |")
+    A("")
+
+    A("### 8.3  Monte Carlo (TT, process + mismatch, "
+      f"{res['1v8']['DLY']['mc']['m']['n']} runs)\n")
+    A("| Cell | edge | mean | sigma | sigma/mean | min | max | 1%..99% |")
+    A("|---|---|---|---|---|---|---|---|")
+    for dk in doms:
+        r = res[dk]["DLY"]
+        for edge, key in (("rise", "m"), ("fall", "fe")):
+            m = r["mc"][key]
+            if not m:
+                A(f"| {cell(dk,'DLY')} | {edge} | n/a |"); continue
+            A(f"| {cell(dk,'DLY')} | {edge} delay | {ns(m['mean'])} ns "
+              f"| {m['std']*1e12:.0f} ps | {m['rel']*100:.2f}% | {ns(m['min'])} "
+              f"| {ns(m['max'])} | {ns(m['p1'])}..{ns(m['p99'])} |")
+    A("")
+
+    A("### 8.4  Rising-edge delay distribution (Monte Carlo)\n")
+    for dk in doms:
+        m = res[dk]["DLY"]["mc"]["m"]
+        if not m or "samples" not in m:
+            continue
+        samp = [float(x) for x in m["samples"]]
+        A(f"**{cell(dk,'DLY')}** (rise delay): mean {ns(m['mean'])} ns, "
+          f"sigma {m['std']*1e12:.0f} ps ({m['rel']*100:.2f}%)")
+        A("```")
+        for ln in histogram(samp):
+            A(ln)
+        A("```\n")
+    return L
+
+
 def report(res):
     L = []; A = L.append
     A("# Delay & Pulse-Generator Cell Characterization Report")
-    A("### AutoHV BiCMOS 180 PDK | 12 cells (4 archetypes x 3 voltage domains)\n")
+    A("### AutoHV BiCMOS 180 PDK | 12 edge-asymmetric + 3 two-sided delay cells "
+      "(5 archetypes x 3 voltage domains)\n")
     _p = res.get("_provenance", {})
     A(f"<sub>Models: **{_p.get('model_tag','v2-grounded')}** (frozen) · simulator: "
       f"**{_p.get('ngspice_version','ngspice-45')}** · {_p.get('n_mc',200)}-run MC.</sub>\n")
@@ -93,6 +174,7 @@ def report(res):
     A("| `DLYF_<D>` | falling-edge delay, rising-edge passthrough |")
     A("| `PHI_<D>`  | HIGH pulse on rising edge, falling-edge passthrough |")
     A("| `PLO_<D>`  | LOW pulse on falling edge, rising-edge passthrough |")
+    A("| `DLY_<D>`  | two-sided delay: BOTH edges RC-delayed (no bypass) -- see section 8 |")
     A("\n`<D>` = `1V8`/`3V3`/`5V0`. Each cell was sized for ~20 ns at nominal; "
       "this report measures how that timing moves over PVT and statistics.\n")
 
@@ -215,7 +297,8 @@ def report(res):
     rels = [res[dk][a]["mc"]["m"]["rel"]*100 for dk in _DOMS for a in D.ARCHES
             if res[dk][a]["mc"]["m"]]
     A(f"- **MC spread is tight**: 1-sigma on the delay/width is "
-      f"{min(rels):.1f}-{max(rels):.1f}% of the mean across all 12 cells. The "
+      f"{min(rels):.1f}-{max(rels):.1f}% of the mean across the 12 edge-"
+      f"asymmetric cells (the two-sided DLY family is in section 8). The "
       "timing is an RC product and the MIM cap (sigma_Cj ~ 0.1%) and poly Rsh "
       "are well controlled; most of the statistical spread comes from the "
       "Schmitt-trip (device Vth mismatch) rather than the RC itself.")
@@ -240,10 +323,15 @@ def report(res):
       "the poly resistor + MIM cap that set the time constant; the transistors "
       "are ~1-3 um^2. Area scales with the target delay (longer delay -> larger "
       "RC -> more area), essentially independent of voltage domain.")
-    A("\n## 8. Files\n")
+    # ------------------------------------------------------------ two-sided DLY
+    L.extend(dly_section(res))
+
+    A("\n## 9. Files\n")
     A("- `char.json` - full numeric results (PVT envelopes, MC stats, raw MC "
-      "samples). `dp_char.py` - characterization driver. `char_report.py` - "
-      "this report. `decks/pvt_*`, `decks/mc_*` - the generated ngspice decks.")
+      "samples). `dp_char.py` - characterization driver for the 12 edge-"
+      "asymmetric cells; `dp_char_dly.py` - the two-sided DLY driver (merges "
+      "into `char.json`). `char_report.py` - this report. `decks/pvt_*`, "
+      "`decks/mc_*` - the generated ngspice decks.")
     return "\n".join(L) + "\n"
 
 
