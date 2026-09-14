@@ -1,0 +1,1096 @@
+{
+ "provenance": {
+  "model_tag": "v2-grounded",
+  "ngspice_version": "ngspice-45",
+  "step": "02_ratio",
+  "case": "TT",
+  "temp_C": 27,
+  "supply": "nominal"
+ },
+ "ratios": [
+  1.0,
+  1.5,
+  2.0,
+  2.5,
+  3.0,
+  3.5,
+  4.0,
+  5.0,
+  6.0,
+  8.0
+ ],
+ "wtots_um": [
+  2.0,
+  20.0
+ ],
+ "domains": {
+  "1v8": {
+   "srcbody": {
+    "2.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 1.0,
+       "wp_um": 1.0,
+       "ron_peak_ohm": 6515.37349,
+       "worst_level_V": 1.17,
+       "ron_at_0_ohm": 1054.37058,
+       "ron_at_vdd_ohm": 3494.74406
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 0.8,
+       "wp_um": 1.2,
+       "ron_peak_ohm": 5627.02024,
+       "worst_level_V": 1.134,
+       "ron_at_0_ohm": 1329.94231,
+       "ron_at_vdd_ohm": 2886.11318
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 0.6666666666666666,
+       "wp_um": 1.3333333333333333,
+       "ron_peak_ohm": 5230.43339,
+       "worst_level_V": 1.098,
+       "ron_at_0_ohm": 1608.35801,
+       "ron_at_vdd_ohm": 2584.34879
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 0.5714285714285714,
+       "wp_um": 1.4285714285714286,
+       "ron_peak_ohm": 5047.82407,
+       "worst_level_V": 1.08,
+       "ron_at_0_ohm": 1889.4436,
+       "ron_at_vdd_ohm": 2404.16305
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 0.5,
+       "wp_um": 1.5,
+       "ron_peak_ohm": 4978.04864,
+       "worst_level_V": 1.044,
+       "ron_at_0_ohm": 2173.10944,
+       "ron_at_vdd_ohm": 2284.42711
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 0.4444444444444444,
+       "wp_um": 1.5555555555555556,
+       "ron_peak_ohm": 5287.28633,
+       "worst_level_V": 0.81,
+       "ron_at_0_ohm": 2459.30791,
+       "ron_at_vdd_ohm": 2199.09409
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 0.4,
+       "wp_um": 1.6,
+       "ron_peak_ohm": 5768.04192,
+       "worst_level_V": 0.774,
+       "ron_at_0_ohm": 2748.0123,
+       "ron_at_vdd_ohm": 2135.21705
+      },
+      {
+       "ratio": 5.0,
+       "wn_um": 0.3333333333333333,
+       "wp_um": 1.6666666666666667,
+       "ron_peak_ohm": 6763.88705,
+       "worst_level_V": 0.756,
+       "ron_at_0_ohm": 3332.95614,
+       "ron_at_vdd_ohm": 2045.94045
+      },
+      {
+       "ratio": 6.0,
+       "wn_um": 0.2857142857142857,
+       "wp_um": 1.7142857142857142,
+       "ron_peak_ohm": 7783.38749,
+       "worst_level_V": 0.738,
+       "ron_at_0_ohm": 3928.00649,
+       "ron_at_vdd_ohm": 1986.53429
+      },
+      {
+       "ratio": 8.0,
+       "wn_um": 0.2222222222222222,
+       "wp_um": 1.7777777777777777,
+       "ron_peak_ohm": 9858.34714,
+       "worst_level_V": 0.702,
+       "ron_at_0_ohm": 5149.11763,
+       "ron_at_vdd_ohm": 1912.40743
+      }
+     ],
+     "best_ratio": 3.0
+    },
+    "20.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 10.0,
+       "wp_um": 10.0,
+       "ron_peak_ohm": 506.435671,
+       "worst_level_V": 1.224,
+       "ron_at_0_ohm": 98.0776879,
+       "ron_at_vdd_ohm": 319.646864
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 8.0,
+       "wp_um": 12.0,
+       "ron_peak_ohm": 434.30591,
+       "worst_level_V": 1.206,
+       "ron_at_0_ohm": 123.161045,
+       "ron_at_vdd_ohm": 265.312087
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 6.666666666666667,
+       "wp_um": 13.333333333333334,
+       "ron_peak_ohm": 400.985398,
+       "worst_level_V": 1.17,
+       "ron_at_0_ohm": 148.418508,
+       "ron_at_vdd_ohm": 238.283983
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 5.714285714285714,
+       "wp_um": 14.285714285714286,
+       "ron_peak_ohm": 383.82155,
+       "worst_level_V": 1.152,
+       "ron_at_0_ohm": 173.831724,
+       "ron_at_vdd_ohm": 222.113008
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 5.0,
+       "wp_um": 15.0,
+       "ron_peak_ohm": 374.709294,
+       "worst_level_V": 1.116,
+       "ron_at_0_ohm": 199.385283,
+       "ron_at_vdd_ohm": 211.352372
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 4.444444444444445,
+       "wp_um": 15.555555555555555,
+       "ron_peak_ohm": 400.68798,
+       "worst_level_V": 0.72,
+       "ron_at_0_ohm": 225.065832,
+       "ron_at_vdd_ohm": 203.675744
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 4.0,
+       "wp_um": 16.0,
+       "ron_peak_ohm": 440.981973,
+       "worst_level_V": 0.702,
+       "ron_at_0_ohm": 250.86146,
+       "ron_at_vdd_ohm": 197.924833
+      },
+      {
+       "ratio": 5.0,
+       "wn_um": 3.3333333333333335,
+       "wp_um": 16.666666666666668,
+       "ron_peak_ohm": 523.231005,
+       "worst_level_V": 0.684,
+       "ron_at_0_ohm": 302.76235,
+       "ron_at_vdd_ohm": 189.88039
+      },
+      {
+       "ratio": 6.0,
+       "wn_um": 2.857142857142857,
+       "wp_um": 17.142857142857142,
+       "ron_peak_ohm": 606.117948,
+       "worst_level_V": 0.666,
+       "ron_at_0_ohm": 355.023742,
+       "ron_at_vdd_ohm": 184.522873
+      },
+      {
+       "ratio": 8.0,
+       "wn_um": 2.2222222222222223,
+       "wp_um": 17.77777777777778,
+       "ron_peak_ohm": 773.560793,
+       "worst_level_V": 0.648,
+       "ron_at_0_ohm": 460.445532,
+       "ron_at_vdd_ohm": 177.832318
+      }
+     ],
+     "best_ratio": 3.0
+    }
+   },
+   "rail": {
+    "2.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 1.0,
+       "wp_um": 1.0,
+       "ron_peak_ohm": 16657.8883,
+       "worst_level_V": 1.026,
+       "ron_at_0_ohm": 1054.37258,
+       "ron_at_vdd_ohm": 3494.72208
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 0.8,
+       "wp_um": 1.2,
+       "ron_peak_ohm": 15598.4363,
+       "worst_level_V": 0.99,
+       "ron_at_0_ohm": 1329.94549,
+       "ron_at_vdd_ohm": 2886.09819
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 0.6666666666666666,
+       "wp_um": 1.3333333333333333,
+       "ron_peak_ohm": 15579.517,
+       "worst_level_V": 0.972,
+       "ron_at_0_ohm": 1608.36266,
+       "ron_at_vdd_ohm": 2584.33677
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 0.5714285714285714,
+       "wp_um": 1.4285714285714286,
+       "ron_peak_ohm": 15997.0915,
+       "worst_level_V": 0.954,
+       "ron_at_0_ohm": 1889.45003,
+       "ron_at_vdd_ohm": 2404.15265
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 0.5,
+       "wp_um": 1.5,
+       "ron_peak_ohm": 16639.0069,
+       "worst_level_V": 0.936,
+       "ron_at_0_ohm": 2173.11794,
+       "ron_at_vdd_ohm": 2284.41772
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 0.4444444444444444,
+       "wp_um": 1.5555555555555556,
+       "ron_peak_ohm": 17382.8426,
+       "worst_level_V": 0.936,
+       "ron_at_0_ohm": 2459.3188,
+       "ron_at_vdd_ohm": 2199.08539
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 0.4,
+       "wp_um": 1.6,
+       "ron_peak_ohm": 18335.2216,
+       "worst_level_V": 0.918,
+       "ron_at_0_ohm": 2748.02589,
+       "ron_at_vdd_ohm": 2135.20885
+      },
+      {
+       "ratio": 5.0,
+       "wn_um": 0.3333333333333333,
+       "wp_um": 1.6666666666666667,
+       "ron_peak_ohm": 20272.4837,
+       "worst_level_V": 0.9,
+       "ron_at_0_ohm": 3332.97614,
+       "ron_at_vdd_ohm": 2045.93291
+      },
+      {
+       "ratio": 6.0,
+       "wn_um": 0.2857142857142857,
+       "wp_um": 1.7142857142857142,
+       "ron_peak_ohm": 22300.0857,
+       "worst_level_V": 0.882,
+       "ron_at_0_ohm": 3928.03427,
+       "ron_at_vdd_ohm": 1986.52718
+      },
+      {
+       "ratio": 8.0,
+       "wn_um": 0.2222222222222222,
+       "wp_um": 1.7777777777777777,
+       "ron_peak_ohm": 26582.113,
+       "worst_level_V": 0.864,
+       "ron_at_0_ohm": 5149.16536,
+       "ron_at_vdd_ohm": 1912.40085
+      }
+     ],
+     "best_ratio": 2.0
+    },
+    "20.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 10.0,
+       "wp_um": 10.0,
+       "ron_peak_ohm": 958.047602,
+       "worst_level_V": 1.08,
+       "ron_at_0_ohm": 98.0777052,
+       "ron_at_vdd_ohm": 319.646681
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 8.0,
+       "wp_um": 12.0,
+       "ron_peak_ohm": 857.862492,
+       "worst_level_V": 1.044,
+       "ron_at_0_ohm": 123.161072,
+       "ron_at_vdd_ohm": 265.311961
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 6.666666666666667,
+       "wp_um": 13.333333333333334,
+       "ron_peak_ohm": 826.442525,
+       "worst_level_V": 1.026,
+       "ron_at_0_ohm": 148.418547,
+       "ron_at_vdd_ohm": 238.283881
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 5.714285714285714,
+       "wp_um": 14.285714285714286,
+       "ron_peak_ohm": 829.599897,
+       "worst_level_V": 0.99,
+       "ron_at_0_ohm": 173.831779,
+       "ron_at_vdd_ohm": 222.11292
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 5.0,
+       "wp_um": 15.0,
+       "ron_peak_ohm": 854.546298,
+       "worst_level_V": 0.954,
+       "ron_at_0_ohm": 199.385355,
+       "ron_at_vdd_ohm": 211.352292
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 4.444444444444445,
+       "wp_um": 15.555555555555555,
+       "ron_peak_ohm": 900.206046,
+       "worst_level_V": 0.918,
+       "ron_at_0_ohm": 225.065923,
+       "ron_at_vdd_ohm": 203.67567
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 4.0,
+       "wp_um": 16.0,
+       "ron_peak_ohm": 959.436099,
+       "worst_level_V": 0.9,
+       "ron_at_0_ohm": 250.861573,
+       "ron_at_vdd_ohm": 197.924763
+      },
+      {
+       "ratio": 5.0,
+       "wn_um": 3.3333333333333335,
+       "wp_um": 16.666666666666668,
+       "ron_peak_ohm": 1099.62922,
+       "worst_level_V": 0.864,
+       "ron_at_0_ohm": 302.762515,
+       "ron_at_vdd_ohm": 189.880325
+      },
+      {
+       "ratio": 6.0,
+       "wn_um": 2.857142857142857,
+       "wp_um": 17.142857142857142,
+       "ron_peak_ohm": 1248.80047,
+       "worst_level_V": 0.846,
+       "ron_at_0_ohm": 355.023969,
+       "ron_at_vdd_ohm": 184.522812
+      },
+      {
+       "ratio": 8.0,
+       "wn_um": 2.2222222222222223,
+       "wp_um": 17.77777777777778,
+       "ron_peak_ohm": 1555.6949,
+       "worst_level_V": 0.828,
+       "ron_at_0_ohm": 460.445914,
+       "ron_at_vdd_ohm": 177.832262
+      }
+     ],
+     "best_ratio": 2.0
+    }
+   }
+  },
+  "3v3": {
+   "srcbody": {
+    "2.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 1.0,
+       "wp_um": 1.0,
+       "ron_peak_ohm": 9221.10223,
+       "worst_level_V": 2.475,
+       "ron_at_0_ohm": 2357.52781,
+       "ron_at_vdd_ohm": 7280.04575
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 0.8,
+       "wp_um": 1.2,
+       "ron_peak_ohm": 7684.76903,
+       "worst_level_V": 2.442,
+       "ron_at_0_ohm": 2988.92378,
+       "ron_at_vdd_ohm": 5992.7351
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 0.6666666666666666,
+       "wp_um": 1.3333333333333333,
+       "ron_peak_ohm": 6933.25934,
+       "worst_level_V": 2.442,
+       "ron_at_0_ohm": 3634.22657,
+       "ron_at_vdd_ohm": 5358.208
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 0.5714285714285714,
+       "wp_um": 1.4285714285714286,
+       "ron_peak_ohm": 6498.55821,
+       "worst_level_V": 2.409,
+       "ron_at_0_ohm": 4293.48053,
+       "ron_at_vdd_ohm": 4980.46547
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 0.5,
+       "wp_um": 1.5,
+       "ron_peak_ohm": 6535.96099,
+       "worst_level_V": 0.957,
+       "ron_at_0_ohm": 4966.8989,
+       "ron_at_vdd_ohm": 4729.9093
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 0.4444444444444444,
+       "wp_um": 1.5555555555555556,
+       "ron_peak_ohm": 7392.00663,
+       "worst_level_V": 0.957,
+       "ron_at_0_ohm": 5654.78609,
+       "ron_at_vdd_ohm": 4551.56323
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 0.4,
+       "wp_um": 1.6,
+       "ron_peak_ohm": 8254.70011,
+       "worst_level_V": 0.924,
+       "ron_at_0_ohm": 6357.49871,
+       "ron_at_vdd_ohm": 4418.17799
+      },
+      {
+       "ratio": 5.0,
+       "wn_um": 0.3333333333333333,
+       "wp_um": 1.6666666666666667,
+       "ron_peak_ohm": 10038.6606,
+       "worst_level_V": 0.924,
+       "ron_at_0_ohm": 7809.17905,
+       "ron_at_vdd_ohm": 4231.92108
+      }
+     ],
+     "best_ratio": 2.5
+    },
+    "20.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 10.0,
+       "wp_um": 10.0,
+       "ron_peak_ohm": 796.206768,
+       "worst_level_V": 2.574,
+       "ron_at_0_ohm": 216.754211,
+       "ron_at_vdd_ohm": 660.138888
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 8.0,
+       "wp_um": 12.0,
+       "ron_peak_ohm": 667.018744,
+       "worst_level_V": 2.541,
+       "ron_at_0_ohm": 272.172284,
+       "ron_at_vdd_ohm": 548.098023
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 6.666666666666667,
+       "wp_um": 13.333333333333334,
+       "ron_peak_ohm": 603.699779,
+       "worst_level_V": 2.541,
+       "ron_at_0_ohm": 327.985121,
+       "ron_at_vdd_ohm": 492.347615
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 5.714285714285714,
+       "wp_um": 14.285714285714286,
+       "ron_peak_ohm": 566.850536,
+       "worst_level_V": 2.508,
+       "ron_at_0_ohm": 384.158486,
+       "ron_at_vdd_ohm": 458.985575
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 5.0,
+       "wp_um": 15.0,
+       "ron_peak_ohm": 555.018334,
+       "worst_level_V": 0.891,
+       "ron_at_0_ohm": 440.663799,
+       "ron_at_vdd_ohm": 436.782587
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 4.444444444444445,
+       "wp_um": 15.555555555555555,
+       "ron_peak_ohm": 624.753576,
+       "worst_level_V": 0.858,
+       "ron_at_0_ohm": 497.476328,
+       "ron_at_vdd_ohm": 420.941489
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 4.0,
+       "wp_um": 16.0,
+       "ron_peak_ohm": 694.685576,
+       "worst_level_V": 0.858,
+       "ron_at_0_ohm": 554.57394,
+       "ron_at_vdd_ohm": 409.073349
+      },
+      {
+       "ratio": 5.0,
+       "wn_um": 3.3333333333333335,
+       "wp_um": 16.666666666666668,
+       "ron_peak_ohm": 835.254471,
+       "worst_level_V": 0.825,
+       "ron_at_0_ohm": 669.560087,
+       "ron_at_vdd_ohm": 392.470788
+      },
+      {
+       "ratio": 6.0,
+       "wn_um": 2.857142857142857,
+       "wp_um": 17.142857142857142,
+       "ron_peak_ohm": 977.308547,
+       "worst_level_V": 0.825,
+       "ron_at_0_ohm": 785.505196,
+       "ron_at_vdd_ohm": 381.412808
+      },
+      {
+       "ratio": 8.0,
+       "wn_um": 2.2222222222222223,
+       "wp_um": 17.77777777777778,
+       "ron_peak_ohm": 1262.80079,
+       "worst_level_V": 0.792,
+       "ron_at_0_ohm": 1019.94493,
+       "ron_at_vdd_ohm": 367.602445
+      }
+     ],
+     "best_ratio": 3.0
+    }
+   },
+   "rail": {
+    "2.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 1.0,
+       "wp_um": 1.0,
+       "ron_peak_ohm": 14753.555,
+       "worst_level_V": 2.112,
+       "ron_at_0_ohm": 2357.54615,
+       "ron_at_vdd_ohm": 7279.87086
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 0.8,
+       "wp_um": 1.2,
+       "ron_peak_ohm": 12449.7013,
+       "worst_level_V": 2.079,
+       "ron_at_0_ohm": 2988.95326,
+       "ron_at_vdd_ohm": 5992.61659
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 0.6666666666666666,
+       "wp_um": 1.3333333333333333,
+       "ron_peak_ohm": 11374.8219,
+       "worst_level_V": 2.079,
+       "ron_at_0_ohm": 3634.27015,
+       "ron_at_vdd_ohm": 5358.11326
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 0.5714285714285714,
+       "wp_um": 1.4285714285714286,
+       "ron_peak_ohm": 10775.2367,
+       "worst_level_V": 2.046,
+       "ron_at_0_ohm": 4293.54136,
+       "ron_at_vdd_ohm": 4980.38361
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 0.5,
+       "wp_um": 1.5,
+       "ron_peak_ohm": 10755.4825,
+       "worst_level_V": 1.386,
+       "ron_at_0_ohm": 4966.98031,
+       "ron_at_vdd_ohm": 4729.83547
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 0.4444444444444444,
+       "wp_um": 1.5555555555555556,
+       "ron_peak_ohm": 12068.5127,
+       "worst_level_V": 1.353,
+       "ron_at_0_ohm": 5654.89162,
+       "ron_at_vdd_ohm": 4551.49487
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 0.4,
+       "wp_um": 1.6,
+       "ron_peak_ohm": 13392.7025,
+       "worst_level_V": 1.32,
+       "ron_at_0_ohm": 6357.6321,
+       "ron_at_vdd_ohm": 4418.11358
+      },
+      {
+       "ratio": 5.0,
+       "wn_um": 0.3333333333333333,
+       "wp_um": 1.6666666666666667,
+       "ron_peak_ohm": 16146.4814,
+       "worst_level_V": 1.32,
+       "ron_at_0_ohm": 7809.3803,
+       "ron_at_vdd_ohm": 4231.86198
+      }
+     ],
+     "best_ratio": 3.0
+    },
+    "20.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 10.0,
+       "wp_um": 10.0,
+       "ron_peak_ohm": 1184.31439,
+       "worst_level_V": 2.211,
+       "ron_at_0_ohm": 216.754366,
+       "ron_at_vdd_ohm": 660.13745
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 8.0,
+       "wp_um": 12.0,
+       "ron_peak_ohm": 1001.41656,
+       "worst_level_V": 2.178,
+       "ron_at_0_ohm": 272.172529,
+       "ron_at_vdd_ohm": 548.097031
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 6.666666666666667,
+       "wp_um": 13.333333333333334,
+       "ron_peak_ohm": 913.726958,
+       "worst_level_V": 2.145,
+       "ron_at_0_ohm": 327.985476,
+       "ron_at_vdd_ohm": 492.346815
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 5.714285714285714,
+       "wp_um": 14.285714285714286,
+       "ron_peak_ohm": 865.04316,
+       "worst_level_V": 2.145,
+       "ron_at_0_ohm": 384.158973,
+       "ron_at_vdd_ohm": 458.98488
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 5.0,
+       "wp_um": 15.0,
+       "ron_peak_ohm": 846.390706,
+       "worst_level_V": 1.287,
+       "ron_at_0_ohm": 440.664439,
+       "ron_at_vdd_ohm": 436.781957
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 4.444444444444445,
+       "wp_um": 15.555555555555555,
+       "ron_peak_ohm": 947.403093,
+       "worst_level_V": 1.287,
+       "ron_at_0_ohm": 497.477145,
+       "ron_at_vdd_ohm": 420.940904
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 4.0,
+       "wp_um": 16.0,
+       "ron_peak_ohm": 1051.56471,
+       "worst_level_V": 1.254,
+       "ron_at_0_ohm": 554.574955,
+       "ron_at_vdd_ohm": 409.072797
+      },
+      {
+       "ratio": 5.0,
+       "wn_um": 3.3333333333333335,
+       "wp_um": 16.666666666666668,
+       "ron_peak_ohm": 1258.31568,
+       "worst_level_V": 1.221,
+       "ron_at_0_ohm": 669.561566,
+       "ron_at_vdd_ohm": 392.47028
+      },
+      {
+       "ratio": 6.0,
+       "wn_um": 2.857142857142857,
+       "wp_um": 17.142857142857142,
+       "ron_peak_ohm": 1470.91269,
+       "worst_level_V": 1.221,
+       "ron_at_0_ohm": 785.507233,
+       "ron_at_vdd_ohm": 381.412328
+      },
+      {
+       "ratio": 8.0,
+       "wn_um": 2.2222222222222223,
+       "wp_um": 17.77777777777778,
+       "ron_peak_ohm": 1893.41799,
+       "worst_level_V": 1.221,
+       "ron_at_0_ohm": 1019.94837,
+       "ron_at_vdd_ohm": 367.601999
+      }
+     ],
+     "best_ratio": 3.0
+    }
+   }
+  },
+  "5v0": {
+   "srcbody": {
+    "2.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 1.0,
+       "wp_um": 1.0,
+       "ron_peak_ohm": 18203.7267,
+       "worst_level_V": 3.95,
+       "ron_at_0_ohm": 5628.0937,
+       "ron_at_vdd_ohm": 15506.6155
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 0.8,
+       "wp_um": 1.2,
+       "ron_peak_ohm": 15003.0794,
+       "worst_level_V": 3.9,
+       "ron_at_0_ohm": 7227.06409,
+       "ron_at_vdd_ohm": 12651.2395
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 0.6666666666666666,
+       "wp_um": 1.3333333333333333,
+       "ron_peak_ohm": 13440.209,
+       "worst_level_V": 3.85,
+       "ron_at_0_ohm": 8903.71254,
+       "ron_at_vdd_ohm": 11262.1069
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 0.5714285714285714,
+       "wp_um": 1.4285714285714286,
+       "ron_peak_ohm": 12691.8891,
+       "worst_level_V": 1.2,
+       "ron_at_0_ohm": 10662.7599,
+       "ron_at_vdd_ohm": 10440.8004
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 0.5,
+       "wp_um": 1.5,
+       "ron_peak_ohm": 14770.3622,
+       "worst_level_V": 1.2,
+       "ron_at_0_ohm": 12509.8547,
+       "ron_at_vdd_ohm": 9898.34398
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 0.4444444444444444,
+       "wp_um": 1.5555555555555556,
+       "ron_peak_ohm": 16915.2172,
+       "worst_level_V": 1.2,
+       "ron_at_0_ohm": 14451.4593,
+       "ron_at_vdd_ohm": 9513.34327
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 0.4,
+       "wp_um": 1.6,
+       "ron_peak_ohm": 19143.9644,
+       "worst_level_V": 1.15,
+       "ron_at_0_ohm": 16494.8358,
+       "ron_at_vdd_ohm": 9226.00798
+      }
+     ],
+     "best_ratio": 2.5
+    },
+    "20.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 10.0,
+       "wp_um": 10.0,
+       "ron_peak_ohm": 1531.58212,
+       "worst_level_V": 4.1,
+       "ron_at_0_ohm": 495.031627,
+       "ron_at_vdd_ohm": 1341.86333
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 8.0,
+       "wp_um": 12.0,
+       "ron_peak_ohm": 1278.21494,
+       "worst_level_V": 4.05,
+       "ron_at_0_ohm": 622.390545,
+       "ron_at_vdd_ohm": 1113.14486
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 6.666666666666667,
+       "wp_um": 13.333333333333334,
+       "ron_peak_ohm": 1152.49734,
+       "worst_level_V": 4.05,
+       "ron_at_0_ohm": 750.968441,
+       "ron_at_vdd_ohm": 999.481549
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 5.714285714285714,
+       "wp_um": 14.285714285714286,
+       "ron_peak_ohm": 1079.70438,
+       "worst_level_V": 4.0,
+       "ron_at_0_ohm": 880.687959,
+       "ron_at_vdd_ohm": 931.509758
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 5.0,
+       "wp_um": 15.0,
+       "ron_peak_ohm": 1183.80305,
+       "worst_level_V": 1.05,
+       "ron_at_0_ohm": 1011.48497,
+       "ron_at_vdd_ohm": 886.292744
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 4.444444444444445,
+       "wp_um": 15.555555555555555,
+       "ron_peak_ohm": 1336.11486,
+       "worst_level_V": 1.05,
+       "ron_at_0_ohm": 1143.30438,
+       "ron_at_vdd_ohm": 854.041376
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 4.0,
+       "wp_um": 16.0,
+       "ron_peak_ohm": 1489.00137,
+       "worst_level_V": 1.05,
+       "ron_at_0_ohm": 1276.0972,
+       "ron_at_vdd_ohm": 829.883855
+      },
+      {
+       "ratio": 5.0,
+       "wn_um": 3.3333333333333335,
+       "wp_um": 16.666666666666668,
+       "ron_peak_ohm": 1796.23935,
+       "worst_level_V": 1.05,
+       "ron_at_0_ohm": 1544.46376,
+       "ron_at_vdd_ohm": 796.096917
+      },
+      {
+       "ratio": 6.0,
+       "wn_um": 2.857142857142857,
+       "wp_um": 17.142857142857142,
+       "ron_peak_ohm": 2109.00456,
+       "worst_level_V": 1.0,
+       "ron_at_0_ohm": 1816.33358,
+       "ron_at_vdd_ohm": 773.598285
+      },
+      {
+       "ratio": 8.0,
+       "wn_um": 2.2222222222222223,
+       "wp_um": 17.77777777777778,
+       "ron_peak_ohm": 2743.2507,
+       "worst_level_V": 1.0,
+       "ron_at_0_ohm": 2369.91073,
+       "ron_at_vdd_ohm": 745.505084
+      }
+     ],
+     "best_ratio": 2.5
+    }
+   },
+   "rail": {
+    "2.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 1.0,
+       "wp_um": 1.0,
+       "ron_peak_ohm": 27308.122,
+       "worst_level_V": 3.35,
+       "ron_at_0_ohm": 5628.25208,
+       "ron_at_vdd_ohm": 15505.4133
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 0.8,
+       "wp_um": 1.2,
+       "ron_peak_ohm": 22669.1261,
+       "worst_level_V": 3.3,
+       "ron_at_0_ohm": 7227.32525,
+       "ron_at_vdd_ohm": 12650.4392
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 0.6666666666666666,
+       "wp_um": 1.3333333333333333,
+       "ron_peak_ohm": 20484.447,
+       "worst_level_V": 3.3,
+       "ron_at_0_ohm": 8904.10893,
+       "ron_at_vdd_ohm": 11261.4728
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 0.5714285714285714,
+       "wp_um": 1.4285714285714286,
+       "ron_peak_ohm": 19225.5339,
+       "worst_level_V": 3.25,
+       "ron_at_0_ohm": 10663.3284,
+       "ron_at_vdd_ohm": 10440.2554
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 0.5,
+       "wp_um": 1.5,
+       "ron_peak_ohm": 22130.3284,
+       "worst_level_V": 1.85,
+       "ron_at_0_ohm": 12510.6372,
+       "ron_at_vdd_ohm": 9897.85412
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 0.4444444444444444,
+       "wp_um": 1.5555555555555556,
+       "ron_peak_ohm": 25196.7231,
+       "worst_level_V": 1.85,
+       "ron_at_0_ohm": 14452.5036,
+       "ron_at_vdd_ohm": 9512.89077
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 0.4,
+       "wp_um": 1.6,
+       "ron_peak_ohm": 28366.755,
+       "worst_level_V": 1.8,
+       "ron_at_0_ohm": 16496.1964,
+       "ron_at_vdd_ohm": 9225.5824
+      }
+     ],
+     "best_ratio": 2.5
+    },
+    "20.0": {
+     "rows": [
+      {
+       "ratio": 1.0,
+       "wn_um": 10.0,
+       "wp_um": 10.0,
+       "ron_peak_ohm": 2173.15436,
+       "worst_level_V": 3.5,
+       "ron_at_0_ohm": 495.032853,
+       "ron_at_vdd_ohm": 1341.85433
+      },
+      {
+       "ratio": 1.5,
+       "wn_um": 8.0,
+       "wp_um": 12.0,
+       "ron_peak_ohm": 1824.08244,
+       "worst_level_V": 3.45,
+       "ron_at_0_ohm": 622.392482,
+       "ron_at_vdd_ohm": 1113.13866
+      },
+      {
+       "ratio": 2.0,
+       "wn_um": 6.666666666666667,
+       "wp_um": 13.333333333333334,
+       "ron_peak_ohm": 1652.96885,
+       "worst_level_V": 3.45,
+       "ron_at_0_ohm": 750.971261,
+       "ron_at_vdd_ohm": 999.476554
+      },
+      {
+       "ratio": 2.5,
+       "wn_um": 5.714285714285714,
+       "wp_um": 14.285714285714286,
+       "ron_peak_ohm": 1557.80331,
+       "worst_level_V": 3.4,
+       "ron_at_0_ohm": 880.691837,
+       "ron_at_vdd_ohm": 931.505419
+      },
+      {
+       "ratio": 3.0,
+       "wn_um": 5.0,
+       "wp_um": 15.0,
+       "ron_peak_ohm": 1694.22625,
+       "worst_level_V": 1.75,
+       "ron_at_0_ohm": 1011.49008,
+       "ron_at_vdd_ohm": 886.288816
+      },
+      {
+       "ratio": 3.5,
+       "wn_um": 4.444444444444445,
+       "wp_um": 15.555555555555555,
+       "ron_peak_ohm": 1908.41595,
+       "worst_level_V": 1.7,
+       "ron_at_0_ohm": 1143.31092,
+       "ron_at_vdd_ohm": 854.037729
+      },
+      {
+       "ratio": 4.0,
+       "wn_um": 4.0,
+       "wp_um": 16.0,
+       "ron_peak_ohm": 2126.14012,
+       "worst_level_V": 1.7,
+       "ron_at_0_ohm": 1276.10534,
+       "ron_at_vdd_ohm": 829.880412
+      },
+      {
+       "ratio": 5.0,
+       "wn_um": 3.3333333333333335,
+       "wp_um": 16.666666666666668,
+       "ron_peak_ohm": 2562.5297,
+       "worst_level_V": 1.7,
+       "ron_at_0_ohm": 1544.47568,
+       "ron_at_vdd_ohm": 796.093748
+      },
+      {
+       "ratio": 6.0,
+       "wn_um": 2.857142857142857,
+       "wp_um": 17.142857142857142,
+       "ron_peak_ohm": 3000.44637,
+       "worst_level_V": 1.65,
+       "ron_at_0_ohm": 1816.35007,
+       "ron_at_vdd_ohm": 773.595292
+      },
+      {
+       "ratio": 8.0,
+       "wn_um": 2.2222222222222223,
+       "wp_um": 17.77777777777778,
+       "ron_peak_ohm": 3906.74852,
+       "worst_level_V": 1.65,
+       "ron_at_0_ohm": 2369.93881,
+       "ron_at_vdd_ohm": 745.502305
+      }
+     ],
+     "best_ratio": 2.5
+    }
+   }
+  }
+ }
+}

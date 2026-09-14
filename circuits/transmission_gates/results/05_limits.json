@@ -1,0 +1,220 @@
+{
+ "provenance": {
+  "model_tag": "v2-grounded",
+  "ngspice_version": "ngspice-45",
+  "step": "05_limits",
+  "ceiling_x_nominal": 3.0
+ },
+ "window": {
+  "1v8": {
+   "corner": "SS",
+   "vdd_V": 1.62,
+   "temp_C": -55,
+   "body": {
+    "rail": {
+     "1K": {
+      "ok": "0..0.680 and 1.021..1.620",
+      "excluded_band_V": [
+       0.6804,
+       1.0206
+      ],
+      "excluded_frac": 0.21,
+      "ceiling_ohm": 3000.0,
+      "ron_peak_ohm": 308026.03
+     },
+     "100R": {
+      "ok": "0..0.713 and 1.004..1.620",
+      "excluded_band_V": [
+       0.7128,
+       1.0044
+      ],
+      "excluded_frac": 0.18,
+      "ceiling_ohm": 300.0,
+      "ron_peak_ohm": 9834.11738
+     },
+     "10R": {
+      "ok": "0..0.713 and 1.004..1.620",
+      "excluded_band_V": [
+       0.7128,
+       1.0044
+      ],
+      "excluded_frac": 0.18,
+      "ceiling_ohm": 30.0,
+      "ron_peak_ohm": 922.76327
+     }
+    },
+    "srcbody": {
+     "1K": {
+      "ok": "0..0.794 and 0.907..1.620",
+      "excluded_band_V": [
+       0.7938,
+       0.9072
+      ],
+      "excluded_frac": 0.07,
+      "ceiling_ohm": 3000.0,
+      "ron_peak_ohm": 5012.84534
+     },
+     "100R": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 300.0,
+      "ron_peak_ohm": 275.608298
+     },
+     "10R": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 30.0,
+      "ron_peak_ohm": 26.6312252
+     }
+    }
+   }
+  },
+  "3v3": {
+   "corner": "SS",
+   "vdd_V": 2.97,
+   "temp_C": 150,
+   "body": {
+    "rail": {
+     "1K": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 3000.0,
+      "ron_peak_ohm": 2253.91415
+     },
+     "100R": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 300.0,
+      "ron_peak_ohm": 206.684667
+     },
+     "10R": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 30.0,
+      "ron_peak_ohm": 20.5069833
+     }
+    },
+    "srcbody": {
+     "1K": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 3000.0,
+      "ron_peak_ohm": 1453.98009
+     },
+     "100R": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 300.0,
+      "ron_peak_ohm": 137.953914
+     },
+     "10R": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 30.0,
+      "ron_peak_ohm": 13.7286903
+     }
+    }
+   }
+  },
+  "5v0": {
+   "corner": "SS",
+   "vdd_V": 4.5,
+   "temp_C": 150,
+   "body": {
+    "rail": {
+     "1K": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 3000.0,
+      "ron_peak_ohm": 2156.06623
+     },
+     "100R": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 300.0,
+      "ron_peak_ohm": 206.040995
+     },
+     "10R": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 30.0,
+      "ron_peak_ohm": 20.5521799
+     }
+    },
+    "srcbody": {
+     "1K": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 3000.0,
+      "ron_peak_ohm": 1492.42128
+     },
+     "100R": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 300.0,
+      "ron_peak_ohm": 145.116349
+     },
+     "10R": {
+      "ok": "full 0..vdd",
+      "excluded_band_V": null,
+      "ceiling_ohm": 30.0,
+      "ron_peak_ohm": 14.4844628
+     }
+    }
+   }
+  }
+ },
+ "coff": {
+  "1v8": {
+   "1K": {
+    "wtot_um": 14.0,
+    "off_fF": 16.676099999999998,
+    "on_fF": 21.364
+   },
+   "100R": {
+    "wtot_um": 140.0,
+    "off_fF": 165.38400000000001,
+    "on_fF": 216.352
+   },
+   "10R": {
+    "wtot_um": 1400.0,
+    "off_fF": 1653.3700000000001,
+    "on_fF": 2163.83
+   }
+  },
+  "3v3": {
+   "1K": {
+    "wtot_um": 16.1,
+    "off_fF": 16.0078,
+    "on_fF": 24.7741
+   },
+   "100R": {
+    "wtot_um": 161.0,
+    "off_fF": 158.909,
+    "on_fF": 247.12099999999998
+   },
+   "10R": {
+    "wtot_um": 1610.0,
+    "off_fF": 1588.1899999999998,
+    "on_fF": 2470.83
+   }
+  },
+  "5v0": {
+   "1K": {
+    "wtot_um": 29.4,
+    "off_fF": 24.6717,
+    "on_fF": 37.8614
+   },
+   "100R": {
+    "wtot_um": 294.0,
+    "off_fF": 245.70100000000002,
+    "on_fF": 377.915
+   },
+   "10R": {
+    "wtot_um": 2940.0,
+    "off_fF": 2456.38,
+    "on_fF": 3778.7500000000005
+   }
+  }
+ }
+}

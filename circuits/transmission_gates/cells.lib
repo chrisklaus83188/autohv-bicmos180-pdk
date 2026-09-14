@@ -1,0 +1,46 @@
+* AutoHV BiCMOS 180 PDK -- CMOS transmission-gate (analog switch) cell library
+*
+* 18 cells = 3 supply domains x 3 impedance classes x 2 body options.
+*
+*   TG_<class>_<dom>    bodies tied to the rails (NMOS->gnd, PMOS->vdd)
+*                       ports: a b en vdd gnd
+*   TGB_<class>_<dom>   bodies brought out on pins bn / bp
+*                       ports: a b en bn bp vdd gnd
+*
+*   <class> = 1K / 100R / 10R   (typical Ron at TT, nominal supply, 27 C,
+*                                worst case over the input level)
+*   <dom>   = 1V8 / 3V3 / 5V0
+*
+* Every cell contains its own inverter, so only `en` is driven; enb is made
+* inside.  Wp/Wn = 2.5 and L = Lmin throughout.  Sizing method, PVT envelope
+* and the guaranteed input window per cell are in REPORT.md.
+*
+* Usage:
+*   .include "<repo-root>/autohv_bicmos180_case.lib"
+*   .include "<repo-root>/circuits/transmission_gates/cells.lib"
+*   X1 sig1 sig2 sel vdd 0 TG_100R_3V3
+
+
+* ---- 1.8 V domain ----
+.include "cells/TG_1K_1V8.lib"
+.include "cells/TGB_1K_1V8.lib"
+.include "cells/TG_100R_1V8.lib"
+.include "cells/TGB_100R_1V8.lib"
+.include "cells/TG_10R_1V8.lib"
+.include "cells/TGB_10R_1V8.lib"
+
+* ---- 3.3 V domain ----
+.include "cells/TG_1K_3V3.lib"
+.include "cells/TGB_1K_3V3.lib"
+.include "cells/TG_100R_3V3.lib"
+.include "cells/TGB_100R_3V3.lib"
+.include "cells/TG_10R_3V3.lib"
+.include "cells/TGB_10R_3V3.lib"
+
+* ---- 5 V domain ----
+.include "cells/TG_1K_5V0.lib"
+.include "cells/TGB_1K_5V0.lib"
+.include "cells/TG_100R_5V0.lib"
+.include "cells/TGB_100R_5V0.lib"
+.include "cells/TG_10R_5V0.lib"
+.include "cells/TGB_10R_5V0.lib"

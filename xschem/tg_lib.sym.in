@@ -1,0 +1,17 @@
+v {xschem version=3.4.8RC file_version=1.3}
+G {}
+K {type=netlist_commands
+format="
+.include __HOME__/autohv_pdk/circuits/transmission_gates/cells.lib
+.global vdd
+"
+template="name=TGLIB only_toplevel=true"
+}
+V {}
+S {}
+E {}
+L 4 0 -12 210 -12 {}
+L 4 0 -12 0 8 {}
+L 4 210 -12 210 8 {}
+T {AutoHV transmission-gate cells (cells.lib) + global vdd} 6 -28 0 0 0.2 0.2 {layer=8}
+T {@name} 6 -6 0 0 0.25 0.25 {}

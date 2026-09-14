@@ -1,0 +1,33 @@
+* Transmission-gate smoke test: a 5 V sample-and-hold and a 3.3 V mux leg.
+* Proves the shipped cells netlist, converge and switch.  Run from this dir:
+*   ngspice -b smoke.cir
+.include "../../autohv_bicmos180_case.lib"
+.include "cells.lib"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+.option num_threads=1
+
+Vdd  vdd 0 5
+Vsig sig 0 SIN(2.5 2 1MEG)
+Vclk clk 0 PULSE(0 5 0.1u 1n 1n 0.2u 0.5u)
+XSH  sig hold clk vdd 0 TG_100R_5V0
+Chold hold 0 10p
+
+* body pins strapped to the rails: must behave as the TG cell does
+Vdd33 vdd33 0 3.3
+Vs33  s33 0 1.65
+Ven33 en33 0 3.3
+XB    s33 o33 en33 0 vdd33 vdd33 0 TGB_10R_3V3
+Ro33  o33 0 100
+
+.control
+option temp=27
+tran 2n 1u
+meas tran vh_a FIND v(hold) AT=0.35u
+meas tran vh_b FIND v(hold) AT=0.45u
+meas tran vs_a FIND v(sig)  AT=0.35u
+meas tran v33  FIND v(o33)  AT=0.9u
+echo "RES hold_at_open=$&vh_a hold_later=$&vh_b sig_at_open=$&vs_a div33=$&v33"
+.endc
+.end
