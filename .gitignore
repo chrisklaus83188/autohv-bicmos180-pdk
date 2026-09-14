@@ -30,3 +30,6 @@ LOCAL_*
 
 # Transmission-gate characterization decks (regenerable: circuits/transmission_gates/0*.py)
 circuits/transmission_gates/decks/
+
+# Monte Carlo check decks (regenerable: circuits/mc_mismatch_check/0*.py)
+circuits/mc_mismatch_check/decks/

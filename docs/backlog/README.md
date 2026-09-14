@@ -12,6 +12,7 @@ separately under [`../handoffs/`](../handoffs/).
 |---|------|---------|--------|------------|
 | 1 | [HV DMOS are subthreshold at analog (µA) currents](HANDOFF_dmos200_subthreshold_analog.md) | `NDMOS200`, `PDMOS200` | `kp` is a power-FET value, so the devices sit in subthreshold below ~mA. A current mirror at a µA budget hits max gm/I, amplifying ~2 mV Vth mismatch into a ~400 mV (1σ) trip shift — unusable as a precision analog mirror. | Self-biased diode sweep in the doc (§Reproducer) |
 | 2 | [Fast HV transients micro-step into timeouts above ~100 V](HANDOFF_dynamic_transient_microstepping.md) | `NDMOS200`, `PDMOS200` | With ≥1 floating HV LDMOS front-end, a fast edge / slew drives the timestep toward zero above ~120 V and never completes. DC and quasi-static transients are fine (the `Rcond` fix handled those). | [`repro_slew_vin{100,200}.cir`](../../repro_slew_vin100.cir), [`repro_delay_vin{100,200}.cir`](../../repro_delay_vin100.cir) at repo root |
+| 3 | [Monte Carlo: seeding traps, `M` does not reduce mismatch, eval-task notes](HANDOFF_monte_carlo.md) | all MOS wrappers | MC works on ngspice-45, but `set rndseed` does not pin draws and a fixed `.option seed` freezes an in-deck loop. `AUM2` omits `M`, so device arrays get no matching benefit. | [`circuits/mc_mismatch_check/`](../../circuits/mc_mismatch_check/) |
 
 ## Notes on each
 
@@ -36,3 +37,7 @@ macromodel) take a fast 150–200 V drain transient with several floating
 instances without the timestep collapsing — or is it inherent? The four
 `repro_*.cir` decks at the repo root are the standalone reproducers (the
 100 V / 200 V pairs are identical except VIN level).
+
+### 3 — Monte Carlo setup (open improvements)
+
+Mechanism verified live and per-instance independent; characterization-inventory item 22 does not reproduce. Open work: add `M` to `AUM2` (requires re-characterization), an MC liveness gate in `preflight.py`, splitting `MM_SIGMA` into independent Vth/W/L knobs for an external RNG driver, and correcting the reproducibility claim in `current_mirror_char/run_mc.py`. The handoff also records the documentation and grading guidance for building an LLM-eval task on this.

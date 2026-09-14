@@ -1,0 +1,108 @@
+{
+ "provenance": {
+  "model_tag": "v2-grounded",
+  "ngspice_version": "ngspice-45",
+  "device": "NMOS50",
+  "W_um": 4.7,
+  "L_um": 1.0,
+  "iref_A": 1e-05,
+  "vdd_V": 5.0,
+  "vout_V": 2.5,
+  "temp_C": 27,
+  "corner": "TT",
+  "step": "00_mc_mechanism"
+ },
+ "checks": {
+  "C1": {
+   "title": "MM_ON=0 (negative control)",
+   "n": 10,
+   "mean": 1.063967836e-05,
+   "std": 0.0,
+   "sigma_over_mu_pct": 0.0,
+   "min": 1.063967836e-05,
+   "max": 1.063967836e-05,
+   "p50": 1.063967836e-05,
+   "distinct": 1,
+   "note": "must be flat",
+   "reproducible": null
+  },
+  "C2": {
+   "title": "in-deck reset+op loop, unseeded",
+   "n": 40,
+   "mean": 1.06107695650475e-05,
+   "std": 5.485271196022212e-07,
+   "sigma_over_mu_pct": 5.169531919806286,
+   "min": 9.6276154854e-06,
+   "max": 1.1877265435e-05,
+   "p50": 1.0620690239e-05,
+   "distinct": 40,
+   "note": "",
+   "reproducible": false
+  },
+  "C3": {
+   "title": "separate invocations, unseeded",
+   "n": 40,
+   "mean": 1.0697707361815e-05,
+   "std": 4.572708751353098e-07,
+   "sigma_over_mu_pct": 4.274475452259222,
+   "min": 9.930383571e-06,
+   "max": 1.1691580278e-05,
+   "p50": 1.0733486517e-05,
+   "distinct": 40,
+   "note": "",
+   "reproducible": false
+  },
+  "C4": {
+   "title": "separate runs, .control `set rndseed=k`",
+   "n": 40,
+   "mean": 1.07524803731775e-05,
+   "std": 5.06742068313966e-07,
+   "sigma_over_mu_pct": 4.712792311419184,
+   "min": 9.6693345147e-06,
+   "max": 1.1669656821e-05,
+   "p50": 1.0883783077e-05,
+   "distinct": 40,
+   "note": "",
+   "reproducible": false
+  },
+  "C5": {
+   "title": "separate runs, netlist `.option seed=k`",
+   "n": 40,
+   "mean": 1.0691128230715e-05,
+   "std": 5.376694497297211e-07,
+   "sigma_over_mu_pct": 5.0291179576822165,
+   "min": 9.5002199039e-06,
+   "max": 1.1594597363e-05,
+   "p50": 1.082399219e-05,
+   "distinct": 40,
+   "note": "",
+   "reproducible": true
+  },
+  "C5b": {
+   "title": "in-deck loop + fixed `.option seed`",
+   "n": 40,
+   "mean": 1.1244180913e-05,
+   "std": 0.0,
+   "sigma_over_mu_pct": 0.0,
+   "min": 1.1244180913e-05,
+   "max": 1.1244180913e-05,
+   "p50": 1.1244180913e-05,
+   "distinct": 1,
+   "note": "reset re-seeds to the same value",
+   "reproducible": true
+  },
+  "C6": {
+   "title": "per-instance independence",
+   "delvto_x1": -0.00757797898,
+   "delvto_x2": -0.01006917345,
+   "w_x1": 4.69712123e-06,
+   "w_x2": 4.7083101307e-06,
+   "independent": true
+  }
+ },
+ "all_pass": true,
+ "caveats": [
+  "`set rndseed` in .control does not make a run reproducible: it is applied after .param AGAUSS has already been evaluated at parse time. circuits/current_mirror_char/run_mc.py claims reproducibility on this basis; that claim does not hold on ngspice-45.",
+  "A netlist `.option seed=N` combined with an in-deck reset loop makes every iteration identical -- `reset` re-seeds the generator to the same value. Seed per invocation, never per loop."
+ ]
+}
