@@ -2,10 +2,17 @@ name: PDK regression
 
 on:
   push:
-    branches: [main]
+    # mc-realism: the MC realism program branch (v2.3-stats); remove at close-out
+    # once it has merged to main.
+    branches: [main, mc-realism]
   pull_request:
     branches: [main]
   workflow_dispatch:
+
+env:
+  # Pinned simulator. Matches the local development baseline (ngspice-45, Qucs-S
+  # bundle) that the goldens and the Monte Carlo seeding evidence were produced on.
+  NGSPICE_VERSION: "45"
 
 jobs:
   regression:
@@ -19,32 +26,47 @@ jobs:
         with:
           python-version: '3.12'
 
-      # Install ngspice from the apt repository. The local development
-      # baseline is ngspice-45 (Qucs-S bundle) on Windows; Ubuntu 24.04 ships an
-      # older release (~41-42). For phases A/B/D this should be fine
-      # (they test structural / convergence behavior), and the
-      # AGAUSS HSPICE convention is stable across versions. Phase C
-      # diffs against pinned goldens stamped with the generating ngspice
-      # version (goldens carry ngspice-45); it may show small drift on a
-      # different ngspice, in which case rebuild ngspice-45 from source
-      # in CI with caching.
-      - name: Install ngspice
+      # Build the pinned ngspice from source. Ubuntu 24.04's apt package is an
+      # older release (~41-42); Phase C diffs against goldens generated on 45, and
+      # the native Monte Carlo seeding behaviour (docs/backlog/HANDOFF_monte_carlo.md
+      # C2-C5b) was measured on 45 only. The install is cached by version, so only
+      # the first run after a version bump pays the compile.
+      - name: Cache ngspice build
+        id: ngspice-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/ngspice
+          key: ngspice-${{ env.NGSPICE_VERSION }}-ubuntu-24.04-v1
+
+      - name: Build ngspice from source
+        if: steps.ngspice-cache.outputs.cache-hit != 'true'
         run: |
           sudo apt-get update
-          sudo apt-get install -y ngspice
-          which ngspice
+          sudo apt-get install -y build-essential bison flex libtool
+          curl -fsSL --retry 5 -o ngspice.tar.gz \
+            "https://sourceforge.net/projects/ngspice/files/ng-spice-rework/old-releases/${NGSPICE_VERSION}/ngspice-${NGSPICE_VERSION}.tar.gz/download"
+          tar xzf ngspice.tar.gz
+          cd "ngspice-${NGSPICE_VERSION}"
+          mkdir release
+          cd release
+          ../configure --prefix="$HOME/ngspice" --with-x=no --with-readline=no --disable-debug
+          make -j"$(nproc)"
+          make install
 
-      # Record the actual ngspice version this CI run used (phase-4 Step 3):
-      # the goldens are stamped with their generating version, so pin/record
-      # the runner's version for cross-referencing any golden drift.
-      - name: Record ngspice version
+      - name: Put ngspice on PATH
+        run: echo "$HOME/ngspice/bin" >> "$GITHUB_PATH"
+
+      # Record the ngspice version this run used, and fail if it is not the pinned
+      # one (characterization-inventory item 23: the previous check could not fail).
+      - name: Record and assert ngspice version
         run: |
           ngspice --version | grep -i ngspice | head -1 | tee ngspice-version.txt
+          grep -Eq "ngspice-${NGSPICE_VERSION}( |$)" ngspice-version.txt
 
       - name: Pre-flight - device_limits reader (SOA self-consistency + defaults==minima)
         run: python pdk_validation/preflight.py
 
-      - name: Phase A+B - device instantiation smoke (760 ops, ~45 s)
+      - name: Phase A+B - device instantiation smoke (800 ops, ~45 s)
         run: python pdk_validation/regression/run_smoke.py
 
       - name: Phase C - passive R(V)/C(V) goldens
