@@ -5,7 +5,7 @@ Pinned to **ngspice-45.2**.
 
 ## Phases A + B — instantiation smoke + per-op wall-time budget (`run_smoke.py`)
 
-Generates a minimal bias circuit for every `.subckt` device (all 38),
+Generates a minimal bias circuit for every `.subckt` device (all 40),
 runs `op` in `ngspice_con -b`, and asserts that:
 
 - the deck reaches the `SMOKE_OK` marker (`op` converged),
@@ -24,12 +24,12 @@ Sweeps the full corner × statistics matrix:
 | `PROC_ON`| 0, 1                                    |
 | `MM_ON`  | 0, 1                                    |
 
-Total: **38 × 5 × 4 = 760 ops**, ~45 s on a typical laptop.
+Total: **40 × 5 × 4 = 800 ops**, ~45 s on a typical laptop.
 
 ### Running
 
 ```sh
-# Full matrix (760 ops, ~45 s)
+# Full matrix (800 ops, ~45 s)
 python pdk_validation/regression/run_smoke.py
 
 # Smoke only (38 ops, ~3 s) — quick gate while iterating

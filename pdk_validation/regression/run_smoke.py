@@ -2,7 +2,7 @@
 """
 Phase A smoke regression for the AutoHV BiCMOS 180 PDK.
 
-For each of the 38 .subckt devices defined in autohv_bicmos180_case.lib,
+For each of the 40 .subckt devices defined in autohv_bicmos180_case.lib,
 generate a minimal deck biasing it, run ngspice in batch, and require:
   * the deck reaches the SMOKE_OK marker (op converged), and
   * ngspice prints no fatal-error patterns.
@@ -11,12 +11,12 @@ Sweeps the full corner * statistics matrix by default:
   case        in {0,1,2,3,4}        (TT, FF, SS, FS, SF)
   PROC_ON     in {0,1}              (die-to-die process variation)
   MM_ON       in {0,1}              (local mismatch)
-Total:  38 * 5 * 4 = 760 ops.
+Total:  40 * 5 * 4 = 800 ops.
 
 Pinned to ngspice-45.2 (the version P0 was developed against).
 
 Usage:
-  python run_smoke.py                 # full matrix (760 ops)
+  python run_smoke.py                 # full matrix (800 ops)
   python run_smoke.py --quick         # case=0 + (PROC,MM)=(1,1) only (38 ops)
   python run_smoke.py --device NDMOS20 PDMOS40   # only listed devices
   python run_smoke.py --jobs 4        # parallel workers (default 1)

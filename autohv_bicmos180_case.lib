@@ -3,7 +3,7 @@
 * AutoHV_BiCMOS180 - device subcircuit library for Qucs-S (case-parameterized).
 * Drop this file + autohv_bicmos180_case_models.inc + the autohv_bicmos180_case/
 * symbol folder into a Qucs-S library directory (e.g. ~/.qucs/user_lib or
-* <install>/share/qucs-s/library). All 38 .SUBCKT devices then appear in the
+* <install>/share/qucs-s/library). All 40 .SUBCKT devices then appear in the
 * left-side Library dock with their symbols, drag-and-drop ready.
 * Corner: set the global 'case' param (0=TT 1=FF 2=SS 3=FS 4=SF); see the .inc.
 * ============================================================================

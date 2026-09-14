@@ -19,7 +19,7 @@ for the full device reference and user guide.
 ## Repository layout
 
 ```
-autohv_bicmos180_case.lib            # the library: 38 .subckt wrappers (reference this)
+autohv_bicmos180_case.lib            # the library: 40 .subckt wrappers (reference this)
 autohv_bicmos180_case_models.inc     # global params, corner selectors, .model cards
 autohv_bicmos180_case/               # one .sym schematic symbol per device (38 files)
 docs/                                # PDK reference manual (.docx)
