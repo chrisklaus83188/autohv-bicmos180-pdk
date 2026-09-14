@@ -1,0 +1,57 @@
+{
+ "provenance": {
+  "model_tag": "v2-grounded",
+  "ngspice_version": "ngspice-45",
+  "device": "NMOS50",
+  "W_um": 4.7,
+  "L_um": 1.0,
+  "iref_A": 1e-05,
+  "vdd_V": 5.0,
+  "vout_V": 2.5,
+  "temp_C": 27,
+  "corner": "TT",
+  "step": "03_mc_runtime",
+  "nrun": 200,
+  "repeats": 3,
+  "host": {
+   "platform": "Windows-11-10.0.26200-SP0",
+   "processor": "Intel64 Family 6 Model 186 Stepping 3, GenuineIntel",
+   "cpu_count": 12,
+   "python": "3.14.4"
+  }
+ },
+ "patterns": {
+  "inloop": {
+   "title": "in-deck loop, one invocation",
+   "best_s": 0.6318573000007746,
+   "all_s": [
+    0.6962696999999025,
+    0.6507244999993418,
+    0.6318573000007746
+   ]
+  },
+  "perrun": {
+   "title": "`.option seed=k` per invocation, 8 parallel workers",
+   "best_s": 3.0855403000005026,
+   "all_s": [
+    3.2396231000002444,
+    3.0855403000005026,
+    3.1750705000013113
+   ]
+  },
+  "external": {
+   "title": "external driver (alterparam), one invocation",
+   "best_s": 0.7080980000009731,
+   "all_s": [
+    0.8291611000004195,
+    0.7407115000005433,
+    0.7080980000009731
+   ]
+  }
+ },
+ "handoff_section4_s": {
+  "inloop": 0.7,
+  "perrun": 3.1,
+  "external": 0.7
+ }
+}

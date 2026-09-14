@@ -1,4 +1,5 @@
-"""Build REPORT.md from results/00_mechanism.json and results/01_mc_mirror.json."""
+"""Build REPORT.md from results/00_mechanism.json and results/01_mc_mirror.json,
+plus results/02_m_sweep.json, 03_runtime.json and 04_external_proto.json when present."""
 import json
 from pathlib import Path
 
@@ -212,12 +213,96 @@ w("truncation, and %d samples cannot distinguish a truncated tail from a Gaussia
 w("If the tails matter for a design, that needs its own experiment.")
 w()
 
-w("## 5. Reproduce")
+
+def _load(name):
+    p = M.RESULTS / name
+    return json.load(open(p)) if p.exists() else None
+
+
+msw = _load("02_m_sweep.json")
+if msw:
+    w("## 5. Does `M` reduce mismatch?")
+    w()
+    w("No. Every mismatch term in the v2.2 MOS wrapper scales as `1/sqrt(AUM2)` with")
+    w("`AUM2 = W*L`, and `M` is not in it. Same mirror, %d fixed-seed runs per row,"
+      % msw["provenance"]["nrun_per_geometry"])
+    w("four times the baseline area reached three ways:")
+    w()
+    w("| geometry | total area | sigma(delvto), pooled | formula, v2.2 wrapper "
+      "| formula, `M` in `AUM2` | sigma/mu(Iout) |")
+    w("|---|---|---|---|---|---|")
+    for g in msw["geometries"]:
+        w("| W=%g L=%g M=%d | %.1f um^2 | %.3f mV | %.3f mV | %.3f mV | %.3f %% |"
+          % (g["W_um"], g["L_um"], g["M"], g["total_area_um2"],
+             g["sigma_delvto_pooled_mV"], g["formula_v2_2_mV"], g["formula_R1_mV"],
+             g["sigma_over_mu_pct"]))
+    w()
+    w("Quadrupling the area through `M` leaves sigma(delvto) where the v2.2 formula")
+    w("puts it; through W or L it halves. The sigma/mu column also moves with gm/Id --")
+    w("a wider device at fixed current sits closer to weak inversion, a longer one")
+    w("further from it -- which is legitimate; the delvto column is the clean evidence.")
+    w("This table is the \"before\" for acceptance A1 of the MC realism program: after")
+    w("the `AUM2` fix the M=4 row must follow the right-hand formula column.")
+    w()
+
+rt = _load("03_runtime.json")
+if rt:
+    host = rt["provenance"]["host"]
+    w("## 6. Runtime, %d samples" % rt["provenance"]["nrun"])
+    w()
+    w("Best of %d, including deck writing and process start-up. Host: %s, %d logical CPUs."
+      % (rt["provenance"]["repeats"], host["platform"], host["cpu_count"]))
+    w()
+    w("| pattern | wall clock | HANDOFF section 4 |")
+    w("|---|---|---|")
+    for k, p in rt["patterns"].items():
+        w("| %s | %.2f s | %.1f s |" % (p["title"], p["best_s"], rt["handoff_section4_s"][k]))
+    w()
+    w("The in-deck loop is fast but not reproducible (check C2). Per-invocation seeding")
+    w("is reproducible but pays a process start per sample. The external driver keeps")
+    w("both properties in one invocation, which is the pattern the program's Phase 3")
+    w("driver builds on (acceptance A11: under 2 s).")
+    w()
+
+ext = _load("04_external_proto.json")
+if ext:
+    pr = ext["prediction"]
+    w("## 7. External random-number driver prototype")
+    w()
+    w("Each device carries its own knob (`MM_SIGMA={S1}` on X1, `{S2}` on X2) with")
+    w("`MM_ON=0`; Python draws the unit-normal values (numpy `default_rng(%d)`) and"
+      % ext["provenance"]["z_seed"])
+    w("one ngspice invocation steps `alterparam` + `reset` + `op` through all %d samples."
+      % ext["provenance"]["nrun"])
+    w()
+    w("| quantity | value |")
+    w("|---|---|")
+    w("| sigma/mu of Iout | %.3f %% |" % ext["sigma_over_mu_pct"])
+    w("| distinct samples | %d / %d |" % (ext["iout"]["distinct"], ext["iout"]["n"]))
+    w("| bit-identical on repeat | %s |" % ("yes" if ext["bit_identical_on_repeat"] else "**no**"))
+    w("| first-order prediction, one knob per device | %.3f %% |"
+      % pr["correlated_single_knob_pct"])
+    w("| wrapper formula, independent terms (section 4) | %.3f %% |"
+      % pr["independent_terms_pct_from_01"])
+    w("| native `MM_ON=1` measurement (section 3) | %.3f %% |"
+      % ext["native_mm_on_sigma_over_mu_pct_from_01"])
+    w("| HANDOFF section 4 prototype | %.2f %% |" % ext["handoff_section4_sigma_over_mu_pct"])
+    w()
+    w("One `MM_SIGMA` scales a device's Vth, W and L terms by the same z, so the three")
+    w("are perfectly correlated; the W term then partly cancels the Vth term, which is")
+    w("why the one-knob prediction sits slightly below the independent-terms one. The")
+    w("program replaces `MM_SIGMA` with independent `Z_VT`, `Z_W`, `Z_L` (R5 as ruled).")
+    w()
+
+w("## 8. Reproduce")
 w()
 w("```bash")
 w("cd circuits/mc_mismatch_check")
-w("python 00_mc_mechanism.py     # does MC randomize, and how must it be driven")
-w("python 01_mc_mirror.py        # the 200-run mirror measurement")
+w("python 00_mc_mechanism.py       # does MC randomize, and how must it be driven")
+w("python 01_mc_mirror.py          # the 200-run mirror measurement")
+w("python 02_mc_m_sweep.py         # does M reduce mismatch (not in the v2.2 wrappers)")
+w("python 04_mc_external_proto.py  # external random-number driver prototype")
+w("python 03_mc_runtime.py         # wall clock of the three patterns; run last, alone")
 w("python report.py")
 w("```")
 w()

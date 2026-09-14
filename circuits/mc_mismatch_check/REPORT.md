@@ -23,9 +23,9 @@ noted below.
 | check | what was driven | distinct samples | sigma/mu | reproducible |
 |---|---|---|---|---|
 | C1 | MM_ON=0 (negative control) | 1 / 10 | 0.000 % | - |
-| C2 | in-deck reset+op loop, unseeded | 40 / 40 | 5.170 % | no |
-| C3 | separate invocations, unseeded | 40 / 40 | 4.274 % | no |
-| C4 | separate runs, .control `set rndseed=k` | 40 / 40 | 4.713 % | no |
+| C2 | in-deck reset+op loop, unseeded | 40 / 40 | 4.349 % | no |
+| C3 | separate invocations, unseeded | 40 / 40 | 4.538 % | no |
+| C4 | separate runs, .control `set rndseed=k` | 40 / 40 | 4.947 % | no |
 | C5 | separate runs, netlist `.option seed=k` | 40 / 40 | 5.029 % | yes |
 | C5b | in-deck loop + fixed `.option seed` | 1 / 40 | 0.000 % | yes |
 
@@ -166,12 +166,71 @@ sigma. The `AGAUSS(..., 3)` third argument is a scale factor in ngspice, not a
 truncation, and 200 samples cannot distinguish a truncated tail from a Gaussian one.
 If the tails matter for a design, that needs its own experiment.
 
-## 5. Reproduce
+## 5. Does `M` reduce mismatch?
+
+No. Every mismatch term in the v2.2 MOS wrapper scales as `1/sqrt(AUM2)` with
+`AUM2 = W*L`, and `M` is not in it. Same mirror, 120 fixed-seed runs per row,
+four times the baseline area reached three ways:
+
+| geometry | total area | sigma(delvto), pooled | formula, v2.2 wrapper | formula, `M` in `AUM2` | sigma/mu(Iout) |
+|---|---|---|---|---|---|
+| W=4.7 L=1 M=1 | 4.7 um^2 | 5.421 mV | 5.074 mV | 5.074 mV | 4.563 % |
+| W=4.7 L=1 M=4 | 18.8 um^2 | 5.421 mV | 5.074 mV | 2.537 mV | 9.164 % |
+| W=18.8 L=1 M=1 | 18.8 um^2 | 2.710 mV | 2.537 mV | 2.537 mV | 4.637 % |
+| W=4.7 L=4 M=1 | 18.8 um^2 | 2.710 mV | 2.537 mV | 2.537 mV | 1.071 % |
+
+Quadrupling the area through `M` leaves sigma(delvto) where the v2.2 formula
+puts it; through W or L it halves. The sigma/mu column also moves with gm/Id --
+a wider device at fixed current sits closer to weak inversion, a longer one
+further from it -- which is legitimate; the delvto column is the clean evidence.
+This table is the "before" for acceptance A1 of the MC realism program: after
+the `AUM2` fix the M=4 row must follow the right-hand formula column.
+
+## 6. Runtime, 200 samples
+
+Best of 3, including deck writing and process start-up. Host: Windows-11-10.0.26200-SP0, 12 logical CPUs.
+
+| pattern | wall clock | HANDOFF section 4 |
+|---|---|---|
+| in-deck loop, one invocation | 0.63 s | 0.7 s |
+| `.option seed=k` per invocation, 8 parallel workers | 3.09 s | 3.1 s |
+| external driver (alterparam), one invocation | 0.71 s | 0.7 s |
+
+The in-deck loop is fast but not reproducible (check C2). Per-invocation seeding
+is reproducible but pays a process start per sample. The external driver keeps
+both properties in one invocation, which is the pattern the program's Phase 3
+driver builds on (acceptance A11: under 2 s).
+
+## 7. External random-number driver prototype
+
+Each device carries its own knob (`MM_SIGMA={S1}` on X1, `{S2}` on X2) with
+`MM_ON=0`; Python draws the unit-normal values (numpy `default_rng(0)`) and
+one ngspice invocation steps `alterparam` + `reset` + `op` through all 200 samples.
+
+| quantity | value |
+|---|---|
+| sigma/mu of Iout | 3.965 % |
+| distinct samples | 200 / 200 |
+| bit-identical on repeat | yes |
+| first-order prediction, one knob per device | 3.936 % |
+| wrapper formula, independent terms (section 4) | 4.006 % |
+| native `MM_ON=1` measurement (section 3) | 4.331 % |
+| HANDOFF section 4 prototype | 3.71 % |
+
+One `MM_SIGMA` scales a device's Vth, W and L terms by the same z, so the three
+are perfectly correlated; the W term then partly cancels the Vth term, which is
+why the one-knob prediction sits slightly below the independent-terms one. The
+program replaces `MM_SIGMA` with independent `Z_VT`, `Z_W`, `Z_L` (R5 as ruled).
+
+## 8. Reproduce
 
 ```bash
 cd circuits/mc_mismatch_check
-python 00_mc_mechanism.py     # does MC randomize, and how must it be driven
-python 01_mc_mirror.py        # the 200-run mirror measurement
+python 00_mc_mechanism.py       # does MC randomize, and how must it be driven
+python 01_mc_mirror.py          # the 200-run mirror measurement
+python 02_mc_m_sweep.py         # does M reduce mismatch (not in the v2.2 wrappers)
+python 04_mc_external_proto.py  # external random-number driver prototype
+python 03_mc_runtime.py         # wall clock of the three patterns; run last, alone
 python report.py
 ```
 
