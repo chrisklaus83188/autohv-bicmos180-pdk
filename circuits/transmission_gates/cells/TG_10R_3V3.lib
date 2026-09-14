@@ -1,0 +1,23 @@
+* TG_10R_3V3 -- CMOS transmission gate, 3.3 V domain, ~10 ohm on-resistance
+* AutoHV BiCMOS 180 PDK | NMOS33/PMOS33, L = 0.35 um, Wp/Wn = 2.5
+*
+* Bodies are tied to the rails: NMOS body to gnd, PMOS body to vdd.
+* This is the shipping default.  Body effect is present and is already
+* included in every number in ../REPORT.md.
+*
+* Port order:  a b en vdd gnd
+*   .include "<repo-root>/autohv_bicmos180_case.lib"
+*   .include "<this-dir>/TG_10R_3V3.lib"
+*   X1 sig1 sig2 enable vdd 0 TG_10R_3V3
+*
+* Typical Ron 10 ohm at TT / 3.3 V / 27 C, worst case over the input
+* level.  PVT envelope and the guaranteed input window: ../REPORT.md.
+
+.subckt TG_10R_3V3 a b en vdd gnd
+* control inverter: enb = !en  (bodies always on the rails)
+XINVP enb en vdd vdd PMOS33 W=57.5u M=2 L=0.35u
+XINVN enb en gnd gnd NMOS33 W=46u M=1 L=0.35u
+* pass pair
+XN b en  a gnd NMOS33 W=92u M=5 L=0.35u
+XP b enb a vdd PMOS33 W=95.8333u M=12 L=0.35u
+.ends TG_10R_3V3

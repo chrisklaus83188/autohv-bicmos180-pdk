@@ -27,3 +27,6 @@ LOCAL_*
 # xschem scratch/backup siblings (created on save / grid-nudge) -- keep only the canonical .sch
 *.bak
 *.prenudge
+
+# Transmission-gate characterization decks (regenerable: circuits/transmission_gates/0*.py)
+circuits/transmission_gates/decks/

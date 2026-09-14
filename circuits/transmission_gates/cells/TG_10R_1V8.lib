@@ -1,0 +1,23 @@
+* TG_10R_1V8 -- CMOS transmission gate, 1.8 V domain, ~10 ohm on-resistance
+* AutoHV BiCMOS 180 PDK | NMOS18/PMOS18, L = 0.18 um, Wp/Wn = 2.5
+*
+* Bodies are tied to the rails: NMOS body to gnd, PMOS body to vdd.
+* This is the shipping default.  Body effect is present and is already
+* included in every number in ../REPORT.md.
+*
+* Port order:  a b en vdd gnd
+*   .include "<repo-root>/autohv_bicmos180_case.lib"
+*   .include "<this-dir>/TG_10R_1V8.lib"
+*   X1 sig1 sig2 enable vdd 0 TG_10R_1V8
+*
+* Typical Ron 10 ohm at TT / 1.8 V / 27 C, worst case over the input
+* level.  PVT envelope and the guaranteed input window: ../REPORT.md.
+
+.subckt TG_10R_1V8 a b en vdd gnd
+* control inverter: enb = !en  (bodies always on the rails)
+XINVP enb en vdd vdd PMOS18 W=100u M=1 L=0.18u
+XINVN enb en gnd gnd NMOS18 W=40u M=1 L=0.18u
+* pass pair
+XN b en  a gnd NMOS18 W=100u M=4 L=0.18u
+XP b enb a vdd PMOS18 W=100u M=10 L=0.18u
+.ends TG_10R_1V8

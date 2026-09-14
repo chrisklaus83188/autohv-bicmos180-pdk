@@ -48,6 +48,13 @@ fi
 ln -sfn "$SD/delay_pulse" "$HOME/xschem_lib/delay_pulse"
 echo "symlink: ~/xschem_lib/delay_pulse -> $SD/delay_pulse"
 
+# 2f) transmission-gate symbols (transmission_gates/ subdir) on the lib path
+if [ -e "$HOME/xschem_lib/transmission_gates" ] && [ ! -L "$HOME/xschem_lib/transmission_gates" ]; then
+  rm -rf "$HOME/xschem_lib/transmission_gates"
+fi
+ln -sfn "$SD/transmission_gates" "$HOME/xschem_lib/transmission_gates"
+echo "symlink: ~/xschem_lib/transmission_gates -> $SD/transmission_gates"
+
 # 3) generate the machine-local include helpers (only files with an abs path)
 sed "s|__HOME__|$HOME|g" "$SD/autohv_lib.sym.in" > "$HOME/xschem_lib/autohv_lib.sym"
 echo "wrote:   ~/xschem_lib/autohv_lib.sym (model include + corner)"
@@ -57,6 +64,8 @@ sed "s|__HOME__|$HOME|g" "$SD/cmp_lib.sym.in" > "$HOME/xschem_lib/cmp_lib.sym"
 echo "wrote:   ~/xschem_lib/cmp_lib.sym (comparators_all.lib include + global vdd)"
 sed "s|__HOME__|$HOME|g" "$SD/dly_lib.sym.in" > "$HOME/xschem_lib/dly_lib.sym"
 echo "wrote:   ~/xschem_lib/dly_lib.sym (delay cells.lib + gear + global vdd)"
+sed "s|__HOME__|$HOME|g" "$SD/tg_lib.sym.in" > "$HOME/xschem_lib/tg_lib.sym"
+echo "wrote:   ~/xschem_lib/tg_lib.sym (transmission-gate cells.lib + global vdd)"
 rm -f "$HOME/cmp_pdk"   # obsolete: comparators now live in the canonical PDK tree
 
 # 4) register the lib path in this machine's xschemrc (idempotent)

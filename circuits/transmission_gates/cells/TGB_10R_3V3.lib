@@ -1,0 +1,25 @@
+* TGB_10R_3V3 -- CMOS transmission gate, 3.3 V domain, ~10 ohm on-resistance
+* AutoHV BiCMOS 180 PDK | NMOS33/PMOS33, L = 0.35 um, Wp/Wn = 2.5
+*
+* Bodies are brought out on pins bn (NMOS) and bp (PMOS) so the caller
+* can bias them.  Driving bn/bp to the switch terminal removes the body
+* effect and lowers Ron by 1.4x (5 V) to 1.9x (1.8 V); see ../REPORT.md.
+* bn must never sit above, and bp never below, either switch terminal.
+* The internal inverter always takes its bodies from the rails.
+*
+* Port order:  a b en bn bp vdd gnd
+*   .include "<repo-root>/autohv_bicmos180_case.lib"
+*   .include "<this-dir>/TGB_10R_3V3.lib"
+*   X1 sig1 sig2 enable 0 vdd vdd 0 TGB_10R_3V3
+*
+* Typical Ron 10 ohm at TT / 3.3 V / 27 C, worst case over the input
+* level.  PVT envelope and the guaranteed input window: ../REPORT.md.
+
+.subckt TGB_10R_3V3 a b en bn bp vdd gnd
+* control inverter: enb = !en  (bodies always on the rails)
+XINVP enb en vdd vdd PMOS33 W=57.5u M=2 L=0.35u
+XINVN enb en gnd gnd NMOS33 W=46u M=1 L=0.35u
+* pass pair
+XN b en  a bn NMOS33 W=92u M=5 L=0.35u
+XP b enb a bp PMOS33 W=95.8333u M=12 L=0.35u
+.ends TGB_10R_3V3

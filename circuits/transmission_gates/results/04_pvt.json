@@ -1,0 +1,6578 @@
+{
+ "provenance": {
+  "model_tag": "v2-grounded",
+  "ngspice_version": "ngspice-45",
+  "step": "04_pvt",
+  "wp_over_wn": 2.5,
+  "corners": [
+   "TT",
+   "FF",
+   "SS",
+   "FS",
+   "SF"
+  ],
+  "temps_C": [
+   -55,
+   27,
+   150
+  ],
+  "vtol": 0.1,
+  "note": "-55 C is below the model Tj_min of -40 C"
+ },
+ "variants": {
+  "1v8": [
+   [
+    "1K",
+    4.0,
+    10.0
+   ],
+   [
+    "100R",
+    40.0,
+    100.0
+   ],
+   [
+    "10R",
+    400.0,
+    1000.0
+   ]
+  ],
+  "3v3": [
+   [
+    "1K",
+    4.6,
+    11.5
+   ],
+   [
+    "100R",
+    46.0,
+    115.0
+   ],
+   [
+    "10R",
+    460.0,
+    1150.0
+   ]
+  ],
+  "5v0": [
+   [
+    "1K",
+    8.4,
+    21.0
+   ],
+   [
+    "100R",
+    84.0,
+    210.0
+   ],
+   [
+    "10R",
+    840.0,
+    2100.0
+   ]
+  ]
+ },
+ "ratio": 2.5,
+ "pvt": {
+  "1v8": {
+   "rail": [
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.62,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 15643.1209,
+       "ron_min_ohm": 218.047194,
+       "worst_level_V": 0.8424
+      },
+      "100R": {
+       "ron_max_ohm": 693.597817,
+       "ron_min_ohm": 20.7382967,
+       "worst_level_V": 0.8586
+      },
+      "10R": {
+       "ron_max_ohm": 65.7460512,
+       "ron_min_ohm": 2.06336656,
+       "worst_level_V": 0.8586
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.62,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 3229.74032,
+       "ron_min_ohm": 278.66699,
+       "worst_level_V": 0.8586
+      },
+      "100R": {
+       "ron_max_ohm": 209.218274,
+       "ron_min_ohm": 26.6344895,
+       "worst_level_V": 0.8748
+      },
+      "10R": {
+       "ron_max_ohm": 20.3803858,
+       "ron_min_ohm": 2.65134058,
+       "worst_level_V": 0.8748
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.62,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1512.76493,
+       "ron_min_ohm": 368.2993,
+       "worst_level_V": 0.891
+      },
+      "100R": {
+       "ron_max_ohm": 122.989148,
+       "ron_min_ohm": 35.4644824,
+       "worst_level_V": 0.9234
+      },
+      "10R": {
+       "ron_max_ohm": 12.1418496,
+       "ron_min_ohm": 3.53302432,
+       "worst_level_V": 0.9234
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.8,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 2507.08192,
+       "ron_min_ohm": 198.492024,
+       "worst_level_V": 0.954
+      },
+      "100R": {
+       "ron_max_ohm": 154.250585,
+       "ron_min_ohm": 19.0012929,
+       "worst_level_V": 0.972
+      },
+      "10R": {
+       "ron_max_ohm": 15.0067587,
+       "ron_min_ohm": 1.89179401,
+       "worst_level_V": 0.972
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.8,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1269.13597,
+       "ron_min_ohm": 250.861573,
+       "worst_level_V": 0.972
+      },
+      "100R": {
+       "ron_max_ohm": 99.3591025,
+       "ron_min_ohm": 24.1160142,
+       "worst_level_V": 1.008
+      },
+      "10R": {
+       "ron_max_ohm": 9.80035162,
+       "ron_min_ohm": 2.40206682,
+       "worst_level_V": 1.026
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.8,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 974.696062,
+       "ron_min_ohm": 326.601711,
+       "worst_level_V": 1.062
+      },
+      "100R": {
+       "ron_max_ohm": 85.6687622,
+       "ron_min_ohm": 31.6186671,
+       "worst_level_V": 1.116
+      },
+      "10R": {
+       "ron_max_ohm": 8.50327118,
+       "ron_min_ohm": 3.1516572,
+       "worst_level_V": 1.116
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.98,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 922.479971,
+       "ron_min_ohm": 185.224758,
+       "worst_level_V": 1.089
+      },
+      "100R": {
+       "ron_max_ohm": 71.9650224,
+       "ron_min_ohm": 17.8134339,
+       "worst_level_V": 1.1286
+      },
+      "10R": {
+       "ron_max_ohm": 7.1001766,
+       "ron_min_ohm": 1.77437447,
+       "worst_level_V": 1.1286
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.98,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 767.865171,
+       "ron_min_ohm": 230.785413,
+       "worst_level_V": 1.1484
+      },
+      "100R": {
+       "ron_max_ohm": 66.397149,
+       "ron_min_ohm": 22.2804011,
+       "worst_level_V": 1.188
+      },
+      "10R": {
+       "ron_max_ohm": 6.57910669,
+       "ron_min_ohm": 2.22020944,
+       "worst_level_V": 1.188
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.98,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 741.137249,
+       "ron_min_ohm": 294.144226,
+       "worst_level_V": 1.2474
+      },
+      "100R": {
+       "ron_max_ohm": 67.5693306,
+       "ron_min_ohm": 28.5961558,
+       "worst_level_V": 1.287
+      },
+      "10R": {
+       "ron_max_ohm": 6.71933557,
+       "ron_min_ohm": 2.85163525,
+       "worst_level_V": 1.287
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.62,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1939.09245,
+       "ron_min_ohm": 167.899178,
+       "worst_level_V": 0.8586
+      },
+      "100R": {
+       "ron_max_ohm": 119.814301,
+       "ron_min_ohm": 16.0310682,
+       "worst_level_V": 0.8748
+      },
+      "10R": {
+       "ron_max_ohm": 11.6419607,
+       "ron_min_ohm": 1.59565308,
+       "worst_level_V": 0.8748
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.62,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1000.83409,
+       "ron_min_ohm": 216.153765,
+       "worst_level_V": 0.891
+      },
+      "100R": {
+       "ron_max_ohm": 78.327963,
+       "ron_min_ohm": 20.724736,
+       "worst_level_V": 0.9234
+      },
+      "10R": {
+       "ron_max_ohm": 7.71914244,
+       "ron_min_ohm": 2.06371738,
+       "worst_level_V": 0.9234
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.62,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 778.609664,
+       "ron_min_ohm": 289.124235,
+       "worst_level_V": 0.972
+      },
+      "100R": {
+       "ron_max_ohm": 68.4240947,
+       "ron_min_ohm": 27.9021796,
+       "worst_level_V": 1.0206
+      },
+      "10R": {
+       "ron_max_ohm": 6.79112852,
+       "ron_min_ohm": 2.78028888,
+       "worst_level_V": 1.0206
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.8,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 715.827957,
+       "ron_min_ohm": 154.967583,
+       "worst_level_V": 0.99
+      },
+      "100R": {
+       "ron_max_ohm": 55.9013498,
+       "ron_min_ohm": 14.8771826,
+       "worst_level_V": 1.026
+      },
+      "10R": {
+       "ron_max_ohm": 5.50904748,
+       "ron_min_ohm": 1.48162782,
+       "worst_level_V": 1.026
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.8,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 604.536272,
+       "ron_min_ohm": 196.996247,
+       "worst_level_V": 1.062
+      },
+      "100R": {
+       "ron_max_ohm": 52.2964406,
+       "ron_min_ohm": 18.9821362,
+       "worst_level_V": 1.098
+      },
+      "10R": {
+       "ron_max_ohm": 5.18379883,
+       "ron_min_ohm": 1.89116575,
+       "worst_level_V": 1.098
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.8,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 593.806367,
+       "ron_min_ohm": 259.239152,
+       "worst_level_V": 1.152
+      },
+      "100R": {
+       "ron_max_ohm": 54.1502271,
+       "ron_min_ohm": 25.13819,
+       "worst_level_V": 1.188
+      },
+      "10R": {
+       "ron_max_ohm": 5.38379759,
+       "ron_min_ohm": 2.50612605,
+       "worst_level_V": 1.188
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.98,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 436.826325,
+       "ron_min_ohm": 146.07609,
+       "worst_level_V": 1.1682
+      },
+      "100R": {
+       "ron_max_ohm": 37.7939216,
+       "ron_min_ohm": 14.0793312,
+       "worst_level_V": 1.2078
+      },
+      "10R": {
+       "ron_max_ohm": 3.7494868,
+       "ron_min_ohm": 1.40274485,
+       "worst_level_V": 1.2078
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.98,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 449.337577,
+       "ron_min_ohm": 182.90976,
+       "worst_level_V": 1.2276
+      },
+      "100R": {
+       "ron_max_ohm": 40.5977115,
+       "ron_min_ohm": 17.6904821,
+       "worst_level_V": 1.2672
+      },
+      "10R": {
+       "ron_max_ohm": 4.03412623,
+       "ron_min_ohm": 1.76316369,
+       "worst_level_V": 1.287
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.98,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 488.895435,
+       "ron_min_ohm": 235.502917,
+       "worst_level_V": 1.3266
+      },
+      "100R": {
+       "ron_max_ohm": 45.4511881,
+       "ron_min_ohm": 22.9235813,
+       "worst_level_V": 1.3662
+      },
+      "10R": {
+       "ron_max_ohm": 4.52537616,
+       "ron_min_ohm": 2.28625767,
+       "worst_level_V": 1.3662
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.62,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 308026.03,
+       "ron_min_ohm": 288.042721,
+       "worst_level_V": 0.8424
+      },
+      "100R": {
+       "ron_max_ohm": 9834.11738,
+       "ron_min_ohm": 27.2706405,
+       "worst_level_V": 0.8586
+      },
+      "10R": {
+       "ron_max_ohm": 922.76327,
+       "ron_min_ohm": 2.71204647,
+       "worst_level_V": 0.8586
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.62,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 18687.5102,
+       "ron_min_ohm": 364.861896,
+       "worst_level_V": 0.8424
+      },
+      "100R": {
+       "ron_max_ohm": 973.958001,
+       "ron_min_ohm": 34.7447767,
+       "worst_level_V": 0.8586
+      },
+      "10R": {
+       "ron_max_ohm": 93.200938,
+       "ron_min_ohm": 3.45738533,
+       "worst_level_V": 0.8586
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.62,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 3890.31422,
+       "ron_min_ohm": 475.59813,
+       "worst_level_V": 0.8586
+      },
+      "100R": {
+       "ron_max_ohm": 282.57991,
+       "ron_min_ohm": 45.6775916,
+       "worst_level_V": 0.8748
+      },
+      "10R": {
+       "ron_max_ohm": 27.6770286,
+       "ron_min_ohm": 4.54925831,
+       "worst_level_V": 0.8748
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.8,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 20826.6528,
+       "ron_min_ohm": 257.981683,
+       "worst_level_V": 0.936
+      },
+      "100R": {
+       "ron_max_ohm": 901.522795,
+       "ron_min_ohm": 24.6159383,
+       "worst_level_V": 0.954
+      },
+      "10R": {
+       "ron_max_ohm": 85.830068,
+       "ron_min_ohm": 2.44997773,
+       "worst_level_V": 0.954
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.8,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 4118.46707,
+       "ron_min_ohm": 323.830631,
+       "worst_level_V": 0.954
+      },
+      "100R": {
+       "ron_max_ohm": 266.415184,
+       "ron_min_ohm": 31.0478247,
+       "worst_level_V": 0.972
+      },
+      "10R": {
+       "ron_max_ohm": 25.9803402,
+       "ron_min_ohm": 3.09165861,
+       "worst_level_V": 0.972
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.8,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1903.1322,
+       "ron_min_ohm": 416.577697,
+       "worst_level_V": 0.99
+      },
+      "100R": {
+       "ron_max_ohm": 155.091593,
+       "ron_min_ohm": 40.2534887,
+       "worst_level_V": 1.026
+      },
+      "10R": {
+       "ron_max_ohm": 15.3191834,
+       "ron_min_ohm": 4.01157076,
+       "worst_level_V": 1.026
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.98,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 3247.98248,
+       "ron_min_ohm": 237.967174,
+       "worst_level_V": 1.0494
+      },
+      "100R": {
+       "ron_max_ohm": 199.64973,
+       "ron_min_ohm": 22.8297371,
+       "worst_level_V": 1.0494
+      },
+      "10R": {
+       "ron_max_ohm": 19.4378734,
+       "ron_min_ohm": 2.27346573,
+       "worst_level_V": 1.0692
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.98,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1624.79025,
+       "ron_min_ohm": 294.834855,
+       "worst_level_V": 1.0692
+      },
+      "100R": {
+       "ron_max_ohm": 127.414713,
+       "ron_min_ohm": 28.4060613,
+       "worst_level_V": 1.1088
+      },
+      "10R": {
+       "ron_max_ohm": 12.5503584,
+       "ron_min_ohm": 2.83002596,
+       "worst_level_V": 1.1088
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.98,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1229.25902,
+       "ron_min_ohm": 371.638921,
+       "worst_level_V": 1.1682
+      },
+      "100R": {
+       "ron_max_ohm": 108.198524,
+       "ron_min_ohm": 36.0789962,
+       "worst_level_V": 1.2078
+      },
+      "10R": {
+       "ron_max_ohm": 10.7374435,
+       "ron_min_ohm": 3.59730082,
+       "worst_level_V": 1.2078
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.62,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 15963.4081,
+       "ron_min_ohm": 167.943203,
+       "worst_level_V": 0.9234
+      },
+      "100R": {
+       "ron_max_ohm": 708.425146,
+       "ron_min_ohm": 16.0306557,
+       "worst_level_V": 0.9396
+      },
+      "10R": {
+       "ron_max_ohm": 67.1581703,
+       "ron_min_ohm": 1.59556618,
+       "worst_level_V": 0.9396
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.62,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 3352.90167,
+       "ron_min_ohm": 216.787199,
+       "worst_level_V": 0.9558
+      },
+      "100R": {
+       "ron_max_ohm": 223.264138,
+       "ron_min_ohm": 20.7787139,
+       "worst_level_V": 0.972
+      },
+      "10R": {
+       "ron_max_ohm": 21.7670833,
+       "ron_min_ohm": 2.06902415,
+       "worst_level_V": 0.972
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.62,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1660.4047,
+       "ron_min_ohm": 290.943397,
+       "worst_level_V": 1.0206
+      },
+      "100R": {
+       "ron_max_ohm": 138.347171,
+       "ron_min_ohm": 28.0666661,
+       "worst_level_V": 1.053
+      },
+      "10R": {
+       "ron_max_ohm": 13.6736663,
+       "ron_min_ohm": 2.79656554,
+       "worst_level_V": 1.053
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.8,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 2645.13194,
+       "ron_min_ohm": 154.942147,
+       "worst_level_V": 1.044
+      },
+      "100R": {
+       "ron_max_ohm": 167.986258,
+       "ron_min_ohm": 14.871089,
+       "worst_level_V": 1.062
+      },
+      "10R": {
+       "ron_max_ohm": 16.321445,
+       "ron_min_ohm": 1.48098443,
+       "worst_level_V": 1.062
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.8,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1424.95547,
+       "ron_min_ohm": 197.532007,
+       "worst_level_V": 1.098
+      },
+      "100R": {
+       "ron_max_ohm": 114.61149,
+       "ron_min_ohm": 19.0283776,
+       "worst_level_V": 1.134
+      },
+      "10R": {
+       "ron_max_ohm": 11.311987,
+       "ron_min_ohm": 1.89571807,
+       "worst_level_V": 1.134
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.8,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1128.57901,
+       "ron_min_ohm": 260.961741,
+       "worst_level_V": 1.188
+      },
+      "100R": {
+       "ron_max_ohm": 100.328902,
+       "ron_min_ohm": 25.2960692,
+       "worst_level_V": 1.224
+      },
+      "10R": {
+       "ron_max_ohm": 9.96004045,
+       "ron_min_ohm": 2.52177144,
+       "worst_level_V": 1.242
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.98,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1064.13031,
+       "ron_min_ohm": 145.992869,
+       "worst_level_V": 1.188
+      },
+      "100R": {
+       "ron_max_ohm": 85.2800709,
+       "ron_min_ohm": 14.0682953,
+       "worst_level_V": 1.2276
+      },
+      "10R": {
+       "ron_max_ohm": 8.41174735,
+       "ron_min_ohm": 1.401615,
+       "worst_level_V": 1.2276
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.98,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 911.313628,
+       "ron_min_ohm": 183.368572,
+       "worst_level_V": 1.2672
+      },
+      "100R": {
+       "ron_max_ohm": 79.6611898,
+       "ron_min_ohm": 17.730419,
+       "worst_level_V": 1.3068
+      },
+      "10R": {
+       "ron_max_ohm": 7.90360811,
+       "ron_min_ohm": 1.76709885,
+       "worst_level_V": 1.3068
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.98,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 877.015005,
+       "ron_min_ohm": 237.157455,
+       "worst_level_V": 1.3662
+      },
+      "100R": {
+       "ron_max_ohm": 80.3482958,
+       "ron_min_ohm": 23.0768342,
+       "worst_level_V": 1.4058
+      },
+      "10R": {
+       "ron_max_ohm": 7.99272601,
+       "ron_min_ohm": 2.30146174,
+       "worst_level_V": 1.4058
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.62,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 15502.3536,
+       "ron_min_ohm": 208.610267,
+       "worst_level_V": 0.7776
+      },
+      "100R": {
+       "ron_max_ohm": 694.192725,
+       "ron_min_ohm": 20.2467775,
+       "worst_level_V": 0.7776
+      },
+      "10R": {
+       "ron_max_ohm": 65.8167264,
+       "ron_min_ohm": 2.02467779,
+       "worst_level_V": 0.7776
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.62,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 3211.28374,
+       "ron_min_ohm": 271.169921,
+       "worst_level_V": 0.7614
+      },
+      "100R": {
+       "ron_max_ohm": 206.77346,
+       "ron_min_ohm": 26.3990625,
+       "worst_level_V": 0.7776
+      },
+      "10R": {
+       "ron_max_ohm": 20.1501668,
+       "ron_min_ohm": 2.63990631,
+       "worst_level_V": 0.7776
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.62,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1495.96511,
+       "ron_min_ohm": 361.62521,
+       "worst_level_V": 0.729
+      },
+      "100R": {
+       "ron_max_ohm": 121.208327,
+       "ron_min_ohm": 35.3559724,
+       "worst_level_V": 0.7128
+      },
+      "10R": {
+       "ron_max_ohm": 11.9624617,
+       "ron_min_ohm": 3.53559736,
+       "worst_level_V": 0.7128
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.8,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 2488.77193,
+       "ron_min_ohm": 189.326097,
+       "worst_level_V": 0.864
+      },
+      "100R": {
+       "ron_max_ohm": 152.705153,
+       "ron_min_ohm": 18.4415559,
+       "worst_level_V": 0.864
+      },
+      "10R": {
+       "ron_max_ohm": 14.8273303,
+       "ron_min_ohm": 1.84415563,
+       "worst_level_V": 0.864
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.8,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1248.0899,
+       "ron_min_ohm": 244.303681,
+       "worst_level_V": 0.828
+      },
+      "100R": {
+       "ron_max_ohm": 96.965095,
+       "ron_min_ohm": 23.8590026,
+       "worst_level_V": 0.81
+      },
+      "10R": {
+       "ron_max_ohm": 9.54683326,
+       "ron_min_ohm": 2.38590032,
+       "worst_level_V": 0.81
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.8,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 957.490241,
+       "ron_min_ohm": 322.370432,
+       "worst_level_V": 0.738
+      },
+      "100R": {
+       "ron_max_ohm": 84.0697398,
+       "ron_min_ohm": 31.6081963,
+       "worst_level_V": 0.72
+      },
+      "10R": {
+       "ron_max_ohm": 8.33655429,
+       "ron_min_ohm": 3.16081974,
+       "worst_level_V": 0.72
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.98,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 904.341424,
+       "ron_min_ohm": 176.151873,
+       "worst_level_V": 0.9108
+      },
+      "100R": {
+       "ron_max_ohm": 69.9838237,
+       "ron_min_ohm": 17.2029989,
+       "worst_level_V": 0.891
+      },
+      "10R": {
+       "ron_max_ohm": 6.88800604,
+       "ron_min_ohm": 1.72029992,
+       "worst_level_V": 0.891
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.98,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 747.449977,
+       "ron_min_ohm": 224.861381,
+       "worst_level_V": 0.8316
+      },
+      "100R": {
+       "ron_max_ohm": 64.4312396,
+       "ron_min_ohm": 22.0116385,
+       "worst_level_V": 0.8118
+      },
+      "10R": {
+       "ron_max_ohm": 6.38037809,
+       "ron_min_ohm": 2.20116391,
+       "worst_level_V": 0.8118
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.98,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 726.675504,
+       "ron_min_ohm": 291.826719,
+       "worst_level_V": 0.7524
+      },
+      "100R": {
+       "ron_max_ohm": 66.2178919,
+       "ron_min_ohm": 28.6769352,
+       "worst_level_V": 0.7128
+      },
+      "10R": {
+       "ron_max_ohm": 6.58077828,
+       "ron_min_ohm": 2.86769362,
+       "worst_level_V": 0.7128
+      }
+     }
+    }
+   ],
+   "srcbody": [
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.62,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1082.88169,
+       "ron_min_ohm": 218.047117,
+       "worst_level_V": 0.8748
+      },
+      "100R": {
+       "ron_max_ohm": 79.057807,
+       "ron_min_ohm": 20.738296,
+       "worst_level_V": 0.9072
+      },
+      "10R": {
+       "ron_max_ohm": 7.77120422,
+       "ron_min_ohm": 2.06336649,
+       "worst_level_V": 0.9234
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.62,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 850.480072,
+       "ron_min_ohm": 278.666864,
+       "worst_level_V": 0.9396
+      },
+      "100R": {
+       "ron_max_ohm": 71.1851526,
+       "ron_min_ohm": 26.6344884,
+       "worst_level_V": 0.9882
+      },
+      "10R": {
+       "ron_max_ohm": 7.04634384,
+       "ron_min_ohm": 2.65134046,
+       "worst_level_V": 0.9882
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.62,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 811.355903,
+       "ron_min_ohm": 368.298882,
+       "worst_level_V": 1.0206
+      },
+      "100R": {
+       "ron_max_ohm": 72.8251831,
+       "ron_min_ohm": 35.4644543,
+       "worst_level_V": 1.0692
+      },
+      "10R": {
+       "ron_max_ohm": 7.23701211,
+       "ron_min_ohm": 3.53302153,
+       "worst_level_V": 1.0854
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.8,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 538.987744,
+       "ron_min_ohm": 198.491953,
+       "worst_level_V": 1.062
+      },
+      "100R": {
+       "ron_max_ohm": 46.1918205,
+       "ron_min_ohm": 19.0012923,
+       "worst_level_V": 1.116
+      },
+      "10R": {
+       "ron_max_ohm": 4.5789625,
+       "ron_min_ohm": 1.89179394,
+       "worst_level_V": 1.116
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.8,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 564.944323,
+       "ron_min_ohm": 250.86146,
+       "worst_level_V": 1.134
+      },
+      "100R": {
+       "ron_max_ohm": 50.7172786,
+       "ron_min_ohm": 24.1160132,
+       "worst_level_V": 1.188
+      },
+      "10R": {
+       "ron_max_ohm": 5.04135399,
+       "ron_min_ohm": 2.40206672,
+       "worst_level_V": 1.188
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.8,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 627.658118,
+       "ron_min_ohm": 326.601364,
+       "worst_level_V": 1.224
+      },
+      "100R": {
+       "ron_max_ohm": 58.0757297,
+       "ron_min_ohm": 31.6186446,
+       "worst_level_V": 1.278
+      },
+      "10R": {
+       "ron_max_ohm": 5.78270227,
+       "ron_min_ohm": 3.15165496,
+       "worst_level_V": 1.278
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.98,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 380.865523,
+       "ron_min_ohm": 185.22469,
+       "worst_level_V": 1.2672
+      },
+      "100R": {
+       "ron_max_ohm": 34.5222035,
+       "ron_min_ohm": 17.8134333,
+       "worst_level_V": 1.3068
+      },
+      "10R": {
+       "ron_max_ohm": 3.43251143,
+       "ron_min_ohm": 1.77437441,
+       "worst_level_V": 1.3068
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.98,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 440.220489,
+       "ron_min_ohm": 230.785308,
+       "worst_level_V": 1.3266
+      },
+      "100R": {
+       "ron_max_ohm": 40.7441266,
+       "ron_min_ohm": 22.2804001,
+       "worst_level_V": 1.386
+      },
+      "10R": {
+       "ron_max_ohm": 4.05859526,
+       "ron_min_ohm": 2.22020934,
+       "worst_level_V": 1.386
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 1.98,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 520.971072,
+       "ron_min_ohm": 294.143928,
+       "worst_level_V": 1.4058
+      },
+      "100R": {
+       "ron_max_ohm": 49.0114953,
+       "ron_min_ohm": 28.5961372,
+       "worst_level_V": 1.4652
+      },
+      "10R": {
+       "ron_max_ohm": 4.88453339,
+       "ron_min_ohm": 2.85163341,
+       "worst_level_V": 1.4652
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.62,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 447.14001,
+       "ron_min_ohm": 167.899132,
+       "worst_level_V": 0.9558
+      },
+      "100R": {
+       "ron_max_ohm": 37.9321924,
+       "ron_min_ohm": 16.0310677,
+       "worst_level_V": 1.0044
+      },
+      "10R": {
+       "ron_max_ohm": 3.75789462,
+       "ron_min_ohm": 1.59565304,
+       "worst_level_V": 1.0206
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.62,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 464.214566,
+       "ron_min_ohm": 216.153689,
+       "worst_level_V": 1.0368
+      },
+      "100R": {
+       "ron_max_ohm": 41.4822218,
+       "ron_min_ohm": 20.7247353,
+       "worst_level_V": 1.0854
+      },
+      "10R": {
+       "ron_max_ohm": 4.12271934,
+       "ron_min_ohm": 2.0637173,
+       "worst_level_V": 1.0854
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.62,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 515.679997,
+       "ron_min_ohm": 289.123491,
+       "worst_level_V": 1.1178
+      },
+      "100R": {
+       "ron_max_ohm": 47.6632813,
+       "ron_min_ohm": 27.9020923,
+       "worst_level_V": 1.1664
+      },
+      "10R": {
+       "ron_max_ohm": 4.74399841,
+       "ron_min_ohm": 2.78028021,
+       "worst_level_V": 1.1826
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.8,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 308.038257,
+       "ron_min_ohm": 154.96754,
+       "worst_level_V": 1.17
+      },
+      "100R": {
+       "ron_max_ohm": 27.8389755,
+       "ron_min_ohm": 14.8771822,
+       "worst_level_V": 1.206
+      },
+      "10R": {
+       "ron_max_ohm": 2.76808975,
+       "ron_min_ohm": 1.48162778,
+       "worst_level_V": 1.206
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.8,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 357.671562,
+       "ron_min_ohm": 196.996176,
+       "worst_level_V": 1.224
+      },
+      "100R": {
+       "ron_max_ohm": 33.0556092,
+       "ron_min_ohm": 18.9821355,
+       "worst_level_V": 1.278
+      },
+      "10R": {
+       "ron_max_ohm": 3.29152871,
+       "ron_min_ohm": 1.89116568,
+       "worst_level_V": 1.278
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.8,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 427.494653,
+       "ron_min_ohm": 259.23854,
+       "worst_level_V": 1.314
+      },
+      "100R": {
+       "ron_max_ohm": 40.1781846,
+       "ron_min_ohm": 25.1381189,
+       "worst_level_V": 1.368
+      },
+      "10R": {
+       "ron_max_ohm": 4.00438362,
+       "ron_min_ohm": 2.50611899,
+       "worst_level_V": 1.368
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.98,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 246.413182,
+       "ron_min_ohm": 146.076047,
+       "worst_level_V": 1.3662
+      },
+      "100R": {
+       "ron_max_ohm": 22.9328608,
+       "ron_min_ohm": 14.0793309,
+       "worst_level_V": 1.4058
+      },
+      "10R": {
+       "ron_max_ohm": 2.28537261,
+       "ron_min_ohm": 1.40274481,
+       "worst_level_V": 1.4058
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.98,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 299.296133,
+       "ron_min_ohm": 182.909693,
+       "worst_level_V": 1.4256
+      },
+      "100R": {
+       "ron_max_ohm": 28.1624422,
+       "ron_min_ohm": 17.6904815,
+       "worst_level_V": 1.4652
+      },
+      "10R": {
+       "ron_max_ohm": 2.80694634,
+       "ron_min_ohm": 1.76316362,
+       "worst_level_V": 1.4652
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 1.98,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 369.092575,
+       "ron_min_ohm": 235.502402,
+       "worst_level_V": 1.5048
+      },
+      "100R": {
+       "ron_max_ohm": 35.0663895,
+       "ron_min_ohm": 22.9235221,
+       "worst_level_V": 1.5444
+      },
+      "10R": {
+       "ron_max_ohm": 3.49605017,
+       "ron_min_ohm": 2.28625178,
+       "worst_level_V": 1.5444
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.62,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 5012.84534,
+       "ron_min_ohm": 288.042587,
+       "worst_level_V": 0.8586
+      },
+      "100R": {
+       "ron_max_ohm": 275.608298,
+       "ron_min_ohm": 27.2706393,
+       "worst_level_V": 0.8586
+      },
+      "10R": {
+       "ron_max_ohm": 26.6312252,
+       "ron_min_ohm": 2.71204636,
+       "worst_level_V": 0.8748
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.62,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 2151.78954,
+       "ron_min_ohm": 364.86168,
+       "worst_level_V": 0.8748
+      },
+      "100R": {
+       "ron_max_ohm": 155.544236,
+       "ron_min_ohm": 34.7447748,
+       "worst_level_V": 0.891
+      },
+      "10R": {
+       "ron_max_ohm": 15.2574163,
+       "ron_min_ohm": 3.45738513,
+       "worst_level_V": 0.9072
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.62,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1474.90623,
+       "ron_min_ohm": 475.597649,
+       "worst_level_V": 0.9234
+      },
+      "100R": {
+       "ron_max_ohm": 124.3164,
+       "ron_min_ohm": 45.6775756,
+       "worst_level_V": 0.972
+      },
+      "10R": {
+       "ron_max_ohm": 12.3042169,
+       "ron_min_ohm": 4.54925672,
+       "worst_level_V": 0.972
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.8,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1241.13228,
+       "ron_min_ohm": 257.981563,
+       "worst_level_V": 0.972
+      },
+      "100R": {
+       "ron_max_ohm": 93.4089229,
+       "ron_min_ohm": 24.6159372,
+       "worst_level_V": 1.026
+      },
+      "10R": {
+       "ron_max_ohm": 9.19430752,
+       "ron_min_ohm": 2.44997762,
+       "worst_level_V": 1.026
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.8,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1022.0631,
+       "ron_min_ohm": 323.830442,
+       "worst_level_V": 1.044
+      },
+      "100R": {
+       "ron_max_ohm": 86.568411,
+       "ron_min_ohm": 31.047823,
+       "worst_level_V": 1.098
+      },
+      "10R": {
+       "ron_max_ohm": 8.57741107,
+       "ron_min_ohm": 3.09165844,
+       "worst_level_V": 1.098
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.8,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 991.060867,
+       "ron_min_ohm": 416.577297,
+       "worst_level_V": 1.134
+      },
+      "100R": {
+       "ron_max_ohm": 89.3015021,
+       "ron_min_ohm": 40.253476,
+       "worst_level_V": 1.17
+      },
+      "10R": {
+       "ron_max_ohm": 8.87739852,
+       "ron_min_ohm": 4.0115695,
+       "worst_level_V": 1.188
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.98,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 662.113767,
+       "ron_min_ohm": 237.967062,
+       "worst_level_V": 1.1682
+      },
+      "100R": {
+       "ron_max_ohm": 57.2102008,
+       "ron_min_ohm": 22.8297361,
+       "worst_level_V": 1.2276
+      },
+      "10R": {
+       "ron_max_ohm": 5.67763871,
+       "ron_min_ohm": 2.27346562,
+       "worst_level_V": 1.2276
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.98,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 698.332386,
+       "ron_min_ohm": 294.834683,
+       "worst_level_V": 1.2474
+      },
+      "100R": {
+       "ron_max_ohm": 62.9325807,
+       "ron_min_ohm": 28.4060597,
+       "worst_level_V": 1.287
+      },
+      "10R": {
+       "ron_max_ohm": 6.25479632,
+       "ron_min_ohm": 2.8300258,
+       "worst_level_V": 1.287
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 1.98,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 772.606355,
+       "ron_min_ohm": 371.638578,
+       "worst_level_V": 1.3266
+      },
+      "100R": {
+       "ron_max_ohm": 71.610521,
+       "ron_min_ohm": 36.0789857,
+       "worst_level_V": 1.3662
+      },
+      "10R": {
+       "ron_max_ohm": 7.12736476,
+       "ron_min_ohm": 3.59729978,
+       "worst_level_V": 1.3662
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.62,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1228.89749,
+       "ron_min_ohm": 167.943157,
+       "worst_level_V": 1.0044
+      },
+      "100R": {
+       "ron_max_ohm": 93.1902747,
+       "ron_min_ohm": 16.0306553,
+       "worst_level_V": 1.0368
+      },
+      "10R": {
+       "ron_max_ohm": 9.16578838,
+       "ron_min_ohm": 1.59556614,
+       "worst_level_V": 1.0368
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.62,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1004.71995,
+       "ron_min_ohm": 216.787122,
+       "worst_level_V": 1.0692
+      },
+      "100R": {
+       "ron_max_ohm": 85.5962629,
+       "ron_min_ohm": 20.7787132,
+       "worst_level_V": 1.1178
+      },
+      "10R": {
+       "ron_max_ohm": 8.4864585,
+       "ron_min_ohm": 2.06902408,
+       "worst_level_V": 1.1178
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.62,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 964.314832,
+       "ron_min_ohm": 290.943217,
+       "worst_level_V": 1.1664
+      },
+      "100R": {
+       "ron_max_ohm": 87.2647542,
+       "ron_min_ohm": 28.0666601,
+       "worst_level_V": 1.215
+      },
+      "10R": {
+       "ron_max_ohm": 8.6778397,
+       "ron_min_ohm": 2.79656494,
+       "worst_level_V": 1.215
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.8,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 662.608876,
+       "ron_min_ohm": 154.942104,
+       "worst_level_V": 1.188
+      },
+      "100R": {
+       "ron_max_ohm": 57.3891733,
+       "ron_min_ohm": 14.8710886,
+       "worst_level_V": 1.224
+      },
+      "10R": {
+       "ron_max_ohm": 5.69184014,
+       "ron_min_ohm": 1.48098439,
+       "worst_level_V": 1.242
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.8,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 693.129287,
+       "ron_min_ohm": 197.531937,
+       "worst_level_V": 1.26
+      },
+      "100R": {
+       "ron_max_ohm": 62.5847021,
+       "ron_min_ohm": 19.028377,
+       "worst_level_V": 1.296
+      },
+      "10R": {
+       "ron_max_ohm": 6.22170032,
+       "ron_min_ohm": 1.895718,
+       "worst_level_V": 1.314
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.8,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 757.80261,
+       "ron_min_ohm": 260.961584,
+       "worst_level_V": 1.35
+      },
+      "100R": {
+       "ron_max_ohm": 70.3625879,
+       "ron_min_ohm": 25.2960642,
+       "worst_level_V": 1.404
+      },
+      "10R": {
+       "ron_max_ohm": 7.00769187,
+       "ron_min_ohm": 2.52177094,
+       "worst_level_V": 1.404
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.98,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 479.463721,
+       "ron_min_ohm": 145.992827,
+       "worst_level_V": 1.386
+      },
+      "100R": {
+       "ron_max_ohm": 43.6793698,
+       "ron_min_ohm": 14.0682949,
+       "worst_level_V": 1.4256
+      },
+      "10R": {
+       "ron_max_ohm": 4.34782148,
+       "ron_min_ohm": 1.40161496,
+       "worst_level_V": 1.4256
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.98,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 547.511124,
+       "ron_min_ohm": 183.368506,
+       "worst_level_V": 1.4454
+      },
+      "100R": {
+       "ron_max_ohm": 50.8169902,
+       "ron_min_ohm": 17.7304184,
+       "worst_level_V": 1.485
+      },
+      "10R": {
+       "ron_max_ohm": 5.05956526,
+       "ron_min_ohm": 1.76709879,
+       "worst_level_V": 1.5048
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 1.98,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 632.774751,
+       "ron_min_ohm": 237.157315,
+       "worst_level_V": 1.5444
+      },
+      "100R": {
+       "ron_max_ohm": 59.6355921,
+       "ron_min_ohm": 23.0768299,
+       "worst_level_V": 1.584
+      },
+      "10R": {
+       "ron_max_ohm": 5.94302586,
+       "ron_min_ohm": 2.30146132,
+       "worst_level_V": 1.584
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.62,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1058.77793,
+       "ron_min_ohm": 208.610338,
+       "worst_level_V": 0.729
+      },
+      "100R": {
+       "ron_max_ohm": 76.9089113,
+       "ron_min_ohm": 20.2467782,
+       "worst_level_V": 0.7128
+      },
+      "10R": {
+       "ron_max_ohm": 7.54327197,
+       "ron_min_ohm": 2.02467782,
+       "worst_level_V": 0.7128
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.62,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 830.644841,
+       "ron_min_ohm": 271.17004,
+       "worst_level_V": 0.6642
+      },
+      "100R": {
+       "ron_max_ohm": 69.2561343,
+       "ron_min_ohm": 26.3990636,
+       "worst_level_V": 0.6318
+      },
+      "10R": {
+       "ron_max_ohm": 6.84594269,
+       "ron_min_ohm": 2.63990636,
+       "worst_level_V": 0.6318
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.62,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 799.239785,
+       "ron_min_ohm": 361.625375,
+       "worst_level_V": 0.567
+      },
+      "100R": {
+       "ron_max_ohm": 71.5769026,
+       "ron_min_ohm": 35.3559629,
+       "worst_level_V": 0.5508
+      },
+      "10R": {
+       "ron_max_ohm": 7.10531268,
+       "ron_min_ohm": 3.53559617,
+       "worst_level_V": 0.5508
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.8,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 529.867024,
+       "ron_min_ohm": 189.326161,
+       "worst_level_V": 0.72
+      },
+      "100R": {
+       "ron_max_ohm": 45.1593783,
+       "ron_min_ohm": 18.4415565,
+       "worst_level_V": 0.684
+      },
+      "10R": {
+       "ron_max_ohm": 4.46788267,
+       "ron_min_ohm": 1.84415565,
+       "worst_level_V": 0.684
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.8,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 555.44187,
+       "ron_min_ohm": 244.303788,
+       "worst_level_V": 0.648
+      },
+      "100R": {
+       "ron_max_ohm": 49.6452307,
+       "ron_min_ohm": 23.8590036,
+       "worst_level_V": 0.612
+      },
+      "10R": {
+       "ron_max_ohm": 4.92608462,
+       "ron_min_ohm": 2.38590036,
+       "worst_level_V": 0.612
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.8,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 619.27222,
+       "ron_min_ohm": 322.370582,
+       "worst_level_V": 0.558
+      },
+      "100R": {
+       "ron_max_ohm": 57.1610325,
+       "ron_min_ohm": 31.6081889,
+       "worst_level_V": 0.522
+      },
+      "10R": {
+       "ron_max_ohm": 5.68484514,
+       "ron_min_ohm": 3.16081879,
+       "worst_level_V": 0.522
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.98,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 378.795121,
+       "ron_min_ohm": 176.151934,
+       "worst_level_V": 0.693
+      },
+      "100R": {
+       "ron_max_ohm": 34.116102,
+       "ron_min_ohm": 17.2029994,
+       "worst_level_V": 0.6732
+      },
+      "10R": {
+       "ron_max_ohm": 3.38587344,
+       "ron_min_ohm": 1.72029994,
+       "worst_level_V": 0.6732
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.98,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 435.293114,
+       "ron_min_ohm": 224.861482,
+       "worst_level_V": 0.6336
+      },
+      "100R": {
+       "ron_max_ohm": 40.0835995,
+       "ron_min_ohm": 22.0116395,
+       "worst_level_V": 0.594
+      },
+      "10R": {
+       "ron_max_ohm": 3.98448425,
+       "ron_min_ohm": 2.20116395,
+       "worst_level_V": 0.594
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 1.98,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 513.770383,
+       "ron_min_ohm": 291.826857,
+       "worst_level_V": 0.5544
+      },
+      "100R": {
+       "ron_max_ohm": 48.2154333,
+       "ron_min_ohm": 28.6769292,
+       "worst_level_V": 0.5148
+      },
+      "10R": {
+       "ron_max_ohm": 4.80028022,
+       "ron_min_ohm": 2.86769285,
+       "worst_level_V": 0.5148
+      }
+     }
+    }
+   ]
+  },
+  "3v3": {
+   "rail": [
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 2.97,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1336.25446,
+       "ron_min_ohm": 391.745253,
+       "worst_level_V": 1.7226
+      },
+      "100R": {
+       "ron_max_ohm": 115.613145,
+       "ron_min_ohm": 37.5564563,
+       "worst_level_V": 1.782
+      },
+      "10R": {
+       "ron_max_ohm": 11.4184556,
+       "ron_min_ohm": 3.74329186,
+       "worst_level_V": 1.782
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 2.97,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1411.11243,
+       "ron_min_ohm": 518.916661,
+       "worst_level_V": 1.8117
+      },
+      "100R": {
+       "ron_max_ohm": 127.333783,
+       "ron_min_ohm": 49.9247949,
+       "worst_level_V": 1.8711
+      },
+      "10R": {
+       "ron_max_ohm": 12.6143212,
+       "ron_min_ohm": 4.97753437,
+       "worst_level_V": 1.8711
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 2.97,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1563.50947,
+       "ron_min_ohm": 709.427036,
+       "worst_level_V": 1.9602
+      },
+      "100R": {
+       "ron_max_ohm": 145.249431,
+       "ron_min_ohm": 68.6439381,
+       "worst_level_V": 1.9899
+      },
+      "10R": {
+       "ron_max_ohm": 14.4217794,
+       "ron_min_ohm": 6.84710151,
+       "worst_level_V": 1.9899
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.3,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 936.38581,
+       "ron_min_ohm": 369.122588,
+       "worst_level_V": 2.013
+      },
+      "100R": {
+       "ron_max_ohm": 85.3436813,
+       "ron_min_ohm": 35.5003185,
+       "worst_level_V": 2.079
+      },
+      "10R": {
+       "ron_max_ohm": 8.4590579,
+       "ron_min_ohm": 3.5393174,
+       "worst_level_V": 2.079
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.3,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1090.08785,
+       "ron_min_ohm": 480.154777,
+       "worst_level_V": 2.112
+      },
+      "100R": {
+       "ron_max_ohm": 101.181298,
+       "ron_min_ohm": 46.3346746,
+       "worst_level_V": 2.178
+      },
+      "10R": {
+       "ron_max_ohm": 10.047611,
+       "ron_min_ohm": 4.62079752,
+       "worst_level_V": 2.178
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.3,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1290.77098,
+       "ron_min_ohm": 639.194825,
+       "worst_level_V": 2.244
+      },
+      "100R": {
+       "ron_max_ohm": 121.66157,
+       "ron_min_ohm": 62.0462258,
+       "worst_level_V": 2.31
+      },
+      "10R": {
+       "ron_max_ohm": 12.0997493,
+       "ron_min_ohm": 6.19070877,
+       "worst_level_V": 2.31
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.63,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 751.629992,
+       "ron_min_ohm": 353.653899,
+       "worst_level_V": 2.3232
+      },
+      "100R": {
+       "ron_max_ohm": 70.1287893,
+       "ron_min_ohm": 34.0920918,
+       "worst_level_V": 2.3958
+      },
+      "10R": {
+       "ron_max_ohm": 6.96943565,
+       "ron_min_ohm": 3.39961442,
+       "worst_level_V": 2.3958
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.63,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 910.666955,
+       "ron_min_ohm": 451.112246,
+       "worst_level_V": 2.4321
+      },
+      "100R": {
+       "ron_max_ohm": 85.7683657,
+       "ron_min_ohm": 43.6291367,
+       "worst_level_V": 2.4684
+      },
+      "10R": {
+       "ron_max_ohm": 8.52681792,
+       "ron_min_ohm": 4.35184022,
+       "worst_level_V": 2.5047
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.63,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1108.12715,
+       "ron_min_ohm": 581.925548,
+       "worst_level_V": 2.541
+      },
+      "100R": {
+       "ron_max_ohm": 105.49742,
+       "ron_min_ohm": 56.6300039,
+       "worst_level_V": 2.6136
+      },
+      "10R": {
+       "ron_max_ohm": 10.5005819,
+       "ron_min_ohm": 5.65156082,
+       "worst_level_V": 2.6136
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 2.97,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 845.774422,
+       "ron_min_ohm": 315.358307,
+       "worst_level_V": 1.8117
+      },
+      "100R": {
+       "ron_max_ohm": 75.8066165,
+       "ron_min_ohm": 30.2697594,
+       "worst_level_V": 1.8414
+      },
+      "10R": {
+       "ron_max_ohm": 7.5007184,
+       "ron_min_ohm": 3.0173245,
+       "worst_level_V": 1.8414
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 2.97,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 962.814467,
+       "ron_min_ohm": 418.866524,
+       "worst_level_V": 1.9008
+      },
+      "100R": {
+       "ron_max_ohm": 88.4174594,
+       "ron_min_ohm": 40.3401161,
+       "worst_level_V": 1.9305
+      },
+      "10R": {
+       "ron_max_ohm": 8.77692399,
+       "ron_min_ohm": 4.02228251,
+       "worst_level_V": 1.9602
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 2.97,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1126.98166,
+       "ron_min_ohm": 575.546884,
+       "worst_level_V": 2.0196
+      },
+      "100R": {
+       "ron_max_ohm": 105.662446,
+       "ron_min_ohm": 55.7317323,
+       "worst_level_V": 2.079
+      },
+      "10R": {
+       "ron_max_ohm": 10.5037097,
+       "ron_min_ohm": 5.55949339,
+       "worst_level_V": 2.079
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.3,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 649.644497,
+       "ron_min_ohm": 298.914196,
+       "worst_level_V": 2.112
+      },
+      "100R": {
+       "ron_max_ohm": 60.0778269,
+       "ron_min_ohm": 28.7744975,
+       "worst_level_V": 2.145
+      },
+      "10R": {
+       "ron_max_ohm": 5.9607341,
+       "ron_min_ohm": 2.86898961,
+       "worst_level_V": 2.145
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.3,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 782.878214,
+       "ron_min_ohm": 389.704086,
+       "worst_level_V": 2.211
+      },
+      "100R": {
+       "ron_max_ohm": 73.4069771,
+       "ron_min_ohm": 37.6356079,
+       "worst_level_V": 2.244
+      },
+      "10R": {
+       "ron_max_ohm": 7.29402859,
+       "ron_min_ohm": 3.75352112,
+       "worst_level_V": 2.244
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.3,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 955.771174,
+       "ron_min_ohm": 521.222333,
+       "worst_level_V": 2.343
+      },
+      "100R": {
+       "ron_max_ohm": 90.6815933,
+       "ron_min_ohm": 50.6234641,
+       "worst_level_V": 2.376
+      },
+      "10R": {
+       "ron_max_ohm": 9.02197949,
+       "ron_min_ohm": 5.05124554,
+       "worst_level_V": 2.376
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.63,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 545.137601,
+       "ron_min_ohm": 287.726279,
+       "worst_level_V": 2.3958
+      },
+      "100R": {
+       "ron_max_ohm": 51.3711392,
+       "ron_min_ohm": 27.7568247,
+       "worst_level_V": 2.4684
+      },
+      "10R": {
+       "ron_max_ohm": 5.10883315,
+       "ron_min_ohm": 2.76804353,
+       "worst_level_V": 2.4684
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.63,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 674.127185,
+       "ron_min_ohm": 367.71646,
+       "worst_level_V": 2.5047
+      },
+      "100R": {
+       "ron_max_ohm": 63.9023663,
+       "ron_min_ohm": 35.5854958,
+       "worst_level_V": 2.541
+      },
+      "10R": {
+       "ron_max_ohm": 6.35981549,
+       "ron_min_ohm": 3.54970849,
+       "worst_level_V": 2.5773
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.63,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 836.346599,
+       "ron_min_ohm": 476.455535,
+       "worst_level_V": 2.6499
+      },
+      "100R": {
+       "ron_max_ohm": 79.9637067,
+       "ron_min_ohm": 46.3865549,
+       "worst_level_V": 2.6862
+      },
+      "10R": {
+       "ron_max_ohm": 7.96191889,
+       "ron_min_ohm": 4.62946713,
+       "worst_level_V": 2.6862
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 2.97,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 2363.81857,
+       "ron_min_ohm": 491.679545,
+       "worst_level_V": 1.6335
+      },
+      "100R": {
+       "ron_max_ohm": 192.584875,
+       "ron_min_ohm": 47.0759586,
+       "worst_level_V": 1.6929
+      },
+      "10R": {
+       "ron_max_ohm": 18.9090126,
+       "ron_min_ohm": 4.69160121,
+       "worst_level_V": 1.6929
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 2.97,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 2199.032,
+       "ron_min_ohm": 649.398449,
+       "worst_level_V": 1.7523
+      },
+      "100R": {
+       "ron_max_ohm": 192.893863,
+       "ron_min_ohm": 62.4095948,
+       "worst_level_V": 1.782
+      },
+      "10R": {
+       "ron_max_ohm": 19.0765848,
+       "ron_min_ohm": 6.22169942,
+       "worst_level_V": 1.8117
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 2.97,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 2253.91415,
+       "ron_min_ohm": 883.117975,
+       "worst_level_V": 1.8711
+      },
+      "100R": {
+       "ron_max_ohm": 206.684667,
+       "ron_min_ohm": 85.3798119,
+       "worst_level_V": 1.9305
+      },
+      "10R": {
+       "ron_max_ohm": 20.5069833,
+       "ron_min_ohm": 8.51587359,
+       "worst_level_V": 1.9305
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.3,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1430.63716,
+       "ron_min_ohm": 460.36467,
+       "worst_level_V": 1.947
+      },
+      "100R": {
+       "ron_max_ohm": 127.151064,
+       "ron_min_ohm": 44.2321493,
+       "worst_level_V": 2.013
+      },
+      "10R": {
+       "ron_max_ohm": 12.5843967,
+       "ron_min_ohm": 4.40949891,
+       "worst_level_V": 2.013
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.3,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1580.01977,
+       "ron_min_ohm": 597.416191,
+       "worst_level_V": 2.046
+      },
+      "100R": {
+       "ron_max_ohm": 144.491248,
+       "ron_min_ohm": 57.6021704,
+       "worst_level_V": 2.112
+      },
+      "10R": {
+       "ron_max_ohm": 14.3362815,
+       "ron_min_ohm": 5.74405554,
+       "worst_level_V": 2.112
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.3,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1794.04331,
+       "ron_min_ohm": 791.446473,
+       "worst_level_V": 2.178
+      },
+      "100R": {
+       "ron_max_ohm": 167.706261,
+       "ron_min_ohm": 76.7778061,
+       "worst_level_V": 2.244
+      },
+      "10R": {
+       "ron_max_ohm": 16.6710316,
+       "ron_min_ohm": 7.66015163,
+       "worst_level_V": 2.244
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.63,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1075.87573,
+       "ron_min_ohm": 438.906828,
+       "worst_level_V": 2.2506
+      },
+      "100R": {
+       "ron_max_ohm": 99.0831731,
+       "ron_min_ohm": 42.2780227,
+       "worst_level_V": 2.3232
+      },
+      "10R": {
+       "ron_max_ohm": 9.83770512,
+       "ron_min_ohm": 4.21562633,
+       "worst_level_V": 2.3232
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.63,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1268.05247,
+       "ron_min_ohm": 558.741937,
+       "worst_level_V": 2.3595
+      },
+      "100R": {
+       "ron_max_ohm": 118.444173,
+       "ron_min_ohm": 54.0030847,
+       "worst_level_V": 2.3958
+      },
+      "10R": {
+       "ron_max_ohm": 11.763592,
+       "ron_min_ohm": 5.38629553,
+       "worst_level_V": 2.3958
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.63,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1505.17802,
+       "ron_min_ohm": 717.496157,
+       "worst_level_V": 2.4684
+      },
+      "100R": {
+       "ron_max_ohm": 142.546331,
+       "ron_min_ohm": 69.7899334,
+       "worst_level_V": 2.541
+      },
+      "10R": {
+       "ron_max_ohm": 14.1818446,
+       "ron_min_ohm": 6.96460148,
+       "worst_level_V": 2.541
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 2.97,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1610.78176,
+       "ron_min_ohm": 315.516935,
+       "worst_level_V": 1.8414
+      },
+      "100R": {
+       "ron_max_ohm": 140.644987,
+       "ron_min_ohm": 30.2777582,
+       "worst_level_V": 1.8711
+      },
+      "10R": {
+       "ron_max_ohm": 13.8770496,
+       "ron_min_ohm": 3.01806364,
+       "worst_level_V": 1.8711
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 2.97,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1707.77068,
+       "ron_min_ohm": 420.236059,
+       "worst_level_V": 1.9305
+      },
+      "100R": {
+       "ron_max_ohm": 154.525761,
+       "ron_min_ohm": 40.4614623,
+       "worst_level_V": 1.9899
+      },
+      "10R": {
+       "ron_max_ohm": 15.3242041,
+       "ron_min_ohm": 4.03429623,
+       "worst_level_V": 1.9899
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 2.97,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1879.57763,
+       "ron_min_ohm": 579.568656,
+       "worst_level_V": 2.079
+      },
+      "100R": {
+       "ron_max_ohm": 175.031883,
+       "ron_min_ohm": 56.1032121,
+       "worst_level_V": 2.1087
+      },
+      "10R": {
+       "ron_max_ohm": 17.3801166,
+       "ron_min_ohm": 5.59640326,
+       "worst_level_V": 2.1087
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.3,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1150.85384,
+       "ron_min_ohm": 298.888381,
+       "worst_level_V": 2.145
+      },
+      "100R": {
+       "ron_max_ohm": 105.296356,
+       "ron_min_ohm": 28.765947,
+       "worst_level_V": 2.178
+      },
+      "10R": {
+       "ron_max_ohm": 10.4372514,
+       "ron_min_ohm": 2.868088,
+       "worst_level_V": 2.178
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.3,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1331.85018,
+       "ron_min_ohm": 390.849919,
+       "worst_level_V": 2.244
+      },
+      "100R": {
+       "ron_max_ohm": 123.939734,
+       "ron_min_ohm": 37.7375541,
+       "worst_level_V": 2.277
+      },
+      "10R": {
+       "ron_max_ohm": 12.3055412,
+       "ron_min_ohm": 3.76361761,
+       "worst_level_V": 2.277
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.3,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1559.75406,
+       "ron_min_ohm": 525.050532,
+       "worst_level_V": 2.376
+      },
+      "100R": {
+       "ron_max_ohm": 147.118623,
+       "ron_min_ohm": 50.9801432,
+       "worst_level_V": 2.409
+      },
+      "10R": {
+       "ron_max_ohm": 14.6264514,
+       "ron_min_ohm": 5.0867112,
+       "worst_level_V": 2.442
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.63,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 932.504042,
+       "ron_min_ohm": 287.547166,
+       "worst_level_V": 2.4321
+      },
+      "100R": {
+       "ron_max_ohm": 86.9512001,
+       "ron_min_ohm": 27.7342787,
+       "worst_level_V": 2.4684
+      },
+      "10R": {
+       "ron_max_ohm": 8.63738787,
+       "ron_min_ohm": 2.76575235,
+       "worst_level_V": 2.5047
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.63,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1119.03342,
+       "ron_min_ohm": 368.685321,
+       "worst_level_V": 2.541
+      },
+      "100R": {
+       "ron_max_ohm": 105.57578,
+       "ron_min_ohm": 35.6718552,
+       "worst_level_V": 2.5773
+      },
+      "10R": {
+       "ron_max_ohm": 10.494827,
+       "ron_min_ohm": 3.55826255,
+       "worst_level_V": 2.5773
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.63,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1342.40199,
+       "ron_min_ohm": 480.154644,
+       "worst_level_V": 2.6862
+      },
+      "100R": {
+       "ron_max_ohm": 127.875041,
+       "ron_min_ohm": 46.7336011,
+       "worst_level_V": 2.7225
+      },
+      "10R": {
+       "ron_max_ohm": 12.7268994,
+       "ron_min_ohm": 4.66399562,
+       "worst_level_V": 2.7225
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 2.97,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1354.81376,
+       "ron_min_ohm": 367.03225,
+       "worst_level_V": 1.2771
+      },
+      "100R": {
+       "ron_max_ohm": 116.38411,
+       "ron_min_ohm": 35.9613426,
+       "worst_level_V": 1.2474
+      },
+      "10R": {
+       "ron_max_ohm": 11.4867247,
+       "ron_min_ohm": 3.58767524,
+       "worst_level_V": 1.2474
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 2.97,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1442.69537,
+       "ron_min_ohm": 491.618946,
+       "worst_level_V": 1.1583
+      },
+      "100R": {
+       "ron_max_ohm": 129.336762,
+       "ron_min_ohm": 48.2497253,
+       "worst_level_V": 1.1583
+      },
+      "10R": {
+       "ron_max_ohm": 12.8067242,
+       "ron_min_ohm": 4.81458991,
+       "worst_level_V": 1.1583
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 2.97,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1622.85851,
+       "ron_min_ohm": 674.93763,
+       "worst_level_V": 1.0395
+      },
+      "100R": {
+       "ron_max_ohm": 150.040478,
+       "ron_min_ohm": 66.411369,
+       "worst_level_V": 1.0098
+      },
+      "10R": {
+       "ron_max_ohm": 14.9012694,
+       "ron_min_ohm": 6.62885983,
+       "worst_level_V": 1.0098
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.3,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 954.181789,
+       "ron_min_ohm": 345.507986,
+       "worst_level_V": 1.287
+      },
+      "100R": {
+       "ron_max_ohm": 85.9723107,
+       "ron_min_ohm": 33.9049558,
+       "worst_level_V": 1.287
+      },
+      "10R": {
+       "ron_max_ohm": 8.51649098,
+       "ron_min_ohm": 3.38314939,
+       "worst_level_V": 1.287
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.3,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1115.879,
+       "ron_min_ohm": 456.138581,
+       "worst_level_V": 1.188
+      },
+      "100R": {
+       "ron_max_ohm": 102.691257,
+       "ron_min_ohm": 44.8319522,
+       "worst_level_V": 1.188
+      },
+      "10R": {
+       "ron_max_ohm": 10.1921422,
+       "ron_min_ohm": 4.47432293,
+       "worst_level_V": 1.188
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.3,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1334.7546,
+       "ron_min_ohm": 612.902703,
+       "worst_level_V": 1.056
+      },
+      "100R": {
+       "ron_max_ohm": 125.157401,
+       "ron_min_ohm": 60.3947207,
+       "worst_level_V": 1.056
+      },
+      "10R": {
+       "ron_max_ohm": 12.4438695,
+       "ron_min_ohm": 6.02936145,
+       "worst_level_V": 1.023
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.63,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 766.505572,
+       "ron_min_ohm": 330.687738,
+       "worst_level_V": 1.3431
+      },
+      "100R": {
+       "ron_max_ohm": 70.8316786,
+       "ron_min_ohm": 32.4879558,
+       "worst_level_V": 1.3068
+      },
+      "10R": {
+       "ron_max_ohm": 7.03303842,
+       "ron_min_ohm": 3.24220797,
+       "worst_level_V": 1.3068
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.63,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 930.939991,
+       "ron_min_ohm": 429.618477,
+       "worst_level_V": 1.2342
+      },
+      "100R": {
+       "ron_max_ohm": 87.012002,
+       "ron_min_ohm": 42.270664,
+       "worst_level_V": 1.1979
+      },
+      "10R": {
+       "ron_max_ohm": 8.65109203,
+       "ron_min_ohm": 4.21925113,
+       "worst_level_V": 1.1979
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.63,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1141.2572,
+       "ron_min_ohm": 562.571006,
+       "worst_level_V": 1.089
+      },
+      "100R": {
+       "ron_max_ohm": 108.005091,
+       "ron_min_ohm": 55.497642,
+       "worst_level_V": 1.089
+      },
+      "10R": {
+       "ron_max_ohm": 10.7507819,
+       "ron_min_ohm": 5.5412349,
+       "worst_level_V": 1.0527
+      }
+     }
+    }
+   ],
+   "srcbody": [
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 2.97,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 646.674053,
+       "ron_min_ohm": 391.744798,
+       "worst_level_V": 2.0493
+      },
+      "100R": {
+       "ron_max_ohm": 60.7322519,
+       "ron_min_ohm": 37.5564479,
+       "worst_level_V": 2.1087
+      },
+      "10R": {
+       "ron_max_ohm": 6.03861995,
+       "ron_min_ohm": 3.74329136,
+       "worst_level_V": 2.1384
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 2.97,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 826.251331,
+       "ron_min_ohm": 518.915861,
+       "worst_level_V": 2.1384
+      },
+      "100R": {
+       "ron_max_ohm": 78.2338708,
+       "ron_min_ohm": 49.9247801,
+       "worst_level_V": 2.1978
+      },
+      "10R": {
+       "ron_max_ohm": 7.78482146,
+       "ron_min_ohm": 4.97753348,
+       "worst_level_V": 2.2275
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 2.97,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1070.62153,
+       "ron_min_ohm": 709.425401,
+       "worst_level_V": 2.2869
+      },
+      "100R": {
+       "ron_max_ohm": 102.156231,
+       "ron_min_ohm": 68.6438949,
+       "worst_level_V": 2.3463
+      },
+      "10R": {
+       "ron_max_ohm": 10.1719693,
+       "ron_min_ohm": 6.84709828,
+       "worst_level_V": 2.3463
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.3,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 547.146805,
+       "ron_min_ohm": 369.122138,
+       "worst_level_V": 2.409
+      },
+      "100R": {
+       "ron_max_ohm": 52.1870296,
+       "ron_min_ohm": 35.5003102,
+       "worst_level_V": 2.475
+      },
+      "10R": {
+       "ron_max_ohm": 5.19580917,
+       "ron_min_ohm": 3.5393169,
+       "worst_level_V": 2.475
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.3,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 709.814544,
+       "ron_min_ohm": 480.154016,
+       "worst_level_V": 2.508
+      },
+      "100R": {
+       "ron_max_ohm": 67.9800028,
+       "ron_min_ohm": 46.3346604,
+       "worst_level_V": 2.541
+      },
+      "10R": {
+       "ron_max_ohm": 6.76934829,
+       "ron_min_ohm": 4.62079667,
+       "worst_level_V": 2.574
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.3,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 930.510876,
+       "ron_min_ohm": 639.193363,
+       "worst_level_V": 2.607
+      },
+      "100R": {
+       "ron_max_ohm": 89.4569196,
+       "ron_min_ohm": 62.0461879,
+       "worst_level_V": 2.673
+      },
+      "10R": {
+       "ron_max_ohm": 8.91188264,
+       "ron_min_ohm": 6.19070598,
+       "worst_level_V": 2.673
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.63,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 487.804878,
+       "ron_min_ohm": 353.653445,
+       "worst_level_V": 2.7588
+      },
+      "100R": {
+       "ron_max_ohm": 46.9734652,
+       "ron_min_ohm": 33.653844,
+       "worst_level_V": 2.7951
+      },
+      "10R": {
+       "ron_max_ohm": 4.67870534,
+       "ron_min_ohm": 3.34802859,
+       "worst_level_V": 2.8314
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.63,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 634.138562,
+       "ron_min_ohm": 451.111507,
+       "worst_level_V": 2.8314
+      },
+      "100R": {
+       "ron_max_ohm": 61.1894255,
+       "ron_min_ohm": 43.6291229,
+       "worst_level_V": 2.904
+      },
+      "10R": {
+       "ron_max_ohm": 6.09811609,
+       "ron_min_ohm": 4.35183939,
+       "worst_level_V": 2.904
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 3.63,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 828.022052,
+       "ron_min_ohm": 581.924224,
+       "worst_level_V": 2.9403
+      },
+      "100R": {
+       "ron_max_ohm": 80.0135845,
+       "ron_min_ohm": 56.6299702,
+       "worst_level_V": 3.0129
+      },
+      "10R": {
+       "ron_max_ohm": 7.9755019,
+       "ron_min_ohm": 5.65155837,
+       "worst_level_V": 3.0129
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 2.97,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 472.656274,
+       "ron_min_ohm": 315.358011,
+       "worst_level_V": 2.1384
+      },
+      "100R": {
+       "ron_max_ohm": 44.8104746,
+       "ron_min_ohm": 30.269754,
+       "worst_level_V": 2.1978
+      },
+      "10R": {
+       "ron_max_ohm": 4.45646877,
+       "ron_min_ohm": 3.01732417,
+       "worst_level_V": 2.2275
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 2.97,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 614.066104,
+       "ron_min_ohm": 418.866003,
+       "worst_level_V": 2.2275
+      },
+      "100R": {
+       "ron_max_ohm": 58.5461326,
+       "ron_min_ohm": 40.3401064,
+       "worst_level_V": 2.2869
+      },
+      "10R": {
+       "ron_max_ohm": 5.82672708,
+       "ron_min_ohm": 4.02228193,
+       "worst_level_V": 2.3166
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 2.97,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 808.959586,
+       "ron_min_ohm": 575.545701,
+       "worst_level_V": 2.3463
+      },
+      "100R": {
+       "ron_max_ohm": 77.5460133,
+       "ron_min_ohm": 55.7316878,
+       "worst_level_V": 2.4057
+      },
+      "10R": {
+       "ron_max_ohm": 7.72473065,
+       "ron_min_ohm": 5.55948959,
+       "worst_level_V": 2.4354
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.3,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 412.026201,
+       "ron_min_ohm": 298.913902,
+       "worst_level_V": 2.508
+      },
+      "100R": {
+       "ron_max_ohm": 39.5469355,
+       "ron_min_ohm": 28.774492,
+       "worst_level_V": 2.541
+      },
+      "10R": {
+       "ron_max_ohm": 3.93699753,
+       "ron_min_ohm": 2.86898929,
+       "worst_level_V": 2.541
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.3,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 539.744852,
+       "ron_min_ohm": 389.703584,
+       "worst_level_V": 2.574
+      },
+      "100R": {
+       "ron_max_ohm": 51.9378298,
+       "ron_min_ohm": 37.6355986,
+       "worst_level_V": 2.64
+      },
+      "10R": {
+       "ron_max_ohm": 5.17385216,
+       "ron_min_ohm": 3.75352056,
+       "worst_level_V": 2.64
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.3,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 714.047446,
+       "ron_min_ohm": 521.221274,
+       "worst_level_V": 2.706
+      },
+      "100R": {
+       "ron_max_ohm": 68.8513381,
+       "ron_min_ohm": 50.6234257,
+       "worst_level_V": 2.772
+      },
+      "10R": {
+       "ron_max_ohm": 6.86250478,
+       "ron_min_ohm": 5.0512423,
+       "worst_level_V": 2.772
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.63,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 374.898493,
+       "ron_min_ohm": 269.829798,
+       "worst_level_V": 2.8314
+      },
+      "100R": {
+       "ron_max_ohm": 36.249516,
+       "ron_min_ohm": 25.5882563,
+       "worst_level_V": 2.904
+      },
+      "10R": {
+       "ron_max_ohm": 3.61326593,
+       "ron_min_ohm": 2.54660604,
+       "worst_level_V": 2.904
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.63,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 489.362053,
+       "ron_min_ohm": 366.556439,
+       "worst_level_V": 2.9403
+      },
+      "100R": {
+       "ron_max_ohm": 47.3972687,
+       "ron_min_ohm": 34.9421073,
+       "worst_level_V": 2.9766
+      },
+      "10R": {
+       "ron_max_ohm": 4.72384122,
+       "ron_min_ohm": 3.47916629,
+       "worst_level_V": 2.9766
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 3.63,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 642.258414,
+       "ron_min_ohm": 476.454575,
+       "worst_level_V": 3.0492
+      },
+      "100R": {
+       "ron_max_ohm": 62.2337667,
+       "ron_min_ohm": 46.3865212,
+       "worst_level_V": 3.0855
+      },
+      "10R": {
+       "ron_max_ohm": 6.20359023,
+       "ron_min_ohm": 4.62946432,
+       "worst_level_V": 3.0855
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 2.97,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 919.041532,
+       "ron_min_ohm": 491.678827,
+       "worst_level_V": 1.9899
+      },
+      "100R": {
+       "ron_max_ohm": 85.251936,
+       "ron_min_ohm": 47.0759454,
+       "worst_level_V": 2.0493
+      },
+      "10R": {
+       "ron_max_ohm": 8.46938426,
+       "ron_min_ohm": 4.69160043,
+       "worst_level_V": 2.0493
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 2.97,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1147.35307,
+       "ron_min_ohm": 649.397197,
+       "worst_level_V": 2.079
+      },
+      "100R": {
+       "ron_max_ohm": 107.701754,
+       "ron_min_ohm": 62.4095717,
+       "worst_level_V": 2.1384
+      },
+      "10R": {
+       "ron_max_ohm": 10.7092445,
+       "ron_min_ohm": 6.22169804,
+       "worst_level_V": 2.1384
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 2.97,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1453.98009,
+       "ron_min_ohm": 883.115492,
+       "worst_level_V": 2.1978
+      },
+      "100R": {
+       "ron_max_ohm": 137.953914,
+       "ron_min_ohm": 85.3797524,
+       "worst_level_V": 2.2572
+      },
+      "10R": {
+       "ron_max_ohm": 13.7286903,
+       "ron_min_ohm": 8.51586938,
+       "worst_level_V": 2.2572
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.3,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 747.000866,
+       "ron_min_ohm": 460.363971,
+       "worst_level_V": 2.31
+      },
+      "100R": {
+       "ron_max_ohm": 70.7837607,
+       "ron_min_ohm": 44.2321364,
+       "worst_level_V": 2.376
+      },
+      "10R": {
+       "ron_max_ohm": 7.03934757,
+       "ron_min_ohm": 4.40949814,
+       "worst_level_V": 2.376
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.3,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 958.351146,
+       "ron_min_ohm": 597.415014,
+       "worst_level_V": 2.409
+      },
+      "100R": {
+       "ron_max_ohm": 91.2809415,
+       "ron_min_ohm": 57.6021485,
+       "worst_level_V": 2.475
+      },
+      "10R": {
+       "ron_max_ohm": 9.08613493,
+       "ron_min_ohm": 5.74405423,
+       "worst_level_V": 2.475
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.3,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1239.88286,
+       "ron_min_ohm": 791.444272,
+       "worst_level_V": 2.541
+      },
+      "100R": {
+       "ron_max_ohm": 118.747779,
+       "ron_min_ohm": 76.777754,
+       "worst_level_V": 2.574
+      },
+      "10R": {
+       "ron_max_ohm": 11.8243769,
+       "ron_min_ohm": 7.66014799,
+       "worst_level_V": 2.607
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.63,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 650.208911,
+       "ron_min_ohm": 438.906129,
+       "worst_level_V": 2.6499
+      },
+      "100R": {
+       "ron_max_ohm": 62.3834289,
+       "ron_min_ohm": 42.2780097,
+       "worst_level_V": 2.7225
+      },
+      "10R": {
+       "ron_max_ohm": 6.21172011,
+       "ron_min_ohm": 4.21562556,
+       "worst_level_V": 2.7225
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.63,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 840.222679,
+       "ron_min_ohm": 558.740803,
+       "worst_level_V": 2.7588
+      },
+      "100R": {
+       "ron_max_ohm": 80.7341838,
+       "ron_min_ohm": 54.0030636,
+       "worst_level_V": 2.7951
+      },
+      "10R": {
+       "ron_max_ohm": 8.04323286,
+       "ron_min_ohm": 5.38629427,
+       "worst_level_V": 2.8314
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 3.63,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1089.68105,
+       "ron_min_ohm": 717.494179,
+       "worst_level_V": 2.8677
+      },
+      "100R": {
+       "ron_max_ohm": 104.957831,
+       "ron_min_ohm": 69.7898872,
+       "worst_level_V": 2.9403
+      },
+      "10R": {
+       "ron_max_ohm": 10.4609942,
+       "ron_min_ohm": 6.96459828,
+       "worst_level_V": 2.9403
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 2.97,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 812.695576,
+       "ron_min_ohm": 315.516639,
+       "worst_level_V": 2.1681
+      },
+      "100R": {
+       "ron_max_ohm": 76.417216,
+       "ron_min_ohm": 30.2777528,
+       "worst_level_V": 2.2275
+      },
+      "10R": {
+       "ron_max_ohm": 7.59612463,
+       "ron_min_ohm": 3.01806331,
+       "worst_level_V": 2.2275
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 2.97,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1027.61573,
+       "ron_min_ohm": 420.235534,
+       "worst_level_V": 2.2572
+      },
+      "100R": {
+       "ron_max_ohm": 97.4057074,
+       "ron_min_ohm": 40.4614525,
+       "worst_level_V": 2.3166
+      },
+      "10R": {
+       "ron_max_ohm": 9.68757452,
+       "ron_min_ohm": 4.03429565,
+       "worst_level_V": 2.3166
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 2.97,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1311.65252,
+       "ron_min_ohm": 579.567585,
+       "worst_level_V": 2.4057
+      },
+      "100R": {
+       "ron_max_ohm": 125.237785,
+       "ron_min_ohm": 56.1031863,
+       "worst_level_V": 2.4651
+      },
+      "10R": {
+       "ron_max_ohm": 12.470699,
+       "ron_min_ohm": 5.59640143,
+       "worst_level_V": 2.4651
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.3,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 689.340033,
+       "ron_min_ohm": 298.888087,
+       "worst_level_V": 2.508
+      },
+      "100R": {
+       "ron_max_ohm": 65.7961747,
+       "ron_min_ohm": 28.7659415,
+       "worst_level_V": 2.574
+      },
+      "10R": {
+       "ron_max_ohm": 6.55063524,
+       "ron_min_ohm": 2.86808768,
+       "worst_level_V": 2.574
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.3,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 884.912026,
+       "ron_min_ohm": 390.849414,
+       "worst_level_V": 2.607
+      },
+      "100R": {
+       "ron_max_ohm": 84.7804551,
+       "ron_min_ohm": 37.7375447,
+       "worst_level_V": 2.673
+      },
+      "10R": {
+       "ron_max_ohm": 8.44474567,
+       "ron_min_ohm": 3.76361705,
+       "worst_level_V": 2.673
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.3,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1140.16281,
+       "ron_min_ohm": 525.049562,
+       "worst_level_V": 2.739
+      },
+      "100R": {
+       "ron_max_ohm": 109.619775,
+       "ron_min_ohm": 50.9801202,
+       "worst_level_V": 2.805
+      },
+      "10R": {
+       "ron_max_ohm": 10.9234597,
+       "ron_min_ohm": 5.08670959,
+       "worst_level_V": 2.805
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.63,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 614.99401,
+       "ron_min_ohm": 287.546866,
+       "worst_level_V": 2.8677
+      },
+      "100R": {
+       "ron_max_ohm": 59.3055916,
+       "ron_min_ohm": 27.7342731,
+       "worst_level_V": 2.904
+      },
+      "10R": {
+       "ron_max_ohm": 5.90730936,
+       "ron_min_ohm": 2.76575201,
+       "worst_level_V": 2.904
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.63,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 791.129106,
+       "ron_min_ohm": 368.684827,
+       "worst_level_V": 2.9403
+      },
+      "100R": {
+       "ron_max_ohm": 76.349,
+       "ron_min_ohm": 35.6718459,
+       "worst_level_V": 3.0129
+      },
+      "10R": {
+       "ron_max_ohm": 7.60968248,
+       "ron_min_ohm": 3.558262,
+       "worst_level_V": 3.0129
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 3.63,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1013.62856,
+       "ron_min_ohm": 480.153757,
+       "worst_level_V": 3.0492
+      },
+      "100R": {
+       "ron_max_ohm": 98.0234316,
+       "ron_min_ohm": 46.7335804,
+       "worst_level_V": 3.1218
+      },
+      "10R": {
+       "ron_max_ohm": 9.76937716,
+       "ron_min_ohm": 4.66399418,
+       "worst_level_V": 3.1218
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 2.97,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 674.033262,
+       "ron_min_ohm": 367.032651,
+       "worst_level_V": 0.891
+      },
+      "100R": {
+       "ron_max_ohm": 62.4386031,
+       "ron_min_ohm": 35.9613464,
+       "worst_level_V": 0.8613
+      },
+      "10R": {
+       "ron_max_ohm": 6.20318152,
+       "ron_min_ohm": 3.58767544,
+       "worst_level_V": 0.8613
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 2.97,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 859.553132,
+       "ron_min_ohm": 491.619664,
+       "worst_level_V": 0.8019
+      },
+      "100R": {
+       "ron_max_ohm": 80.4615966,
+       "ron_min_ohm": 48.2497322,
+       "worst_level_V": 0.7722
+      },
+      "10R": {
+       "ron_max_ohm": 8.00021386,
+       "ron_min_ohm": 4.81459025,
+       "worst_level_V": 0.7722
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 2.97,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1115.60434,
+       "ron_min_ohm": 674.938996,
+       "worst_level_V": 0.6831
+      },
+      "100R": {
+       "ron_max_ohm": 105.613368,
+       "ron_min_ohm": 66.4113808,
+       "worst_level_V": 0.6534
+      },
+      "10R": {
+       "ron_max_ohm": 10.5102054,
+       "ron_min_ohm": 6.62886032,
+       "worst_level_V": 0.6534
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.3,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 571.573472,
+       "ron_min_ohm": 345.50838,
+       "worst_level_V": 0.891
+      },
+      "100R": {
+       "ron_max_ohm": 53.7781593,
+       "ron_min_ohm": 33.9049596,
+       "worst_level_V": 0.858
+      },
+      "10R": {
+       "ron_max_ohm": 5.34868127,
+       "ron_min_ohm": 3.38314958,
+       "worst_level_V": 0.858
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.3,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 737.799692,
+       "ron_min_ohm": 456.139268,
+       "worst_level_V": 0.792
+      },
+      "100R": {
+       "ron_max_ohm": 69.8444377,
+       "ron_min_ohm": 44.8319589,
+       "worst_level_V": 0.759
+      },
+      "10R": {
+       "ron_max_ohm": 6.95177118,
+       "ron_min_ohm": 4.47432326,
+       "worst_level_V": 0.759
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.3,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 964.42115,
+       "ron_min_ohm": 612.903954,
+       "worst_level_V": 0.66
+      },
+      "100R": {
+       "ron_max_ohm": 92.0004477,
+       "ron_min_ohm": 60.3947317,
+       "worst_level_V": 0.627
+      },
+      "10R": {
+       "ron_max_ohm": 9.16437384,
+       "ron_min_ohm": 6.02936191,
+       "worst_level_V": 0.627
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.63,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 511.566111,
+       "ron_min_ohm": 330.688135,
+       "worst_level_V": 0.8712
+      },
+      "100R": {
+       "ron_max_ohm": 48.5650698,
+       "ron_min_ohm": 32.4879596,
+       "worst_level_V": 0.8349
+      },
+      "10R": {
+       "ron_max_ohm": 4.83534352,
+       "ron_min_ohm": 3.24220816,
+       "worst_level_V": 0.8349
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.63,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 658.060446,
+       "ron_min_ohm": 429.619147,
+       "worst_level_V": 0.7623
+      },
+      "100R": {
+       "ron_max_ohm": 62.733262,
+       "ron_min_ohm": 42.2706705,
+       "worst_level_V": 0.7623
+      },
+      "10R": {
+       "ron_max_ohm": 6.24769914,
+       "ron_min_ohm": 4.21925146,
+       "worst_level_V": 0.726
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 3.63,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 852.959164,
+       "ron_min_ohm": 562.572164,
+       "worst_level_V": 0.6534
+      },
+      "100R": {
+       "ron_max_ohm": 81.8303065,
+       "ron_min_ohm": 55.4976523,
+       "worst_level_V": 0.6534
+      },
+      "10R": {
+       "ron_max_ohm": 8.15348381,
+       "ron_min_ohm": 5.54123535,
+       "worst_level_V": 0.6171
+      }
+     }
+    }
+   ]
+  },
+  "5v0": {
+   "rail": [
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 4.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 970.817934,
+       "ron_min_ohm": 455.824897,
+       "worst_level_V": 2.835
+      },
+      "100R": {
+       "ron_max_ohm": 91.4224907,
+       "ron_min_ohm": 44.1669939,
+       "worst_level_V": 2.88
+      },
+      "10R": {
+       "ron_max_ohm": 9.11120926,
+       "ron_min_ohm": 4.41485752,
+       "worst_level_V": 2.88
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 4.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1241.04337,
+       "ron_min_ohm": 634.061008,
+       "worst_level_V": 2.97
+      },
+      "100R": {
+       "ron_max_ohm": 118.060283,
+       "ron_min_ohm": 61.5402899,
+       "worst_level_V": 3.015
+      },
+      "10R": {
+       "ron_max_ohm": 11.7725541,
+       "ron_min_ohm": 6.15161055,
+       "worst_level_V": 3.015
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 4.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1612.07384,
+       "ron_min_ohm": 918.820737,
+       "worst_level_V": 3.105
+      },
+      "100R": {
+       "ron_max_ohm": 154.640527,
+       "ron_min_ohm": 89.4215482,
+       "worst_level_V": 3.195
+      },
+      "10R": {
+       "ron_max_ohm": 15.4282617,
+       "ron_min_ohm": 8.9389871,
+       "worst_level_V": 3.195
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.0,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 791.292288,
+       "ron_min_ohm": 432.536935,
+       "worst_level_V": 3.3
+      },
+      "100R": {
+       "ron_max_ohm": 75.6830806,
+       "ron_min_ohm": 41.9748908,
+       "worst_level_V": 3.35
+      },
+      "10R": {
+       "ron_max_ohm": 7.5477535,
+       "ron_min_ohm": 4.19583622,
+       "worst_level_V": 3.35
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.0,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1039.30238,
+       "ron_min_ohm": 591.954924,
+       "worst_level_V": 3.4
+      },
+      "100R": {
+       "ron_max_ohm": 99.8477612,
+       "ron_min_ohm": 57.5395855,
+       "worst_level_V": 3.45
+      },
+      "10R": {
+       "ron_max_ohm": 9.96032797,
+       "ron_min_ohm": 5.75182886,
+       "worst_level_V": 3.45
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.0,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1385.05963,
+       "ron_min_ohm": 839.597009,
+       "worst_level_V": 3.6
+      },
+      "100R": {
+       "ron_max_ohm": 133.795283,
+       "ron_min_ohm": 81.8445863,
+       "worst_level_V": 3.65
+      },
+      "10R": {
+       "ron_max_ohm": 13.3525211,
+       "ron_min_ohm": 8.18176295,
+       "worst_level_V": 3.65
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 685.286506,
+       "ron_min_ohm": 416.389065,
+       "worst_level_V": 3.74
+      },
+      "100R": {
+       "ron_max_ohm": 66.1356094,
+       "ron_min_ohm": 40.4505671,
+       "worst_level_V": 3.795
+      },
+      "10R": {
+       "ron_max_ohm": 6.59780286,
+       "ron_min_ohm": 4.04353145,
+       "worst_level_V": 3.795
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 909.934661,
+       "ron_min_ohm": 559.944797,
+       "worst_level_V": 3.905
+      },
+      "100R": {
+       "ron_max_ohm": 88.0490027,
+       "ron_min_ohm": 54.4844166,
+       "worst_level_V": 3.96
+      },
+      "10R": {
+       "ron_max_ohm": 8.78713294,
+       "ron_min_ohm": 5.44651502,
+       "worst_level_V": 3.96
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1223.44768,
+       "ron_min_ohm": 774.423448,
+       "worst_level_V": 4.07
+      },
+      "100R": {
+       "ron_max_ohm": 118.719747,
+       "ron_min_ohm": 75.5825008,
+       "worst_level_V": 4.125
+      },
+      "10R": {
+       "ron_max_ohm": 11.8508219,
+       "ron_min_ohm": 7.55590452,
+       "worst_level_V": 4.125
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 4.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 717.182988,
+       "ron_min_ohm": 373.707198,
+       "worst_level_V": 2.925
+      },
+      "100R": {
+       "ron_max_ohm": 68.0803695,
+       "ron_min_ohm": 36.227753,
+       "worst_level_V": 2.97
+      },
+      "10R": {
+       "ron_max_ohm": 6.78743257,
+       "ron_min_ohm": 3.62128995,
+       "worst_level_V": 2.97
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 4.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 932.527667,
+       "ron_min_ohm": 520.094009,
+       "worst_level_V": 3.015
+      },
+      "100R": {
+       "ron_max_ohm": 89.1167474,
+       "ron_min_ohm": 50.500039,
+       "worst_level_V": 3.105
+      },
+      "10R": {
+       "ron_max_ohm": 8.88882135,
+       "ron_min_ohm": 5.04805032,
+       "worst_level_V": 3.105
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 4.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1233.5006,
+       "ron_min_ohm": 754.760582,
+       "worst_level_V": 3.195
+      },
+      "100R": {
+       "ron_max_ohm": 118.666861,
+       "ron_min_ohm": 73.4792983,
+       "worst_level_V": 3.24
+      },
+      "10R": {
+       "ron_max_ohm": 11.8401338,
+       "ron_min_ohm": 7.34536356,
+       "worst_level_V": 3.24
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.0,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 600.527779,
+       "ron_min_ohm": 355.918951,
+       "worst_level_V": 3.35
+      },
+      "100R": {
+       "ron_max_ohm": 57.6947494,
+       "ron_min_ohm": 34.5524218,
+       "worst_level_V": 3.45
+      },
+      "10R": {
+       "ron_max_ohm": 5.75550594,
+       "ron_min_ohm": 3.45390049,
+       "worst_level_V": 3.45
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.0,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 798.146351,
+       "ron_min_ohm": 487.212626,
+       "worst_level_V": 3.5
+      },
+      "100R": {
+       "ron_max_ohm": 76.9607823,
+       "ron_min_ohm": 47.3734731,
+       "worst_level_V": 3.55
+      },
+      "10R": {
+       "ron_max_ohm": 7.67884944,
+       "ron_min_ohm": 4.73561657,
+       "worst_level_V": 3.55
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.0,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1074.53193,
+       "ron_min_ohm": 691.809975,
+       "worst_level_V": 3.65
+      },
+      "100R": {
+       "ron_max_ohm": 103.992924,
+       "ron_min_ohm": 67.4552243,
+       "worst_level_V": 3.7
+      },
+      "10R": {
+       "ron_max_ohm": 10.378843,
+       "ron_min_ohm": 6.743327,
+       "worst_level_V": 3.7
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 530.351274,
+       "ron_min_ohm": 343.651174,
+       "worst_level_V": 3.85
+      },
+      "100R": {
+       "ron_max_ohm": 51.3162682,
+       "ron_min_ohm": 33.394106,
+       "worst_level_V": 3.905
+      },
+      "10R": {
+       "ron_max_ohm": 5.12070032,
+       "ron_min_ohm": 3.33816604,
+       "worst_level_V": 3.905
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 709.06696,
+       "ron_min_ohm": 462.134054,
+       "worst_level_V": 3.96
+      },
+      "100R": {
+       "ron_max_ohm": 68.7590266,
+       "ron_min_ohm": 44.9783589,
+       "worst_level_V": 4.015
+      },
+      "10R": {
+       "ron_max_ohm": 6.86229462,
+       "ron_min_ohm": 4.49626263,
+       "worst_level_V": 4.015
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 958.94684,
+       "ron_min_ohm": 639.669754,
+       "worst_level_V": 4.125
+      },
+      "100R": {
+       "ron_max_ohm": 93.1990214,
+       "ron_min_ohm": 62.4430096,
+       "worst_level_V": 4.18
+      },
+      "10R": {
+       "ron_max_ohm": 9.30362442,
+       "ron_min_ohm": 6.24238267,
+       "worst_level_V": 4.18
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 4.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1354.42416,
+       "ron_min_ohm": 561.201248,
+       "worst_level_V": 2.79
+      },
+      "100R": {
+       "ron_max_ohm": 126.676165,
+       "ron_min_ohm": 54.3497649,
+       "worst_level_V": 2.835
+      },
+      "10R": {
+       "ron_max_ohm": 12.6214542,
+       "ron_min_ohm": 5.43266996,
+       "worst_level_V": 2.835
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 4.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1695.00747,
+       "ron_min_ohm": 780.201251,
+       "worst_level_V": 2.88
+      },
+      "100R": {
+       "ron_max_ohm": 160.127518,
+       "ron_min_ohm": 75.6909323,
+       "worst_level_V": 2.925
+      },
+      "10R": {
+       "ron_max_ohm": 15.9622301,
+       "ron_min_ohm": 7.5660698,
+       "worst_level_V": 2.925
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 4.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 2156.06623,
+       "ron_min_ohm": 1128.88271,
+       "worst_level_V": 3.06
+      },
+      "100R": {
+       "ron_max_ohm": 206.040995,
+       "ron_min_ohm": 109.826425,
+       "worst_level_V": 3.105
+      },
+      "10R": {
+       "ron_max_ohm": 20.5521799,
+       "ron_min_ohm": 10.9786938,
+       "worst_level_V": 3.105
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.0,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1065.13318,
+       "ron_min_ohm": 530.510775,
+       "worst_level_V": 3.25
+      },
+      "100R": {
+       "ron_max_ohm": 101.452393,
+       "ron_min_ohm": 51.4626824,
+       "worst_level_V": 3.3
+      },
+      "10R": {
+       "ron_max_ohm": 10.1166342,
+       "ron_min_ohm": 5.14421241,
+       "worst_level_V": 3.3
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.0,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1385.32069,
+       "ron_min_ohm": 725.834322,
+       "worst_level_V": 3.35
+      },
+      "100R": {
+       "ron_max_ohm": 132.663188,
+       "ron_min_ohm": 70.5293976,
+       "worst_level_V": 3.4
+      },
+      "10R": {
+       "ron_max_ohm": 13.2325483,
+       "ron_min_ohm": 7.05029392,
+       "worst_level_V": 3.4
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.0,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1822.41246,
+       "ron_min_ohm": 1028.28428,
+       "worst_level_V": 3.5
+      },
+      "100R": {
+       "ron_max_ohm": 175.518095,
+       "ron_min_ohm": 100.211192,
+       "worst_level_V": 3.55
+      },
+      "10R": {
+       "ron_max_ohm": 17.5135056,
+       "ron_min_ohm": 10.0177773,
+       "worst_level_V": 3.55
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 905.613926,
+       "ron_min_ohm": 509.147235,
+       "worst_level_V": 3.685
+      },
+      "100R": {
+       "ron_max_ohm": 87.1196706,
+       "ron_min_ohm": 49.4466586,
+       "worst_level_V": 3.74
+      },
+      "10R": {
+       "ron_max_ohm": 8.69057013,
+       "ron_min_ohm": 4.94277889,
+       "worst_level_V": 3.74
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1194.43684,
+       "ron_min_ohm": 684.651128,
+       "worst_level_V": 3.795
+      },
+      "100R": {
+       "ron_max_ohm": 115.288745,
+       "ron_min_ohm": 66.6013441,
+       "worst_level_V": 3.85
+      },
+      "10R": {
+       "ron_max_ohm": 11.5031472,
+       "ron_min_ohm": 6.65775264,
+       "worst_level_V": 3.85
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1592.65018,
+       "ron_min_ohm": 946.091425,
+       "worst_level_V": 3.96
+      },
+      "100R": {
+       "ron_max_ohm": 154.255142,
+       "ron_min_ohm": 92.3179113,
+       "worst_level_V": 4.015
+      },
+      "10R": {
+       "ron_max_ohm": 15.3958029,
+       "ron_min_ohm": 9.22889584,
+       "worst_level_V": 4.015
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 4.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1187.00645,
+       "ron_min_ohm": 374.140351,
+       "worst_level_V": 2.97
+      },
+      "100R": {
+       "ron_max_ohm": 112.218553,
+       "ron_min_ohm": 36.2638248,
+       "worst_level_V": 3.015
+      },
+      "10R": {
+       "ron_max_ohm": 11.1865048,
+       "ron_min_ohm": 3.62488749,
+       "worst_level_V": 3.015
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 4.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1514.86742,
+       "ron_min_ohm": 521.855143,
+       "worst_level_V": 3.06
+      },
+      "100R": {
+       "ron_max_ohm": 144.063811,
+       "ron_min_ohm": 50.6619186,
+       "worst_level_V": 3.105
+      },
+      "10R": {
+       "ron_max_ohm": 14.3646858,
+       "ron_min_ohm": 5.06421939,
+       "worst_level_V": 3.105
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 4.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1955.90133,
+       "ron_min_ohm": 759.471502,
+       "worst_level_V": 3.24
+      },
+      "100R": {
+       "ron_max_ohm": 187.636175,
+       "ron_min_ohm": 73.9221142,
+       "worst_level_V": 3.285
+      },
+      "10R": {
+       "ron_max_ohm": 18.7192933,
+       "ron_min_ohm": 7.38960769,
+       "worst_level_V": 3.285
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.0,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 974.854857,
+       "ron_min_ohm": 356.124585,
+       "worst_level_V": 3.4
+      },
+      "100R": {
+       "ron_max_ohm": 93.2951629,
+       "ron_min_ohm": 34.5673542,
+       "worst_level_V": 3.45
+      },
+      "10R": {
+       "ron_max_ohm": 9.304405,
+       "ron_min_ohm": 3.45538619,
+       "worst_level_V": 3.45
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.0,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1271.85495,
+       "ron_min_ohm": 488.704762,
+       "worst_level_V": 3.5
+      },
+      "100R": {
+       "ron_max_ohm": 122.359787,
+       "ron_min_ohm": 47.51091,
+       "worst_level_V": 3.6
+      },
+      "10R": {
+       "ron_max_ohm": 12.2083203,
+       "ron_min_ohm": 4.74934463,
+       "worst_level_V": 3.6
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.0,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1684.05788,
+       "ron_min_ohm": 696.284924,
+       "worst_level_V": 3.7
+      },
+      "100R": {
+       "ron_max_ohm": 162.688517,
+       "ron_min_ohm": 67.8781559,
+       "worst_level_V": 3.75
+      },
+      "10R": {
+       "ron_max_ohm": 16.2357421,
+       "ron_min_ohm": 6.78558774,
+       "worst_level_V": 3.75
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 847.124973,
+       "ron_min_ohm": 343.666241,
+       "worst_level_V": 3.85
+      },
+      "100R": {
+       "ron_max_ohm": 81.7783909,
+       "ron_min_ohm": 33.3911655,
+       "worst_level_V": 3.905
+      },
+      "10R": {
+       "ron_max_ohm": 8.15885195,
+       "ron_min_ohm": 3.337866,
+       "worst_level_V": 3.905
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1117.35399,
+       "ron_min_ohm": 463.410642,
+       "worst_level_V": 3.96
+      },
+      "100R": {
+       "ron_max_ohm": 108.159145,
+       "ron_min_ohm": 45.0960277,
+       "worst_level_V": 4.015
+      },
+      "10R": {
+       "ron_max_ohm": 10.7925384,
+       "ron_min_ohm": 4.50801627,
+       "worst_level_V": 4.015
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1489.1063,
+       "ron_min_ohm": 643.982923,
+       "worst_level_V": 4.18
+      },
+      "100R": {
+       "ron_max_ohm": 144.526437,
+       "ron_min_ohm": 62.8524298,
+       "worst_level_V": 4.235
+      },
+      "10R": {
+       "ron_max_ohm": 14.4271779,
+       "ron_min_ohm": 6.28329593,
+       "worst_level_V": 4.235
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 4.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1094.66396,
+       "ron_min_ohm": 387.277266,
+       "worst_level_V": 1.71
+      },
+      "100R": {
+       "ron_max_ohm": 102.305447,
+       "ron_min_ohm": 38.2652644,
+       "worst_level_V": 1.665
+      },
+      "10R": {
+       "ron_max_ohm": 10.2066901,
+       "ron_min_ohm": 3.82022096,
+       "worst_level_V": 1.665
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 4.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1408.63582,
+       "ron_min_ohm": 544.938203,
+       "worst_level_V": 1.575
+      },
+      "100R": {
+       "ron_max_ohm": 132.828098,
+       "ron_min_ohm": 53.8789501,
+       "worst_level_V": 1.575
+      },
+      "10R": {
+       "ron_max_ohm": 13.2512199,
+       "ron_min_ohm": 5.37952206,
+       "worst_level_V": 1.575
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 4.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1848.69801,
+       "ron_min_ohm": 793.969905,
+       "worst_level_V": 1.44
+      },
+      "100R": {
+       "ron_max_ohm": 176.186398,
+       "ron_min_ohm": 78.5800113,
+       "worst_level_V": 1.395
+      },
+      "10R": {
+       "ron_max_ohm": 17.5884174,
+       "ron_min_ohm": 7.84689996,
+       "worst_level_V": 1.395
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.0,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 895.112448,
+       "ron_min_ohm": 367.320816,
+       "worst_level_V": 1.75
+      },
+      "100R": {
+       "ron_max_ohm": 84.567587,
+       "ron_min_ohm": 36.3149914,
+       "worst_level_V": 1.75
+      },
+      "10R": {
+       "ron_max_ohm": 8.44013468,
+       "ron_min_ohm": 3.6258263,
+       "worst_level_V": 1.7
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.0,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1179.15285,
+       "ron_min_ohm": 509.759187,
+       "worst_level_V": 1.65
+      },
+      "100R": {
+       "ron_max_ohm": 112.329821,
+       "ron_min_ohm": 50.429472,
+       "worst_level_V": 1.6
+      },
+      "10R": {
+       "ron_max_ohm": 11.2159254,
+       "ron_min_ohm": 5.03552689,
+       "worst_level_V": 1.6
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.0,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1584.52523,
+       "ron_min_ohm": 728.995333,
+       "worst_level_V": 1.45
+      },
+      "100R": {
+       "ron_max_ohm": 152.089846,
+       "ron_min_ohm": 72.1923557,
+       "worst_level_V": 1.45
+      },
+      "10R": {
+       "ron_max_ohm": 15.186291,
+       "ron_min_ohm": 7.20965997,
+       "worst_level_V": 1.45
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 775.851772,
+       "ron_min_ohm": 353.386696,
+       "worst_level_V": 1.815
+      },
+      "100R": {
+       "ron_max_ohm": 74.0657057,
+       "ron_min_ohm": 34.9518408,
+       "worst_level_V": 1.76
+      },
+      "10R": {
+       "ron_max_ohm": 7.39727643,
+       "ron_min_ohm": 3.48993646,
+       "worst_level_V": 1.76
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1031.12284,
+       "ron_min_ohm": 483.090961,
+       "worst_level_V": 1.705
+      },
+      "100R": {
+       "ron_max_ohm": 98.9215425,
+       "ron_min_ohm": 47.810165,
+       "worst_level_V": 1.65
+      },
+      "10R": {
+       "ron_max_ohm": 9.8795366,
+       "ron_min_ohm": 4.77426112,
+       "worst_level_V": 1.65
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1395.99052,
+       "ron_min_ohm": 675.916815,
+       "worst_level_V": 1.54
+      },
+      "100R": {
+       "ron_max_ohm": 134.542361,
+       "ron_min_ohm": 66.9649627,
+       "worst_level_V": 1.485
+      },
+      "10R": {
+       "ron_max_ohm": 13.4381657,
+       "ron_min_ohm": 6.68804092,
+       "worst_level_V": 1.485
+      }
+     }
+    }
+   ],
+   "srcbody": [
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 4.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 585.505622,
+       "ron_min_ohm": 455.823962,
+       "worst_level_V": 3.42
+      },
+      "100R": {
+       "ron_max_ohm": 56.8679011,
+       "ron_min_ohm": 44.1669675,
+       "worst_level_V": 3.465
+      },
+      "10R": {
+       "ron_max_ohm": 5.67436036,
+       "ron_min_ohm": 4.41485568,
+       "worst_level_V": 3.465
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 4.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 812.299888,
+       "ron_min_ohm": 634.059199,
+       "worst_level_V": 3.51
+      },
+      "100R": {
+       "ron_max_ohm": 78.9385659,
+       "ron_min_ohm": 61.5402387,
+       "worst_level_V": 3.555
+      },
+      "10R": {
+       "ron_max_ohm": 7.87760846,
+       "ron_min_ohm": 6.15160697,
+       "worst_level_V": 3.555
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 4.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1150.47143,
+       "ron_min_ohm": 918.816767,
+       "worst_level_V": 3.645
+      },
+      "100R": {
+       "ron_max_ohm": 112.031615,
+       "ron_min_ohm": 89.4214234,
+       "worst_level_V": 3.735
+      },
+      "10R": {
+       "ron_max_ohm": 11.1831852,
+       "ron_min_ohm": 8.93897786,
+       "worst_level_V": 3.735
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.0,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 523.417386,
+       "ron_min_ohm": 404.599881,
+       "worst_level_V": 3.9
+      },
+      "100R": {
+       "ron_max_ohm": 51.074335,
+       "ron_min_ohm": 38.9643653,
+       "worst_level_V": 4.0
+      },
+      "10R": {
+       "ron_max_ohm": 5.09784691,
+       "ron_min_ohm": 3.88967063,
+       "worst_level_V": 4.0
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.0,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 725.463227,
+       "ron_min_ohm": 575.642375,
+       "worst_level_V": 4.0
+      },
+      "100R": {
+       "ron_max_ohm": 70.87278,
+       "ron_min_ohm": 55.5817334,
+       "worst_level_V": 4.1
+      },
+      "10R": {
+       "ron_max_ohm": 7.07472754,
+       "ron_min_ohm": 5.54921401,
+       "worst_level_V": 4.1
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.0,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1026.76202,
+       "ron_min_ohm": 839.593341,
+       "worst_level_V": 4.15
+      },
+      "100R": {
+       "ron_max_ohm": 100.331184,
+       "ron_min_ohm": 81.7924654,
+       "worst_level_V": 4.25
+      },
+      "10R": {
+       "ron_max_ohm": 10.0170698,
+       "ron_min_ohm": 8.16726288,
+       "worst_level_V": 4.25
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 482.714545,
+       "ron_min_ohm": 357.796302,
+       "worst_level_V": 4.455
+      },
+      "100R": {
+       "ron_max_ohm": 47.3325877,
+       "ron_min_ohm": 34.6042806,
+       "worst_level_V": 4.51
+      },
+      "10R": {
+       "ron_max_ohm": 4.72510459,
+       "ron_min_ohm": 3.45509101,
+       "worst_level_V": 4.51
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 665.281449,
+       "ron_min_ohm": 512.069988,
+       "worst_level_V": 4.51
+      },
+      "100R": {
+       "ron_max_ohm": 65.1931165,
+       "ron_min_ohm": 49.626548,
+       "worst_level_V": 4.62
+      },
+      "10R": {
+       "ron_max_ohm": 6.50876833,
+       "ron_min_ohm": 4.95549761,
+       "worst_level_V": 4.62
+      }
+     }
+    },
+    {
+     "case": 0,
+     "corner": "TT",
+     "vdd_V": 5.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 933.074718,
+       "ron_min_ohm": 758.424581,
+       "worst_level_V": 4.675
+      },
+      "100R": {
+       "ron_max_ohm": 91.3995113,
+       "ron_min_ohm": 73.6946123,
+       "worst_level_V": 4.73
+      },
+      "10R": {
+       "ron_max_ohm": 9.12615377,
+       "ron_min_ohm": 7.35972752,
+       "worst_level_V": 4.73
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 4.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 455.921286,
+       "ron_min_ohm": 365.877177,
+       "worst_level_V": 3.465
+      },
+      "100R": {
+       "ron_max_ohm": 44.3858596,
+       "ron_min_ohm": 35.1142107,
+       "worst_level_V": 3.555
+      },
+      "10R": {
+       "ron_max_ohm": 4.42945649,
+       "ron_min_ohm": 3.50470557,
+       "worst_level_V": 3.555
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 4.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 634.964503,
+       "ron_min_ohm": 517.535108,
+       "worst_level_V": 3.6
+      },
+      "100R": {
+       "ron_max_ohm": 61.8533541,
+       "ron_min_ohm": 49.8239614,
+       "worst_level_V": 3.645
+      },
+      "10R": {
+       "ron_max_ohm": 6.1732685,
+       "ron_min_ohm": 4.97359903,
+       "worst_level_V": 3.645
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 4.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 903.896512,
+       "ron_min_ohm": 752.120449,
+       "worst_level_V": 3.735
+      },
+      "100R": {
+       "ron_max_ohm": 88.1396702,
+       "ron_min_ohm": 72.6719152,
+       "worst_level_V": 3.825
+      },
+      "10R": {
+       "ron_max_ohm": 8.79893499,
+       "ron_min_ohm": 7.25559173,
+       "worst_level_V": 3.825
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.0,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 413.01614,
+       "ron_min_ohm": 316.659915,
+       "worst_level_V": 4.0
+      },
+      "100R": {
+       "ron_max_ohm": 40.390716,
+       "ron_min_ohm": 30.5559969,
+       "worst_level_V": 4.05
+      },
+      "10R": {
+       "ron_max_ohm": 4.03145974,
+       "ron_min_ohm": 3.05051443,
+       "worst_level_V": 4.05
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.0,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 573.541497,
+       "ron_min_ohm": 452.546466,
+       "worst_level_V": 4.1
+      },
+      "100R": {
+       "ron_max_ohm": 56.0912696,
+       "ron_min_ohm": 43.7686179,
+       "worst_level_V": 4.15
+      },
+      "10R": {
+       "ron_max_ohm": 5.5991816,
+       "ron_min_ohm": 4.37006356,
+       "worst_level_V": 4.15
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.0,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 813.377671,
+       "ron_min_ohm": 667.614319,
+       "worst_level_V": 4.25
+      },
+      "100R": {
+       "ron_max_ohm": 79.5619742,
+       "ron_min_ohm": 64.7514815,
+       "worst_level_V": 4.3
+      },
+      "10R": {
+       "ron_max_ohm": 7.94349938,
+       "ron_min_ohm": 6.46594965,
+       "worst_level_V": 4.3
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 384.612697,
+       "ron_min_ohm": 282.606163,
+       "worst_level_V": 4.51
+      },
+      "100R": {
+       "ron_max_ohm": 37.7461699,
+       "ron_min_ohm": 27.3726889,
+       "worst_level_V": 4.565
+      },
+      "10R": {
+       "ron_max_ohm": 3.76810794,
+       "ron_min_ohm": 2.73318851,
+       "worst_level_V": 4.565
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 530.066956,
+       "ron_min_ohm": 405.79044,
+       "worst_level_V": 4.62
+      },
+      "100R": {
+       "ron_max_ohm": 52.0047634,
+       "ron_min_ohm": 39.3763455,
+       "worst_level_V": 4.675
+      },
+      "10R": {
+       "ron_max_ohm": 5.19207577,
+       "ron_min_ohm": 3.93212289,
+       "worst_level_V": 4.675
+      }
+     }
+    },
+    {
+     "case": 1,
+     "corner": "FF",
+     "vdd_V": 5.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 742.975803,
+       "ron_min_ohm": 603.69157,
+       "worst_level_V": 4.785
+      },
+      "100R": {
+       "ron_max_ohm": 72.8597133,
+       "ron_min_ohm": 58.7180178,
+       "worst_level_V": 4.84
+      },
+      "10R": {
+       "ron_max_ohm": 7.27547702,
+       "ron_min_ohm": 5.86423831,
+       "worst_level_V": 4.84
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 4.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 768.440655,
+       "ron_min_ohm": 561.199831,
+       "worst_level_V": 3.33
+      },
+      "100R": {
+       "ron_max_ohm": 74.3875526,
+       "ron_min_ohm": 54.3497251,
+       "worst_level_V": 3.375
+      },
+      "10R": {
+       "ron_max_ohm": 7.42135862,
+       "ron_min_ohm": 5.43266717,
+       "worst_level_V": 3.375
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 4.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1060.3369,
+       "ron_min_ohm": 780.198512,
+       "worst_level_V": 3.42
+      },
+      "100R": {
+       "ron_max_ohm": 102.754283,
+       "ron_min_ohm": 75.6908549,
+       "worst_level_V": 3.465
+      },
+      "10R": {
+       "ron_max_ohm": 10.2529951,
+       "ron_min_ohm": 7.56606439,
+       "worst_level_V": 3.465
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 4.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1492.42128,
+       "ron_min_ohm": 1128.87674,
+       "worst_level_V": 3.555
+      },
+      "100R": {
+       "ron_max_ohm": 145.116349,
+       "ron_min_ohm": 109.826239,
+       "worst_level_V": 3.645
+      },
+      "10R": {
+       "ron_max_ohm": 14.4844628,
+       "ron_min_ohm": 10.9786801,
+       "worst_level_V": 3.645
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.0,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 676.475785,
+       "ron_min_ohm": 524.908599,
+       "worst_level_V": 3.85
+      },
+      "100R": {
+       "ron_max_ohm": 65.9528824,
+       "ron_min_ohm": 50.4358282,
+       "worst_level_V": 3.9
+      },
+      "10R": {
+       "ron_max_ohm": 6.58210414,
+       "ron_min_ohm": 5.03444183,
+       "worst_level_V": 3.9
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.0,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 935.984229,
+       "ron_min_ohm": 725.831687,
+       "worst_level_V": 3.95
+      },
+      "100R": {
+       "ron_max_ohm": 91.2928194,
+       "ron_min_ohm": 70.529323,
+       "worst_level_V": 4.0
+      },
+      "10R": {
+       "ron_max_ohm": 9.11217329,
+       "ron_min_ohm": 7.0502887,
+       "worst_level_V": 4.0
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.0,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1320.51757,
+       "ron_min_ohm": 1028.2788,
+       "worst_level_V": 4.1
+      },
+      "100R": {
+       "ron_max_ohm": 128.894624,
+       "ron_min_ohm": 100.211022,
+       "worst_level_V": 4.15
+      },
+      "10R": {
+       "ron_max_ohm": 12.8678165,
+       "ron_min_ohm": 10.0177649,
+       "worst_level_V": 4.15
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 618.346339,
+       "ron_min_ohm": 459.544972,
+       "worst_level_V": 4.345
+      },
+      "100R": {
+       "ron_max_ohm": 60.5252825,
+       "ron_min_ohm": 44.370549,
+       "worst_level_V": 4.4
+      },
+      "10R": {
+       "ron_max_ohm": 6.04141528,
+       "ron_min_ohm": 4.42997782,
+       "worst_level_V": 4.4
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 851.253874,
+       "ron_min_ohm": 655.219037,
+       "worst_level_V": 4.455
+      },
+      "100R": {
+       "ron_max_ohm": 83.3266146,
+       "ron_min_ohm": 63.4094778,
+       "worst_level_V": 4.51
+      },
+      "10R": {
+       "ron_max_ohm": 8.31841484,
+       "ron_min_ohm": 6.331524,
+       "worst_level_V": 4.51
+      }
+     }
+    },
+    {
+     "case": 2,
+     "corner": "SS",
+     "vdd_V": 5.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1191.4578,
+       "ron_min_ohm": 946.086335,
+       "worst_level_V": 4.62
+      },
+      "100R": {
+       "ron_max_ohm": 116.631085,
+       "ron_min_ohm": 92.3177546,
+       "worst_level_V": 4.675
+      },
+      "10R": {
+       "ron_max_ohm": 11.6454276,
+       "ron_min_ohm": 9.2288844,
+       "worst_level_V": 4.675
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 4.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 729.760799,
+       "ron_min_ohm": 374.139721,
+       "worst_level_V": 3.51
+      },
+      "100R": {
+       "ron_max_ohm": 70.8345654,
+       "ron_min_ohm": 36.263807,
+       "worst_level_V": 3.555
+      },
+      "10R": {
+       "ron_max_ohm": 7.06768243,
+       "ron_min_ohm": 3.62488625,
+       "worst_level_V": 3.555
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 4.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1004.86993,
+       "ron_min_ohm": 521.853917,
+       "worst_level_V": 3.6
+      },
+      "100R": {
+       "ron_max_ohm": 97.7518654,
+       "ron_min_ohm": 50.661884,
+       "worst_level_V": 3.69
+      },
+      "10R": {
+       "ron_max_ohm": 9.75583779,
+       "ron_min_ohm": 5.06421697,
+       "worst_level_V": 3.69
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 4.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1411.91636,
+       "ron_min_ohm": 759.468797,
+       "worst_level_V": 3.78
+      },
+      "100R": {
+       "ron_max_ohm": 137.435008,
+       "ron_min_ohm": 73.92203,
+       "worst_level_V": 3.825
+      },
+      "10R": {
+       "ron_max_ohm": 13.7187601,
+       "ron_min_ohm": 7.38960149,
+       "worst_level_V": 3.87
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.0,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 652.455005,
+       "ron_min_ohm": 356.123951,
+       "worst_level_V": 4.0
+      },
+      "100R": {
+       "ron_max_ohm": 63.6809467,
+       "ron_min_ohm": 34.5673362,
+       "worst_level_V": 4.1
+      },
+      "10R": {
+       "ron_max_ohm": 6.35621238,
+       "ron_min_ohm": 3.45538494,
+       "worst_level_V": 4.1
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.0,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 898.67144,
+       "ron_min_ohm": 488.703568,
+       "worst_level_V": 4.15
+      },
+      "100R": {
+       "ron_max_ohm": 87.8295359,
+       "ron_min_ohm": 47.5108761,
+       "worst_level_V": 4.2
+      },
+      "10R": {
+       "ron_max_ohm": 8.76737541,
+       "ron_min_ohm": 4.74934226,
+       "worst_level_V": 4.2
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.0,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1259.95398,
+       "ron_min_ohm": 696.282408,
+       "worst_level_V": 4.3
+      },
+      "100R": {
+       "ron_max_ohm": 123.139843,
+       "ron_min_ohm": 67.878078,
+       "worst_level_V": 4.35
+      },
+      "10R": {
+       "ron_max_ohm": 12.2940933,
+       "ron_min_ohm": 6.78558203,
+       "worst_level_V": 4.35
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 602.282951,
+       "ron_min_ohm": 343.665591,
+       "worst_level_V": 4.51
+      },
+      "100R": {
+       "ron_max_ohm": 59.0203173,
+       "ron_min_ohm": 33.3911471,
+       "worst_level_V": 4.565
+      },
+      "10R": {
+       "ron_max_ohm": 5.89127633,
+       "ron_min_ohm": 3.33679769,
+       "worst_level_V": 4.565
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 824.348286,
+       "ron_min_ohm": 463.409461,
+       "worst_level_V": 4.62
+      },
+      "100R": {
+       "ron_max_ohm": 80.7667311,
+       "ron_min_ohm": 45.0959941,
+       "worst_level_V": 4.675
+      },
+      "10R": {
+       "ron_max_ohm": 8.06344888,
+       "ron_min_ohm": 4.50801392,
+       "worst_level_V": 4.73
+      }
+     }
+    },
+    {
+     "case": 3,
+     "corner": "FS",
+     "vdd_V": 5.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1144.0396,
+       "ron_min_ohm": 643.980564,
+       "worst_level_V": 4.785
+      },
+      "100R": {
+       "ron_max_ohm": 112.053812,
+       "ron_min_ohm": 62.8523571,
+       "worst_level_V": 4.84
+      },
+      "10R": {
+       "ron_max_ohm": 11.1883914,
+       "ron_min_ohm": 6.28329062,
+       "worst_level_V": 4.84
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 4.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 678.151387,
+       "ron_min_ohm": 387.277941,
+       "worst_level_V": 1.08
+      },
+      "100R": {
+       "ron_max_ohm": 64.87336,
+       "ron_min_ohm": 38.265271,
+       "worst_level_V": 1.035
+      },
+      "10R": {
+       "ron_max_ohm": 6.48051363,
+       "ron_min_ohm": 3.82022155,
+       "worst_level_V": 1.035
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 4.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 934.72413,
+       "ron_min_ohm": 544.93954,
+       "worst_level_V": 0.99
+      },
+      "100R": {
+       "ron_max_ohm": 89.7829807,
+       "ron_min_ohm": 53.8789631,
+       "worst_level_V": 0.945
+      },
+      "10R": {
+       "ron_max_ohm": 8.96790157,
+       "ron_min_ohm": 5.37952323,
+       "worst_level_V": 0.945
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 4.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1323.17703,
+       "ron_min_ohm": 793.972771,
+       "worst_level_V": 0.81
+      },
+      "100R": {
+       "ron_max_ohm": 127.643779,
+       "ron_min_ohm": 78.5800411,
+       "worst_level_V": 0.81
+      },
+      "10R": {
+       "ron_max_ohm": 12.7492072,
+       "ron_min_ohm": 7.84690266,
+       "worst_level_V": 0.81
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.0,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 606.992825,
+       "ron_min_ohm": 367.321491,
+       "worst_level_V": 1.05
+      },
+      "100R": {
+       "ron_max_ohm": 58.4309704,
+       "ron_min_ohm": 36.314998,
+       "worst_level_V": 1.05
+      },
+      "10R": {
+       "ron_max_ohm": 5.8366604,
+       "ron_min_ohm": 3.62582689,
+       "worst_level_V": 1.05
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.0,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 834.587756,
+       "ron_min_ohm": 509.760487,
+       "worst_level_V": 0.95
+      },
+      "100R": {
+       "ron_max_ohm": 80.5183469,
+       "ron_min_ohm": 50.4294847,
+       "worst_level_V": 0.95
+      },
+      "10R": {
+       "ron_max_ohm": 8.04312034,
+       "ron_min_ohm": 5.03552803,
+       "worst_level_V": 0.95
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.0,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1176.84092,
+       "ron_min_ohm": 728.998014,
+       "worst_level_V": 0.8
+      },
+      "100R": {
+       "ron_max_ohm": 113.952426,
+       "ron_min_ohm": 72.1923835,
+       "worst_level_V": 0.8
+      },
+      "10R": {
+       "ron_max_ohm": 11.383795,
+       "ron_min_ohm": 7.20966248,
+       "worst_level_V": 0.8
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.5,
+     "temp_C": -55,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 561.118379,
+       "ron_min_ohm": 344.871465,
+       "worst_level_V": 1.045
+      },
+      "100R": {
+       "ron_max_ohm": 54.1813234,
+       "ron_min_ohm": 33.466706,
+       "worst_level_V": 1.045
+      },
+      "10R": {
+       "ron_max_ohm": 5.41289141,
+       "ron_min_ohm": 3.3409499,
+       "worst_level_V": 1.045
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.5,
+     "temp_C": 27,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 764.349951,
+       "ron_min_ohm": 483.092245,
+       "worst_level_V": 0.935
+      },
+      "100R": {
+       "ron_max_ohm": 73.9790725,
+       "ron_min_ohm": 47.8101776,
+       "worst_level_V": 0.935
+      },
+      "10R": {
+       "ron_max_ohm": 7.39135427,
+       "ron_min_ohm": 4.77426225,
+       "worst_level_V": 0.935
+      }
+     }
+    },
+    {
+     "case": 4,
+     "corner": "SF",
+     "vdd_V": 5.5,
+     "temp_C": 150,
+     "variants": {
+      "1K": {
+       "ron_max_ohm": 1065.2789,
+       "ron_min_ohm": 675.919349,
+       "worst_level_V": 0.825
+      },
+      "100R": {
+       "ron_max_ohm": 103.299965,
+       "ron_min_ohm": 66.9649889,
+       "worst_level_V": 0.825
+      },
+      "10R": {
+       "ron_max_ohm": 10.3214074,
+       "ron_min_ohm": 6.68804328,
+       "worst_level_V": 0.77
+      }
+     }
+    }
+   ]
+  }
+ },
+ "summary": {
+  "1v8": {
+   "rail": {
+    "1K": {
+     "wn_um": 4.0,
+     "wp_um": 10.0,
+     "wtot_um": 14.0,
+     "ron_typ_ohm": 1269.13597,
+     "ron_max_ohm": 308026.03,
+     "ron_max_at": "SS 1.62V -55C level=0.8424V",
+     "ron_min_ohm": 145.992869,
+     "ron_min_at": "FS 1.98V -55C",
+     "idc_max_mA": 8.0,
+     "gate_area_um2": 2.52,
+     "spread_x": 2109.8703800389044,
+     "max_over_typ": 242.70530288413465
+    },
+    "100R": {
+     "wn_um": 40.0,
+     "wp_um": 100.0,
+     "wtot_um": 140.0,
+     "ron_typ_ohm": 99.3591025,
+     "ron_max_ohm": 9834.11738,
+     "ron_max_at": "SS 1.62V -55C level=0.8586V",
+     "ron_min_ohm": 14.0682953,
+     "ron_min_at": "FS 1.98V -55C",
+     "idc_max_mA": 80.0,
+     "gate_area_um2": 25.2,
+     "spread_x": 699.0269375423189,
+     "max_over_typ": 98.97550533933213
+    },
+    "10R": {
+     "wn_um": 400.0,
+     "wp_um": 1000.0,
+     "wtot_um": 1400.0,
+     "ron_typ_ohm": 9.80035162,
+     "ron_max_ohm": 922.76327,
+     "ron_max_at": "SS 1.62V -55C level=0.8586V",
+     "ron_min_ohm": 1.401615,
+     "ron_min_at": "FS 1.98V -55C",
+     "idc_max_mA": 800.0,
+     "gate_area_um2": 252.0,
+     "spread_x": 658.3571594196694,
+     "max_over_typ": 94.15613906310027
+    }
+   },
+   "srcbody": {
+    "1K": {
+     "wn_um": 4.0,
+     "wp_um": 10.0,
+     "wtot_um": 14.0,
+     "ron_typ_ohm": 564.944323,
+     "ron_max_ohm": 5012.84534,
+     "ron_max_at": "SS 1.62V -55C level=0.8586V",
+     "ron_min_ohm": 145.992827,
+     "ron_min_at": "FS 1.98V -55C",
+     "idc_max_mA": 8.0,
+     "gate_area_um2": 2.52,
+     "spread_x": 34.33624406766231,
+     "max_over_typ": 8.873167028886135
+    },
+    "100R": {
+     "wn_um": 40.0,
+     "wp_um": 100.0,
+     "wtot_um": 140.0,
+     "ron_typ_ohm": 50.7172786,
+     "ron_max_ohm": 275.608298,
+     "ron_max_at": "SS 1.62V -55C level=0.8586V",
+     "ron_min_ohm": 14.0682949,
+     "ron_min_at": "FS 1.98V -55C",
+     "idc_max_mA": 80.0,
+     "gate_area_um2": 25.2,
+     "spread_x": 19.590739315537096,
+     "max_over_typ": 5.434209121780442
+    },
+    "10R": {
+     "wn_um": 400.0,
+     "wp_um": 1000.0,
+     "wtot_um": 1400.0,
+     "ron_typ_ohm": 5.04135399,
+     "ron_max_ohm": 26.6312252,
+     "ron_max_at": "SS 1.62V -55C level=0.8748V",
+     "ron_min_ohm": 1.40161496,
+     "ron_min_at": "FS 1.98V -55C",
+     "idc_max_mA": 800.0,
+     "gate_area_um2": 252.0,
+     "spread_x": 19.000385954784612,
+     "max_over_typ": 5.28255410209748
+    }
+   }
+  },
+  "3v3": {
+   "rail": {
+    "1K": {
+     "wn_um": 4.6,
+     "wp_um": 11.5,
+     "wtot_um": 16.1,
+     "ron_typ_ohm": 1090.08785,
+     "ron_max_ohm": 2363.81857,
+     "ron_max_at": "SS 2.97V -55C level=1.6335V",
+     "ron_min_ohm": 287.547166,
+     "ron_min_at": "FS 3.63V -55C",
+     "idc_max_mA": 7.359999999999999,
+     "gate_area_um2": 5.635,
+     "spread_x": 8.220628994131696,
+     "max_over_typ": 2.168466119496699
+    },
+    "100R": {
+     "wn_um": 46.0,
+     "wp_um": 115.0,
+     "wtot_um": 161.0,
+     "ron_typ_ohm": 101.181298,
+     "ron_max_ohm": 206.684667,
+     "ron_max_at": "SS 2.97V 150C level=1.9305V",
+     "ron_min_ohm": 27.7342787,
+     "ron_min_at": "FS 3.63V -55C",
+     "idc_max_mA": 73.60000000000001,
+     "gate_area_um2": 56.349999999999994,
+     "spread_x": 7.452318094719369,
+     "max_over_typ": 2.04271610550005
+    },
+    "10R": {
+     "wn_um": 460.0,
+     "wp_um": 1150.0,
+     "wtot_um": 1610.0,
+     "ron_typ_ohm": 10.047611,
+     "ron_max_ohm": 20.5069833,
+     "ron_max_at": "SS 2.97V 150C level=1.9305V",
+     "ron_min_ohm": 2.76575235,
+     "ron_min_at": "FS 3.63V -55C",
+     "idc_max_mA": 736.0,
+     "gate_area_um2": 563.5,
+     "spread_x": 7.414612989481868,
+     "max_over_typ": 2.040981015288112
+    }
+   },
+   "srcbody": {
+    "1K": {
+     "wn_um": 4.6,
+     "wp_um": 11.5,
+     "wtot_um": 16.1,
+     "ron_typ_ohm": 709.814544,
+     "ron_max_ohm": 1453.98009,
+     "ron_max_at": "SS 2.97V 150C level=2.1978V",
+     "ron_min_ohm": 269.829798,
+     "ron_min_at": "FF 3.63V -55C",
+     "idc_max_mA": 7.359999999999999,
+     "gate_area_um2": 5.635,
+     "spread_x": 5.388508240294499,
+     "max_over_typ": 2.0483943338303874
+    },
+    "100R": {
+     "wn_um": 46.0,
+     "wp_um": 115.0,
+     "wtot_um": 161.0,
+     "ron_typ_ohm": 67.9800028,
+     "ron_max_ohm": 137.953914,
+     "ron_max_at": "SS 2.97V 150C level=2.2572V",
+     "ron_min_ohm": 25.5882563,
+     "ron_min_at": "FF 3.63V -55C",
+     "idc_max_mA": 73.60000000000001,
+     "gate_area_um2": 56.349999999999994,
+     "spread_x": 5.391297960385053,
+     "max_over_typ": 2.0293308078533943
+    },
+    "10R": {
+     "wn_um": 460.0,
+     "wp_um": 1150.0,
+     "wtot_um": 1610.0,
+     "ron_typ_ohm": 6.76934829,
+     "ron_max_ohm": 13.7286903,
+     "ron_max_at": "SS 2.97V 150C level=2.2572V",
+     "ron_min_ohm": 2.54660604,
+     "ron_min_at": "FF 3.63V -55C",
+     "idc_max_mA": 736.0,
+     "gate_area_um2": 563.5,
+     "spread_x": 5.390975315522303,
+     "max_over_typ": 2.0280667668231325
+    }
+   }
+  },
+  "5v0": {
+   "rail": {
+    "1K": {
+     "wn_um": 8.4,
+     "wp_um": 21.0,
+     "wtot_um": 29.4,
+     "ron_typ_ohm": 1039.30238,
+     "ron_max_ohm": 2156.06623,
+     "ron_max_at": "SS 4.5V 150C level=3.06V",
+     "ron_min_ohm": 343.651174,
+     "ron_min_at": "FF 5.5V -55C",
+     "idc_max_mA": 10.08,
+     "gate_area_um2": 14.7,
+     "spread_x": 6.273996404272432,
+     "max_over_typ": 2.0745321780173347
+    },
+    "100R": {
+     "wn_um": 84.0,
+     "wp_um": 210.0,
+     "wtot_um": 294.0,
+     "ron_typ_ohm": 99.8477612,
+     "ron_max_ohm": 206.040995,
+     "ron_max_at": "SS 4.5V 150C level=3.105V",
+     "ron_min_ohm": 33.3911655,
+     "ron_min_at": "FS 5.5V -55C",
+     "idc_max_mA": 100.8,
+     "gate_area_um2": 147.0,
+     "spread_x": 6.170524206470122,
+     "max_over_typ": 2.0635514760044518
+    },
+    "10R": {
+     "wn_um": 840.0,
+     "wp_um": 2100.0,
+     "wtot_um": 2940.0,
+     "ron_typ_ohm": 9.96032797,
+     "ron_max_ohm": 20.5521799,
+     "ron_max_at": "SS 4.5V 150C level=3.105V",
+     "ron_min_ohm": 3.337866,
+     "ron_min_at": "FS 5.5V -55C",
+     "idc_max_mA": 1008.0,
+     "gate_area_um2": 1470.0,
+     "spread_x": 6.157281298889769,
+     "max_over_typ": 2.0634039322703144
+    }
+   },
+   "srcbody": {
+    "1K": {
+     "wn_um": 8.4,
+     "wp_um": 21.0,
+     "wtot_um": 29.4,
+     "ron_typ_ohm": 725.463227,
+     "ron_max_ohm": 1492.42128,
+     "ron_max_at": "SS 4.5V 150C level=3.555V",
+     "ron_min_ohm": 282.606163,
+     "ron_min_at": "FF 5.5V -55C",
+     "idc_max_mA": 10.08,
+     "gate_area_um2": 14.7,
+     "spread_x": 5.2809226244652,
+     "max_over_typ": 2.0571976972169814
+    },
+    "100R": {
+     "wn_um": 84.0,
+     "wp_um": 210.0,
+     "wtot_um": 294.0,
+     "ron_typ_ohm": 70.87278,
+     "ron_max_ohm": 145.116349,
+     "ron_max_at": "SS 4.5V 150C level=3.645V",
+     "ron_min_ohm": 27.3726889,
+     "ron_min_at": "FF 5.5V -55C",
+     "idc_max_mA": 100.8,
+     "gate_area_um2": 147.0,
+     "spread_x": 5.301501417348883,
+     "max_over_typ": 2.047561122902192
+    },
+    "10R": {
+     "wn_um": 840.0,
+     "wp_um": 2100.0,
+     "wtot_um": 2940.0,
+     "ron_typ_ohm": 7.07472754,
+     "ron_max_ohm": 14.4844628,
+     "ron_max_at": "SS 4.5V 150C level=3.645V",
+     "ron_min_ohm": 2.73318851,
+     "ron_min_at": "FF 5.5V -55C",
+     "idc_max_mA": 1008.0,
+     "gate_area_um2": 1470.0,
+     "spread_x": 5.299474495449273,
+     "max_over_typ": 2.0473527380532874
+    }
+   }
+  }
+ }
+}

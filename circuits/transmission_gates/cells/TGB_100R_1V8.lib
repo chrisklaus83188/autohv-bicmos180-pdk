@@ -1,0 +1,25 @@
+* TGB_100R_1V8 -- CMOS transmission gate, 1.8 V domain, ~100 ohm on-resistance
+* AutoHV BiCMOS 180 PDK | NMOS18/PMOS18, L = 0.18 um, Wp/Wn = 2.5
+*
+* Bodies are brought out on pins bn (NMOS) and bp (PMOS) so the caller
+* can bias them.  Driving bn/bp to the switch terminal removes the body
+* effect and lowers Ron by 1.4x (5 V) to 1.9x (1.8 V); see ../REPORT.md.
+* bn must never sit above, and bp never below, either switch terminal.
+* The internal inverter always takes its bodies from the rails.
+*
+* Port order:  a b en bn bp vdd gnd
+*   .include "<repo-root>/autohv_bicmos180_case.lib"
+*   .include "<this-dir>/TGB_100R_1V8.lib"
+*   X1 sig1 sig2 enable 0 vdd vdd 0 TGB_100R_1V8
+*
+* Typical Ron 100 ohm at TT / 1.8 V / 27 C, worst case over the input
+* level.  PVT envelope and the guaranteed input window: ../REPORT.md.
+
+.subckt TGB_100R_1V8 a b en bn bp vdd gnd
+* control inverter: enb = !en  (bodies always on the rails)
+XINVP enb en vdd vdd PMOS18 W=10u M=1 L=0.18u
+XINVN enb en gnd gnd NMOS18 W=4u M=1 L=0.18u
+* pass pair
+XN b en  a bn NMOS18 W=40u M=1 L=0.18u
+XP b enb a bp PMOS18 W=100u M=1 L=0.18u
+.ends TGB_100R_1V8

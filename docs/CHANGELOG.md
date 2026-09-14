@@ -1,3 +1,46 @@
+## [unreleased] -- transmission gates (CMOS analog switches)
+
+18 switch cells added under `circuits/transmission_gates/` + `xschem/transmission_gates/`,
+sized from a full device-level characterization rather than from a rule of thumb. Models
+frozen at v2-grounded; nothing in the PDK proper was touched.
+
+### 2026-09-11 -- TG1: characterize, size, ship 18 cells
+
+- **Cells:** `TG_<class>_<dom>` (bodies to the rails, ports `a b en vdd gnd`) and
+  `TGB_<class>_<dom>` (bodies on pins `bn`/`bp`, ports `a b en bn bp vdd gnd`), for
+  class = 1K / 100R / 10R and dom = 1V8 / 3V3 / 5V0. Each carries its own inverter, so
+  only `en` is driven. `cells.lib` is the netlist authority; the 18 `.sch` are the drawn
+  implementation. Regenerate with `circuits/transmission_gates/gen_cells.py`; symbols
+  (bow-tie transmission-gate glyph) with `xschem/gen_tg_syms.sh`.
+- **Sizing, derived not assumed:** Ron measured as dV/dI with a 1 mV probe, swept over the
+  full input level. Wp/Wn swept at fixed total width -> optimum 2.0-3.0 and width-independent;
+  **2.5 frozen family-wide** (within 2 % of the per-domain optimum). Width ladder gives a flat
+  `Ron x Wtot` above ~50 um: 1.386e4 / 1.624e4 / 2.939e4 ohm.um (1V8 / 3V3 / 5V0, rails).
+- **PVT:** 5 corners x supply +/-10 % x -55/27/150 C, full level sweep at each of the 45
+  points. 3V3 and 5V0 hold 2.1x max-over-typical. 1V8 does not -- see below.
+- **Finding, 1.8 V dead zone:** `TG_*_1V8` reaches ~99x typical Ron near mid-rail at
+  SS / 1.62 V / -55 C. Supply droop dominates: the same corner at the nominal 1.8 V rail
+  costs only 9x. Mitigation is the `TGB` cell with bodies on the signal node (full input
+  range recovered on 100R and 10R) or a restricted signal window; both are specced in
+  REPORT.md section 6. 3V3 and 5V0 are unaffected.
+- **Finding, narrow-width Vth is uncalibrated:** no AutoHV MOS model card sets `K3` or `W0`,
+  so both sit at the BSIM3 defaults (80, 2.5 um). Vth roll-up is ~84 mV at W = 1 um vs 3 mV
+  at W = 100 um. Invisible in strong inversion, worth a factor of 20 in the subthreshold
+  dead zone -- which is why the 1 kohm class scales worse than 1/W there. Per-finger width
+  is therefore kept as wide as the 100 um fab window allows. Logged as model uncertainty,
+  not fixed (models frozen).
+- **Rating check:** supply +10 % on the 3.3 V rail puts `en` at 3.63 V against a
+  `Vgs_dcmax` of 3.60 V for NMOS33/PMOS33. 5 V lands exactly on its 5.5 V rating. -55 C is
+  outside the declared -40 C `Tj_max`; it roughly doubles the 1.8 V dead-zone resistance
+  relative to -40 C. All three recorded in REPORT.md section 11.
+- **Verification:** all 18 cells re-measured from `cells.lib`; `TGB` checked twice (bodies to
+  rails, bodies to signal). 27/27 reproduce the device-level data to better than 0.01 %.
+  Symbols pass `xschem/check_pin_grid.py`. `smoke.cir` exercises a 5 V sample-and-hold and a
+  3.3 V pass leg end to end.
+- **Plumbing:** `xschem/tg_lib.sym.in` + `install.sh` symlink/helper entries; example sheet
+  `xschem/transmission_gates/examples/switch_sheet.sch`; characterization decks gitignored
+  (regenerable from `0*.py`), results JSON tracked.
+
 ## [unreleased] -- v2.2 close-out (merge to main; track designs; last unbacked table)
 
 Lands the three programs on `main` and closes the remaining loose ends. Models frozen at v2-grounded.
