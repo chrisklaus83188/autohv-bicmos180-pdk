@@ -1,0 +1,227 @@
+{
+ "provenance": {
+  "program": "MC realism (v2.3-stats)",
+  "base_commit": "61de05fa6f4bd3a7434d872c8e9835d201df7ed3",
+  "base_describe": "v2.2-defaults-4-g61de05f",
+  "generated_at_commit": "e842e5cee6b82f00e250dcddbfeb625d1b494431",
+  "ngspice_version": "ngspice-45",
+  "model_tag": "v2-grounded",
+  "sources": [
+   "circuits/mc_mismatch_check/results/01_mc_mirror.json",
+   "circuits/mc_mismatch_check/results/02_m_sweep.json",
+   "circuits/mc_mismatch_check/results/03_runtime.json",
+   "circuits/mc_mismatch_check/results/04_external_proto.json"
+  ]
+ },
+ "mirror_nmos50_mismatch_only": {
+  "circuit": "NMOS50 mirror W=4.7u L=1u, Iref 10 uA, Vout 2.5 V, TT, 5.0 V, 27 C",
+  "nrun": 200,
+  "pattern": "one invocation per sample, .option seed=k",
+  "handoff_section1": {
+   "sigma_over_mu_pct": 4.33,
+   "sigma_delvto_dev1_mV": 5.263,
+   "mean_iout_uA": 10.649,
+   "gain_zero_mismatch": 1.064,
+   "gm_over_id": 5.58
+  },
+  "measured": {
+   "sigma_over_mu_pct": 4.331020468130058,
+   "sigma_delvto_dev1_mV": 5.262781125037408,
+   "sigma_delvto_pair_diff_mV": 7.393504547566793,
+   "mean_iout_uA": 10.648773828554999,
+   "gain_zero_mismatch": 1.06397,
+   "gm_over_id": 5.576632451732974,
+   "distinct_samples": 200
+  },
+  "wrapper_formula": {
+   "sigma_vth_per_device_V": 0.005073921644158868,
+   "sigma_vth_pair_V": 0.007175608803587865,
+   "from_vth_pct": 4.00157329150289,
+   "from_geometry_pct": 0.19018468068158761,
+   "total_pct": 4.006090241124784,
+   "sizing_guide_pct": 4.08
+  }
+ },
+ "m_sweep": [
+  {
+   "key": "W4.7_L1_M1",
+   "W_um": 4.7,
+   "L_um": 1.0,
+   "M": 1,
+   "total_area_um2": 4.7,
+   "sigma_delvto_pooled_mV": 5.420843335255468,
+   "sigma_delvto_dev1_mV": 5.67738621723861,
+   "formula_v2_2_mV": 5.073921644158868,
+   "formula_R1_mV": 5.073921644158868,
+   "sigma_over_mu_pct": 4.562784441860243,
+   "handoff_section3": {
+    "sigma_delvto_mV": 5.039,
+    "sigma_over_mu_pct": 3.624
+   }
+  },
+  {
+   "key": "W4.7_L1_M4",
+   "W_um": 4.7,
+   "L_um": 1.0,
+   "M": 4,
+   "total_area_um2": 18.8,
+   "sigma_delvto_pooled_mV": 5.420843335255468,
+   "sigma_delvto_dev1_mV": 5.67738621723861,
+   "formula_v2_2_mV": 5.073921644158868,
+   "formula_R1_mV": 2.536960822079434,
+   "sigma_over_mu_pct": 9.163913260962028,
+   "handoff_section3": {
+    "sigma_delvto_mV": 4.958,
+    "sigma_over_mu_pct": 6.798
+   }
+  },
+  {
+   "key": "W18.8_L1_M1",
+   "W_um": 18.8,
+   "L_um": 1.0,
+   "M": 1,
+   "total_area_um2": 18.8,
+   "sigma_delvto_pooled_mV": 2.710421667598566,
+   "sigma_delvto_dev1_mV": 2.8386931085773646,
+   "formula_v2_2_mV": 2.536960822079434,
+   "formula_R1_mV": 2.536960822079434,
+   "sigma_over_mu_pct": 4.637038727932962,
+   "handoff_section3": {
+    "sigma_delvto_mV": 2.605,
+    "sigma_over_mu_pct": 3.737
+   }
+  },
+  {
+   "key": "W4.7_L4_M1",
+   "W_um": 4.7,
+   "L_um": 4.0,
+   "M": 1,
+   "total_area_um2": 18.8,
+   "sigma_delvto_pooled_mV": 2.710421667598566,
+   "sigma_delvto_dev1_mV": 2.8386931085773646,
+   "formula_v2_2_mV": 2.536960822079434,
+   "formula_R1_mV": 2.536960822079434,
+   "sigma_over_mu_pct": 1.0712184912771492,
+   "handoff_section3": {
+    "sigma_delvto_mV": 2.422,
+    "sigma_over_mu_pct": 0.671
+   }
+  }
+ ],
+ "m_sweep_nrun_per_geometry": 120,
+ "runtime_200_samples": {
+  "host": {
+   "platform": "Windows-11-10.0.26200-SP0",
+   "processor": "Intel64 Family 6 Model 186 Stepping 3, GenuineIntel",
+   "cpu_count": 12,
+   "python": "3.14.4"
+  },
+  "best_s": {
+   "inloop": 0.6318573000007746,
+   "perrun": 3.0855403000005026,
+   "external": 0.7080980000009731
+  },
+  "handoff_section4_s": {
+   "inloop": 0.7,
+   "perrun": 3.1,
+   "external": 0.7
+  }
+ },
+ "external_driver_prototype": {
+  "sigma_over_mu_pct": 3.9645822319054416,
+  "bit_identical_on_repeat": true,
+  "z_seed": 0,
+  "prediction": {
+   "gm_over_id_from_01": 5.576632451732974,
+   "correlated_single_knob_pct": 3.9363404841975465,
+   "independent_terms_pct_from_01": 4.006090241124784
+  },
+  "handoff_section4_sigma_over_mu_pct": 3.71
+ },
+ "preregistered_movers": [
+  {
+   "quantity": "NMOS50 mirror sigma/mu, M=1, N=200",
+   "before": "4.33 %",
+   "expected_after": "4.0-4.6 %",
+   "why": "notation-only change + new seeds"
+  },
+  {
+   "quantity": "sigma(delvto) at M=4",
+   "before": "4.96 mV",
+   "expected_after": "~2.5 mV",
+   "why": "R1"
+  },
+  {
+   "quantity": "sigma(delvto) vs NF at fixed W",
+   "before": "not measured",
+   "expected_after": "flat",
+   "why": "R2"
+  },
+  {
+   "quantity": "external-driver sigma/mu",
+   "before": "3.71 %",
+   "expected_after": "~4.0-4.3 %",
+   "why": "three independent knobs"
+  },
+  {
+   "quantity": "sizing-guide sigma column, M=1",
+   "before": "-",
+   "expected_after": "unchanged",
+   "why": "nothing physical changed"
+  },
+  {
+   "quantity": "36-check corner regression",
+   "before": "green",
+   "expected_after": "green, byte-identical",
+   "why": "A13"
+  },
+  {
+   "quantity": "200-sample runtime (op)",
+   "before": "0.7 s",
+   "expected_after": "< 2 s",
+   "why": "driver overhead (A11)"
+  },
+  {
+   "quantity": "NMOS18 vth0 process 1-sigma",
+   "before": "8.33 mV",
+   "expected_after": "26.7 mV",
+   "why": "derived from corners (rulings C6)"
+  },
+  {
+   "quantity": "NMOS18 u0 process 1-sigma",
+   "before": "3.33 %",
+   "expected_after": "5.67 %",
+   "why": "derived from corners (rulings C6)"
+  },
+  {
+   "quantity": "PMOS18 u0 process 1-sigma",
+   "before": "3.33 %",
+   "expected_after": "6.33 %",
+   "why": "derived from corners (rulings C6)"
+  },
+  {
+   "quantity": "tox process variation",
+   "before": "0.333 %, three independent classes",
+   "expected_after": "0.333 %, one shared TOX",
+   "why": "rulings Q8"
+  },
+  {
+   "quantity": "NDMOS20 vto process 1-sigma",
+   "before": "13.3 mV",
+   "expected_after": "16.7 mV",
+   "why": "derived from corners (rulings C6)"
+  },
+  {
+   "quantity": "NDMOS20 kp process 1-sigma",
+   "before": "3.33 %",
+   "expected_after": "5.00 %",
+   "why": "derived from corners (rulings C6)"
+  },
+  {
+   "quantity": "every PROC_ON=1 result in the repo",
+   "before": "e.g. mirror process+mismatch 1.344 %",
+   "expected_after": "moves",
+   "why": "derived process sigma (rulings section 3)"
+  }
+ ]
+}
