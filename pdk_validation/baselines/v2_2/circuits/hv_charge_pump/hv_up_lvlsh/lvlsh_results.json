@@ -1,0 +1,46 @@
+{
+  "_provenance": {
+    "model_tag": "v2-grounded",
+    "ngspice_version": "ngspice-45",
+    "vhv": 200,
+    "vboot": 12,
+    "vddl": 5
+  },
+  "op": {
+    "idle": {
+      "state": "idle",
+      "q": 210.653,
+      "qb": 210.654,
+      "onhs": 200.0,
+      "offhs": 200.0,
+      "sw": 200.0,
+      "boot": 212.0,
+      "iboot": 0.000690822,
+      "ivdd": 1.65785e-07
+    },
+    "set": {
+      "state": "set",
+      "q": 199.96,
+      "qb": 211.988,
+      "onhs": 212.0,
+      "offhs": 200.0,
+      "iboot": 1.20216e-05,
+      "ivdd": 4.87017e-06
+    },
+    "reset": {
+      "state": "reset",
+      "q": 211.988,
+      "qb": 199.96,
+      "onhs": 200.0,
+      "offhs": 212.0,
+      "iboot": 1.20217e-05,
+      "ivdd": 4.87017e-06
+    }
+  },
+  "transient": {
+    "converged": false,
+    "abort_time_s": 5.01327e-07,
+    "trouble_node": "von#branch",
+    "measured": {}
+  }
+}
