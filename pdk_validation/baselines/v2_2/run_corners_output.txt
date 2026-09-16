@@ -1,0 +1,78 @@
+ngspice : C:/Users/chris/SPICE/Qucs-S-25.2.0-win64/bin/ngspice_con.exe
+lib     : C:\Users\chris\ngspice\BiCMOS Process - Automotive\autohv-bicmos180-pdk-mc-realism\autohv_bicmos180_case.lib
+probes  : 9
+corners : ['TT', 'FF', 'SS', 'FS', 'SF']
+
+  BSIM3 NMOS  (NMOS18)  ID @ VGS=VDS=1.2 V
+    TT = +350.638 uA
+    FF = +525.046 uA  delta=+49.740%  expected sign +1   OK
+    SS = +225.102 uA  delta=-35.802%  expected sign -1   OK
+    FS = +521.846 uA  delta=+48.828%  expected sign +1   OK
+    SF = +226.414 uA  delta=-35.428%  expected sign -1   OK
+    [PROBE OK]
+
+  BSIM3 PMOS  (PMOS18)  |ID| @ |VGS|=|VDS|=1.2 V
+    TT =  +92.236 uA
+    FF = +144.517 uA  delta=+56.682%  expected sign +1   OK
+    SS =  +56.005 uA  delta=-39.281%  expected sign -1   OK
+    FS =  +56.281 uA  delta=-38.981%  expected sign -1   OK
+    SF = +143.777 uA  delta=+55.880%  expected sign +1   OK
+    [PROBE OK]
+
+  VDMOS NMOS  (NDMOS20) ID @ Vgs=2.5 Vds=3 V
+    TT =   +2.540 mA
+    FF =   +3.064 mA  delta=+20.627%  expected sign +1   OK
+    SS =   +2.047 mA  delta=-19.416%  expected sign -1   OK
+    FS =   +3.064 mA  delta=+20.627%  expected sign +1   OK
+    SF =   +2.047 mA  delta=-19.416%  expected sign -1   OK
+    [PROBE OK]
+
+  VDMOS PMOS  (PDMOS20) |ID| @ Vgs=-2.5 Vds=-3 V
+    TT = +939.504 uA
+    FF =   +1.136 mA  delta=+20.942%  expected sign +1   OK
+    SS = +767.405 uA  delta=-18.318%  expected sign -1   OK
+    FS = +767.405 uA  delta=-18.318%  expected sign -1   OK
+    SF =   +1.136 mA  delta=+20.942%  expected sign +1   OK
+    [PROBE OK]
+
+  BJT NPN     (NPN_LV)  Ic @ Ib=10uA Vc=2 V
+    TT =   +1.105 mA
+    FF =   +1.305 mA  delta=+18.075%  expected sign +1   OK
+    SS = +922.836 uA  delta=-16.504%  expected sign -1   OK
+    FS =   +1.305 mA  delta=+18.075%  expected sign +1   OK
+    SF = +922.836 uA  delta=-16.504%  expected sign -1   OK
+    [PROBE OK]
+
+  BJT PNP     (PNP_LAT) |Ic| @ Ib=10uA Vec=2 V
+    TT = +318.070 uA
+    FF = +379.150 uA  delta=+19.203%  expected sign +1   OK
+    SS = +262.575 uA  delta=-17.447%  expected sign -1   OK
+    FS = +262.575 uA  delta=-17.447%  expected sign -1   OK
+    SF = +379.150 uA  delta=+19.203%  expected sign +1   OK
+    [PROBE OK]
+
+  Diode       (DIO_PN)  Vf @ Ifwd=1 mA
+    TT = +0.6702 V
+    FF = +0.6687 V  delta= -0.228%  expected sign -1   OK
+    SS = +0.6718 V  delta= +0.226%  expected sign +1   OK
+    FS = +0.6702 V  delta= +0.000%  expected sign +0   OK
+    SF = +0.6702 V  delta= +0.000%  expected sign +0   OK
+    [PROBE OK]
+
+  Resistor    (RPOLY_HI) R = V/I @ V=1 V
+    TT =  +12.273 kohm
+    FF =  +11.046 kohm  delta=-10.000%  expected sign -1   OK
+    SS =  +13.746 kohm  delta=+12.000%  expected sign +1   OK
+    FS =  +12.273 kohm  delta= +0.000%  expected sign +0   OK
+    SF =  +12.273 kohm  delta= +0.000%  expected sign +0   OK
+    [PROBE OK]
+
+  Cap         (CMIM_STD) C from dV/dt = 1 kV/s ramp
+    TT =  +10.001 pF
+    FF =  +10.300 pF  delta= +3.000%  expected sign +1   OK
+    SS =   +9.700 pF  delta= -3.000%  expected sign -1   OK
+    FS =  +10.001 pF  delta= +0.000%  expected sign +0   OK
+    SF =  +10.001 pF  delta= +0.000%  expected sign +0   OK
+    [PROBE OK]
+
+ALL PASS: 36/36 corner checks across 9 probes
