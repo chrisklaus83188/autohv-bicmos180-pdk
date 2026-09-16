@@ -40,9 +40,9 @@ W=10u, L=1u. Per iteration we capture i(Vd1), i(Vd2) and gm via
 @m.xm1.m0[gm] / @m.xm2.m0[gm], and form log(I1/I2). Expected sigma at
 this size:
 
-  sigma(DVTH_MM, per device) = (13.5 mV / sqrt(W*L_um2)) / 3
-                             = (13.5 / sqrt(10)) / 3 = 1.42 mV
-  sigma(delta_Vth, pair)     = sqrt(2) * 1.42 = 2.01 mV
+  sigma(DVTH_MM, per device) = A_VT / sqrt(W*L_um2) / 3, with A_VT read
+                               from the NMOS50 wrapper in the .lib
+  sigma(delta_Vth, pair)     = sqrt(2) x above
   gm/ID at this bias (empirical, BSIM3) ~ 1.7 V^-1
   Vth-only contribution to sigma(log(I1/I2)) ~ 0.34 %
   W/L mismatch contribution (from DWREL_MM, DLREL_MM)  ~ 0.13 %
@@ -96,14 +96,56 @@ quit
 .end
 """
 
-# .lib AGAUSS values for NMOS50 (lines 53-70 of the .lib).
-# All AGAUSS(mean, X, N) use the HSPICE convention: true sigma = X/N.
-DVTH_3SIG_BASE = 0.0135       # V, before 1/sqrt(AUM2). True sigma = X/3.
-DWREL_3SIG_BASE = 0.0075      # rel, ditto.
-DLREL_3SIG_BASE = 0.0045      # rel, ditto.
-AGAUSS_CLIP_N  = 3
-WL_UM2 = 10                   # W * L in um^2 for the testbench
+# The NMOS50 mismatch coefficients are READ FROM THE .lib at run time. They are
+# not constants here: commit dc7de19 widened A_VT from 0.0135 to 0.033 V.um and
+# this check kept the old value, so it reported a 179 % deviation against a
+# correct model until 2026-09-16.
+# AGAUSS(mean, X, N) uses the HSPICE convention: true sigma = X / N.
+AGAUSS_CLIP_N = 3
+W_UM, L_UM = 10.0, 1.0        # testbench geometry
+WL_UM2 = W_UM * L_UM          # W * L in um^2 for the testbench
 VGS = 2.0
+VDS = 3.0
+
+SENS_TEMPLATE = """\
+* sensitivity probe: one NMOS50, deterministic MM_SIGMA knob (MM_ON=0)
+.include "{lib}"
+.param case=0
+.param PROC_ON=0
+.param MM_ON=0
+
+Vd1 d1 0 {vds}
+Vg1 g1 0 {vgs}
+
+XM1 d1 g1 0 0 NMOS50 W={w}u L={l}u M=1 MM_SIGMA={z}
+
+.control
+option numdgt=12
+op
+echo MC_BEGIN
+print i(Vd1) @m.xm1.m0[gm]
+echo MC_END
+quit
+.endc
+.end
+"""
+
+
+def read_nmos50_coefficients() -> dict[str, float]:
+    """3-sigma Pelgrom coefficients from the NMOS50 wrapper in the .lib."""
+    text = LIB_PATH.read_text(encoding="utf-8")
+    m = re.search(r"^\.subckt\s+NMOS50\b(.*?)^\.ends", text, re.S | re.M | re.I)
+    if not m:
+        raise RuntimeError(f"NMOS50 wrapper not found in {LIB_PATH}")
+    body, out = m.group(1), {}
+    for key, param in (("vth", "DVTH_MM"), ("w", "DWREL_MM"), ("l", "DLREL_MM")):
+        mm = re.search(
+            r"\.param\s+%s\s*=\s*\{[^}]*AGAUSS\(\s*0\s*,\s*([-\d.eE+]+)\s*/\s*sqrt" % param,
+            body, re.IGNORECASE)
+        if not mm:
+            raise RuntimeError(f"could not read {param} from the NMOS50 wrapper")
+        out[key] = float(mm.group(1))
+    return out
 
 
 def find_ngspice() -> str | None:
@@ -172,6 +214,76 @@ def run_one(ngspice: str, deck: str) -> tuple[float, float, float, float]:
     # i(Vdx) is current into the Vdx '+' terminal; the drain current
     # is the load current = -i(Vdx). Return positive magnitudes.
     return -i_found["1"], -i_found["2"], gm_found["1"], gm_found["2"]
+
+
+def run_probe(ngspice: str, deck: str) -> tuple[float, float]:
+    """One op point of the single-device sensitivity bench: (Id, gm)."""
+    with tempfile.NamedTemporaryFile(
+        mode="w", suffix=".cir", delete=False, encoding="utf-8"
+    ) as f:
+        f.write(deck)
+        deck_path = f.name
+    try:
+        res = subprocess.run([ngspice, "-b", deck_path], capture_output=True,
+                             text=True, timeout=30)
+        out = (res.stdout or "") + (res.stderr or "")
+    finally:
+        try:
+            os.unlink(deck_path)
+        except OSError:
+            pass
+    i_m = re.search(r"^i\(vd1\)\s*=\s*(-?[\d.]+e[+-]?\d+)\s*$", out,
+                    re.IGNORECASE | re.MULTILINE)
+    gm_m = re.search(r"^@m\.xm1\.m0\[gm\]\s*=\s*(-?[\d.]+e[+-]?\d+)\s*$", out,
+                     re.IGNORECASE | re.MULTILINE)
+    if not i_m or not gm_m:
+        raise RuntimeError(f"sensitivity probe did not return Id/gm: {out[-400:]!r}")
+    return -float(i_m.group(1)), float(gm_m.group(1))
+
+
+def measure_sensitivities(ngspice: str, lib_uri: str,
+                          sig: dict[str, float]) -> dict[str, float]:
+    """Measure d lnI/d(term) on the testbench instead of assuming it.
+
+    This check used to assume the textbook first-order values: gm/Id for the
+    threshold term and +-1 for W and L. On this card they are 9-17 % low, which
+    is real model behaviour, not a modelling error:
+      * mobility degradation puts Vth explicitly in the effective field, so a
+        Vth shift costs more current than gm x dVth (zeroing ua/ub/uc restores
+        the ratio to exactly 1.000);
+      * BSIM3's default k3 = 80 narrow-width Vth term is active, because the
+        card declares no k3/k3b/w0 (setting k3 = 0 takes d lnI/d lnW from
+        1.096 to 1.004);
+      * dvt0 rolls Vth off with L (with k3 and mobility off, d lnI/d lnL goes
+        from -1.117 to -1.005).
+
+    The MM_SIGMA knob drives all three terms together, so the W and L
+    sensitivities are measured by perturbing the drawn dimensions and the Vth
+    sensitivity is solved from the knob. Seven op points, about 0.6 s.
+    """
+    eps = 0.002
+
+    def probe(w: float, l: float, z: float) -> float:
+        return run_probe(ngspice, SENS_TEMPLATE.format(
+            lib=lib_uri, w=f"{w:.10g}", l=f"{l:.10g}", z=f"{z:.17g}",
+            vgs=VGS, vds=VDS))[0]
+
+    i0, gm0 = run_probe(ngspice, SENS_TEMPLATE.format(
+        lib=lib_uri, w=f"{W_UM:.10g}", l=f"{L_UM:.10g}", z="0", vgs=VGS, vds=VDS))
+    span = math.log(1 + eps) - math.log(1 - eps)
+    dlnw = (math.log(probe(W_UM * (1 + eps), L_UM, 0.0))
+            - math.log(probe(W_UM * (1 - eps), L_UM, 0.0))) / span
+    dlnl = (math.log(probe(W_UM, L_UM * (1 + eps), 0.0))
+            - math.log(probe(W_UM, L_UM * (1 - eps), 0.0))) / span
+    dz = (math.log(probe(W_UM, L_UM, +1.0))
+          - math.log(probe(W_UM, L_UM, -1.0))) / 2.0
+    return {
+        "Id": i0,
+        "gm_over_id": gm0 / i0,
+        "dlnI_dVth": (dz - dlnw * sig["w"] - dlnl * sig["l"]) / sig["vth"],
+        "dlnI_dlnW": dlnw,
+        "dlnI_dlnL": dlnl,
+    }
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
@@ -274,26 +386,23 @@ def main(argv: list[str] | None = None) -> int:
     sigma_I1_rel = statistics.stdev(I1) / mean_I1
     sigma_I2_rel = statistics.stdev(I2) / mean_I2
 
-    # --- Intended sigma for the MM axis.
-    # AGAUSS(0, X, 3) has true 1-sigma = X / 3 (HSPICE convention,
-    # empirically verified on ngspice 45.2). The .lib's AGAUSS calls
-    # use X = (3-sigma bound) / sqrt(W*L_um2).
-    sigma_dvth_dev = DVTH_3SIG_BASE / math.sqrt(WL_UM2) / AGAUSS_CLIP_N
-    sigma_dwrel_dev = DWREL_3SIG_BASE / math.sqrt(WL_UM2) / AGAUSS_CLIP_N
-    sigma_dlrel_dev = DLREL_3SIG_BASE / math.sqrt(WL_UM2) / AGAUSS_CLIP_N
-
+    # --- Intended sigma for the MM axis, from coefficients read out of the
+    # .lib and sensitivities measured on the bench (see measure_sensitivities).
+    coef = read_nmos50_coefficients()
+    sig = {k: v / math.sqrt(WL_UM2) / AGAUSS_CLIP_N for k, v in coef.items()}
+    sigma_dvth_dev = sig["vth"]
     sigma_dvth_pair = math.sqrt(2) * sigma_dvth_dev
-    sigma_wlrel_pair = math.sqrt(2) * math.sqrt(sigma_dwrel_dev**2
-                                                + sigma_dlrel_dev**2)
 
     # Empirical gm/ID from this run (averages out per-iteration jitter).
     gm_over_id_emp = ((mean_gm1 / mean_I1) + (mean_gm2 / mean_I2)) / 2
 
-    sigma_lr_vth_part = gm_over_id_emp * sigma_dvth_pair
-    sigma_lr_wl_part = sigma_wlrel_pair   # ID is linear in W/L
-    expected_sigma_lr_mm = math.sqrt(
-        sigma_lr_vth_part**2 + sigma_lr_wl_part**2
-    )
+    sens = measure_sensitivities(ngspice, lib_uri, sig)
+    parts = {"vth": sens["dlnI_dVth"] * sig["vth"],
+             "w": sens["dlnI_dlnW"] * sig["w"],
+             "l": sens["dlnI_dlnL"] * sig["l"]}
+    expected_sigma_lr_mm = math.sqrt(2) * math.sqrt(sum(v * v for v in parts.values()))
+    first_order_sigma_lr = math.sqrt(2) * math.sqrt(
+        (gm_over_id_emp * sig["vth"]) ** 2 + sig["w"] ** 2 + sig["l"] ** 2)
 
     print()
     print(f"Wall: {elapsed:.1f}s for {args.iterations} iterations  "
@@ -309,19 +418,27 @@ def main(argv: list[str] | None = None) -> int:
     print()
 
     if args.axis == "mm":
-        print("Intended sigma for MM axis (AGAUSS HSPICE conv: 1-sigma = X/3):")
-        print(f"  sigma(DVTH_MM, per device) = ({DVTH_3SIG_BASE*1000:.1f} mV / sqrt({WL_UM2})) / 3 = "
+        print("Intended sigma for MM axis (coefficients from the .lib, 1-sigma = X/3):")
+        print(f"  A_VT / A_W / A_L (3-sigma)                         = "
+              f"{coef['vth']*1000:.1f} mV.um / {coef['w']*100:.2f} %.um / "
+              f"{coef['l']*100:.2f} %.um")
+        print(f"  sigma(DVTH_MM, per device) at W*L = {WL_UM2:g} um^2      = "
               f"{sigma_dvth_dev*1000:.3f} mV")
         print(f"  sigma(delta_Vth, pair)     = sqrt(2) x above       = "
               f"{sigma_dvth_pair*1000:.3f} mV")
-        print(f"  gm/ID (empirical from this run)                    = "
-              f"{gm_over_id_emp:.3f} V^-1")
+        print(f"  measured d lnI/dVth                                = "
+              f"{sens['dlnI_dVth']:+.3f} V^-1   (gm/ID = {gm_over_id_emp:.3f} V^-1)")
+        print(f"  measured d lnI/dlnW, d lnI/dlnL                    = "
+              f"{sens['dlnI_dlnW']:+.3f}, {sens['dlnI_dlnL']:+.3f}   (first order: +1, -1)")
         print(f"  Vth-only contribution to sigma(log I1/I2)          = "
-              f"{sigma_lr_vth_part*100:.3f} %")
+              f"{abs(parts['vth'])*math.sqrt(2)*100:.3f} %")
         print(f"  W/L-mismatch contribution                          = "
-              f"{sigma_lr_wl_part*100:.3f} %")
+              f"{math.sqrt(2)*math.sqrt(parts['w']**2 + parts['l']**2)*100:.3f} %")
         print(f"  intended sigma(log I1/I2)  (RSS)                   ~ "
               f"{expected_sigma_lr_mm*100:.3f} %")
+        print(f"  first-order estimate (gm/ID, +-1 on W/L)           ~ "
+              f"{first_order_sigma_lr*100:.3f} %  "
+              f"[{(expected_sigma_lr_mm/first_order_sigma_lr-1)*100:+.0f} %]")
         deviation = abs(sigma_lr - expected_sigma_lr_mm) / expected_sigma_lr_mm
         print(f"  measured sigma             = {sigma_lr*100:.3f} %  "
               f"(deviation {deviation*100:.1f} %)")
