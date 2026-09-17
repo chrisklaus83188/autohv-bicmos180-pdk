@@ -2,8 +2,8 @@
  "_meta": {
   "program": "v3.0-stats",
   "brief": "docs/backlog/HANDOFF_v3_stats_brief.md, as amended by the Phase 0 and Phase 1 replies",
-  "date": "2026-09-16",
-  "status": "authored for Stop A; G1-G4 applied; 32 of 40 groups still need measured directions",
+  "date": "2026-09-17",
+  "status": "Stop A approved subject to S1-S4; masters added, directions and corners pending re-measurement at Lmin with the S2 calibration",
   "conventions": {
    "sigma": "1-sigma. sigma_3 is repeated for readability only; the generator reads sigma.",
    "relative_units": "fraction of the TT value (0.0133 = 1.33 %)",
@@ -15,7 +15,8 @@
   },
   "counts": {
    "global_variables": 131,
-   "groups": 40
+   "groups": 40,
+   "master_variables": 7
   },
   "resolved_review_items": {
    "F9/G1": "closed by ruling G1: A_VT re-anchored on the ONC25 measurements, F5 withdrawn. The anchor inversion in G1's text is corrected here; see local_mismatch._A_VT_note.",
@@ -40,7 +41,11 @@
      "param": "tox",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_OX",
+    "rho": 0.7
+   }
   },
   "TOX_33": {
    "origin": "3.3 V gate-oxide growth",
@@ -59,7 +64,11 @@
      "param": "tox",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_OX",
+    "rho": 0.7
+   }
   },
   "TOX_50": {
    "origin": "5 V gate-oxide growth",
@@ -100,7 +109,11 @@
      "param": "VTO_*_STAT",
      "form": "via-loading"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_OX",
+    "rho": 0.7
+   }
   },
   "TOX_12": {
    "origin": "12 V gate-oxide growth (31 nm, separate module)",
@@ -119,7 +132,11 @@
      "param": "tox",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_OX",
+    "rho": 0.7
+   }
   },
   "VTH_NMOS18": {
    "origin": "1.8 V n-channel implant",
@@ -137,7 +154,11 @@
      "param": "vth0",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_N",
+    "rho": 0.7
+   }
   },
   "VTH_PMOS18": {
    "origin": "1.8 V p-channel implant",
@@ -155,7 +176,11 @@
      "param": "vth0",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_P",
+    "rho": 0.7
+   }
   },
   "VTH_NMOS33": {
    "origin": "3.3 V n-channel implant",
@@ -173,7 +198,11 @@
      "param": "vth0",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_N",
+    "rho": 0.7
+   }
   },
   "VTH_PMOS33": {
    "origin": "3.3 V p-channel implant",
@@ -191,7 +220,11 @@
      "param": "vth0",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_P",
+    "rho": 0.7
+   }
   },
   "VTH_NMOS50": {
    "origin": "5 V n-channel implant",
@@ -210,7 +243,11 @@
      "param": "vth0",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_N",
+    "rho": 0.7
+   }
   },
   "VTH_PMOS50": {
    "origin": "5 V p-channel implant",
@@ -228,7 +265,11 @@
      "param": "vth0",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_P",
+    "rho": 0.7
+   }
   },
   "VTH_NMOS12": {
    "origin": "12 V n-channel implant",
@@ -247,7 +288,11 @@
      "form": "additive"
     }
    ],
-   "note": "Ruling G2: ONC25 was searched for a Vth band on its highest-voltage CMOS and has none (its 12 V hits concern Lmin only; section HH covers NMOS5V). Stays declared. This is the weakest-grounded class: its fixed set covers 3.6 % of a 14 % band, so U0 carries the corner."
+   "note": "Ruling G2: ONC25 was searched for a Vth band on its highest-voltage CMOS and has none (its 12 V hits concern Lmin only; section HH covers NMOS5V). Stays declared. This is the weakest-grounded class: its fixed set covers 3.6 % of a 14 % band, so U0 carries the corner.",
+   "master": {
+    "name": "G_N",
+    "rho": 0.7
+   }
   },
   "VTH_PMOS12": {
    "origin": "12 V p-channel implant",
@@ -266,7 +311,11 @@
      "form": "additive"
     }
    ],
-   "note": "Ruling G2: ONC25 was searched for a Vth band on its highest-voltage CMOS and has none (its 12 V hits concern Lmin only; section HH covers NMOS5V). Stays declared. This is the weakest-grounded class: its fixed set covers 3.6 % of a 14 % band, so U0 carries the corner."
+   "note": "Ruling G2: ONC25 was searched for a Vth band on its highest-voltage CMOS and has none (its 12 V hits concern Lmin only; section HH covers NMOS5V). Stays declared. This is the weakest-grounded class: its fixed set covers 3.6 % of a 14 % band, so U0 carries the corner.",
+   "master": {
+    "name": "G_P",
+    "rho": 0.7
+   }
   },
   "_VTH_VDMOS_template": {
    "_comment": "one entry per VDMOS device, listed individually below",
@@ -294,7 +343,11 @@
      "param": "VTO_NDMOS20_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_N",
+    "rho": 0.7
+   }
   },
   "VTH_PDMOS20": {
    "origin": "20 V p-LDMOS channel implant",
@@ -312,7 +365,11 @@
      "param": "VTO_PDMOS20_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_P",
+    "rho": 0.7
+   }
   },
   "VTH_NDMOS40": {
    "origin": "40 V n-LDMOS channel implant",
@@ -330,7 +387,11 @@
      "param": "VTO_NDMOS40_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_N",
+    "rho": 0.7
+   }
   },
   "VTH_PDMOS40": {
    "origin": "40 V p-LDMOS channel implant",
@@ -348,7 +409,11 @@
      "param": "VTO_PDMOS40_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_P",
+    "rho": 0.7
+   }
   },
   "VTH_NDMOS60": {
    "origin": "60 V n-LDMOS channel implant",
@@ -366,7 +431,11 @@
      "param": "VTO_NDMOS60_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_N",
+    "rho": 0.7
+   }
   },
   "VTH_PDMOS60": {
    "origin": "60 V p-LDMOS channel implant",
@@ -384,7 +453,11 @@
      "param": "VTO_PDMOS60_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_P",
+    "rho": 0.7
+   }
   },
   "VTH_NDMOS80": {
    "origin": "80 V n-LDMOS channel implant",
@@ -402,7 +475,11 @@
      "param": "VTO_NDMOS80_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_N",
+    "rho": 0.7
+   }
   },
   "VTH_PDMOS80": {
    "origin": "80 V p-LDMOS channel implant",
@@ -420,7 +497,11 @@
      "param": "VTO_PDMOS80_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_P",
+    "rho": 0.7
+   }
   },
   "VTH_NDMOS120": {
    "origin": "120 V n-LDMOS channel implant",
@@ -438,7 +519,11 @@
      "param": "VTO_NDMOS120_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_N",
+    "rho": 0.7
+   }
   },
   "VTH_PDMOS120": {
    "origin": "120 V p-LDMOS channel implant",
@@ -456,7 +541,11 @@
      "param": "VTO_PDMOS120_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_P",
+    "rho": 0.7
+   }
   },
   "VTH_NDMOS200": {
    "origin": "200 V n-LDMOS channel implant",
@@ -474,7 +563,11 @@
      "param": "VTO_NDMOS200_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_N",
+    "rho": 0.7
+   }
   },
   "VTH_PDMOS200": {
    "origin": "200 V p-LDMOS channel implant",
@@ -492,7 +585,11 @@
      "param": "VTO_PDMOS200_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_P",
+    "rho": 0.7
+   }
   },
   "VTH_DNMOS20": {
    "origin": "20 V depletion n-LDMOS implant",
@@ -510,7 +607,11 @@
      "param": "VTO_DNMOS20_STAT",
      "form": "additive"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_N",
+    "rho": 0.7
+   }
   },
   "_U0_calibration": {
    "_comment": "U0_<dev> sigma is solved, not declared. Rules from ruling F3.",
@@ -565,7 +666,8 @@
     "DNMOS20"
    ],
    "sigma": null,
-   "calibration_caveat": "The measured fixed set was VTH, TOX and RDSW only. DL_POLY and DW_ACT never entered it, because the wrappers do not implement edge bias yet (brief section 5.2, Phase 3), so they had no lever to perturb. F3a calls DL_POLY first-order at the classic bench, so these U0 values are provisional. The next harness pass realizes DL_POLY and DW_ACT through the cards' lint/wint (dL = -2*dlint, dW = -2*dwint) and the calibration is re-run."
+   "calibration_caveat": "The measured fixed set was VTH, TOX and RDSW only. DL_POLY and DW_ACT never entered it, because the wrappers do not implement edge bias yet (brief section 5.2, Phase 3), so they had no lever to perturb. F3a calls DL_POLY first-order at the classic bench, so these U0 values are provisional. The next harness pass realizes DL_POLY and DW_ACT through the cards' lint/wint (dL = -2*dlint, dW = -2*dwint) and the calibration is re-run.",
+   "master": "G_N/G_P by polarity"
   },
   "_RDSW_template": {
    "_comment": "one entry per MOS/VDMOS device; VDMOS applies to both rd and rs, which come from the same drift module",
@@ -660,7 +762,11 @@
      "target": "poly_resistor_W",
      "form": "additive-in-wrapper"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_LITHO",
+    "rho": 0.7
+   }
   },
   "DW_ACT_LV": {
    "origin": "LV active/isolation CD",
@@ -683,7 +789,11 @@
      "target": "mos_W",
      "form": "additive-in-wrapper"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_LITHO",
+    "rho": 0.7
+   }
   },
   "DW_ACT_HV": {
    "origin": "HV active/isolation CD",
@@ -715,7 +825,11 @@
      "target": "mos_W",
      "form": "additive-in-wrapper"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_LITHO",
+    "rho": 0.7
+   }
   },
   "RSH_RPOLY_HI": {
    "origin": "high-res poly module",
@@ -733,7 +847,11 @@
      "param": "rsh",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_RSH",
+    "rho": 0.6
+   }
   },
   "RSH_RPOLY_LO": {
    "origin": "doped poly module",
@@ -751,7 +869,11 @@
      "param": "rsh",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_RSH",
+    "rho": 0.6
+   }
   },
   "RSH_RNWELL": {
    "origin": "n-well module",
@@ -769,7 +891,11 @@
      "param": "rsh",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_RSH",
+    "rho": 0.6
+   }
   },
   "RSH_RNPLUS": {
    "origin": "n+ diffusion module",
@@ -787,7 +913,11 @@
      "param": "rsh",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_RSH",
+    "rho": 0.6
+   }
   },
   "RSH_RPPLUS": {
    "origin": "p+ diffusion module",
@@ -805,7 +935,11 @@
      "param": "rsh",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_RSH",
+    "rho": 0.6
+   }
   },
   "RSH_GATE": {
    "origin": "silicided gate poly",
@@ -832,7 +966,11 @@
      "target": "mos_rgate",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_RSH",
+    "rho": 0.6
+   }
   },
   "_RHEAD_template": {
    "_comment": "one entry per resistor layer",
@@ -850,7 +988,8 @@
     "RNWELL",
     "RNPLUS",
     "RPPLUS"
-   ]
+   ],
+   "master": "G_RSH"
   },
   "CDEN_MIM": {
    "origin": "MIM nitride thickness",
@@ -869,7 +1008,11 @@
      "param": "cj",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_CAP",
+    "rho": 0.6
+   }
   },
   "CDEN_MOM": {
    "origin": "metal pitch / IMD thickness",
@@ -888,7 +1031,11 @@
      "param": "cj",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": {
+    "name": "G_CAP",
+    "rho": 0.6
+   }
   },
   "_CPER_template": {
    "_comment": "one entry per capacitor type; new term, see wrapper section 5.4",
@@ -904,7 +1051,8 @@
     "CMOM",
     "CFRINGE"
    ],
-   "constraint": "CDEN and CPER are split so total C is unchanged at each type's regression-golden geometry (ruling Q-C)."
+   "constraint": "CDEN and CPER are split so total C is unchanged at each type's regression-golden geometry (ruling Q-C).",
+   "master": "G_CAP"
   },
   "_VBE_template": {
    "_comment": "physical variable for BJT global spread; IS is derived from it (ruling 3.1)",
@@ -920,7 +1068,8 @@
     "PNP_LAT",
     "NPN_HV",
     "PNP_HV"
-   ]
+   ],
+   "master": "G_BJT"
   },
   "_BF_template": {
    "_comment": "one entry per BJT",
@@ -941,7 +1090,8 @@
      "param": "bf",
      "form": "multiplicative"
     }
-   ]
+   ],
+   "master": "G_BJT"
   },
   "_RPAR_template": {
    "_comment": "BJT parasitic series resistances rb/rc/re move together (one module)",
@@ -988,7 +1138,8 @@
     "DZ_5V6",
     "DZ_12",
     "DZ_24"
-   ]
+   ],
+   "master": "G_BJT"
   },
   "_RS_DIO_template": {
    "distribution": "lognormal",
@@ -1869,6 +2020,147 @@
     "PMOS50",
     "NMOS12",
     "PMOS12"
+   ]
+  }
+ },
+ "master_variables": {
+  "_comment": "Ruling S1. Each listed variable decomposes as X = rho*G_master + sqrt(1-rho^2)*X_res, with G and X_res independent unit normals. The sigma of X is unchanged; only its decomposition changes. Monte Carlo samples masters and residuals; corner distance is Mahalanobis under the resulting covariance, not the Euclidean norm.",
+  "_grounding": "ONC25 section 8.3 does carry master-variable correlation matrices, but the local extraction lists them under 'noted, not pursued' and did not transcribe them (checked for S1 step 1). The loadings below are therefore DECLARED and are the least-grounded numbers in the model.",
+  "_uncorrelated": "RDSW_*, BV_*, RS_<dio>, CJ_<dio> stay uncorrelated: no source says otherwise.",
+  "G_N": {
+   "origin": "n-channel implant and anneal lot effect",
+   "rho": 0.7,
+   "error_bar": "+-0.2",
+   "source": "declared",
+   "loads_onto": [
+    "VTH_NMOS18",
+    "VTH_NMOS33",
+    "VTH_NMOS50",
+    "VTH_NMOS12",
+    "U0_NMOS18",
+    "U0_NMOS33",
+    "U0_NMOS50",
+    "U0_NMOS12",
+    "VTH_NDMOS20",
+    "VTH_NDMOS40",
+    "VTH_NDMOS60",
+    "VTH_NDMOS80",
+    "VTH_NDMOS120",
+    "VTH_NDMOS200",
+    "VTH_DNMOS20",
+    "U0_NDMOS20",
+    "U0_NDMOS40",
+    "U0_NDMOS60",
+    "U0_NDMOS80",
+    "U0_NDMOS120",
+    "U0_NDMOS200",
+    "U0_DNMOS20"
+   ]
+  },
+  "G_P": {
+   "origin": "p-channel implant lot effect; separate from G_N so FS/SF exist",
+   "rho": 0.7,
+   "error_bar": "+-0.2",
+   "source": "declared",
+   "loads_onto": [
+    "VTH_PMOS18",
+    "VTH_PMOS33",
+    "VTH_PMOS50",
+    "VTH_PMOS12",
+    "U0_PMOS18",
+    "U0_PMOS33",
+    "U0_PMOS50",
+    "U0_PMOS12",
+    "VTH_PDMOS20",
+    "VTH_PDMOS40",
+    "VTH_PDMOS60",
+    "VTH_PDMOS80",
+    "VTH_PDMOS120",
+    "VTH_PDMOS200",
+    "U0_PDMOS20",
+    "U0_PDMOS40",
+    "U0_PDMOS60",
+    "U0_PDMOS80",
+    "U0_PDMOS120",
+    "U0_PDMOS200"
+   ]
+  },
+  "G_OX": {
+   "origin": "oxidation furnace lot effect",
+   "rho": 0.7,
+   "error_bar": "+-0.2",
+   "source": "declared",
+   "loads_onto": [
+    "TOX_18",
+    "TOX_33",
+    "TOX_50",
+    "TOX_12"
+   ]
+  },
+  "G_LITHO": {
+   "origin": "litho/etch lot effect",
+   "rho": 0.7,
+   "error_bar": "+-0.2",
+   "source": "declared",
+   "loads_onto": [
+    "DL_POLY",
+    "DW_ACT_LV",
+    "DW_ACT_HV"
+   ]
+  },
+  "G_RSH": {
+   "origin": "silicide/implant lot effect on passives",
+   "rho": 0.6,
+   "error_bar": "+-0.2",
+   "source": "declared",
+   "loads_onto": [
+    "RSH_RPOLY_HI",
+    "RSH_RPOLY_LO",
+    "RSH_RNWELL",
+    "RSH_RNPLUS",
+    "RSH_RPPLUS",
+    "RSH_GATE",
+    "RHEAD_RPOLY_HI",
+    "RHEAD_RPOLY_LO",
+    "RHEAD_RNWELL",
+    "RHEAD_RNPLUS",
+    "RHEAD_RPPLUS"
+   ]
+  },
+  "G_CAP": {
+   "origin": "dielectric deposition lot effect",
+   "rho": 0.6,
+   "error_bar": "+-0.2",
+   "source": "declared",
+   "loads_onto": [
+    "CDEN_MIM",
+    "CDEN_MOM",
+    "CPER_CMIM_STD",
+    "CPER_CMIM_HI",
+    "CPER_CMOM",
+    "CPER_CFRINGE"
+   ]
+  },
+  "G_BJT": {
+   "origin": "emitter/base profile lot effect",
+   "rho": 0.6,
+   "error_bar": "+-0.2",
+   "source": "declared",
+   "loads_onto": [
+    "VBE_NPN_LV",
+    "VBE_PNP_LAT",
+    "VBE_NPN_HV",
+    "VBE_PNP_HV",
+    "BF_NPN_LV",
+    "BF_PNP_LAT",
+    "BF_NPN_HV",
+    "BF_PNP_HV",
+    "VF_DIO_PN",
+    "VF_DIO_FAST",
+    "VF_DIO_SCH",
+    "VF_DZ_5V6",
+    "VF_DZ_12",
+    "VF_DZ_24"
    ]
   }
  }

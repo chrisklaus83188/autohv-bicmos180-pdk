@@ -62,6 +62,11 @@ SIZING = ROOT / "docs" / "sizing-guide.json"
 
 VT_THERMAL = 0.025852  # kT/q at 27 C
 
+# S2: below this measured slope, U0 is not the variable the band should be
+# solved through -- the drift resistance is. Applies to the LDMOS family.
+U0_SLOPE_FLOOR = 0.4
+U0_HELD_3SIGMA = 0.08   # literature mobility spread where U0 is not solved
+
 # Variables that exist in the model but have no lever on a given metric. Kept
 # out of the direction with a reason, rather than sitting in it as a zero.
 INERT = {
@@ -83,6 +88,17 @@ CAP_GROUPS = ["CMIM_STD", "CMIM_HI", "CMOM", "CFRINGE"]
 BJT_GROUPS = ["NPN_LV", "PNP_LAT", "NPN_HV", "PNP_HV"]
 DIO_GROUPS = ["DIO_PN", "DIO_FAST", "DIO_SCH", "DZ_5V6", "DZ_12", "DZ_24"]
 POLY_RES = {"RPOLY_HI", "RPOLY_LO"}
+
+
+def lmin_um(group: str) -> float:
+    """Fabrication minimum L for a group, from device_limits.csv (ruling 4.1)."""
+    import csv
+    path = ROOT / "pdk_validation" / "device_limits.csv"
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            if row["device"] == group and row["param"] == "L":
+                return float(row["min"])
+    raise SystemExit(f"no L row for {group} in {path.name}")
 
 
 def kind_of(group: str) -> str:
@@ -173,7 +189,8 @@ def tt_of(name: str, card: str | None = None) -> float | None:
 def deck_mos(group: str, bench: dict, bias: str) -> tuple[str, str]:
     b = bench["classic"] if bias == "classic" else bench["analog"]
     sign = -1.0 if group.startswith("P") else 1.0
-    w, l = bench["W_um"], bench.get("L_um", 1.0)
+    w = bench["W_um"]
+    l = bench["L_classic_um"] if bias == "classic" else bench["L_analog_um"]
     body = [f"Vd1 d1 0 {sign * b['Vds']:.6g}", f"Vg1 g1 0 {sign * b['Vgs']:.6g}",
             f"XM1 d1 g1 0 0 {group} W={w:.6g}u L={l:.6g}u M=1"]
     return "\n".join(_wrap(f"{group} {bias}", body,
@@ -384,6 +401,9 @@ def perturbed(spec: dict, sgn: int) -> tuple[dict, dict]:
 def bench_for(group: str, model: dict, sizing: dict) -> dict:
     kind = kind_of(group)
     b = dict(model["benches"].get(group, {}))
+    if kind == "mos":
+        b["L_analog_um"] = b.get("L_um", 1.0)
+        b["L_classic_um"] = lmin_um(group)      # ruling 4.1
     if kind == "resistor":
         b.update({"W_um": 2.0, "L_um": 16.5, "V": 0.1})
     elif kind == "capacitor":
@@ -417,21 +437,22 @@ def solve_diode_vf(ng: str, group: str, bench: dict, work: Path,
 
 
 def measure_group(ng: str, group: str, model: dict, sizing: dict, work: Path,
-                  u0_sigma: float | None, bias_override: str | None = None) -> dict:
+                  sigma_overrides: dict[str, float] | None = None,
+                  bias_override: str | None = None) -> dict:
     kind = kind_of(group)
     bench = bench_for(group, model, sizing)
     if kind == "diode" and bench.get("Vf") is None:
         bench["Vf"] = solve_diode_vf(ng, group, bench, work)
     perts, dead = perturbations(group, model)
-    if u0_sigma is not None and kind in ("mos", "vdmos"):
-        if kind == "vdmos":
-            perts[f"U0_{group}"] = {"card": None, "param": None,
-                                    "pname": f"KP_{group}_STAT", "form": "multiplicative",
-                                    "sigma": u0_sigma, "scale": 1.0, "extra": []}
-        else:
-            perts[f"U0_{group}"] = {"card": f"{group}_INT", "param": "u0", "pname": None,
-                                    "form": "multiplicative", "sigma": u0_sigma,
-                                    "scale": 1.0, "extra": []}
+    for var, sig in (sigma_overrides or {}).items():
+        if var in perts:
+            perts[var] = {**perts[var], "sigma": sig}
+        elif var.startswith("U0_") and kind in ("mos", "vdmos"):
+            perts[var] = ({"card": None, "param": None, "pname": f"KP_{group}_STAT",
+                           "form": "multiplicative", "sigma": sig, "scale": 1.0, "extra": []}
+                          if kind == "vdmos" else
+                          {"card": f"{group}_INT", "param": "u0", "pname": None,
+                           "form": "multiplicative", "sigma": sig, "scale": 1.0, "extra": []})
 
     builder = BUILDERS[kind]
     if bias_override:
@@ -518,32 +539,48 @@ def main(argv=None) -> int:
             if kind in ("mos", "vdmos"):
                 cls = re.sub(r"^[NP]?D?MOS", "", g) or "vdmos"
                 band = bands.get(cls, bands["vdmos"])
-                fixed = measure_group(ng, g, model, sizing, work, None)
-                swing = 3.0 * math.sqrt(sum(v * v for v in fixed["g"].values()))
                 probe = 0.01
-                probed = measure_group(ng, g, model, sizing, work, probe)
-                slope = abs(probed["g"].get(f"U0_{g}", 0.0)) / probe
+                u0_var, rd_var = f"U0_{g}", f"RDSW_{g}"
+
+                # S2: solve the variable with the largest measured lever. Where
+                # drift resistance dominates (LDMOS above ~80 V) KP has almost
+                # none, and solving U0 there inflates mobility spread instead of
+                # describing the device.
+                u0_slope = abs(measure_group(ng, g, model, sizing, work,
+                                             {u0_var: probe})["g"].get(u0_var, 0.0)) / probe
+                if u0_slope >= U0_SLOPE_FLOOR:
+                    solved, held = u0_var, {}
+                    slope = u0_slope
+                else:
+                    held = {u0_var: U0_HELD_3SIGMA / 3.0}
+                    slope = abs(measure_group(ng, g, model, sizing, work,
+                                              {**held, rd_var: probe})["g"].get(rd_var, 0.0)) / probe
+                    solved = rd_var
                 if slope <= 0:
-                    sys.exit(f"{g}: u0 has no measurable lever")
+                    sys.exit(f"{g}: {solved} has no measurable lever on this bench")
+
+                fixed = measure_group(ng, g, model, sizing, work, held)
+                swing = 3.0 * math.sqrt(sum(v * v for v in fixed["g"].values()))
                 need = math.sqrt(max(band ** 2 - swing ** 2, 0.0)) / 3.0 / slope
                 floored = need < floor3 / 3.0
-                u0_sigma = max(need, floor3 / 3.0)
-                full = measure_group(ng, g, model, sizing, work, u0_sigma)
-                z_fast, norm = direction(full["g"])
-                rec = {"class_band_3sigma": band, "u0_sigma_1s": u0_sigma,
-                       "u0_slope_measured": slope, "u0_floor_hit": floored,
-                       "fixed_set_3sigma_swing": swing,
-                       "metric_3sigma_swing": 3.0 * norm,
-                       "band_error_pct": 100.0 * (3.0 * norm / band - 1.0)}
-                print(f"{g:9s} {kind:9s} band {band*100:5.1f} %  slope {slope:4.2f}  "
-                      f"u0 1s {u0_sigma*100:5.2f} %{'  FLOOR' if floored else ''}  "
-                      f"swing {3*norm*100:5.1f} %  err {100*(3*norm/band-1):+5.1f} %")
+                solved_sigma = max(need, floor3 / 3.0)
+                full = measure_group(ng, g, model, sizing, work,
+                                     {**held, solved: solved_sigma})
+                rec = {"class_band_3sigma": band,
+                       "calibrated_variable": solved,
+                       "calibrated_sigma_1s": solved_sigma,
+                       "calibrated_slope": slope,
+                       "u0_slope_measured": u0_slope,
+                       "held_at_literature_1s": held,
+                       "floor_hit": floored,
+                       "fixed_set_3sigma_swing": swing}
+                print(f"{g:9s} {kind:9s} band {band*100:5.1f} %  u0slope {u0_slope:4.2f}  "
+                      f"solve {solved.split('_')[0]:4s} {solved_sigma*100:5.2f} %"
+                      f"{'  FLOOR' if floored else ''}", end="")
             else:
                 full = measure_group(ng, g, model, sizing, work, None)
-                z_fast, norm = direction(full["g"])
-                rec = {"metric_3sigma_swing": 3.0 * norm}
-                print(f"{g:9s} {kind:9s} swing {3*norm*100:5.1f} %  "
-                      f"terms {len(full['g'])}  excluded {len(full['excluded'])}")
+                rec = {}
+                print(f"{g:9s} {kind:9s}", end="")
             prune_no_lever(full)
             if kind == "bjt":
                 beta = measure_group(ng, g, model, sizing, work, None, bias_override="beta")
@@ -559,6 +596,12 @@ def main(argv=None) -> int:
                     full["g"][bf_var] = beta["g"][bf_var]
             z_fast, norm = direction(full["g"])
             rec["metric_3sigma_swing"] = 3.0 * norm
+            if "class_band_3sigma" in rec:
+                rec["band_error_pct"] = 100.0 * (3.0 * norm / rec["class_band_3sigma"] - 1.0)
+                print(f"  swing {3*norm*100:5.1f} %  err {rec['band_error_pct']:+5.1f} %")
+            else:
+                print(f"  swing {3*norm*100:5.1f} %  terms {len(full['g'])}  "
+                      f"excluded {len(full['excluded'])}")
             rec.update({"bench": full["bench"], "kind": full["kind"],
                         "metric_classic": full.get("metric_classic"),
                         "metric_analog": full.get("metric_analog"),
