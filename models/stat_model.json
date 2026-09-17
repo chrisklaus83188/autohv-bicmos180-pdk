@@ -3,7 +3,7 @@
   "program": "v3.0-stats",
   "brief": "docs/backlog/HANDOFF_v3_stats_brief.md, as amended by the Phase 0 and Phase 1 replies",
   "date": "2026-09-16",
-  "status": "authored for Stop A review; nothing generated from it yet",
+  "status": "authored for Stop A; G1-G4 applied; 32 of 40 groups still need measured directions",
   "conventions": {
    "sigma": "1-sigma. sigma_3 is repeated for readability only; the generator reads sigma.",
    "relative_units": "fraction of the TT value (0.0133 = 1.33 %)",
@@ -17,13 +17,9 @@
    "global_variables": 131,
    "groups": 40
   },
-  "open_review_item": {
-   "id": "F9",
-   "what": "A_VT grounding for the 8 BSIM3 classes",
-   "authored_as": "ruling F5 (A_VT = 1 mV.um per nm of oxide)",
-   "conflicting_evidence": "ONC25 section GG measures 5 V CMOS A_VT = 6.35 mV.um (NMOS) and 5.1 (PMOS) at 13.1 nm oxide, i.e. 0.48 mV.um/nm, not 1.0. The 1 mV.um/nm rule holds only for their 2.5 V devices (0.78-0.94). AutoHV's 5 V value of 11.0 mV.um is therefore ~1.7-2.2x wider than the same-class measurement, and its agreement with the oxide rule is numerical coincidence.",
-   "alternative": "anchor on the ONC25 measurement and scale by oxide: 1.8 V 3.4, 3.3 V 5.5, 5 V 5.3, 12 V 15.0 mV.um",
-   "effect_if_changed": "one line per device in local_mismatch; no structural change"
+  "resolved_review_items": {
+   "F9/G1": "closed by ruling G1: A_VT re-anchored on the ONC25 measurements, F5 withdrawn. The anchor inversion in G1's text is corrected here; see local_mismatch._A_VT_note.",
+   "G2": "closed: no 12 V band in ONC25; 150 mV stays declared and the class is labelled weakest-grounded."
   }
  },
  "global_variables": {
@@ -250,7 +246,8 @@
      "param": "vth0",
      "form": "additive"
     }
-   ]
+   ],
+   "note": "Ruling G2: ONC25 was searched for a Vth band on its highest-voltage CMOS and has none (its 12 V hits concern Lmin only; section HH covers NMOS5V). Stays declared. This is the weakest-grounded class: its fixed set covers 3.6 % of a 14 % band, so U0 carries the corner."
   },
   "VTH_PMOS12": {
    "origin": "12 V p-channel implant",
@@ -268,7 +265,8 @@
      "param": "vth0",
      "form": "additive"
     }
-   ]
+   ],
+   "note": "Ruling G2: ONC25 was searched for a Vth band on its highest-voltage CMOS and has none (its 12 V hits concern Lmin only; section HH covers NMOS5V). Stays declared. This is the weakest-grounded class: its fixed set covers 3.6 % of a 14 % band, so U0 carries the corner."
   },
   "_VTH_VDMOS_template": {
    "_comment": "one entry per VDMOS device, listed individually below",
@@ -566,7 +564,8 @@
     "PDMOS200",
     "DNMOS20"
    ],
-   "sigma": null
+   "sigma": null,
+   "calibration_caveat": "The measured fixed set was VTH, TOX and RDSW only. DL_POLY and DW_ACT never entered it, because the wrappers do not implement edge bias yet (brief section 5.2, Phase 3), so they had no lever to perturb. F3a calls DL_POLY first-order at the classic bench, so these U0 values are provisional. The next harness pass realizes DL_POLY and DW_ACT through the cards' lint/wint (dL = -2*dlint, dW = -2*dwint) and the calibration is re-run."
   },
   "_RDSW_template": {
    "_comment": "one entry per MOS/VDMOS device; VDMOS applies to both rd and rs, which come from the same drift module",
@@ -1141,14 +1140,15 @@
  },
  "local_mismatch": {
   "_convention": "1-sigma Pelgrom coefficients, foundry units. sigma = A / sqrt(W*L*M) for MOS, A / sqrt(area*M) for BJT/diode, per the wrapper forms.",
-  "_A_VT_note": "Authored per ruling F5 (1 mV.um per nm of oxide). See _meta.open_review_item F9: ONC25's measured 5 V values are about half this. Changing it is one number per device.",
+  "_A_VT_note": "Ruling G1: F5 (1 mV.um per nm) is withdrawn; a measured coefficient outranks the foundry's own rule-of-thumb footnote. NOTE: G1 states the 2.5 V anchors as '0.78 N / 0.94 P', which inverts them -- ONC25 section E reads nmos2v 6.0 and pmos2v 5.0 mV.um at 6.4 nm, i.e. N 0.9375 and P 0.7812 per nm. The corrected assignment is used, because the swapped one makes PMOS mismatch exceed NMOS at 1.8 V and 3.3 V, contradicting both measured anchors (N is the worse matcher at 2.5 V and at 5 V).",
   "NMOS18": {
    "A_VT": {
-    "value": 4.25,
+    "value": 4.6,
     "units": "mV.um",
     "was": 3.5,
-    "source": "onc25:oxide-rule",
-    "error_bar": "+-25%"
+    "source": "onc25:measured, interpolated-in-tox",
+    "error_bar": "+-30%",
+    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
    },
    "A_BETA": {
     "value": 1.5,
@@ -1170,11 +1170,12 @@
   },
   "PMOS18": {
    "A_VT": {
-    "value": 4.25,
+    "value": 3.85,
     "units": "mV.um",
     "was": 3.5,
-    "source": "onc25:oxide-rule",
-    "error_bar": "+-25%"
+    "source": "onc25:measured, interpolated-in-tox",
+    "error_bar": "+-30%",
+    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
    },
    "A_BETA": {
     "value": 1.5,
@@ -1196,11 +1197,12 @@
   },
   "NMOS33": {
    "A_VT": {
-    "value": 6.75,
+    "value": 6.17,
     "units": "mV.um",
     "was": 4.0,
-    "source": "onc25:oxide-rule",
-    "error_bar": "+-25%"
+    "source": "onc25:measured, interpolated-in-tox",
+    "error_bar": "+-30%",
+    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
    },
    "A_BETA": {
     "value": 1.5,
@@ -1222,11 +1224,12 @@
   },
   "PMOS33": {
    "A_VT": {
-    "value": 6.75,
+    "value": 5.14,
     "units": "mV.um",
     "was": 4.0,
-    "source": "onc25:oxide-rule",
-    "error_bar": "+-25%"
+    "source": "onc25:measured, interpolated-in-tox",
+    "error_bar": "+-30%",
+    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
    },
    "A_BETA": {
     "value": 1.5,
@@ -1248,11 +1251,12 @@
   },
   "NMOS50": {
    "A_VT": {
-    "value": 11.0,
+    "value": 6.89,
     "units": "mV.um",
     "was": 11.0,
-    "source": "onc25:oxide-rule",
-    "error_bar": "+-25%"
+    "source": "onc25:measured, interpolated-in-tox",
+    "error_bar": "+-30%",
+    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
    },
    "A_BETA": {
     "value": 1.5,
@@ -1274,11 +1278,12 @@
   },
   "PMOS50": {
    "A_VT": {
-    "value": 11.0,
+    "value": 5.63,
     "units": "mV.um",
     "was": 11.0,
-    "source": "onc25:oxide-rule",
-    "error_bar": "+-25%"
+    "source": "onc25:measured, interpolated-in-tox",
+    "error_bar": "+-30%",
+    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
    },
    "A_BETA": {
     "value": 1.5,
@@ -1300,11 +1305,12 @@
   },
   "NMOS12": {
    "A_VT": {
-    "value": 31.0,
+    "value": 15.03,
     "units": "mV.um",
     "was": 31.0,
-    "source": "onc25:oxide-rule",
-    "error_bar": "+-25%"
+    "source": "onc25:measured, interpolated-in-tox",
+    "error_bar": "+-30%",
+    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
    },
    "A_BETA": {
     "value": 1.5,
@@ -1326,11 +1332,12 @@
   },
   "PMOS12": {
    "A_VT": {
-    "value": 31.0,
+    "value": 12.07,
     "units": "mV.um",
     "was": 31.0,
-    "source": "onc25:oxide-rule",
-    "error_bar": "+-25%"
+    "source": "onc25:measured, interpolated-in-tox",
+    "error_bar": "+-30%",
+    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
    },
    "A_BETA": {
     "value": 1.5,
@@ -1354,7 +1361,7 @@
    "A_VT": {
     "value": 20.0,
     "units": "mV.um",
-    "source": "onc25:LDMOS-mismatch",
+    "source": "onc25:measured",
     "error_bar": "+-30%",
     "note": "ONC25 section GG: NLDMOS40V5VA sigma(dVth) 8.2 mV at 12 um^2 gives A_VT ~ 20 mV.um, about 3x the CMOS coefficient. Replaces the wrapper's per-cell 24 mV form; the generator converts to the wrapper's mtot normalization.",
     "devices": [
@@ -1376,7 +1383,7 @@
   },
   "_RESISTORS": {
    "_comment": "the single lumped coefficient is split into four terms, constrained at the 10x10 um reference geometry (ruling Q-C / brief 5.3)",
-   "split_constraint": "at W=L=10 um, NS=1, M=1 the combined sigma equals today's per-type lumped value exactly; end+head carry <= 20 % of the variance there",
+   "split_constraint": "at the passives_mc local-mismatch reference geometry (W=L=10 um, NS=1, M=1) the combined sigma equals today's per-type lumped value exactly; end+head carry <= 20 % of the variance there. Note this is a different geometry from the R(V) goldens (100x10 um).",
    "lumped_today_1sigma_pct_um": {
     "RPOLY_HI": 1.061,
     "RPOLY_LO": 1.061,
@@ -1410,7 +1417,7 @@
     "units": "%.um^0.5",
     "source": "declared",
     "error_bar": "+-100%",
-    "note": "New perimeter term; value set by the Q-C golden-geometry constraint together with CDEN/CPER."
+    "note": "New perimeter term; value set by the Q-C constraint, which holds total C at each type's golden geometry of 100x100 um."
    }
   },
   "_BJT": {
@@ -1581,11 +1588,12 @@
    "layer_ref": "RPOLY_HI 2 um width, per the sizing guide's precision default",
    "W_um": 2.0,
    "L_um": null,
-   "metric": "ln R"
+   "metric": "ln R",
+   "golden_geometry": "the resistor C(V)/R(V) goldens use 100x10 um (10 squares); the direction bench uses the sizing guide's precision default (RPOLY_HI, 2 um width)"
   },
   "_capacitors": {
    "type_ref": "CMIM_HI",
-   "geometry": "each type's regression-golden geometry (10x10 um for CMIM_STD)",
+   "geometry": "each type's regression-golden geometry: 100x100 um (10000 um^2), which is what pdk_validation/regression/run_passives.py generates the C(V) goldens at",
    "metric": "ln C"
   },
   "_bjt": {
@@ -1809,5 +1817,59 @@
   ],
   "shared_variable_rule": "When several selected groups pull a shared variable the same way, the preset generator takes the normalized sum of directions and rescales to the preset's declared distance. Conflicts are reported in corners.json; last-listed group wins only in case = -1 manual mode.",
   "SPD_note": "SPD_<group> is a derived direction, not a sampled variable. Monte Carlo samples the independent variables; SPD exists only to define corners."
+ },
+ "model_parameter_changes": {
+  "_comment": "Non-statistical model-card values changed by this program. The generator writes these into every BSIM3 card; brief section 0 requires physics, source and before/after for each.",
+  "k3": {
+   "before": 80.0,
+   "before_origin": "BSIM3 default (undeclared in all 8 cards)",
+   "after": 2.0,
+   "source": "literature:0.18um-class-fitted",
+   "error_bar": "+-100%",
+   "applies_to": [
+    "NMOS18",
+    "PMOS18",
+    "NMOS33",
+    "PMOS33",
+    "NMOS50",
+    "PMOS50",
+    "NMOS12",
+    "PMOS12"
+   ],
+   "evidence": "docs/bsim3-defaults-audit.md: at W=0.4 um the default raises Vth +238 mV vs a 50 um device (+29 mV once grounded); Id/W 111.9 -> 125.5 uA/um"
+  },
+  "k3b": {
+   "before": 0.0,
+   "after": 0.0,
+   "source": "BSIM3 default retained",
+   "error_bar": "n/a",
+   "applies_to": [
+    "NMOS18",
+    "PMOS18",
+    "NMOS33",
+    "PMOS33",
+    "NMOS50",
+    "PMOS50",
+    "NMOS12",
+    "PMOS12"
+   ]
+  },
+  "w0": {
+   "before": 2.5e-06,
+   "before_origin": "BSIM3 default",
+   "after": 2.5e-07,
+   "source": "literature:0.18um-class-fitted",
+   "error_bar": "+-100%",
+   "applies_to": [
+    "NMOS18",
+    "PMOS18",
+    "NMOS33",
+    "PMOS33",
+    "NMOS50",
+    "PMOS50",
+    "NMOS12",
+    "PMOS12"
+   ]
+  }
  }
 }
