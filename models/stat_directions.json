@@ -1,11 +1,18 @@
 {
  "_meta": {
   "ngspice": "C:/Users/chris/SPICE/Qucs-S-25.2.0-win64/bin/ngspice_con.exe",
-  "model": "models\\stat_model.json",
-  "bench_rule": "classic = Vgs = Vds = class supply (ruling F8)"
+  "model": "models/stat_model.json",
+  "bench_rule": "classic = Vgs = Vds = class supply (ruling F8); metrics per ruling G3"
  },
  "groups": {
   "NMOS18": {
+   "class_band_3sigma": 0.2,
+   "u0_sigma_1s": 0.04251073641378085,
+   "u0_slope_measured": 0.9301988739538913,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.16101815980397793,
+   "metric_3sigma_swing": 0.19889359605322993,
+   "band_error_pct": -0.5532019733850424,
    "bench": {
     "W_um": 1.3,
     "L_um": 1.0,
@@ -21,34 +28,47 @@
     },
     "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
-   "class_band_3sigma": 0.2,
-   "u0_sigma_1s": 0.042859904450322645,
-   "u0_floor_hit": false,
-   "fixed_set_3sigma_swing": 0.1602957099992156,
-   "u0_slope_measured": 0.9301988739538913,
-   "band_error_pct": -0.5682388500597657,
+   "kind": "mos",
+   "metric_classic": 0.000121774593811,
+   "metric_analog": 1.005968993315e-05,
    "g_classic": {
     "TOX_18": -0.007236620383532788,
     "VTH_NMOS18": -0.0529372460008144,
+    "DL_POLY": -0.0030237662211698435,
+    "DW_ACT_LV": 0.00408036876144191,
     "RDSW_NMOS18": -0.0004975993052998007,
-    "U0_NMOS18": 0.03923148658548303
+    "U0_NMOS18": 0.03891845429773788
    },
    "g_analog": {
     "TOX_18": -0.014488087809905181,
     "VTH_NMOS18": -0.2046311784167525,
+    "DL_POLY": -0.0025354807075430585,
+    "DW_ACT_LV": 0.004585445272661914,
     "RDSW_NMOS18": -1.3748731175766693e-06,
-    "U0_NMOS18": 0.041819482239497496
+    "U0_NMOS18": 0.041485791473777844
+   },
+   "excluded": {
+    "RSH_GATE": "no rgate term in the wrappers yet (Phase 3)",
+    "JS_MOS": "junction leakage is picoamps against the bench current"
    },
    "z_fast": {
-    "TOX_18": -0.3275089503523002,
-    "VTH_NMOS18": -2.3957898788943255,
-    "RDSW_NMOS18": -0.022519935762502073,
-    "U0_NMOS18": 1.7755060112880217
+    "TOX_18": -0.3274594292838089,
+    "VTH_NMOS18": -2.3954276229176386,
+    "DL_POLY": -0.13682640633258666,
+    "DW_ACT_LV": 0.1846380154097517,
+    "RDSW_NMOS18": -0.022516530630275564,
+    "U0_NMOS18": 1.7610727325071802
    },
-   "idsat_3sigma_swing": 0.19886352229988047,
    "mahalanobis": 3.0
   },
   "PMOS18": {
+   "class_band_3sigma": 0.2,
+   "u0_sigma_1s": 0.03556744459803383,
+   "u0_slope_measured": 0.9761029164100599,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.17074034450510278,
+   "metric_3sigma_swing": 0.19932647685970561,
+   "band_error_pct": -0.33676157014719266,
    "bench": {
     "W_um": 3.7,
     "L_um": 1.0,
@@ -64,34 +84,47 @@
     },
     "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
-   "class_band_3sigma": 0.2,
-   "u0_sigma_1s": 0.03574084583225911,
-   "u0_floor_hit": false,
-   "fixed_set_3sigma_swing": 0.17042956296004205,
-   "u0_slope_measured": 0.9761029164100599,
-   "band_error_pct": -0.342317085231314,
+   "kind": "mos",
+   "metric_classic": 0.0001033998960534,
+   "metric_analog": 1.012056839532e-05,
    "g_classic": {
     "TOX_18": -0.0052135842062828175,
     "VTH_PMOS18": 0.0565699031914777,
+    "DL_POLY": -0.0031184959633838716,
+    "DW_ACT_LV": 0.0014338819611836584,
     "RDSW_PMOS18": -0.0001553721083533688,
-    "U0_PMOS18": 0.034448639910277024
+    "U0_PMOS18": 0.03428439738355493
    },
    "g_analog": {
     "TOX_18": -0.010365027014434425,
     "VTH_PMOS18": 0.19079896331889046,
+    "DL_POLY": -0.002504307004699058,
+    "DW_ACT_LV": 0.0016060254399699048,
     "RDSW_PMOS18": 5.879383008977612e-05,
-    "U0_PMOS18": 0.03532746574953993
+    "U0_PMOS18": 0.035159031526426965
+   },
+   "excluded": {
+    "RSH_GATE": "no rgate term in the wrappers yet (Phase 3)",
+    "JS_MOS": "junction leakage is picoamps against the bench current"
    },
    "z_fast": {
-    "TOX_18": -0.23541716245136457,
-    "VTH_PMOS18": 2.554389756175283,
-    "RDSW_PMOS18": -0.0070157610245476214,
-    "U0_PMOS18": 1.5555135847260775
+    "TOX_18": -0.2354040396227503,
+    "VTH_PMOS18": 2.554247367155573,
+    "DL_POLY": -0.140806500534343,
+    "DW_ACT_LV": 0.06474271684306128,
+    "RDSW_PMOS18": -0.007015369945882986,
+    "U0_PMOS18": 1.5480109883704596
    },
-   "idsat_3sigma_swing": 0.19931536582953738,
    "mahalanobis": 3.0
   },
   "NMOS33": {
+   "class_band_3sigma": 0.2,
+   "u0_sigma_1s": 0.06403418375133134,
+   "u0_slope_measured": 0.8873350402657021,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.10461175126523872,
+   "metric_3sigma_swing": 0.19624427942082323,
+   "band_error_pct": -1.8778602895883845,
    "bench": {
     "W_um": 2.2,
     "L_um": 1.0,
@@ -107,34 +140,47 @@
     },
     "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
-   "class_band_3sigma": 0.2,
-   "u0_sigma_1s": 0.06418309153573726,
-   "u0_floor_hit": false,
-   "fixed_set_3sigma_swing": 0.10396308725525003,
-   "u0_slope_measured": 0.8873350402657021,
-   "band_error_pct": -1.8917006162340488,
+   "kind": "mos",
+   "metric_classic": 0.0003443977917577,
+   "metric_analog": 1.038812310009e-05,
    "g_classic": {
     "TOX_33": -0.00598407486550423,
     "VTH_NMOS33": -0.03412804567378824,
+    "DL_POLY": -0.0030383541176401963,
+    "DW_ACT_LV": 0.002408564105202071,
     "RDSW_NMOS33": -0.0006262436577197938,
-    "U0_NMOS33": 0.055470342546721785
+    "U0_NMOS33": 0.05534557967154896
    },
    "g_analog": {
     "TOX_33": -0.015457770434573526,
     "VTH_NMOS33": -0.23530705089679316,
+    "DL_POLY": -0.0028687369425304254,
+    "DW_ACT_LV": 0.0029309317914787414,
     "RDSW_NMOS33": 5.937095785313318e-05,
-    "U0_NMOS33": 0.06273200482577135
+    "U0_NMOS33": 0.06259089634997039
+   },
+   "excluded": {
+    "RSH_GATE": "no rgate term in the wrappers yet (Phase 3)",
+    "JS_MOS": "junction leakage is picoamps against the bench current"
    },
    "z_fast": {
-    "TOX_33": -0.27447562605722714,
-    "VTH_NMOS33": -1.5653742496474201,
-    "RDSW_NMOS33": -0.02872434317422675,
-    "U0_NMOS33": 2.5442958753553957
+    "TOX_33": -0.274436910713961,
+    "VTH_NMOS33": -1.5651534504373565,
+    "DL_POLY": -0.1393425945432181,
+    "DW_ACT_LV": 0.1104596628793171,
+    "RDSW_NMOS33": -0.028720291547413613,
+    "U0_NMOS33": 2.538215220917603
    },
-   "idsat_3sigma_swing": 0.19621659876753192,
    "mahalanobis": 3.0
   },
   "PMOS33": {
+   "class_band_3sigma": 0.2,
+   "u0_sigma_1s": 0.05748387320863297,
+   "u0_slope_measured": 0.9571519351221802,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.11293539582831777,
+   "metric_3sigma_swing": 0.19689727586511935,
+   "band_error_pct": -1.5513620674403317,
    "bench": {
     "W_um": 6.1,
     "L_um": 1.0,
@@ -150,34 +196,47 @@
     },
     "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
-   "class_band_3sigma": 0.2,
-   "u0_sigma_1s": 0.057587794554555115,
-   "u0_floor_hit": false,
-   "fixed_set_3sigma_swing": 0.11249801558683917,
-   "u0_slope_measured": 0.9571519351221802,
-   "band_error_pct": -1.5603156445021749,
+   "kind": "mos",
+   "metric_classic": 0.0003190079707875,
+   "metric_analog": 1.006092050648e-05,
    "g_classic": {
     "TOX_33": -0.0040548306203858075,
     "VTH_PMOS33": 0.037278584569221174,
+    "DL_POLY": -0.003197089672672071,
+    "DW_ACT_LV": 0.0008568468387801786,
     "RDSW_PMOS33": -0.00025665397703900084,
-    "U0_PMOS33": 0.05385750985812621
+    "U0_PMOS33": 0.053762991827511986
    },
    "g_analog": {
     "TOX_33": -0.010934128923690167,
     "VTH_PMOS33": 0.23144850785319626,
+    "DL_POLY": -0.0027012672515587255,
+    "DW_ACT_LV": 0.001011400641416138,
     "RDSW_PMOS33": 0.00012745566001992614,
-    "U0_PMOS33": 0.057103496494612216
+    "U0_PMOS33": 0.05700327773411207
+   },
+   "excluded": {
+    "RSH_GATE": "no rgate term in the wrappers yet (Phase 3)",
+    "JS_MOS": "junction leakage is picoamps against the bench current"
    },
    "z_fast": {
-    "TOX_33": -0.18535957232289785,
-    "VTH_PMOS33": 1.7041260509905962,
-    "RDSW_PMOS33": -0.011732492888788916,
-    "U0_PMOS33": 2.46200296098402
+    "TOX_33": -0.1853427144846403,
+    "VTH_PMOS33": 1.7039710663789138,
+    "DL_POLY": -0.14613613584862178,
+    "DW_ACT_LV": 0.039165709708976905,
+    "RDSW_PMOS33": -0.011731425857477835,
+    "U0_PMOS33": 2.45745871455871
    },
-   "idsat_3sigma_swing": 0.19687936871099565,
    "mahalanobis": 3.0
   },
   "NMOS50": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.045521120166450726,
+   "u0_slope_measured": 0.8514983804558618,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.07796250515810092,
+   "metric_3sigma_swing": 0.13833786872794937,
+   "band_error_pct": -1.1872366228933173,
    "bench": {
     "W_um": 4.7,
     "L_um": 1.0,
@@ -193,34 +252,47 @@
     },
     "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
-   "class_band_3sigma": 0.14,
-   "u0_sigma_1s": 0.045685060600962196,
-   "u0_floor_hit": false,
-   "fixed_set_3sigma_swing": 0.07733421794343465,
-   "u0_slope_measured": 0.8514983804558618,
-   "band_error_pct": -1.2012421373549298,
+   "kind": "mos",
+   "metric_classic": 0.000713547929475,
+   "metric_analog": 1.052014993133e-05,
    "g_classic": {
     "TOX_50": -0.005731268359451036,
     "VTH_NMOS50": -0.02512257488546954,
+    "DL_POLY": -0.0030951113444119827,
+    "DW_ACT_LV": 0.001123166035786216,
     "RDSW_NMOS50": -0.0007195995773905395,
-    "U0_NMOS50": 0.038226459805382085
+    "U0_NMOS50": 0.03809230560051091
    },
    "g_analog": {
     "TOX_50": -0.014406508683906694,
     "VTH_NMOS50": -0.26886306112208924,
+    "DL_POLY": -0.00406471211497017,
+    "DW_ACT_LV": 0.0014880614302139605,
     "RDSW_NMOS50": 0.00013647169545993876,
-    "U0_NMOS50": 0.04602643594747047
+    "U0_NMOS50": 0.0458648983306551
+   },
+   "excluded": {
+    "RSH_GATE": "no rgate term in the wrappers yet (Phase 3)",
+    "JS_MOS": "junction leakage is picoamps against the bench current"
    },
    "z_fast": {
-    "TOX_50": -0.37291833239709904,
-    "VTH_NMOS50": -1.6346588825074508,
-    "RDSW_NMOS50": -0.04682242351322055,
-    "U0_NMOS50": 2.4872936931247196
+    "TOX_50": -0.3728654757324447,
+    "VTH_NMOS50": -1.6344271893755484,
+    "DL_POLY": -0.20136208802297315,
+    "DW_ACT_LV": 0.07307105722407053,
+    "RDSW_NMOS50": -0.04681578700081841,
+    "U0_NMOS50": 2.47821333057254
    },
-   "idsat_3sigma_swing": 0.1383182610077031,
    "mahalanobis": 3.0
   },
   "PMOS50": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.039610388852559304,
+   "u0_slope_measured": 0.9373347905376583,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.08481434940312503,
+   "metric_3sigma_swing": 0.1387255103324282,
+   "band_error_pct": -0.9103497625512991,
    "bench": {
     "W_um": 13.4,
     "L_um": 1.0,
@@ -236,34 +308,47 @@
     },
     "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
-   "class_band_3sigma": 0.14,
-   "u0_sigma_1s": 0.03976670738298488,
-   "u0_floor_hit": false,
-   "fixed_set_3sigma_swing": 0.0842339501464931,
-   "u0_slope_measured": 0.9373347905376583,
-   "band_error_pct": -0.9223244501337269,
+   "kind": "mos",
+   "metric_classic": 0.0007827892576702,
+   "metric_analog": 1.04698994858e-05,
    "g_classic": {
     "TOX_50": -0.0039619805169230915,
     "VTH_PMOS50": 0.027795223314301065,
+    "DL_POLY": -0.0032792686049836206,
+    "DW_ACT_LV": 0.0003848642099364419,
     "RDSW_PMOS50": -0.00031846836696081127,
-    "U0_PMOS50": 0.03673441891280449
+    "U0_PMOS50": 0.036592794300270626
    },
    "g_analog": {
     "TOX_50": -0.010276242348343345,
     "VTH_PMOS50": 0.28081476538861594,
+    "DL_POLY": -0.003577406499672975,
+    "DW_ACT_LV": 0.000464132820033214,
     "RDSW_PMOS50": 0.00017580940782835341,
-    "U0_PMOS50": 0.04042128669619505
+    "U0_PMOS50": 0.040265443366966025
+   },
+   "excluded": {
+    "RSH_GATE": "no rgate term in the wrappers yet (Phase 3)",
+    "JS_MOS": "junction leakage is picoamps against the bench current"
    },
    "z_fast": {
-    "TOX_50": -0.2570697648112398,
-    "VTH_PMOS50": 1.8034696258002738,
-    "RDSW_PMOS50": -0.020663551434628256,
-    "U0_PMOS50": 2.3834817940311233
+    "TOX_50": -0.25703869869976265,
+    "VTH_PMOS50": 1.8032516818951172,
+    "DL_POLY": -0.21274686518816568,
+    "DW_ACT_LV": 0.024968571974453145,
+    "RDSW_PMOS50": -0.020661054306298707,
+    "U0_PMOS50": 2.3740056743222584
    },
-   "idsat_3sigma_swing": 0.1387087457698128,
    "mahalanobis": 3.0
   },
   "NMOS12": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.05441200442219539,
+   "u0_slope_measured": 0.8264851171710941,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.037399407495586325,
+   "metric_3sigma_swing": 0.13720939236802582,
+   "band_error_pct": -1.993291165695854,
    "bench": {
     "W_um": 22.4,
     "L_um": 1.0,
@@ -279,34 +364,47 @@
     },
     "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
-   "class_band_3sigma": 0.14,
-   "u0_sigma_1s": 0.05453082775818522,
-   "u0_floor_hit": false,
-   "fixed_set_3sigma_swing": 0.036319884668015945,
-   "u0_slope_measured": 0.8264851171710941,
-   "band_error_pct": -2.0073098034185555,
+   "kind": "mos",
+   "metric_classic": 0.004282375603432,
+   "metric_analog": 1.42923805252e-05,
    "g_classic": {
     "TOX_12": -0.006047422994357454,
     "VTH_NMOS12": -0.010479985349098442,
+    "DL_POLY": -0.0029578779968777447,
+    "DW_ACT_HV": 0.00030555569109003144,
     "RDSW_NMOS12": -0.0004111315263957138,
-    "U0_NMOS12": 0.04409824630973924
+    "U0_NMOS12": 0.04400467358131399
    },
    "g_analog": {
     "TOX_12": -0.009667924308947029,
     "VTH_NMOS12": -0.25969274878777515,
+    "DL_POLY": -0.00796615246678023,
+    "DW_ACT_HV": 0.00041007334724429967,
     "RDSW_NMOS12": 0.00018445609648143346,
-    "U0_NMOS12": 0.05939682918023603
+    "U0_NMOS12": 0.05927077632566302
+   },
+   "excluded": {
+    "RSH_GATE": "no rgate term in the wrappers yet (Phase 3)",
+    "JS_MOS": "junction leakage is picoamps against the bench current"
    },
    "z_fast": {
-    "TOX_12": -0.39672643541087754,
-    "VTH_NMOS12": -0.6875138773301247,
-    "RDSW_NMOS12": -0.02697128100749548,
-    "U0_NMOS12": 2.8929578901058157
+    "TOX_12": -0.3966696886407922,
+    "VTH_NMOS12": -0.6874155370420949,
+    "DL_POLY": -0.19401661586326815,
+    "DW_ACT_HV": 0.020042368618863743,
+    "RDSW_NMOS12": -0.02696742310203311,
+    "U0_NMOS12": 2.8864063559843913
    },
-   "idsat_3sigma_swing": 0.13718976627521404,
    "mahalanobis": 3.0
   },
   "PMOS12": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.04971687706152871,
+   "u0_slope_measured": 0.9014915873120977,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.039000457428711846,
+   "metric_3sigma_swing": 0.13751907557062049,
+   "band_error_pct": -1.7720888781282307,
    "bench": {
     "W_um": 63.2,
     "L_um": 1.0,
@@ -322,31 +420,1139 @@
     },
     "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
-   "class_band_3sigma": 0.14,
-   "u0_sigma_1s": 0.04983166400542406,
-   "u0_floor_hit": false,
-   "fixed_set_3sigma_swing": 0.03791381585189879,
-   "u0_slope_measured": 0.9014915873120977,
-   "band_error_pct": -1.7853717444642814,
+   "kind": "mos",
+   "metric_classic": 0.00576765827407,
+   "metric_analog": 1.340428375617e-05,
    "g_classic": {
     "TOX_12": -0.004702740525361904,
     "VTH_PMOS12": 0.01172837978065111,
+    "DL_POLY": -0.0030455022347233296,
+    "DW_ACT_HV": 0.00010671480253998666,
     "RDSW_PMOS12": -0.00021640648457355027,
-    "U0_PMOS12": 0.04405668627040438
+    "U0_PMOS12": 0.04395763170517375
    },
    "g_analog": {
     "TOX_12": -0.006938879396078512,
     "VTH_PMOS12": 0.3003167224389234,
+    "DL_POLY": -0.007916664632451997,
+    "DW_ACT_HV": 0.00012440544706837642,
     "RDSW_PMOS12": 0.00014371043702787745,
-    "U0_PMOS12": 0.05317027485022052
+    "U0_PMOS12": 0.05305072079238471
+   },
+   "excluded": {
+    "RSH_GATE": "no rgate term in the wrappers yet (Phase 3)",
+    "JS_MOS": "junction leakage is picoamps against the bench current"
    },
    "z_fast": {
-    "TOX_12": -0.30781466991524803,
-    "VTH_PMOS12": 0.7676730900529467,
-    "RDSW_PMOS12": -0.01416473867892176,
-    "U0_PMOS12": 2.8837003166022095
+    "TOX_12": -0.3077730456857387,
+    "VTH_PMOS12": 0.7675692814823634,
+    "DL_POLY": -0.19931431329637095,
+    "DW_ACT_HV": 0.006983999993271235,
+    "RDSW_PMOS12": -0.014162823252558639,
+    "U0_PMOS12": 2.876827696121334
    },
-   "idsat_3sigma_swing": 0.13750047955775002,
+   "mahalanobis": 3.0
+  },
+  "NDMOS20": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.059322428567470574,
+   "u0_slope_measured": 0.706005533805909,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.06175039022071789,
+   "metric_3sigma_swing": 0.13733644150211177,
+   "band_error_pct": -1.9025417842058912,
+   "bench": {
+    "W_um": 3.0,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.289,
+     "Vds": 5.0,
+     "gm_id": 5.89,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.001770847280034,
+   "metric_analog": 2.073599123674e-05,
+   "g_classic": {
+    "VTH_NDMOS20": -0.01526004116269375,
+    "RDSW_NDMOS20": -0.0138134032568491,
+    "U0_NDMOS20": 0.04089035130966723
+   },
+   "g_analog": {
+    "VTH_NDMOS20": -0.2777070842220235,
+    "RDSW_NDMOS20": -0.0027956700951925484,
+    "U0_NDMOS20": 0.05431953236360165
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_NDMOS20": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_NDMOS20": -1.0000286083000913,
+    "RDSW_NDMOS20": -0.9052268134508951,
+    "U0_NDMOS20": 2.6796468421773274
+   },
+   "mahalanobis": 3.0
+  },
+  "PDMOS20": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.0452954000891352,
+   "u0_slope_measured": 0.959657927928248,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.050938458229262136,
+   "metric_3sigma_swing": 0.13792755786016486,
+   "band_error_pct": -1.480315814167965,
+   "bench": {
+    "W_um": 4.7,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.306,
+     "Vds": 5.0,
+     "gm_id": 6.39,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.001216330414639,
+   "metric_analog": 8.834106899482e-06,
+   "g_classic": {
+    "VTH_PDMOS20": 0.01689506251628492,
+    "RDSW_PDMOS20": -0.0016910972740173946,
+    "U0_PDMOS20": 0.042725590419813386
+   },
+   "g_analog": {
+    "VTH_PDMOS20": 0.31873529812352874,
+    "RDSW_PDMOS20": -0.00021839199785134156,
+    "U0_PDMOS20": 0.04408895689864245
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_PDMOS20": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_PDMOS20": 1.1024306165177145,
+    "RDSW_PDMOS20": -0.11034687847940382,
+    "U0_PDMOS20": 2.7879150457239947
+   },
+   "mahalanobis": 3.0
+  },
+  "NDMOS40": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.06843574081797209,
+   "u0_slope_measured": 0.5706383861751707,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.07664482368569553,
+   "metric_3sigma_swing": 0.13728149976154172,
+   "band_error_pct": -1.9417858846130676,
+   "bench": {
+    "W_um": 3.0,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.346,
+     "Vds": 5.0,
+     "gm_id": 5.88,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.001391625900512,
+   "metric_analog": 2.041359147105e-05,
+   "g_classic": {
+    "VTH_NDMOS40": -0.01500032442856769,
+    "RDSW_NDMOS40": -0.020681020287400376,
+    "U0_NDMOS40": 0.03796457585546298
+   },
+   "g_analog": {
+    "VTH_NDMOS40": -0.26455801129913237,
+    "RDSW_NDMOS40": -0.005183534382890542,
+    "U0_NDMOS40": 0.05915832463887849
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_NDMOS40": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_NDMOS40": -0.9834021342395706,
+    "RDSW_NDMOS40": -1.3558213081144233,
+    "U0_NDMOS40": 2.4889091632351614
+   },
+   "mahalanobis": 3.0
+  },
+  "PDMOS40": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.0494285403422728,
+   "u0_slope_measured": 0.871127583681508,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.05397814269210213,
+   "metric_3sigma_swing": 0.13773191613726912,
+   "band_error_pct": -1.6200599019506323,
+   "bench": {
+    "W_um": 4.7,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.357,
+     "Vds": 5.0,
+     "gm_id": 6.37,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.00110571370603,
+   "metric_analog": 8.745462992022e-06,
+   "g_classic": {
+    "VTH_PDMOS40": 0.01694838606344451,
+    "RDSW_PDMOS40": -0.0060406932741283725,
+    "U0_PDMOS40": 0.0422380039963417
+   },
+   "g_analog": {
+    "VTH_PDMOS40": 0.315129640343601,
+    "RDSW_PDMOS40": -0.0008538031630171972,
+    "U0_PDMOS40": 0.04739432665019905
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_PDMOS40": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_PDMOS40": 1.107480959017354,
+    "RDSW_PDMOS40": -0.39472506439953825,
+    "U0_PDMOS40": 2.7600141392660986
+   },
+   "mahalanobis": 3.0
+  },
+  "NDMOS60": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.07599367885142365,
+   "u0_slope_measured": 0.4773875989082743,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.0880617578717051,
+   "metric_3sigma_swing": 0.13737073860157836,
+   "band_error_pct": -1.8780438560154655,
+   "bench": {
+    "W_um": 3.0,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.403,
+     "Vds": 5.0,
+     "gm_id": 5.87,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.001134703455087,
+   "metric_analog": 2.012792548918e-05,
+   "g_classic": {
+    "VTH_NDMOS60": -0.014831882910954164,
+    "RDSW_NDMOS60": -0.02533116315988959,
+    "U0_NDMOS60": 0.035143905152779986
+   },
+   "g_analog": {
+    "VTH_NDMOS60": -0.25218071408449383,
+    "RDSW_NDMOS60": -0.007478405620097384,
+    "U0_NDMOS60": 0.062013208678066256
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_NDMOS60": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_NDMOS60": -0.9717276587246487,
+    "RDSW_NDMOS60": -1.6595999319784314,
+    "U0_NDMOS60": 2.3024928714431887
+   },
+   "mahalanobis": 3.0
+  },
+  "PDMOS60": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.07007908855542483,
+   "u0_slope_measured": 0.5430489048622533,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.08102723462233499,
+   "metric_3sigma_swing": 0.13734929975705185,
+   "band_error_pct": -1.893357316391553,
+   "bench": {
+    "W_um": 4.7,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.419,
+     "Vds": 5.0,
+     "gm_id": 6.35,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.0006594125143927,
+   "metric_analog": 8.626433518625e-06,
+   "g_classic": {
+    "VTH_PDMOS60": 0.015479966959692337,
+    "RDSW_PDMOS60": -0.02213280209423818,
+    "U0_PDMOS60": 0.03696757947957696
+   },
+   "g_analog": {
+    "VTH_PDMOS60": 0.2876880562131774,
+    "RDSW_PDMOS60": -0.0052613560453780295,
+    "U0_PDMOS60": 0.06042292207436084
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_PDMOS60": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_PDMOS60": 1.0143459259251013,
+    "RDSW_PDMOS60": -1.4502820123618174,
+    "U0_PDMOS60": 2.422351012380102
+   },
+   "mahalanobis": 3.0
+  },
+  "NDMOS80": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.08526726748167718,
+   "u0_slope_measured": 0.39456009180285356,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.09702216287211027,
+   "metric_3sigma_swing": 0.13744968263106183,
+   "band_error_pct": -1.8216552635272776,
+   "bench": {
+    "W_um": 3.0,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.463,
+     "Vds": 5.0,
+     "gm_id": 5.85,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.0009089877991716,
+   "metric_analog": 1.989002526873e-05,
+   "g_classic": {
+    "VTH_NDMOS80": -0.013798732457967144,
+    "RDSW_NDMOS80": -0.02924922588028478,
+    "U0_NDMOS80": 0.032453582522662394
+   },
+   "g_analog": {
+    "VTH_NDMOS80": -0.23689830217865904,
+    "RDSW_NDMOS80": -0.010113866762721635,
+    "U0_NDMOS80": 0.0648574416240626
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_NDMOS80": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_NDMOS80": -0.9035203992070864,
+    "RDSW_NDMOS80": -1.9151956402049455,
+    "U0_NDMOS80": 2.125012128896359
+   },
+   "mahalanobis": 3.0
+  },
+  "PDMOS80": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.07981889809700851,
+   "u0_slope_measured": 0.44129532573213837,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.09183471248843261,
+   "metric_3sigma_swing": 0.13738826540474966,
+   "band_error_pct": -1.8655247108931072,
+   "bench": {
+    "W_um": 4.7,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.476,
+     "Vds": 5.0,
+     "gm_id": 6.33,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.0005197151998751,
+   "metric_analog": 8.505856992874e-06,
+   "g_classic": {
+    "VTH_PDMOS80": 0.014348460558200937,
+    "RDSW_PDMOS80": -0.027040524186078052,
+    "U0_PDMOS80": 0.03406190614665672
+   },
+   "g_analog": {
+    "VTH_PDMOS80": 0.2724998431936294,
+    "RDSW_PDMOS80": -0.007724478558517767,
+    "U0_PDMOS80": 0.06462945578752777
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_PDMOS80": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_PDMOS80": 0.9399357699390828,
+    "RDSW_PDMOS80": -1.7713646573653377,
+    "U0_PDMOS80": 2.231319788606287
+   },
+   "mahalanobis": 3.0
+  },
+  "NDMOS120": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.10380340574682481,
+   "u0_slope_measured": 0.2883768976213119,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.10740264974491101,
+   "metric_3sigma_swing": 0.13753472677342443,
+   "band_error_pct": -1.7609094475539822,
+   "bench": {
+    "W_um": 3.0,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.532,
+     "Vds": 5.0,
+     "gm_id": 5.84,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.0006702339313988,
+   "metric_analog": 1.972579830372e-05,
+   "g_classic": {
+    "VTH_NDMOS120": -0.010690631948544471,
+    "RDSW_NDMOS120": -0.03416743522565646,
+    "U0_NDMOS120": 0.028636557630670634
+   },
+   "g_analog": {
+    "VTH_NDMOS120": -0.21317354326777327,
+    "RDSW_NDMOS120": -0.01422441840311972,
+    "U0_NDMOS120": 0.06996134937369991
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_NDMOS120": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_NDMOS120": -0.6995737716148341,
+    "RDSW_NDMOS120": -2.235849259638236,
+    "U0_NDMOS120": 1.8739195890549163
+   },
+   "mahalanobis": 3.0
+  },
+  "PDMOS120": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.10044046802215087,
+   "u0_slope_measured": 0.3090949333552029,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.10452518482039411,
+   "metric_3sigma_swing": 0.13743234148698308,
+   "band_error_pct": -1.834041795012098,
+   "bench": {
+    "W_um": 4.7,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.541,
+     "Vds": 5.0,
+     "gm_id": 6.31,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.0003727847424526,
+   "metric_analog": 8.453836677721e-06,
+   "g_classic": {
+    "VTH_PDMOS120": 0.010319207234049443,
+    "RDSW_PDMOS120": -0.033278521468699473,
+    "U0_PDMOS120": 0.029743597303280023
+   },
+   "g_analog": {
+    "VTH_PDMOS120": 0.2472339982517031,
+    "RDSW_PDMOS120": -0.011711666855152458,
+    "U0_PDMOS120": 0.07272735036969813
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_PDMOS120": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_PDMOS120": 0.675771540392779,
+    "RDSW_PDMOS120": -2.1793028480611536,
+    "U0_PDMOS120": 1.9478120858100545
+   },
+   "mahalanobis": 3.0
+  },
+  "NDMOS200": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.11578946388308783,
+   "u0_slope_measured": 0.23128139404593462,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.11465386677249126,
+   "metric_3sigma_swing": 0.13779614914536134,
+   "band_error_pct": -1.5741791818847606,
+   "bench": {
+    "W_um": 3.0,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.605,
+     "Vds": 5.0,
+     "gm_id": 5.82,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.0005085878074169,
+   "metric_analog": 1.964624971151e-05,
+   "g_classic": {
+    "VTH_NDMOS200": -0.009147545937015167,
+    "RDSW_NDMOS200": -0.03710706850281875,
+    "U0_NDMOS200": 0.025478246829199414
+   },
+   "g_analog": {
+    "VTH_NDMOS200": -0.19012174264570092,
+    "RDSW_NDMOS200": -0.018109677634509325,
+    "U0_NDMOS200": 0.06887423345083832
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_NDMOS200": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_NDMOS200": -0.5974616412994871,
+    "RDSW_NDMOS200": -2.423606309731269,
+    "U0_NDMOS200": 1.664082943427551
+   },
+   "mahalanobis": 3.0
+  },
+  "PDMOS200": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.1149445160574486,
+   "u0_slope_measured": 0.23615947358166522,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.11387811583230822,
+   "metric_3sigma_swing": 0.13777630356074688,
+   "band_error_pct": -1.5883545994665238,
+   "bench": {
+    "W_um": 4.7,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 1.621,
+     "Vds": 5.0,
+     "gm_id": 6.28,
+     "current_A": 1e-05
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.0002685617655516,
+   "metric_analog": 8.400529623032e-06,
+   "g_classic": {
+    "VTH_PDMOS200": 0.008494798518406732,
+    "RDSW_PDMOS200": -0.0369966527745742,
+    "U0_PDMOS200": 0.02585017635303366
+   },
+   "g_analog": {
+    "VTH_PDMOS200": 0.2198686884382859,
+    "RDSW_PDMOS200": -0.01596587976043562,
+    "U0_PDMOS200": 0.07318773491309294
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_PDMOS200": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_PDMOS200": 0.5549080987787689,
+    "RDSW_PDMOS200": -2.4167426935239136,
+    "U0_PDMOS200": 1.688618297664842
+   },
+   "mahalanobis": 3.0
+  },
+  "DNMOS20": {
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.012403058268422902,
+   "u0_slope_measured": 0.850670747181681,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.1363748620671123,
+   "metric_3sigma_swing": 0.1399897527722543,
+   "band_error_pct": -0.007319448389786487,
+   "bench": {
+    "W_um": 3.0,
+    "supply_V": 10.0,
+    "classic": {
+     "Vgs": 0.0,
+     "Vds": 10.0
+    },
+    "analog": {
+     "Vgs": 0.0,
+     "Vds": 5.0
+    },
+    "source": "declared",
+    "note": "Depletion device: the sizing guide lists no mirror point, and Vgs=0 is its operating condition (Idss). Metric is ln Idss at Vgs=0."
+   },
+   "kind": "vdmos",
+   "metric_classic": 0.0003190594450223,
+   "metric_analog": 0.0003126009355818,
+   "g_classic": {
+    "VTH_DNMOS20": -0.04490704209663665,
+    "RDSW_DNMOS20": -0.00705786507696704,
+    "U0_DNMOS20": 0.010535800752212943
+   },
+   "g_analog": {
+    "VTH_DNMOS20": -0.044967094909560856,
+    "RDSW_DNMOS20": -0.006926652859059246,
+    "U0_DNMOS20": 0.010571982069607522
+   },
+   "excluded": {
+    "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
+    "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
+    "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
+    "BV_DNMOS20": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
+   "z_fast": {
+    "VTH_DNMOS20": -2.887092596893522,
+    "RDSW_DNMOS20": -0.4537531100297297,
+    "U0_DNMOS20": 0.6773510552888844
+   },
+   "mahalanobis": 3.0
+  },
+  "RPOLY_HI": {
+   "metric_3sigma_swing": 0.1940416779546565,
+   "bench": {
+    "W_um": 2.0,
+    "L_um": 16.5,
+    "V": 0.1
+   },
+   "kind": "resistor",
+   "metric_classic": 11113.859758840714,
+   "metric_analog": null,
+   "g_classic": {
+    "DL_POLY": -0.0037841089711676545,
+    "RSH_RPOLY_HI": 0.06456977058199875
+   },
+   "g_analog": {},
+   "excluded": {
+    "RHEAD_RPOLY_HI": "contact-head resistance has no wrapper term yet (Phase 3)"
+   },
+   "z_fast": {
+    "DL_POLY": -0.17551374065352754,
+    "RSH_RPOLY_HI": 2.9948614203067567
+   },
+   "mahalanobis": 3.0
+  },
+  "RPOLY_LO": {
+   "metric_3sigma_swing": 0.1468415953971775,
+   "bench": {
+    "W_um": 2.0,
+    "L_um": 16.5,
+    "V": 0.1
+   },
+   "kind": "resistor",
+   "metric_classic": 2869.4261698704,
+   "metric_analog": null,
+   "g_classic": {
+    "DL_POLY": -0.003917667101621447,
+    "RSH_RPOLY_LO": 0.048790164194477015
+   },
+   "g_analog": {},
+   "excluded": {
+    "RHEAD_RPOLY_LO": "contact-head resistance has no wrapper term yet (Phase 3)"
+   },
+   "z_fast": {
+    "DL_POLY": -0.24011591415378172,
+    "RSH_RPOLY_LO": 2.9903752854399555
+   },
+   "mahalanobis": 3.0
+  },
+  "RNWELL": {
+   "metric_3sigma_swing": 0.25853308853150025,
+   "bench": {
+    "W_um": 2.0,
+    "L_um": 16.5,
+    "V": 0.1
+   },
+   "kind": "resistor",
+   "metric_classic": 17794.78402827337,
+   "metric_analog": null,
+   "g_classic": {
+    "RSH_RNWELL": 0.08617769617716675
+   },
+   "g_analog": {},
+   "excluded": {
+    "RHEAD_RNWELL": "contact-head resistance has no wrapper term yet (Phase 3)"
+   },
+   "z_fast": {
+    "RSH_RNWELL": 3.0
+   },
+   "mahalanobis": 3.0
+  },
+  "RNPLUS": {
+   "metric_3sigma_swing": 0.10812777408508589,
+   "bench": {
+    "W_um": 2.0,
+    "L_um": 16.5,
+    "V": 0.1
+   },
+   "kind": "resistor",
+   "metric_classic": 593.5041255235838,
+   "metric_analog": null,
+   "g_classic": {
+    "RSH_RNPLUS": 0.0360425913616953
+   },
+   "g_analog": {},
+   "excluded": {
+    "RHEAD_RNPLUS": "contact-head resistance has no wrapper term yet (Phase 3)"
+   },
+   "z_fast": {
+    "RSH_RNPLUS": 3.0
+   },
+   "mahalanobis": 3.0
+  },
+  "RPPLUS": {
+   "metric_3sigma_swing": 0.1463704919628248,
+   "bench": {
+    "W_um": 2.0,
+    "L_um": 16.5,
+    "V": 0.1
+   },
+   "kind": "resistor",
+   "metric_classic": 1088.1236450227743,
+   "metric_analog": null,
+   "g_classic": {
+    "RSH_RPPLUS": 0.04879016398760827
+   },
+   "g_analog": {},
+   "excluded": {
+    "RHEAD_RPPLUS": "contact-head resistance has no wrapper term yet (Phase 3)"
+   },
+   "z_fast": {
+    "RSH_RPPLUS": 3.0
+   },
+   "mahalanobis": 3.0
+  },
+  "CMIM_STD": {
+   "metric_3sigma_swing": 0.11766213598910369,
+   "bench": {
+    "side_um": 100.0,
+    "freq": 1000000.0
+   },
+   "kind": "capacitor",
+   "metric_classic": 1.000000029999977e-11,
+   "metric_analog": null,
+   "g_classic": {
+    "CDEN_MIM": 0.039220711996367896
+   },
+   "g_analog": {},
+   "excluded": {
+    "CPER_CMIM_STD": "cjsw is 0 on this card, so there is no perimeter lever"
+   },
+   "z_fast": {
+    "CDEN_MIM": 3.0
+   },
+   "mahalanobis": 3.0
+  },
+  "CMIM_HI": {
+   "metric_3sigma_swing": 0.11766213245903678,
+   "bench": {
+    "side_um": 100.0,
+    "freq": 1000000.0
+   },
+   "kind": "capacitor",
+   "metric_classic": 2.000000119999776e-11,
+   "metric_analog": null,
+   "g_classic": {
+    "CDEN_MIM": 0.03922071081967893
+   },
+   "g_analog": {},
+   "excluded": {
+    "CPER_CMIM_HI": "cjsw is 0 on this card, so there is no perimeter lever"
+   },
+   "z_fast": {
+    "CDEN_MIM": 3.0
+   },
+   "mahalanobis": 3.0
+  },
+  "CMOM": {
+   "metric_3sigma_swing": 0.19370931104378464,
+   "bench": {
+    "side_um": 100.0,
+    "freq": 1000000.0
+   },
+   "kind": "capacitor",
+   "metric_classic": 3.5000000174993165e-12,
+   "metric_analog": null,
+   "g_classic": {
+    "CDEN_MOM": 0.06456977034792821
+   },
+   "g_analog": {},
+   "excluded": {
+    "CPER_CMOM": "cjsw is 0 on this card, so there is no perimeter lever"
+   },
+   "z_fast": {
+    "CDEN_MOM": 3.0
+   },
+   "mahalanobis": 3.0
+  },
+  "CFRINGE": {
+   "metric_3sigma_swing": 0.19264293722795367,
+   "bench": {
+    "side_um": 100.0,
+    "freq": 1000000.0
+   },
+   "kind": "capacitor",
+   "metric_classic": 1.8100000053993233e-12,
+   "metric_analog": null,
+   "g_classic": {
+    "CDEN_MOM": 0.06421278762993055,
+    "CPER_CFRINGE": 0.00044251892040669816
+   },
+   "g_analog": {},
+   "excluded": {},
+   "z_fast": {
+    "CDEN_MOM": 2.9999287645076245,
+    "CPER_CFRINGE": 0.020673845306602674
+   },
+   "mahalanobis": 3.0
+  },
+  "NPN_LV": {
+   "metric_3sigma_swing": 0.26043301663676066,
+   "bench": {
+    "Vbe": 0.637,
+    "Vce": 2.0,
+    "AREA": 1.0,
+    "Ib": 7.142857142857144e-08
+   },
+   "kind": "bjt",
+   "metric_classic": 9.775986954619e-06,
+   "metric_analog": null,
+   "g_classic": {
+    "VBE_NPN_LV": 0.07733300881063432,
+    "BF_NPN_LV": 0.039443069666694086,
+    "RPAR_NPN_LV": -2.6218287305646015e-05
+   },
+   "g_analog": {},
+   "excluded": {},
+   "z_fast": {
+    "VBE_NPN_LV": 2.6724609970111883,
+    "BF_NPN_LV": 1.3630669090446634,
+    "RPAR_NPN_LV": -0.0009060471241245348
+   },
+   "mahalanobis": 3.0,
+   "bf_share": {
+    "bench": "base-current driven (ruling G3)",
+    "g_beta_bench": 0.039443069666694086,
+    "g_fixed_vbe_bench": 6.702369015343379e-06,
+    "note": "BF has no lever at a fixed-Vbe bench; the beta-bench value is what a beta-only corner must use"
+   }
+  },
+  "PNP_LAT": {
+   "metric_3sigma_swing": 0.31366570579722963,
+   "bench": {
+    "Vbe": 0.601,
+    "Vce": 2.0,
+    "AREA": 1.0,
+    "Ib": 2.8571428571428575e-07
+   },
+   "kind": "bjt",
+   "metric_classic": 6.124744077241e-06,
+   "metric_analog": null,
+   "g_classic": {
+    "VBE_PNP_LAT": 0.07726747350118046,
+    "BF_PNP_LAT": 0.07043811830143554,
+    "RPAR_PNP_LAT": -7.905929586637939e-05
+   },
+   "g_analog": {},
+   "excluded": {},
+   "z_fast": {
+    "VBE_PNP_LAT": 2.217033130042507,
+    "BF_PNP_LAT": 2.0210786611231724,
+    "RPAR_PNP_LAT": -0.0022684458314910206
+   },
+   "mahalanobis": 3.0,
+   "bf_share": {
+    "bench": "base-current driven (ruling G3)",
+    "g_beta_bench": 0.07043811830143554,
+    "g_fixed_vbe_bench": 4.96527968438798e-05,
+    "note": "BF has no lever at a fixed-Vbe bench; the beta-bench value is what a beta-only corner must use"
+   }
+  },
+  "NPN_HV": {
+   "metric_3sigma_swing": 0.2591702044783801,
+   "bench": {
+    "Vbe": 0.678,
+    "Vce": 2.0,
+    "AREA": 1.0,
+    "Ib": 1.2500000000000002e-07
+   },
+   "kind": "bjt",
+   "metric_classic": 9.618406158651e-06,
+   "metric_analog": null,
+   "g_classic": {
+    "VBE_NPN_HV": 0.07728560058619927,
+    "BF_NPN_HV": 0.03860277193333861,
+    "RPAR_NPN_HV": -7.627377839902749e-05
+   },
+   "g_analog": {},
+   "excluded": {},
+   "z_fast": {
+    "VBE_NPN_HV": 2.6838363101026057,
+    "BF_NPN_HV": 1.3405281216615685,
+    "RPAR_NPN_HV": -0.0026486995562351075
+   },
+   "mahalanobis": 3.0,
+   "bf_share": {
+    "bench": "base-current driven (ruling G3)",
+    "g_beta_bench": 0.03860277193333861,
+    "g_fixed_vbe_bench": 2.2989612831203488e-05,
+    "note": "BF has no lever at a fixed-Vbe bench; the beta-bench value is what a beta-only corner must use"
+   }
+  },
+  "PNP_HV": {
+   "metric_3sigma_swing": 0.3221744102371148,
+   "bench": {
+    "Vbe": 0.655,
+    "Vce": 2.0,
+    "AREA": 1.0,
+    "Ib": 5.555555555555556e-07
+   },
+   "kind": "bjt",
+   "metric_classic": 4.671346018448e-06,
+   "metric_analog": null,
+   "g_classic": {
+    "VBE_PNP_HV": 0.07721577697667836,
+    "BF_PNP_HV": 0.07463671155139728,
+    "RPAR_PNP_HV": -0.00011366801818013528
+   },
+   "g_analog": {},
+   "excluded": {},
+   "z_fast": {
+    "VBE_PNP_HV": 2.1570365948016788,
+    "BF_PNP_HV": 2.0849899390463493,
+    "RPAR_PNP_HV": -0.003175336498228702
+   },
+   "mahalanobis": 3.0,
+   "bf_share": {
+    "bench": "base-current driven (ruling G3)",
+    "g_beta_bench": 0.07463671155139728,
+    "g_fixed_vbe_bench": 9.657941190610586e-05,
+    "note": "BF has no lever at a fixed-Vbe bench; the beta-bench value is what a beta-only corner must use"
+   }
+  },
+  "DIO_PN": {
+   "metric_3sigma_swing": 0.3084764302819202,
+   "bench": {
+    "AREA": 1.0,
+    "Vf": 0.6066354930400848
+   },
+   "kind": "diode",
+   "metric_classic": 9.999924733073e-05,
+   "metric_analog": null,
+   "g_classic": {
+    "VF_DIO_PN": 0.10282508389683365,
+    "RS_DIO_PN": -0.0002842405003677939
+   },
+   "g_analog": {},
+   "excluded": {
+    "CJ_DIO_PN": "junction capacitance has no lever on a DC forward current"
+   },
+   "z_fast": {
+    "VF_DIO_PN": 2.9999885379435494,
+    "RS_DIO_PN": -0.008292901019932736
+   },
+   "mahalanobis": 3.0
+  },
+  "DIO_FAST": {
+   "metric_3sigma_swing": 0.3089119039627679,
+   "bench": {
+    "AREA": 1.0,
+    "Vf": 0.49676750302314754
+   },
+   "kind": "diode",
+   "metric_classic": 0.0001000015073851,
+   "metric_analog": null,
+   "g_classic": {
+    "VF_DIO_FAST": 0.10297045293531326,
+    "RS_DIO_FAST": -0.00019345127732162126
+   },
+   "g_analog": {},
+   "excluded": {
+    "CJ_DIO_FAST": "junction capacitance has no lever on a DC forward current"
+   },
+   "z_fast": {
+    "VF_DIO_FAST": 2.999994705705855,
+    "RS_DIO_FAST": -0.0056361100804468685
+   },
+   "mahalanobis": 3.0
+  },
+  "DIO_SCH": {
+   "metric_3sigma_swing": 0.3093414351426297,
+   "bench": {
+    "AREA": 1.0,
+    "Vf": 0.22664747834205629
+   },
+   "kind": "diode",
+   "metric_classic": 9.999897584478e-05,
+   "metric_analog": null,
+   "g_classic": {
+    "VF_DIO_SCH": 0.10311375931582667,
+    "RS_DIO_SCH": -0.00010395187011535967
+   },
+   "g_analog": {},
+   "excluded": {
+    "CJ_DIO_SCH": "junction capacitance has no lever on a DC forward current"
+   },
+   "z_fast": {
+    "VF_DIO_SCH": 2.999998475518002,
+    "RS_DIO_SCH": -0.0030243825260811577
+   },
+   "mahalanobis": 3.0
+  },
+  "DZ_5V6": {
+   "metric_3sigma_swing": 0.3079759281442924,
+   "bench": {
+    "AREA": 1.0,
+    "Vf": 0.5687144815921783
+   },
+   "kind": "diode",
+   "metric_classic": 9.999930198368e-05,
+   "metric_analog": null,
+   "g_classic": {
+    "VF_DZ_5V6": 0.10265790702083688,
+    "RS_DZ_5V6": -0.00038865169342816586
+   },
+   "g_analog": {},
+   "excluded": {
+    "CJ_DZ_5V6": "junction capacitance has no lever on a DC forward current"
+   },
+   "z_fast": {
+    "VF_DZ_5V6": 2.999978500769897,
+    "RS_DZ_5V6": -0.011357592984392853
+   },
+   "mahalanobis": 3.0
+  },
+  "DZ_12": {
+   "metric_3sigma_swing": 0.30732304339825245,
+   "bench": {
+    "AREA": 1.0,
+    "Vf": 0.6047705233097076
+   },
+   "kind": "diode",
+   "metric_classic": 0.0001000006329005,
+   "metric_analog": null,
+   "g_classic": {
+    "VF_DZ_12": 0.10243966939426485,
+    "RS_DZ_12": -0.0005249564116915906
+   },
+   "g_analog": {},
+   "excluded": {
+    "CJ_DZ_12": "junction capacitance has no lever on a DC forward current"
+   },
+   "z_fast": {
+    "VF_DZ_12": 2.9999606093762456,
+    "RS_DZ_12": -0.015373424826793127
+   },
+   "mahalanobis": 3.0
+  },
+  "DZ_24": {
+   "metric_3sigma_swing": 0.3064434604342864,
+   "bench": {
+    "AREA": 1.0,
+    "Vf": 0.6485234916210174
+   },
+   "kind": "diode",
+   "metric_classic": 9.999818501372e-05,
+   "metric_analog": null,
+   "g_classic": {
+    "VF_DZ_24": 0.10214536109790728,
+    "RS_DZ_24": -0.0007087781774295365
+   },
+   "g_analog": {},
+   "excluded": {
+    "CJ_DZ_24": "junction capacitance has no lever on a DC forward current"
+   },
+   "z_fast": {
+    "VF_DZ_24": 2.9999277797553185,
+    "RS_DZ_24": -0.020816249718057664
+   },
    "mahalanobis": 3.0
   }
  }

@@ -1,28 +1,45 @@
 #!/usr/bin/env python3
-"""Measure the corner directions and calibrate U0, per brief v3 ruling Q-A / F3.
+"""Measure corner directions and calibrate U0, per brief v3 rulings Q-A / F3 / G3 / G4.
 
 Two passes, both measurement rather than assertion:
 
-  calibrate  For each MOS group, solve the U0 sigma that makes the group's
+  calibrate  For each MOS/VDMOS group, solve the U0 sigma that makes the group's
              3-sigma Idsat swing along its own worst-case direction equal the
-             ONC25 class band. The fixed set during calibration is VTH, TOX,
-             DL_POLY, DW_ACT and RDSW at their grounded sigma (ruling F3a).
-             U0 is floored at 3 % 3-sigma; if the floor binds, the fixed set
-             already exceeds the band and that is reported, not tuned away.
+             ONC25 class band. The fixed set is VTH, TOX, DL_POLY, DW_ACT and
+             RDSW at their grounded sigma (ruling F3a). U0 is floored at 3 %
+             3-sigma; if the floor binds, the fixed set already exceeds the band
+             and that is reported, not tuned away.
 
-  directions For every group, measure g_i = d ln(metric)/d z_i for each
-             variable it depends on, then z_fast = 3 g/|g|, z_slow = -z_fast.
-             Mahalanobis length is 3 by construction. Measured on the classic
-             bench (Vgs = Vds = class supply, ruling F8); the analog bench
-             (gm/Id ~ 6) is measured too and reported alongside.
+  directions For every group, measure g_i = d ln(metric)/d z_i for each variable
+             it depends on, then z_fast = 3 g/|g|, z_slow = -z_fast, so the
+             Mahalanobis length is 3 by construction.
 
-Each variable is perturbed by writing its parameter into a scratch copy of the
-model cards -- the wrappers are not modified and the repo is not touched.
+Metrics, per ruling G3:
+  MOS, VDMOS   ln Id.  classic bench Vgs = Vds = class supply (ruling F8);
+               analog bench = the sizing guide's gm/Id ~ 6 mirror point.
+               DNMOS20 is a depletion device: ln Idss at Vgs = 0.
+  resistor     ln R at 0.1 V, low enough that the VCR term stays out of it.
+  capacitor    ln C from a small-signal AC current at 0 V bias.
+  BJT          ln Ic at the sizing guide's 10 uA point (fixed Vbe).
+  diode        ln If at ~100 uA, low enough that RS stays second-order.
+
+How each variable is realized (ruling G4 for VDMOS):
+  card parameters      tox, vth0, u0, rdsw, rsh, cj, cjsw, is, bf, rb/rc/re,
+                       rs, cjo, bv
+  top-level .param     VDMOS VTO_*/KP_*/RD_*/RS_*_STAT
+  edge bias            DL_POLY and DW_ACT have no wrapper term yet (Phase 3), so
+                       they are realized through the cards' lint/wint, which is
+                       exactly equivalent: dL = -2*dlint, dW = -2*dwint. For poly
+                       resistors DL_POLY acts on the drawn width, via `narrow`.
+
+Variables with no lever on a group's metric are excluded with a recorded reason
+rather than carried as zero components.
 
   python tools/measure_stat_directions.py --out models/stat_directions.json
-  python tools/measure_stat_directions.py --groups NMOS50,PMOS50   # subset
+  python tools/measure_stat_directions.py --groups NMOS50,RPOLY_HI
 
-Requires NGSPICE_BIN or ngspice on PATH.
+Requires NGSPICE_BIN or ngspice on PATH. Nothing in the repo is modified: every
+perturbation is written into a scratch copy of the model cards.
 """
 from __future__ import annotations
 
@@ -41,16 +58,47 @@ ROOT = Path(__file__).resolve().parents[1]
 LIB = ROOT / "autohv_bicmos180_case.lib"
 INC = ROOT / "autohv_bicmos180_case_models.inc"
 MODEL = ROOT / "models" / "stat_model.json"
+SIZING = ROOT / "docs" / "sizing-guide.json"
 
-# Junction saturation current sets leakage (picoamps here) and has no lever on
-# an Idsat/Ic direction; it stays in stat_model.json but out of the direction.
-METRIC_INERT = {"JS_MOS"}
+VT_THERMAL = 0.025852  # kT/q at 27 C
+
+# Variables that exist in the model but have no lever on a given metric. Kept
+# out of the direction with a reason, rather than sitting in it as a zero.
+INERT = {
+    "JS_MOS": "junction leakage is picoamps against the bench current",
+    "RHEAD": "contact-head resistance has no wrapper term yet (Phase 3)",
+    "CPER_flat": "cjsw is 0 on this card, so there is no perimeter lever",
+    "TOX_vdmos": "VDMOS cards carry no tox; the oxide reaches them only through "
+                 "the KP/VTO loadings that Phase 3 wires",
+    "DL_vdmos": "VDMOS cards carry no channel-length parameter to bias",
+}
 
 MOS_GROUPS = ["NMOS18", "PMOS18", "NMOS33", "PMOS33", "NMOS50", "PMOS50",
               "NMOS12", "PMOS12"]
 VDMOS_GROUPS = ["NDMOS20", "PDMOS20", "NDMOS40", "PDMOS40", "NDMOS60", "PDMOS60",
                 "NDMOS80", "PDMOS80", "NDMOS120", "PDMOS120", "NDMOS200",
                 "PDMOS200", "DNMOS20"]
+RES_GROUPS = ["RPOLY_HI", "RPOLY_LO", "RNWELL", "RNPLUS", "RPPLUS"]
+CAP_GROUPS = ["CMIM_STD", "CMIM_HI", "CMOM", "CFRINGE"]
+BJT_GROUPS = ["NPN_LV", "PNP_LAT", "NPN_HV", "PNP_HV"]
+DIO_GROUPS = ["DIO_PN", "DIO_FAST", "DIO_SCH", "DZ_5V6", "DZ_12", "DZ_24"]
+POLY_RES = {"RPOLY_HI", "RPOLY_LO"}
+
+
+def kind_of(group: str) -> str:
+    if group in MOS_GROUPS:
+        return "mos"
+    if group in VDMOS_GROUPS:
+        return "vdmos"
+    if group in RES_GROUPS:
+        return "resistor"
+    if group in CAP_GROUPS:
+        return "capacitor"
+    if group in BJT_GROUPS:
+        return "bjt"
+    if group in DIO_GROUPS:
+        return "diode"
+    raise SystemExit(f"unknown group {group}")
 
 
 def find_ngspice() -> str:
@@ -64,16 +112,13 @@ def find_ngspice() -> str:
     sys.exit("ngspice not found; set NGSPICE_BIN")
 
 
-# ---------------------------------------------------------------- card edits
+# ------------------------------------------------------------------ scratch
 
-def card_of(group: str) -> str:
-    return f"{group}_INT"
+def scratch(workdir: Path, cards: dict[str, dict[str, float]],
+            params: dict[str, float]) -> Path:
+    """Copy .lib/.inc into workdir with card and top-level .param overrides.
 
-
-def scratch_lib(workdir: Path, overrides: dict[str, dict[str, float]]) -> Path:
-    """Copy .lib/.inc into workdir, applying {card: {param: value}} overrides.
-
-    Parameters absent from a card are appended, so BSIM3 defaults can be
+    Card parameters absent from a card are appended, so BSIM3 defaults can be
     overridden too (the k3 lesson from the Phase 0 audit).
     """
     workdir.mkdir(parents=True, exist_ok=True)
@@ -81,148 +126,362 @@ def scratch_lib(workdir: Path, overrides: dict[str, dict[str, float]]) -> Path:
     out: list[str] = []
     card, seen = None, set()
     for ln in INC.read_text(encoding="utf-8").splitlines():
+        pm = re.match(r"\.param\s+(\w+)\s*=", ln, re.I)
+        if pm and pm.group(1) in params:
+            out.append(f".param {pm.group(1)}={{{params[pm.group(1)]:.10g}}}")
+            continue
         m = re.match(r"\.model\s+(\S+)\s", ln, re.I)
         if m:
             card, seen = m.group(1), set()
-        if card in overrides and re.match(r"\+\s*\)\s*$", ln):
-            for p, v in overrides[card].items():
+        if card in cards and re.match(r"\+\s*\)\s*$", ln):
+            for p, v in cards[card].items():
                 if p not in seen:
                     out.append(f"+ {p}={v:.10g}")
             card = None
-        elif card in overrides:
+        elif card in cards:
             mm = re.match(r"\+\s*(\w+)\s*=", ln)
-            if mm and mm.group(1).lower() in overrides[card]:
+            if mm and mm.group(1).lower() in cards[card]:
                 p = mm.group(1).lower()
-                ln = f"+ {p}={overrides[card][p]:.10g}"
+                ln = f"+ {p}={cards[card][p]:.10g}"
                 seen.add(p)
         out.append(ln)
     (workdir / INC.name).write_text("\n".join(out) + "\n", encoding="utf-8", newline="\n")
     return workdir
 
 
-# ---------------------------------------------------------------- benches
-
-def deck_mos(group: str, bench: dict, bias: str) -> str:
-    b = bench["classic"] if bias == "classic" else bench["analog"]
-    w, l = bench["W_um"], bench.get("L_um", 1.0)
-    ports = "d1 g1 0 0" if group.startswith(("N", "P")) and "DMOS" not in group else "d1 g1 0"
-    sign = -1.0 if group.startswith("P") else 1.0
-    return "\n".join([
-        f"* direction bench: {group} ({bias})",
-        f'.include "{LIB.name}"',
-        ".param case=0", ".param PROC_ON=0", ".param MM_ON=0",
-        ".option num_threads=1",
-        f"Vd1 d1 0 {sign * b['Vds']:.6g}",
-        f"Vg1 g1 0 {sign * b['Vgs']:.6g}",
-        f"XM1 {ports} {group} W={w:.6g}u" + (f" L={l:.6g}u" if "DMOS" not in group else "") + " M=1",
-        ".control", "option temp=27", "option numdgt=12", "op",
-        "print abs(i(Vd1))", ".endc", ".end", ""])
-
-
-def run_metric(ng: str, workdir: Path, deck: str) -> float:
-    with tempfile.NamedTemporaryFile("w", suffix=".cir", dir=workdir,
-                                     delete=False, encoding="utf-8") as f:
-        f.write(deck)
-        path = f.name
-    try:
-        r = subprocess.run([ng, "-b", Path(path).name], cwd=str(workdir),
-                           capture_output=True, text=True, timeout=60)
-        out = r.stdout + r.stderr
-    finally:
-        try:
-            os.unlink(path)
-        except OSError:
-            pass
-    m = re.search(r"abs\(i\(vd1\)\)\s*=\s*([-\d.eE+]+)", out)
-    if not m:
-        raise RuntimeError(f"no metric from bench:\n{out[-600:]}")
-    v = float(m.group(1))
-    if v <= 0:
-        raise RuntimeError(f"non-positive metric {v}")
-    return v
-
-
-# ---------------------------------------------------------------- variables
-
-def tt_value(card: str, param: str) -> float | None:
-    """TT value of a card parameter, evaluating the corner expression at case=0."""
+def tt_of(name: str, card: str | None = None) -> float | None:
+    """TT value of a card parameter or a top-level .param, at case = 0."""
     text = INC.read_text(encoding="utf-8")
-    m = re.search(rf"^\.model\s+{card}\s.*?(?=^\.model|\Z)", text, re.S | re.M | re.I)
-    body = m.group(0) if m else text
-    mm = re.search(rf"^\+\s*{param}\s*=\s*(.+)$", body, re.M | re.I)
+    if card:
+        m = re.search(rf"^\.model\s+{card}\s.*?(?=^\.model|\Z)", text, re.S | re.M | re.I)
+        body = m.group(0) if m else ""
+        mm = re.search(rf"^\+\s*{name}\s*=\s*(.+)$", body, re.M | re.I)
+    else:
+        mm = re.search(rf"^\.param\s+{name}\s*=\s*(.+)$", text, re.M | re.I)
     if not mm:
         return None
     expr = mm.group(1)
     tt = re.search(r"([-\d.eE+]+)\s*\*\s*_isTT", expr)
     if tt:
         return float(tt.group(1))
-    plain = re.match(r"\s*([-\d.eE+]+)\s*$", expr)
+    plain = re.match(r"[\s{(]*([-\d.eE+]+)[\s})]*(?:;.*)?$", expr)
     return float(plain.group(1)) if plain else None
 
 
-def perturbations(group: str, model: dict) -> dict[str, dict]:
-    """Which variables touch this group, and how to realize +1 sigma of each."""
-    gv = model["global_variables"]
-    card = card_of(group)
-    out: dict[str, dict] = {}
-    is_vdmos = "DMOS" in group
+# ------------------------------------------------------------------ decks
+
+def deck_mos(group: str, bench: dict, bias: str) -> tuple[str, str]:
+    b = bench["classic"] if bias == "classic" else bench["analog"]
+    sign = -1.0 if group.startswith("P") else 1.0
+    w, l = bench["W_um"], bench.get("L_um", 1.0)
+    body = [f"Vd1 d1 0 {sign * b['Vds']:.6g}", f"Vg1 g1 0 {sign * b['Vgs']:.6g}",
+            f"XM1 d1 g1 0 0 {group} W={w:.6g}u L={l:.6g}u M=1"]
+    return "\n".join(_wrap(f"{group} {bias}", body,
+                           ["op", "print abs(i(Vd1))"])), "i"
+
+
+def deck_vdmos(group: str, bench: dict, bias: str) -> tuple[str, str]:
+    b = bench["classic"] if bias == "classic" else bench["analog"]
+    sign = -1.0 if group.startswith("P") else 1.0
+    body = [f"Vd1 d1 0 {sign * b['Vds']:.6g}", f"Vg1 g1 0 {sign * b['Vgs']:.6g}",
+            f"XM1 d1 g1 0 {group} W={bench['W_um']:.6g}u M=1"]
+    return "\n".join(_wrap(f"{group} {bias}", body,
+                           ["op", "print abs(i(Vd1))"])), "i"
+
+
+def deck_resistor(group: str, bench: dict, bias: str) -> tuple[str, str]:
+    w, l = bench["W_um"], bench["L_um"]
+    body = [f"Vr p 0 {bench['V']:.6g}", f"X1 p 0 {group} L={l:.6g}u W={w:.6g}u"]
+    return "\n".join(_wrap(f"{group} R", body, ["op", "print abs(i(Vr))"])), "r"
+
+
+def deck_capacitor(group: str, bench: dict, bias: str) -> tuple[str, str]:
+    s = bench["side_um"]
+    body = ["Vac p 0 DC 0 AC 1", f"X1 p 0 {group} L={s:.6g}u W={s:.6g}u"]
+    return "\n".join(_wrap(f"{group} C", body,
+                           [f"ac lin 1 {bench['freq']:.6g} {bench['freq']:.6g}",
+                            "print mag(i(Vac))"])), "c"
+
+
+def deck_bjt(group: str, bench: dict, bias: str) -> tuple[str, str]:
+    """Collector current. `bias` "beta" drives the base with a current source, so
+    beta has a lever; the default fixed-Vbe bench is IS/VBE-dominated (G3)."""
+    sign = -1.0 if group.startswith("P") else 1.0
+    if bias == "beta":
+        body = [f"Vc c 0 {sign * bench['Vce']:.6g}",
+                f"Ib 0 b {sign * bench['Ib']:.6g}",
+                f"X1 c b 0 {group} AREA={bench['AREA']:.6g}"]
+    else:
+        body = [f"Vc c 0 {sign * bench['Vce']:.6g}",
+                f"Vb b 0 {sign * bench['Vbe']:.6g}",
+                f"X1 c b 0 {group} AREA={bench['AREA']:.6g}"]
+    return "\n".join(_wrap(f"{group} Ic ({bias})", body,
+                            ["op", "print abs(i(Vc))"])), "i"
+
+
+def deck_diode(group: str, bench: dict, bias: str) -> tuple[str, str]:
+    body = [f"Vf a 0 {bench['Vf']:.6g}", f"X1 a 0 {group} AREA={bench['AREA']:.6g}"]
+    return "\n".join(_wrap(f"{group} If", body, ["op", "print abs(i(Vf))"])), "i"
+
+
+def _wrap(title: str, body: list[str], control: list[str]) -> list[str]:
+    return ([f"* direction bench: {title}", f'.include "{LIB.name}"',
+             ".param case=0", ".param PROC_ON=0", ".param MM_ON=0",
+             ".option num_threads=1"] + body +
+            [".control", "option temp=27", "option numdgt=12"] + control +
+            [".endc", ".end", ""])
+
+
+BUILDERS = {"mos": deck_mos, "vdmos": deck_vdmos, "resistor": deck_resistor,
+            "capacitor": deck_capacitor, "bjt": deck_bjt, "diode": deck_diode}
+
+
+def measure(ng: str, workdir: Path, deck: str, mode: str, bench: dict) -> float:
+    with tempfile.NamedTemporaryFile("w", suffix=".cir", dir=workdir,
+                                     delete=False, encoding="utf-8") as f:
+        f.write(deck)
+        path = f.name
+    try:
+        r = subprocess.run([ng, "-b", Path(path).name], cwd=str(workdir),
+                           capture_output=True, text=True, timeout=90)
+        out = r.stdout + r.stderr
+    finally:
+        try:
+            os.unlink(path)
+        except OSError:
+            pass
+    m = re.search(r"(?:abs\(i\(v\w+\)\)|mag\(i\(vac\)\))\s*=\s*([-\d.eE+]+)", out, re.I)
+    if not m:
+        raise RuntimeError(f"no metric:\n{out[-700:]}")
+    v = abs(float(m.group(1)))
+    if v <= 0:
+        raise RuntimeError("non-positive metric")
+    if mode == "r":
+        return bench["V"] / v                      # ln R
+    if mode == "c":
+        return v / (2 * math.pi * bench["freq"])   # ln C
+    return v                                       # ln I
+
+
+# ------------------------------------------------------------------ variables
+
+def perturbations(group: str, model: dict) -> tuple[dict, dict]:
+    """Returns (realizable perturbations, excluded {variable: reason})."""
+    gv, kind, card = model["global_variables"], kind_of(group), f"{group}_INT"
+    out, dead = {}, {}
+
+    def add(var, *, param=None, pname=None, form="multiplicative", sigma=None,
+            scale=1.0, extra_params=()):
+        out[var] = {"card": card if param else None, "param": param, "pname": pname,
+                    "form": form, "sigma": sigma, "scale": scale,
+                    "extra": list(extra_params)}
 
     for name, v in gv.items():
         if name.startswith("_") or group not in v.get("shared_by", []):
             continue
-        for ap in v.get("applies_to", []):
-            param = ap.get("param", "")
-            if not param or "*" in param or ap["form"] == "via-loading":
-                continue
-            if param in ("tox", "vth0", "u0", "rdsw", "js") and not is_vdmos:
-                out[name] = {"card": card, "param": param, "form": ap["form"],
-                             "sigma": v["sigma"]}
-    # templates carry a device list rather than shared_by; name the expanded
-    # variable the way stat_model.json names it, so corners.json can join.
-    for tname, key, param, prefix in (("_U0_calibration", "devices", "u0", "U0_"),
-                                      ("_RDSW_template", "devices_mos", "rdsw", "RDSW_")):
-        t = gv.get(tname, {})
-        if group in t.get(key, []):
-            sigma = t.get("sigma")
-            if sigma is not None:
-                out[prefix + group] = {"card": card, "param": param,
-                                       "form": "multiplicative", "sigma": sigma}
-    # Variables with no lever on this metric are excluded, not carried as zeros.
-    for dead in [k for k in out if k in METRIC_INERT]:
-        out.pop(dead)
-    return out
+        sig = v.get("sigma")
+        if name.startswith("TOX_"):
+            if kind == "vdmos":
+                dead[name] = INERT["TOX_vdmos"]
+            else:
+                add(name, param="tox", sigma=sig)
+        elif name.startswith("VTH_"):
+            if kind == "vdmos":
+                add(name, pname=f"VTO_{group}_STAT", form="additive", sigma=sig)
+            else:
+                add(name, param="vth0", form="additive", sigma=sig)
+        elif name == "DL_POLY":
+            if kind == "mos":
+                add(name, param="lint", form="additive", sigma=sig, scale=-0.5)
+            elif kind == "resistor" and group in POLY_RES:
+                add(name, param="narrow", form="additive", sigma=sig, scale=-1.0)
+            else:
+                dead[name] = INERT["DL_vdmos"]
+        elif name.startswith("DW_ACT"):
+            if kind == "mos":
+                add(name, param="wint", form="additive", sigma=sig, scale=-0.5)
+            else:
+                dead[name] = INERT["DL_vdmos"]
+        elif name.startswith("RSH_") and kind == "resistor":
+            add(name, param="rsh", sigma=sig)
+        elif name.startswith("RSH_GATE"):
+            dead[name] = "no rgate term in the wrappers yet (Phase 3)"
+        elif name.startswith("CDEN_") and kind == "capacitor":
+            add(name, param="cj", sigma=sig)
+        elif name == "JS_MOS":
+            dead[name] = INERT["JS_MOS"]
+
+    # template-backed variables, named as stat_model.json names them
+    t = gv.get("_RDSW_template", {})
+    if group in t.get("devices_mos", []):
+        add(f"RDSW_{group}", param="rdsw", sigma=t["sigma"])
+    elif group in t.get("devices_vdmos", []):
+        add(f"RDSW_{group}", pname=f"RD_{group}_STAT", sigma=t["sigma"],
+            extra_params=[f"RS_{group}_STAT"])
+
+    for tname, prefix, spec in (
+            ("_RHEAD_template", "RHEAD_", None),
+            ("_CPER_template", "CPER_", ("cjsw", "multiplicative")),
+            ("_VBE_template", "VBE_", ("is", "vbe")),
+            ("_BF_template", "BF_", ("bf", "multiplicative")),
+            ("_RPAR_template", "RPAR_", ("rb", "rpar")),
+            ("_VF_template", "VF_", ("is", "vf")),
+            ("_RS_DIO_template", "RS_", ("rs", "multiplicative")),
+            ("_CJ_DIO_template", "CJ_", ("cjo", "multiplicative")),
+            ("_BV_template", "BV_", ("bv", "multiplicative"))):
+        tt = gv.get(tname, {})
+        members = tt.get("devices") or tt.get("layers") or tt.get("types") or []
+        if group not in members:
+            continue
+        var = prefix + group
+        if spec is None:
+            dead[var] = INERT["RHEAD"]
+            continue
+        param, form = spec
+        if param == "cjsw" and not tt_of("cjsw", card):
+            dead[var] = INERT["CPER_flat"]
+            continue
+        if form == "vbe":
+            add(var, param="is", form="exp_v", sigma=tt["sigma"], scale=1.0 / VT_THERMAL)
+        elif form == "vf":
+            add(var, param="is", form="exp_v", sigma=tt["sigma"], scale=1.0 / VT_THERMAL)
+        elif form == "rpar":
+            add(var, param="rb", sigma=tt["sigma"], extra_params=["rc", "re"])
+        else:
+            add(var, param=param, form=form, sigma=tt["sigma"])
+    return out, dead
 
 
-def measure_group(ng: str, group: str, model: dict, work: Path,
-                  u0_sigma: float | None) -> dict:
-    bench = model["benches"][group]
-    perts = perturbations(group, model)
-    if u0_sigma is not None:
-        # Same name stat_model.json uses, so main() can read the slope back and
-        # corners.json can join to the model.
-        perts[f"U0_{group}"] = {"card": card_of(group), "param": "u0",
-                                "form": "multiplicative", "sigma": u0_sigma}
+def perturbed(spec: dict, sgn: int) -> tuple[dict, dict]:
+    """Build the (card, param) override dicts for +/-1 sigma of one variable."""
+    cards, params = {}, {}
+    sigma, scale = spec["sigma"], spec["scale"]
+    targets = [(spec["card"], spec["param"])] if spec["param"] else []
+    targets += [(spec["card"], p) for p in spec["extra"] if spec["param"]]
+    pnames = ([spec["pname"]] if spec["pname"] else []) + \
+             ([p for p in spec["extra"] if not spec["param"]])
 
-    result = {"bench": bench, "g": {}, "g_analog": {}}
-    for bias, key in (("classic", "g"), ("analog", "g_analog")):
-        base_dir = scratch_lib(work / f"{group}_{bias}_base", {})
-        base = run_metric(ng, base_dir, deck_mos(group, bench, bias))
+    def new_value(tt: float) -> float:
+        if spec["form"] == "additive":
+            return tt + sgn * sigma * scale
+        if spec["form"] == "exp_v":
+            return tt * math.exp(sgn * sigma * scale)
+        return tt * math.exp(sgn * math.log1p(sigma))
+
+    for card, param in targets:
+        tt = tt_of(param, card)
+        if tt is None:
+            continue
+        cards.setdefault(card, {})[param] = new_value(tt)
+    for pname in pnames:
+        tt = tt_of(pname)
+        if tt is None:
+            continue
+        params[pname] = new_value(tt)
+    return cards, params
+
+
+def bench_for(group: str, model: dict, sizing: dict) -> dict:
+    kind = kind_of(group)
+    b = dict(model["benches"].get(group, {}))
+    if kind == "resistor":
+        b.update({"W_um": 2.0, "L_um": 16.5, "V": 0.1})
+    elif kind == "capacitor":
+        b.update({"side_um": 100.0, "freq": 1e6})
+    elif kind == "bjt":
+        pt = sizing["bjt"][group]["10uA"]
+        b.update({"Vbe": pt["Vbe_V"], "Vce": 2.0, "AREA": 1.0,
+                  "Ib": 1e-5 / max(pt.get("beta", 100.0), 1.0)})
+    elif kind == "diode":
+        b.update({"AREA": 1.0, "Vf": None})
+    return b
+
+
+def solve_diode_vf(ng: str, group: str, bench: dict, work: Path,
+                   target_a: float = 1e-4) -> float:
+    """Find the forward voltage giving ~target current at TT, by bisection."""
+    lo, hi = 0.2, 1.2
+    d = scratch(work / f"{group}_vf", {}, {})
+    for _ in range(24):
+        mid = 0.5 * (lo + hi)
+        deck, mode = deck_diode(group, {**bench, "Vf": mid}, "classic")
+        try:
+            i = measure(ng, d, deck, mode, bench)
+        except RuntimeError:
+            i = 0.0
+        if i < target_a:
+            lo = mid
+        else:
+            hi = mid
+    return 0.5 * (lo + hi)
+
+
+def measure_group(ng: str, group: str, model: dict, sizing: dict, work: Path,
+                  u0_sigma: float | None, bias_override: str | None = None) -> dict:
+    kind = kind_of(group)
+    bench = bench_for(group, model, sizing)
+    if kind == "diode" and bench.get("Vf") is None:
+        bench["Vf"] = solve_diode_vf(ng, group, bench, work)
+    perts, dead = perturbations(group, model)
+    if u0_sigma is not None and kind in ("mos", "vdmos"):
+        if kind == "vdmos":
+            perts[f"U0_{group}"] = {"card": None, "param": None,
+                                    "pname": f"KP_{group}_STAT", "form": "multiplicative",
+                                    "sigma": u0_sigma, "scale": 1.0, "extra": []}
+        else:
+            perts[f"U0_{group}"] = {"card": f"{group}_INT", "param": "u0", "pname": None,
+                                    "form": "multiplicative", "sigma": u0_sigma,
+                                    "scale": 1.0, "extra": []}
+
+    builder = BUILDERS[kind]
+    if bias_override:
+        biases = (bias_override,)
+    else:
+        biases = ("classic", "analog") if kind in ("mos", "vdmos") else ("classic",)
+    result = {"bench": bench, "kind": kind, "excluded": dead, "g": {}, "g_analog": {}}
+    for bias in biases:
+        key = "g_analog" if bias == "analog" else "g"
+        base_dir = scratch(work / f"{group}_{bias}_base", {}, {})
+        deck, mode = builder(group, bench, bias)
+        base = measure(ng, base_dir, deck, mode, bench)
         result[f"metric_{bias}"] = base
         for vname, spec in perts.items():
-            tt = tt_value(spec["card"], spec["param"])
-            if tt is None:
-                continue
             vals = {}
             for sgn in (+1, -1):
-                if spec["form"] == "additive":
-                    new = tt + sgn * spec["sigma"]
-                else:
-                    new = tt * math.exp(sgn * math.log1p(spec["sigma"]))
-                d = scratch_lib(work / f"{group}_{bias}_{vname}_{sgn}",
-                                {spec["card"]: {spec["param"]: new}})
-                vals[sgn] = run_metric(ng, d, deck_mos(group, bench, bias))
-            result[key][vname] = (math.log(vals[+1]) - math.log(vals[-1])) / 2.0
+                cards, params = perturbed(spec, sgn)
+                if not cards and not params:
+                    break
+                d = scratch(work / f"{group}_{bias}_{vname}_{sgn}", cards, params)
+                deck, mode = builder(group, bench, bias)
+                vals[sgn] = measure(ng, d, deck, mode, bench)
+            if len(vals) == 2:
+                result[key][vname] = (math.log(vals[+1]) - math.log(vals[-1])) / 2.0
     return result
+
+
+# A variable whose measured |g| is below this is treated as having no lever on
+# the metric: it is moved to `excluded` with a reason instead of sitting in the
+# direction as a zero. The threshold is well under the smallest real term seen
+# (RDSW on a MOS classic bench, ~7e-4).
+NO_LEVER = 1e-9
+
+NO_LEVER_REASON = {
+    "BV_": "breakdown has no lever on drain current at the bench bias "
+           "(the device is biased far below its rating)",
+    "CJ_": "junction capacitance has no lever on a DC forward current",
+}
+
+
+def prune_no_lever(rec: dict) -> None:
+    """Move measured-zero variables out of the direction, with a reason."""
+    for var, g in list(rec["g"].items()):
+        if abs(g) > NO_LEVER:
+            continue
+        reason = next((r for pre, r in NO_LEVER_REASON.items() if var.startswith(pre)),
+                      "measured lever on this metric is zero")
+        rec["excluded"][var] = reason
+        rec["g"].pop(var)
+        rec["g_analog"].pop(var, None)
 
 
 def direction(g: dict[str, float]) -> tuple[dict[str, float], float]:
@@ -235,71 +494,87 @@ def direction(g: dict[str, float]) -> tuple[dict[str, float], float]:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--groups", help="comma-separated subset (default: all MOS groups)")
+    ap.add_argument("--groups", help="comma-separated subset (default: all 40)")
     ap.add_argument("--out", default="models/stat_directions.json")
-    ap.add_argument("--keep", action="store_true", help="keep the scratch decks")
+    ap.add_argument("--keep", action="store_true")
     args = ap.parse_args(argv)
 
     ng = find_ngspice()
     model = json.loads(MODEL.read_text(encoding="utf-8"))
-    groups = (args.groups.split(",") if args.groups
-              else [g for g in MOS_GROUPS + VDMOS_GROUPS if g in model["benches"]])
+    sizing = json.loads(SIZING.read_text(encoding="utf-8"))
+    groups = (args.groups.split(",") if args.groups else
+              MOS_GROUPS + VDMOS_GROUPS + RES_GROUPS + CAP_GROUPS + BJT_GROUPS + DIO_GROUPS)
 
+    cal = model["global_variables"]["_U0_calibration"]
+    bands, floor3 = cal["class_bands_3sigma"], cal["floor_3sigma"]
     work = Path(tempfile.mkdtemp(prefix="statdir_"))
-    bands = model["global_variables"]["_U0_calibration"]["class_bands_3sigma"]
-    floor3 = model["global_variables"]["_U0_calibration"]["floor_3sigma"]
-    out = {"_meta": {"ngspice": ng, "model": str(MODEL.relative_to(ROOT)),
-                     "bench_rule": "classic = Vgs = Vds = class supply (ruling F8)"},
+    out = {"_meta": {"ngspice": ng, "model": "models/stat_model.json",
+                     "bench_rule": "classic = Vgs = Vds = class supply (ruling F8); "
+                                   "metrics per ruling G3"},
            "groups": {}}
     try:
         for g in groups:
-            cls = re.sub(r"^[NP]?(MOS|DMOS)", "", g) or "vdmos"
-            band = bands.get(cls, bands.get("vdmos"))
-            fixed = measure_group(ng, g, model, work, u0_sigma=None)
-            gvec = fixed["g"]
-            swing_fixed = 3.0 * math.sqrt(sum(v * v for v in gvec.values()))
-
-            # Measure d ln(metric)/d z_u0 at a probe sigma rather than assuming
-            # it is 1 per unit relative u0: on these cards it is ~0.84, and
-            # assuming it undershoots the class band (Phase 0 lesson).
-            probe = 0.01
-            probed = measure_group(ng, g, model, work, u0_sigma=probe)
-            slope = abs(probed["g"].get("U0_" + g, 0.0)) / probe
-            if slope <= 0:
-                sys.exit(f"{g}: u0 has no measurable lever on the metric")
-            if swing_fixed >= band:
-                u0_sigma, floored = floor3 / 3.0, True
-            else:
-                need = math.sqrt(max(band ** 2 - swing_fixed ** 2, 0.0)) / 3.0 / slope
+            kind = kind_of(g)
+            if kind in ("mos", "vdmos"):
+                cls = re.sub(r"^[NP]?D?MOS", "", g) or "vdmos"
+                band = bands.get(cls, bands["vdmos"])
+                fixed = measure_group(ng, g, model, sizing, work, None)
+                swing = 3.0 * math.sqrt(sum(v * v for v in fixed["g"].values()))
+                probe = 0.01
+                probed = measure_group(ng, g, model, sizing, work, probe)
+                slope = abs(probed["g"].get(f"U0_{g}", 0.0)) / probe
+                if slope <= 0:
+                    sys.exit(f"{g}: u0 has no measurable lever")
+                need = math.sqrt(max(band ** 2 - swing ** 2, 0.0)) / 3.0 / slope
                 floored = need < floor3 / 3.0
                 u0_sigma = max(need, floor3 / 3.0)
-            full = measure_group(ng, g, model, work, u0_sigma=u0_sigma)
+                full = measure_group(ng, g, model, sizing, work, u0_sigma)
+                z_fast, norm = direction(full["g"])
+                rec = {"class_band_3sigma": band, "u0_sigma_1s": u0_sigma,
+                       "u0_slope_measured": slope, "u0_floor_hit": floored,
+                       "fixed_set_3sigma_swing": swing,
+                       "metric_3sigma_swing": 3.0 * norm,
+                       "band_error_pct": 100.0 * (3.0 * norm / band - 1.0)}
+                print(f"{g:9s} {kind:9s} band {band*100:5.1f} %  slope {slope:4.2f}  "
+                      f"u0 1s {u0_sigma*100:5.2f} %{'  FLOOR' if floored else ''}  "
+                      f"swing {3*norm*100:5.1f} %  err {100*(3*norm/band-1):+5.1f} %")
+            else:
+                full = measure_group(ng, g, model, sizing, work, None)
+                z_fast, norm = direction(full["g"])
+                rec = {"metric_3sigma_swing": 3.0 * norm}
+                print(f"{g:9s} {kind:9s} swing {3*norm*100:5.1f} %  "
+                      f"terms {len(full['g'])}  excluded {len(full['excluded'])}")
+            prune_no_lever(full)
+            if kind == "bjt":
+                beta = measure_group(ng, g, model, sizing, work, None, bias_override="beta")
+                bf_var = f"BF_{g}"
+                full["bf_share"] = {
+                    "bench": "base-current driven (ruling G3)",
+                    "g_beta_bench": beta["g"].get(bf_var),
+                    "g_fixed_vbe_bench": full["g"].get(bf_var),
+                    "note": "BF has no lever at a fixed-Vbe bench; the beta-bench value is "
+                            "what a beta-only corner must use",
+                }
+                if beta["g"].get(bf_var) is not None:
+                    full["g"][bf_var] = beta["g"][bf_var]
             z_fast, norm = direction(full["g"])
-            out["groups"][g] = {
-                "bench": full["bench"],
-                "class_band_3sigma": band,
-                "u0_sigma_1s": u0_sigma,
-                "u0_floor_hit": floored,
-                "fixed_set_3sigma_swing": swing_fixed,
-                "u0_slope_measured": slope,
-                "band_error_pct": 100.0 * (3.0 * norm / band - 1.0),
-                "g_classic": full["g"],
-                "g_analog": full["g_analog"],
-                "z_fast": z_fast,
-                "idsat_3sigma_swing": 3.0 * norm,
-                "mahalanobis": 3.0,
-            }
-            print(f"{g:9s} band {band*100:5.1f} %  fixed-set {swing_fixed*100:5.1f} %  "
-                  f"slope {slope:4.2f}  u0 1s {u0_sigma*100:5.2f} %"
-                  f"{'  FLOOR' if floored else ''}  swing {3*norm*100:5.1f} %  "
-                  f"err {100*(3*norm/band-1):+5.1f} %")
+            rec["metric_3sigma_swing"] = 3.0 * norm
+            rec.update({"bench": full["bench"], "kind": full["kind"],
+                        "metric_classic": full.get("metric_classic"),
+                        "metric_analog": full.get("metric_analog"),
+                        "g_classic": full["g"], "g_analog": full["g_analog"],
+                        "excluded": full["excluded"], "z_fast": z_fast,
+                        "mahalanobis": 3.0})
+            if "bf_share" in full:
+                rec["bf_share"] = full["bf_share"]
+            out["groups"][g] = rec
     finally:
         if not args.keep:
             shutil.rmtree(work, ignore_errors=True)
 
-    Path(ROOT / args.out).write_text(json.dumps(out, indent=1) + "\n",
-                                     encoding="utf-8", newline="\n")
-    print(f"wrote {args.out} for {len(out['groups'])} groups")
+    (ROOT / args.out).write_text(json.dumps(out, indent=1) + "\n",
+                                 encoding="utf-8", newline="\n")
+    print(f"wrote {args.out} for {len(out['groups'])} of 40 groups")
     return 0
 
 

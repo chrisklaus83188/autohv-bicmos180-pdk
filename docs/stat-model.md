@@ -119,9 +119,12 @@ feed the wrapper `rgate` term.
 
 MIM density 12 % 3σ and MOM 20 %, both ONC25-grounded, lognormal. `CPER_<type>` is the new
 perimeter term, 25 % 3σ, declared, ±100 %. The `CDEN`/`CPER` split for each type is constrained
-so total C is unchanged at that type's regression-golden geometry (ruling Q-C) — CMIM_STD's
-golden is exactly the 10×10 µm reference at 10 pF — so the goldens stay valid and only the
-size-dependence changes.
+so total C is unchanged at that type's regression-golden geometry (ruling Q-C), so the goldens
+stay valid and only the size-dependence changes. Three distinct geometries are in play and
+must not be conflated: the capacitor goldens are **100×100 µm** (10 000 µm², giving CMIM_STD's
+10 pF), the resistor goldens are **100×10 µm** (10 squares, giving RPOLY_HI's 12.3 kΩ), and the
+local-mismatch reference in `passives_mc_s0.cir` is **10×10 µm**. The capacitor split is
+constrained at the first, the resistor σ split at the last.
 
 ### 2.9 Bipolar and diodes — `VBE_<bjt>`, `BF_<bjt>`, `RPAR_<bjt>`, `VF_<dio>`, `RS_<dio>`, `CJ_<dio>`
 
