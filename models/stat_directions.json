@@ -1,0 +1,353 @@
+{
+ "_meta": {
+  "ngspice": "C:/Users/chris/SPICE/Qucs-S-25.2.0-win64/bin/ngspice_con.exe",
+  "model": "models\\stat_model.json",
+  "bench_rule": "classic = Vgs = Vds = class supply (ruling F8)"
+ },
+ "groups": {
+  "NMOS18": {
+   "bench": {
+    "W_um": 1.3,
+    "L_um": 1.0,
+    "supply_V": 1.8,
+    "classic": {
+     "Vgs": 1.8,
+     "Vds": 1.8
+    },
+    "analog": {
+     "Vgs": 0.883,
+     "Vds": 0.9,
+     "gm_id": 6.37
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "class_band_3sigma": 0.2,
+   "u0_sigma_1s": 0.042859904450322645,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.1602957099992156,
+   "u0_slope_measured": 0.9301988739538913,
+   "band_error_pct": -0.5682388500597657,
+   "g_classic": {
+    "TOX_18": -0.007236620383532788,
+    "VTH_NMOS18": -0.0529372460008144,
+    "RDSW_NMOS18": -0.0004975993052998007,
+    "U0_NMOS18": 0.03923148658548303
+   },
+   "g_analog": {
+    "TOX_18": -0.014488087809905181,
+    "VTH_NMOS18": -0.2046311784167525,
+    "RDSW_NMOS18": -1.3748731175766693e-06,
+    "U0_NMOS18": 0.041819482239497496
+   },
+   "z_fast": {
+    "TOX_18": -0.3275089503523002,
+    "VTH_NMOS18": -2.3957898788943255,
+    "RDSW_NMOS18": -0.022519935762502073,
+    "U0_NMOS18": 1.7755060112880217
+   },
+   "idsat_3sigma_swing": 0.19886352229988047,
+   "mahalanobis": 3.0
+  },
+  "PMOS18": {
+   "bench": {
+    "W_um": 3.7,
+    "L_um": 1.0,
+    "supply_V": 1.8,
+    "classic": {
+     "Vgs": 1.8,
+     "Vds": 1.8
+    },
+    "analog": {
+     "Vgs": 0.925,
+     "Vds": 0.9,
+     "gm_id": 5.8
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "class_band_3sigma": 0.2,
+   "u0_sigma_1s": 0.03574084583225911,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.17042956296004205,
+   "u0_slope_measured": 0.9761029164100599,
+   "band_error_pct": -0.342317085231314,
+   "g_classic": {
+    "TOX_18": -0.0052135842062828175,
+    "VTH_PMOS18": 0.0565699031914777,
+    "RDSW_PMOS18": -0.0001553721083533688,
+    "U0_PMOS18": 0.034448639910277024
+   },
+   "g_analog": {
+    "TOX_18": -0.010365027014434425,
+    "VTH_PMOS18": 0.19079896331889046,
+    "RDSW_PMOS18": 5.879383008977612e-05,
+    "U0_PMOS18": 0.03532746574953993
+   },
+   "z_fast": {
+    "TOX_18": -0.23541716245136457,
+    "VTH_PMOS18": 2.554389756175283,
+    "RDSW_PMOS18": -0.0070157610245476214,
+    "U0_PMOS18": 1.5555135847260775
+   },
+   "idsat_3sigma_swing": 0.19931536582953738,
+   "mahalanobis": 3.0
+  },
+  "NMOS33": {
+   "bench": {
+    "W_um": 2.2,
+    "L_um": 1.0,
+    "supply_V": 3.3,
+    "classic": {
+     "Vgs": 3.3,
+     "Vds": 3.3
+    },
+    "analog": {
+     "Vgs": 1.126,
+     "Vds": 1.65,
+     "gm_id": 5.77
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "class_band_3sigma": 0.2,
+   "u0_sigma_1s": 0.06418309153573726,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.10396308725525003,
+   "u0_slope_measured": 0.8873350402657021,
+   "band_error_pct": -1.8917006162340488,
+   "g_classic": {
+    "TOX_33": -0.00598407486550423,
+    "VTH_NMOS33": -0.03412804567378824,
+    "RDSW_NMOS33": -0.0006262436577197938,
+    "U0_NMOS33": 0.055470342546721785
+   },
+   "g_analog": {
+    "TOX_33": -0.015457770434573526,
+    "VTH_NMOS33": -0.23530705089679316,
+    "RDSW_NMOS33": 5.937095785313318e-05,
+    "U0_NMOS33": 0.06273200482577135
+   },
+   "z_fast": {
+    "TOX_33": -0.27447562605722714,
+    "VTH_NMOS33": -1.5653742496474201,
+    "RDSW_NMOS33": -0.02872434317422675,
+    "U0_NMOS33": 2.5442958753553957
+   },
+   "idsat_3sigma_swing": 0.19621659876753192,
+   "mahalanobis": 3.0
+  },
+  "PMOS33": {
+   "bench": {
+    "W_um": 6.1,
+    "L_um": 1.0,
+    "supply_V": 3.3,
+    "classic": {
+     "Vgs": 3.3,
+     "Vds": 3.3
+    },
+    "analog": {
+     "Vgs": 1.18,
+     "Vds": 1.65,
+     "gm_id": 5.57
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "class_band_3sigma": 0.2,
+   "u0_sigma_1s": 0.057587794554555115,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.11249801558683917,
+   "u0_slope_measured": 0.9571519351221802,
+   "band_error_pct": -1.5603156445021749,
+   "g_classic": {
+    "TOX_33": -0.0040548306203858075,
+    "VTH_PMOS33": 0.037278584569221174,
+    "RDSW_PMOS33": -0.00025665397703900084,
+    "U0_PMOS33": 0.05385750985812621
+   },
+   "g_analog": {
+    "TOX_33": -0.010934128923690167,
+    "VTH_PMOS33": 0.23144850785319626,
+    "RDSW_PMOS33": 0.00012745566001992614,
+    "U0_PMOS33": 0.057103496494612216
+   },
+   "z_fast": {
+    "TOX_33": -0.18535957232289785,
+    "VTH_PMOS33": 1.7041260509905962,
+    "RDSW_PMOS33": -0.011732492888788916,
+    "U0_PMOS33": 2.46200296098402
+   },
+   "idsat_3sigma_swing": 0.19687936871099565,
+   "mahalanobis": 3.0
+  },
+  "NMOS50": {
+   "bench": {
+    "W_um": 4.7,
+    "L_um": 1.0,
+    "supply_V": 5.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 5.0
+    },
+    "analog": {
+     "Vgs": 1.36,
+     "Vds": 2.5,
+     "gm_id": 5.7
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.045685060600962196,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.07733421794343465,
+   "u0_slope_measured": 0.8514983804558618,
+   "band_error_pct": -1.2012421373549298,
+   "g_classic": {
+    "TOX_50": -0.005731268359451036,
+    "VTH_NMOS50": -0.02512257488546954,
+    "RDSW_NMOS50": -0.0007195995773905395,
+    "U0_NMOS50": 0.038226459805382085
+   },
+   "g_analog": {
+    "TOX_50": -0.014406508683906694,
+    "VTH_NMOS50": -0.26886306112208924,
+    "RDSW_NMOS50": 0.00013647169545993876,
+    "U0_NMOS50": 0.04602643594747047
+   },
+   "z_fast": {
+    "TOX_50": -0.37291833239709904,
+    "VTH_NMOS50": -1.6346588825074508,
+    "RDSW_NMOS50": -0.04682242351322055,
+    "U0_NMOS50": 2.4872936931247196
+   },
+   "idsat_3sigma_swing": 0.1383182610077031,
+   "mahalanobis": 3.0
+  },
+  "PMOS50": {
+   "bench": {
+    "W_um": 13.4,
+    "L_um": 1.0,
+    "supply_V": 5.0,
+    "classic": {
+     "Vgs": 5.0,
+     "Vds": 5.0
+    },
+    "analog": {
+     "Vgs": 1.413,
+     "Vds": 2.5,
+     "gm_id": 5.9
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.03976670738298488,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.0842339501464931,
+   "u0_slope_measured": 0.9373347905376583,
+   "band_error_pct": -0.9223244501337269,
+   "g_classic": {
+    "TOX_50": -0.0039619805169230915,
+    "VTH_PMOS50": 0.027795223314301065,
+    "RDSW_PMOS50": -0.00031846836696081127,
+    "U0_PMOS50": 0.03673441891280449
+   },
+   "g_analog": {
+    "TOX_50": -0.010276242348343345,
+    "VTH_PMOS50": 0.28081476538861594,
+    "RDSW_PMOS50": 0.00017580940782835341,
+    "U0_PMOS50": 0.04042128669619505
+   },
+   "z_fast": {
+    "TOX_50": -0.2570697648112398,
+    "VTH_PMOS50": 1.8034696258002738,
+    "RDSW_PMOS50": -0.020663551434628256,
+    "U0_PMOS50": 2.3834817940311233
+   },
+   "idsat_3sigma_swing": 0.1387087457698128,
+   "mahalanobis": 3.0
+  },
+  "NMOS12": {
+   "bench": {
+    "W_um": 22.4,
+    "L_um": 1.0,
+    "supply_V": 12.0,
+    "classic": {
+     "Vgs": 12.0,
+     "Vds": 12.0
+    },
+    "analog": {
+     "Vgs": 1.794,
+     "Vds": 6.0,
+     "gm_id": 5.73
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.05453082775818522,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.036319884668015945,
+   "u0_slope_measured": 0.8264851171710941,
+   "band_error_pct": -2.0073098034185555,
+   "g_classic": {
+    "TOX_12": -0.006047422994357454,
+    "VTH_NMOS12": -0.010479985349098442,
+    "RDSW_NMOS12": -0.0004111315263957138,
+    "U0_NMOS12": 0.04409824630973924
+   },
+   "g_analog": {
+    "TOX_12": -0.009667924308947029,
+    "VTH_NMOS12": -0.25969274878777515,
+    "RDSW_NMOS12": 0.00018445609648143346,
+    "U0_NMOS12": 0.05939682918023603
+   },
+   "z_fast": {
+    "TOX_12": -0.39672643541087754,
+    "VTH_NMOS12": -0.6875138773301247,
+    "RDSW_NMOS12": -0.02697128100749548,
+    "U0_NMOS12": 2.8929578901058157
+   },
+   "idsat_3sigma_swing": 0.13718976627521404,
+   "mahalanobis": 3.0
+  },
+  "PMOS12": {
+   "bench": {
+    "W_um": 63.2,
+    "L_um": 1.0,
+    "supply_V": 12.0,
+    "classic": {
+     "Vgs": 12.0,
+     "Vds": 12.0
+    },
+    "analog": {
+     "Vgs": 1.93,
+     "Vds": 6.0,
+     "gm_id": 6.43
+    },
+    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+   },
+   "class_band_3sigma": 0.14,
+   "u0_sigma_1s": 0.04983166400542406,
+   "u0_floor_hit": false,
+   "fixed_set_3sigma_swing": 0.03791381585189879,
+   "u0_slope_measured": 0.9014915873120977,
+   "band_error_pct": -1.7853717444642814,
+   "g_classic": {
+    "TOX_12": -0.004702740525361904,
+    "VTH_PMOS12": 0.01172837978065111,
+    "RDSW_PMOS12": -0.00021640648457355027,
+    "U0_PMOS12": 0.04405668627040438
+   },
+   "g_analog": {
+    "TOX_12": -0.006938879396078512,
+    "VTH_PMOS12": 0.3003167224389234,
+    "RDSW_PMOS12": 0.00014371043702787745,
+    "U0_PMOS12": 0.05317027485022052
+   },
+   "z_fast": {
+    "TOX_12": -0.30781466991524803,
+    "VTH_PMOS12": 0.7676730900529467,
+    "RDSW_PMOS12": -0.01416473867892176,
+    "U0_PMOS12": 2.8837003166022095
+   },
+   "idsat_3sigma_swing": 0.13750047955775002,
+   "mahalanobis": 3.0
+  }
+ }
+}
