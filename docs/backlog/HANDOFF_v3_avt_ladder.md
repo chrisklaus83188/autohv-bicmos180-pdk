@@ -111,7 +111,7 @@ That is the crux. **Three propositions cannot all hold:**
 2. the Stolk/Mizuno closed form `(q/C_ox)·√(N_a·W_dep/3)`;
 3. the `1 mV·µm/nm` plausibility band.
 
-I verified (2) is implemented correctly — hand-check at t_ox 4 nm, N_a 6e17 reproduces
+I verified (2) is implemented correctly — a hand-check at t_ox 4 nm, N_a 6e17 reproduces
 W_dep 44.7 nm and A_RDF 1.75 mV·µm independently. So the tension is real, not an arithmetic slip.
 
 ---
