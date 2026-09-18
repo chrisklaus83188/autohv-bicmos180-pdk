@@ -345,6 +345,56 @@ summary and old-vs-new tables: `docs/circuits-requalification.md`.
 
 # Changelog
 
+### 2026-09-18 -- VDMOS gate oxide 13 nm -> 11 nm (ruling Z2/AA1)
+
+AutoHV's VDMOS now sit on AutoHV's own 5 V gate oxide. The 13 nm they carried was the reference
+process's 5 V oxide; our 5 V CMOS cards carry 11 nm and the statistical model already shared
+`TOX_50` between the two families, so the D2 declaration and the model had disagreed. D2 re-ruled.
+
+Scaled by 13/11 = 1.1818 (oxide-linear, `C_ox` ∝ 1/`t_ox`) — 13 `KP_*_STAT` parameters and 52 card
+lines:
+
+- **`kp`** — `kp = µ·C_ox·(W_REF/L_ch)`. Inverting it at 13 nm recovers `C_ox` = 2.6563 fF/µm²
+  (matching the phase-3 figure of 2.66) and the declared mobilities 400 / 130 cm²/Vs exactly.
+- **`cgs`, `cgdmax`, `cgdmin`** — `C_ox·W·(L_ch+Lov)`.
+- **`theta`** — `θ ≈ (1…3)e-7 / t_ox[cm]`. Confirmed live rather than assumed: `showmod` reads it
+  back and Id falls monotonically 6.127e-03 → 4.631e-03 as θ goes 0.10 → 0.24.
+
+**Not scaled**, each for a stated reason:
+
+- **`ksubthres`** — ngspice's VDMOS model has no oxide (`unrecognized parameter (tox) - ignored`);
+  `ksubthres` *is* the slope, set literally, with no `n = 1 + C_dep/C_ox` chain to respond. Fitting
+  it per card by bisection against the measured slope returned the carded values to ±0.5 % on all
+  thirteen. Measured S moves only 90.6–97.3 → 90.4–97.1 mV/dec after the rescale, which is the
+  `theta` term, not an oxide effect. This also **retires the phase-2 mapping
+  `S ≈ 1.17·1000·ksubthres` as a constant**: against the cards it drifts 0.99–1.09 with class.
+- **`VTO`** — implant-set, not oxide-following. The oxide-derived shift would have been
+  −13.1…−13.6 % on every enhancement card.
+- **`rd`, `rs`, `BV`** — drift-region quantities, ruled from the two-regime literature ladder.
+
+**Measured movers** (W = 10 µm, Vov = 3 V), replacing the pre-registration of +≈18 % Idsat and
+−5…−10 % Ron:
+
+| | measured |
+|---|---|
+| Idsat (Vds = 10 V) | **+4.1 … +10.4 %** |
+| Ron (Vds = 0.1 V) | **−1.3 … −8.9 %** |
+| subthreshold slope | −0.2 mV/dec (unchanged) |
+
+The pre-registration assumed `kp` alone. A thinner oxide raises drive **and** raises vertical-field
+mobility degradation together, so `kp` ×1.1818 and `theta` ×1.1818 push opposite ways and roughly
+half the gain cancels. The effect is class-dependent — PDMOS20 +10.4 %, NDMOS200 +4.1 % — and Ron
+reaches the pre-registered band only at the low-voltage end, since above 60 V it is drift-dominated
+and `rd`/`rs` are untouched.
+
+Body doping re-derived at 11 nm from each card's measured slope, with `V_FB` solved rather than
+assumed: **N_a 1.80e17–2.83e17 cm⁻³**, `V_FB` −0.710…−0.745 (N) / +0.696…+0.724 (P). Recorded in
+`docs/stat-model.md` §1.2; card `VTO` unchanged.
+
+VDMOS `A_VT` keeps its carded per-class width-normalised ladder (0.024–0.033 V at the 10 µm cell)
+and the externally anchored entry is removed from `stat_model.json` — see `docs/stat-model.md` §3.2
+for the two normalisation conventions and why they must not be converted into each other.
+
 ### 2026-07-24 � Phase 3 VDMOS DC realism: kp/rd re-derived, mismatch ladder unified (F1, F2, F-VD3)
 
 The trigger for the whole audit. A 200 V NMOS mirror at 10-55 uA read "always in

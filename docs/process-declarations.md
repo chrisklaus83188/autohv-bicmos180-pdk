@@ -115,6 +115,19 @@ Supporting public literature (citable openly):
 
 ---
 
+## D2 — VDMOS gate-oxide ladder · `[re-ruled 2026-09-18: 11 nm]`
+
+> **Amended (ruling Z2).** The VDMOS gate oxide is **11 nm — AutoHV's own 5 V oxide**, flat across
+> all drain classes. The 13 nm previously declared here was the *reference* process's 5 V oxide. In
+> any BCD flow the 5 V-gate LDMOS shares the 5 V CMOS gate-oxide growth, and AutoHV's 5 V CMOS cards
+> carry `tox = 1.1e-08`; the statistical model already shared `TOX_50` between them, so the
+> declaration and the model had been inconsistent. Under the identity rule the oxide is ours.
+>
+> The gate-set-not-drain-set principle below is unchanged and is what made the correction findable.
+> `VTO` is **not** rescaled: a threshold is implant-set, not oxide-following, and the
+> "Vth-vs-tox tension resolved" paragraph below holds at 11 nm for the same reason it held at 13.
+> `ksubthres` is not rescaled either — ngspice's VDMOS model has no oxide at all.
+
 ## D2 — VDMOS gate-oxide ladder · `[declared-grounded]`
 
 **Question.** What is the VDMOS gate-oxide thickness per class, and does it rise with voltage?

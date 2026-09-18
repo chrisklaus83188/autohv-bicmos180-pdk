@@ -39,6 +39,24 @@ describes the depletion charge Pelgrom mismatch depends on. See
 A source/drain-to-well junction is set by the doping on its lightly-doped side, so junction
 capacitance scaling uses `nch`, not the halo-inflated `Na(k1)`. See §7.1 of the audit.
 
+### 1.2 VDMOS body doping
+
+The VDMOS cards carry no `tox` and no `k1`, so their body doping is derived from each card's own
+**measured** subthreshold slope rather than from a card parameter:
+
+`n = S/(kT/q·ln10)` → `C_dep = (n−1)·C_ox` → `W_dm = ε_si/C_dep` → `N_a` self-consistently from
+`W_dm = √(4ε_si·φ_F/(q·N_a))`.
+
+At the ruled 11 nm oxide this gives **N_a = 1.80e17 … 2.83e17 cm⁻³**, rising with voltage class.
+The flat-band voltage falls out of each card's `VTO` and is **solved, not assumed**:
+**V_FB = −0.710 … −0.745 V (n-channel), +0.696 … +0.724 V (p-channel)** — tight and near-symmetric
+between polarities.
+
+This matters because assuming `V_FB` instead (∓0.95 V) gives 3.6e17–5.7e17 cm⁻³, which contradicts
+the doping the phase-3 subthreshold ladder implies (1.3e17–2.7e17) by about 2×. Solving `V_FB`
+removes the contradiction: there was never a disagreement between the two derivations, only an
+assumed parameter.
+
 ## 2. Global variables
 
 ### 2.1 Gate oxide — `TOX_18`, `TOX_33`, `TOX_50`, `TOX_12`
@@ -175,6 +193,26 @@ of oxide, giving 4.25 / 6.75 / 11.0 / 31.0 mV·µm. But ONC25 *measures* 5 V CMO
 2.5 V devices (0.78–0.94). On that evidence AutoHV's 5 V value is 1.7–2.2× too wide and its
 agreement with the oxide rule is coincidence. The alternative — anchoring on the measurement and
 scaling by oxide — gives 3.4 / 5.5 / 5.3 / 15.0 mV·µm. This is one number per device to change.
+
+### 3.2 Two mismatch normalisations — do not convert one into the other
+
+The wrappers use **two different** local-mismatch forms, and they are not interchangeable:
+
+| family | wrapper form | what the coefficient means |
+|---|---|---|
+| BSIM3 MOS | `AGAUSS(0, coef/√AUM2)`, `AUM2 = (W/1µ)·(L/1µ)` | `A_VT`, area-normalised, in V·µm |
+| VDMOS | `AGAUSS(0, coef, 3)/√mtot`, `mtot = (W/W_REF)·M` | **σ(Vth) at the W_REF = 10 µm cell**, in V |
+
+The conversion chain was validated in both directions before this was written down. BSIM3
+`coef`/3 reproduces the pre-Z1 `A_VT` values exactly — 0.0105 → 3.50, 0.0120 → 4.00,
+0.0330 → 11.00, 0.0930 → 31.00 mV·µm. On the VDMOS side, converting at the 6 µm² reference cell
+(W_REF 10 µm × `L_ch` 0.6 µm) turns a 20 mV·µm figure into a 0.0245 V cell coefficient, against a
+carded 0.0255 — agreement that confirms the reading.
+
+**The trap:** a VDMOS coefficient looks like a Pelgrom coefficient and is not one. It carries no
+length dependence, because W is the only size knob on these cells — channel and drift length are
+fixed at the process minimum. Applying the `A_VT = c_RDF·√(t_ox·k1)` ladder of §3 to them would
+both use the wrong normalisation and flatten a deliberate per-class ladder.
 
 ### 3.1 Resistor matching: a discrepancy left on the record
 
