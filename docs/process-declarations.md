@@ -128,8 +128,6 @@ Supporting public literature (citable openly):
 > "Vth-vs-tox tension resolved" paragraph below holds at 11 nm for the same reason it held at 13.
 > `ksubthres` is not rescaled either — ngspice's VDMOS model has no oxide at all.
 
-## D2 — VDMOS gate-oxide ladder · `[declared-grounded]`
-
 **Question.** What is the VDMOS gate-oxide thickness per class, and does it rise with voltage?
 
 **Grounded facts.** The reference process's gate-oxide ladder, by **gate** voltage class, is
