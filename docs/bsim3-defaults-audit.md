@@ -145,3 +145,87 @@ pre-existing miss. Fixed with the one parameter meant for it:
 | `nfactor` (PMOS50 only) | 1.9000 | **1.5055** | S 104.3 → 95.32 mV/dec |
 
 `k1`, `nch` and `vth0` untouched. Fitted by bisection against the measured slope.
+
+## 7. The 12 V card refit
+
+NMOS12 and PMOS12 were built by scaling the 5 V cards without re-deriving the parameters that
+depend on doping and oxide. Three independent lines of evidence agreed:
+
+1. **Body effect.** `γ = tox·√(2qε_si·Na)/ε_ox` from each card's own `nch` at 31 nm is 1.552 (N)
+   and 1.715 (P); the cards carried 0.750 and 0.820 — 2.07× and 2.09× low.
+2. **Subthreshold slope.** Measured 152.8 / 170.2 mV/dec, against a first-principles
+   `n = 1 + C_dep/C_ox` floor of 110.9 / 115.9 — what a high-`C_dep` device does, confirming `nch`
+   as the trustworthy parameter on these two cards.
+3. **Threshold.** The cards' `vth0` (1.350 / −1.550) is consistent with the *corrected* γ
+   (+1.25 / −1.42 V, inside ±0.3) and inconsistent with the copied `k1` (+0.53 / −0.61, outside).
+   `vth0` was fitted for the device the corrected `k1` describes.
+
+A parameter-by-parameter comparison also found **22 of 59 shared parameters byte-identical** to the
+5 V cards, including `k2`, `voff`, `nfactor`, `cj` and `cjsw`.
+
+### 7.1 What changed
+
+| parameter | NMOS12 | PMOS12 | basis |
+|---|---|---|---|
+| `k1` | 0.750 → **1.552** | 0.820 → **1.715** | `γ(nch, 31 nm)` |
+| `k2` | −0.030 → **−0.03** (no change) | −0.040 → **−0.03** | declared per X2, not re-derived: there is no 12 V extraction data, and the standing value was a byte-copy of the 5 V card. NMOS12's copy already equalled the declared value, so only PMOS12 moved |
+| `nfactor` | 1.7000 → **1.0625** | 1.8500 → **0.9713** | fitted to the 120 ± 10 mV/dec derived band |
+| `voff` | −0.0700 → **−0.1544** | −0.0800 → **−0.2015** | fitted to hold weak-inversion continuity |
+| `cj` | 0.0014 → **0.0012124** | 0.0015 → **0.001329** | `√(nch_5V/nch_12V)` = 0.866 / 0.886 |
+| `cjsw` | 1e-10 → **8.66e-11** | 1e-10 → **8.86e-11** | same factor |
+
+Junction densities scale on the **card-`nch`** basis, not `Na(k1)`: a source/drain-to-well junction
+is set by the doping on its lightly-doped side, for which `nch` is the nearer proxy, while `Na(k1)`
+is the halo-inflated depletion-averaged *channel* doping. The cards already distinguished the 12 V
+junction in `xj` (5e-7 m vs the 5 V card's 2.6e-7) while carrying identical densities — corroborating
+that depth was genuine and density was the copy.
+
+### 7.2 Acceptance, measured
+
+| quantity | NMOS12 | PMOS12 | target |
+|---|---|---|---|
+| subthreshold slope | 152.8 → **120.9** mV/dec | 170.2 → **124.4** | 120 ± 10 |
+| weak-inversion Id at `vth0` − 0.3 V | 98 % of before | 100 % | ≥ 90 % |
+| ΔVth at Vsb = 5 V | 0.825 → **2.090 V** | 0.910 → **2.406 V** | ≈ γ-implied |
+| implied `k1_eff`, long device (W 50 µm, L 10 µm) | **1.463 (94 % of declared)** | **1.677 (98 %)** | body effect = γ(nch) |
+| Idsat at Vgs = Vds = 12 V, cases 0–4 | **−5.7 to −6.3 %** | **−5.7 to −6.3 %** | within 10 % |
+
+Three extraction methods agree on ΔVth (constant-current at 1 µA and 100 nA, and gm-max linear
+extrapolation: 2.090 / 2.078 / 2.044 on NMOS12), so the numbers are not extraction artefacts.
+
+### 7.3 Two predictions of mine that were wrong, and what actually happened
+
+- **"Idsat will not move, because `k1` only touches the body-bias term."** It moved −6.0 % on
+  both cards. Reverting **one** parameter at a time attributes the entire shift to **`k1`**: with
+  `k1` alone put back, the pre-refit current returns exactly (1.854488e-03 N / 8.652385e-04 P),
+  while reverting `k2`, `voff`, `nfactor` or `cj`/`cjsw` alone leaves the full −6.0 % in place.
+  `k1` is not confined to the body-bias term — it also sets BSIM3's bulk-charge factor `Abulk`,
+  which scales the saturation current at any bias including Vbs = 0. The operating-point split
+  confirms that mechanism: at Vgs = 12 V, the saturation current (Vds = 12 V) moves −6.0 % while
+  the linear current (Vds = 0.1 V) moves only −0.9 % (N) / −1.1 % (P). A threshold shift would
+  move both alike; a bulk-charge effect moves saturation and barely touches linear.
+
+  I mis-attributed this bullet **twice**: first to `k1`/`k2` jointly (the ablation reverted them
+  together and could not separate them), then to `k2` alone — which the card diff already refuted,
+  since NMOS12's `k2` never changed yet its Idsat moved the full −6.0 %. The one-at-a-time
+  measurement above is what settles it. The acceptance passes either way, but the reasoning behind
+  the original prediction was wrong.
+- **"The measured body effect should equal the closed form."** It is ~16 % below it
+  (2.090 vs 2.495 V). `dvt0` — short-channel Vth roll-off — accounts for the geometry-dependent
+  part: disabling it moves the implied `k1_eff` from 1.383 to 1.465, and a wide/long device
+  independently reproduces 1.463. `k3` and `toxm` contribute nothing. The remaining 6 % is BSIM3
+  evaluating `√(φs − Vbs)` where the closed form uses `√(2φ_F + Vsb)`.
+
+### 7.4 Anchor updated
+
+`docs/anchor-values.json`, NMOS12/PMOS12 `subthreshold_swing`: 72–96 (target 80, `industry`) →
+**110–130 (target 120, `autohv-derived`)**. The retired value was a thin-oxide industry number and
+does not apply to a 31 nm gate. The first-principles floor (110.9 / 115.9) is recorded in the
+entry's basis.
+
+### 7.5 What moves downstream
+
+12 V body effect roughly doubles: ΔVth at Vsb = 5 V rises by ≈ 1.2–1.5 V, so every 12 V circuit
+with source not tied to body moves. Subthreshold and weak-inversion entries move; strong-inversion
+Idsat moves −6 %. Junction capacitances drop 11–13 %, so 12 V delay and comparator timing moves.
+The NMOS12 analog-floor and every 12 V sizing-guide entry are re-derived in Phase 7.

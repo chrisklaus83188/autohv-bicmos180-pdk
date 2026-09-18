@@ -35,6 +35,10 @@ them. `k1` is the parameter fitted to the device's measured body effect, so it i
 describes the depletion charge Pelgrom mismatch depends on. See
 `docs/bsim3-defaults-audit.md` §6.1 for the per-card ratios.
 
+**Scope of that rule: `k1` for channel depletion charge; `nch` for junction quantities.**
+A source/drain-to-well junction is set by the doping on its lightly-doped side, so junction
+capacitance scaling uses `nch`, not the halo-inflated `Na(k1)`. See §7.1 of the audit.
+
 ## 2. Global variables
 
 ### 2.1 Gate oxide — `TOX_18`, `TOX_33`, `TOX_50`, `TOX_12`
