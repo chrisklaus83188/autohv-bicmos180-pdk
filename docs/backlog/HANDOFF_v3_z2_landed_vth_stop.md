@@ -62,6 +62,13 @@ would shift. That was wrong — nothing reads the ρ layer, so it changes no num
 
 ### 4.1 What I derived
 
+> **Superseded by ruling AB1 (2026-09-18).** The `0.85` automotive tightening factor was
+> **rejected in U3** and must not appear anywhere — its use here was mine in error. The
+> derivation was also missing two terms and a coupling: fixed oxide charge `Q_f`, effective
+> channel charge (not dose alone), and the oxide contribution, which is *not* "carried
+> separately" by `TOX_*` but must be coupled explicitly. See
+> `HANDOFF_v3_vth_three_term.md`.
+
 `VTH_<device>` is a **wafer-level** additive shift on `vth0`/`VTO`, not the Pelgrom local term
 (that is `A_VT`, landed in Z1), so it carries no `1/√(W·L)`. The implant-driven part:
 
