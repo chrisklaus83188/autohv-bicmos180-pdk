@@ -60,13 +60,13 @@
    "tag": "industry"
   },
   "avt_1sigma": {
-   "target": 4.25,
-   "lo": 2.12,
-   "hi": 6.38,
+   "target": 3.44,
+   "lo": 2.41,
+   "hi": 4.47,
    "units": "mV.um",
    "sigma_convention": "1-sigma",
-   "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 3.50",
-   "tag": "industry"
+   "basis": "A_VT = c_RDF*sqrt(tox_nm*k1) with c_RDF = 2.1991 mV.um/sqrt(nm) computed from the RDF expression at f_RDF = 0.30 (tox 4.25 nm, k1 0.560, Na 6.237e+17 cm-3, Wdep 43.9 nm). Band is the +-30 % error bar. Retired: the 'A_VT ~ 1 mV.um per nm of tox (+-50 %)' thin-oxide heuristic, and the externally anchored ladder before it. See models/stat_model.json local_mismatch._A_VT_derivation.",
+   "tag": "autohv-derived"
   },
   "cj_area": {
    "target": 1.0,
@@ -188,13 +188,13 @@
    "tag": "industry"
   },
   "avt_1sigma": {
-   "target": 4.25,
-   "lo": 2.12,
-   "hi": 6.38,
+   "target": 3.66,
+   "lo": 2.56,
+   "hi": 4.76,
    "units": "mV.um",
    "sigma_convention": "1-sigma",
-   "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 3.50",
-   "tag": "industry"
+   "basis": "A_VT = c_RDF*sqrt(tox_nm*k1) with c_RDF = 2.1991 mV.um/sqrt(nm) computed from the RDF expression at f_RDF = 0.30 (tox 4.25 nm, k1 0.630, Na 7.893e+17 cm-3, Wdep 39.3 nm). Band is the +-30 % error bar. Retired: the 'A_VT ~ 1 mV.um per nm of tox (+-50 %)' thin-oxide heuristic, and the externally anchored ladder before it. See models/stat_model.json local_mismatch._A_VT_derivation.",
+   "tag": "autohv-derived"
   },
   "cj_area": {
    "target": 1.05,
@@ -316,13 +316,13 @@
    "tag": "industry"
   },
   "avt_1sigma": {
-   "target": 6.75,
-   "lo": 3.38,
-   "hi": 10.12,
+   "target": 4.51,
+   "lo": 3.16,
+   "hi": 5.86,
    "units": "mV.um",
    "sigma_convention": "1-sigma",
-   "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 4.00",
-   "tag": "industry"
+   "basis": "A_VT = c_RDF*sqrt(tox_nm*k1) with c_RDF = 2.1991 mV.um/sqrt(nm) computed from the RDF expression at f_RDF = 0.30 (tox 6.75 nm, k1 0.620, Na 3.031e+17 cm-3, Wdep 61.7 nm). Band is the +-30 % error bar. Retired: the 'A_VT ~ 1 mV.um per nm of tox (+-50 %)' thin-oxide heuristic, and the externally anchored ladder before it. See models/stat_model.json local_mismatch._A_VT_derivation.",
+   "tag": "autohv-derived"
   },
   "cj_area": {
    "target": 0.82,
@@ -444,13 +444,13 @@
    "tag": "industry"
   },
   "avt_1sigma": {
-   "target": 6.75,
-   "lo": 3.38,
-   "hi": 10.12,
+   "target": 4.81,
+   "lo": 3.37,
+   "hi": 6.25,
    "units": "mV.um",
    "sigma_convention": "1-sigma",
-   "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 4.00",
-   "tag": "industry"
+   "basis": "A_VT = c_RDF*sqrt(tox_nm*k1) with c_RDF = 2.1991 mV.um/sqrt(nm) computed from the RDF expression at f_RDF = 0.30 (tox 6.75 nm, k1 0.700, Na 3.863e+17 cm-3, Wdep 55.0 nm). Band is the +-30 % error bar. Retired: the 'A_VT ~ 1 mV.um per nm of tox (+-50 %)' thin-oxide heuristic, and the externally anchored ladder before it. See models/stat_model.json local_mismatch._A_VT_derivation.",
+   "tag": "autohv-derived"
   },
   "cj_area": {
    "target": 0.88,
@@ -572,13 +572,13 @@
    "tag": "grounded"
   },
   "avt_1sigma": {
-   "target": 11.0,
-   "lo": 5.5,
-   "hi": 16.5,
+   "target": 5.96,
+   "lo": 4.17,
+   "hi": 7.75,
    "units": "mV.um",
    "sigma_convention": "1-sigma",
-   "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 4.50",
-   "tag": "industry"
+   "basis": "A_VT = c_RDF*sqrt(tox_nm*k1) with c_RDF = 2.1991 mV.um/sqrt(nm) computed from the RDF expression at f_RDF = 0.30 (tox 11.00 nm, k1 0.680, Na 1.373e+17 cm-3, Wdep 89.5 nm). Band is the +-30 % error bar. Retired: the 'A_VT ~ 1 mV.um per nm of tox (+-50 %)' thin-oxide heuristic, and the externally anchored ladder before it. See models/stat_model.json local_mismatch._A_VT_derivation.",
+   "tag": "autohv-derived"
   },
   "cj_area": {
    "target": 1.4,
@@ -700,13 +700,13 @@
    "tag": "grounded"
   },
   "avt_1sigma": {
-   "target": 11.0,
-   "lo": 5.5,
-   "hi": 16.5,
+   "target": 6.41,
+   "lo": 4.49,
+   "hi": 8.33,
    "units": "mV.um",
    "sigma_convention": "1-sigma",
-   "basis": "A_VT ~ 1 mV.um per nm of tox (+/-50%); PDK currently implies 4.50",
-   "tag": "industry"
+   "basis": "A_VT = c_RDF*sqrt(tox_nm*k1) with c_RDF = 2.1991 mV.um/sqrt(nm) computed from the RDF expression at f_RDF = 0.30 (tox 11.00 nm, k1 0.780, Na 1.806e+17 cm-3, Wdep 78.7 nm). Band is the +-30 % error bar. Retired: the 'A_VT ~ 1 mV.um per nm of tox (+-50 %)' thin-oxide heuristic, and the externally anchored ladder before it. See models/stat_model.json local_mismatch._A_VT_derivation.",
+   "tag": "autohv-derived"
   },
   "cj_area": {
    "target": 1.5,
@@ -828,13 +828,13 @@
    "tag": "autohv-derived"
   },
   "avt_1sigma": {
-   "target": 31,
-   "lo": 20,
-   "hi": 35,
+   "target": 15.02,
+   "lo": 10.51,
+   "hi": 19.53,
    "units": "mV.um",
    "sigma_convention": "1-sigma",
-   "basis": "1 mV.um/nm at the 31nm oxide (O5)",
-   "tag": "grounded"
+   "basis": "A_VT = c_RDF*sqrt(tox_nm*k1) with c_RDF = 2.1991 mV.um/sqrt(nm) computed from the RDF expression at f_RDF = 0.30 (tox 31.00 nm, k1 1.552, Na 9.004e+16 cm-3, Wdep 109.1 nm). Band is the +-30 % error bar. Retired: the 'A_VT ~ 1 mV.um per nm of tox (+-50 %)' thin-oxide heuristic, and the externally anchored ladder before it. See models/stat_model.json local_mismatch._A_VT_derivation.",
+   "tag": "autohv-derived"
   },
   "cj_area": {
    "target": 0.35,
@@ -956,13 +956,13 @@
    "tag": "autohv-derived"
   },
   "avt_1sigma": {
-   "target": 31,
-   "lo": 20,
-   "hi": 35,
+   "target": 15.84,
+   "lo": 11.09,
+   "hi": 20.59,
    "units": "mV.um",
    "sigma_convention": "1-sigma",
-   "basis": "1 mV.um/nm at the 31nm oxide (O5)",
-   "tag": "grounded"
+   "basis": "A_VT = c_RDF*sqrt(tox_nm*k1) with c_RDF = 2.1991 mV.um/sqrt(nm) computed from the RDF expression at f_RDF = 0.30 (tox 31.00 nm, k1 1.715, Na 1.099e+17 cm-3, Wdep 99.3 nm). Band is the +-30 % error bar. Retired: the 'A_VT ~ 1 mV.um per nm of tox (+-50 %)' thin-oxide heuristic, and the externally anchored ladder before it. See models/stat_model.json local_mismatch._A_VT_derivation.",
+   "tag": "autohv-derived"
   },
   "cj_area": {
    "target": 0.38,
