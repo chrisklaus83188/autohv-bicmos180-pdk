@@ -407,14 +407,13 @@
    }
   },
   "_VTH_VDMOS_template": {
-   "_comment": "one entry per VDMOS device, listed individually below",
+   "_comment": "one entry per VDMOS device, listed individually below; the sigma on each entry is derived per device and this template no longer carries one",
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
-   "note": "ONC25 states no enhancement-LDMOS Vth band; its only LDMOS Vth figures are for the depletion NLDMOSD family (-1.65 V, -2.2/-1.1). Per ruling 3.3 the LV-class band is the better anchor, used as 130 mV 3-sigma absolute."
+   "derivation": "Ruling AB1. Same three-term construction as the BSIM3 cards, but k1 comes from each card's own measured subthreshold slope at the 11 nm oxide (docs/stat-model.md S1.2), since VDMOS cards carry no k1 and no tox. Realised range across the thirteen devices: 0.02003-0.02307 V 1-sigma.",
+   "supersedes": "sigma 0.0433 / 0.13 3-sigma tagged declared:LV-class-anchor, which borrowed the LV CMOS band because no enhancement-LDMOS threshold band was available. Each device now derives its own."
   },
   "VTH_NDMOS20": {
    "origin": "20 V n-LDMOS channel implant",
