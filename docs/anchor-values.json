@@ -819,13 +819,13 @@
    "tag": "industry"
   },
   "subthreshold_swing": {
-   "target": 80,
-   "lo": 72,
-   "hi": 96,
+   "target": 120,
+   "lo": 110,
+   "hi": 130,
    "units": "mV/dec",
    "sigma_convention": "n/a",
-   "basis": "S=n*ln10*kT/q at 300K, n=1.2-1.6",
-   "tag": "industry"
+   "basis": "n = 1 + Cdep/Cox from the card's own nch and 31 nm oxide gives a textbook floor of 110.9 (N) / 115.9 (P) mV/dec; real devices sit above the floor through interface-trap capacitance, so the target is the floor x ~1.08. The 72-96 industry value previously here was a thin-oxide number and is retired.",
+   "tag": "autohv-derived"
   },
   "avt_1sigma": {
    "target": 31,
@@ -947,13 +947,13 @@
    "tag": "industry"
   },
   "subthreshold_swing": {
-   "target": 80,
-   "lo": 72,
-   "hi": 96,
+   "target": 120,
+   "lo": 110,
+   "hi": 130,
    "units": "mV/dec",
    "sigma_convention": "n/a",
-   "basis": "S=n*ln10*kT/q at 300K, n=1.2-1.6",
-   "tag": "industry"
+   "basis": "n = 1 + Cdep/Cox from the card's own nch and 31 nm oxide gives a textbook floor of 110.9 (N) / 115.9 (P) mV/dec; real devices sit above the floor through interface-trap capacitance, so the target is the floor x ~1.08. The 72-96 industry value previously here was a thin-oxide number and is retired.",
+   "tag": "autohv-derived"
   },
   "avt_1sigma": {
    "target": 31,

@@ -737,7 +737,7 @@
 + nch=9e+16
 + nsub=2e+16
 + vth0={((1.35*_isTT + 1.27*_isFF + 1.43*_isSS + 1.27*_isFS + 1.43*_isSF))+P_DVTO_NMOS12}
-+ k1=0.75
++ k1=1.552
 + k2=-0.03
 + u0={((80*_isTT + 94.4*_isFF + 67.2*_isSS + 94.4*_isFS + 67.2*_isSF))*(1+P_DUO_NMOS12)}
 + ua=2.5e-09
@@ -746,8 +746,8 @@
 + vsat={((75000*_isTT + 76200*_isFF + 73800*_isSS + 76200*_isFS + 73800*_isSF))*(1+P_DVSAT_NMOS12)}
 + a0=1
 + ags=0.16
-+ nfactor=1.7
-+ voff=-0.07
++ nfactor=1.0625
++ voff=-0.1544
 + kt1=-0.48
 + ute=-1.2
 + dvt0=1.6
@@ -770,8 +770,8 @@
 + cgso=1.5e-10
 + cgdo=1.5e-10
 + cgbo=5e-11
-+ cj=0.0014
-+ cjsw=1e-10
++ cj=0.0012124
++ cjsw=8.66e-11
 + pb=0.98
 + pbsw=0.98
 + mj=0.4
@@ -801,8 +801,8 @@
 + nch=1.1e+17
 + nsub=2.4e+16
 + vth0={((-1.55*_isTT + -1.47*_isFF + -1.63*_isSS + -1.63*_isFS + -1.47*_isSF))+P_DVTO_PMOS12}
-+ k1=0.82
-+ k2=-0.04
++ k1=1.715
++ k2=-0.03
 + u0={((40*_isTT + 48*_isFF + 32.8*_isSS + 32.8*_isFS + 48*_isSF))*(1+P_DUO_PMOS12)}
 + ua=3e-09
 + ub=9e-19
@@ -810,8 +810,8 @@
 + vsat={((62000*_isTT + 62992*_isFF + 61256*_isSS + 61256*_isFS + 62992*_isSF))*(1+P_DVSAT_PMOS12)}
 + a0=1.05
 + ags=0.18
-+ nfactor=1.85
-+ voff=-0.08
++ nfactor=0.9713
++ voff=-0.2015
 + kt1=-0.44
 + ute=-1.2
 + dvt0=1.7
@@ -834,8 +834,8 @@
 + cgso=1.6e-10
 + cgdo=1.6e-10
 + cgbo=5.2e-11
-+ cj=0.0015
-+ cjsw=1e-10
++ cj=0.001329
++ cjsw=8.86e-11
 + pb=0.97
 + pbsw=0.97
 + mj=0.39
