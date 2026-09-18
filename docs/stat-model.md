@@ -85,6 +85,26 @@ F2 quoted — same source, tighter provenance. The 12 V band is an extrapolation
 band borrows the LV anchor, because ONC25's only LDMOS threshold figures are for its *depletion*
 family (−1.65 V, −2.2/−1.1), which is the wrong device to anchor on. Both carry ±50 %.
 
+### 2.2a Where the oxide part of Vth lives
+
+`VTH_<device>` is the **private** draw and holds two terms in quadrature: fixed oxide charge
+(`σ(V_FB) = q·σ(Q_f)/C_ox`) and effective channel charge (`k1·√(2φ_F)·σ_Qdep/2`). The **oxide**
+term is deliberately *not* in it — it enters through the shared `TOX_<class>` draw, so that
+devices on the same oxide correlate in Monte Carlo:
+
+| parameter | follows | expression |
+|---|---|---|
+| `vth0` | `TOX_<class>` | `Δvth0 = k1·√(2φ_F)·(Δt_ox/t_ox)` |
+| `k1` | `TOX_<class>` | `Δk1/k1 = Δt_ox/t_ox` |
+| `VTO_<vdmos>_STAT` | `TOX_50` | as `vth0`, with `k1_equiv` from §1.2 |
+
+**This coupling must be applied by the generator; BSIM3 does not do it.** `showmod` confirms
+`vth0` and `k1` are explicit card parameters and do not move when `tox` does. Perturbing `tox` by
+the `TOX_*` 1σ and reading Vth back measures only 3.7–19.5 % of the closed form — the residual
+short-channel and narrow-width terms. The generator applies the full expression: the residual is
+not a subtractable constant (it moves with geometry, and in opposite directions across classes)
+and at 4–20 % it is well inside the ±50 % error bar on the inputs.
+
 ### 2.3 Mobility — `U0_<device>`, solved not declared
 
 Lognormal, one per device, and the only variable whose σ is **derived**. Fab statistical models

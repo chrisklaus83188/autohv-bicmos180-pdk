@@ -41,11 +41,7 @@
      "param": "tox",
      "form": "multiplicative"
     }
-   ],
-   "master": {
-    "name": "G_OX",
-    "rho": 0.7
-   }
+   ]
   },
   "TOX_33": {
    "origin": "3.3 V gate-oxide growth",
@@ -64,11 +60,7 @@
      "param": "tox",
      "form": "multiplicative"
     }
-   ],
-   "master": {
-    "name": "G_OX",
-    "rho": 0.7
-   }
+   ]
   },
   "TOX_50": {
    "origin": "5 V gate-oxide growth",
@@ -109,11 +101,7 @@
      "param": "VTO_*_STAT",
      "form": "via-loading"
     }
-   ],
-   "master": {
-    "name": "G_OX",
-    "rho": 0.7
-   }
+   ]
   },
   "TOX_12": {
    "origin": "12 V gate-oxide growth (31 nm, separate module)",
@@ -132,11 +120,7 @@
      "param": "tox",
      "form": "multiplicative"
     }
-   ],
-   "master": {
-    "name": "G_OX",
-    "rho": 0.7
-   }
+   ]
   },
   "VTH_NMOS18": {
    "origin": "1.8 V n-channel implant",
@@ -144,20 +128,32 @@
     "NMOS18"
    ],
    "distribution": "normal",
-   "sigma": 0.0293,
-   "sigma_3": 0.088,
+   "sigma": 0.010256,
+   "sigma_3": 0.030768,
    "units": "V",
-   "source": "onc25:2.5V-class-band",
-   "error_bar": "+-25%",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
+   "error_bar": "+-50%",
    "applies_to": [
     {
      "param": "vth0",
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_N",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.00493,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.008993,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.007177,
+    "total_with_oxide_V": 0.012518,
+    "k1": 0.56,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": null,
+    "within": null,
+    "note": "no comparable class in the local reference"
    }
   },
   "VTH_PMOS18": {
@@ -166,20 +162,32 @@
     "PMOS18"
    ],
    "distribution": "normal",
-   "sigma": 0.0293,
-   "sigma_3": 0.088,
+   "sigma": 0.011314,
+   "sigma_3": 0.033943,
    "units": "V",
-   "source": "onc25:2.5V-class-band",
-   "error_bar": "+-25%",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
+   "error_bar": "+-50%",
    "applies_to": [
     {
      "param": "vth0",
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_P",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.00493,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.010184,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.008127,
+    "total_with_oxide_V": 0.01393,
+    "k1": 0.63,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": null,
+    "within": null,
+    "note": "no comparable class in the local reference"
    }
   },
   "VTH_NMOS33": {
@@ -188,20 +196,35 @@
     "NMOS33"
    ],
    "distribution": "normal",
-   "sigma": 0.038,
-   "sigma_3": 0.114,
+   "sigma": 0.012508,
+   "sigma_3": 0.037525,
    "units": "V",
-   "source": "onc25:3.3V-class-band",
-   "error_bar": "+-25%",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
+   "error_bar": "+-50%",
    "applies_to": [
     {
      "param": "vth0",
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_N",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.00783,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.009755,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.007784,
+    "total_with_oxide_V": 0.014733,
+    "k1": 0.62,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.0205,
+     0.112
+    ],
+    "within": false,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_PMOS33": {
@@ -210,20 +233,35 @@
     "PMOS33"
    ],
    "distribution": "normal",
-   "sigma": 0.038,
-   "sigma_3": 0.114,
+   "sigma": 0.013576,
+   "sigma_3": 0.040728,
    "units": "V",
-   "source": "onc25:3.3V-class-band",
-   "error_bar": "+-25%",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
+   "error_bar": "+-50%",
    "applies_to": [
     {
      "param": "vth0",
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_P",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.00783,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.011091,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.00885,
+    "total_with_oxide_V": 0.016206,
+    "k1": 0.7,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.0205,
+     0.112
+    ],
+    "within": false,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_NMOS50": {
@@ -232,21 +270,35 @@
     "NMOS50"
    ],
    "distribution": "normal",
-   "sigma": 0.045,
-   "sigma_3": 0.135,
+   "sigma": 0.016492,
+   "sigma_3": 0.049477,
    "units": "V",
-   "source": "onc25:5V-LSL/USL-bundle",
-   "error_bar": "+-25%",
-   "note": "ONC25 section HH measures NMOS5V Vth 0.657/0.792/0.927, i.e. +-135 mV. Used in place of the +-128 mV pass-2 synthesis quoted in ruling F2 (same source, tighter provenance).",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
+   "error_bar": "+-50%",
    "applies_to": [
     {
      "param": "vth0",
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_N",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.01045,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.008339,
+    "total_with_oxide_V": 0.018481,
+    "k1": 0.68,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.008,
+     0.044
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_PMOS50": {
@@ -255,20 +307,35 @@
     "PMOS50"
    ],
    "distribution": "normal",
-   "sigma": 0.045,
-   "sigma_3": 0.135,
+   "sigma": 0.017575,
+   "sigma_3": 0.052725,
    "units": "V",
-   "source": "onc25:5V-LSL/USL-bundle",
-   "error_bar": "+-25%",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
+   "error_bar": "+-50%",
    "applies_to": [
     {
      "param": "vth0",
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_P",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.012086,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.009645,
+    "total_with_oxide_V": 0.020048,
+    "k1": 0.78,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.008,
+     0.044
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_NMOS12": {
@@ -277,10 +344,10 @@
     "NMOS12"
    ],
    "distribution": "normal",
-   "sigma": 0.05,
-   "sigma_3": 0.15,
+   "sigma": 0.04298,
+   "sigma_3": 0.128939,
    "units": "V",
-   "source": "declared:12V-extrapolation",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -288,10 +355,21 @@
      "form": "additive"
     }
    ],
-   "note": "Ruling G2: ONC25 was searched for a Vth band on its highest-voltage CMOS and has none (its 12 V hits concern Lmin only; section HH covers NMOS5V). Stays declared. This is the weakest-grounded class: its fixed set covers 3.6 % of a 14 % band, so U0 carries the corner.",
-   "master": {
-    "name": "G_N",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.035958,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.023542,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.018787,
+    "total_with_oxide_V": 0.046906,
+    "k1": 1.552,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": null,
+    "within": null,
+    "note": "no comparable class in the local reference"
    }
   },
   "VTH_PMOS12": {
@@ -300,10 +378,10 @@
     "PMOS12"
    ],
    "distribution": "normal",
-   "sigma": 0.05,
-   "sigma_3": 0.15,
+   "sigma": 0.044477,
+   "sigma_3": 0.133431,
    "units": "V",
-   "source": "declared:12V-extrapolation",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -311,10 +389,21 @@
      "form": "additive"
     }
    ],
-   "note": "Ruling G2: ONC25 was searched for a Vth band on its highest-voltage CMOS and has none (its 12 V hits concern Lmin only; section HH covers NMOS5V). Stays declared. This is the weakest-grounded class: its fixed set covers 3.6 % of a 14 % band, so U0 carries the corner.",
-   "master": {
-    "name": "G_P",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.035958,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.026177,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.020889,
+    "total_with_oxide_V": 0.049138,
+    "k1": 1.715,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": null,
+    "within": null,
+    "note": "no comparable class in the local reference"
    }
   },
   "_VTH_VDMOS_template": {
@@ -333,10 +422,10 @@
     "NDMOS20"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.020025,
+   "sigma_3": 0.060074,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -344,9 +433,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_N",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.015433,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.012316,
+    "total_with_oxide_V": 0.023509,
+    "k1": 0.9825,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_PDMOS20": {
@@ -355,10 +459,10 @@
     "PDMOS20"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.020723,
+   "sigma_3": 0.06217,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -366,9 +470,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_P",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.01633,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.013031,
+    "total_with_oxide_V": 0.02448,
+    "k1": 1.0364,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_NDMOS40": {
@@ -377,10 +496,10 @@
     "NDMOS40"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.020547,
+   "sigma_3": 0.061641,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -388,9 +507,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_N",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.016105,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.012852,
+    "total_with_oxide_V": 0.024235,
+    "k1": 1.0229,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_PDMOS40": {
@@ -399,10 +533,10 @@
     "PDMOS40"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.02117,
+   "sigma_3": 0.063509,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -410,9 +544,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_P",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.016892,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.01348,
+    "total_with_oxide_V": 0.025097,
+    "k1": 1.0701,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_NDMOS60": {
@@ -421,10 +570,10 @@
     "NDMOS60"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.020111,
+   "sigma_3": 0.060333,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -432,9 +581,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_N",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.015545,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.012405,
+    "total_with_oxide_V": 0.023629,
+    "k1": 0.9893,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_PDMOS60": {
@@ -443,10 +607,10 @@
     "PDMOS60"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.020591,
+   "sigma_3": 0.061773,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -454,9 +618,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_P",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.016161,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.012897,
+    "total_with_oxide_V": 0.024296,
+    "k1": 1.0263,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_NDMOS80": {
@@ -465,10 +644,10 @@
     "NDMOS80"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.020768,
+   "sigma_3": 0.062303,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -476,9 +655,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_N",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.016386,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.013076,
+    "total_with_oxide_V": 0.024541,
+    "k1": 1.0397,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_PDMOS80": {
@@ -487,10 +681,10 @@
     "PDMOS80"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.02126,
+   "sigma_3": 0.063779,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -498,9 +692,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_P",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.017005,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.01357,
+    "total_with_oxide_V": 0.025221,
+    "k1": 1.0769,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_NDMOS120": {
@@ -509,10 +718,10 @@
     "NDMOS120"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.021486,
+   "sigma_3": 0.064458,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -520,9 +729,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_N",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.017287,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.013795,
+    "total_with_oxide_V": 0.025534,
+    "k1": 1.0937,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_PDMOS120": {
@@ -531,10 +755,10 @@
     "PDMOS120"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.02199,
+   "sigma_3": 0.06597,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -542,9 +766,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_P",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.01791,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.014292,
+    "total_with_oxide_V": 0.026226,
+    "k1": 1.1309,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_NDMOS200": {
@@ -553,10 +792,10 @@
     "NDMOS200"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.021623,
+   "sigma_3": 0.064868,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -564,9 +803,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_N",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.017457,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.013931,
+    "total_with_oxide_V": 0.025722,
+    "k1": 1.1039,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_PDMOS200": {
@@ -575,10 +829,10 @@
     "PDMOS200"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.023068,
+   "sigma_3": 0.069203,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -586,9 +840,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_P",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.019218,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.015336,
+    "total_with_oxide_V": 0.0277,
+    "k1": 1.2089,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "VTH_DNMOS20": {
@@ -597,10 +866,10 @@
     "DNMOS20"
    ],
    "distribution": "normal",
-   "sigma": 0.0433,
-   "sigma_3": 0.13,
+   "sigma": 0.020241,
+   "sigma_3": 0.060723,
    "units": "V",
-   "source": "declared:LV-class-anchor",
+   "source": "autohv-derived (Q_f + effective channel charge, in quadrature)",
    "error_bar": "+-50%",
    "applies_to": [
     {
@@ -608,9 +877,24 @@
      "form": "additive"
     }
    ],
-   "master": {
-    "name": "G_N",
-    "rho": 0.7
+   "derivation": {
+    "private_draw": "quadrature(Q_f term, channel-charge term); the oxide term is NOT here",
+    "Q_f_term_V": 0.012759,
+    "Q_f_form": "sigma(V_FB) = q*sigma(Q_f)/C_ox",
+    "channel_term_V": 0.015713,
+    "channel_form": "k1*sqrt(2*phi_F)*(sigma_Qdep/2), Vth ~ sqrt(Q_dep)",
+    "oxide_term_V_via_TOX": 0.012539,
+    "total_with_oxide_V": 0.02381,
+    "k1": 0.9993,
+    "supersedes": "spec-window (LSL/USL) sigma, which is a spec limit and not a model sigma"
+   },
+   "plausibility": {
+    "band": [
+     0.01,
+     0.18
+    ],
+    "within": true,
+    "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
    }
   },
   "_U0_calibration": {
@@ -666,8 +950,7 @@
     "DNMOS20"
    ],
    "sigma": null,
-   "calibration_caveat": "The measured fixed set was VTH, TOX and RDSW only. DL_POLY and DW_ACT never entered it, because the wrappers do not implement edge bias yet (brief section 5.2, Phase 3), so they had no lever to perturb. F3a calls DL_POLY first-order at the classic bench, so these U0 values are provisional. The next harness pass realizes DL_POLY and DW_ACT through the cards' lint/wint (dL = -2*dlint, dW = -2*dwint) and the calibration is re-run.",
-   "master": "G_N/G_P by polarity"
+   "calibration_caveat": "The measured fixed set was VTH, TOX and RDSW only. DL_POLY and DW_ACT never entered it, because the wrappers do not implement edge bias yet (brief section 5.2, Phase 3), so they had no lever to perturb. F3a calls DL_POLY first-order at the classic bench, so these U0 values are provisional. The next harness pass realizes DL_POLY and DW_ACT through the cards' lint/wint (dL = -2*dlint, dW = -2*dwint) and the calibration is re-run."
   },
   "_RDSW_template": {
    "_comment": "one entry per MOS/VDMOS device; VDMOS applies to both rd and rs, which come from the same drift module",
@@ -762,11 +1045,7 @@
      "target": "poly_resistor_W",
      "form": "additive-in-wrapper"
     }
-   ],
-   "master": {
-    "name": "G_LITHO",
-    "rho": 0.7
-   }
+   ]
   },
   "DW_ACT_LV": {
    "origin": "LV active/isolation CD",
@@ -789,11 +1068,7 @@
      "target": "mos_W",
      "form": "additive-in-wrapper"
     }
-   ],
-   "master": {
-    "name": "G_LITHO",
-    "rho": 0.7
-   }
+   ]
   },
   "DW_ACT_HV": {
    "origin": "HV active/isolation CD",
@@ -825,11 +1100,7 @@
      "target": "mos_W",
      "form": "additive-in-wrapper"
     }
-   ],
-   "master": {
-    "name": "G_LITHO",
-    "rho": 0.7
-   }
+   ]
   },
   "RSH_RPOLY_HI": {
    "origin": "high-res poly module",
@@ -847,11 +1118,7 @@
      "param": "rsh",
      "form": "multiplicative"
     }
-   ],
-   "master": {
-    "name": "G_RSH",
-    "rho": 0.6
-   }
+   ]
   },
   "RSH_RPOLY_LO": {
    "origin": "doped poly module",
@@ -869,11 +1136,7 @@
      "param": "rsh",
      "form": "multiplicative"
     }
-   ],
-   "master": {
-    "name": "G_RSH",
-    "rho": 0.6
-   }
+   ]
   },
   "RSH_RNWELL": {
    "origin": "n-well module",
@@ -891,11 +1154,7 @@
      "param": "rsh",
      "form": "multiplicative"
     }
-   ],
-   "master": {
-    "name": "G_RSH",
-    "rho": 0.6
-   }
+   ]
   },
   "RSH_RNPLUS": {
    "origin": "n+ diffusion module",
@@ -913,11 +1172,7 @@
      "param": "rsh",
      "form": "multiplicative"
     }
-   ],
-   "master": {
-    "name": "G_RSH",
-    "rho": 0.6
-   }
+   ]
   },
   "RSH_RPPLUS": {
    "origin": "p+ diffusion module",
@@ -935,11 +1190,7 @@
      "param": "rsh",
      "form": "multiplicative"
     }
-   ],
-   "master": {
-    "name": "G_RSH",
-    "rho": 0.6
-   }
+   ]
   },
   "RSH_GATE": {
    "origin": "silicided gate poly",
@@ -966,11 +1217,7 @@
      "target": "mos_rgate",
      "form": "multiplicative"
     }
-   ],
-   "master": {
-    "name": "G_RSH",
-    "rho": 0.6
-   }
+   ]
   },
   "_RHEAD_template": {
    "_comment": "one entry per resistor layer",
@@ -988,8 +1235,7 @@
     "RNWELL",
     "RNPLUS",
     "RPPLUS"
-   ],
-   "master": "G_RSH"
+   ]
   },
   "CDEN_MIM": {
    "origin": "MIM nitride thickness",
@@ -1008,11 +1254,7 @@
      "param": "cj",
      "form": "multiplicative"
     }
-   ],
-   "master": {
-    "name": "G_CAP",
-    "rho": 0.6
-   }
+   ]
   },
   "CDEN_MOM": {
    "origin": "metal pitch / IMD thickness",
@@ -1031,11 +1273,7 @@
      "param": "cj",
      "form": "multiplicative"
     }
-   ],
-   "master": {
-    "name": "G_CAP",
-    "rho": 0.6
-   }
+   ]
   },
   "_CPER_template": {
    "_comment": "one entry per capacitor type; new term, see wrapper section 5.4",
@@ -1051,8 +1289,7 @@
     "CMOM",
     "CFRINGE"
    ],
-   "constraint": "CDEN and CPER are split so total C is unchanged at each type's regression-golden geometry (ruling Q-C).",
-   "master": "G_CAP"
+   "constraint": "CDEN and CPER are split so total C is unchanged at each type's regression-golden geometry (ruling Q-C)."
   },
   "_VBE_template": {
    "_comment": "physical variable for BJT global spread; IS is derived from it (ruling 3.1)",
@@ -1068,8 +1305,7 @@
     "PNP_LAT",
     "NPN_HV",
     "PNP_HV"
-   ],
-   "master": "G_BJT"
+   ]
   },
   "_BF_template": {
    "_comment": "one entry per BJT",
@@ -1090,8 +1326,7 @@
      "param": "bf",
      "form": "multiplicative"
     }
-   ],
-   "master": "G_BJT"
+   ]
   },
   "_RPAR_template": {
    "_comment": "BJT parasitic series resistances rb/rc/re move together (one module)",
@@ -1138,8 +1373,7 @@
     "DZ_5V6",
     "DZ_12",
     "DZ_24"
-   ],
-   "master": "G_BJT"
+   ]
   },
   "_RS_DIO_template": {
    "distribution": "lognormal",
@@ -1240,6 +1474,23 @@
      "form": "multiplicative"
     }
    ]
+  },
+  "_VTH_inputs": {
+   "Q_f_typical_cm2": 50000000000.0,
+   "Q_f_source": "literature: thermal oxide on (100) Si, standard texts (Nicollian & Brews; Sze)",
+   "Q_f_variation_1sigma": 0.5,
+   "Q_f_variation_source": "declared",
+   "Q_f_variation_note": "The ruling's prose states 50 % and its expected-totals table is reproduced by 30 %. 50 % is used per the autonomy-rule tie-break (closer to current PDK behaviour); the 30 % totals are in the handoff.",
+   "Q_dep_3sigma": 0.1,
+   "Q_dep_source": "literature: typical Vth-implant control budget for 0.18-0.25 um",
+   "Q_dep_note": "effective channel charge, not dose alone: implant energy/profile and anneal thermal budget move the depletion charge that sets Vth, and the fab control budget is on the resulting charge",
+   "error_bar": "+-50%",
+   "poly_depletion": "held at zero: second order at these oxide thicknesses"
+  },
+  "_sharing": {
+   "scheme": "binary (ruling U1)",
+   "rule": "Variables sharing a physical cause share ONE draw with coefficient 1.0; everything else is independent. No rho decomposition: the declared rho was the least-grounded number in the model and nothing consumed it.",
+   "consequence": "Corner distance is the Euclidean norm of z, which is what build_corners.py computes and what corner_construction states."
   }
  },
  "dependent_parameters": {
@@ -1287,6 +1538,74 @@
    "coefficient": 1.0,
    "form": "relative-to-relative",
    "reason": "same avalanche physics as the VDMOS breakdown term"
+  },
+  "vth0": {
+   "follows": [
+    "TOX_<class>"
+   ],
+   "coefficient": 1.0,
+   "form": "absolute-from-relative",
+   "expression": "d vth0 = k1*sqrt(2*phi_F) * (d tox / tox)",
+   "reason": "Ruling AB1 S2.1: the oxide contribution to Vth is NOT in the private VTH_<device> draw. It enters through the shared TOX_<class> draw so that same-oxide devices correlate in Monte Carlo. Thicker oxide -> higher |Vth|.",
+   "per_device_sigma_V": {
+    "NMOS18": 0.007177,
+    "PMOS18": 0.008127,
+    "NMOS33": 0.007784,
+    "PMOS33": 0.00885,
+    "NMOS50": 0.008339,
+    "PMOS50": 0.009645,
+    "NMOS12": 0.018787,
+    "PMOS12": 0.020889,
+    "NDMOS20": 0.012316,
+    "PDMOS20": 0.013031,
+    "NDMOS40": 0.012852,
+    "PDMOS40": 0.01348,
+    "NDMOS60": 0.012405,
+    "PDMOS60": 0.012897,
+    "NDMOS80": 0.013076,
+    "PDMOS80": 0.01357,
+    "NDMOS120": 0.013795,
+    "PDMOS120": 0.014292,
+    "NDMOS200": 0.013931,
+    "PDMOS200": 0.015336,
+    "DNMOS20": 0.012539
+   },
+   "validation": {
+    "method": "tox perturbed +-1.33 % on each card, Vth read back by constant-current extraction (1 uA, W/L 10/1, Vds 0.1 V) with log-linear interpolation between sweep samples",
+    "result": "showmod confirms vth0 and k1 do NOT move with tox (0.62 / 0.68 unchanged at 4.25 and 4.307 nm), so BSIM3 carries no implicit oxide-to-threshold coupling. The measured residual is only the short-channel (dvt0/1/2 via lt) and narrow-width (k3) terms, at 3.7-19.5 % of the closed form.",
+    "implicit_fraction_measured": {
+     "NMOS18": {
+      "W10L1": 0.055,
+      "W50L10": 0.037
+     },
+     "NMOS50": {
+      "W10L1": 0.116,
+      "W50L10": 0.108
+     },
+     "NMOS12": {
+      "W10L1": 0.149,
+      "W50L10": 0.195
+     }
+    },
+    "double_counting_decision": "The generator applies the FULL closed form, not the remainder. The residual is not a subtractable constant -- it moves with geometry and in opposite directions across classes (NMOS18 0.055 -> 0.037, NMOS12 0.149 -> 0.195 on a long device) -- and at 4-20 % it sits well inside the +-50 % error bar on the inputs. Recorded so the choice is visible."
+   }
+  },
+  "k1": {
+   "follows": [
+    "TOX_<class>"
+   ],
+   "coefficient": 1.0,
+   "form": "relative-to-relative",
+   "reason": "Ruling AB1 S2.1: gamma scales with oxide thickness, so d k1 / k1 = d tox / tox."
+  },
+  "VTO_<vdmos>_STAT": {
+   "follows": [
+    "TOX_50"
+   ],
+   "coefficient": 1.0,
+   "form": "absolute-from-relative",
+   "expression": "d VTO = k1_equiv*sqrt(2*phi_F) * (d tox / tox)",
+   "reason": "Ruling AB1 S2.1: all thirteen VDMOS sit on the 5 V oxide; k1_equiv comes from the 11 nm body-doping derivation (docs/stat-model.md S1.2)."
   }
  },
  "local_mismatch": {
@@ -2099,147 +2418,6 @@
     "PMOS50",
     "NMOS12",
     "PMOS12"
-   ]
-  }
- },
- "master_variables": {
-  "_comment": "Ruling S1. Each listed variable decomposes as X = rho*G_master + sqrt(1-rho^2)*X_res, with G and X_res independent unit normals. The sigma of X is unchanged; only its decomposition changes. Monte Carlo samples masters and residuals; corner distance is Mahalanobis under the resulting covariance, not the Euclidean norm.",
-  "_grounding": "ONC25 section 8.3 does carry master-variable correlation matrices, but the local extraction lists them under 'noted, not pursued' and did not transcribe them (checked for S1 step 1). The loadings below are therefore DECLARED and are the least-grounded numbers in the model.",
-  "_uncorrelated": "RDSW_*, BV_*, RS_<dio>, CJ_<dio> stay uncorrelated: no source says otherwise.",
-  "G_N": {
-   "origin": "n-channel implant and anneal lot effect",
-   "rho": 0.7,
-   "error_bar": "+-0.2",
-   "source": "declared",
-   "loads_onto": [
-    "VTH_NMOS18",
-    "VTH_NMOS33",
-    "VTH_NMOS50",
-    "VTH_NMOS12",
-    "U0_NMOS18",
-    "U0_NMOS33",
-    "U0_NMOS50",
-    "U0_NMOS12",
-    "VTH_NDMOS20",
-    "VTH_NDMOS40",
-    "VTH_NDMOS60",
-    "VTH_NDMOS80",
-    "VTH_NDMOS120",
-    "VTH_NDMOS200",
-    "VTH_DNMOS20",
-    "U0_NDMOS20",
-    "U0_NDMOS40",
-    "U0_NDMOS60",
-    "U0_NDMOS80",
-    "U0_NDMOS120",
-    "U0_NDMOS200",
-    "U0_DNMOS20"
-   ]
-  },
-  "G_P": {
-   "origin": "p-channel implant lot effect; separate from G_N so FS/SF exist",
-   "rho": 0.7,
-   "error_bar": "+-0.2",
-   "source": "declared",
-   "loads_onto": [
-    "VTH_PMOS18",
-    "VTH_PMOS33",
-    "VTH_PMOS50",
-    "VTH_PMOS12",
-    "U0_PMOS18",
-    "U0_PMOS33",
-    "U0_PMOS50",
-    "U0_PMOS12",
-    "VTH_PDMOS20",
-    "VTH_PDMOS40",
-    "VTH_PDMOS60",
-    "VTH_PDMOS80",
-    "VTH_PDMOS120",
-    "VTH_PDMOS200",
-    "U0_PDMOS20",
-    "U0_PDMOS40",
-    "U0_PDMOS60",
-    "U0_PDMOS80",
-    "U0_PDMOS120",
-    "U0_PDMOS200"
-   ]
-  },
-  "G_OX": {
-   "origin": "oxidation furnace lot effect",
-   "rho": 0.7,
-   "error_bar": "+-0.2",
-   "source": "declared",
-   "loads_onto": [
-    "TOX_18",
-    "TOX_33",
-    "TOX_50",
-    "TOX_12"
-   ]
-  },
-  "G_LITHO": {
-   "origin": "litho/etch lot effect",
-   "rho": 0.7,
-   "error_bar": "+-0.2",
-   "source": "declared",
-   "loads_onto": [
-    "DL_POLY",
-    "DW_ACT_LV",
-    "DW_ACT_HV"
-   ]
-  },
-  "G_RSH": {
-   "origin": "silicide/implant lot effect on passives",
-   "rho": 0.6,
-   "error_bar": "+-0.2",
-   "source": "declared",
-   "loads_onto": [
-    "RSH_RPOLY_HI",
-    "RSH_RPOLY_LO",
-    "RSH_RNWELL",
-    "RSH_RNPLUS",
-    "RSH_RPPLUS",
-    "RSH_GATE",
-    "RHEAD_RPOLY_HI",
-    "RHEAD_RPOLY_LO",
-    "RHEAD_RNWELL",
-    "RHEAD_RNPLUS",
-    "RHEAD_RPPLUS"
-   ]
-  },
-  "G_CAP": {
-   "origin": "dielectric deposition lot effect",
-   "rho": 0.6,
-   "error_bar": "+-0.2",
-   "source": "declared",
-   "loads_onto": [
-    "CDEN_MIM",
-    "CDEN_MOM",
-    "CPER_CMIM_STD",
-    "CPER_CMIM_HI",
-    "CPER_CMOM",
-    "CPER_CFRINGE"
-   ]
-  },
-  "G_BJT": {
-   "origin": "emitter/base profile lot effect",
-   "rho": 0.6,
-   "error_bar": "+-0.2",
-   "source": "declared",
-   "loads_onto": [
-    "VBE_NPN_LV",
-    "VBE_PNP_LAT",
-    "VBE_NPN_HV",
-    "VBE_PNP_HV",
-    "BF_NPN_LV",
-    "BF_PNP_LAT",
-    "BF_NPN_HV",
-    "BF_PNP_HV",
-    "VF_DIO_PN",
-    "VF_DIO_FAST",
-    "VF_DIO_SCH",
-    "VF_DZ_5V6",
-    "VF_DZ_12",
-    "VF_DZ_24"
    ]
   }
  }
