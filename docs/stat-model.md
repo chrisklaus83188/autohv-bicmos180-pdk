@@ -26,6 +26,15 @@ group's fast direction is measured (§4), scaled to a Mahalanobis length of exac
 recorded. `SPD_<group>` names that direction; it is never sampled. Monte Carlo samples the
 independent variables underneath it.
 
+## 1.1 Which doping the model uses
+
+Every depletion-charge derivation in this model uses each card's **`k1`**, never `nch`. The two
+disagree by 1.1–3.2× on the LV/mid cards, which is physical: `k1` reflects the doping averaged
+over the depletion region, `nch` the surface doping, and a retrograde or halo profile separates
+them. `k1` is the parameter fitted to the device's measured body effect, so it is the one that
+describes the depletion charge Pelgrom mismatch depends on. See
+`docs/bsim3-defaults-audit.md` §6.1 for the per-card ratios.
+
 ## 2. Global variables
 
 ### 2.1 Gate oxide — `TOX_18`, `TOX_33`, `TOX_50`, `TOX_12`

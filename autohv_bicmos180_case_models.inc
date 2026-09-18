@@ -682,7 +682,7 @@
 + vsat={((65000*_isTT + 66300*_isFF + 63830*_isSS + 63830*_isFS + 66300*_isSF))*(1+P_DVSAT_PMOS50)}
 + a0=1.05
 + ags=0.2
-+ nfactor=1.9
++ nfactor=1.5055
 + voff=-0.08
 + kt1=-0.44
 + ute=-1.2

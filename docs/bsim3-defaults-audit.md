@@ -103,3 +103,45 @@ VDMOS, BJT, diode, R and C cards are outside this audit's parameter set. The VDM
 next candidate for the same treatment — they carry no `tox` and only a handful of fitted
 parameters — but nothing in them was implicated by Phase 0, so they are listed here as a
 follow-up rather than audited now.
+
+## 6. Card self-consistency: `k1` vs `nch` (retained), and the PMOS50 slope fix
+
+Added after the statistical-model program measured every card's subthreshold slope and compared
+each card's `nch` against the doping its own `k1` implies.
+
+### 6.1 `k1`/`nch` disagreement is physical, not a defect
+
+`Na(k1) = (k1·C_ox)²/(2·q·ε_si)` is the doping averaged over the depletion region; `nch` is the
+surface doping. On a retrograde or halo channel profile the first legitimately exceeds the second,
+and the ratio falls as the oxide thickens and halo matters less — which is the pattern measured:
+
+| card | `nch` cm⁻³ | `Na(k1)` cm⁻³ | ratio | measured S mV/dec |
+|---|---|---|---|---|
+| NMOS18 | 2.2e17 | 6.24e17 | 2.83 | 77.6 |
+| PMOS18 | 2.5e17 | 7.89e17 | 3.16 | 80.7 |
+| NMOS33 | 1.7e17 | 3.03e17 | 1.78 | 85.6 |
+| PMOS33 | 1.9e17 | 3.86e17 | 2.03 | 89.6 |
+| NMOS50 | 1.2e17 | 1.37e17 | 1.14 | 96.6 |
+| PMOS50 | 1.4e17 | 1.81e17 | 1.29 | 104.3 |
+| NMOS12 | 9.0e16 | 2.10e16 | 0.23 | 152.8 |
+| PMOS12 | 1.1e17 | 2.51e16 | 0.23 | 170.2 |
+
+**Ruling: retained, no change** on the six LV/mid cards — "retrograde-profile consistent". The
+12 V pair inverts the pattern and is handled separately (§7).
+
+Slopes measured by DC sweep at Vds = 0.1 V, W = 10 µm, L = 1 µm, linear fit of Vg against
+log₁₀(Id) over the 1e-12…1e-9 A decades, 27 °C.
+
+**Consequence for the statistical model:** every depletion-charge derivation uses `k1`, never
+`nch`. `nch` is not an input to any statistical quantity.
+
+### 6.2 PMOS50 subthreshold slope
+
+PMOS50 measured 104.3 mV/dec against its **grounded** anchor of 85–100 (target 95) — a
+pre-existing miss. Fixed with the one parameter meant for it:
+
+| parameter | before | after | result |
+|---|---|---|---|
+| `nfactor` (PMOS50 only) | 1.9000 | **1.5055** | S 104.3 → 95.32 mV/dec |
+
+`k1`, `nch` and `vth0` untouched. Fitted by bisection against the measured slope.
