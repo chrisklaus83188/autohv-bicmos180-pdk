@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
-"""Measure corner directions and calibrate U0, per brief v3 rulings Q-A / F3 / G3 / G4.
-
-Two passes, both measurement rather than assertion:
-
-  calibrate  For each MOS/VDMOS group, solve the U0 sigma that makes the group's
-             3-sigma Idsat swing along its own worst-case direction equal the
-             ONC25 class band. The fixed set is VTH, TOX, DL_POLY, DW_ACT and
-             RDSW at their grounded sigma (ruling F3a). U0 is floored at 3 %
-             3-sigma; if the floor binds, the fixed set already exceeds the band
-             and that is reported, not tuned away.
+"""Measure corner directions, per brief v3 rulings Q-A / F3 / G3 / G4, as amended by U2.
 
   directions For every group, measure g_i = d ln(metric)/d z_i for each variable
              it depends on, then z_fast = 3 g/|g|, z_slow = -z_fast, so the
              Mahalanobis length is 3 by construction.
+
+  Idsat spread  REPORTED, not targeted (ruling U2). U0_<device> is DECLARED at its
+             literature mobility spread (_U0_declared), like every other variable,
+             and each group's predicted 3-sigma Idsat swing is whatever its own
+             grounded inputs produce. The previous pass solved U0 so the swing hit
+             an external per-class Idsat band; those bands were externally sourced
+             and the LDMOS one was invented, so both are retired. Nothing is now
+             tuned to match an outside number.
+
+             The U0-vs-Rd slope probe is kept as a DIAGNOSTIC: where drift
+             resistance dominates (LDMOS above ~80 V) U0 has almost no lever, and
+             recording that is what carries the U0/Rd anti-correlation.
 
 Metrics, per ruling G3:
   MOS, VDMOS   ln Id.  classic bench Vgs = Vds = class supply (ruling F8);
@@ -526,8 +529,8 @@ def main(argv=None) -> int:
     groups = (args.groups.split(",") if args.groups else
               MOS_GROUPS + VDMOS_GROUPS + RES_GROUPS + CAP_GROUPS + BJT_GROUPS + DIO_GROUPS)
 
-    cal = model["global_variables"]["_U0_calibration"]
-    bands, floor3 = cal["class_bands_3sigma"], cal["floor_3sigma"]
+    u0d = model["global_variables"]["_U0_declared"]
+    u0_sigma, floor3 = u0d["sigma"], u0d["floor_3sigma"]
     work = Path(tempfile.mkdtemp(prefix="statdir_"))
     out = {"_meta": {"ngspice": ng, "model": "models/stat_model.json",
                      "bench_rule": "classic = Vgs = Vds = class supply (ruling F8); "
@@ -537,46 +540,25 @@ def main(argv=None) -> int:
         for g in groups:
             kind = kind_of(g)
             if kind in ("mos", "vdmos"):
-                cls = re.sub(r"^[NP]?D?MOS", "", g) or "vdmos"
-                band = bands.get(cls, bands["vdmos"])
                 probe = 0.01
                 u0_var, rd_var = f"U0_{g}", f"RDSW_{g}"
 
-                # S2: solve the variable with the largest measured lever. Where
-                # drift resistance dominates (LDMOS above ~80 V) KP has almost
-                # none, and solving U0 there inflates mobility spread instead of
-                # describing the device.
+                # Diagnostic only (U2): which variable actually has the lever.
+                # Where drift resistance dominates, U0 has almost none -- that is
+                # the U0/Rd anti-correlation, recorded rather than solved around.
                 u0_slope = abs(measure_group(ng, g, model, sizing, work,
                                              {u0_var: probe})["g"].get(u0_var, 0.0)) / probe
-                if u0_slope >= U0_SLOPE_FLOOR:
-                    solved, held = u0_var, {}
-                    slope = u0_slope
-                else:
-                    held = {u0_var: U0_HELD_3SIGMA / 3.0}
-                    slope = abs(measure_group(ng, g, model, sizing, work,
-                                              {**held, rd_var: probe})["g"].get(rd_var, 0.0)) / probe
-                    solved = rd_var
-                if slope <= 0:
-                    sys.exit(f"{g}: {solved} has no measurable lever on this bench")
+                dominant = u0_var if u0_slope >= U0_SLOPE_FLOOR else rd_var
 
-                fixed = measure_group(ng, g, model, sizing, work, held)
-                swing = 3.0 * math.sqrt(sum(v * v for v in fixed["g"].values()))
-                need = math.sqrt(max(band ** 2 - swing ** 2, 0.0)) / 3.0 / slope
-                floored = need < floor3 / 3.0
-                solved_sigma = max(need, floor3 / 3.0)
-                full = measure_group(ng, g, model, sizing, work,
-                                     {**held, solved: solved_sigma})
-                rec = {"class_band_3sigma": band,
-                       "calibrated_variable": solved,
-                       "calibrated_sigma_1s": solved_sigma,
-                       "calibrated_slope": slope,
+                # U0 is declared, like everything else. No band, no solve.
+                full = measure_group(ng, g, model, sizing, work, {u0_var: u0_sigma})
+                rec = {"u0_sigma_1s": u0_sigma,
+                       "u0_source": "declared (_U0_declared)",
                        "u0_slope_measured": u0_slope,
-                       "held_at_literature_1s": held,
-                       "floor_hit": floored,
-                       "fixed_set_3sigma_swing": swing}
-                print(f"{g:9s} {kind:9s} band {band*100:5.1f} %  u0slope {u0_slope:4.2f}  "
-                      f"solve {solved.split('_')[0]:4s} {solved_sigma*100:5.2f} %"
-                      f"{'  FLOOR' if floored else ''}", end="")
+                       "dominant_variable": dominant,
+                       "u0_floor_3sigma": floor3}
+                print(f"{g:9s} {kind:9s} u0 {u0_sigma*100:4.2f} %  u0slope {u0_slope:4.2f}  "
+                      f"dom {dominant.split('_')[0]:4s}", end="")
             else:
                 full = measure_group(ng, g, model, sizing, work, None)
                 rec = {}
@@ -595,13 +577,10 @@ def main(argv=None) -> int:
                 if beta["g"].get(bf_var) is not None:
                     full["g"][bf_var] = beta["g"][bf_var]
             z_fast, norm = direction(full["g"])
+            rec["predicted_3sigma_swing"] = 3.0 * norm
             rec["metric_3sigma_swing"] = 3.0 * norm
-            if "class_band_3sigma" in rec:
-                rec["band_error_pct"] = 100.0 * (3.0 * norm / rec["class_band_3sigma"] - 1.0)
-                print(f"  swing {3*norm*100:5.1f} %  err {rec['band_error_pct']:+5.1f} %")
-            else:
-                print(f"  swing {3*norm*100:5.1f} %  terms {len(full['g'])}  "
-                      f"excluded {len(full['excluded'])}")
+            print(f"  swing {3*norm*100:5.1f} %  terms {len(full['g'])}  "
+                  f"excluded {len(full['excluded'])}")
             rec.update({"bench": full["bench"], "kind": full["kind"],
                         "metric_classic": full.get("metric_classic"),
                         "metric_analog": full.get("metric_analog"),

@@ -68,22 +68,44 @@ ONC25 states no oxide-thickness tolerance anywhere (checked for ruling F4), so t
 literature rather than grounded — hence the wide error bar. It is 4× what today's cards move
 (±1 % across FF/SS), which is why every capacitance, gm and AC number moves when this lands.
 
-**Which oxide each device uses is set by the gate rating, not the drain rating.** ONC25 is
-explicit: its 200 V LDMOS with a 5 V gate uses the 13 nm 5 V oxide. Every AutoHV VDMOS is rated
-±5.5 V DC on the gate, so all 13 sit on `TOX_50` regardless of their 20–200 V drain ratings.
+**Which oxide each device uses is set by the gate rating, not the drain rating.** Every AutoHV
+VDMOS is rated ±5.5 V DC on the gate, so all 13 sit on `TOX_50` — AutoHV's own **11 nm** 5 V
+oxide (declaration D2, re-ruled 2026-09-18) — regardless of their 20–200 V drain ratings.
 `TOX_12` serves NMOS12/PMOS12 only. VDMOS cards carry no `tox` parameter at all, so the oxide
-reaches them through their `KP`/`VTO` loadings.
+reaches them through their `KP`/`VTO` loadings and through the couplings in §2.2a.
 
 ### 2.2 Threshold voltage — `VTH_<device>`
 
-One per device, additive, in volts. 1.8 V: 88 mV 3σ. 3.3 V: 114 mV. 5 V: 135 mV. 12 V: 150 mV.
-VDMOS: 130 mV.
+One per device, additive, in volts, and **derived from AutoHV's own physics** (ruling AB1). The
+private draw is the quadrature sum of two terms; the oxide term is separate and lives in §2.2a.
 
-The 1.8 V and 3.3 V numbers are ONC25's per-class LSL/USL bands. The 5 V number is ONC25's
-measured bundle (Vth 0.657 / 0.792 / 0.927), used in place of the ±128 mV synthesis that ruling
-F2 quoted — same source, tighter provenance. The 12 V band is an extrapolation and the VDMOS
-band borrows the LV anchor, because ONC25's only LDMOS threshold figures are for its *depletion*
-family (−1.65 V, −2.2/−1.1), which is the wrong device to anchor on. Both carry ±50 %.
+- **Fixed oxide charge.** `σ(V_FB) = q·σ(Q_f)/C_ox`, with `Q_f` = 5e10 cm⁻² typical for a thermal
+  oxide on (100) Si (`literature`) and its wafer-to-wafer variation declared.
+- **Effective channel charge.** `σ = k1·√(2φ_F)·(σ_Qdep/2)`, since Vth's depletion-charge term
+  goes as `√Q_dep`. `σ(Q_dep)/Q_dep` = 10 % 3σ — *effective* charge, not dose alone: implant
+  energy, profile position and anneal thermal budget all move the charge that sets Vth, and a fab
+  controls the result, not the dose.
+
+| device | 1σ mV | 3σ mV |
+|---|---|---|
+| NMOS18 | 10.3 | 30.8 |
+| PMOS18 | 11.3 | 33.9 |
+| NMOS33 | 12.5 | 37.5 |
+| PMOS33 | 13.6 | 40.7 |
+| NMOS50 | 16.5 | 49.5 |
+| PMOS50 | 17.6 | 52.7 |
+| NMOS12 | 43.0 | 128.9 |
+| PMOS12 | 44.5 | 133.4 |
+| NDMOS20 | 20.0 | 60.1 |
+| NDMOS200 | 21.6 | 64.9 |
+
+VDMOS `k1` comes from each card's own measured subthreshold slope at 11 nm (§1.2), since those
+cards carry no `k1`. All entries are `autohv-derived`, ±50 %.
+
+**What this replaced.** The previous values (88 / 114 / 135 / 150 / 130 mV 3σ) were **spec
+windows — LSL/USL limits, not model σ**, which is a category error: a spec limit is a screening
+boundary, not a standard deviation. They were 2–3× too wide at 5 V. No automotive "tightening
+factor" is applied anywhere; that idea was considered and rejected.
 
 ### 2.2a Where the oxide part of Vth lives
 
@@ -105,34 +127,50 @@ short-channel and narrow-width terms. The generator applies the full expression:
 not a subtractable constant (it moves with geometry, and in opposite directions across classes)
 and at 4–20 % it is well inside the ±50 % error bar on the inputs.
 
-### 2.3 Mobility — `U0_<device>`, solved not declared
+### 2.3 Mobility — `U0_<device>`, declared
 
-Lognormal, one per device, and the only variable whose σ is **derived**. Fab statistical models
-are fitted so that the corner reproduces the measured Idsat band, and that is what this does:
-with `VTH`, `TOX`, `DL_POLY`, `DW_ACT` and `RDSW` held at their grounded σ, `U0` σ is solved so
-the group's 3σ Idsat swing along its own fast direction equals the ONC25 class band
-(±20 % at 1.8 V and 3.3 V, ±14 % at 5 V and 12 V). Floored at 3 % 3σ.
+Lognormal, one per device, **declared at 8 % 3σ** (`literature`: mobility spread for a
+0.18–0.25 µm BCD flow), ±50 %, floored at 3 % 3σ.
 
-Measured result, 8 BSIM3 groups (`models/stat_directions.json`):
+**It used to be solved, and no longer is (ruling U2).** The previous procedure fitted each `U0` σ
+so the group's 3σ Idsat swing hit a per-class Idsat band. Those bands were externally sourced, and
+the LDMOS one was invented outright. Solving against them meant `U0` silently absorbed every error
+elsewhere in the model — when §2.2 narrowed, the solve simply inflated `U0` to keep hitting the
+same external number. Now every variable is declared or derived on its own evidence, and each
+group's Idsat spread is **whatever its own inputs predict**, reported rather than targeted.
 
-| group | class band | fixed set alone | solved `U0` 1σ | achieved swing | error |
-|---|---|---|---|---|---|
-| NMOS18 | 20 % | 16.0 % | 4.29 % | 19.9 % | −0.6 % |
-| PMOS18 | 20 % | 17.0 % | 3.57 % | 19.9 % | −0.3 % |
-| NMOS33 | 20 % | 10.4 % | 6.42 % | 19.6 % | −1.9 % |
-| PMOS33 | 20 % | 11.2 % | 5.76 % | 19.7 % | −1.6 % |
-| NMOS50 | 14 % | 7.7 % | 4.57 % | 13.8 % | −1.2 % |
-| PMOS50 | 14 % | 8.4 % | 3.98 % | 13.9 % | −0.9 % |
-| NMOS12 | 14 % | 3.6 % | 5.45 % | 13.7 % | −2.0 % |
-| PMOS12 | 14 % | 3.8 % | 4.98 % | 13.8 % | −1.8 % |
+| group | `U0` 1σ | `U0` slope | dominant | predicted 3σ Idsat |
+|---|---|---|---|---|
+| NMOS18 | 2.67 | 0.672 | U0 | **9.64 %** |
+| PMOS18 | 2.67 | 0.877 | U0 | **11.96 %** |
+| NMOS33 | 2.67 | 0.716 | U0 | **7.22 %** |
+| PMOS33 | 2.67 | 0.886 | U0 | **8.63 %** |
+| NMOS50 | 2.67 | 0.728 | U0 | **6.80 %** |
+| PMOS50 | 2.67 | 0.880 | U0 | **8.00 %** |
+| NMOS12 | 2.67 | 0.729 | U0 | **6.79 %** |
+| PMOS12 | 2.67 | 0.859 | U0 | **7.80 %** |
+| NDMOS20 | 2.67 | 0.693 | U0 | **7.30 %** |
+| PDMOS20 | 2.67 | 0.957 | U0 | **7.97 %** |
+| NDMOS40 | 2.67 | 0.554 | U0 | **8.08 %** |
+| PDMOS40 | 2.67 | 0.863 | U0 | **7.52 %** |
+| NDMOS60 | 2.67 | 0.459 | U0 | **8.91 %** |
+| PDMOS60 | 2.67 | 0.524 | U0 | **8.35 %** |
+| NDMOS80 | 2.67 | 0.365 | RDSW | **9.76 %** |
+| PDMOS80 | 2.67 | 0.412 | U0 | **9.32 %** |
+| NDMOS120 | 2.67 | 0.265 | RDSW | **10.87 %** |
+| PDMOS120 | 2.67 | 0.285 | RDSW | **10.66 %** |
+| NDMOS200 | 2.67 | 0.212 | RDSW | **11.59 %** |
+| PDMOS200 | 2.67 | 0.216 | RDSW | **11.58 %** |
+| DNMOS20 | 2.67 | 0.837 | U0 | **9.35 %** |
 
-No group hit the floor. The residual ≤ 2 % is left alone deliberately: the band it matches
-carries a ±25 % error bar, so driving it to zero would be false precision.
+**The U0/Rd anti-correlation is now structural, not fitted.** `dominant` is measured, and it flips
+from `U0` to `RDSW` exactly where drift resistance takes over — NDMOS80 onward, as the `U0` slope
+falls through 0.4. On a 200 V LDMOS mobility barely moves the current at all (`U0` slope 0.21);
+the drift region does. That is a property of the device, and it now shows up as one.
 
-**Caveat on the 12 V class.** The fixed set covers 16–17 % of the 20 % band at 1.8 V but only
-3.6–3.8 % of the 14 % band at 12 V, so `U0` carries almost the entire 12 V corner. That follows
-from the 12 V `VTH` σ being declared rather than measured. The 12 V corner is therefore the
-weakest-grounded of the four classes and should be read that way.
+**Consequence, pre-registered.** LV/mid Idsat 3σ roughly halves against the retired bands — 5 V
+13.8 → 6.8 %, 1.8 V 19.9 → 9.6 %. This is the intended correction, not a regression: the old
+figure was tuned to an outside number, this one is what AutoHV's own σ produce.
 
 ### 2.4 Series resistance — `RDSW_<device>`
 
@@ -201,18 +239,40 @@ TT. `BVCBO` follows `BV` one-for-one — the same avalanche physics.
 
 ## 3. Local mismatch
 
-1σ Pelgrom coefficients. MOS: `A_VT` per class, `A_BETA` 1.5 %·µm (new), `A_W` 0.25 %·µm and
-`A_L` 0.15 %·µm carried over. VDMOS `A_VT` 20 mV·µm, from ONC25's measured LDMOS
-σ(ΔVth) = 8.2 mV at 12 µm² — about 3× the CMOS coefficient. BJT `A_VBE` 1.0 mV·µm, which
-reproduces today's 0.15 mV pair σ. Areas follow the `AREA × 100 µm²` convention (ruling Q-E), so
-`AREA = 0.04` means 4 µm².
+1σ Pelgrom coefficients. MOS: `A_VT` per device, **derived** (below), `A_BETA` 1.5 %·µm (new),
+`A_W` 0.25 %·µm and `A_L` 0.15 %·µm carried over. BJT `A_VBE` 1.0 mV·µm, which reproduces today's
+0.15 mV pair σ. Areas follow the `AREA × 100 µm²` convention (ruling Q-E), so `AREA = 0.04` means
+4 µm². VDMOS mismatch is **not** a Pelgrom coefficient — see §3.2.
 
-**`A_VT` is the one open item (F9).** The file is authored as ruling F5 directs — 1 mV·µm per nm
-of oxide, giving 4.25 / 6.75 / 11.0 / 31.0 mV·µm. But ONC25 *measures* 5 V CMOS at 6.35 mV·µm
-(NMOS) and 5.1 (PMOS) on a 13.1 nm oxide, i.e. 0.48 mV·µm per nm. The rule only holds for their
-2.5 V devices (0.78–0.94). On that evidence AutoHV's 5 V value is 1.7–2.2× too wide and its
-agreement with the oxide rule is coincidence. The alternative — anchoring on the measurement and
-scaling by oxide — gives 3.4 / 5.5 / 5.3 / 15.0 mV·µm. This is one number per device to change.
+### 3.1 `A_VT`, derived from RDF physics
+
+`A_VT = c_RDF·√(t_ox[nm]·k1)`, with `c_RDF` = 2.1991 mV·µm/√nm **computed, never fitted**:
+
+> `A_VT(RDF) = (q/C_ox)·√(N_a·W_dep/3)`, with `N_a = (k1·C_ox)²/(2qε_si)` from the card's own `k1`
+> and `W_dep` self-consistent; the total is `A_VT(RDF)/√f_RDF`.
+
+Substituting `N_a(k1)` collapses the whole expression to `c_RDF·√(t_ox·k1)`, so the constant falls
+out of the physics rather than being chosen. `f_RDF` = 0.3: random dopant fluctuation carries
+roughly half of σ(Vth) at this node, i.e. ~0.25–0.35 of the variance. The ~0.65 share often quoted
+applies at ≤ 45 nm.
+
+| device | `A_VT` mV·µm |
+|---|---|
+| NMOS18 | 3.44 |
+| PMOS18 | 3.66 |
+| NMOS33 | 4.51 |
+| PMOS33 | 4.81 |
+| NMOS50 | 5.96 |
+| PMOS50 | 6.41 |
+| NMOS12 | 15.02 |
+| PMOS12 | 15.84 |
+
+**The check that it is right:** `c_RDF` holds to 3.18 % across t_ox 4.25–31 nm and
+N_a 9.0e16–7.9e17 cm⁻³. A wrong doping exponent would drift it systematically with oxide
+thickness, and it does not.
+
+**Retired with it:** the `A_VT ≈ 1 mV·µm per nm of oxide` heuristic, which is a thin-oxide rule of
+thumb, and the externally anchored ladder that preceded it. Ruling F9 is closed.
 
 ### 3.2 Two mismatch normalisations — do not convert one into the other
 
@@ -234,7 +294,7 @@ length dependence, because W is the only size knob on these cells — channel an
 fixed at the process minimum. Applying the `A_VT = c_RDF·√(t_ox·k1)` ladder of §3 to them would
 both use the wrong normalisation and flatten a deliberate per-class ladder.
 
-### 3.1 Resistor matching: a discrepancy left on the record
+### 3.3 Resistor matching: a discrepancy left on the record
 
 ONC25 gives resistor matching two ways that disagree by a factor of ~23: a spec-table column
 (high-res poly 0.045 %·µm) and its own model-form Pelgrom coefficient (1.1–1.55 %·µm). AutoHV's
@@ -268,11 +328,15 @@ Direction: `g_i = d ln(metric)/d z_i` for every variable the group depends on, t
 
 ## 5. What is not done yet
 
-- **32 of 40 groups have no measured direction.** The harness implements the MOS bench only. The
-  13 VDMOS drive statistics through `*_STAT` top-level params rather than card parameters;
-  resistors, capacitors, BJTs and diodes need `ln R`, `ln C`, `ln Ic` and `ln If` metrics. Until
-  that second pass runs, presets 7–12 (passives, bipolar) cannot be built.
-- **The preset table and its Mahalanobis distances** therefore do not exist yet.
-- **`A_VT` (F9)** awaits a ruling.
 - **`k3`** is proposed for grounding at 2.0 in `docs/bsim3-defaults-audit.md`; the model assumes
   that lands.
+- **The couplings in §2.2a are a generator contract, not yet generated.** They are recorded in
+  `dependent_parameters` and honoured in Phase 2; nothing writes perturbed cards from them today.
+- **The 3.3 V class reports a plausibility miss** (≈0.3× its comparable magnitude). Reported, not
+  chased.
+- **The 1.8 V and 12 V classes have no comparable magnitude at all**, so their plausibility
+  entries carry `band: null`. Their justification is the derivation itself, plus the fact that the
+  same three-term formula lands in band for every class that *can* be checked.
+
+Closed since the last revision: all 40 groups now have measured directions; the preset table and
+its Mahalanobis distances exist (`models/corners.json`, 17 cases); `A_VT` is ruled and derived.
