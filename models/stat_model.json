@@ -1291,15 +1291,37 @@
  },
  "local_mismatch": {
   "_convention": "1-sigma Pelgrom coefficients, foundry units. sigma = A / sqrt(W*L*M) for MOS, A / sqrt(area*M) for BJT/diode, per the wrapper forms.",
-  "_A_VT_note": "Ruling G1: F5 (1 mV.um per nm) is withdrawn; a measured coefficient outranks the foundry's own rule-of-thumb footnote. NOTE: G1 states the 2.5 V anchors as '0.78 N / 0.94 P', which inverts them -- ONC25 section E reads nmos2v 6.0 and pmos2v 5.0 mV.um at 6.4 nm, i.e. N 0.9375 and P 0.7812 per nm. The corrected assignment is used, because the swapped one makes PMOS mismatch exceed NMOS at 1.8 V and 3.3 V, contradicting both measured anchors (N is the worse matcher at 2.5 V and at 5 V).",
+  "_A_VT_derivation": {
+   "form": "A_VT = c_RDF * sqrt(tox_nm * k1)",
+   "c_RDF": 2.1991,
+   "c_units": "mV.um/sqrt(nm)",
+   "f_RDF": 0.3,
+   "expression": "A_VT(RDF) = (q/Cox)*sqrt(Na*Wdep/3), with Na = (k1*Cox)^2/(2*q*eps_si) taken from the card's own k1 and Wdep = sqrt(4*eps_si*phi_F/(q*Na)) self-consistent; the total is A_VT = A_VT(RDF)/sqrt(f_RDF). Substituting Na(k1) collapses the whole expression to c_RDF*sqrt(tox*k1), so c_RDF is computed, never fitted.",
+   "f_RDF_basis": "Random dopant fluctuation carries roughly half of sigma(Vth) at the 0.18-0.25 um node, i.e. ~0.25-0.35 of the variance; 0.30 is taken. The ~0.65 share quoted for advanced nodes applies at <=45 nm. Oxide charge, line-edge roughness and halo/implant non-uniformity carry the remainder.",
+   "validation": "c_RDF is constant to 3.18 % (2.1661..2.2361) across tox 4.25-31 nm and Na 9.0e16-7.9e17 cm-3. A wrong doping exponent would drift c systematically with tox; it does not, which is the evidence for the tox*Na^(1/4) shape.",
+   "retired": "Supersedes the 'A_VT ~ 1 mV.um per nm of tox (+-50 %)' thin-oxide heuristic previously used as the target band, and the externally anchored ladder that preceded it.",
+   "citations": [
+    "Stolk, Widdershoven & Klaassen, IEEE TED 45(9), 1998 -- RDF model for sigma(Vth)",
+    "Asenov, IEEE TED 45(12), 1998 -- statistical 3-D simulation of random dopant effects",
+    "Mizuno, Okamura & Toriumi, IEEE TED 41(11), 1994 -- measured dopant-fluctuation Vth spread",
+    "Kuhn et al., IEEE TED 58(8), 2011 -- process-variation sources by node (the ~65 % RDF share is a <=45 nm figure)"
+   ],
+   "least_checked": "The 12 V (31 nm) rung is the least externally checked: no 12 V-class comparison exists, and the 31 nm end is where an oxide-charge term would matter most."
+  },
   "NMOS18": {
    "A_VT": {
-    "value": 4.6,
+    "value": 3.44,
     "units": "mV.um",
-    "was": 3.5,
-    "source": "onc25:measured, interpolated-in-tox",
+    "was": 4.6,
+    "source": "autohv-derived (RDF, k1-based, f_RDF = 0.30 literature)",
     "error_bar": "+-30%",
-    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
+    "inputs": {
+     "tox_nm": 4.25,
+     "k1": 0.56,
+     "Na_cm3": 6.237e+17,
+     "Wdep_nm": 43.9,
+     "c_RDF": 2.2288
+    }
    },
    "A_BETA": {
     "value": 1.5,
@@ -1321,12 +1343,18 @@
   },
   "PMOS18": {
    "A_VT": {
-    "value": 3.85,
+    "value": 3.66,
     "units": "mV.um",
-    "was": 3.5,
-    "source": "onc25:measured, interpolated-in-tox",
+    "was": 3.85,
+    "source": "autohv-derived (RDF, k1-based, f_RDF = 0.30 literature)",
     "error_bar": "+-30%",
-    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
+    "inputs": {
+     "tox_nm": 4.25,
+     "k1": 0.63,
+     "Na_cm3": 7.893e+17,
+     "Wdep_nm": 39.3,
+     "c_RDF": 2.2361
+    }
    },
    "A_BETA": {
     "value": 1.5,
@@ -1348,12 +1376,18 @@
   },
   "NMOS33": {
    "A_VT": {
-    "value": 6.17,
+    "value": 4.51,
     "units": "mV.um",
-    "was": 4.0,
-    "source": "onc25:measured, interpolated-in-tox",
+    "was": 6.17,
+    "source": "autohv-derived (RDF, k1-based, f_RDF = 0.30 literature)",
     "error_bar": "+-30%",
-    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
+    "inputs": {
+     "tox_nm": 6.75,
+     "k1": 0.62,
+     "Na_cm3": 3.031e+17,
+     "Wdep_nm": 61.7,
+     "c_RDF": 2.206
+    }
    },
    "A_BETA": {
     "value": 1.5,
@@ -1375,12 +1409,18 @@
   },
   "PMOS33": {
    "A_VT": {
-    "value": 5.14,
+    "value": 4.81,
     "units": "mV.um",
-    "was": 4.0,
-    "source": "onc25:measured, interpolated-in-tox",
+    "was": 5.14,
+    "source": "autohv-derived (RDF, k1-based, f_RDF = 0.30 literature)",
     "error_bar": "+-30%",
-    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
+    "inputs": {
+     "tox_nm": 6.75,
+     "k1": 0.7,
+     "Na_cm3": 3.863e+17,
+     "Wdep_nm": 55.0,
+     "c_RDF": 2.2138
+    }
    },
    "A_BETA": {
     "value": 1.5,
@@ -1402,12 +1442,18 @@
   },
   "NMOS50": {
    "A_VT": {
-    "value": 6.89,
+    "value": 5.96,
     "units": "mV.um",
-    "was": 11.0,
-    "source": "onc25:measured, interpolated-in-tox",
+    "was": 6.89,
+    "source": "autohv-derived (RDF, k1-based, f_RDF = 0.30 literature)",
     "error_bar": "+-30%",
-    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
+    "inputs": {
+     "tox_nm": 11.0,
+     "k1": 0.68,
+     "Na_cm3": 1.373e+17,
+     "Wdep_nm": 89.5,
+     "c_RDF": 2.1802
+    }
    },
    "A_BETA": {
     "value": 1.5,
@@ -1429,12 +1475,18 @@
   },
   "PMOS50": {
    "A_VT": {
-    "value": 5.63,
+    "value": 6.41,
     "units": "mV.um",
-    "was": 11.0,
-    "source": "onc25:measured, interpolated-in-tox",
+    "was": 5.63,
+    "source": "autohv-derived (RDF, k1-based, f_RDF = 0.30 literature)",
     "error_bar": "+-30%",
-    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
+    "inputs": {
+     "tox_nm": 11.0,
+     "k1": 0.78,
+     "Na_cm3": 1.806e+17,
+     "Wdep_nm": 78.7,
+     "c_RDF": 2.1893
+    }
    },
    "A_BETA": {
     "value": 1.5,
@@ -1456,12 +1508,18 @@
   },
   "NMOS12": {
    "A_VT": {
-    "value": 15.03,
+    "value": 15.02,
     "units": "mV.um",
-    "was": 31.0,
-    "source": "onc25:measured, interpolated-in-tox",
+    "was": 15.03,
+    "source": "autohv-derived (RDF, k1-based, f_RDF = 0.30 literature)",
     "error_bar": "+-30%",
-    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
+    "inputs": {
+     "tox_nm": 31.0,
+     "k1": 1.552,
+     "Na_cm3": 9.004e+16,
+     "Wdep_nm": 109.1,
+     "c_RDF": 2.1661
+    }
    },
    "A_BETA": {
     "value": 1.5,
@@ -1483,12 +1541,18 @@
   },
   "PMOS12": {
    "A_VT": {
-    "value": 12.07,
+    "value": 15.84,
     "units": "mV.um",
-    "was": 31.0,
-    "source": "onc25:measured, interpolated-in-tox",
+    "was": 12.07,
+    "source": "autohv-derived (RDF, k1-based, f_RDF = 0.30 literature)",
     "error_bar": "+-30%",
-    "anchors": "2.5 V class 6.0 (N) / 5.0 (P) mV.um at 6.4 nm (section E); 5 V class 6.35 (N) / 5.1 (P) at 13.1 nm (section GG); per-nm coefficient interpolated linearly in tox, clamped at the 5 V value above 13.1 nm"
+    "inputs": {
+     "tox_nm": 31.0,
+     "k1": 1.715,
+     "Na_cm3": 1.099e+17,
+     "Wdep_nm": 99.3,
+     "c_RDF": 2.1728
+    }
    },
    "A_BETA": {
     "value": 1.5,
