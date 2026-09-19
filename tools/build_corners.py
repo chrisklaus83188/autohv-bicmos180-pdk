@@ -144,7 +144,9 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true", help="exit 1 if corners.json is stale")
-    ap.add_argument("--markdown", action="store_true", help="print the docs/corners.md table")
+    ap.add_argument("--markdown", action="store_true", help="print the docs/corners.md table (it is also printed on a normal run)")
+    ap.add_argument("--write-md", action="store_true",
+                    help="regenerate the table inside docs/corners.md between its markers")
     args = ap.parse_args(argv)
 
     data = build()
@@ -165,9 +167,23 @@ def main(argv=None) -> int:
                  if p["shared_variable_conflicts"]}
     print()
     print("presets with shared-variable conflicts:", sorted(conflicts) or "none")
-    if args.markdown:
-        print()
-        print(markdown(data))
+
+    if args.write_md:
+        md = ROOT / "docs" / "corners.md"
+        body = md.read_text(encoding="utf-8")
+        first, last = "<!-- BEGIN distances -->", "<!-- END distances -->"
+        if first not in body or last not in body:
+            print("docs/corners.md is missing its distance markers; not written")
+        else:
+            names = ", ".join(str(c) for c in sorted(conflicts, key=int)) if conflicts else "none"
+            lines = [first, markdown(data), "",
+                     "Presets with shared-variable conflicts: **" + names
+                     + "** \u2014 see above.", last]
+            block = "\n".join(lines)
+            body = (body[:body.index(first)] + block
+                    + body[body.index(last) + len(last):])
+            md.write_text(body, encoding="utf-8", newline="\n")
+            print("wrote docs/corners.md distance table")
     return 0
 
 
