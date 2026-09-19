@@ -26,22 +26,22 @@ Two consequences follow, and both are correct behaviour rather than defects:
 | case | preset | groups moved | variables | Mahalanobis |
 |---|---|---|---|---|
 | 0 | typical, nothing moved | 0 | 0 | **0.00** |
-| 1 | FF: all MOS fast | 21 | 70 | **16.54** |
-| 2 | SS: all MOS slow | 21 | 70 | **16.54** |
-| 3 | FS: n-type fast, p-type slow | 20 | 67 | **12.83** |
-| 4 | SF: n-type slow, p-type fast | 20 | 67 | **12.83** |
-| 5 | LV fast, HV slow | 21 | 70 | **16.54** |
-| 6 | LV slow, HV fast | 21 | 70 | **16.54** |
+| 1 | FF: all MOS fast | 21 | 65 | **16.54** |
+| 2 | SS: all MOS slow | 21 | 65 | **16.54** |
+| 3 | FS: n-type fast, p-type slow | 20 | 62 | **12.83** |
+| 4 | SF: n-type slow, p-type fast | 20 | 62 | **12.83** |
+| 5 | LV fast, HV slow | 21 | 65 | **16.54** |
+| 6 | LV slow, HV fast | 21 | 65 | **16.54** |
 | 7 | all resistors lo | 5 | 6 | **6.71** |
 | 8 | all resistors hi | 5 | 6 | **6.71** |
 | 9 | all capacitors lo | 4 | 3 | **8.49** |
 | 10 | all capacitors hi | 4 | 3 | **8.49** |
 | 11 | BJT and diodes lo | 10 | 24 | **9.49** |
 | 12 | BJT and diodes hi | 10 | 24 | **9.49** |
-| 13 | slow everything | 40 | 102 | **22.11** |
-| 14 | fast everything | 40 | 102 | **22.11** |
-| 15 | SS with resistors lo | 26 | 75 | **18.08** |
-| 16 | FF with resistors hi | 26 | 75 | **18.08** |
+| 13 | slow everything | 40 | 97 | **22.11** |
+| 14 | fast everything | 40 | 97 | **22.11** |
+| 15 | SS with resistors lo | 26 | 70 | **18.08** |
+| 16 | FF with resistors hi | 26 | 70 | **18.08** |
 
 Presets with shared-variable conflicts: **3, 4** — see above.
 <!-- END distances -->

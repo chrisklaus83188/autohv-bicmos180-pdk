@@ -767,13 +767,13 @@
    "mahalanobis": 3.0
   },
   "NDMOS80": {
-   "u0_sigma_1s": 0.026667,
-   "u0_source": "declared (_U0_declared)",
+   "u0_sigma_1s": 0.0,
+   "u0_source": "declared (_U0_declared), sigma forced to 0: drift-dominated",
    "u0_slope_measured": 0.36502904440784967,
    "dominant_variable": "RDSW_NDMOS80",
    "u0_floor_3sigma": 0.03,
-   "predicted_3sigma_swing": 0.09758959752761692,
-   "metric_3sigma_swing": 0.09758959752761692,
+   "predicted_3sigma_swing": 0.09319222521018235,
+   "metric_3sigma_swing": 0.09319222521018235,
    "bench": {
     "W_um": 3.0,
     "supply_V": 10.0,
@@ -795,24 +795,22 @@
    "metric_analog": 2.253664381631e-05,
    "g_classic": {
     "VTH_NDMOS80": -0.005994773609574011,
-    "RDSW_NDMOS80": -0.0304801484466255,
-    "U0_NDMOS80": 0.009654812881418895
+    "RDSW_NDMOS80": -0.0304801484466255
    },
    "g_analog": {
     "VTH_NDMOS80": -0.1112322579874796,
-    "RDSW_NDMOS80": -0.011261353385009443,
-    "U0_NDMOS80": 0.02024335194352922
+    "RDSW_NDMOS80": -0.011261353385009443
    },
    "excluded": {
     "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
     "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
     "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
-    "BV_NDMOS80": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+    "BV_NDMOS80": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)",
+    "U0_NDMOS80": "measured lever on this metric is zero"
    },
    "z_fast": {
-    "VTH_NDMOS80": -0.5528556716395713,
-    "RDSW_NDMOS80": -2.8109690271240146,
-    "U0_NDMOS80": 0.8903952689033283
+    "VTH_NDMOS80": -0.57894274296469,
+    "RDSW_NDMOS80": -2.943607531646928
    },
    "mahalanobis": 3.0
   },
@@ -866,13 +864,13 @@
    "mahalanobis": 3.0
   },
   "NDMOS120": {
-   "u0_sigma_1s": 0.026667,
-   "u0_source": "declared (_U0_declared)",
+   "u0_sigma_1s": 0.0,
+   "u0_source": "declared (_U0_declared), sigma forced to 0: drift-dominated",
    "u0_slope_measured": 0.26460511926278407,
    "dominant_variable": "RDSW_NDMOS120",
    "u0_floor_3sigma": 0.03,
-   "predicted_3sigma_swing": 0.108683853792464,
-   "metric_3sigma_swing": 0.108683853792464,
+   "predicted_3sigma_swing": 0.10663649491939467,
+   "metric_3sigma_swing": 0.10663649491939467,
    "bench": {
     "W_um": 3.0,
     "supply_V": 10.0,
@@ -894,35 +892,33 @@
    "metric_analog": 2.205878954975e-05,
    "g_classic": {
     "VTH_NDMOS120": -0.004822824772631407,
-    "RDSW_NDMOS120": -0.035216797285775314,
-    "U0_NDMOS120": 0.006998714377874471
+    "RDSW_NDMOS120": -0.035216797285775314
    },
    "g_analog": {
     "VTH_NDMOS120": -0.1032600794658185,
-    "RDSW_NDMOS120": -0.01558090466312212,
-    "U0_NDMOS120": 0.017913216013237587
+    "RDSW_NDMOS120": -0.01558090466312212
    },
    "excluded": {
     "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
     "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
     "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
-    "BV_NDMOS120": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+    "BV_NDMOS120": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)",
+    "U0_NDMOS120": "measured lever on this metric is zero"
    },
    "z_fast": {
-    "VTH_NDMOS120": -0.399373241186009,
-    "RDSW_NDMOS120": -2.916267361821824,
-    "U0_NDMOS120": 0.5795564585071585
+    "VTH_NDMOS120": -0.4070409758543952,
+    "RDSW_NDMOS120": -2.972258004274781
    },
    "mahalanobis": 3.0
   },
   "PDMOS120": {
-   "u0_sigma_1s": 0.026667,
-   "u0_source": "declared (_U0_declared)",
+   "u0_sigma_1s": 0.0,
+   "u0_source": "declared (_U0_declared), sigma forced to 0: drift-dominated",
    "u0_slope_measured": 0.2845481025468999,
    "dominant_variable": "RDSW_PDMOS120",
    "u0_floor_3sigma": 0.03,
-   "predicted_3sigma_swing": 0.1066465341596512,
-   "metric_3sigma_swing": 0.1066465341596512,
+   "predicted_3sigma_swing": 0.10422898822537091,
+   "metric_3sigma_swing": 0.10422898822537091,
    "bench": {
     "W_um": 4.7,
     "supply_V": 10.0,
@@ -943,35 +939,33 @@
    "metric_analog": 9.537663786729e-06,
    "g_classic": {
     "VTH_PDMOS120": 0.0047707765375024636,
-    "RDSW_PDMOS120": -0.03441388480693908,
-    "U0_PDMOS120": 0.007526259671466917
+    "RDSW_PDMOS120": -0.03441388480693908
    },
    "g_analog": {
     "VTH_PDMOS120": 0.12267970858608024,
-    "RDSW_PDMOS120": -0.012962243079843283,
-    "U0_PDMOS120": 0.01932545432233912
+    "RDSW_PDMOS120": -0.012962243079843283
    },
    "excluded": {
     "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
     "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
     "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
-    "BV_PDMOS120": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+    "BV_PDMOS120": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)",
+    "U0_PDMOS120": "measured lever on this metric is zero"
    },
    "z_fast": {
-    "VTH_PDMOS120": 0.4026102599194172,
-    "RDSW_PDMOS120": -2.9042196795517943,
-    "U0_PDMOS120": 0.6351480390520718
+    "VTH_PDMOS120": 0.41194862934561866,
+    "RDSW_PDMOS120": -2.971581788674218
    },
    "mahalanobis": 3.0
   },
   "NDMOS200": {
-   "u0_sigma_1s": 0.026667,
-   "u0_source": "declared (_U0_declared)",
+   "u0_sigma_1s": 0.0,
+   "u0_source": "declared (_U0_declared), sigma forced to 0: drift-dominated",
    "u0_slope_measured": 0.21196702767709574,
    "dominant_variable": "RDSW_NDMOS200",
    "u0_floor_3sigma": 0.03,
-   "predicted_3sigma_swing": 0.1159351823654752,
-   "metric_3sigma_swing": 0.1159351823654752,
+   "predicted_3sigma_swing": 0.11471018466403661,
+   "metric_3sigma_swing": 0.11471018466403661,
    "bench": {
     "W_um": 3.0,
     "supply_V": 10.0,
@@ -993,35 +987,33 @@
    "metric_analog": 2.169422805309e-05,
    "g_classic": {
     "VTH_NDMOS200": -0.004182787715808267,
-    "RDSW_NDMOS200": -0.038007258148905265,
-    "U0_NDMOS200": 0.005602975840852675
+    "RDSW_NDMOS200": -0.038007258148905265
    },
    "g_analog": {
     "VTH_NDMOS200": -0.09249704707474216,
-    "RDSW_NDMOS200": -0.019534572846416687,
-    "U0_NDMOS200": 0.015798017441384538
+    "RDSW_NDMOS200": -0.019534572846416687
    },
    "excluded": {
     "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
     "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
     "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
-    "BV_NDMOS200": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+    "BV_NDMOS200": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)",
+    "U0_NDMOS200": "measured lever on this metric is zero"
    },
    "z_fast": {
-    "VTH_NDMOS200": -0.32470807113238204,
-    "RDSW_NDMOS200": -2.950487646293748,
-    "U0_NDMOS200": 0.43495668475086535
+    "VTH_NDMOS200": -0.32817565024875,
+    "RDSW_NDMOS200": -2.9819961003636157
    },
    "mahalanobis": 3.0
   },
   "PDMOS200": {
-   "u0_sigma_1s": 0.026667,
-   "u0_source": "declared (_U0_declared)",
+   "u0_sigma_1s": 0.0,
+   "u0_source": "declared (_U0_declared), sigma forced to 0: drift-dominated",
    "u0_slope_measured": 0.21641854926910398,
    "dominant_variable": "RDSW_PDMOS200",
    "u0_floor_3sigma": 0.03,
-   "predicted_3sigma_swing": 0.11583027724643545,
-   "metric_3sigma_swing": 0.11583027724643545,
+   "predicted_3sigma_swing": 0.1145536900389792,
+   "metric_3sigma_swing": 0.1145536900389792,
    "bench": {
     "W_um": 4.7,
     "supply_V": 10.0,
@@ -1042,24 +1034,22 @@
    "metric_analog": 9.345822036266e-06,
    "g_classic": {
     "VTH_PDMOS200": 0.0041202561458995035,
-    "RDSW_PDMOS200": -0.03796161702617251,
-    "U0_PDMOS200": 0.005716498787035285
+    "RDSW_PDMOS200": -0.03796161702617251
    },
    "g_analog": {
     "VTH_PDMOS200": 0.1141785412361438,
-    "RDSW_PDMOS200": -0.01739175778612445,
-    "U0_PDMOS200": 0.01689164672515009
+    "RDSW_PDMOS200": -0.01739175778612445
    },
    "excluded": {
     "TOX_50": "VDMOS cards carry no tox; the oxide reaches them only through the KP/VTO loadings that Phase 3 wires",
     "DL_POLY": "VDMOS cards carry no channel-length parameter to bias",
     "DW_ACT_HV": "VDMOS cards carry no channel-length parameter to bias",
-    "BV_PDMOS200": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+    "BV_PDMOS200": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)",
+    "U0_PDMOS200": "measured lever on this metric is zero"
    },
    "z_fast": {
-    "VTH_PDMOS200": 0.32014345639699054,
-    "RDSW_PDMOS200": -2.9496135324675365,
-    "U0_PDMOS200": 0.444171336772837
+    "VTH_PDMOS200": 0.32371113755023984,
+    "RDSW_PDMOS200": -2.9824840484780353
    },
    "mahalanobis": 3.0
   },

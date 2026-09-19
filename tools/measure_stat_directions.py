@@ -531,6 +531,9 @@ def main(argv=None) -> int:
 
     u0d = model["global_variables"]["_U0_declared"]
     u0_sigma, floor3 = u0d["sigma"], u0d["floor_3sigma"]
+    # sigma(KP) = 0 where the drift region dominates: mobility has no meaningful
+    # lever there, so the variable is dropped rather than carried as a near-zero.
+    u0_zero = set(u0d.get("sigma_zero_devices", []))
     work = Path(tempfile.mkdtemp(prefix="statdir_"))
     out = {"_meta": {"ngspice": ng, "model": "models/stat_model.json",
                      "bench_rule": "classic = Vgs = Vds = class supply (ruling F8); "
@@ -551,13 +554,15 @@ def main(argv=None) -> int:
                 dominant = u0_var if u0_slope >= U0_SLOPE_FLOOR else rd_var
 
                 # U0 is declared, like everything else. No band, no solve.
-                full = measure_group(ng, g, model, sizing, work, {u0_var: u0_sigma})
-                rec = {"u0_sigma_1s": u0_sigma,
-                       "u0_source": "declared (_U0_declared)",
+                sig = 0.0 if g in u0_zero else u0_sigma
+                full = measure_group(ng, g, model, sizing, work, {u0_var: sig})
+                rec = {"u0_sigma_1s": sig,
+                       "u0_source": ("declared (_U0_declared), sigma forced to 0: drift-dominated"
+                                     if g in u0_zero else "declared (_U0_declared)"),
                        "u0_slope_measured": u0_slope,
                        "dominant_variable": dominant,
                        "u0_floor_3sigma": floor3}
-                print(f"{g:9s} {kind:9s} u0 {u0_sigma*100:4.2f} %  u0slope {u0_slope:4.2f}  "
+                print(f"{g:9s} {kind:9s} u0 {sig*100:4.2f} %  u0slope {u0_slope:4.2f}  "
                       f"dom {dominant.split('_')[0]:4s}", end="")
             else:
                 full = measure_group(ng, g, model, sizing, work, None)

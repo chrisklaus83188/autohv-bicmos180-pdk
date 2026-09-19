@@ -159,32 +159,41 @@ group's Idsat spread is **whatever its own inputs predict**, reported rather tha
 
 | group | `U0` 1σ | `U0` slope | dominant | predicted 3σ Idsat |
 |---|---|---|---|---|
-| NMOS18 | 2.67 | 0.672 | U0 | **9.64 %** |
-| PMOS18 | 2.67 | 0.877 | U0 | **11.96 %** |
-| NMOS33 | 2.67 | 0.716 | U0 | **7.22 %** |
-| PMOS33 | 2.67 | 0.886 | U0 | **8.63 %** |
-| NMOS50 | 2.67 | 0.728 | U0 | **6.80 %** |
-| PMOS50 | 2.67 | 0.880 | U0 | **8.00 %** |
-| NMOS12 | 2.67 | 0.729 | U0 | **6.79 %** |
-| PMOS12 | 2.67 | 0.859 | U0 | **7.80 %** |
+| NMOS18 | 2.67 | 0.650 | U0 | **9.24 %** |
+| PMOS18 | 2.67 | 0.867 | U0 | **11.72 %** |
+| NMOS33 | 2.67 | 0.703 | U0 | **7.03 %** |
+| PMOS33 | 2.67 | 0.881 | U0 | **8.55 %** |
+| NMOS50 | 2.67 | 0.719 | U0 | **6.68 %** |
+| PMOS50 | 2.67 | 0.878 | U0 | **7.95 %** |
+| NMOS12 | 2.67 | 0.726 | U0 | **6.75 %** |
+| PMOS12 | 2.67 | 0.858 | U0 | **7.78 %** |
 | NDMOS20 | 2.67 | 0.693 | U0 | **7.30 %** |
 | PDMOS20 | 2.67 | 0.957 | U0 | **7.97 %** |
 | NDMOS40 | 2.67 | 0.554 | U0 | **8.08 %** |
 | PDMOS40 | 2.67 | 0.863 | U0 | **7.52 %** |
 | NDMOS60 | 2.67 | 0.459 | U0 | **8.91 %** |
 | PDMOS60 | 2.67 | 0.524 | U0 | **8.35 %** |
-| NDMOS80 | 2.67 | 0.365 | RDSW | **9.76 %** |
+| NDMOS80 | 0.00 | 0.365 | RDSW | **9.32 %** |
 | PDMOS80 | 2.67 | 0.412 | U0 | **9.32 %** |
-| NDMOS120 | 2.67 | 0.265 | RDSW | **10.87 %** |
-| PDMOS120 | 2.67 | 0.285 | RDSW | **10.66 %** |
-| NDMOS200 | 2.67 | 0.212 | RDSW | **11.59 %** |
-| PDMOS200 | 2.67 | 0.216 | RDSW | **11.58 %** |
+| NDMOS120 | 0.00 | 0.265 | RDSW | **10.66 %** |
+| PDMOS120 | 0.00 | 0.285 | RDSW | **10.42 %** |
+| NDMOS200 | 0.00 | 0.212 | RDSW | **11.47 %** |
+| PDMOS200 | 0.00 | 0.216 | RDSW | **11.46 %** |
 | DNMOS20 | 2.67 | 0.837 | U0 | **9.35 %** |
 
-**The U0/Rd anti-correlation is now structural, not fitted.** `dominant` is measured, and it flips
-from `U0` to `RDSW` exactly where drift resistance takes over — NDMOS80 onward, as the `U0` slope
-falls through 0.4. On a 200 V LDMOS mobility barely moves the current at all (`U0` slope 0.21);
-the drift region does. That is a property of the device, and it now shows up as one.
+**`U0` and `RD` are independent draws (separate implants).** The fast corner direction moves
+both — higher mobility, lower drift resistance — because both raise current. That is a property of
+the *direction*, not a correlation in the *process*. A shared signed draw is a legitimate
+alternative structure used by some libraries; it is not adopted here for lack of a physical basis
+in AutoHV's declared flow, where channel mobility is set by the body implant and drift resistance
+by the drift implant.
+
+**`σ(KP) = 0` where the drift region dominates.** Measured per device as `d ln(Id)/d ln(U0)` on its
+own classic bench; below 0.4 the mobility lever is not meaningful and a non-zero `σ(KP)` would
+describe the model rather than the device. Five devices qualify — NDMOS80 (0.365), NDMOS120
+(0.265), PDMOS120 (0.285), NDMOS200 (0.212), PDMOS200 (0.216). The 80 V pair straddles the
+boundary: NDMOS80 is drift-dominated and PDMOS80 (0.412) is not, so this is recorded per device
+rather than per voltage class.
 
 **Consequence, pre-registered.** LV/mid Idsat 3σ roughly halves against the retired bands — 5 V
 13.8 → 6.8 %, 1.8 V 19.9 → 9.6 %. This is the intended correction, not a regression: the old
