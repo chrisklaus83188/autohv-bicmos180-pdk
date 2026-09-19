@@ -92,16 +92,12 @@
     {
      "param": "tox",
      "form": "multiplicative"
-    },
-    {
-     "param": "KP_*_STAT",
-     "form": "via-loading"
-    },
-    {
-     "param": "VTO_*_STAT",
-     "form": "via-loading"
     }
-   ]
+   ],
+   "vdmos_loading": {
+    "mechanism": "see dependent_parameters: VTO_<vdmos>_STAT follows TOX_50, and k1/vth0 follow TOX_<class>",
+    "why_not_here": "This entry previously duplicated the coupling as applies_to 'via-loading' on KP_*_STAT and VTO_*_STAT. Ruling 1.2 gave the coupling measured per-card coefficients (analytic - bsim3_residual), which live in dependent_parameters. Two live mechanisms for one effect would let the generator apply it twice, so dependent_parameters is authoritative and this is a pointer."
+   }
   },
   "TOX_12": {
    "origin": "12 V gate-oxide growth (31 nm, separate module)",
@@ -1483,6 +1479,40 @@
    ],
    "supersedes": "_U0_calibration, whose class_bands_3sigma {18: 0.20, 33: 0.20, 50: 0.14, 12: 0.14, vdmos: 0.14} came from an external Idsat FF/SS table and whose LDMOS entry was invented.",
    "anti_correlation": "U2 also adopts the U0/Rd anti-correlation as a structural feature, carried by sign rather than by a solved VDMOS calibration."
+  },
+  "_KPRD_sharing": {
+   "_comment": "Ruling: LDMOS KPRD_<family> signed sharing, sigma(KP) = 0 where drift-dominated. One draw per device couples mobility and drift resistance with OPPOSITE signs: a fast die has higher KP and lower RD together. Carried by sign, not by a declared correlation coefficient (ruling U1 binary sharing).",
+   "draw": "KPRD_<device>",
+   "coefficient_KP": 1.0,
+   "coefficient_RD": -1.0,
+   "sign_reason": "KP and RD move oppositely on a real die: the same implant/anneal excursion that raises channel mobility lowers drift-region resistivity.",
+   "dominance_rule": "Measured, not assumed: d ln(Id)/d ln(U0) on each device's own classic bench. At or above 0.4 the device is mobility-dominated and KP carries the draw; below it the drift region dominates and sigma(KP) = 0, with RD carrying it.",
+   "u0_dominated": {
+    "NDMOS20": 0.693,
+    "PDMOS20": 0.957,
+    "NDMOS40": 0.554,
+    "PDMOS40": 0.863,
+    "NDMOS60": 0.459,
+    "PDMOS60": 0.524,
+    "PDMOS80": 0.412,
+    "DNMOS20": 0.837
+   },
+   "rd_dominated": {
+    "NDMOS80": 0.365,
+    "NDMOS120": 0.265,
+    "PDMOS120": 0.285,
+    "NDMOS200": 0.212,
+    "PDMOS200": 0.216
+   },
+   "sigma_KP_zero_for": [
+    "NDMOS120",
+    "NDMOS200",
+    "NDMOS80",
+    "PDMOS120",
+    "PDMOS200"
+   ],
+   "asymmetry_note": "The 80 V pair straddles the boundary -- NDMOS80 at 0.365 is drift-dominated while PDMOS80 at 0.412 is not. Recorded per device rather than per voltage class, because that is what the measurement says.",
+   "source": "autohv-derived (measured u0 slope per device, models/stat_directions.json)"
   }
  },
  "dependent_parameters": {
