@@ -1563,24 +1563,53 @@
     "DNMOS20": 0.012539
    },
    "validation": {
-    "method": "tox perturbed +-1.33 % on each card, Vth read back by constant-current extraction (1 uA, W/L 10/1, Vds 0.1 V) with log-linear interpolation between sweep samples",
-    "result": "showmod confirms vth0 and k1 do NOT move with tox (0.62 / 0.68 unchanged at 4.25 and 4.307 nm), so BSIM3 carries no implicit oxide-to-threshold coupling. The measured residual is only the short-channel (dvt0/1/2 via lt) and narrow-width (k3) terms, at 3.7-19.5 % of the closed form.",
-    "implicit_fraction_measured": {
-     "NMOS18": {
-      "W10L1": 0.055,
-      "W50L10": 0.037
-     },
-     "NMOS50": {
-      "W10L1": 0.116,
-      "W50L10": 0.108
-     },
-     "NMOS12": {
-      "W10L1": 0.149,
-      "W50L10": 0.195
-     }
+    "method": "tox perturbed +-1.33 % (the TOX_* 1-sigma); Vth read from the model itself (@m.xm1.m0[vth]) with no extraction criterion, at each group's own classic bench (sizing-guide W, L = Lmin_fab), after the k3 grounding landed",
+    "bsim3_residual_is_negative": "On every card |Vth| FALLS as tox rises at bench geometry. An L-sweep on NMOS50 (W 4.7 um) shows why: as carded the residual is -1.171 mV at L = 0.5 um, -0.222 at 1 um, then +0.035..+0.049 at L >= 2 um; with dvt0/dvt1/dvt2/k3 zeroed it collapses to ~0 at every length. So BSIM3's implicit tox dependence is entirely the short-channel and narrow-width terms, which dominate and reverse the trend at bench lengths. applied = analytic - (negative) is therefore 10-22 % LARGER than analytic.",
+    "supersedes": "The earlier decision to apply the full closed form, and the 3.7-19.5 % residual reported at Stop A'. That figure came from constant-current and gm-max extraction, both of which move with tox themselves and gave criterion-dependent, sign-unstable results (NMOS18 read -0.18 mV at a 1x W/L criterion, -0.61 at 0.1x, +3.52 at 10x)."
+   },
+   "coefficients_V_per_sigma_TOX": {
+    "NMOS18": {
+     "analytic": 0.007177,
+     "bsim3_residual": -0.0016,
+     "applied": 0.008777
     },
-    "double_counting_decision": "The generator applies the FULL closed form, not the remainder. The residual is not a subtractable constant -- it moves with geometry and in opposite directions across classes (NMOS18 0.055 -> 0.037, NMOS12 0.149 -> 0.195 on a long device) -- and at 4-20 % it sits well inside the +-50 % error bar on the inputs. Recorded so the choice is visible."
-   }
+    "PMOS18": {
+     "analytic": 0.008127,
+     "bsim3_residual": -0.001592,
+     "applied": 0.009719
+    },
+    "NMOS33": {
+     "analytic": 0.007784,
+     "bsim3_residual": -0.000981,
+     "applied": 0.008765
+    },
+    "PMOS33": {
+     "analytic": 0.00885,
+     "bsim3_residual": -0.000959,
+     "applied": 0.009809
+    },
+    "NMOS50": {
+     "analytic": 0.008339,
+     "bsim3_residual": -0.001171,
+     "applied": 0.00951
+    },
+    "PMOS50": {
+     "analytic": 0.009645,
+     "bsim3_residual": -0.001122,
+     "applied": 0.010767
+    },
+    "NMOS12": {
+     "analytic": 0.018787,
+     "bsim3_residual": -0.001904,
+     "applied": 0.020691
+    },
+    "PMOS12": {
+     "analytic": 0.020889,
+     "bsim3_residual": -0.001917,
+     "applied": 0.022806
+    }
+   },
+   "coefficient_rule": "applied = analytic - bsim3_residual (ruling 1.2)"
   },
   "k1": {
    "follows": [
@@ -1588,7 +1617,9 @@
    ],
    "coefficient": 1.0,
    "form": "relative-to-relative",
-   "reason": "Ruling AB1 S2.1: gamma scales with oxide thickness, so d k1 / k1 = d tox / tox."
+   "reason": "Ruling AB1 S2.1: gamma scales with oxide thickness, so d k1 / k1 = d tox / tox.",
+   "coefficient_rule": "applied = analytic; bsim3_residual = 0",
+   "validation": "showmod confirms BSIM3 does not scale k1 with tox at all: k1 reads back 0.68 unchanged at tox 4.25 and 4.307 nm. The residual is exactly 0, so the generator applies the full relative coupling d k1 / k1 = d tox / tox."
   },
   "VTO_<vdmos>_STAT": {
    "follows": [

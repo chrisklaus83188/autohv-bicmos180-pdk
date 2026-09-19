@@ -101,8 +101,9 @@ whatever its own inputs predict: **6.79–11.96 %**, reported rather than target
   `ksubthres` *is* the slope, set literally, and "recompute it at 11 nm" has no referent. A
   bisection fit against each card's measured slope returned the carded values to ±0.5 %.
 - **BSIM3 does not couple oxide to threshold.** `showmod` confirms `vth0` and `k1` do not move when
-  `tox` does. Perturbing `tox` by 1σ and reading Vth back yields only 3.7–19.5 % of the physical
-  effect — the residual short-channel and narrow-width terms. The generator must apply the rest.
+  `tox` does. BSIM3 *does* move the threshold through its short-channel and narrow-width terms,
+  so the generator applies `analytic − bsim3_residual`. (The 3.7–19.5 % figure first reported
+  here was an extraction artefact; corrected in §5.)
 - **The U0/Rd anti-correlation is a measurable device property.** `dominant_variable` flips from
   `U0` to `RDSW` exactly where drift resistance takes over (NDMOS80 onward, as the U0 slope falls
   through 0.4). On a 200 V LDMOS, mobility barely moves the current at all.
@@ -142,6 +143,14 @@ derivative-peak window — resolves every card without hand-picking.
 | oxide coupling validated against ngspice | yes — residual 3.7–19.5 % |
 | plausibility script vs the AB1 generator | **zero diff** on all 21 variables |
 | `--apply` with no local magnitudes | refused, exit 1 |
+
+> **Corrected 2026-09-19.** The 3.7–19.5 % residual quoted above is wrong. It came from
+> constant-current and gm-max extraction, both of which move with `tox` themselves and gave
+> criterion-dependent, sign-unstable results (NMOS18 read −0.18 mV at a 1× W/L criterion,
+> −0.61 at 0.1×, +3.52 at 10×). Measured from the model's own `@m.xm1.m0[vth]` at bench
+> geometry the residual is **negative**, −0.96 to −1.92 mV, i.e. 9–22 %, which makes
+> `applied = analytic − residual` *larger* than analytic rather than smaller. See
+> `docs/stat-model.md` §2.2a.
 
 **The reported miss:** NMOS33/PMOS33 at 0.26× and 0.28× of the comparable midpoint. Reported, not
 clamped, per U3. Worth noting the comparable for 3.3 V is *wider* than the one for 5 V, which is
