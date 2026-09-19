@@ -398,6 +398,9 @@
 * HF NQS (item #2: non-quasi-static channel charge model)
 + nqsmod=1
 + elm=5
++ k3=2
++ k3b=0
++ w0=2.5e-07
 + )
 
 .model PMOS18_INT PMOS (
@@ -463,6 +466,9 @@
 * HF NQS (item #2: non-quasi-static channel charge model)
 + nqsmod=1
 + elm=5
++ k3=2
++ k3b=0
++ w0=2.5e-07
 + )
 
 .model NMOS33_INT NMOS (
@@ -528,6 +534,9 @@
 * HF NQS (item #2: non-quasi-static channel charge model)
 + nqsmod=1
 + elm=5
++ k3=2
++ k3b=0
++ w0=2.5e-07
 + )
 
 .model PMOS33_INT PMOS (
@@ -593,6 +602,9 @@
 * HF NQS (item #2: non-quasi-static channel charge model)
 + nqsmod=1
 + elm=5
++ k3=2
++ k3b=0
++ w0=2.5e-07
 + )
 
 .model NMOS50_INT NMOS (
@@ -658,6 +670,9 @@
 * HF NQS (item #2: non-quasi-static channel charge model)
 + nqsmod=1
 + elm=5
++ k3=2
++ k3b=0
++ w0=2.5e-07
 + )
 
 .model PMOS50_INT PMOS (
@@ -723,6 +738,9 @@
 * HF NQS (item #2: non-quasi-static channel charge model)
 + nqsmod=1
 + elm=5
++ k3=2
++ k3b=0
++ w0=2.5e-07
 + )
 
 .model NMOS12_INT NMOS (
@@ -787,6 +805,9 @@
 * HF NQS (item #2: non-quasi-static channel charge model)
 + nqsmod=1
 + elm=5
++ k3=2
++ k3b=0
++ w0=2.5e-07
 + )
 
 .model PMOS12_INT PMOS (
@@ -851,6 +872,9 @@
 * HF NQS (item #2: non-quasi-static channel charge model)
 + nqsmod=1
 + elm=5
++ k3=2
++ k3b=0
++ w0=2.5e-07
 + )
 
 .model NDMOS20_INT VDMOS (nchan
