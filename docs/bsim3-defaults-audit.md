@@ -97,6 +97,44 @@ threshold back. Wide devices (≥ 10 µm) move by under 45 mV; devices at 50 µm
 recorded before/after. This has all three, and it is the direct cause of the sensitivity anomaly
 diagnosed in Phase 0 (`d lnI/d lnW` = 1.096 instead of 1.004).
 
+### 4.1 Landed 2026-09-19
+
+`k3 = 2.0`, `k3b = 0`, `w0 = 2.5e-7` appended to all eight BSIM3 cards. The parameters were
+**undeclared**, so this is an append before each card's closing `+ )`, not a replace — a
+replace-only edit would have silently changed nothing. Values read back from the simulator
+(`showmod`) on all eight cards rather than assumed.
+
+The §4 table reproduces exactly, using the same method it was taken with — the model's own
+threshold via `@m.xm1.m0[vth]`, not a constant-current extraction:
+
+| W | `k3 = 80` (before) | `k3 = 2` (after) | audit §4 predicted |
+|---|---|---|---|
+| 0.4 µm | +238 mV | **+29 mV** | 238 / 29 |
+| 1.0 µm | +195 mV | **+14 mV** | 195 / 14 |
+| 4.7 µm | +87 mV | **+3 mV** | 87 / 3 |
+| 10 µm | +44 mV | **+1 mV** | 44 / 1 |
+| 50 µm | reference | reference | — |
+
+A constant-current extraction at 1 µA·(W/L) gives 255/205/91/46 and 37/18/4/2 instead — 5–8 %
+high. That is a different threshold definition, not a different device; the audit's numbers are
+reproducible only by the audit's method, which is why the method is named here.
+
+**Direction re-measurement after landing** (ruling 1.1). Only the eight BSIM3 groups move, and
+they move in bench-width order — NMOS18's bench is 1.3 µm and moves most, PMOS12's is 63.2 µm and
+moves least:
+
+| group | before | after | Δ |
+|---|---|---|---|
+| NMOS18 | 9.64 % | 9.24 % | −0.41 |
+| PMOS18 | 11.96 % | 11.72 % | −0.24 |
+| NMOS33 | 7.22 % | 7.03 % | −0.19 |
+| NMOS50 | 6.80 % | 6.68 % | −0.12 |
+| PMOS33 / PMOS50 / NMOS12 / PMOS12 | — | — | −0.08 … −0.01 |
+
+All 13 VDMOS, 5 resistors, 4 capacitors, 4 BJTs and 6 diodes are unchanged to 0.00. Corner
+distances move +0.005…+0.007. The expectation that the delta would be small — because the benches
+use sizing-guide widths rather than minimum width — is confirmed.
+
 ## 5. Non-BSIM3 cards
 
 VDMOS, BJT, diode, R and C cards are outside this audit's parameter set. The VDMOS cards are the
