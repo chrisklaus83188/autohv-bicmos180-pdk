@@ -66,6 +66,14 @@ over it (reported as shared-variable conflicts on presets 3 and 4).
 | plausibility script vs AB1 generator | **zero diff** on all 21 variables |
 | `--apply` with no local magnitudes | refused, exit 1 |
 
+> **Corrected 2026-09-19.** The 3.7–19.5 % residual quoted above is wrong. It came from
+> constant-current and gm-max extraction, both of which move with `tox` themselves and gave
+> criterion-dependent, sign-unstable results (NMOS18 read −0.18 mV at a 1× W/L criterion,
+> −0.61 at 0.1×, +3.52 at 10×). Measured from the model's own `@m.xm1.m0[vth]` at bench
+> geometry the residual is **negative**, −0.96 to −1.92 mV, i.e. 9–22 %, which makes
+> `applied = analytic − residual` *larger* than analytic rather than smaller. See
+> `docs/stat-model.md` §2.2a.
+
 **The reported miss:** NMOS33 and PMOS33 land at 0.26× and 0.28× of their comparable midpoint.
 Per U3 this is reported, not clamped. Your own §2.4 anticipated it and attributed it to a probable
 shared 3.3/5 V implant artefact in the reference — worth noting that the comparable for 3.3 V

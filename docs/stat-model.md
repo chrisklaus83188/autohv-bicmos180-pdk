@@ -121,11 +121,29 @@ devices on the same oxide correlate in Monte Carlo:
 | `VTO_<vdmos>_STAT` | `TOX_50` | as `vth0`, with `k1_equiv` from §1.2 |
 
 **This coupling must be applied by the generator; BSIM3 does not do it.** `showmod` confirms
-`vth0` and `k1` are explicit card parameters and do not move when `tox` does. Perturbing `tox` by
-the `TOX_*` 1σ and reading Vth back measures only 3.7–19.5 % of the closed form — the residual
-short-channel and narrow-width terms. The generator applies the full expression: the residual is
-not a subtractable constant (it moves with geometry, and in opposite directions across classes)
-and at 4–20 % it is well inside the ±50 % error bar on the inputs.
+`vth0` and `k1` are explicit card parameters and do not move when `tox` does — `k1` reads back
+unchanged, so its residual is exactly 0 and it takes the full relative coupling.
+
+`vth0` is different: BSIM3 *does* move the threshold when `tox` moves, through the short-channel
+(`dvt0/1/2` via `lt`) and narrow-width (`k3`) terms. So the coefficient the generator applies is
+
+> `applied = analytic − bsim3_residual`
+
+measured per card at its own classic bench, from the model's own `@m.xm1.m0[vth]` with no
+extraction criterion:
+
+| card | analytic | BSIM3 residual | applied |
+|---|---|---|---|
+| NMOS18 / PMOS18 | 7.18 / 8.13 mV | **−1.60 / −1.59** | 8.78 / 9.72 |
+| NMOS33 / PMOS33 | 7.78 / 8.85 | −0.98 / −0.96 | 8.77 / 9.81 |
+| NMOS50 / PMOS50 | 8.34 / 9.65 | −1.17 / −1.12 | 9.51 / 10.77 |
+| NMOS12 / PMOS12 | 18.79 / 20.89 | −1.90 / −1.92 | 20.69 / 22.81 |
+
+**The residual is negative**, so `applied` is 9–22 % *larger* than the analytic value. An L-sweep
+on NMOS50 shows why: as carded it runs −1.171 mV at L = 0.5 µm, −0.222 at 1 µm, then +0.035…+0.049
+at L ≥ 2 µm; with `dvt0/dvt1/dvt2/k3` zeroed it collapses to ≈0 at every length. BSIM3's implicit
+oxide-to-threshold coupling *is* those terms, and at bench lengths they dominate and reverse the
+depletion-charge trend.
 
 ### 2.3 Mobility — `U0_<device>`, declared
 
