@@ -1360,7 +1360,7 @@
    ]
   },
   "_BV_template": {
-   "_comment": "one entry per VDMOS; drift doping sets breakdown",
+   "_comment": "one entry per VDMOS; drift doping sets breakdown Extended 2026-09-19 (ruling AD1) with the four BJTs: their wrappers define BVCBO from the retired _isXX/P_* constructs, and dependent_parameters.BVCBO already reads 'follows: BV_<device>'. Same sigma, tag and basis as the VDMOS.",
    "distribution": "normal",
    "sigma": 0.0167,
    "sigma_3": 0.05,
@@ -1380,14 +1380,52 @@
     "PDMOS120",
     "NDMOS200",
     "PDMOS200",
-    "DNMOS20"
+    "DNMOS20",
+    "NPN_LV",
+    "NPN_HV",
+    "PNP_LAT",
+    "PNP_HV"
    ],
    "applies_to": [
     {
      "param": "bv",
-     "form": "multiplicative"
+     "form": "multiplicative",
+     "devices": [
+      "NDMOS20",
+      "PDMOS20",
+      "NDMOS40",
+      "PDMOS40",
+      "NDMOS60",
+      "PDMOS60",
+      "NDMOS80",
+      "PDMOS80",
+      "NDMOS120",
+      "PDMOS120",
+      "NDMOS200",
+      "PDMOS200",
+      "DNMOS20"
+     ],
+     "note": "These cards carry a bv parameter directly. Membership derived from the cards, not hand-listed: an earlier hand-written list omitted DNMOS20."
+    },
+    {
+     "target": "wrapper_BVCBO",
+     "form": "multiplicative",
+     "devices": [
+      "NPN_LV",
+      "NPN_HV",
+      "PNP_LAT",
+      "PNP_HV"
+     ],
+     "tt_V": {
+      "NPN_LV": 14.0,
+      "PNP_LAT": 18.0,
+      "NPN_HV": 45.0,
+      "PNP_HV": 32.0
+     },
+     "note": "BJT cards carry no bv parameter; breakdown lives in the wrapper as .param BVCBO feeding the Bavl avalanche source. Rewritten as {TT*exp(sigma*Z_BV_<bjt>)} in autohv_bicmos180_case.lib (ruling AD1)."
     }
-   ]
+   ],
+   "bjt_note": "BV_<bjt> carries the -10 % FF-SS breakdown ladder through the wrapper's Bavl avalanche source only. Like the VDMOS BV_*, it has no lever at the bench bias and is excluded from every measured direction, contributing 0 to each corner vector."
   },
   "JS_MOS": {
    "origin": "source/drain junction formation",
@@ -2394,13 +2432,14 @@
  "corner_construction": {
   "method": "Q-A ruling: measured worst-case direction, not hand-declared loadings",
   "steps": [
-   "1. Calibrate U0 per group (see _U0_calibration).",
+   "1. U0 is DECLARED, not calibrated (ruling U2, see _U0_declared); sigma(KP) = 0 on the drift-dominated devices listed there.",
    "2. Measure g_i = d ln(metric)/d z_i for every variable the group depends on, on its classic bench.",
    "3. z_fast = 3 * g / |g|; z_slow = -z_fast. Mahalanobis length is exactly 3 by construction.",
    "4. Record bench, bias, and the g vector (classic and analog) in corners.json."
   ],
   "shared_variable_rule": "When several selected groups pull a shared variable the same way, the preset generator takes the normalized sum of directions and rescales to the preset's declared distance. Conflicts are reported in corners.json; last-listed group wins only in case = -1 manual mode.",
-  "SPD_note": "SPD_<group> is a derived direction, not a sampled variable. Monte Carlo samples the independent variables; SPD exists only to define corners."
+  "SPD_note": "SPD_<group> is a derived direction, not a sampled variable. Monte Carlo samples the independent variables; SPD exists only to define corners.",
+  "length_invariance_note": "Because each per-group vector is renormalised to exactly 3 sigma, removing a variable from a group (for example sigma(KP) = 0 on a drift-dominated device) does NOT shorten the vector or change any preset distance -- the same length is redistributed onto the remaining levers. Measured: the five dropped U0 components summed to 1.918577 in squares and the surviving RDSW/VTH components gained +1.918578."
  },
  "model_parameter_changes": {
   "_comment": "Non-statistical model-card values changed by this program. The generator writes these into every BSIM3 card; brief section 0 requires physics, source and before/after for each.",

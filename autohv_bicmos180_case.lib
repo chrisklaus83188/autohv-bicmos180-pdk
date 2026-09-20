@@ -406,7 +406,7 @@ M0 d g_int s DNMOS20_INT m={mtot}
 .ends DNMOS20
 .subckt NPN_LV c b e params: AREA=0.04 MM_SIGMA=0
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-.param BVCBO={((14*_isTT + 13.3*_isFF + 14.7*_isSS + 13.3*_isFS + 14.7*_isSF))*(1+P_DBV_NPN_LV)}
+.param BVCBO={14*exp(0.0167*Z_BV_NPN_LV)}
 .param MAV_BJT=4
 Vsen c ci DC 0
 Q0 ci b e NPN_LV_INT area={AREAEFF}
@@ -415,7 +415,7 @@ Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 
 
 .subckt PNP_LAT c b e params: AREA=0.10 MM_SIGMA=0
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-.param BVCBO={((18*_isTT + 17.1*_isFF + 18.9*_isSS + 18.9*_isFS + 17.1*_isSF))*(1+P_DBV_PNP_LAT)}
+.param BVCBO={18*exp(0.0167*Z_BV_PNP_LAT)}
 .param MAV_BJT=4
 Vsen c ci DC 0
 Q0 ci b e PNP_LAT_INT area={AREAEFF}
@@ -424,7 +424,7 @@ Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 
 
 .subckt NPN_HV c b e params: AREA=0.10 MM_SIGMA=0
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-.param BVCBO={((45*_isTT + 42.75*_isFF + 47.25*_isSS + 42.75*_isFS + 47.25*_isSF))*(1+P_DBV_NPN_HV)}
+.param BVCBO={45*exp(0.0167*Z_BV_NPN_HV)}
 .param MAV_BJT=4
 Vsen c ci DC 0
 Q0 ci b e NPN_HV_INT area={AREAEFF}
@@ -433,7 +433,7 @@ Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 
 
 .subckt PNP_HV c b e params: AREA=0.10 MM_SIGMA=0
 .param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-.param BVCBO={((32*_isTT + 30.4*_isFF + 33.6*_isSS + 33.6*_isFS + 30.4*_isSF))*(1+P_DBV_PNP_HV)}
+.param BVCBO={32*exp(0.0167*Z_BV_PNP_HV)}
 .param MAV_BJT=4
 Vsen c ci DC 0
 Q0 ci b e PNP_HV_INT area={AREAEFF}

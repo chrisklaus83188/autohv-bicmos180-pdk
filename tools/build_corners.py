@@ -33,9 +33,10 @@ OUT = ROOT / "models" / "corners.json"
 
 MOS_N = ["NMOS18", "NMOS33", "NMOS50", "NMOS12"]
 MOS_P = ["PMOS18", "PMOS33", "PMOS50", "PMOS12"]
-VDMOS = ["NDMOS20", "PDMOS20", "NDMOS40", "PDMOS40", "NDMOS60", "PDMOS60",
-         "NDMOS80", "PDMOS80", "NDMOS120", "PDMOS120", "NDMOS200", "PDMOS200",
-         "DNMOS20"]
+VDMOS_N = ["NDMOS20", "NDMOS40", "NDMOS60", "NDMOS80", "NDMOS120", "NDMOS200",
+           "DNMOS20"]          # DNMOS20 is an N-channel depletion device
+VDMOS_P = ["PDMOS20", "PDMOS40", "PDMOS60", "PDMOS80", "PDMOS120", "PDMOS200"]
+VDMOS = VDMOS_N + VDMOS_P
 LV_MOS = MOS_N + MOS_P
 RES = ["RPOLY_HI", "RPOLY_LO", "RNWELL", "RNPLUS", "RPPLUS"]
 CAP = ["CMIM_STD", "CMIM_HI", "CMOM", "CFRINGE"]
@@ -51,12 +52,12 @@ PRESETS: dict[int, tuple[str, dict[str, int]]] = {
     0: ("typical, nothing moved", {}),
     1: ("FF: all MOS fast", {**_all(LV_MOS, +1), **_all(VDMOS, +1)}),
     2: ("SS: all MOS slow", {**_all(LV_MOS, -1), **_all(VDMOS, -1)}),
+    # Explicit N/P lists, not a name-prefix test: DNMOS20 starts with "D" and so
+    # fell into neither side, silently dropping out of FS/SF (ruling 2026-09-19 S2).
     3: ("FS: n-type fast, p-type slow", {**_all(MOS_N, +1), **_all(MOS_P, -1),
-                                         **_all([g for g in VDMOS if g.startswith("N")], +1),
-                                         **_all([g for g in VDMOS if g.startswith("P")], -1)}),
+                                         **_all(VDMOS_N, +1), **_all(VDMOS_P, -1)}),
     4: ("SF: n-type slow, p-type fast", {**_all(MOS_N, -1), **_all(MOS_P, +1),
-                                         **_all([g for g in VDMOS if g.startswith("N")], -1),
-                                         **_all([g for g in VDMOS if g.startswith("P")], +1)}),
+                                         **_all(VDMOS_N, -1), **_all(VDMOS_P, +1)}),
     5: ("LV fast, HV slow", {**_all(LV_MOS, +1), **_all(VDMOS, -1)}),
     6: ("LV slow, HV fast", {**_all(LV_MOS, -1), **_all(VDMOS, +1)}),
     7: ("all resistors lo", _all(RES, -1)),

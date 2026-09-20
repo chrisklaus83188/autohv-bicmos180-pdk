@@ -28,8 +28,8 @@ Two consequences follow, and both are correct behaviour rather than defects:
 | 0 | typical, nothing moved | 0 | 0 | **0.00** |
 | 1 | FF: all MOS fast | 21 | 65 | **16.54** |
 | 2 | SS: all MOS slow | 21 | 65 | **16.54** |
-| 3 | FS: n-type fast, p-type slow | 20 | 62 | **12.83** |
-| 4 | SF: n-type slow, p-type fast | 20 | 62 | **12.83** |
+| 3 | FS: n-type fast, p-type slow | 21 | 65 | **13.18** |
+| 4 | SF: n-type slow, p-type fast | 21 | 65 | **13.18** |
 | 5 | LV fast, HV slow | 21 | 65 | **16.54** |
 | 6 | LV slow, HV fast | 21 | 65 | **16.54** |
 | 7 | all resistors lo | 5 | 6 | **6.71** |

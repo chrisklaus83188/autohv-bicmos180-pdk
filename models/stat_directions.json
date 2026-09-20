@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "ngspice": "C:/Users/chris/SPICE/Qucs-S-25.2.0-win64/bin/ngspice_con.exe",
+  "ngspice": "C:/Program Files/Qucs-S-25.2.0-win64/bin/ngspice_con.exe",
   "model": "models/stat_model.json",
   "bench_rule": "classic = Vgs = Vds = class supply (ruling F8); metrics per ruling G3"
  },
@@ -1309,8 +1309,8 @@
    "mahalanobis": 3.0
   },
   "NPN_LV": {
-   "predicted_3sigma_swing": 0.26043301663676066,
-   "metric_3sigma_swing": 0.26043301663676066,
+   "predicted_3sigma_swing": 0.2604330164744275,
+   "metric_3sigma_swing": 0.2604330164744275,
    "bench": {
     "Vbe": 0.637,
     "Vce": 2.0,
@@ -1322,27 +1322,29 @@
    "metric_analog": null,
    "g_classic": {
     "VBE_NPN_LV": 0.07733300881063432,
-    "BF_NPN_LV": 0.039443069666694086,
+    "BF_NPN_LV": 0.03944306954760002,
     "RPAR_NPN_LV": -2.6218287305646015e-05
    },
    "g_analog": {},
-   "excluded": {},
+   "excluded": {
+    "BV_NPN_LV": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
    "z_fast": {
-    "VBE_NPN_LV": 2.6724609970111883,
-    "BF_NPN_LV": 1.3630669090446634,
-    "RPAR_NPN_LV": -0.0009060471241245348
+    "VBE_NPN_LV": 2.672460998676988,
+    "BF_NPN_LV": 1.3630669057786582,
+    "RPAR_NPN_LV": -0.0009060471246892924
    },
    "mahalanobis": 3.0,
    "bf_share": {
     "bench": "base-current driven (ruling G3)",
-    "g_beta_bench": 0.039443069666694086,
+    "g_beta_bench": 0.03944306954760002,
     "g_fixed_vbe_bench": 6.702369015343379e-06,
     "note": "BF has no lever at a fixed-Vbe bench; the beta-bench value is what a beta-only corner must use"
    }
   },
   "PNP_LAT": {
-   "predicted_3sigma_swing": 0.31366570579722963,
-   "metric_3sigma_swing": 0.31366570579722963,
+   "predicted_3sigma_swing": 0.31366570575467195,
+   "metric_3sigma_swing": 0.31366570575467195,
    "bench": {
     "Vbe": 0.601,
     "Vce": 2.0,
@@ -1354,20 +1356,22 @@
    "metric_analog": null,
    "g_classic": {
     "VBE_PNP_LAT": 0.07726747350118046,
-    "BF_PNP_LAT": 0.07043811830143554,
+    "BF_PNP_LAT": 0.0704381182803786,
     "RPAR_PNP_LAT": -7.905929586637939e-05
    },
    "g_analog": {},
-   "excluded": {},
+   "excluded": {
+    "BV_PNP_LAT": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
    "z_fast": {
-    "VBE_PNP_LAT": 2.217033130042507,
-    "BF_PNP_LAT": 2.0210786611231724,
-    "RPAR_PNP_LAT": -0.0022684458314910206
+    "VBE_PNP_LAT": 2.2170331303433106,
+    "BF_PNP_LAT": 2.0210786607932034,
+    "RPAR_PNP_LAT": -0.0022684458317988
    },
    "mahalanobis": 3.0,
    "bf_share": {
     "bench": "base-current driven (ruling G3)",
-    "g_beta_bench": 0.07043811830143554,
+    "g_beta_bench": 0.0704381182803786,
     "g_fixed_vbe_bench": 4.96527968438798e-05,
     "note": "BF has no lever at a fixed-Vbe bench; the beta-bench value is what a beta-only corner must use"
    }
@@ -1390,7 +1394,9 @@
     "RPAR_NPN_HV": -7.627377839902749e-05
    },
    "g_analog": {},
-   "excluded": {},
+   "excluded": {
+    "BV_NPN_HV": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
    "z_fast": {
     "VBE_NPN_HV": 2.6838363101026057,
     "BF_NPN_HV": 1.3405281216615685,
@@ -1405,8 +1411,8 @@
    }
   },
   "PNP_HV": {
-   "predicted_3sigma_swing": 0.3221744102371148,
-   "metric_3sigma_swing": 0.3221744102371148,
+   "predicted_3sigma_swing": 0.32217441020889453,
+   "metric_3sigma_swing": 0.32217441020889453,
    "bench": {
     "Vbe": 0.655,
     "Vce": 2.0,
@@ -1418,20 +1424,22 @@
    "metric_analog": null,
    "g_classic": {
     "VBE_PNP_HV": 0.07721577697667836,
-    "BF_PNP_HV": 0.07463671155139728,
+    "BF_PNP_HV": 0.07463671153786233,
     "RPAR_PNP_HV": -0.00011366801818013528
    },
    "g_analog": {},
-   "excluded": {},
+   "excluded": {
+    "BV_PNP_HV": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
+   },
    "z_fast": {
-    "VBE_PNP_HV": 2.1570365948016788,
-    "BF_PNP_HV": 2.0849899390463493,
-    "RPAR_PNP_HV": -0.003175336498228702
+    "VBE_PNP_HV": 2.1570365949906205,
+    "BF_PNP_HV": 2.084989938850879,
+    "RPAR_PNP_HV": -0.00317533649850684
    },
    "mahalanobis": 3.0,
    "bf_share": {
     "bench": "base-current driven (ruling G3)",
-    "g_beta_bench": 0.07463671155139728,
+    "g_beta_bench": 0.07463671153786233,
     "g_fixed_vbe_bench": 9.657941190610586e-05,
     "note": "BF has no lever at a fixed-Vbe bench; the beta-bench value is what a beta-only corner must use"
    }

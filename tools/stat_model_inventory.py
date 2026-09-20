@@ -231,20 +231,34 @@ def build():
         })
 
     # global findings
+    # Two notations, one meaning: "this parameter is statistical". The `_isXX` selector
+    # form is the authored one and now lives only in the .in template; the generated
+    # files carry `{TT + sigma*Z_X}` / `{TT*exp(sigma*Z_X)}` instead. Count both, or a
+    # zero here reads as a missing feature rather than a retired spelling.
     corner_re = re.compile(r"(\w+)\s*=\s*\{[(\s]*" + r"\s*\+\s*".join(
         r"[-+]?[\d.]+(?:[eE][-+]?\d+)?\*_is" + c for c in ("TT", "FF", "SS", "FS", "SF")))
+    draw_re = re.compile(r"(\w+)\s*=\s*\{[^}]*?\*\s*Z_\w+")
     corner_inc = [m.group(1) for m in corner_re.finditer(inc_text)]
     corner_lib = [m.group(1) for m in corner_re.finditer(lib_text)]
-    geom_moved = [p for p in corner_inc + corner_lib if p.lower() in GEOM_PARAMS]
+    draw_inc = [m.group(1) for m in draw_re.finditer(inc_text)]
+    draw_lib = [m.group(1) for m in draw_re.finditer(lib_text)]
+    stat_inc, stat_lib = corner_inc + draw_inc, corner_lib + draw_lib
+    geom_moved = [p for p in stat_inc + stat_lib if p.lower() in GEOM_PARAMS]
     header_claim = re.search(r"All (\d+) \.SUBCKT", "\n".join(header))
     rgate = re.search(r"\b(rgate|rsh_poly|rgeomod)\b", lib_text + inc_text, re.I)
     beta = [r["name"] for r in rows if re.search(r"BETA|U0", r["terms"], re.I)]
     findings = [
         ("device wrappers in the library", "%d" % len(devs)),
         ("library header claims", header_claim.group(1) if header_claim else "no count"),
-        ("corner-selected expressions `(tt*_isTT + ... + sf*_isSF)`",
+        ("statistical card expressions (both notations)",
          "%d (%d in the models file, %d in the library)"
-         % (len(corner_inc) + len(corner_lib), len(corner_inc), len(corner_lib))),
+         % (len(stat_inc) + len(stat_lib), len(stat_inc), len(stat_lib))),
+        ("  of those, authored selector form `(tt*_isTT + ... + sf*_isSF)`",
+         "%d — the authored spelling, now only in the .in template"
+         % (len(corner_inc) + len(corner_lib))),
+        ("  of those, generated draw form `{TT + sigma*Z_X}` / `{TT*exp(sigma*Z_X)}`",
+         "%d (%d in the models file, %d in the library)"
+         % (len(draw_inc) + len(draw_lib), len(draw_inc), len(draw_lib))),
         ("of those, geometry parameters (%s) — brief R0 prerequisite" % "/".join(GEOM_PARAMS),
          "%d — no corner moves geometry; edge bias is declared per D3" % len(geom_moved)
          if not geom_moved else "%d" % len(geom_moved)),

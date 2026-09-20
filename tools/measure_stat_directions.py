@@ -57,6 +57,9 @@ import sys
 import tempfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import inc_parse  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 LIB = ROOT / "autohv_bicmos180_case.lib"
 INC = ROOT / "autohv_bicmos180_case_models.inc"
@@ -169,7 +172,18 @@ def scratch(workdir: Path, cards: dict[str, dict[str, float]],
 
 
 def tt_of(name: str, card: str | None = None) -> float | None:
-    """TT value of a card parameter or a top-level .param, at case = 0."""
+    """TT value of a card parameter or a top-level .param, at case = 0.
+
+    Returns None for exactly ONE reason: the parameter is not on the card (or not a
+    top-level .param). That is a fact about the model -- BJT cards genuinely carry no
+    `bv` -- and callers test for it.
+
+    It never returns None because it could not read a line. A line that is present but
+    unparseable is a defect in this tool, and it stops the run. Conflating those two is
+    what silently degraded five direction records: the generated `{TT + sigma*Z}` form
+    was unreadable to the old regex, tt_of returned None, and `perturbed()` skipped the
+    variable with no record anywhere. See tools/inc_parse.py.
+    """
     text = INC.read_text(encoding="utf-8")
     if card:
         m = re.search(rf"^\.model\s+{card}\s.*?(?=^\.model|\Z)", text, re.S | re.M | re.I)
@@ -178,13 +192,21 @@ def tt_of(name: str, card: str | None = None) -> float | None:
     else:
         mm = re.search(rf"^\.param\s+{name}\s*=\s*(.+)$", text, re.M | re.I)
     if not mm:
-        return None
+        return None                       # absent: a fact, not a parse failure
     expr = mm.group(1)
-    tt = re.search(r"([-\d.eE+]+)\s*\*\s*_isTT", expr)
-    if tt:
-        return float(tt.group(1))
-    plain = re.match(r"[\s{(]*([-\d.eE+]+)[\s})]*(?:;.*)?$", expr)
-    return float(plain.group(1)) if plain else None
+    try:
+        p = inc_parse.parse(expr)
+    except inc_parse.IncParseError as exc:
+        raise SystemExit("measure_stat_directions: cannot read %s%s: %s"
+                         % (f"{card}." if card else ".param ", name, exc))
+    if p.kind == "reference":
+        # The card defers to a top-level .param (a tempco wrapper around FOO_STAT).
+        # Follow it rather than reporting no TT, which would drop the variable.
+        return tt_of(p.z)
+    if p.tt is None:
+        raise SystemExit("measure_stat_directions: no TT value for %s%s (%s form): %s"
+                         % (f"{card}." if card else ".param ", name, p.kind, expr.strip()))
+    return p.tt
 
 
 # ------------------------------------------------------------------ decks
@@ -285,6 +307,13 @@ def measure(ng: str, workdir: Path, deck: str, mode: str, bench: dict) -> float:
 
 # ------------------------------------------------------------------ variables
 
+NO_LEVER_REASON = {
+    "BV_": "breakdown has no lever on drain current at the bench bias "
+           "(the device is biased far below its rating)",
+    "CJ_": "junction capacitance has no lever on a DC forward current",
+}
+
+
 def perturbations(group: str, model: dict) -> tuple[dict, dict]:
     """Returns (realizable perturbations, excluded {variable: reason})."""
     gv, kind, card = model["global_variables"], kind_of(group), f"{group}_INT"
@@ -361,6 +390,12 @@ def perturbations(group: str, model: dict) -> tuple[dict, dict]:
         if param == "cjsw" and not tt_of("cjsw", card):
             dead[var] = INERT["CPER_flat"]
             continue
+        if param == "bv" and tt_of("bv", card) is None:
+            # BJT cards carry no bv; their breakdown is the wrapper's BVCBO. Record
+            # the exclusion with the same reason the VDMOS BV_* get, rather than
+            # letting the variable vanish from the direction unrecorded (AD1).
+            dead[var] = NO_LEVER_REASON["BV_"]
+            continue
         if form == "vbe":
             add(var, param="is", form="exp_v", sigma=tt["sigma"], scale=1.0 / VT_THERMAL)
         elif form == "vf":
@@ -370,6 +405,15 @@ def perturbations(group: str, model: dict) -> tuple[dict, dict]:
         else:
             add(var, param=param, form=form, sigma=tt["sigma"])
     return out, dead
+
+
+SKIPPED: set[str] = set()
+"""(card, param) targets a variable named but the model file does not carry.
+
+Not an error -- the model may legitimately point at a parameter a given card lacks --
+but never silent either. An unnoticed skip here is precisely how DNMOS20 fell to a
+zero-length direction with nothing in the record to show for it.
+"""
 
 
 def perturbed(spec: dict, sgn: int) -> tuple[dict, dict]:
@@ -391,11 +435,13 @@ def perturbed(spec: dict, sgn: int) -> tuple[dict, dict]:
     for card, param in targets:
         tt = tt_of(param, card)
         if tt is None:
+            SKIPPED.add(f"{card}.{param}")     # absent from the card; recorded, not silent
             continue
         cards.setdefault(card, {})[param] = new_value(tt)
     for pname in pnames:
         tt = tt_of(pname)
         if tt is None:
+            SKIPPED.add(f".param {pname}")
             continue
         params[pname] = new_value(tt)
     return cards, params
@@ -489,11 +535,6 @@ def measure_group(ng: str, group: str, model: dict, sizing: dict, work: Path,
 # (RDSW on a MOS classic bench, ~7e-4).
 NO_LEVER = 1e-9
 
-NO_LEVER_REASON = {
-    "BV_": "breakdown has no lever on drain current at the bench bias "
-           "(the device is biased far below its rating)",
-    "CJ_": "junction capacitance has no lever on a DC forward current",
-}
 
 
 def prune_no_lever(rec: dict) -> None:
@@ -602,6 +643,10 @@ def main(argv=None) -> int:
     (ROOT / args.out).write_text(json.dumps(out, indent=1) + "\n",
                                  encoding="utf-8", newline="\n")
     print(f"wrote {args.out} for {len(out['groups'])} of 40 groups")
+    if SKIPPED:
+        # Targets the model named but the cards do not carry. Reported, never silent.
+        print("skipped %d target(s) absent from the model file: %s"
+              % (len(SKIPPED), ", ".join(sorted(SKIPPED))))
     return 0
 
 
