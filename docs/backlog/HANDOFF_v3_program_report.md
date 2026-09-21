@@ -162,7 +162,7 @@ backwards for a thinner oxide.
 
 ## 6. The naming pass is bigger than the model file
 
-One definition — case-insensitive `onc25|on semi` across tracked files — gives **100 occurrences in
+One definition — case-insensitive `<reference-name pattern>` across tracked files — gives **100 occurrences in
 16 files**. `models/stat_model.json` holds 19 and `docs/stat-model.md` 9; the largest single file is
 a committed backlog handoff at 22. §5 of the naming rule explicitly includes those, so the pass is
 mostly documentation rather than model content.

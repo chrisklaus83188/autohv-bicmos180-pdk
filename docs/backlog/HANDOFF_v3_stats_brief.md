@@ -101,7 +101,7 @@ Keep what stop-1 completed. Remaining items:
 
 One entry per variable: `name`, `origin` (process step), `shared_by` (device groups),
 `distribution` (`normal` | `lognormal`), `sigma` (1σ, in the parameter's units or as a fraction),
-`source` (`onc25` | `literature:<ref>` | `declared`), `error_bar`. The set to author (adjust to
+`source` (`the reference process` | `literature:<ref>` | `declared`), `error_bar`. The set to author (adjust to
 what the 40 wrappers actually need; report deviations):
 
 | variable | origin | shared by | distribution |
@@ -125,7 +125,7 @@ reason. **Do not create a variable for a parameter just because the old cards mo
 
 ### 3.2 Grounding rule
 
-For each `sigma`: (1) ONC25 extraction if it states the quantity; (2) literature for a 0.18 µm
+For each `sigma`: (1) the reference process extraction if it states the quantity; (2) literature for a 0.18 µm
 BCD-class process, cited; (3) declared with an error bar. Starting 3σ ranges to ground against
 (not to copy): tox 3–5 %; global Vth 60–90 mV; poly CD ±10 nm; poly rsh 15–20 %; well rsh
 25–30 %; MIM density 10–15 %; MOM 15–20 %; BJT β 20–30 %. The `source` column replaces the

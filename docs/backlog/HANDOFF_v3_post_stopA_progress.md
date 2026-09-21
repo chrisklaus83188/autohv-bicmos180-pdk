@@ -19,7 +19,7 @@ solve, described in §3. Phase 2 has not started. Three questions, T1–T3.
 
 ## 2. S1 — masters added, and the loadings are declared
 
-**§1.2 step 1 checked and answered: the correlation data is not available locally.** ONC25 §8.3
+**§1.2 step 1 checked and answered: the correlation data is not available locally.** the reference process §8.3
 *does* carry master-variable correlation matrices — the local extraction names them, in its
 "noted, not pursued" list, and states they were never transcribed ("§8 Statistical Models (p102)
 offers full worst-case libraries + master-variable correlations (not transcribed — the LSL/USL
@@ -82,8 +82,8 @@ recorded explicitly rather than appearing as a null.
 | # | question | my proposal |
 |---|---|---|
 | **T1** | The `RDSW` solve undershoots the band by 40 % because the response saturates (§3). Iterate to convergence, or accept what the device can actually deliver? | Iterate, but **cap it**: if the achievable 3σ swing at a physically sensible `RDSW` σ (say ≤ 30 % 3σ) still falls short of the band, stop and report the shortfall rather than inflating the variable — that is exactly the failure mode S2 was written to prevent, just moved from `U0` to `RDSW`. |
-| **T2** | **Is the 14 % Idsat band even the right target for a 200 V LDMOS?** The class bands come from ONC25's *CMOS* classes (±20 / 20 / 14 %). I applied 14 % to all 13 VDMOS as an assumption; ONC25 states no LDMOS Idsat band. The 40 % shortfall may be telling us the target is wrong rather than the solve. | Ground or drop it: if ONC25 gives an LDMOS Rdson or Idsat spread anywhere, use it per class; otherwise declare the VDMOS band from the Rdson tolerance a power-device datasheet would quote (typically ±25–35 % on Rdson, which is a *wider* Idsat band than 14 %) and record it as declared. I would not keep an un-grounded 14 % that the physics then has to be bent to meet. |
-| **T3** | The master loadings are declared at 0.7/0.6 ±0.2 and are now the least-grounded numbers in the model, yet ONC25 §8.3 contains the real correlation matrices — they were simply never transcribed into the local extraction. | If the source document is still available, transcribing §8.3 would move the single weakest part of the model to `source: onc25`. It is a read, not an experiment. Worth doing before Phase 2 freezes the structure. |
+| **T2** | **Is the 14 % Idsat band even the right target for a 200 V LDMOS?** The class bands come from the reference process's *CMOS* classes (±20 / 20 / 14 %). I applied 14 % to all 13 VDMOS as an assumption; the reference process states no LDMOS Idsat band. The 40 % shortfall may be telling us the target is wrong rather than the solve. | Ground or drop it: if the reference process gives an LDMOS Rdson or Idsat spread anywhere, use it per class; otherwise declare the VDMOS band from the Rdson tolerance a power-device datasheet would quote (typically ±25–35 % on Rdson, which is a *wider* Idsat band than 14 %) and record it as declared. I would not keep an un-grounded 14 % that the physics then has to be bent to meet. |
+| **T3** | The master loadings are declared at 0.7/0.6 ±0.2 and are now the least-grounded numbers in the model, yet the reference process §8.3 contains the real correlation matrices — they were simply never transcribed into the local extraction. | If the source document is still available, transcribing §8.3 would move the single weakest part of the model to `source: the reference process`. It is a read, not an experiment. Worth doing before Phase 2 freezes the structure. |
 
 ## 6. Next, once T1–T2 are answered
 

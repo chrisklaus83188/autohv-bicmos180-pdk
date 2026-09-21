@@ -78,7 +78,7 @@ OK: within 30 % of intended sigma
 
 | Q | question | recommendation |
 |---|---|---|
-| **Q-A** | §3.1 makes `VTH_<dev>`, `U0_<dev>`, `RDSW_<dev>` independent variables, but §3.4 sets a group's fast/slow to ±3σ on **each** of its variables. That vector's Mahalanobis distance is 3·√k, not 3, so §11's "FF preset ≈ 3" and B9's "FF/SS Idsat at 3–4.3σ" are unreachable by construction (k ≈ 4 lands near 6σ). | **(i)** give each device group one latent speed variable with declared loadings onto Vth/u0/rdsw (plus optional small residuals): fast = z=+3 on one variable, distance exactly 3, B9 holds, and it matches ONC25's own per-group fast/slow scheme. **(ii)** keep independent variables and restate §11/B9 as "≈3√k, reported". I recommend (i). |
+| **Q-A** | §3.1 makes `VTH_<dev>`, `U0_<dev>`, `RDSW_<dev>` independent variables, but §3.4 sets a group's fast/slow to ±3σ on **each** of its variables. That vector's Mahalanobis distance is 3·√k, not 3, so §11's "FF preset ≈ 3" and B9's "FF/SS Idsat at 3–4.3σ" are unreachable by construction (k ≈ 4 lands near 6σ). | **(i)** give each device group one latent speed variable with declared loadings onto Vth/u0/rdsw (plus optional small residuals): fast = z=+3 on one variable, distance exactly 3, B9 holds, and it matches the reference process's own per-group fast/slow scheme. **(ii)** keep independent variables and restate §11/B9 as "≈3√k, reported". I recommend (i). |
 | **Q-B** | §5.2 feeds `rgate` from "the `RSH` of the gate poly layer", but this PDK has no gate poly layer — only resistor layers at 1200 Ω/□ (RPOLY_HI) and 300 Ω/□ (RPOLY_LO). A silicided gate is typically 5–15 Ω/□, so either would overstate gate R by 20–100×. | Declare a new `RSH_GATE` (~8 Ω/□, literature, with an error bar) and add `rgate`; **or** drop gate R from this program. Either way, add "all transient and AC timing numbers move" to §11 — adding a series gate resistor changes every delay and comparator result, and that mover is missing. |
 | **Q-C** | §5.4 adds a perimeter term to every capacitor, which moves published capacitances. | Constrain the `CDEN`/`CPER` split so total C is unchanged at the 10×10 µm reference geometry, as §5.3 already does for resistors. The CMIM_STD golden is exactly that geometry at 10 pF, so goldens stay valid and only the size-dependence changes. |
 | **Q-D** | `--exhaustive` 3^k: a comparator deck instantiating 8–12 device types gives 6,561–531,441 runs (≈5 min to ≈7 h at measured speed). | Add `--max-runs`, default ≈20,000, erroring with a pointer to `--groups` or sensitivity-guided pruning. |
@@ -87,7 +87,7 @@ OK: within 30 % of intended sigma
 ### Deviations from §3.1 I will apply unless told otherwise
 
 - **`TOX_50` is not shared with the 12 V devices.** NMOS12/PMOS12 carry their own fixed
-  `tox = 31 nm` against 11 nm at 5 V, and ONC25 confirms a separate 12 V oxide. So: `TOX_12`,
+  `tox = 31 nm` against 11 nm at 5 V, and the reference process confirms a separate 12 V oxide. So: `TOX_12`,
   its own variable.
 - **VDMOS devices get no `TOX` variable at all.** The ngspice VDMOS cards have no `tox`
   parameter; oxide effects can only enter through `KP`/`VTO`, so that is where their loadings go.

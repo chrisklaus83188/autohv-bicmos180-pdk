@@ -81,7 +81,7 @@ fitted**. Inflated for non-RDF sources by `A_total = A_RDF/√(RDF fraction)`, f
 **The strong result:** `c` comes out **1.4716…1.5191, constant to 3.18 %** (mean **1.4940**
 mV·µm/√nm) across oxides spanning 4.25→31 nm and dopings spanning 9e16→7.9e17. That near-constancy
 is the validation of V2's `N_a^{1/4}` form — a wrong exponent would drift `c` systematically with
-`t_ox`, and it does not. The values are entirely ours: they replace an ONC25-anchored ladder
+`t_ox`, and it does not. The values are entirely ours: they replace a reference-anchored ladder
 (3.85→15.03) with one generated from our own cards.
 
 **The problem:** the derived ladder is ~0.5 mV·µm per nm of `t_ox` against bands built on a
@@ -139,7 +139,7 @@ re-opens a ruled declaration and invalidates four sets of card values, so I have
 VDMOS cards carry **no `t_ox` and no `k1`**, so `c·√(t_ox·k1)` cannot be evaluated for them at all
 until this is settled; `kp = µ·C_ox` is the route to `C_ox` once the oxide is fixed.
 
-**Z3 — scope for removing ONC25 content.** `models/stat_model.json` carries **28 ONC25
+**Z3 — scope for removing the reference process content.** `models/stat_model.json` carries **28 the reference process
 references**, several quoting measured values verbatim: section E/GG `A_VT` anchors, section HH Vth
 bands, per-class Idsat bands, poly/well/diffusion tolerances. Under the "not ours to copy"
 constraint these should all become AutoHV-derived. The `A_VT` block is ready to replace now. Do you

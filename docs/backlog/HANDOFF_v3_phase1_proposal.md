@@ -15,7 +15,7 @@ mover added), Q-C (split constrained at each type's golden geometry), Q-D (`--ma
 `--prune N`), Q-E (`AREA` × 100 µm²) are all taken as written. The two §3.1 deviations are
 accepted. The `k3` finding became the defaults-audit deliverable (§5).
 
-**One ruling I derived and am applying** (flagged for confirmation as F6): ONC25 states the gate
+**One ruling I derived and am applying** (flagged for confirmation as F6): the reference process states the gate
 oxide follows the **gate** rating, not the drain rating (its 200 V LDMOS with a 5 V gate uses the
 13 nm oxide). Every one of the 13 AutoHV VDMOS/LDMOS devices is rated ±5.5 V DC / ±7 V absolute
 on the gate. **So all 13 load onto `TOX_50`, and `TOX_12` is used only by NMOS12/PMOS12** —
@@ -23,9 +23,9 @@ regardless of their 20–200 V drain ratings.
 
 ## 2. What the grounding actually supports
 
-From the local ONC25 extraction (values below are derived; the source file stays local):
+From the local the reference process extraction (values below are derived; the source file stays local):
 
-| quantity | ONC25 says | grounds |
+| quantity | the reference process says | grounds |
 |---|---|---|
 | gate-oxide ladder | 6.4 / 7.5 / 13.1 / 31.1 nm for 2.5 / 3.3 / 5 / 12 V | the TOX variable split, and the oxide-by-gate-rating rule |
 | Pelgrom A_VT | **≈ 1 mV·µm per nm of oxide** (foundry's own footnote, "based upon 1 V·Tox") | A_VT for every MOS class |
@@ -44,29 +44,29 @@ Roughly 90 variables across 40 groups. σ is quoted as 3σ for readability; the 
 | variable | 3σ | distribution | source | error bar |
 |---|---|---|---|---|
 | `TOX_18` / `TOX_33` / `TOX_50` / `TOX_12` | 4 % | lognormal | literature (0.18 µm BCD) | ±50 % |
-| `VTH_N18`,`VTH_P18` | 88 mV | normal | onc25 (2.5 V band) | ±25 % |
-| `VTH_N33`,`VTH_P33` | 114 mV | normal | onc25 | ±25 % |
-| `VTH_N50`,`VTH_P50` | 128 mV | normal | onc25 | ±25 % |
+| `VTH_N18`,`VTH_P18` | 88 mV | normal | the reference process (2.5 V band) | ±25 % |
+| `VTH_N33`,`VTH_P33` | 114 mV | normal | the reference process | ±25 % |
+| `VTH_N50`,`VTH_P50` | 128 mV | normal | the reference process | ±25 % |
 | `VTH_N12`,`VTH_P12` | 150 mV | normal | declared (12 V extrapolation) | ±50 % |
 | `VTH_<vdmos>` × 13 | 5 % of VTO | normal | declared | ±50 % |
-| `U0_<dev>` × 21 | **calibrated** (§4.2) | lognormal | onc25-derived | ±25 % |
+| `U0_<dev>` × 21 | **calibrated** (§4.2) | lognormal | reference-derived | ±25 % |
 | `RDSW_<dev>` (VDMOS: `RD`,`RS`) | 15 % | lognormal | declared | ±50 % |
 | `DL_POLY` | 10 nm | normal | literature | ±50 % |
 | `DW_ACT_LV` / `DW_ACT_HV` | 15 nm / 20 nm | normal | declared | ±50 % |
-| `RSH_RPOLY_HI` | 20 % | lognormal | onc25 high-res poly | ±20 % |
-| `RSH_RPOLY_LO` | 15 % | lognormal | onc25 p+/n+ poly | ±20 % |
-| `RSH_RNWELL` | 27 % | lognormal | onc25 n-well STI | ±20 % |
-| `RSH_RNPLUS` | 11 % | lognormal | onc25 n+ diff | ±20 % |
-| `RSH_RPPLUS` | 15 % | lognormal | onc25 p+ diff | ±20 % |
+| `RSH_RPOLY_HI` | 20 % | lognormal | the reference process high-res poly | ±20 % |
+| `RSH_RPOLY_LO` | 15 % | lognormal | the reference process p+/n+ poly | ±20 % |
+| `RSH_RNWELL` | 27 % | lognormal | the reference process n-well STI | ±20 % |
+| `RSH_RNPLUS` | 11 % | lognormal | the reference process n+ diff | ±20 % |
+| `RSH_RPPLUS` | 15 % | lognormal | the reference process p+ diff | ±20 % |
 | `RSH_GATE` (8 Ω/□ nominal) | 20 % | lognormal | literature (Q-B) | ±50 % |
 | `RHEAD_<layer>` × 5 | 30 % | lognormal | declared | ±100 % |
-| `CDEN_MIM` (STD, HI) | 12 % | lognormal | onc25 | ±20 % |
-| `CDEN_MOM` (CMOM, CFRINGE) | 20 % | lognormal | onc25 | ±25 % |
+| `CDEN_MIM` (STD, HI) | 12 % | lognormal | the reference process | ±20 % |
+| `CDEN_MOM` (CMOM, CFRINGE) | 20 % | lognormal | the reference process | ±25 % |
 | `CPER_<type>` × 4 | 25 % | lognormal | declared | ±100 % |
 | `IS_<bjt>` × 4 | 6 % | lognormal | declared (carries today's corner) | ±50 % |
-| `BF_<bjt>` × 4 | 25 % | lognormal | onc25 β band | ±20 % |
+| `BF_<bjt>` × 4 | 25 % | lognormal | the reference process β band | ±20 % |
 | `IS_<dio>` / `RS_<dio>` / `CJ_<dio>` × 6 | 6 % / 20 % / 3 % | lognormal | mixed | ±50 % |
-| `BV_<vdmos>` × 13 | 5 % | normal | onc25 diode BV | ±50 % |
+| `BV_<vdmos>` × 13 | 5 % | normal | the reference process diode BV | ±50 % |
 
 `pclm`, `vsat`, `js`, `cjsw`, `eta0` and similar are **not** given variables. They either follow
 TOX/VTH with a declared sensitivity or stay at TT with a reason, per brief §3.1.
@@ -101,7 +101,7 @@ vector all get written into `corners.json`.
 ### 4.2 Two measurement passes
 
 1. **Calibration.** With VTH and TOX fixed at their grounded σ, choose each `U0_<dev>` σ so the
-   group's own 3σ Idsat swing equals the ONC25 band for its class (±20 / ±20 / ±14 %). This makes
+   group's own 3σ Idsat swing equals the reference process band for its class (±20 / ±20 / ±14 %). This makes
    the corner's Idsat grounded rather than asserted — and is the part of §3 I most want feedback
    on (**F3**), because it makes `U0` a derived σ rather than an independently grounded one.
 2. **Direction.** Perturb every variable the group depends on by ±1σ on its bench, measure
@@ -139,9 +139,9 @@ Grounding it moves every narrow device in the sizing guide, which §11 should pr
 
 | # | point | my proposal |
 |---|---|---|
-| **F1** | **Resistor matching normalization disagrees by ~23×.** ONC25's spec column reads 0.045 %·µm for high-res poly, but its *model* Pelgrom coefficient is 1.1–1.55, and AutoHV's current lumped value is 1.06 %·µm. The spec column is evidently a different normalization. | Ground the split on the **model-form** coefficient (1.1–1.55, consistent with today's 1.06), not the spec column, and record the discrepancy. Confirm. |
-| **F2** | Global Vth σ: ONC25's bands (88 / 114 / 128 mV 3σ) are **wider than the brief's** §3.2 starting range of 60–90 mV. | Use ONC25 per class (it is measurement-grounded); 12 V declared at 150 mV. |
-| **F3** | Calibrating `U0` σ to hit the ONC25 Idsat band makes it derived, not independently grounded. The alternative is to ground `U0` directly and let Idsat land where it lands. | Calibrate (§4.2), and record `U0` as `source: onc25-derived`. |
+| **F1** | **Resistor matching normalization disagrees by ~23×.** the reference process's spec column reads 0.045 %·µm for high-res poly, but its *model* Pelgrom coefficient is 1.1–1.55, and AutoHV's current lumped value is 1.06 %·µm. The spec column is evidently a different normalization. | Ground the split on the **model-form** coefficient (1.1–1.55, consistent with today's 1.06), not the spec column, and record the discrepancy. Confirm. |
+| **F2** | Global Vth σ: the reference process's bands (88 / 114 / 128 mV 3σ) are **wider than the brief's** §3.2 starting range of 60–90 mV. | Use the reference process per class (it is measurement-grounded); 12 V declared at 150 mV. |
+| **F3** | Calibrating `U0` σ to hit the reference process Idsat band makes it derived, not independently grounded. The alternative is to ground `U0` directly and let Idsat land where it lands. | Calibrate (§4.2), and record `U0` as `source: reference-derived`. |
 | **F4** | `TOX` σ at 4 % 3σ is **4× today's cards** (which move tox ±1 % across FF/SS). Every capacitance, gm and AC number moves. | Take the physical value; add "all Cgg/gm/AC numbers move" to §11. |
 | **F5** | Moving 1.8 V and 3.3 V A_VT onto the oxide rule (3.5 → 4.25, 4.0 → 6.75 mV·µm) changes published mismatch σ for those classes by +21 % and +69 %. | Do it — the rule is the grounded one and the 5 V/12 V values already obey it. Pre-register both. |
 | **F6** | The gate-rating oxide rule puts all 13 VDMOS on `TOX_50`. | Confirm. |

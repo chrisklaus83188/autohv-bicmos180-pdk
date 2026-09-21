@@ -10,7 +10,7 @@
       "absolute_units": "stated per entry (V, nm, ohm/sq, ohm/contact)",
       "normal": "param = TT + sigma * Z",
       "lognormal": "param = TT * exp(sigma_log * Z), sigma_log = ln(1 + sigma)",
-      "source": "onc25 | onc25-derived | literature:<ref> | declared",
+      "source": "autohv-derived | carried-over | declared | default | derived | literature | measured | reference-class",
       "local_mismatch": "1-sigma Pelgrom coefficients in foundry units; sigma = A / sqrt(area)"
     },
     "counts": {
@@ -19,8 +19,18 @@
       "master_variables": 7
     },
     "resolved_review_items": {
-      "F9/G1": "closed by ruling G1: A_VT re-anchored on the ONC25 measurements, F5 withdrawn. The anchor inversion in G1's text is corrected here; see local_mismatch._A_VT_note.",
-      "G2": "closed: no 12 V band in ONC25; 150 mV stays declared and the class is labelled weakest-grounded."
+      "F9/G1": "closed by ruling G1: A_VT re-anchored on the reference process measurements, F5 withdrawn. The anchor inversion in G1's text is corrected here; see local_mismatch._A_VT_note.",
+      "G2": "closed: no 12 V band in the reference process; 150 mV stays declared and the class is labelled weakest-grounded."
+    },
+    "source_taxonomy": {
+      "measured": "measured in this repo by a named tool, at a named bench",
+      "derived": "computed from other values in this model or from our own data files",
+      "autohv-derived": "computed from AutoHV's own device physics (a formula, stated where used)",
+      "literature": "public, citable literature",
+      "reference-class": "anchored on a comparable commercial class held locally; the magnitude itself never enters this repo, only a boolean band check (tools/check_plausibility.py)",
+      "declared": "set by fiat, with an error bar; not grounded in a measurement",
+      "carried-over": "inherited from the pre-program cards and not yet grounded",
+      "default": "a simulator default deliberately retained"
     }
   },
   "global_variables": {
@@ -87,7 +97,7 @@
       "units": "relative",
       "source": "literature:0.18um-BCD-class",
       "error_bar": "+-50%",
-      "note": "ONC25 sets the gate oxide by the GATE rating, not the drain rating (its 200 V LDMOS with a 5 V gate uses the 13 nm oxide). All 13 AutoHV VDMOS are rated 5.5 V DC on the gate, so all of them sit on this oxide. VDMOS cards carry no tox parameter, so the loading reaches them through KP/VTO.",
+      "note": "the reference process sets the gate oxide by the GATE rating, not the drain rating (its 200 V LDMOS with a 5 V gate uses the 13 nm oxide). All 13 AutoHV VDMOS are rated 5.5 V DC on the gate, so all of them sit on this oxide. VDMOS cards carry no tox parameter, so the loading reaches them through KP/VTO.",
       "applies_to": [
         {
           "param": "tox",
@@ -1051,7 +1061,7 @@
       "sigma": 0.0667,
       "sigma_3": 0.2,
       "units": "relative",
-      "source": "onc25:high-res-poly-tolerance",
+      "source": "reference-class:high-res-poly-tolerance",
       "error_bar": "+-20%",
       "applies_to": [
         {
@@ -1069,7 +1079,7 @@
       "sigma": 0.05,
       "sigma_3": 0.15,
       "units": "relative",
-      "source": "onc25:p+/n+-poly-tolerance",
+      "source": "reference-class:p+/n+-poly-tolerance",
       "error_bar": "+-20%",
       "applies_to": [
         {
@@ -1087,7 +1097,7 @@
       "sigma": 0.09,
       "sigma_3": 0.27,
       "units": "relative",
-      "source": "onc25:n-well-STI-tolerance",
+      "source": "reference-class:n-well-STI-tolerance",
       "error_bar": "+-20%",
       "applies_to": [
         {
@@ -1105,7 +1115,7 @@
       "sigma": 0.0367,
       "sigma_3": 0.11,
       "units": "relative",
-      "source": "onc25:n+-diffusion-tolerance",
+      "source": "reference-class:n+-diffusion-tolerance",
       "error_bar": "+-20%",
       "applies_to": [
         {
@@ -1123,7 +1133,7 @@
       "sigma": 0.05,
       "sigma_3": 0.15,
       "units": "relative",
-      "source": "onc25:p+-diffusion-tolerance",
+      "source": "reference-class:p+-diffusion-tolerance",
       "error_bar": "+-20%",
       "applies_to": [
         {
@@ -1168,7 +1178,7 @@
       "units": "ohm/contact (nominal); sigma relative",
       "source": "literature:silicided-contact",
       "error_bar": "+-100%",
-      "note": "ONC25 carries only a contact-head temperature coefficient, no ohm-per-contact value (checked per ruling F7), so nominal and sigma are declared: silicided 5-10 ohm/contact.",
+      "note": "the reference process carries only a contact-head temperature coefficient, no ohm-per-contact value (checked per ruling F7), so nominal and sigma are declared: silicided 5-10 ohm/contact.",
       "layers": [
         "RPOLY_HI",
         "RPOLY_LO",
@@ -1187,7 +1197,7 @@
       "sigma": 0.04,
       "sigma_3": 0.12,
       "units": "relative",
-      "source": "onc25:MIM-density-tolerance",
+      "source": "reference-class:MIM-density-tolerance",
       "error_bar": "+-20%",
       "applies_to": [
         {
@@ -1206,7 +1216,7 @@
       "sigma": 0.0667,
       "sigma_3": 0.2,
       "units": "relative",
-      "source": "onc25:MOM-density-tolerance",
+      "source": "reference-class:MOM-density-tolerance",
       "error_bar": "+-25%",
       "applies_to": [
         {
@@ -1260,7 +1270,7 @@
       "sigma": 0.0833,
       "sigma_3": 0.25,
       "units": "relative",
-      "source": "onc25:beta-class-band",
+      "source": "reference-class:beta-class-band",
       "error_bar": "+-20%",
       "devices": [
         "NPN_LV",
@@ -1379,7 +1389,7 @@
       "sigma": 0.0167,
       "sigma_3": 0.05,
       "units": "relative",
-      "source": "onc25:diode-BV-tolerance",
+      "source": "reference-class:diode-BV-tolerance",
       "error_bar": "+-50%",
       "devices": [
         "NDMOS20",
@@ -1551,7 +1561,7 @@
   },
   "dependent_parameters": {
     "vsat": {
-      "held_at_TT": "no corner or spread data in ONC25; second-order at the corner biases used here"
+      "held_at_TT": "no corner or spread data in the reference process; second-order at the corner biases used here"
     },
     "pclm": {
       "held_at_TT": "no corner or spread data; affects output conductance, not the corner metric"
@@ -2033,9 +2043,9 @@
         "A_LEND",
         "SIG_HEAD"
       ],
-      "source": "onc25-model-form",
+      "source": "reference-class:model-form",
       "error_bar": "+-50%",
-      "note": "Ruling F1: grounded on ONC25's model-form Pelgrom coefficient (1.1-1.55 %.um), which is consistent with today's 1.06. The spec-table column is NOT used; see the discrepancy note in docs/stat-model.md."
+      "note": "Ruling F1: grounded on the reference process's model-form Pelgrom coefficient (1.1-1.55 %.um), which is consistent with today's 1.06. The spec-table column is NOT used; see the discrepancy note in docs/stat-model.md."
     },
     "_CAPACITORS": {
       "A_C": {
@@ -2046,7 +2056,7 @@
         "units": "%.um",
         "source": "carried-over",
         "error_bar": "+-100%",
-        "note": "ONC25 is silent on MIM matching."
+        "note": "the reference process is silent on MIM matching."
       },
       "A_CPER": {
         "value": null,
@@ -2113,7 +2123,7 @@
         "Vds": 0.9,
         "gm_id": 6.37
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "PMOS18": {
       "W_um": 3.7,
@@ -2128,7 +2138,7 @@
         "Vds": 0.9,
         "gm_id": 5.8
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "NMOS33": {
       "W_um": 2.2,
@@ -2143,7 +2153,7 @@
         "Vds": 1.65,
         "gm_id": 5.77
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "PMOS33": {
       "W_um": 6.1,
@@ -2158,7 +2168,7 @@
         "Vds": 1.65,
         "gm_id": 5.57
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "NMOS50": {
       "W_um": 4.7,
@@ -2173,7 +2183,7 @@
         "Vds": 2.5,
         "gm_id": 5.7
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "PMOS50": {
       "W_um": 13.4,
@@ -2188,7 +2198,7 @@
         "Vds": 2.5,
         "gm_id": 5.9
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "NMOS12": {
       "W_um": 22.4,
@@ -2203,7 +2213,7 @@
         "Vds": 6.0,
         "gm_id": 5.73
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "PMOS12": {
       "W_um": 63.2,
@@ -2218,7 +2228,7 @@
         "Vds": 6.0,
         "gm_id": 6.43
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "_resistors": {
       "layer_ref": "RPOLY_HI 2 um width, per the sizing guide's precision default",
@@ -2255,7 +2265,7 @@
         "gm_id": 5.89,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
     "PDMOS20": {
@@ -2271,7 +2281,7 @@
         "gm_id": 6.39,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "NDMOS40": {
       "W_um": 3.0,
@@ -2286,7 +2296,7 @@
         "gm_id": 5.88,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
     "PDMOS40": {
@@ -2302,7 +2312,7 @@
         "gm_id": 6.37,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "NDMOS60": {
       "W_um": 3.0,
@@ -2317,7 +2327,7 @@
         "gm_id": 5.87,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
     "PDMOS60": {
@@ -2333,7 +2343,7 @@
         "gm_id": 6.35,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "NDMOS80": {
       "W_um": 3.0,
@@ -2348,7 +2358,7 @@
         "gm_id": 5.85,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
     "PDMOS80": {
@@ -2364,7 +2374,7 @@
         "gm_id": 6.33,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "NDMOS120": {
       "W_um": 3.0,
@@ -2379,7 +2389,7 @@
         "gm_id": 5.84,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
     "PDMOS120": {
@@ -2395,7 +2405,7 @@
         "gm_id": 6.31,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "NDMOS200": {
       "W_um": 3.0,
@@ -2410,7 +2420,7 @@
         "gm_id": 5.82,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
     "PDMOS200": {
@@ -2426,7 +2436,7 @@
         "gm_id": 6.28,
         "current_A": 1e-05
       },
-      "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+      "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
     "DNMOS20": {
       "W_um": 3.0,
@@ -2478,7 +2488,7 @@
     "k3b": {
       "before": 0.0,
       "after": 0.0,
-      "source": "BSIM3 default retained",
+      "source": "default:BSIM3-retained",
       "error_bar": "n/a",
       "applies_to": [
         "NMOS18",

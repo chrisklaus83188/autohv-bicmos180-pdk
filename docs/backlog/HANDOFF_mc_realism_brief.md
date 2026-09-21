@@ -108,7 +108,7 @@ series, each with its own two contact heads, joined by metal. Consequences:
   ≈ 0 if the process declarations have no number). A segmented resistor is therefore
   *higher* than the unsegmented one by `2(NS−1)·R_head + (NS−1)·R_link` — this must be
   visible in simulation. If the resistor wrappers have no head-resistance term today,
-  ground one from the ONC25 contact-resistance data and add it; if nothing is available,
+  ground one from the reference process contact-resistance data and add it; if nothing is available,
   declare a value in the synthetic-residue list with an error bar.
 - Geometry realized per segment, not per total: every segment is
   `L_seg = L/NS + DL_bias`, `W_seg = W + DW_bias`, where `DL_bias`/`DW_bias` are the
@@ -140,7 +140,7 @@ series, each with its own two contact heads, joined by metal. Consequences:
   process-side edge bias applied per copy (perimeter term), same principle.
 - If R or C wrappers lack a local-mismatch term entirely, add one in the form above.
   Coefficients (`A_RSH`, `A_W`, `A_LEND`, `A_C`, `σ_head`, `DL_bias`, `DW_bias`): ground
-  from the ONC25 documentation on hand where it states matching or edge bias; otherwise
+  from the reference process documentation on hand where it states matching or edge bias; otherwise
   declare a literature-typical value and add it to the synthetic-residue list in
   `docs/process-declarations.md` with an error bar. Do not invent silently, and do not
   collapse the terms into one lumped `A_R` — the NS behaviour depends on keeping them

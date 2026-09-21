@@ -84,7 +84,7 @@ shared 3.3/5 V implant artefact in the reference — worth noting that the compa
 I reported the external-reference count as falling "28 → 19 → 14 → 12 → 11". Those numbers mixed
 case-sensitive and case-insensitive greps and were counting different things at different times.
 
-**One definition — case-insensitive `onc25|on semi` across tracked files: 100 occurrences in 16
+**One definition — case-insensitive `<reference-name pattern>` across tracked files: 100 occurrences in 16
 files.**
 
 | file | count |

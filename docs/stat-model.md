@@ -57,6 +57,32 @@ the doping the phase-3 subthreshold ladder implies (1.3e17–2.7e17) by about 2�
 removes the contradiction: there was never a disagreement between the two derivations, only an
 assumed parameter.
 
+## 1.3 Where a number came from — the provenance taxonomy
+
+Every `source` in `models/stat_model.json` begins with one of eight prefixes, and
+`tools/check_naming.py --check` fails the build if one does not:
+
+| prefix | means |
+|---|---|
+| `measured` | measured in this repo by a named tool, at a named bench |
+| `derived` | computed from other values in this model, or from our own data files |
+| `autohv-derived` | computed from AutoHV's own device physics, formula stated where used |
+| `literature` | public, citable literature |
+| `reference-class` | anchored on a comparable commercial class held locally |
+| `declared` | set by fiat, with an error bar; not grounded in a measurement |
+| `carried-over` | inherited from the pre-program cards, not yet grounded |
+| `default` | a simulator default deliberately retained |
+
+**Why a closed vocabulary and not free text.** Free text is how a third party's name got into
+this repo in the first place: a value like `<vendor>:beta-class-band` is a name wearing a
+provenance label. The prefix carries the same information a reader actually needs — *how much
+should I trust this number* — without identifying whose data it was anchored against.
+
+`reference-class` is the load-bearing one. This PDK reuses **methodology**, not data. Where a
+value was sanity-checked against a comparable commercial class, the comparable magnitude is held
+only in a gitignored `LOCAL_*` file, and the single thing that reaches the repo is the boolean
+outcome of the band check (`tools/check_plausibility.py`) — never the magnitude, never the name.
+
 ## 2. Global variables
 
 ### 2.1 Gate oxide — `TOX_18`, `TOX_33`, `TOX_50`, `TOX_12`
@@ -64,7 +90,7 @@ assumed parameter.
 Four separate oxide growths, so four independent variables: 4.25, 6.75, 11 and 31 nm nominal.
 Each at 4 % 3σ, lognormal, `literature:0.18um-BCD-class`, ±50 %.
 
-ONC25 states no oxide-thickness tolerance anywhere (checked for ruling F4), so the number is
+The reference process states no oxide-thickness tolerance anywhere (checked for ruling F4), so the number is
 literature rather than grounded — hence the wide error bar. It is 4× what today's cards move
 (±1 % across FF/SS), which is why every capacitance, gm and AC number moves when this lands.
 
@@ -216,12 +242,12 @@ segmentation behave differently from a single large shape.
 
 ### 2.6 Resistors — `RSH_<layer>`, `RHEAD_<layer>`
 
-Sheet resistance per layer, lognormal, from ONC25's own tolerance table: high-res poly 20 % 3σ,
+Sheet resistance per layer, lognormal, from the reference process's own tolerance table: high-res poly 20 % 3σ,
 doped poly 15 %, n-well 27 %, n+ diffusion 11 %, p+ diffusion 15 %, each ±20 %. These are the
 best-grounded numbers in the model.
 
 Contact-head resistance `RHEAD_<layer>` is 7.5 Ω/contact nominal at 30 % 3σ, **declared**, ±100 %.
-ONC25 carries a contact-head *temperature coefficient* but no resistance value (checked for
+The reference process carries a contact-head *temperature coefficient* but no resistance value (checked for
 ruling F7), so this is literature for silicided contacts (5–10 Ω).
 
 ### 2.7 Gate poly sheet — `RSH_GATE`
@@ -233,7 +259,7 @@ feed the wrapper `rgate` term.
 
 ### 2.8 Capacitors — `CDEN_<dielectric>`, `CPER_<type>`
 
-MIM density 12 % 3σ and MOM 20 %, both ONC25-grounded, lognormal. `CPER_<type>` is the new
+MIM density 12 % 3σ and MOM 20 %, both reference-grounded, lognormal. `CPER_<type>` is the new
 perimeter term, 25 % 3σ, declared, ±100 %. The `CDEN`/`CPER` split for each type is constrained
 so total C is unchanged at that type's regression-golden geometry (ruling Q-C), so the goldens
 stay valid and only the size-dependence changes. Three distinct geometries are in play and
@@ -264,12 +290,12 @@ intended:
 
 Today's cards move `IS` ±6 %, which is a
 ±1.5 mV Vbe shift — far tighter than any real bipolar process. Current gain `BF` is 25 % 3σ from
-ONC25's β band. `RPAR_<bjt>` covers `rb`/`rc`/`re` together at 20 % 3σ, since they come from one
+The reference process's β band. `RPAR_<bjt>` covers `rb`/`rc`/`re` together at 20 % 3σ, since they come from one
 module.
 
 ### 2.10 Breakdown and junctions — `BV_<vdmos>`, `JS_MOS`
 
-`BV` at 5 % 3σ per VDMOS, anchored on ONC25's diode BV tolerances (±3 % and ±5 %). `JS_MOS` at
+`BV` at 5 % 3σ per VDMOS, anchored on the reference process's diode BV tolerances (±3 % and ±5 %). `JS_MOS` at
 20 % 3σ covers source/drain junction leakage; it stays in the model but is **excluded from corner
 directions**, because at the corner benches junction leakage is picoamps against a hundred
 microamps and has no lever on Idsat.
@@ -340,7 +366,7 @@ both use the wrong normalisation and flatten a deliberate per-class ladder.
 
 ### 3.3 Resistor matching: a discrepancy left on the record
 
-ONC25 gives resistor matching two ways that disagree by a factor of ~23: a spec-table column
+The reference process gives resistor matching two ways that disagree by a factor of ~23: a spec-table column
 (high-res poly 0.045 %·µm) and its own model-form Pelgrom coefficient (1.1–1.55 %·µm). AutoHV's
 current lumped value is 1.06 %·µm, consistent with the model form. Per ruling F1 the model form
 is used and the spec column is not.
@@ -348,9 +374,9 @@ is used and the spec column is not.
 The hypothesis check F1 asked for **fails**: if the spec column were the same quantity under a
 different area normalization, the ratio would be constant across layers. It is not — 23.6×
 (high-res poly), 25.3× (doped poly), 7.8× (n-well), 188× (n+ diffusion), 44× (p+ diffusion), a
-24× spread. The relative ordering disagrees too: ONC25 has n+ diffusion matching best and n-well
+24× spread. The relative ordering disagrees too: the reference process has n+ diffusion matching best and n-well
 worst; AutoHV has high-res poly best and n+ diffusion mid-pack. Recorded as unexplained. It is
-also a flag on AutoHV's own per-layer matching values, which do not reproduce ONC25's ordering.
+also a flag on AutoHV's own per-layer matching values, which do not reproduce the reference process's ordering.
 
 ## 4. How corner directions are measured
 

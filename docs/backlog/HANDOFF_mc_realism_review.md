@@ -243,7 +243,7 @@ diode, NPN, PNP. Change A14's band to "FF/SS within 3–4.3σ, value reported"? 
 
 ### C9 — R3 requires coefficients the grounding does not have; the freeze line is closed
 
-What the local ONC25 extraction offers for R3 (categories only; the file is third-party data and is
+What the local the reference process extraction offers for R3 (categories only; the file is third-party data and is
 not in this package):
 
 | R3 coefficient | available | status if R3 proceeds |

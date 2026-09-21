@@ -44,7 +44,7 @@ These carry fitted values per card (e.g. NMOS50: `dvt0=1.8`, `dvt1=0.4`, `dvt2=-
 | `dvt0w` | 0 | small-width Vth, width-dependent | keep: term is inert at 0 |
 | `dvt1w` | 5.3e6 | partner of `dvt0w` | keep: inert while `dvt0w = 0` |
 | `dvt2w` | −0.032 | partner of `dvt0w` | keep: inert while `dvt0w = 0` |
-| `keta` | −0.047 | bulk-charge body-effect coefficient | keep: default is the Berkeley fit; no ONC25 value; affects only body-biased operation |
+| `keta` | −0.047 | bulk-charge body-effect coefficient | keep: default is the Berkeley fit; no reference value; affects only body-biased operation |
 | `b0` | 0 | width dependence of bulk charge | keep: inert at 0 |
 | `b1` | 0 | partner of `b0` | keep: inert at 0 |
 | `pdiblcb` | 0 | body-bias dependence of DIBL | keep: inert at 0; `pdiblc1/2` are fitted |
@@ -52,7 +52,7 @@ These carry fitted values per card (e.g. NMOS50: `dvt0=1.8`, `dvt1=0.4`, `dvt2=-
 | `pscbe1` | 4.24e8 | substrate-current body effect | keep: matters near breakdown, outside the SOA these devices are rated for |
 | `pscbe2` | 1e-5 | partner of `pscbe1` | keep, as above |
 | `kt2` | 0.022 | second-order Vth tempco | keep: `kt1` is fitted per card; `kt2` is a small correction with no source |
-| `ua1` | 4.31e-9 | temperature coefficient of `ua` | keep: `ute` fitted; no ONC25 mobility-tempco split |
+| `ua1` | 4.31e-9 | temperature coefficient of `ua` | keep: `ute` fitted; no reference mobility-tempco split |
 | `ub1` | −7.61e-18 | temperature coefficient of `ub` | keep, as above |
 | `uc1` | −5.6e-11 | temperature coefficient of `uc` | keep, as above |
 

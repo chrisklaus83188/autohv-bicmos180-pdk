@@ -53,7 +53,7 @@ and `DL_POLY` in opposite directions, which is what an FS/SF corner means.
 
 ### 3.1 Calibration lands within 2 % on every class
 
-`U0` σ solved per group against the ONC25 Idsat band, fixed set at grounded σ, slope measured not
+`U0` σ solved per group against the reference process Idsat band, fixed set at grounded σ, slope measured not
 assumed (0.23–0.98 across the 21 MOS/VDMOS groups). No group hit the 3 % floor. Every class lands
 within 2 % of its band.
 
@@ -108,7 +108,7 @@ constructible, and the direction uses the base-driven value.
 |---|---|---|
 | **S1** | Compound preset distances are 13.8 (FF/SS) to 20.0 (everything), against §11's "≈ 3". | Keep the sum unrescaled — it is the honest number and the whole point of having the column. Replace §11's entry with "single-group = 3.00; all-MOS FF = 13.8; report the rest", and add one line to `docs/corners.md`: presets 1–6 are **multi-module worst cases, not 3σ process corners**, which is why MC and the exhaustive sweep exist. If instead you want case 1–4 to *be* a 3σ corner, the construction has to change: rescale each preset to 3, which makes FF a much milder corner than today's and will move every published corner result. |
 | **S2** | VDMOS `U0` inflated to 31–35 % 3σ at 120–200 V (§3.2). | Extend F3's solve: for VDMOS, calibrate against `RDSW` rather than `U0` where the measured `U0` slope is below ~0.4 (that is 80 V and above). Keep `U0` at a literature 8 % 3σ there. Report both the old and new directions. |
-| **S3** | `A_VT` anchors: G1 states "0.78 N / 0.94 P"; ONC25 §E reads nmos2v 6.0 / pmos2v 5.0 mV·µm at 6.4 nm, i.e. N 0.9375 / P 0.7812. | The corrected assignment is already applied (N is the worse matcher in both measured anchors). Confirm, so it is on the record rather than being my unilateral reading. |
+| **S3** | `A_VT` anchors: G1 states "0.78 N / 0.94 P"; the reference process §E reads nmos2v 6.0 / pmos2v 5.0 mV·µm at 6.4 nm, i.e. N 0.9375 / P 0.7812. | The corrected assignment is already applied (N is the worse matcher in both measured anchors). Confirm, so it is on the record rather than being my unilateral reading. |
 
 ## 5. Numbers that will move, for §11
 
@@ -119,7 +119,7 @@ constructible, and the direction uses the base-driven value.
 | A_VT 5 V | 11.0 | **N 6.89 / P 5.63** |
 | A_VT 12 V | 31.0 | **N 15.03 / P 12.07** |
 | narrow-device Vth (`k3`) | +238 mV at W = 0.4 µm | +29 mV |
-| VDMOS A_VT | per-cell 24 mV form | 20 mV·µm, ONC25-measured |
+| VDMOS A_VT | per-cell 24 mV form | 20 mV·µm, reference-measured |
 | BJT/diode `IS` corner | ±6 % | ≈ ±25 % (via `VBE` 6 mV, `VF` 8 mV) |
 | tox σ | ±1 % across FF/SS | 4 % 3σ |
 | corner distances | never computed | tabulated in §2 |
