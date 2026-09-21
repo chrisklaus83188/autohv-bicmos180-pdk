@@ -76,7 +76,7 @@ Two grounded conventions apply:
 model library is runnable for its 30 V LDMOS (the higher-voltage devices use a Verilog-A drift module
 this ngspice build cannot compile). Local TT simulation on the 30 V device, normalized to the 10 µm
 cell, gives **Ron·W ≈ 8400 Ω·µm, Idsat ≈ 0.33 mA/µm, BVdss ≈ 33.5 V** — see amendment
-[`P2-1`](anchor-amendments-onc25.md). AutoHV's phase-2-measured NDMOS20 (Ron·W ≈ 2–6 Ω·µm, Idsat
+[`P2-1`](anchor-amendments-reference.md). AutoHV's phase-2-measured NDMOS20 (Ron·W ≈ 2–6 Ω·µm, Idsat
 ≈ 1674 mA/µm) is ~3600× low on Ron·W and ~5000× high on Idsat, so **F1's ~10³× magnitude is now
 grounded against a real medium-voltage LDMOS**, and fix #2/#3 have a measured target rather than only a
 silicon-limit estimate. The **100–200 V** magnitude is not runnable (Verilog-A) and reverts to
@@ -284,7 +284,7 @@ the qualification-range statement the model files lack.
 Beyond the seven, the same documents ground a large fraction of the 447 anchor entries — sheet
 resistances, poly TC signs (F7), MOS Idsat/Vth/S, mismatch AVT and its convention, MIM density/VCC/TCC,
 and zener bv tempco. Those are written up as proposed band changes in
-[`anchor-amendments-onc25.md`](anchor-amendments-onc25.md), **not applied here** — the maintainer
+[`anchor-amendments-reference.md`](anchor-amendments-reference.md), **not applied here** — the maintainer
 applies them together with the outstanding phase-2 audit amendments.
 
 The three highest-value grounded results feeding that file:
@@ -339,7 +339,7 @@ A third reference source — the process's full **device catalog** (per-device d
 mined for exactly the items passes 1–2 marked "silent for simulation" (the ≥40 V LDMOS, whose drift is a
 Verilog-A module the local build can't run) and "silent electrically" (specific Ron, BVdss, emitter
 geometry, zener/Schottky detail, output conductance). It closed most of them. The proposed band changes
-are in [`anchor-amendments-onc25.md`](anchor-amendments-onc25.md) §"Pass 3"; this section records the
+are in [`anchor-amendments-reference.md`](anchor-amendments-reference.md) §"Pass 3"; this section records the
 **status regrades**, the **ladder-exponent ruling**, the **D2 external validation**, the **final gaps
 dispositions**, and the **synthetic-residue freeze line**.
 
