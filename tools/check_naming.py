@@ -107,7 +107,24 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true", help="exit 1 on any violation")
+    ap.add_argument("--stdin", action="store_true",
+                    help="scan text on stdin instead of the tree (commit messages: "
+                         "git log --format=%%B <range> | tools/check_naming.py --stdin)")
     args = ap.parse_args(argv)
+
+    if args.stdin:
+        # Commit messages are not files, and they outlive any edit to the tree: a message
+        # written today is still there after the working copy is cleaned. Scanning them is
+        # the same rule applied to the other half of the repository.
+        text = sys.stdin.buffer.read().decode("utf-8", errors="replace")
+        hits = [(i, l) for i, l in enumerate(text.splitlines(), 1) if PATTERN.search(l)]
+        if hits:
+            print("naming check FAILED: %d commit-message line(s) name the reference" % len(hits))
+            for i, l in hits[:20]:
+                print("    line %d: %s" % (i, l.strip()[:90]))
+            return 1
+        print("ok: no reference name in %d line(s) of input" % len(text.splitlines()))
+        return 0
 
     files = tracked()
     bad = scan_names(files) + scan_sources()
