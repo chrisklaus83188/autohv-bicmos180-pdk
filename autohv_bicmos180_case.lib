@@ -5,7 +5,27 @@
 * symbol folder into a Qucs-S library directory (e.g. ~/.qucs/user_lib or
 * <install>/share/qucs-s/library). All 40 .SUBCKT devices then appear in the
 * left-side Library dock with their symbols, drag-and-drop ready.
-* Corner: set the global 'case' param (0=TT 1=FF 2=SS 3=FS 4=SF); see the .inc.
+* Corner: set the global 'case' param. Full menu (see docs/corners.md):
+*   case 0   typical, nothing moved            0 group(s)
+*   case 1   FF: all MOS fast                 21 group(s)
+*   case 2   SS: all MOS slow                 21 group(s)
+*   case 3   FS: n-type fast, p-type slow     21 group(s)
+*   case 4   SF: n-type slow, p-type fast     21 group(s)
+*   case 5   LV fast, HV slow                 21 group(s)
+*   case 6   LV slow, HV fast                 21 group(s)
+*   case 7   all resistors lo                  5 group(s)
+*   case 8   all resistors hi                  5 group(s)
+*   case 9   all capacitors lo                 4 group(s)
+*   case 10  all capacitors hi                 4 group(s)
+*   case 11  BJT and diodes lo                10 group(s)
+*   case 12  BJT and diodes hi                10 group(s)
+*   case 13  slow everything                  40 group(s)
+*   case 14  fast everything                  40 group(s)
+*   case 15  SS with resistors lo             26 group(s)
+*   case 16  FF with resistors hi             26 group(s)
+*   case -1  per-group control: set c_<GROUP> to 0 (typ), 1 (fast/hi), 2 (slow/lo)
+* Presets 1-4 move the MOS groups only; passives and bipolars stay typical there.
+* The all-device sign-off corners are 13-16. Each variable sits at its own +-3 sigma.
 * ============================================================================
 .include "autohv_bicmos180_case_models.inc"
 

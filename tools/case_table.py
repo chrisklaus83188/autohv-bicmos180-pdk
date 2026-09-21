@@ -25,8 +25,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import measure_stat_directions as M  # noqa: E402
 
-CASES = [0, 1, 2, 3, 4]
+CASES = list(range(17))
 CASE_LABEL = {0: "TT", 1: "FF", 2: "SS", 3: "FS", 4: "SF"}
+FLAT = 0.5      # |response| below this, on a preset the group is in, is a finding (Q4)
 
 
 def deck_at_case(group: str, bench: dict, case: int) -> tuple[str, str]:
@@ -74,30 +75,52 @@ def main(argv=None) -> int:
         pct = {c: 100.0 * (vals[c] - base) / base for c in CASES}
         rows.append((g, M.kind_of(g), vals, pct))
         print("%-10s %-10s %s" % (g, M.kind_of(g),
-              "  ".join("%s %+7.3f%%" % (CASE_LABEL[c], pct[c]) for c in CASES)),
+              "  ".join("%s %+7.3f%%" % (CASE_LABEL.get(c, "c%d" % c), pct[c])
+                        for c in (1, 2, 7, 9, 11, 13))),
               file=sys.stderr)
 
-    md = ["# Device response to case 0-4", "",
+    # Which presets does each group actually participate in? A group is only expected to
+    # move on those; silence anywhere else is correct, not a finding.
+    corners = json.loads((M.ROOT / "models" / "corners.json").read_text(encoding="utf-8"))
+    member = {c: set(p["groups"]) for c, p in corners["presets"].items()}
+
+    md = ["# Device response to case 0-16", "",
           "Classic bench per group (ruling F8), `PROC_ON=0`, `MM_ON=0`, T=27 C. Percentages",
-          "are against that device's own case 0, so a row of zeros means the corners do not",
-          "reach that device at all.", "",
-          "| device | kind | case 0 (abs) | FF | SS | FS | SF |",
-          "|---|---|---:|---:|---:|---:|---:|"]
+          "are against that device's own case 0. A device is only expected to move on the",
+          "presets it belongs to; `-` marks a preset it is not part of.", "",
+          "| device | kind | case 0 (abs) | " +
+          " | ".join(CASE_LABEL.get(c, str(c)) for c in CASES[1:]) + " |",
+          "|---|---|---:|" + "---:|" * (len(CASES) - 1)]
     for g, kind, vals, pct in rows:
-        md.append("| %s | %s | %.6e | %+.3f%% | %+.3f%% | %+.3f%% | %+.3f%% |"
-                  % (g, kind, vals[0], pct[1], pct[2], pct[3], pct[4]))
-    flat = [g for g, _k, _v, p in rows if all(abs(p[c]) < 1e-9 for c in (1, 2, 3, 4))]
-    md += ["", "%d of %d devices measured; %d respond to at least one corner."
-           % (len(rows), len(groups), len(rows) - len(flat))]
+        cells = []
+        for c in CASES[1:]:
+            cells.append("%+.2f%%" % pct[c] if g in member.get(str(c), ()) else "–")
+        md.append("| %s | %s | %.6e | %s |" % (g, kind, vals[0], " | ".join(cells)))
+
+    # Q4 assertion: no group may sit at zero on a preset it participates in.
+    flat = []
+    for g, _k, _v, p in rows:
+        for c in CASES[1:]:
+            if g in member.get(str(c), ()) and abs(p[c]) < FLAT:
+                flat.append((g, c, p[c]))
+    md += ["", "%d of %d devices measured." % (len(rows), len(groups))]
     if flat:
-        md.append("")
-        md.append("**Devices no corner moves:** " + ", ".join(flat) +
-                  " — each is a finding, not a rounding artifact.")
+        md += ["", "**Flat on a preset they belong to (|response| < %.1f%%) — each is a "
+                   "finding, not a rounding artifact:**" % FLAT, ""]
+        md += ["- `%s` on case %d: %+.3f%%" % f for f in flat]
+    else:
+        md += ["", "Every device responds on every preset it participates in "
+                   "(|response| ≥ %.1f%%)." % FLAT]
     if dead:
-        md.append("")
-        md.append("**Devices with a zero case-0 metric (not measurable): " +
-                  ", ".join(dead) + "**")
+        md += ["", "**Devices with a zero case-0 metric (not measurable): " +
+               ", ".join(dead) + "**"]
     text = "\n".join(md) + "\n"
+
+    if flat:
+        print("FINDING: %d device/preset pair(s) flat on a preset they belong to" % len(flat),
+              file=sys.stderr)
+        for f in flat:
+            print("   %s case %d: %+.3f%%" % f, file=sys.stderr)
 
     if args.out:
         Path(args.out).write_text(text, encoding="utf-8", newline="\n")

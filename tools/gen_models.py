@@ -38,8 +38,11 @@ behaviour change on FF/SS runs and is pre-registered as such.
 Z_* RESOLUTION (brief S1.1)
 ---------------------------
   PROC_ON=0, case>=0    the preset's z from corners.json
-  PROC_ON=0, case=-1    per-group c_<GROUP>: 0 -> 0, 1 -> +z_fast, 2 -> -z_fast
-                        (z_slow = -z_fast by construction, so only z_fast is stored)
+  PROC_ON=0, case=-1    per-group c_<GROUP>: 0 -> 0, 1 -> +z_corner, 2 -> -z_corner
+                        (z_slow = -z_corner by construction, so only one is stored).
+                        z_corner is the per-variable +-3 sigma sign-off vector (ruling
+                        Q1), the same convention the presets use -- NOT z_direction,
+                        which is the joint-3-sigma point kept for MC work.
   PROC_ON=1             AGAUSS(0,1,1) per draw, ADDED to the corner z so that
                         "process MC centred on a corner" is legal
 
@@ -60,6 +63,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from inc_parse import IncParseError, tt_of  # noqa: E402
+# One source of truth for kT/q: the harness measured the VBE_*/VF_* directions with this
+# value, and the corner z values assume it. A second copy here that drifted would put the
+# cards and the measured directions quietly out of step.
+from measure_stat_directions import VT_THERMAL  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = ROOT / "models" / "stat_model.json"
@@ -151,7 +158,7 @@ def z_variables(corners: dict, table: dict | None = None,
     for p in corners["presets"].values():
         names |= set(p["z"])
     for r in corners["per_group"].values():
-        names |= set(r["z_fast"])
+        names |= set(r["z_corner"])
     if table:
         names |= {var for (_dev, _param), (var, _form, sig) in table.items() if sig}
     if model is not None:
@@ -181,6 +188,18 @@ def expression(tt: float, form: str, sigma: float, var: str) -> str:
         return "%.6g" % tt
     if form == "additive":
         return "{%.6g + %.6g*Z_%s}" % (tt, sigma, var)
+    if form == "exp_v":
+        # The declared variable is a VOLTAGE spread (sigma_VBE = 2 mV, sigma_VF = 2.67 mV)
+        # but the card parameter it drives is a current. IS = IS_TT*exp(dV/V_T), so the
+        # ln-current sigma is sigma_V/V_T. Fold it here, at generation, so V_T never
+        # appears in the model file and the card is a plain multiplicative draw (ruling
+        # Q2). V_T is frozen at 27 C deliberately: the physical variable is the saturation
+        # current, and a fixed IS multiplier is that physics at every temperature -- the
+        # 2 mV is merely the 27 C quote of it, the way datasheets quote it. The equivalent
+        # Vbe spread then shrinks with V_T at high temperature, which is correct.
+        # Sign is positive to match measure_stat_directions.perturbed(), which measured
+        # the direction as tt*exp(+sigma*scale*z); the corner z values assume that sign.
+        return "{%.6g*exp(%.6g*Z_%s)}" % (tt, sigma / VT_THERMAL, var)
     return "{%.6g*exp(%.6g*Z_%s)}" % (tt, sigma, var)
 
 
@@ -212,7 +231,7 @@ def z_block(corners: dict, table: dict, model: dict) -> list[str]:
         # per-group contribution, active only at case=-1
         per = []
         for g in groups:
-            v = corners["per_group"][g]["z_fast"].get(var)
+            v = corners["per_group"][g]["z_corner"].get(var)
             if v:
                 per.append("(c_%s==1)*%.6g + (c_%s==2)*%.6g" % (g, v, g, -v))
         per_expr = " + ".join(per) if per else "0"

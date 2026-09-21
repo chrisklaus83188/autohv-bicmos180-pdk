@@ -75,6 +75,30 @@ PRESETS: dict[int, tuple[str, dict[str, int]]] = {
 }
 
 
+def z_corner_of(rec: dict) -> dict[str, float]:
+    """The SIGN-OFF corner vector: every variable at its own +/-3 sigma (ruling Q1).
+
+    Two conventions turn a statistical model into a corner, and they are not the same
+    point:
+
+      joint 3 sigma   z = 3*g/|g|, the point on the group's 3 sigma ellipsoid that
+                      maximises the metric. Mahalanobis exactly 3. This is the honest
+                      3 sigma of the distribution and is what MC and yield reasoning
+                      want. Kept per group as `z_direction`.
+
+      per-variable    z_i = 3*sign(g_i), every contributing variable at its own 3 sigma
+      3 sigma         simultaneously. Mahalanobis 3*sqrt(k) for k contributors, i.e.
+                      more pessimistic by sqrt(k). This is what production corner
+                      libraries ship and what docs/corners.md already described.
+
+    A sign-off corner is deliberately the pessimistic one, so the builder now emits it.
+    Variables excluded for having no lever contribute nothing and stay absent, exactly
+    as before -- this changes the magnitude of each component, never the membership.
+    """
+    return {var: 3.0 if g > 0 else -3.0
+            for var, g in rec["g_classic"].items() if g != 0.0}
+
+
 def build() -> dict:
     model = json.loads(MODEL.read_text(encoding="utf-8"))
     dirs = json.loads(DIRECTIONS.read_text(encoding="utf-8"))["groups"]
@@ -89,7 +113,7 @@ def build() -> dict:
             if rec is None:
                 missing.append(group)
                 continue
-            for var, val in rec["z_fast"].items():
+            for var, val in z_corner_of(rec).items():
                 z[var] = z.get(var, 0.0) + sign * val
                 contributors.setdefault(var, []).append(f"{group}{'+' if sign > 0 else '-'}")
         # a shared variable pulled both ways by different groups
@@ -106,14 +130,22 @@ def build() -> dict:
             "missing_groups": missing,
         }
 
-    per_group = {
-        g: {"kind": r["kind"],
-            "z_fast": {k: round(v, 6) for k, v in r["z_fast"].items()},
-            "mahalanobis": 3.0,
+    per_group = {}
+    for g, r in dirs.items():
+        zc = z_corner_of(r)
+        per_group[g] = {
+            "kind": r["kind"],
+            # The sign-off corner: every variable at its own +/-3 sigma.
+            "z_corner": {k: round(v, 6) for k, v in zc.items()},
+            "mahalanobis_corner": round(math.sqrt(sum(v * v for v in zc.values())), 4),
+            # The joint-3-sigma worst-case direction, kept for MC and sensitivity work.
+            # Never mix the two: this one is the honest 3 sigma of the distribution.
+            "z_direction": {k: round(v, 6) for k, v in r["z_fast"].items()},
+            "mahalanobis_direction": 3.0,
+            "terms": len(zc),
             "excluded": r["excluded"],
-            "bench": r["bench"]}
-        for g, r in dirs.items()
-    }
+            "bench": r["bench"],
+        }
     return {
         "_meta": {
             "program": "v3.0-stats",
@@ -121,7 +153,15 @@ def build() -> dict:
             "source": ["models/stat_model.json", "models/stat_directions.json"],
             "distance": "Mahalanobis = Euclidean norm of z, because the global variables are "
                         "independent unit normals",
-            "single_group_distance": 3.0,
+            "corner_construction": "per-variable +-3 sigma (ruling Q1): every variable a group "
+                                   "depends on is set to its own 3 sigma simultaneously, sign from "
+                                   "the measured direction. This is the sign-off convention and is "
+                                   "deliberately more pessimistic than the joint 3 sigma point by "
+                                   "sqrt(k) for k contributors.",
+            "single_group_distance": "3*sqrt(k) for k contributing variables; see per_group "
+                                     "mahalanobis_corner. The joint-3-sigma direction "
+                                     "(mahalanobis_direction) is exactly 3.0 and is kept per group "
+                                     "for MC and sensitivity work.",
             "shared_variable_rule": "selected groups' vectors are summed; the preset's distance is "
                                     "whatever the sum produces and is reported, not rescaled. "
                                     "Conflicts (a shared variable pulled both ways) are listed per preset.",
@@ -153,6 +193,18 @@ def main(argv=None) -> int:
     data = build()
     text = json.dumps(data, indent=1) + "\n"
     if args.check:
+        # The term-count invariant first: corners.json can be perfectly current and still
+        # be built from a direction that quietly lost terms, because every group's vector
+        # is normalised and so carries no trace of how many variables went into it.
+        import expected_terms
+        model = json.loads(MODEL.read_text(encoding="utf-8"))
+        dirs = json.loads(DIRECTIONS.read_text(encoding="utf-8"))["groups"]
+        bad = expected_terms.compare(model, dirs, model.get("expected_terms"))
+        if bad:
+            print("stale: the measured directions disagree with what the model realises")
+            for b in bad:
+                print("   ", b)
+            return 1
         current = OUT.read_text(encoding="utf-8") if OUT.exists() else ""
         if current != text:
             print("stale: models/corners.json differs from the generator output")

@@ -33,9 +33,9 @@ Regenerate with `python tools/stat_model_inventory.py`; `--check` fails if stale
 |---|---|
 | device wrappers in the library | 40 |
 | library header claims | 40 |
-| statistical card expressions (both notations) | 137 (133 in the models file, 4 in the library) |
+| statistical card expressions (both notations) | 147 (143 in the models file, 4 in the library) |
 |   of those, authored selector form `(tt*_isTT + ... + sf*_isSF)` | 0 — the authored spelling, now only in the .in template |
-|   of those, generated draw form `{TT + sigma*Z_X}` / `{TT*exp(sigma*Z_X)}` | 137 (133 in the models file, 4 in the library) |
+|   of those, generated draw form `{TT + sigma*Z_X}` / `{TT*exp(sigma*Z_X)}` | 147 (143 in the models file, 4 in the library) |
 | of those, geometry parameters (lint/wint/dwc/dlc/xl/xw/narrow/short) — brief R0 prerequisite | 0 — no corner moves geometry; edge bias is declared per D3 |
 | gate-resistance term (`rgate`/`rsh_poly`/`rgeomod`) in wrappers or cards | absent — R2 gate-R bullet dropped, listed as follow-up |
 | β/mobility mismatch term in any wrapper | absent (D6: deferred) |

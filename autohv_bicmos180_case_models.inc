@@ -65,10 +65,10 @@
 .param c_RPOLY_LO=0
 .param c_RPPLUS=0
 
-.param Z_BF_NPN_HV={((case==-1) ? ((c_NPN_HV==1)*1.34053 + (c_NPN_HV==2)*-1.34053) : ((case==11)*-1.34053 + (case==12)*1.34053 + (case==13)*-1.34053 + (case==14)*1.34053)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_BF_NPN_LV={((case==-1) ? ((c_NPN_LV==1)*1.36307 + (c_NPN_LV==2)*-1.36307) : ((case==11)*-1.36307 + (case==12)*1.36307 + (case==13)*-1.36307 + (case==14)*1.36307)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_BF_PNP_HV={((case==-1) ? ((c_PNP_HV==1)*2.08499 + (c_PNP_HV==2)*-2.08499) : ((case==11)*-2.08499 + (case==12)*2.08499 + (case==13)*-2.08499 + (case==14)*2.08499)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_BF_PNP_LAT={((case==-1) ? ((c_PNP_LAT==1)*2.02108 + (c_PNP_LAT==2)*-2.02108) : ((case==11)*-2.02108 + (case==12)*2.02108 + (case==13)*-2.02108 + (case==14)*2.02108)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_BF_NPN_HV={((case==-1) ? ((c_NPN_HV==1)*3 + (c_NPN_HV==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_BF_NPN_LV={((case==-1) ? ((c_NPN_LV==1)*3 + (c_NPN_LV==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_BF_PNP_HV={((case==-1) ? ((c_PNP_HV==1)*3 + (c_PNP_HV==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_BF_PNP_LAT={((case==-1) ? ((c_PNP_LAT==1)*3 + (c_PNP_LAT==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_BV_DNMOS20={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_BV_NDMOS120={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_BV_NDMOS20={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
@@ -87,105 +87,105 @@
 .param Z_BV_PNP_HV={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_BV_PNP_LAT={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_CDEN_MIM={((case==-1) ? ((c_CMIM_HI==1)*3 + (c_CMIM_HI==2)*-3 + (c_CMIM_STD==1)*3 + (c_CMIM_STD==2)*-3) : ((case==9)*-6 + (case==10)*6 + (case==13)*-6 + (case==14)*6)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_CDEN_MOM={((case==-1) ? ((c_CFRINGE==1)*2.99993 + (c_CFRINGE==2)*-2.99993 + (c_CMOM==1)*3 + (c_CMOM==2)*-3) : ((case==9)*-5.99993 + (case==10)*5.99993 + (case==13)*-5.99993 + (case==14)*5.99993)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_CDEN_MOM={((case==-1) ? ((c_CFRINGE==1)*3 + (c_CFRINGE==2)*-3 + (c_CMOM==1)*3 + (c_CMOM==2)*-3) : ((case==9)*-6 + (case==10)*6 + (case==13)*-6 + (case==14)*6)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_CJ_DIO_FAST={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_CJ_DIO_PN={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_CJ_DIO_SCH={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_CJ_DZ_12={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_CJ_DZ_24={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_CJ_DZ_5V6={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_CPER_CFRINGE={((case==-1) ? ((c_CFRINGE==1)*0.020674 + (c_CFRINGE==2)*-0.020674) : ((case==9)*-0.020674 + (case==10)*0.020674 + (case==13)*-0.020674 + (case==14)*0.020674)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_DL_POLY={((case==-1) ? ((c_NMOS12==1)*-0.842492 + (c_NMOS12==2)*0.842492 + (c_NMOS18==1)*-2.04135 + (c_NMOS18==2)*2.04135 + (c_NMOS33==1)*-1.21285 + (c_NMOS33==2)*1.21285 + (c_NMOS50==1)*-0.886723 + (c_NMOS50==2)*0.886723 + (c_PMOS12==1)*-0.828395 + (c_PMOS12==2)*0.828395 + (c_PMOS18==1)*-1.95122 + (c_PMOS18==2)*1.95122 + (c_PMOS33==1)*-1.16129 + (c_PMOS33==2)*1.16129 + (c_PMOS50==1)*-0.862984 + (c_PMOS50==2)*0.862984 + (c_RPOLY_HI==1)*-0.175514 + (c_RPOLY_HI==2)*0.175514 + (c_RPOLY_LO==1)*-0.240116 + (c_RPOLY_LO==2)*0.240116) : ((case==1)*-9.7873 + (case==2)*9.7873 + (case==3)*-0.179519 + (case==4)*0.179519 + (case==5)*-9.7873 + (case==6)*9.7873 + (case==7)*0.41563 + (case==8)*-0.41563 + (case==13)*10.2029 + (case==14)*-10.2029 + (case==15)*10.2029 + (case==16)*-10.2029)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_DW_ACT_HV={((case==-1) ? ((c_NMOS12==1)*0.040153 + (c_NMOS12==2)*-0.040153 + (c_PMOS12==1)*0.012256 + (c_PMOS12==2)*-0.012256) : ((case==1)*0.05241 + (case==2)*-0.05241 + (case==3)*0.027897 + (case==4)*-0.027897 + (case==5)*0.05241 + (case==6)*-0.05241 + (case==13)*-0.05241 + (case==14)*0.05241 + (case==15)*-0.05241 + (case==16)*0.05241)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_DW_ACT_LV={((case==-1) ? ((c_NMOS18==1)*0.381774 + (c_NMOS18==2)*-0.381774 + (c_NMOS33==1)*0.297421 + (c_NMOS33==2)*-0.297421 + (c_NMOS50==1)*0.146359 + (c_NMOS50==2)*-0.146359 + (c_PMOS18==1)*0.104721 + (c_PMOS18==2)*-0.104721 + (c_PMOS33==1)*0.087102 + (c_PMOS33==2)*-0.087102 + (c_PMOS50==1)*0.042562 + (c_PMOS50==2)*-0.042562) : ((case==1)*1.05994 + (case==2)*-1.05994 + (case==3)*0.59117 + (case==4)*-0.59117 + (case==5)*1.05994 + (case==6)*-1.05994 + (case==13)*-1.05994 + (case==14)*1.05994 + (case==15)*-1.05994 + (case==16)*1.05994)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_CPER_CFRINGE={((case==-1) ? ((c_CFRINGE==1)*3 + (c_CFRINGE==2)*-3) : ((case==9)*-3 + (case==10)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_DL_POLY={((case==-1) ? ((c_NMOS12==1)*-3 + (c_NMOS12==2)*3 + (c_NMOS18==1)*-3 + (c_NMOS18==2)*3 + (c_NMOS33==1)*-3 + (c_NMOS33==2)*3 + (c_NMOS50==1)*-3 + (c_NMOS50==2)*3 + (c_PMOS12==1)*-3 + (c_PMOS12==2)*3 + (c_PMOS18==1)*-3 + (c_PMOS18==2)*3 + (c_PMOS33==1)*-3 + (c_PMOS33==2)*3 + (c_PMOS50==1)*-3 + (c_PMOS50==2)*3 + (c_RPOLY_HI==1)*-3 + (c_RPOLY_HI==2)*3 + (c_RPOLY_LO==1)*-3 + (c_RPOLY_LO==2)*3) : ((case==1)*-24 + (case==2)*24 + (case==5)*-24 + (case==6)*24 + (case==7)*6 + (case==8)*-6 + (case==13)*30 + (case==14)*-30 + (case==15)*30 + (case==16)*-30)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_DW_ACT_HV={((case==-1) ? ((c_NMOS12==1)*3 + (c_NMOS12==2)*-3 + (c_PMOS12==1)*3 + (c_PMOS12==2)*-3) : ((case==1)*6 + (case==2)*-6 + (case==5)*6 + (case==6)*-6 + (case==13)*-6 + (case==14)*6 + (case==15)*-6 + (case==16)*6)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_DW_ACT_LV={((case==-1) ? ((c_NMOS18==1)*3 + (c_NMOS18==2)*-3 + (c_NMOS33==1)*3 + (c_NMOS33==2)*-3 + (c_NMOS50==1)*3 + (c_NMOS50==2)*-3 + (c_PMOS18==1)*3 + (c_PMOS18==2)*-3 + (c_PMOS33==1)*3 + (c_PMOS33==2)*-3 + (c_PMOS50==1)*3 + (c_PMOS50==2)*-3) : ((case==1)*18 + (case==2)*-18 + (case==5)*18 + (case==6)*-18 + (case==13)*-18 + (case==14)*18 + (case==15)*-18 + (case==16)*18)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_JS_MOS={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_DNMOS20={((case==-1) ? ((c_DNMOS20==1)*-0.740607 + (c_DNMOS20==2)*0.740607) : ((case==1)*-0.740607 + (case==2)*0.740607 + (case==3)*-0.740607 + (case==4)*0.740607 + (case==5)*0.740607 + (case==6)*-0.740607 + (case==13)*0.740607 + (case==14)*-0.740607 + (case==15)*0.740607 + (case==16)*-0.740607)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_NDMOS120={((case==-1) ? ((c_NDMOS120==1)*-2.97226 + (c_NDMOS120==2)*2.97226) : ((case==1)*-2.97226 + (case==2)*2.97226 + (case==3)*-2.97226 + (case==4)*2.97226 + (case==5)*2.97226 + (case==6)*-2.97226 + (case==13)*2.97226 + (case==14)*-2.97226 + (case==15)*2.97226 + (case==16)*-2.97226)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_NDMOS20={((case==-1) ? ((c_NDMOS20==1)*-1.78144 + (c_NDMOS20==2)*1.78144) : ((case==1)*-1.78144 + (case==2)*1.78144 + (case==3)*-1.78144 + (case==4)*1.78144 + (case==5)*1.78144 + (case==6)*-1.78144 + (case==13)*1.78144 + (case==14)*-1.78144 + (case==15)*1.78144 + (case==16)*-1.78144)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_NDMOS200={((case==-1) ? ((c_NDMOS200==1)*-2.982 + (c_NDMOS200==2)*2.982) : ((case==1)*-2.982 + (case==2)*2.982 + (case==3)*-2.982 + (case==4)*2.982 + (case==5)*2.982 + (case==6)*-2.982 + (case==13)*2.982 + (case==14)*-2.982 + (case==15)*2.982 + (case==16)*-2.982)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_NDMOS40={((case==-1) ? ((c_NDMOS40==1)*-2.39583 + (c_NDMOS40==2)*2.39583) : ((case==1)*-2.39583 + (case==2)*2.39583 + (case==3)*-2.39583 + (case==4)*2.39583 + (case==5)*2.39583 + (case==6)*-2.39583 + (case==13)*2.39583 + (case==14)*-2.39583 + (case==15)*2.39583 + (case==16)*-2.39583)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_NDMOS60={((case==-1) ? ((c_NDMOS60==1)*-2.65175 + (c_NDMOS60==2)*2.65175) : ((case==1)*-2.65175 + (case==2)*2.65175 + (case==3)*-2.65175 + (case==4)*2.65175 + (case==5)*2.65175 + (case==6)*-2.65175 + (case==13)*2.65175 + (case==14)*-2.65175 + (case==15)*2.65175 + (case==16)*-2.65175)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_NDMOS80={((case==-1) ? ((c_NDMOS80==1)*-2.94361 + (c_NDMOS80==2)*2.94361) : ((case==1)*-2.94361 + (case==2)*2.94361 + (case==3)*-2.94361 + (case==4)*2.94361 + (case==5)*2.94361 + (case==6)*-2.94361 + (case==13)*2.94361 + (case==14)*-2.94361 + (case==15)*2.94361 + (case==16)*-2.94361)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_NMOS12={((case==-1) ? ((c_NMOS12==1)*-0.11855 + (c_NMOS12==2)*0.11855) : ((case==1)*-0.11855 + (case==2)*0.11855 + (case==3)*-0.11855 + (case==4)*0.11855 + (case==5)*-0.11855 + (case==6)*0.11855 + (case==13)*0.11855 + (case==14)*-0.11855 + (case==15)*0.11855 + (case==16)*-0.11855)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_NMOS18={((case==-1) ? ((c_NMOS18==1)*-0.316116 + (c_NMOS18==2)*0.316116) : ((case==1)*-0.316116 + (case==2)*0.316116 + (case==3)*-0.316116 + (case==4)*0.316116 + (case==5)*-0.316116 + (case==6)*0.316116 + (case==13)*0.316116 + (case==14)*-0.316116 + (case==15)*0.316116 + (case==16)*-0.316116)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_NMOS33={((case==-1) ? ((c_NMOS33==1)*-0.251856 + (c_NMOS33==2)*0.251856) : ((case==1)*-0.251856 + (case==2)*0.251856 + (case==3)*-0.251856 + (case==4)*0.251856 + (case==5)*-0.251856 + (case==6)*0.251856 + (case==13)*0.251856 + (case==14)*-0.251856 + (case==15)*0.251856 + (case==16)*-0.251856)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_NMOS50={((case==-1) ? ((c_NMOS50==1)*-0.211643 + (c_NMOS50==2)*0.211643) : ((case==1)*-0.211643 + (case==2)*0.211643 + (case==3)*-0.211643 + (case==4)*0.211643 + (case==5)*-0.211643 + (case==6)*0.211643 + (case==13)*0.211643 + (case==14)*-0.211643 + (case==15)*0.211643 + (case==16)*-0.211643)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_PDMOS120={((case==-1) ? ((c_PDMOS120==1)*-2.97158 + (c_PDMOS120==2)*2.97158) : ((case==1)*-2.97158 + (case==2)*2.97158 + (case==3)*2.97158 + (case==4)*-2.97158 + (case==5)*2.97158 + (case==6)*-2.97158 + (case==13)*2.97158 + (case==14)*-2.97158 + (case==15)*2.97158 + (case==16)*-2.97158)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_PDMOS20={((case==-1) ? ((c_PDMOS20==1)*-0.203074 + (c_PDMOS20==2)*0.203074) : ((case==1)*-0.203074 + (case==2)*0.203074 + (case==3)*0.203074 + (case==4)*-0.203074 + (case==5)*0.203074 + (case==6)*-0.203074 + (case==13)*0.203074 + (case==14)*-0.203074 + (case==15)*0.203074 + (case==16)*-0.203074)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_PDMOS200={((case==-1) ? ((c_PDMOS200==1)*-2.98248 + (c_PDMOS200==2)*2.98248) : ((case==1)*-2.98248 + (case==2)*2.98248 + (case==3)*2.98248 + (case==4)*-2.98248 + (case==5)*2.98248 + (case==6)*-2.98248 + (case==13)*2.98248 + (case==14)*-2.98248 + (case==15)*2.98248 + (case==16)*-2.98248)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_PDMOS40={((case==-1) ? ((c_PDMOS40==1)*-0.768359 + (c_PDMOS40==2)*0.768359) : ((case==1)*-0.768359 + (case==2)*0.768359 + (case==3)*0.768359 + (case==4)*-0.768359 + (case==5)*0.768359 + (case==6)*-0.768359 + (case==13)*0.768359 + (case==14)*-0.768359 + (case==15)*0.768359 + (case==16)*-0.768359)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_PDMOS60={((case==-1) ? ((c_PDMOS60==1)*-2.48296 + (c_PDMOS60==2)*2.48296) : ((case==1)*-2.48296 + (case==2)*2.48296 + (case==3)*2.48296 + (case==4)*-2.48296 + (case==5)*2.48296 + (case==6)*-2.48296 + (case==13)*2.48296 + (case==14)*-2.48296 + (case==15)*2.48296 + (case==16)*-2.48296)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_PDMOS80={((case==-1) ? ((c_PDMOS80==1)*-2.7392 + (c_PDMOS80==2)*2.7392) : ((case==1)*-2.7392 + (case==2)*2.7392 + (case==3)*2.7392 + (case==4)*-2.7392 + (case==5)*2.7392 + (case==6)*-2.7392 + (case==13)*2.7392 + (case==14)*-2.7392 + (case==15)*2.7392 + (case==16)*-2.7392)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_PMOS12={((case==-1) ? ((c_PMOS12==1)*-0.052373 + (c_PMOS12==2)*0.052373) : ((case==1)*-0.052373 + (case==2)*0.052373 + (case==3)*0.052373 + (case==4)*-0.052373 + (case==5)*-0.052373 + (case==6)*0.052373 + (case==13)*0.052373 + (case==14)*-0.052373 + (case==15)*0.052373 + (case==16)*-0.052373)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_PMOS18={((case==-1) ? ((c_PMOS18==1)*-0.095987 + (c_PMOS18==2)*0.095987) : ((case==1)*-0.095987 + (case==2)*0.095987 + (case==3)*0.095987 + (case==4)*-0.095987 + (case==5)*-0.095987 + (case==6)*0.095987 + (case==13)*0.095987 + (case==14)*-0.095987 + (case==15)*0.095987 + (case==16)*-0.095987)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_PMOS33={((case==-1) ? ((c_PMOS33==1)*-0.091754 + (c_PMOS33==2)*0.091754) : ((case==1)*-0.091754 + (case==2)*0.091754 + (case==3)*0.091754 + (case==4)*-0.091754 + (case==5)*-0.091754 + (case==6)*0.091754 + (case==13)*0.091754 + (case==14)*-0.091754 + (case==15)*0.091754 + (case==16)*-0.091754)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RDSW_PMOS50={((case==-1) ? ((c_PMOS50==1)*-0.082176 + (c_PMOS50==2)*0.082176) : ((case==1)*-0.082176 + (case==2)*0.082176 + (case==3)*0.082176 + (case==4)*-0.082176 + (case==5)*-0.082176 + (case==6)*0.082176 + (case==13)*0.082176 + (case==14)*-0.082176 + (case==15)*0.082176 + (case==16)*-0.082176)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RPAR_NPN_HV={((case==-1) ? ((c_NPN_HV==1)*-0.002649 + (c_NPN_HV==2)*0.002649) : ((case==11)*0.002649 + (case==12)*-0.002649 + (case==13)*0.002649 + (case==14)*-0.002649)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RPAR_NPN_LV={((case==-1) ? ((c_NPN_LV==1)*-0.000906 + (c_NPN_LV==2)*0.000906) : ((case==11)*0.000906 + (case==12)*-0.000906 + (case==13)*0.000906 + (case==14)*-0.000906)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RPAR_PNP_HV={((case==-1) ? ((c_PNP_HV==1)*-0.003175 + (c_PNP_HV==2)*0.003175) : ((case==11)*0.003175 + (case==12)*-0.003175 + (case==13)*0.003175 + (case==14)*-0.003175)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RPAR_PNP_LAT={((case==-1) ? ((c_PNP_LAT==1)*-0.002268 + (c_PNP_LAT==2)*0.002268) : ((case==11)*0.002268 + (case==12)*-0.002268 + (case==13)*0.002268 + (case==14)*-0.002268)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_DNMOS20={((case==-1) ? ((c_DNMOS20==1)*-3 + (c_DNMOS20==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_NDMOS120={((case==-1) ? ((c_NDMOS120==1)*-3 + (c_NDMOS120==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_NDMOS20={((case==-1) ? ((c_NDMOS20==1)*-3 + (c_NDMOS20==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_NDMOS200={((case==-1) ? ((c_NDMOS200==1)*-3 + (c_NDMOS200==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_NDMOS40={((case==-1) ? ((c_NDMOS40==1)*-3 + (c_NDMOS40==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_NDMOS60={((case==-1) ? ((c_NDMOS60==1)*-3 + (c_NDMOS60==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_NDMOS80={((case==-1) ? ((c_NDMOS80==1)*-3 + (c_NDMOS80==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_NMOS12={((case==-1) ? ((c_NMOS12==1)*-3 + (c_NMOS12==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_NMOS18={((case==-1) ? ((c_NMOS18==1)*-3 + (c_NMOS18==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_NMOS33={((case==-1) ? ((c_NMOS33==1)*-3 + (c_NMOS33==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_NMOS50={((case==-1) ? ((c_NMOS50==1)*-3 + (c_NMOS50==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_PDMOS120={((case==-1) ? ((c_PDMOS120==1)*-3 + (c_PDMOS120==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_PDMOS20={((case==-1) ? ((c_PDMOS20==1)*-3 + (c_PDMOS20==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_PDMOS200={((case==-1) ? ((c_PDMOS200==1)*-3 + (c_PDMOS200==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_PDMOS40={((case==-1) ? ((c_PDMOS40==1)*-3 + (c_PDMOS40==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_PDMOS60={((case==-1) ? ((c_PDMOS60==1)*-3 + (c_PDMOS60==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_PDMOS80={((case==-1) ? ((c_PDMOS80==1)*-3 + (c_PDMOS80==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_PMOS12={((case==-1) ? ((c_PMOS12==1)*-3 + (c_PMOS12==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_PMOS18={((case==-1) ? ((c_PMOS18==1)*-3 + (c_PMOS18==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_PMOS33={((case==-1) ? ((c_PMOS33==1)*-3 + (c_PMOS33==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RDSW_PMOS50={((case==-1) ? ((c_PMOS50==1)*-3 + (c_PMOS50==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RPAR_NPN_HV={((case==-1) ? ((c_NPN_HV==1)*-3 + (c_NPN_HV==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RPAR_NPN_LV={((case==-1) ? ((c_NPN_LV==1)*-3 + (c_NPN_LV==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RPAR_PNP_HV={((case==-1) ? ((c_PNP_HV==1)*-3 + (c_PNP_HV==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RPAR_PNP_LAT={((case==-1) ? ((c_PNP_LAT==1)*-3 + (c_PNP_LAT==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RSH_RNPLUS={((case==-1) ? ((c_RNPLUS==1)*3 + (c_RNPLUS==2)*-3) : ((case==7)*-3 + (case==8)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RSH_RNWELL={((case==-1) ? ((c_RNWELL==1)*3 + (c_RNWELL==2)*-3) : ((case==7)*-3 + (case==8)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RSH_RPOLY_HI={((case==-1) ? ((c_RPOLY_HI==1)*2.99486 + (c_RPOLY_HI==2)*-2.99486) : ((case==7)*-2.99486 + (case==8)*2.99486 + (case==13)*-2.99486 + (case==14)*2.99486 + (case==15)*-2.99486 + (case==16)*2.99486)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RSH_RPOLY_LO={((case==-1) ? ((c_RPOLY_LO==1)*2.99037 + (c_RPOLY_LO==2)*-2.99037) : ((case==7)*-2.99037 + (case==8)*2.99037 + (case==13)*-2.99037 + (case==14)*2.99037 + (case==15)*-2.99037 + (case==16)*2.99037)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RSH_RPOLY_HI={((case==-1) ? ((c_RPOLY_HI==1)*3 + (c_RPOLY_HI==2)*-3) : ((case==7)*-3 + (case==8)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RSH_RPOLY_LO={((case==-1) ? ((c_RPOLY_LO==1)*3 + (c_RPOLY_LO==2)*-3) : ((case==7)*-3 + (case==8)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RSH_RPPLUS={((case==-1) ? ((c_RPPLUS==1)*3 + (c_RPPLUS==2)*-3) : ((case==7)*-3 + (case==8)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RS_DIO_FAST={((case==-1) ? ((c_DIO_FAST==1)*-0.005636 + (c_DIO_FAST==2)*0.005636) : ((case==11)*0.005636 + (case==12)*-0.005636 + (case==13)*0.005636 + (case==14)*-0.005636)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RS_DIO_PN={((case==-1) ? ((c_DIO_PN==1)*-0.008293 + (c_DIO_PN==2)*0.008293) : ((case==11)*0.008293 + (case==12)*-0.008293 + (case==13)*0.008293 + (case==14)*-0.008293)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RS_DIO_SCH={((case==-1) ? ((c_DIO_SCH==1)*-0.003024 + (c_DIO_SCH==2)*0.003024) : ((case==11)*0.003024 + (case==12)*-0.003024 + (case==13)*0.003024 + (case==14)*-0.003024)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RS_DZ_12={((case==-1) ? ((c_DZ_12==1)*-0.015373 + (c_DZ_12==2)*0.015373) : ((case==11)*0.015373 + (case==12)*-0.015373 + (case==13)*0.015373 + (case==14)*-0.015373)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RS_DZ_24={((case==-1) ? ((c_DZ_24==1)*-0.020816 + (c_DZ_24==2)*0.020816) : ((case==11)*0.020816 + (case==12)*-0.020816 + (case==13)*0.020816 + (case==14)*-0.020816)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RS_DZ_5V6={((case==-1) ? ((c_DZ_5V6==1)*-0.011358 + (c_DZ_5V6==2)*0.011358) : ((case==11)*0.011358 + (case==12)*-0.011358 + (case==13)*0.011358 + (case==14)*-0.011358)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_TOX_12={((case==-1) ? ((c_NMOS12==1)*-0.812038 + (c_NMOS12==2)*0.812038 + (c_PMOS12==1)*-0.508791 + (c_PMOS12==2)*0.508791) : ((case==1)*-1.32083 + (case==2)*1.32083 + (case==3)*-0.303247 + (case==4)*0.303247 + (case==5)*-1.32083 + (case==6)*1.32083 + (case==13)*1.32083 + (case==14)*-1.32083 + (case==15)*1.32083 + (case==16)*-1.32083)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_TOX_18={((case==-1) ? ((c_NMOS18==1)*-0.349546 + (c_NMOS18==2)*0.349546 + (c_PMOS18==1)*-0.060614 + (c_PMOS18==2)*0.060614) : ((case==1)*-0.41016 + (case==2)*0.41016 + (case==3)*-0.288932 + (case==4)*0.288932 + (case==5)*-0.41016 + (case==6)*0.41016 + (case==13)*0.41016 + (case==14)*-0.41016 + (case==15)*0.41016 + (case==16)*-0.41016)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_TOX_33={((case==-1) ? ((c_NMOS33==1)*-0.613907 + (c_NMOS33==2)*0.613907 + (c_PMOS33==1)*-0.270835 + (c_PMOS33==2)*0.270835) : ((case==1)*-0.884742 + (case==2)*0.884742 + (case==3)*-0.343071 + (case==4)*0.343071 + (case==5)*-0.884742 + (case==6)*0.884742 + (case==13)*0.884742 + (case==14)*-0.884742 + (case==15)*0.884742 + (case==16)*-0.884742)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_TOX_50={((case==-1) ? ((c_NMOS50==1)*-0.696552 + (c_NMOS50==2)*0.696552 + (c_PMOS50==1)*-0.362812 + (c_PMOS50==2)*0.362812) : ((case==1)*-1.05936 + (case==2)*1.05936 + (case==3)*-0.333741 + (case==4)*0.333741 + (case==5)*-1.05936 + (case==6)*1.05936 + (case==13)*1.05936 + (case==14)*-1.05936 + (case==15)*1.05936 + (case==16)*-1.05936)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_DNMOS20={((case==-1) ? ((c_DNMOS20==1)*2.13112 + (c_DNMOS20==2)*-2.13112) : ((case==1)*2.13112 + (case==2)*-2.13112 + (case==3)*2.13112 + (case==4)*-2.13112 + (case==5)*-2.13112 + (case==6)*2.13112 + (case==13)*-2.13112 + (case==14)*2.13112 + (case==15)*-2.13112 + (case==16)*2.13112)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_NDMOS20={((case==-1) ? ((c_NDMOS20==1)*2.25955 + (c_NDMOS20==2)*-2.25955) : ((case==1)*2.25955 + (case==2)*-2.25955 + (case==3)*2.25955 + (case==4)*-2.25955 + (case==5)*-2.25955 + (case==6)*2.25955 + (case==13)*-2.25955 + (case==14)*2.25955 + (case==15)*-2.25955 + (case==16)*2.25955)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_NDMOS40={((case==-1) ? ((c_NDMOS40==1)*1.63046 + (c_NDMOS40==2)*-1.63046) : ((case==1)*1.63046 + (case==2)*-1.63046 + (case==3)*1.63046 + (case==4)*-1.63046 + (case==5)*-1.63046 + (case==6)*1.63046 + (case==13)*-1.63046 + (case==14)*1.63046 + (case==15)*-1.63046 + (case==16)*1.63046)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_NDMOS60={((case==-1) ? ((c_NDMOS60==1)*1.22586 + (c_NDMOS60==2)*-1.22586) : ((case==1)*1.22586 + (case==2)*-1.22586 + (case==3)*1.22586 + (case==4)*-1.22586 + (case==5)*-1.22586 + (case==6)*1.22586 + (case==13)*-1.22586 + (case==14)*1.22586 + (case==15)*-1.22586 + (case==16)*1.22586)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_NMOS12={((case==-1) ? ((c_NMOS12==1)*2.55903 + (c_NMOS12==2)*-2.55903) : ((case==1)*2.55903 + (case==2)*-2.55903 + (case==3)*2.55903 + (case==4)*-2.55903 + (case==5)*2.55903 + (case==6)*-2.55903 + (case==13)*-2.55903 + (case==14)*2.55903 + (case==15)*-2.55903 + (case==16)*2.55903)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_NMOS18={((case==-1) ? ((c_NMOS18==1)*1.67602 + (c_NMOS18==2)*-1.67602) : ((case==1)*1.67602 + (case==2)*-1.67602 + (case==3)*1.67602 + (case==4)*-1.67602 + (case==5)*1.67602 + (case==6)*-1.67602 + (case==13)*-1.67602 + (case==14)*1.67602 + (case==15)*-1.67602 + (case==16)*1.67602)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_NMOS33={((case==-1) ? ((c_NMOS33==1)*2.38069 + (c_NMOS33==2)*-2.38069) : ((case==1)*2.38069 + (case==2)*-2.38069 + (case==3)*2.38069 + (case==4)*-2.38069 + (case==5)*2.38069 + (case==6)*-2.38069 + (case==13)*-2.38069 + (case==14)*2.38069 + (case==15)*-2.38069 + (case==16)*2.38069)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_NMOS50={((case==-1) ? ((c_NMOS50==1)*2.56415 + (c_NMOS50==2)*-2.56415) : ((case==1)*2.56415 + (case==2)*-2.56415 + (case==3)*2.56415 + (case==4)*-2.56415 + (case==5)*2.56415 + (case==6)*-2.56415 + (case==13)*-2.56415 + (case==14)*2.56415 + (case==15)*-2.56415 + (case==16)*2.56415)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_PDMOS20={((case==-1) ? ((c_PDMOS20==1)*2.85827 + (c_PDMOS20==2)*-2.85827) : ((case==1)*2.85827 + (case==2)*-2.85827 + (case==3)*-2.85827 + (case==4)*2.85827 + (case==5)*-2.85827 + (case==6)*2.85827 + (case==13)*-2.85827 + (case==14)*2.85827 + (case==15)*-2.85827 + (case==16)*2.85827)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_PDMOS40={((case==-1) ? ((c_PDMOS40==1)*2.734 + (c_PDMOS40==2)*-2.734) : ((case==1)*2.734 + (case==2)*-2.734 + (case==3)*-2.734 + (case==4)*2.734 + (case==5)*-2.734 + (case==6)*2.734 + (case==13)*-2.734 + (case==14)*2.734 + (case==15)*-2.734 + (case==16)*2.734)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_PDMOS60={((case==-1) ? ((c_PDMOS60==1)*1.49405 + (c_PDMOS60==2)*-1.49405) : ((case==1)*1.49405 + (case==2)*-1.49405 + (case==3)*-1.49405 + (case==4)*1.49405 + (case==5)*-1.49405 + (case==6)*1.49405 + (case==13)*-1.49405 + (case==14)*1.49405 + (case==15)*-1.49405 + (case==16)*1.49405)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_PDMOS80={((case==-1) ? ((c_PDMOS80==1)*1.05305 + (c_PDMOS80==2)*-1.05305) : ((case==1)*1.05305 + (case==2)*-1.05305 + (case==3)*-1.05305 + (case==4)*1.05305 + (case==5)*-1.05305 + (case==6)*1.05305 + (case==13)*-1.05305 + (case==14)*1.05305 + (case==15)*-1.05305 + (case==16)*1.05305)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_PMOS12={((case==-1) ? ((c_PMOS12==1)*2.62452 + (c_PMOS12==2)*-2.62452) : ((case==1)*2.62452 + (case==2)*-2.62452 + (case==3)*-2.62452 + (case==4)*2.62452 + (case==5)*2.62452 + (case==6)*-2.62452 + (case==13)*-2.62452 + (case==14)*2.62452 + (case==15)*-2.62452 + (case==16)*2.62452)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_PMOS18={((case==-1) ? ((c_PMOS18==1)*1.76112 + (c_PMOS18==2)*-1.76112) : ((case==1)*1.76112 + (case==2)*-1.76112 + (case==3)*-1.76112 + (case==4)*1.76112 + (case==5)*1.76112 + (case==6)*-1.76112 + (case==13)*-1.76112 + (case==14)*1.76112 + (case==15)*-1.76112 + (case==16)*1.76112)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_PMOS33={((case==-1) ? ((c_PMOS33==1)*2.45355 + (c_PMOS33==2)*-2.45355) : ((case==1)*2.45355 + (case==2)*-2.45355 + (case==3)*-2.45355 + (case==4)*2.45355 + (case==5)*2.45355 + (case==6)*-2.45355 + (case==13)*-2.45355 + (case==14)*2.45355 + (case==15)*-2.45355 + (case==16)*2.45355)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_U0_PMOS50={((case==-1) ? ((c_PMOS50==1)*2.62683 + (c_PMOS50==2)*-2.62683) : ((case==1)*2.62683 + (case==2)*-2.62683 + (case==3)*-2.62683 + (case==4)*2.62683 + (case==5)*2.62683 + (case==6)*-2.62683 + (case==13)*-2.62683 + (case==14)*2.62683 + (case==15)*-2.62683 + (case==16)*2.62683)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VBE_NPN_HV={((case==-1) ? ((c_NPN_HV==1)*2.68384 + (c_NPN_HV==2)*-2.68384) : ((case==11)*-2.68384 + (case==12)*2.68384 + (case==13)*-2.68384 + (case==14)*2.68384)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VBE_NPN_LV={((case==-1) ? ((c_NPN_LV==1)*2.67246 + (c_NPN_LV==2)*-2.67246) : ((case==11)*-2.67246 + (case==12)*2.67246 + (case==13)*-2.67246 + (case==14)*2.67246)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VBE_PNP_HV={((case==-1) ? ((c_PNP_HV==1)*2.15704 + (c_PNP_HV==2)*-2.15704) : ((case==11)*-2.15704 + (case==12)*2.15704 + (case==13)*-2.15704 + (case==14)*2.15704)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VBE_PNP_LAT={((case==-1) ? ((c_PNP_LAT==1)*2.21703 + (c_PNP_LAT==2)*-2.21703) : ((case==11)*-2.21703 + (case==12)*2.21703 + (case==13)*-2.21703 + (case==14)*2.21703)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RS_DIO_FAST={((case==-1) ? ((c_DIO_FAST==1)*-3 + (c_DIO_FAST==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RS_DIO_PN={((case==-1) ? ((c_DIO_PN==1)*-3 + (c_DIO_PN==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RS_DIO_SCH={((case==-1) ? ((c_DIO_SCH==1)*-3 + (c_DIO_SCH==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RS_DZ_12={((case==-1) ? ((c_DZ_12==1)*-3 + (c_DZ_12==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RS_DZ_24={((case==-1) ? ((c_DZ_24==1)*-3 + (c_DZ_24==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RS_DZ_5V6={((case==-1) ? ((c_DZ_5V6==1)*-3 + (c_DZ_5V6==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_TOX_12={((case==-1) ? ((c_NMOS12==1)*-3 + (c_NMOS12==2)*3 + (c_PMOS12==1)*-3 + (c_PMOS12==2)*3) : ((case==1)*-6 + (case==2)*6 + (case==5)*-6 + (case==6)*6 + (case==13)*6 + (case==14)*-6 + (case==15)*6 + (case==16)*-6)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_TOX_18={((case==-1) ? ((c_NMOS18==1)*-3 + (c_NMOS18==2)*3 + (c_PMOS18==1)*-3 + (c_PMOS18==2)*3) : ((case==1)*-6 + (case==2)*6 + (case==5)*-6 + (case==6)*6 + (case==13)*6 + (case==14)*-6 + (case==15)*6 + (case==16)*-6)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_TOX_33={((case==-1) ? ((c_NMOS33==1)*-3 + (c_NMOS33==2)*3 + (c_PMOS33==1)*-3 + (c_PMOS33==2)*3) : ((case==1)*-6 + (case==2)*6 + (case==5)*-6 + (case==6)*6 + (case==13)*6 + (case==14)*-6 + (case==15)*6 + (case==16)*-6)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_TOX_50={((case==-1) ? ((c_NMOS50==1)*-3 + (c_NMOS50==2)*3 + (c_PMOS50==1)*-3 + (c_PMOS50==2)*3) : ((case==1)*-6 + (case==2)*6 + (case==5)*-6 + (case==6)*6 + (case==13)*6 + (case==14)*-6 + (case==15)*6 + (case==16)*-6)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_DNMOS20={((case==-1) ? ((c_DNMOS20==1)*3 + (c_DNMOS20==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*3 + (case==4)*-3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_NDMOS20={((case==-1) ? ((c_NDMOS20==1)*3 + (c_NDMOS20==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*3 + (case==4)*-3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_NDMOS40={((case==-1) ? ((c_NDMOS40==1)*3 + (c_NDMOS40==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*3 + (case==4)*-3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_NDMOS60={((case==-1) ? ((c_NDMOS60==1)*3 + (c_NDMOS60==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*3 + (case==4)*-3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_NMOS12={((case==-1) ? ((c_NMOS12==1)*3 + (c_NMOS12==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*3 + (case==4)*-3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_NMOS18={((case==-1) ? ((c_NMOS18==1)*3 + (c_NMOS18==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*3 + (case==4)*-3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_NMOS33={((case==-1) ? ((c_NMOS33==1)*3 + (c_NMOS33==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*3 + (case==4)*-3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_NMOS50={((case==-1) ? ((c_NMOS50==1)*3 + (c_NMOS50==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*3 + (case==4)*-3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_PDMOS20={((case==-1) ? ((c_PDMOS20==1)*3 + (c_PDMOS20==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_PDMOS40={((case==-1) ? ((c_PDMOS40==1)*3 + (c_PDMOS40==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_PDMOS60={((case==-1) ? ((c_PDMOS60==1)*3 + (c_PDMOS60==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_PDMOS80={((case==-1) ? ((c_PDMOS80==1)*3 + (c_PDMOS80==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_PMOS12={((case==-1) ? ((c_PMOS12==1)*3 + (c_PMOS12==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_PMOS18={((case==-1) ? ((c_PMOS18==1)*3 + (c_PMOS18==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_PMOS33={((case==-1) ? ((c_PMOS33==1)*3 + (c_PMOS33==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_U0_PMOS50={((case==-1) ? ((c_PMOS50==1)*3 + (c_PMOS50==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VBE_NPN_HV={((case==-1) ? ((c_NPN_HV==1)*3 + (c_NPN_HV==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VBE_NPN_LV={((case==-1) ? ((c_NPN_LV==1)*3 + (c_NPN_LV==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VBE_PNP_HV={((case==-1) ? ((c_PNP_HV==1)*3 + (c_PNP_HV==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VBE_PNP_LAT={((case==-1) ? ((c_PNP_LAT==1)*3 + (c_PNP_LAT==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_VF_DIO_FAST={((case==-1) ? ((c_DIO_FAST==1)*3 + (c_DIO_FAST==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VF_DIO_PN={((case==-1) ? ((c_DIO_PN==1)*2.99999 + (c_DIO_PN==2)*-2.99999) : ((case==11)*-2.99999 + (case==12)*2.99999 + (case==13)*-2.99999 + (case==14)*2.99999)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VF_DIO_PN={((case==-1) ? ((c_DIO_PN==1)*3 + (c_DIO_PN==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_VF_DIO_SCH={((case==-1) ? ((c_DIO_SCH==1)*3 + (c_DIO_SCH==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VF_DZ_12={((case==-1) ? ((c_DZ_12==1)*2.99996 + (c_DZ_12==2)*-2.99996) : ((case==11)*-2.99996 + (case==12)*2.99996 + (case==13)*-2.99996 + (case==14)*2.99996)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VF_DZ_24={((case==-1) ? ((c_DZ_24==1)*2.99993 + (c_DZ_24==2)*-2.99993) : ((case==11)*-2.99993 + (case==12)*2.99993 + (case==13)*-2.99993 + (case==14)*2.99993)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VF_DZ_5V6={((case==-1) ? ((c_DZ_5V6==1)*2.99998 + (c_DZ_5V6==2)*-2.99998) : ((case==11)*-2.99998 + (case==12)*2.99998 + (case==13)*-2.99998 + (case==14)*2.99998)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_DNMOS20={((case==-1) ? ((c_DNMOS20==1)*-1.97733 + (c_DNMOS20==2)*1.97733) : ((case==1)*-1.97733 + (case==2)*1.97733 + (case==3)*-1.97733 + (case==4)*1.97733 + (case==5)*1.97733 + (case==6)*-1.97733 + (case==13)*1.97733 + (case==14)*-1.97733 + (case==15)*1.97733 + (case==16)*-1.97733)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_NDMOS120={((case==-1) ? ((c_NDMOS120==1)*-0.407041 + (c_NDMOS120==2)*0.407041) : ((case==1)*-0.407041 + (case==2)*0.407041 + (case==3)*-0.407041 + (case==4)*0.407041 + (case==5)*0.407041 + (case==6)*-0.407041 + (case==13)*0.407041 + (case==14)*-0.407041 + (case==15)*0.407041 + (case==16)*-0.407041)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_NDMOS20={((case==-1) ? ((c_NDMOS20==1)*-0.849076 + (c_NDMOS20==2)*0.849076) : ((case==1)*-0.849076 + (case==2)*0.849076 + (case==3)*-0.849076 + (case==4)*0.849076 + (case==5)*0.849076 + (case==6)*-0.849076 + (case==13)*0.849076 + (case==14)*-0.849076 + (case==15)*0.849076 + (case==16)*-0.849076)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_NDMOS200={((case==-1) ? ((c_NDMOS200==1)*-0.328176 + (c_NDMOS200==2)*0.328176) : ((case==1)*-0.328176 + (case==2)*0.328176 + (case==3)*-0.328176 + (case==4)*0.328176 + (case==5)*0.328176 + (case==6)*-0.328176 + (case==13)*0.328176 + (case==14)*-0.328176 + (case==15)*0.328176 + (case==16)*-0.328176)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_NDMOS40={((case==-1) ? ((c_NDMOS40==1)*-0.77562 + (c_NDMOS40==2)*0.77562) : ((case==1)*-0.77562 + (case==2)*0.77562 + (case==3)*-0.77562 + (case==4)*0.77562 + (case==5)*0.77562 + (case==6)*-0.77562 + (case==13)*0.77562 + (case==14)*-0.77562 + (case==15)*0.77562 + (case==16)*-0.77562)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_NDMOS60={((case==-1) ? ((c_NDMOS60==1)*-0.682281 + (c_NDMOS60==2)*0.682281) : ((case==1)*-0.682281 + (case==2)*0.682281 + (case==3)*-0.682281 + (case==4)*0.682281 + (case==5)*0.682281 + (case==6)*-0.682281 + (case==13)*0.682281 + (case==14)*-0.682281 + (case==15)*0.682281 + (case==16)*-0.682281)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_NDMOS80={((case==-1) ? ((c_NDMOS80==1)*-0.578943 + (c_NDMOS80==2)*0.578943) : ((case==1)*-0.578943 + (case==2)*0.578943 + (case==3)*-0.578943 + (case==4)*0.578943 + (case==5)*0.578943 + (case==6)*-0.578943 + (case==13)*0.578943 + (case==14)*-0.578943 + (case==15)*0.578943 + (case==16)*-0.578943)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_NMOS12={((case==-1) ? ((c_NMOS12==1)*-1.03271 + (c_NMOS12==2)*1.03271) : ((case==1)*-1.03271 + (case==2)*1.03271 + (case==3)*-1.03271 + (case==4)*1.03271 + (case==5)*-1.03271 + (case==6)*1.03271 + (case==13)*1.03271 + (case==14)*-1.03271 + (case==15)*1.03271 + (case==16)*-1.03271)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_NMOS18={((case==-1) ? ((c_NMOS18==1)*-1.28686 + (c_NMOS18==2)*1.28686) : ((case==1)*-1.28686 + (case==2)*1.28686 + (case==3)*-1.28686 + (case==4)*1.28686 + (case==5)*-1.28686 + (case==6)*1.28686 + (case==13)*1.28686 + (case==14)*-1.28686 + (case==15)*1.28686 + (case==16)*-1.28686)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_NMOS33={((case==-1) ? ((c_NMOS33==1)*-1.15437 + (c_NMOS33==2)*1.15437) : ((case==1)*-1.15437 + (case==2)*1.15437 + (case==3)*-1.15437 + (case==4)*1.15437 + (case==5)*-1.15437 + (case==6)*1.15437 + (case==13)*1.15437 + (case==14)*-1.15437 + (case==15)*1.15437 + (case==16)*-1.15437)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_NMOS50={((case==-1) ? ((c_NMOS50==1)*-1.04281 + (c_NMOS50==2)*1.04281) : ((case==1)*-1.04281 + (case==2)*1.04281 + (case==3)*-1.04281 + (case==4)*1.04281 + (case==5)*-1.04281 + (case==6)*1.04281 + (case==13)*1.04281 + (case==14)*-1.04281 + (case==15)*1.04281 + (case==16)*-1.04281)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_PDMOS120={((case==-1) ? ((c_PDMOS120==1)*0.411949 + (c_PDMOS120==2)*-0.411949) : ((case==1)*0.411949 + (case==2)*-0.411949 + (case==3)*-0.411949 + (case==4)*0.411949 + (case==5)*-0.411949 + (case==6)*0.411949 + (case==13)*-0.411949 + (case==14)*0.411949 + (case==15)*-0.411949 + (case==16)*0.411949)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_PDMOS20={((case==-1) ? ((c_PDMOS20==1)*0.888276 + (c_PDMOS20==2)*-0.888276) : ((case==1)*0.888276 + (case==2)*-0.888276 + (case==3)*-0.888276 + (case==4)*0.888276 + (case==5)*-0.888276 + (case==6)*0.888276 + (case==13)*-0.888276 + (case==14)*0.888276 + (case==15)*-0.888276 + (case==16)*0.888276)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_PDMOS200={((case==-1) ? ((c_PDMOS200==1)*0.323711 + (c_PDMOS200==2)*-0.323711) : ((case==1)*0.323711 + (case==2)*-0.323711 + (case==3)*-0.323711 + (case==4)*0.323711 + (case==5)*-0.323711 + (case==6)*0.323711 + (case==13)*-0.323711 + (case==14)*0.323711 + (case==15)*-0.323711 + (case==16)*0.323711)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_PDMOS40={((case==-1) ? ((c_PDMOS40==1)*0.966895 + (c_PDMOS40==2)*-0.966895) : ((case==1)*0.966895 + (case==2)*-0.966895 + (case==3)*-0.966895 + (case==4)*0.966895 + (case==5)*-0.966895 + (case==6)*0.966895 + (case==13)*-0.966895 + (case==14)*0.966895 + (case==15)*-0.966895 + (case==16)*0.966895)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_PDMOS60={((case==-1) ? ((c_PDMOS60==1)*0.77634 + (c_PDMOS60==2)*-0.77634) : ((case==1)*0.77634 + (case==2)*-0.77634 + (case==3)*-0.77634 + (case==4)*0.77634 + (case==5)*-0.77634 + (case==6)*0.77634 + (case==13)*-0.77634 + (case==14)*0.77634 + (case==15)*-0.77634 + (case==16)*0.77634)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_PDMOS80={((case==-1) ? ((c_PDMOS80==1)*0.622785 + (c_PDMOS80==2)*-0.622785) : ((case==1)*0.622785 + (case==2)*-0.622785 + (case==3)*-0.622785 + (case==4)*0.622785 + (case==5)*-0.622785 + (case==6)*0.622785 + (case==13)*-0.622785 + (case==14)*0.622785 + (case==15)*-0.622785 + (case==16)*0.622785)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_PMOS12={((case==-1) ? ((c_PMOS12==1)*1.07884 + (c_PMOS12==2)*-1.07884) : ((case==1)*1.07884 + (case==2)*-1.07884 + (case==3)*-1.07884 + (case==4)*1.07884 + (case==5)*1.07884 + (case==6)*-1.07884 + (case==13)*-1.07884 + (case==14)*1.07884 + (case==15)*-1.07884 + (case==16)*1.07884)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_PMOS18={((case==-1) ? ((c_PMOS18==1)*1.43782 + (c_PMOS18==2)*-1.43782) : ((case==1)*1.43782 + (case==2)*-1.43782 + (case==3)*-1.43782 + (case==4)*1.43782 + (case==5)*1.43782 + (case==6)*-1.43782 + (case==13)*-1.43782 + (case==14)*1.43782 + (case==15)*-1.43782 + (case==16)*1.43782)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_PMOS33={((case==-1) ? ((c_PMOS33==1)*1.24182 + (c_PMOS33==2)*-1.24182) : ((case==1)*1.24182 + (case==2)*-1.24182 + (case==3)*-1.24182 + (case==4)*1.24182 + (case==5)*1.24182 + (case==6)*-1.24182 + (case==13)*-1.24182 + (case==14)*1.24182 + (case==15)*-1.24182 + (case==16)*1.24182)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VTH_PMOS50={((case==-1) ? ((c_PMOS50==1)*1.10218 + (c_PMOS50==2)*-1.10218) : ((case==1)*1.10218 + (case==2)*-1.10218 + (case==3)*-1.10218 + (case==4)*1.10218 + (case==5)*1.10218 + (case==6)*-1.10218 + (case==13)*-1.10218 + (case==14)*1.10218 + (case==15)*-1.10218 + (case==16)*1.10218)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VF_DZ_12={((case==-1) ? ((c_DZ_12==1)*3 + (c_DZ_12==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VF_DZ_24={((case==-1) ? ((c_DZ_24==1)*3 + (c_DZ_24==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VF_DZ_5V6={((case==-1) ? ((c_DZ_5V6==1)*3 + (c_DZ_5V6==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_DNMOS20={((case==-1) ? ((c_DNMOS20==1)*-3 + (c_DNMOS20==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_NDMOS120={((case==-1) ? ((c_NDMOS120==1)*-3 + (c_NDMOS120==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_NDMOS20={((case==-1) ? ((c_NDMOS20==1)*-3 + (c_NDMOS20==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_NDMOS200={((case==-1) ? ((c_NDMOS200==1)*-3 + (c_NDMOS200==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_NDMOS40={((case==-1) ? ((c_NDMOS40==1)*-3 + (c_NDMOS40==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_NDMOS60={((case==-1) ? ((c_NDMOS60==1)*-3 + (c_NDMOS60==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_NDMOS80={((case==-1) ? ((c_NDMOS80==1)*-3 + (c_NDMOS80==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_NMOS12={((case==-1) ? ((c_NMOS12==1)*-3 + (c_NMOS12==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_NMOS18={((case==-1) ? ((c_NMOS18==1)*-3 + (c_NMOS18==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_NMOS33={((case==-1) ? ((c_NMOS33==1)*-3 + (c_NMOS33==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_NMOS50={((case==-1) ? ((c_NMOS50==1)*-3 + (c_NMOS50==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_PDMOS120={((case==-1) ? ((c_PDMOS120==1)*3 + (c_PDMOS120==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_PDMOS20={((case==-1) ? ((c_PDMOS20==1)*3 + (c_PDMOS20==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_PDMOS200={((case==-1) ? ((c_PDMOS200==1)*3 + (c_PDMOS200==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_PDMOS40={((case==-1) ? ((c_PDMOS40==1)*3 + (c_PDMOS40==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_PDMOS60={((case==-1) ? ((c_PDMOS60==1)*3 + (c_PDMOS60==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_PDMOS80={((case==-1) ? ((c_PDMOS80==1)*3 + (c_PDMOS80==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*-3 + (case==6)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_PMOS12={((case==-1) ? ((c_PMOS12==1)*3 + (c_PMOS12==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_PMOS18={((case==-1) ? ((c_PMOS18==1)*3 + (c_PMOS18==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_PMOS33={((case==-1) ? ((c_PMOS33==1)*3 + (c_PMOS33==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_PMOS50={((case==-1) ? ((c_PMOS50==1)*3 + (c_PMOS50==2)*-3) : ((case==1)*3 + (case==2)*-3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
 
 
 * Die-to-die absolute tolerance is layer-dependent (random part of "absolute
@@ -1194,7 +1194,7 @@
 + )
 
 .model NPN_LV_INT NPN (
-+ is=2e-16
++ is={2e-16*exp(0.0773635*Z_VBE_NPN_LV)}
 + bf={140*exp(0.0833*Z_BF_NPN_LV)}
 + nf=1
 + vaf=80
@@ -1231,7 +1231,7 @@
 + )
 
 .model PNP_LAT_INT PNP (
-+ is=8e-16
++ is={8e-16*exp(0.0773635*Z_VBE_PNP_LAT)}
 + bf={35*exp(0.0833*Z_BF_PNP_LAT)}
 + nf=1.02
 + vaf=35
@@ -1268,7 +1268,7 @@
 + )
 
 .model NPN_HV_INT NPN (
-+ is=4e-17
++ is={4e-17*exp(0.0773635*Z_VBE_NPN_HV)}
 + bf={80*exp(0.0833*Z_BF_NPN_HV)}
 + nf=1
 + vaf=120
@@ -1305,7 +1305,7 @@
 + )
 
 .model PNP_HV_INT PNP (
-+ is=1e-16
++ is={1e-16*exp(0.0773635*Z_VBE_PNP_HV)}
 + bf={18*exp(0.0833*Z_BF_PNP_HV)}
 + nf=1.03
 + vaf=50
@@ -1342,7 +1342,7 @@
 + )
 
 .model DIO_PN_INT D (
-+ is=2e-14
++ is={2e-14*exp(0.10328*Z_VF_DIO_PN)}
 + n=1.05
 + rs={1.2*exp(0.0667*Z_RS_DIO_PN)}
 + bv=100
@@ -1357,7 +1357,7 @@
 + )
 
 .model DIO_FAST_INT D (
-+ is=8e-13
++ is={8e-13*exp(0.10328*Z_VF_DIO_FAST)}
 + n=1.03
 + rs={0.8*exp(0.0667*Z_RS_DIO_FAST)}
 + bv=80
@@ -1372,7 +1372,7 @@
 + )
 
 .model DIO_SCH_INT D (
-+ is=3e-08
++ is={3e-08*exp(0.10328*Z_VF_DIO_SCH)}
 + n=1.08
 + rs={0.45*exp(0.0667*Z_RS_DIO_SCH)}
 + bv=45
@@ -1390,7 +1390,7 @@
 + )
 
 .model DZ_5V6_INT D (
-+ is=5e-13
++ is={5e-13*exp(0.10328*Z_VF_DZ_5V6)}
 + n=1.15
 + rs={1.8*exp(0.0667*Z_RS_DZ_5V6)}
 + bv=5.6
@@ -1405,7 +1405,7 @@
 + )
 
 .model DZ_12_INT D (
-+ is=2.5e-13
++ is={2.5e-13*exp(0.10328*Z_VF_DZ_12)}
 + n=1.18
 + rs={2.5*exp(0.0667*Z_RS_DZ_12)}
 + bv=12
@@ -1420,7 +1420,7 @@
 + )
 
 .model DZ_24_INT D (
-+ is=1.2e-13
++ is={1.2e-13*exp(0.10328*Z_VF_DZ_24)}
 + n=1.22
 + rs={3.5*exp(0.0667*Z_RS_DZ_24)}
 + bv=24
