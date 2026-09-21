@@ -6,82 +6,82 @@ S {}
 E {}
 T {CMP_RR_5V0} 620 -280 0 0 0.6 0.6 {}
 T {body: circuits/comparators/comparators_all.lib (authority) | rail-to-rail input, folded cascode} 620 -220 0 0 0.3 0.3 {}
-C {autohv/NMOS50.sym} 250 1200 0 0 {name=rbn model=NMOS50 W=10u L=1u M=1}
+C {autohv/NMOS5V0.sym} 250 1200 0 0 {name=rbn model=NMOS5V0 W=10u L=1u M=1}
 T {rbn} 190 1090 0 0 0.28 0.28 {}
 N 270 1200 270 1240 {}
-C {autohv/NMOS50.sym} 250 700 0 0 {name=ser model=NMOS50 W=4u L=0.5u M=1}
+C {autohv/NMOS5V0.sym} 250 700 0 0 {name=ser model=NMOS5V0 W=4u L=0.5u M=1}
 T {ser} 190 590 0 0 0.28 0.28 {}
 C {lab_pin.sym} 270 700 0 0 {name=lz1 lab=vss}
-C {autohv/NMOS50.sym} 400 1200 0 0 {name=mir model=NMOS50 W=10u L=1u M=1}
+C {autohv/NMOS5V0.sym} 400 1200 0 0 {name=mir model=NMOS5V0 W=10u L=1u M=1}
 T {mir} 340 1090 0 0 0.28 0.28 {}
 N 420 1200 420 1240 {}
-C {autohv/PMOS50.sym} 550 200 2 1 {name=rbp model=PMOS50 W=20u L=1u M=1}
+C {autohv/PMOS5V0.sym} 550 200 2 1 {name=rbp model=PMOS5V0 W=20u L=1u M=1}
 T {rbp} 490 90 0 0 0.28 0.28 {}
 N 570 200 570 160 {}
-C {autohv/PMOS50.sym} 700 200 2 1 {name=vc1 model=PMOS50 W=20u L=1u M=1}
+C {autohv/PMOS5V0.sym} 700 200 2 1 {name=vc1 model=PMOS5V0 W=20u L=1u M=1}
 T {vc1} 640 90 0 0 0.28 0.28 {}
 N 720 200 720 160 {}
-C {autohv/PMOS50.sym} 700 460 2 1 {name=vc2 model=PMOS50 W=20u L=1u M=1}
+C {autohv/PMOS5V0.sym} 700 460 2 1 {name=vc2 model=PMOS5V0 W=20u L=1u M=1}
 T {vc2} 640 350 0 0 0.28 0.28 {}
 C {lab_pin.sym} 720 460 0 0 {name=lz2 lab=vdd}
-C {autohv/NMOS50.sym} 850 1200 0 0 {name=isk model=NMOS50 W=10u L=1u M=1}
+C {autohv/NMOS5V0.sym} 850 1200 0 0 {name=isk model=NMOS5V0 W=10u L=1u M=1}
 T {isk} 790 1090 0 0 0.28 0.28 {}
 N 870 1200 870 1240 {}
-C {autohv/NMOS50.sym} 1000 1200 0 0 {name=shn model=NMOS50 W=4u L=0.5u M=1}
+C {autohv/NMOS5V0.sym} 1000 1200 0 0 {name=shn model=NMOS5V0 W=4u L=0.5u M=1}
 T {shn} 940 1090 0 0 0.28 0.28 {}
 N 1020 1200 1020 1240 {}
-C {autohv/PMOS50.sym} 1150 200 2 1 {name=shp model=PMOS50 W=4u L=0.5u M=1}
+C {autohv/PMOS5V0.sym} 1150 200 2 1 {name=shp model=PMOS5V0 W=4u L=0.5u M=1}
 T {shp} 1090 90 0 0 0.28 0.28 {}
 N 1170 200 1170 160 {}
-C {autohv/PMOS50.sym} 1300 200 2 1 {name=mtp model=PMOS50 W=40u L=1u M=1}
+C {autohv/PMOS5V0.sym} 1300 200 2 1 {name=mtp model=PMOS5V0 W=40u L=1u M=1}
 T {mtp} 1240 90 0 0 0.28 0.28 {}
 N 1320 200 1320 160 {}
-C {autohv/PMOS50.sym} 1450 700 2 1 {name=p1 model=PMOS50 W=\{80u*FIN\} L=\{1u*FIN\} M=1}
+C {autohv/PMOS5V0.sym} 1450 700 2 1 {name=p1 model=PMOS5V0 W=\{80u*FIN\} L=\{1u*FIN\} M=1}
 T {p1} 1390 590 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1470 700 0 0 {name=lz3 lab=vdd}
-C {autohv/PMOS50.sym} 1600 700 2 1 {name=p2 model=PMOS50 W=\{80u*FIN\} L=\{1u*FIN\} M=1}
+C {autohv/PMOS5V0.sym} 1600 700 2 1 {name=p2 model=PMOS5V0 W=\{80u*FIN\} L=\{1u*FIN\} M=1}
 T {p2} 1540 590 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1620 700 0 0 {name=lz4 lab=vdd}
-C {autohv/NMOS50.sym} 1450 940 0 0 {name=n1 model=NMOS50 W=\{40u*FIN\} L=\{1u*FIN\} M=1}
+C {autohv/NMOS5V0.sym} 1450 940 0 0 {name=n1 model=NMOS5V0 W=\{40u*FIN\} L=\{1u*FIN\} M=1}
 T {n1} 1390 830 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1470 940 0 0 {name=lz5 lab=vss}
-C {autohv/NMOS50.sym} 1600 940 0 0 {name=n2 model=NMOS50 W=\{40u*FIN\} L=\{1u*FIN\} M=1}
+C {autohv/NMOS5V0.sym} 1600 940 0 0 {name=n2 model=NMOS5V0 W=\{40u*FIN\} L=\{1u*FIN\} M=1}
 T {n2} 1540 830 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1620 940 0 0 {name=lz6 lab=vss}
-C {autohv/NMOS50.sym} 1520 1200 0 0 {name=mtn model=NMOS50 W=20u L=1u M=1}
+C {autohv/NMOS5V0.sym} 1520 1200 0 0 {name=mtn model=NMOS5V0 W=20u L=1u M=1}
 T {mtn} 1460 1090 0 0 0.28 0.28 {}
 N 1540 1200 1540 1240 {}
-C {autohv/PMOS50.sym} 1750 200 2 1 {name=f1 model=PMOS50 W=60u L=1u M=1}
+C {autohv/PMOS5V0.sym} 1750 200 2 1 {name=f1 model=PMOS5V0 W=60u L=1u M=1}
 T {f1} 1690 90 0 0 0.28 0.28 {}
 N 1770 200 1770 160 {}
-C {autohv/PMOS50.sym} 1750 460 2 1 {name=cp1 model=PMOS50 W=40u L=1u M=1}
+C {autohv/PMOS5V0.sym} 1750 460 2 1 {name=cp1 model=PMOS5V0 W=40u L=1u M=1}
 T {cp1} 1690 350 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1770 460 0 0 {name=lz7 lab=vdd}
-C {autohv/NMOS50.sym} 1750 1200 0 0 {name=mm1 model=NMOS50 W=\{20u*FIN\} L=\{1u*FIN\} M=1}
+C {autohv/NMOS5V0.sym} 1750 1200 0 0 {name=mm1 model=NMOS5V0 W=\{20u*FIN\} L=\{1u*FIN\} M=1}
 T {mm1} 1690 1090 0 0 0.28 0.28 {}
 N 1770 1200 1770 1240 {}
-C {autohv/PMOS50.sym} 1900 200 2 1 {name=f2 model=PMOS50 W=60u L=1u M=1}
+C {autohv/PMOS5V0.sym} 1900 200 2 1 {name=f2 model=PMOS5V0 W=60u L=1u M=1}
 T {f2} 1840 90 0 0 0.28 0.28 {}
 N 1920 200 1920 160 {}
-C {autohv/PMOS50.sym} 1900 460 2 1 {name=cp2 model=PMOS50 W=40u L=1u M=1}
+C {autohv/PMOS5V0.sym} 1900 460 2 1 {name=cp2 model=PMOS5V0 W=40u L=1u M=1}
 T {cp2} 1840 350 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1920 460 0 0 {name=lz8 lab=vdd}
-C {autohv/NMOS50.sym} 1900 1200 0 0 {name=mm2 model=NMOS50 W=\{20u*FIN\} L=\{1u*FIN\} M=1}
+C {autohv/NMOS5V0.sym} 1900 1200 0 0 {name=mm2 model=NMOS5V0 W=\{20u*FIN\} L=\{1u*FIN\} M=1}
 T {mm2} 1840 1090 0 0 0.28 0.28 {}
 N 1920 1200 1920 1240 {}
-C {autohv/PMOS50.sym} 2100 200 2 1 {name=s2p model=PMOS50 W=40u L=1u M=1}
+C {autohv/PMOS5V0.sym} 2100 200 2 1 {name=s2p model=PMOS5V0 W=40u L=1u M=1}
 T {s2p} 2040 90 0 0 0.28 0.28 {}
 N 2120 200 2120 160 {}
-C {autohv/NMOS50.sym} 2100 1200 0 0 {name=s2n model=NMOS50 W=40u L=1u M=1}
+C {autohv/NMOS5V0.sym} 2100 1200 0 0 {name=s2n model=NMOS5V0 W=40u L=1u M=1}
 T {s2n} 2040 1090 0 0 0.28 0.28 {}
 N 2120 1200 2120 1240 {}
-C {autohv/NMOS50.sym} 2250 1200 0 0 {name=sho2 model=NMOS50 W=4u L=0.5u M=1}
+C {autohv/NMOS5V0.sym} 2250 1200 0 0 {name=sho2 model=NMOS5V0 W=4u L=0.5u M=1}
 T {sho2} 2190 1090 0 0 0.28 0.28 {}
 N 2270 1200 2270 1240 {}
-C {autohv/PMOS50.sym} 2400 200 2 1 {name=bp model=PMOS50 W=20u L=0.5u M=1}
+C {autohv/PMOS5V0.sym} 2400 200 2 1 {name=bp model=PMOS5V0 W=20u L=0.5u M=1}
 T {bp} 2340 90 0 0 0.28 0.28 {}
 N 2420 200 2420 160 {}
-C {autohv/NMOS50.sym} 2400 1200 0 0 {name=bn model=NMOS50 W=10u L=0.5u M=1}
+C {autohv/NMOS5V0.sym} 2400 1200 0 0 {name=bn model=NMOS5V0 W=10u L=0.5u M=1}
 T {bn} 2340 1090 0 0 0.28 0.28 {}
 N 2420 1200 2420 1240 {}
 C {logic/INV_5V0.sym} 400 1560 0 0 {name=ei1 VPWR=vdd VGND=vss}

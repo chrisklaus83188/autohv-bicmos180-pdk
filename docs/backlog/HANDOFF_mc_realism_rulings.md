@@ -11,7 +11,7 @@ brief differ, this document wins. Numbering below refers to the brief.
 | # | topic | ruling |
 |---|---|---|
 | D1 | asymmetric corners (Q7, C7) | Corner numbers stay untouched. σ-form is chosen **per parameter** by the generator: linear `TT ± 3σ` where the cards are additive-built, log-space `TT·exp(±3s)` where they are multiplicative-built (reciprocal multipliers: `u0`, `rdsw`, VDMOS `RD/RS/KP`, BJT `rb/rc/re/tf/tr/bf`, diode `rs/tt`, resistor `rsh`). Selection rule is mechanical: the form with the smaller max reconstruction error over FF/SS. The chosen form is recorded per parameter in the derived JSON. Rationale: a lognormal on a resistance or mobility is the physically grounded distribution (positive-definite, and it is how the cards were evidently constructed); a Gaussian on those parameters is not. A12 is redefined in §3. |
-| D2 | `NF` on VDMOS/LDMOS/DNMOS20 (Q12, C12) | **Omitted** for that family. `W = n × 10 µm` cells with the 3 µm minimum is already the finger model; an `NF` with no electrical lever would be a silent no-op. State this in the MC application note. A2b runs on LV NMOS, LV PMOS, and NMOS12. |
+| D2 | `NF` on VDMOS/LDMOS/DNMOS20V (Q12, C12) | **Omitted** for that family. `W = n × 10 µm` cells with the 3 µm minimum is already the finger model; an `NF` with no electrical lever would be a silent no-op. State this in the MC application note. A2b runs on LV NMOS, LV PMOS, and NMOS12V. |
 | D3 | edge-bias variables (Q2, C2) | `PROC_Z_DL` and `PROC_Z_DW` are **declared** in the derived JSON as the one documented exception to R7 (not derived from corners). σ = 0 by default; TT value = the cards' existing fixed `wint/lint` (MOS) and `narrow/short` (R). Wrapper plumbing is wired now. A2b and A4(ii) run with a nonzero σ set in the test harness only. Grounding the σ is deferred to a later decision; A13 holds because σ = 0 changes nothing. |
 | D4 | residue freeze (Q9, C9) | Amend `docs/process-declarations.md` with **one** scoped fourth residue item: "resistor mismatch decomposition and contact head (R3)" — `A_RSH/A_W/A_LEND` split, `σ_head`, `R_head`, `R_link ≈ 0` — each with an error bar. |
 | D5 | reference geometry for R3 (Q9) | The geometry used in `pdk_validation/characterization/decks/passives_mc/` is the reference. At that geometry (NS=1, M=1) the combined σ reproduces today's lumped `0.03182/√(W·L)` **exactly**, so existing resistor MC results are unchanged. End and head terms are sized to carry ≤ 20 % of the variance there. |
@@ -33,7 +33,7 @@ brief differ, this document wins. Numbering below refers to the brief.
 | Q8 | Accept. Grouping = pattern × family × voltage class; one shared `TOX` variable (cards move tox identically across classes); separate variables per resistor type, capacitor type, diode, NPN, PNP. Within a group the parameters are 100 % correlated — that is what the cards say. A14 band: FF/SS Idsat within 3–4.3σ, value reported. |
 | Q9 | D4 + D5. |
 | Q10 | Accept: 0.5 µm is the drawn stripe width for outer and shared inner stripes (not a new number); a shared stripe's area and perimeter split half to each adjacent finger; `NF+1` stripes, outer stripes are source when NF is even, one outer stripe is drain when NF is odd. **ngspice multiplies `AD/AS/PD/PS` by `m`, so the inner device receives the per-finger share (`total/NF`), not the total.** |
-| Q11 | Accept. Keep `M` on all 13 HV wrappers (already R1-correct via `mtot`); apply the `AUM2` fix to NMOS12/PMOS12 as well as the six LV BSIM3 wrappers. Scope table corrected in §3. |
+| Q11 | Accept. Keep `M` on all 13 HV wrappers (already R1-correct via `mtot`); apply the `AUM2` fix to NMOS12V/PMOS12V as well as the six LV BSIM3 wrappers. Scope table corrected in §3. |
 | Q12 | D2. |
 | Q13a | Accept. Per-instantiation-path subckt cloning (`AMP` → `AMP__x1`, `AMP__x2`), each binding its own top-level z params; hierarchical probe paths preserved. |
 | Q13b | D7. |
@@ -50,8 +50,8 @@ instances (nominals unchanged), not "published mismatch numbers" wholesale. Fix 
 
 | family | `M` | `NF` / `NS` |
 |---|---|---|
-| BSIM3 MOS: NMOS/PMOS 18/33/50 and NMOS12/PMOS12 | fix `AUM2` (already have `M`) | `NF` add |
-| VDMOS/LDMOS/DNMOS20 (13 wrappers) | keep (already correct) | none (D2) |
+| BSIM3 MOS: NMOS/PMOS 18/33/50 and NMOS12V/PMOS12V | fix `AUM2` (already have `M`) | `NF` add |
+| VDMOS/LDMOS/DNMOS20V (13 wrappers) | keep (already correct) | none (D2) |
 | resistors (5) | add | `NS` add |
 | capacitors (4) | add | – |
 | BJT, diodes | no change | – |
@@ -77,7 +77,7 @@ construction); the Id delta vs `NF=1` is reported alongside the analytic `2(NF�
 prediction; σ(delvto) unchanged within 3 %; total junction capacitance decreases monotonically
 with NF.
 
-**A2b** — devices: LV NMOS, LV PMOS, NMOS12 (no VDMOS). Bias driven by setting `PROC_Z_DW`/`DL`
+**A2b** — devices: LV NMOS, LV PMOS, NMOS12V (no VDMOS). Bias driven by setting `PROC_Z_DW`/`DL`
 σ nonzero in the harness (D3).
 
 **A4(ii)** — same harness mechanism for the resistor length-bias 10× check.
@@ -90,8 +90,8 @@ fixed by editing a card.
 
 **A14** — band 3–4.3σ, value reported (Q8).
 
-**§8** — add the C6 rows (NMOS18 vth0 8.33 → 26.7 mV, u0 3.33 → 5.67 %, PMOS18 u0 3.33 → 6.33 %,
-tox correlation change, NDMOS20 vto 13.3 → 16.7 mV, kp 3.33 → 5.00 %) and: "every `PROC_ON=1`
+**§8** — add the C6 rows (NMOS1V8 vth0 8.33 → 26.7 mV, u0 3.33 → 5.67 %, PMOS1V8 u0 3.33 → 6.33 %,
+tox correlation change, NDMOS20V vto 13.3 → 16.7 mV, kp 3.33 → 5.00 %) and: "every `PROC_ON=1`
 result in the repo moves, e.g. mirror process+mismatch 1.344 %".
 
 **Phase 0** — add: CI ngspice-45 build (Q14); lib header count; commit `circuits/mc_mismatch_check/`

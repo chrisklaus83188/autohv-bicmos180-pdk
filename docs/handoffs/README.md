@@ -36,8 +36,8 @@ level-shifter tasks.
 | [HANDOFF_cascode_vshift_singularity.md](HANDOFF_cascode_vshift_singularity.md) | `Rgmin` insufficient when the gate is driven by a real (non-stiff) network | `Rcond g_int s` added |
 | [HANDOFF_dmos200_vshift_multiinstance.md](HANDOFF_dmos200_vshift_multiinstance.md) | Same singularity in multi-instance floating mirrors | `Rcond` (13 instances in the `.lib`) |
 | [HANDOFF_dmos200_vshift_multiinstance_REPLY.md](HANDOFF_dmos200_vshift_multiinstance_REPLY.md) | `delvto` rejected by VDMOS; `Rcond` to a determined node is the working fix | `Rcond` landed |
-| [HANDOFF_dmos200_breakdown.md](HANDOFF_dmos200_breakdown.md) | PDMOS200 broke down at 194.58 V (< 200 V) at FF/SF | `bv` re-rated to 216.2 V FF/SF |
-| [HANDOFF_vdmos_caps.md](HANDOFF_vdmos_caps.md) | VDMOS terminal caps ~1000× too large | `cgs`/`cgd`/`cjo` scaled ÷1000 (e.g. NDMOS200 `cjo` 2.2e-11 → 2.2e-14) |
+| [HANDOFF_dmos200_breakdown.md](HANDOFF_dmos200_breakdown.md) | PDMOS200V broke down at 194.58 V (< 200 V) at FF/SF | `bv` re-rated to 216.2 V FF/SF |
+| [HANDOFF_vdmos_caps.md](HANDOFF_vdmos_caps.md) | VDMOS terminal caps ~1000× too large | `cgs`/`cgd`/`cjo` scaled ÷1000 (e.g. NDMOS200V `cjo` 2.2e-11 → 2.2e-14) |
 
 The two DMOS200 findings that were **not** resolved (subthreshold `kp`,
 fast-transient micro-stepping) are tracked in [`../backlog/`](../backlog/).

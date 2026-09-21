@@ -5,22 +5,22 @@ VDMOS / LDMOS characterization -- phase-2 harness family module.
 Covers the thirteen ngspice-VDMOS subcircuit wrappers in
 autohv_bicmos180_case.lib:
 
-    NDMOS20  PDMOS20  DNMOS20
-    NDMOS40  PDMOS40
-    NDMOS60  PDMOS60
-    NDMOS80  PDMOS80
-    NDMOS120 PDMOS120
-    NDMOS200 PDMOS200
+    NDMOS20V  PDMOS20V  DNMOS20V
+    NDMOS40V  PDMOS40V
+    NDMOS60V  PDMOS60V
+    NDMOS80V  PDMOS80V
+    NDMOS120V PDMOS120V
+    NDMOS200V PDMOS200V
 
 FoM keys match docs/anchor-values.json exactly, plus these extra diagnostic
 keys which carry the audit's assertions and have no anchor band:
 
     bv_corner_<FF|SS|FS|SF>       breakdown at the four non-TT corners
     rcond_gate_current            KNOWN ARTIFACT (Rcond g_int s 1e6)
-    cap_reconciliation_ndmos200   the inventory 6.3 fork (NDMOS200 only)
+    cap_reconciliation_ndmos200   the inventory 6.3 fork (NDMOS200V only)
 
 Port order is `d g s` -- there is NO bulk pin on any VDMOS wrapper. Only
-NDMOS200/PDMOS200 take an `L` parameter (drift length, default 8u); the other
+NDMOS200V/PDMOS200V take an `L` parameter (drift length, default 8u); the other
 eleven have no length knob at all.
 
 Sign convention
@@ -32,10 +32,10 @@ Every sweep is run in a device-normalised gate coordinate
 so that drain current rises monotonically with u for both polarities and the
 char_lib extractors (which assume positive gm) apply unchanged. Voltages that
 have a natural sign -- vth_lin, vto_tempco -- are reported SIGNED, i.e.
-negative for the p-channel devices and for the depletion-mode DNMOS20.
+negative for the p-channel devices and for the depletion-mode DNMOS20V.
 Resistances, capacitances, current densities and swings are magnitudes.
 
-DNMOS20 is a DEPLETION n-channel part (vto = -0.9 V), so Vgs = 0 leaves it ON.
+DNMOS20V is a DEPLETION n-channel part (vto = -0.9 V), so Vgs = 0 leaves it ON.
 Every "device off" bias in this module is computed from the card's own vto
 rather than assumed to be 0 V.
 
@@ -47,7 +47,7 @@ These are the FINDINGS. Do not "fix" them:
            silicon limit, which no lateral RESURF device can do.
   * F2  -- cgs/cgdmax remain 3.3x-48x large after the 2026-06-01 divide-by-1000,
            with a residual that slopes with voltage class.
-  * 2.8 -- the ksubthres ladder slopes the wrong way; NDMOS200's n = 1.01 is at
+  * 2.8 -- the ksubthres ladder slopes the wrong way; NDMOS200V's n = 1.01 is at
            the Boltzmann floor. gm_over_id_ceiling is the cross-check.
   * 2.9 -- BV is constant vs drift length L; the L knob is penalty-only.
 
@@ -62,12 +62,12 @@ from char_lib import (header, run_deck, deck_path, parse_dc_sweep, parse_prints,
                       subthreshold_slope, linfit, cap_from_ac, tempco_ppm,
                       mc_run, CORNER_CASE, load_anchors)
 
-DEVICES = ["NDMOS20", "PDMOS20", "DNMOS20",
-           "NDMOS40", "PDMOS40",
-           "NDMOS60", "PDMOS60",
-           "NDMOS80", "PDMOS80",
-           "NDMOS120", "PDMOS120",
-           "NDMOS200", "PDMOS200"]
+DEVICES = ["NDMOS20V", "PDMOS20V", "DNMOS20V",
+           "NDMOS40V", "PDMOS40V",
+           "NDMOS60V", "PDMOS60V",
+           "NDMOS80V", "PDMOS80V",
+           "NDMOS120V", "PDMOS120V",
+           "NDMOS200V", "PDMOS200V"]
 
 SUBDIR = "vdmos"
 
@@ -85,40 +85,40 @@ PITCH_UM = {20: 5.0, 40: 7.0, 60: 9.0, 80: 11.0, 120: 15.0, 200: 22.0}
 # autohv_bicmos180_case.lib, and which mismatch ladder it belongs to
 # (audit 2.6: ladder A is the physical one, ladder B is ~3x optimistic).
 MM_3SIGMA = {
-    "NDMOS20": (0.024, "A"), "PDMOS20": (0.024, "A"), "DNMOS20": (0.024, "A"),
-    "NDMOS40": (0.0085, "B"), "PDMOS40": (0.0085, "B"),
-    "NDMOS60": (0.027, "A"), "PDMOS60": (0.027, "A"),
-    "NDMOS80": (0.0095, "B"), "PDMOS80": (0.0095, "B"),
-    "NDMOS120": (0.030, "A"), "PDMOS120": (0.030, "A"),
-    "NDMOS200": (0.011, "B"), "PDMOS200": (0.011, "B"),
+    "NDMOS20V": (0.024, "A"), "PDMOS20V": (0.024, "A"), "DNMOS20V": (0.024, "A"),
+    "NDMOS40V": (0.0085, "B"), "PDMOS40V": (0.0085, "B"),
+    "NDMOS60V": (0.027, "A"), "PDMOS60V": (0.027, "A"),
+    "NDMOS80V": (0.0095, "B"), "PDMOS80V": (0.0095, "B"),
+    "NDMOS120V": (0.030, "A"), "PDMOS120V": (0.030, "A"),
+    "NDMOS200V": (0.011, "B"), "PDMOS200V": (0.011, "B"),
 }
 
 # BV ratings at TT from the model cards, used only to place sweep ranges and
 # bias ladders. The measured value is what gets reported.
 BV_RATED = {
-    "NDMOS20": 24.0, "PDMOS20": 22.0, "DNMOS20": 24.0,
-    "NDMOS40": 48.0, "PDMOS40": 45.0,
-    "NDMOS60": 75.0, "PDMOS60": 70.0,
-    "NDMOS80": 95.0, "PDMOS80": 90.0,
-    "NDMOS120": 135.0, "PDMOS120": 128.0,
-    "NDMOS200": 225.0, "PDMOS200": 230.0,
+    "NDMOS20V": 24.0, "PDMOS20V": 22.0, "DNMOS20V": 24.0,
+    "NDMOS40V": 48.0, "PDMOS40V": 45.0,
+    "NDMOS60V": 75.0, "PDMOS60V": 70.0,
+    "NDMOS80V": 95.0, "PDMOS80V": 90.0,
+    "NDMOS120V": 135.0, "PDMOS120V": 128.0,
+    "NDMOS200V": 225.0, "PDMOS200V": 230.0,
 }
 
 # audit 3a81be0 corner table -- the cross-check demanded for the 200 V pair.
 AUDIT_BV_TABLE = {
-    "NDMOS200": {"TT": 225.0, "FF": 211.5, "SS": 238.5,
+    "NDMOS200V": {"TT": 225.0, "FF": 211.5, "SS": 238.5,
                  "FS": 211.5, "SF": 238.5},
-    "PDMOS200": {"TT": 230.0, "FF": 216.2, "SS": 243.8,
+    "PDMOS200V": {"TT": 230.0, "FF": 216.2, "SS": 243.8,
                  "FS": 243.8, "SF": 216.2},
 }
 
-HAS_L = {"NDMOS200", "PDMOS200"}
+HAS_L = {"NDMOS200V", "PDMOS200V"}
 L_LIST_UM = [5.0, 8.0, 12.0, 16.0]     # drift lengths for the BV-vs-L probe
 E_SUST_V_PER_UM = 20.0                 # audit 2.9 recommended sustaining field
 
 VTH_SIGN_NOTE = (
     "SIGNED value: positive for n-channel enhancement parts, negative for the "
-    "p-channel parts and for the depletion-mode DNMOS20. The anchor band is "
+    "p-channel parts and for the depletion-mode DNMOS20V. The anchor band is "
     "written as a positive magnitude, so compare |value| against it. "
     "Extraction is max-gm linear extrapolation in the normalised coordinate "
     "u = pol*Vgs, then mapped back through pol."
@@ -130,7 +130,7 @@ VTH_SIGN_NOTE = (
 # --------------------------------------------------------------------------
 
 def _pol(dev: str) -> float:
-    """+1 for n-channel (including the depletion DNMOS20), -1 for p-channel."""
+    """+1 for n-channel (including the depletion DNMOS20V), -1 for p-channel."""
     return -1.0 if dev.startswith("P") else 1.0
 
 
@@ -217,7 +217,7 @@ def _read_card(dev: str) -> tuple[dict, str]:
 def _vgs_off(pol: float, vto: float) -> float:
     """A gate bias that holds the channel firmly off.
 
-    Enhancement parts (pol*vto > 0) are off at Vgs = 0. The depletion DNMOS20
+    Enhancement parts (pol*vto > 0) are off at Vgs = 0. The depletion DNMOS20V
     (pol=+1, vto=-0.9) is not, so it gets 1 V of extra reverse gate drive.
     """
     return 0.0 if pol * vto > 0 else vto - pol * 1.0
@@ -987,7 +987,7 @@ def _do_bv(col: Collector, dev: str, pol: float, card: dict) -> dict:
 
 
 def _do_l_drift(col: Collector, dev: str, pol: float, card: dict) -> None:
-    """BV vs drift length L -- NDMOS200 / PDMOS200 only. Expected FLAT."""
+    """BV vs drift length L -- NDMOS200V / PDMOS200V only. Expected FLAT."""
     vgs_off = _vgs_off(pol, card["vto"])
     rated = BV_RATED[dev]
     tbl: list[dict] = []
@@ -1122,7 +1122,7 @@ def _do_mc(col: Collector, dev: str, pol: float, card: dict) -> None:
                 wrapper_dvth_3sigma_coeff=x3,
                 wrapper_implied_per_device_1sigma_mV=wrapper_1sigma_mV,
                 mismatch_ladder=ladder,
-                ladder_note=("audit 2.6: ladder A (20/60/120 V + DNMOS20) is "
+                ladder_note=("audit 2.6: ladder A (20/60/120 V + DNMOS20V) is "
                              "the physical one at 0.65-0.82x the tox-based "
                              "A_VT expectation; ladder B (40/80/200 V) is "
                              "uniformly ~3x optimistic and is the defective "
@@ -1178,13 +1178,13 @@ def _do_mc(col: Collector, dev: str, pol: float, card: dict) -> None:
 
 
 # --------------------------------------------------------------------------
-# the inventory 6.3 capacitance fork -- NDMOS200 only
+# the inventory 6.3 capacitance fork -- NDMOS200V only
 # --------------------------------------------------------------------------
 
 _REPRO1_BODY = """.param SOA_ON=1
 VB  d 0 DC {VBIAS} AC 1
 Vg  g 0 DC 0
-XN5 d g 0 NDMOS200 W=40u L=8u
+XN5 d g 0 NDMOS200V W=40u L=8u
 .param VBIAS=0.1
 .ac lin 1 1meg 1meg
 .control
@@ -1201,7 +1201,7 @@ XN5 d g 0 NDMOS200 W=40u L=8u
 _REPRO1_FIXED_BODY = """.param SOA_ON=1
 VB  d 0 DC {VBIAS} AC 1
 Vg  g 0 DC 0
-XN5 d g 0 NDMOS200 W=40u L=8u
+XN5 d g 0 NDMOS200V W=40u L=8u
 .param VBIAS=0.1
 .ac lin 1 1meg 1meg
 .control
@@ -1224,12 +1224,12 @@ def _changelog_variant_deck(vds: float) -> str:
     `alter` inside a foreach, and the 2*pi is ngspice's PI constant rather than
     a literal 3.14159265.
     """
-    d = header(f"NDMOS200 cap reconciliation -- CHANGELOG/coss_check variant, "
+    d = header(f"NDMOS200V cap reconciliation -- CHANGELOG/coss_check variant, "
                f"Vds={vds:g} V",
                instruments="VB 1 V AC probe at 1 MHz; Vg ideal DC")
     d += f"VB d 0 DC {vds:g} AC 1\n"
     d += "Vg g 0 DC 0\n"
-    d += "XN5 d g 0 NDMOS200 W=40u L=8u\n"
+    d += "XN5 d g 0 NDMOS200V W=40u L=8u\n"
     d += ".ac lin 1 1meg 1meg\n"
     d += ".control\nrun\n"
     d += "let cdrain = abs(i(VB))/(2*PI*1e6)\n"
@@ -1239,7 +1239,7 @@ def _changelog_variant_deck(vds: float) -> str:
 
 
 def _do_cap_reconciliation(col: Collector) -> None:
-    dev = "NDMOS200"
+    dev = "NDMOS200V"
     vds_list = [0.1, 12.0, 100.0, 200.0]
     # Historical PRE-fix drain capacitances, in farads, as reported by the two
     # sources. HANDOFF_vdmos_caps.md "Reproduction / Repro 1" gives 172 pF /
@@ -1255,7 +1255,7 @@ def _do_cap_reconciliation(col: Collector) -> None:
     dp_af = deck_path(nm_af, SUBDIR)
 
     result: dict = {
-        "device_under_test": "NDMOS200 W=40u L=8u, gate at 0 V, AC 1 MHz",
+        "device_under_test": "NDMOS200V W=40u L=8u, gate at 0 V, AC 1 MHz",
         "quantity": "drain terminal capacitance |i(VB)|/(2*pi*f*Vac)",
         "handoff_reported_pre_fix_F": handoff_pre_fix,
         "changelog_reported_pre_fix_F": changelog_pre_fix,
@@ -1266,7 +1266,7 @@ def _do_cap_reconciliation(col: Collector) -> None:
 
     try:
         # (a) HANDOFF Repro-1, VERBATIM
-        d = header("NDMOS200 cap reconciliation -- HANDOFF_vdmos_caps.md "
+        d = header("NDMOS200V cap reconciliation -- HANDOFF_vdmos_caps.md "
                    "Repro-1, VERBATIM",
                    instruments="VB 1 V AC probe at 1 MHz; Vg ideal DC")
         out_a, _ = run_deck(d + _REPRO1_BODY, nm_a, SUBDIR)
@@ -1278,7 +1278,7 @@ def _do_cap_reconciliation(col: Collector) -> None:
             result["repro1_verbatim_cdrain_prints"])
 
         # (a') the same deck with the echo/print on separate lines
-        d = header("NDMOS200 cap reconciliation -- HANDOFF Repro-1 with the "
+        d = header("NDMOS200V cap reconciliation -- HANDOFF Repro-1 with the "
                    "echo and print on separate lines",
                    instruments="VB 1 V AC probe at 1 MHz; Vg ideal DC")
         out_af, _ = run_deck(d + _REPRO1_FIXED_BODY, nm_af, SUBDIR)
@@ -1480,5 +1480,5 @@ def run(col: Collector) -> None:
     try:
         _do_cap_reconciliation(col)
     except Exception as e:                                        # noqa: BLE001
-        col.measured("NDMOS200", "cap_reconciliation_ndmos200", None,
+        col.measured("NDMOS200V", "cap_reconciliation_ndmos200", None,
                      "percent", error=f"cap reconciliation aborted: {e}")

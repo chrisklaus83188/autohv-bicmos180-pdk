@@ -513,13 +513,13 @@ def write_local_model(name: str, source_card: str, body: str, delta: str) -> Pat
     the PDK makes it shadow the original card. It does not. ngspice-45 keeps
     the FIRST definition of a given model name and silently discards any later
     one, with no warning. A deck that includes the PDK and then a second
-    `.model NDMOS200_INT ...` still reads back the PDK's parameters.
+    `.model NDMOS200V_INT ...` still reads back the PDK's parameters.
 
     Anything relying on shadowing would silently run on stock cards while
     reporting that it had changed them. The working pattern, implemented in
     experiments/exp_lib.py, is:
 
-        1. give the copy a DISTINCT model name (e.g. NDMOS200_INT_D3)
+        1. give the copy a DISTINCT model name (e.g. NDMOS200V_INT_D3)
         2. instantiate that model raw, bypassing the PDK subckt wrapper
         3. prove the bypass is equivalent (wrapper_equivalence_check) rather
            than assuming it

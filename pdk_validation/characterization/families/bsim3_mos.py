@@ -3,7 +3,7 @@
 BSIM3 MOS characterization -- phase-2 harness family module.
 
 Covers the eight BSIM3 subcircuit wrappers in autohv_bicmos180_case.lib:
-NMOS18/PMOS18, NMOS33/PMOS33, NMOS50/PMOS50, NMOS12/PMOS12.
+NMOS1V8/PMOS1V8, NMOS3V3/PMOS3V3, NMOS5V0/PMOS5V0, NMOS12V/PMOS12V.
 
 FoM keys match docs/anchor-values.json exactly, plus four extra diagnostic
 keys that have no anchor band but carry the audit's assertions:
@@ -38,8 +38,8 @@ from char_lib import (header, run_deck, deck_path, parse_dc_sweep, parse_prints,
                       vth_max_gm, subthreshold_slope, linfit, cap_from_ac,
                       tempco_ppm, mc_run, CORNER_CASE, load_anchors)
 
-DEVICES = ["NMOS18", "PMOS18", "NMOS33", "PMOS33", "NMOS50", "PMOS50",
-           "NMOS12", "PMOS12"]
+DEVICES = ["NMOS1V8", "PMOS1V8", "NMOS3V3", "PMOS3V3", "NMOS5V0", "PMOS5V0",
+           "NMOS12V", "PMOS12V"]
 
 SUBDIR = "bsim3_mos"
 
@@ -382,7 +382,7 @@ def _run_device(col: Collector, dev: str, anchors: dict) -> None:
                            "into deep subthreshold where the log slope is "
                            "shallower, biasing S high. The conditions carry a "
                            "narrow-band (1 nA..100 nA) cross-check fitted the "
-                           "way a bench engineer would; on NMOS18 the two agree "
+                           "way a bench engineer would; on NMOS1V8 the two agree "
                            "to a few mV/dec, on the 12 V parts they differ by "
                            "~30-50 mV/dec. Both are above the anchor band."))
     except Exception as e:                                    # noqa: BLE001

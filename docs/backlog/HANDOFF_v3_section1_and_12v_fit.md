@@ -14,11 +14,11 @@ against `ni` in cm⁻³, inflating φ_F by `kT·ln(10⁶)` = 0.357 V. Corrected:
 
 | quantity | my last handoff | corrected | ruling's figure |
 |---|---|---|---|
-| φ_F (NMOS12) | 0.762 V | **0.404 V** | 0.414 |
+| φ_F (NMOS12V) | 0.762 V | **0.404 V** | 0.414 |
 | `W_dm` | 148 nm | **107.8 nm** | 109 |
 | n | 1.629 | **1.863** | 1.85 |
 | S | 96.9 mV/dec | **110.9** | 110 |
-| NMOS50 cross-check | — | **80.4** | 80 |
+| NMOS5V0 cross-check | — | **80.4** | 80 |
 
 So X1's 120 ± 10 target stands on correct arithmetic, and my proposed 95–105 band is withdrawn.
 
@@ -27,19 +27,19 @@ So X1's 120 ± 10 target stands on correct arithmetic, and my proposed 95–105 
 
 | card | using card `k1` | using γ(nch) | card `vth0` |
 |---|---|---|---|
-| NMOS12 | +0.53 V (Δ −0.82, **out**) | **+1.25 V (Δ −0.10, in ±0.3)** | +1.350 |
-| PMOS12 | −0.61 V (Δ +0.94, **out**) | **−1.42 V (Δ +0.13, in ±0.3)** | −1.550 |
+| NMOS12V | +0.53 V (Δ −0.82, **out**) | **+1.25 V (Δ −0.10, in ±0.3)** | +1.350 |
+| PMOS12V | −0.61 V (Δ +0.94, **out**) | **−1.42 V (Δ +0.13, in ±0.3)** | −1.550 |
 
 `vth0` was fitted for a device whose body effect really is γ ≈ 1.55 — a **third independent line of
 evidence** that `k1` is the copied, wrong parameter. My earlier "W2 withdrawn" conclusion was right
 but for the wrong reason, and the audit will say so.
 
-Also corrected: ΔVth at Vsb = 5 V is understated by **1.21 V (NMOS12) / 1.35 V (PMOS12)**, not the
+Also corrected: ΔVth at Vsb = 5 V is understated by **1.21 V (NMOS12V) / 1.35 V (PMOS12V)**, not the
 1.06/1.18 I reported.
 
 ## 2. §1 applied and committed (`a9e41c7`)
 
-- **PMOS50 `nfactor` 1.9000 → 1.5055**, giving **95.32 mV/dec** against the grounded 95 ± 3 target.
+- **PMOS5V0 `nfactor` 1.9000 → 1.5055**, giving **95.32 mV/dec** against the grounded 95 ± 3 target.
   `k1`, `nch`, `vth0` untouched.
 - **`k1`/`nch` retained on all six LV/mid cards** as retrograde-profile consistent, with the ratio
   table and measured baseline slopes in `docs/bsim3-defaults-audit.md` §6.
@@ -52,10 +52,10 @@ Fitted by bisection against the measured slope, then `voff` to restore weak-inve
 
 | card | `nfactor` | `voff` | S mV/dec | Id at `vth0` − 0.3 V |
 |---|---|---|---|---|
-| NMOS12 today | 1.7000 | −0.0700 | 152.8 | 8.826e-11 A |
-| **NMOS12 fitted** | **1.0625** | **−0.1544** | **120.7** | 8.643e-11 (**98 %** of today) |
-| PMOS12 today | 1.8500 | −0.0800 | 170.2 | 6.872e-11 A |
-| **PMOS12 fitted** | **0.9713** | **−0.2015** | **123.9** | 6.856e-11 (**100 %** of today) |
+| NMOS12V today | 1.7000 | −0.0700 | 152.8 | 8.826e-11 A |
+| **NMOS12V fitted** | **1.0625** | **−0.1544** | **120.7** | 8.643e-11 (**98 %** of today) |
+| PMOS12V today | 1.8500 | −0.0800 | 170.2 | 6.872e-11 A |
+| **PMOS12V fitted** | **0.9713** | **−0.2015** | **123.9** | 6.856e-11 (**100 %** of today) |
 
 Both inside the ruled 120 ± 10, both satisfying the ≤ 10 % continuity condition.
 
@@ -89,7 +89,7 @@ the copied part and the depth being genuine.
 
 ## 5. Y2 — a minor acceptance question
 
-PMOS12 lands at **123.9 mV/dec**, 3.9 above the 120 centre but inside ±10. I propose taking it
+PMOS12V lands at **123.9 mV/dec**, 3.9 above the 120 centre but inside ±10. I propose taking it
 rather than over-fitting a third parameter to chase the centre. Say if you want it nearer 120.
 
 `k2` = −0.03 with a note is applied per X2, replacing the 5 V copy.

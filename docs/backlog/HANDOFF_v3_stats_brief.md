@@ -51,8 +51,8 @@ temperature-dependent statistical coefficients, self-heating changes.
 Every statistical model parameter is one expression in a unit-normal variable:
 
 ```
-vth0 = { VTH0_TT_NMOS18 + S_VTHN18 * Z_VTHN18 }               additive (linear)
-u0   = { U0_TT_NMOS18   * exp(S_U0N18 * Z_U0N18) }             multiplicative (lognormal)
+vth0 = { VTH0_TT_NMOS1V8 + S_VTHN18 * Z_VTHN18 }               additive (linear)
+u0   = { U0_TT_NMOS1V8   * exp(S_U0N18 * Z_U0N18) }             multiplicative (lognormal)
 ```
 
 `Z_*` are top-level `.param`s resolved by mode:
@@ -108,7 +108,7 @@ what the 40 wrappers actually need; report deviations):
 |---|---|---|---|
 | `DL_POLY` | poly gate etch/litho CD | every poly-gated MOS (LV, 12 V, VDMOS family), poly resistor **width** | normal |
 | `DW_ACT_LV`, `DW_ACT_HV` | active/isolation CD | LV FETs; HV FETs | normal |
-| `TOX_18`, `TOX_33`, `TOX_50` | separate gate-oxide growths | 1.8 V; 3.3 V; 5 V + 12 V (rule which oxide NMOS12/PMOS12 and each VDMOS use; report) | lognormal |
+| `TOX_18`, `TOX_33`, `TOX_50` | separate gate-oxide growths | 1.8 V; 3.3 V; 5 V + 12 V (rule which oxide NMOS12V/PMOS12V and each VDMOS use; report) | lognormal |
 | `VTH_<dev>` | channel implant, per device | one per BSIM3 device and per VDMOS device | normal |
 | `U0_<dev>` | doping/mobility residual, per device, **after** the tox dependence | one per device | lognormal |
 | `RDSW_<dev>` | S/D extension | one per device (VDMOS: `RD`, `RS`) | lognormal |
@@ -186,7 +186,7 @@ draw. Parallel shapes amplify width/perimeter bias and follow the area law on lo
 shapes amplify length bias and grow end/head σ with count. No `NF`/`M`/`NS`-dependent mismatch
 coefficient is added.
 
-### 5.2 MOS (8 BSIM3 wrappers: 18/33/50 N/P, NMOS12, PMOS12)
+### 5.2 MOS (8 BSIM3 wrappers: 18/33/50 N/P, NMOS12V, PMOS12V)
 - `M` (exists): `AUM2 = (W/1u)(L/1u)M`; `m={NF*M}` to the inner device.
 - `NF` (new): `W` is total width; inner `W={W/NF}`. `NF+1` diffusion stripes of 0.5 µm; outer
   stripes are source for even NF, one outer is drain for odd; shared stripes split half per
@@ -199,7 +199,7 @@ coefficient is added.
 - Mismatch knobs: `Z_VT`, `Z_BETA`, `Z_W`, `Z_L` (instance params, default 0, unit-normal
   multipliers of the 1σ). Native mode (`MM_ON=1`) draws `AGAUSS(0,1,1)` per knob; `MM_SIGMA`
   removed repo-wide. `A_BETA` applied as a multiplicative `u0` (or `delvto`-equivalent β) term.
-- No `NF` on VDMOS/LDMOS/DNMOS20 (`W = n×10 µm` cells is the finger model; document). They keep
+- No `NF` on VDMOS/LDMOS/DNMOS20V (`W = n×10 µm` cells is the finger model; document). They keep
   `M`, get `Z_VT` (+ `Z_BETA` on `KP` if the model supports a clean lever; report), and the
   shared `DL_POLY`/`TOX` variables through their `*_STAT` params.
 
@@ -248,7 +248,7 @@ a comment. `AGAUSS` third argument is a scale, not a clip — stated in the `.li
 - Output: metadata (git SHA, ngspice version, seed, scheme, N, mode, case), per-sample values,
   mean, σ, σ/µ, min/max, yield vs `--spec`.
 
-`tools/corner_sweep.py --deck x.sp {--preset 0-16 | --groups NMOS50=s,RPOLY_HI=hi | --exhaustive}
+`tools/corner_sweep.py --deck x.sp {--preset 0-16 | --groups NMOS5V0=s,RPOLY_HI=hi | --exhaustive}
 --analysis … --meas …` — same loop body; `--exhaustive` parses the deck for instantiated groups
 and runs 3^k; reports the worst value per measurement and which combination produced it.
 
@@ -282,9 +282,9 @@ hard-coded) → scorecard. Then `docs/CHANGELOG.md` entry, tag `v3.0-stats`, pus
 
 ## 10. Acceptance (each a script under `pdk_validation/`; N = 200, seed 0, LHS unless stated)
 - **B1** generator: every preset and per-group vector reproduces the closed form exactly; `--check` green; editing a σ in a scratch branch turns it red.
-- **B2** `M=4` on NMOS50 mirror: σ(delvto) = σ(M=1)/2 ± 15 %. Also one LV PMOS, one 1.8 V device, NMOS12.
+- **B2** `M=4` on NMOS5V0 mirror: σ(delvto) = σ(M=1)/2 ± 15 %. Also one LV PMOS, one 1.8 V device, NMOS12V.
 - **B3** `NF=k` equals k explicit `W/k` devices exactly; Id delta vs NF=1 reported against `2(NF−1)·wint/W`; σ(delvto) invariant; junction cap monotonic; gate R ∝ 1/NF².
-- **B4** edge bias: with `Z_DW_*` = +3, `NF=4` Id shift = 4× the NF=1 shift; `Z_DL_POLY` shift NF-invariant. Devices: LV NMOS, LV PMOS, NMOS12.
+- **B4** edge bias: with `Z_DW_*` = +3, `NF=4` Id shift = 4× the NF=1 shift; `Z_DL_POLY` shift NF-invariant. Devices: LV NMOS, LV PMOS, NMOS12V.
 - **B5** resistors: `M=4` → R/4, σ/R halves; NS sweep (1,2,5,10): nominal rises by `2(NS−1)·R_HEAD`; `Z_DL` shift 10× at NS=10; sheet/width terms flat, end/head ∝ √NS (one coefficient at a time); reference geometry reproduces old lumped σ exactly; poly resistor width co-moves with MOS `L` under `Z_DL_POLY`.
 - **B6** capacitors: `M=4` → 4C, σ/C halves; perimeter term visible (C/area not constant vs size); `M` copies shift more than one 4×-area cap under `Z_DW`.
 - **B7** BJT: `ΔVbe` σ scales 1/√area; diode `ΔIs` likewise.
@@ -297,10 +297,10 @@ hard-coded) → scorecard. Then `docs/CHANGELOG.md` entry, tag `v3.0-stats`, pus
 ## 11. Pre-registered movers (report; do not tune)
 | quantity | before | expected | why |
 |---|---|---|---|
-| NMOS50 mirror σ/µ, M=1 | 4.33 % | 4.3–5.0 % | `A_BETA` added; new seeds |
+| NMOS5V0 mirror σ/µ, M=1 | 4.33 % | 4.3–5.0 % | `A_BETA` added; new seeds |
 | σ(delvto) at M=4 | 4.96 mV | ≈ 2.5 mV | `AUM2` |
 | corner regression | green | **all values move** | corners regenerated from stat model |
-| process σ (NMOS18 vth0 etc.) | hand-set 8.3 mV | grounded, likely 20–30 mV | §3.2 |
+| process σ (NMOS1V8 vth0 etc.) | hand-set 8.3 mV | grounded, likely 20–30 mV | §3.2 |
 | passive MC at reference geometry | – | unchanged | §5.3 constraint |
 | passive MC away from reference | – | moves; tabulated | end/head terms |
 | capacitor nominals | – | move where perimeter term added | §5.4 |

@@ -8,7 +8,7 @@
 Vd d 0 10.0
 Vg g 0 0
 Vs s 0 0
-X1 d g s DNMOS20 W=10u
+X1 d g s DNMOS20V W=10u
 .control
 set noaskquit
 op

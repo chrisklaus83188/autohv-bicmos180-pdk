@@ -82,13 +82,13 @@ def provenance(extra=None):
 # wbp       : bypass transistor width (um) -- must be << R, easily met
 # Lg        : channel length for the logic devices (um)
 DOMAINS = {
-    "1v8": dict(n="NMOS18", p="PMOS18", Lg=0.18, vdd=1.8,
+    "1v8": dict(n="NMOS1V8", p="PMOS1V8", Lg=0.18, vdd=1.8,
                 vlist=[1.62, 1.80, 1.98], wn=0.30, wp=0.70, wbp=0.60,
                 cpp=0.50, hov=1.5),
-    "3v3": dict(n="NMOS33", p="PMOS33", Lg=0.35, vdd=3.3,
+    "3v3": dict(n="NMOS3V3", p="PMOS3V3", Lg=0.35, vdd=3.3,
                 vlist=[2.97, 3.30, 3.63], wn=0.40, wp=0.95, wbp=0.80,
                 cpp=0.70, hov=2.0),
-    "5v0": dict(n="NMOS50", p="PMOS50", Lg=0.50, vdd=5.0,
+    "5v0": dict(n="NMOS5V0", p="PMOS5V0", Lg=0.50, vdd=5.0,
                 vlist=[3.20, 5.00, 5.50], wn=0.50, wp=1.15, wbp=1.00,
                 cpp=0.90, hov=2.5),
 }

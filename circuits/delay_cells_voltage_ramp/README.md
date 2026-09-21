@@ -30,9 +30,9 @@ later stage.
 
 currents: `100n`, `1u`, `10u`, `100u`.
 
-Signal-path devices are **all PDK**: `PMOS50` mirror (L = 2 µm, W per current for
+Signal-path devices are **all PDK**: `PMOS5V0` mirror (L = 2 µm, W per current for
 V_ov ≈ 200 mV — Strategy B from `../current_mirror_char/designs.json`), `CMIM_STD`
-ramp cap (~1 pF), `NMOS50` reset switch, and `BUF_5V0`
+ramp cap (~1 pF), `NMOS5V0` reset switch, and `BUF_5V0`
 (from `../async_logic_design/cells.lib`). The mirror reference current and the
 `MIR_CW` wide-swing cascode bias are ideal sources — bias *instruments*, exactly as
 in the current-mirror characterization study.
@@ -62,8 +62,8 @@ shown in parentheses for reference:
 
 **What moved (re-measure, not re-design):** the mirror sizing (`designs.json`, L = 2 µm,
 Strategy B) is unchanged, so this is a re-measure. Every slope dropped ~9 % (low current)
-to ~26 % (100 µA) because the F6 BSIM3 junction caps — now non-zero on the `PMOS50` mirror
-drain and the `NMOS50` reset-switch drain, both on the `RAMP` node — add ~10 % effective
+to ~26 % (100 µA) because the F6 BSIM3 junction caps — now non-zero on the `PMOS5V0` mirror
+drain and the `NMOS5V0` reset-switch drain, both on the `RAMP` node — add ~10 % effective
 capacitance, so dV/dt = I/C_eff falls. At 100 µA the ramp span also reaches into the
 cascode compliance headroom, so the 1→3 V average slope droops further below I/C — expected,
 and a target of the coming detector-stage characterization.

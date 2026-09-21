@@ -61,7 +61,7 @@ Ranked by severity × breadth. All confirmed by measurement unless noted.
 | **NEW** | **Both PNP avalanche branches are dead code.** `max(V(ci,b)/BVCBO, 0)` zeroes on a p-type device. PNP_LAT sustains **−200 V** against a declared BVCBO of 18 V. | 2 BJT | no breakdown model at all |
 
 Also: passive matching is 4–11× optimistic across all nine devices; VDMOS mismatch has two
-inconsistent ladders (40/80/200 V is ~3× tight); NMOS12/PMOS12 carry four Level-3→BSIM3 migration
+inconsistent ladders (40/80/200 V is ~3× tight); NMOS12V/PMOS12V carry four Level-3→BSIM3 migration
 defects; `device_limits.csv` gives the 12 V parts a 0.15 µm `Lmin` — shorter than the 1.8 V device,
 on a 20 nm oxide.
 
@@ -79,9 +79,9 @@ own audit table to 0.04 %.
 Phase 2 exists partly to check phase 1. It found four places where the static reasoning was wrong,
 and the rule applied was **the measurement wins**.
 
-1. **"NDMOS200 is sub-Boltzmann" — OVERTURNED.** Phase 1 read `ksubthres` as mV/decade directly and
+1. **"NDMOS200V is sub-Boltzmann" — OVERTURNED.** Phase 1 read `ksubthres` as mV/decade directly and
    concluded `n = 1.01`, "a perfect gate, unphysical." Measured: `ksubthres` is per-decade inflated
-   1.17×; NDMOS200 swings at 70.7 mV/dec, `n = 1.19`. **No card in the family is sub-Boltzmann.**
+   1.17×; NDMOS200V swings at 70.7 mV/dec, `n = 1.19`. **No card in the family is sub-Boltzmann.**
    Strike it. (The *structural* half of that finding — the swing ladder slopes the wrong way with
    voltage class — survives untouched and is the real defect.)
 2. **The implied-width table was misattributed.** Phase 1 took the card's whole on-resistance to be
@@ -122,8 +122,8 @@ Phase 1 produced an 18-item worklist ordered by severity × effort. Phase 2 chan
 
 - **`kp` re-derivation** — rescoped from 13 derivations to ~6 numbers *(pending decision 2)*.
 - **`rd`/`rs` divisor** — still one divisor, but its table must be recomputed against total Ron, and
-  it must be checked against the measured **channel-only floor** (1.61 Ω·µm NDMOS20, 27.22 Ω·µm
-  NDMOS200). **Ordering constraint: re-derive `kp` before `rd`/`rs`** — the floor is set by the same
+  it must be checked against the measured **channel-only floor** (1.61 Ω·µm NDMOS20V, 27.22 Ω·µm
+  NDMOS200V). **Ordering constraint: re-derive `kp` before `rd`/`rs`** — the floor is set by the same
   defective `kp`, so fixing `kp` downward raises it. The two defects are independent but coupled
   through this floor.
 - **`ksubthres` ladder** — the sub-Boltzmann clause is struck; the slope clause stands at unchanged

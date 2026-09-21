@@ -21,10 +21,10 @@ too-tight anchor can masquerade as a model defect.
 
 | # | result |
 |---|---|
-| **C1** | **PASS.** Every MOS reaches gm/Id ≈ 6 (strong inversion) at 1.3–140 µm across all currents. The trigger device NDMOS200 at 100 µA is 13.4 µm. |
+| **C1** | **PASS.** Every MOS reaches gm/Id ≈ 6 (strong inversion) at 1.3–140 µm across all currents. The trigger device NDMOS200V at 100 µA is 13.4 µm. |
 | **C2** | **PASS.** VDMOS Vov (Vgs − vto) at the mirror size lands 0.34–0.47 V; BSIM3 0.3–0.6 V. |
 | C3 | **PASS** at the operating rail; note the HV drift drop (I·Rdrift) costs headroom at high current — quantified in the guide's Vgs column. |
-| **C4** | **PASS.** σ(ΔI/I) ≤ 20 % at the minimum (10 µA) size and falls as 1/√W (e.g. NDMOS200 18.5 %→8.6 %→2.8 % for 10/100/1000 µA-scaled widths). |
+| **C4** | **PASS.** σ(ΔI/I) ≤ 20 % at the minimum (10 µA) size and falls as 1/√W (e.g. NDMOS200V 18.5 %→8.6 %→2.8 % for 10/100/1000 µA-scaled widths). |
 | C5 | **PASS.** 10 kΩ = 8.3 squares of RPOLY_HI. |
 | C6 | **PASS.** 1 pF = 22 × 22 µm of CMIM_HI. |
 | C7 | **PARTIAL.** Vbe@100 µA computes to ~0.70 V (in band). β/collapse not re-swept in phase 3 (β cards unchanged from the in-band audit values). |

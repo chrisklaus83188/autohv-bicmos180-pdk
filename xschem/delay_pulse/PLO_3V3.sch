@@ -10,10 +10,10 @@ N 120 100 2760 100 {}
 C {iopin.sym} 120 100 0 0 {name=pz1 lab=vdd sim_pinnumber=3}
 N 120 860 2760 860 {}
 C {iopin.sym} 120 860 0 0 {name=pz2 lab=gnd sim_pinnumber=4}
-C {autohv/PMOS33.sym} 280 280 2 1 {name=I1 model=PMOS33 W=0.95u L=0.35u}
+C {autohv/PMOS3V3.sym} 280 280 2 1 {name=I1 model=PMOS3V3 W=0.95u L=0.35u}
 T {I1} 220 170 0 0 0.28 0.28 {}
 N 300 280 300 240 {}
-C {autohv/NMOS33.sym} 280 720 0 0 {name=I2 model=NMOS33 W=0.4u L=0.35u}
+C {autohv/NMOS3V3.sym} 280 720 0 0 {name=I2 model=NMOS3V3 W=0.4u L=0.35u}
 T {I2} 220 610 0 0 0.28 0.28 {}
 N 300 720 300 760 {}
 N 300 100 300 240 {}
@@ -37,7 +37,7 @@ N 1120 260 1120 420 {}
 N 1120 420 1120 500 {}
 N 1120 500 1120 580 {}
 N 1120 580 1120 740 {}
-C {autohv/NMOS33.sym} 760 800 0 0 {name=BP model=NMOS33 W=0.8u L=0.35u}
+C {autohv/NMOS3V3.sym} 760 800 0 0 {name=BP model=NMOS3V3 W=0.8u L=0.35u}
 T {BP} 700 690 0 0 0.28 0.28 {}
 N 780 800 780 840 {}
 N 780 840 780 860 {}
@@ -47,16 +47,16 @@ C {autohv/CMIM_HI.sym} 940 640 0 0 {name=C L=5.3600u W=5.3600u}
 T {C} 970 600 0 0 0.22 0.22 {}
 N 940 500 940 610 {}
 N 940 670 940 860 {}
-C {autohv/PMOS33.sym} 1160 260 2 1 {name=S3 model=PMOS33 W=0.95u L=0.35u}
+C {autohv/PMOS3V3.sym} 1160 260 2 1 {name=S3 model=PMOS3V3 W=0.95u L=0.35u}
 T {S3} 1100 150 0 0 0.28 0.28 {}
 N 1180 260 1180 220 {}
-C {autohv/PMOS33.sym} 1160 420 2 1 {name=S4 model=PMOS33 W=0.95u L=0.35u}
+C {autohv/PMOS3V3.sym} 1160 420 2 1 {name=S4 model=PMOS3V3 W=0.95u L=0.35u}
 T {S4} 1100 310 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1180 420 0 0 {name=lz7 lab=vdd}
-C {autohv/NMOS33.sym} 1160 580 0 0 {name=S2 model=NMOS33 W=0.4u L=0.35u}
+C {autohv/NMOS3V3.sym} 1160 580 0 0 {name=S2 model=NMOS3V3 W=0.4u L=0.35u}
 T {S2} 1100 470 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1180 580 0 0 {name=lz8 lab=gnd}
-C {autohv/NMOS33.sym} 1160 740 0 0 {name=S1 model=NMOS33 W=0.4u L=0.35u}
+C {autohv/NMOS3V3.sym} 1160 740 0 0 {name=S1 model=NMOS3V3 W=0.4u L=0.35u}
 T {S1} 1100 630 0 0 0.28 0.28 {}
 N 1180 740 1180 780 {}
 N 1180 100 1180 220 {}
@@ -69,10 +69,10 @@ N 1180 660 1180 700 {}
 N 1180 780 1180 860 {}
 C {lab_pin.sym} 1180 300 0 0 {name=lz9 lab=s2}
 C {lab_pin.sym} 1180 620 0 0 {name=lz10 lab=s1}
-C {autohv/PMOS33.sym} 1360 420 2 0 {name=S6 model=PMOS33 W=0.95u L=0.35u}
+C {autohv/PMOS3V3.sym} 1360 420 2 0 {name=S6 model=PMOS3V3 W=0.95u L=0.35u}
 T {S6} 1300 310 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1340 420 0 0 {name=lz11 lab=vdd}
-C {autohv/NMOS33.sym} 1520 580 0 1 {name=S5 model=NMOS33 W=0.4u L=0.35u}
+C {autohv/NMOS3V3.sym} 1520 580 0 1 {name=S5 model=NMOS3V3 W=0.4u L=0.35u}
 T {S5} 1460 470 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1500 580 0 0 {name=lz12 lab=gnd}
 N 1340 460 1340 860 {}
@@ -90,10 +90,10 @@ T {* input inverter} 200 -40 0 0 0.4 0.4 {}
 T {* RC delay (R + MIM C) + bypass} 460 -40 0 0 0.4 0.4 {}
 T {* Schmitt trigger + hysteresis} 1080 -40 0 0 0.4 0.4 {}
 C {lab_pin.sym} 1660 500 0 0 {name=lz13 lab=dco}
-C {autohv/PMOS33.sym} 1840 280 2 1 {name=PI1 model=PMOS33 W=0.95u L=0.35u}
+C {autohv/PMOS3V3.sym} 1840 280 2 1 {name=PI1 model=PMOS3V3 W=0.95u L=0.35u}
 T {PI1} 1780 170 0 0 0.28 0.28 {}
 N 1860 280 1860 240 {}
-C {autohv/NMOS33.sym} 1840 720 0 0 {name=PI2 model=NMOS33 W=0.4u L=0.35u}
+C {autohv/NMOS3V3.sym} 1840 720 0 0 {name=PI2 model=NMOS3V3 W=0.4u L=0.35u}
 T {PI2} 1780 610 0 0 0.28 0.28 {}
 N 1860 720 1860 760 {}
 N 1860 100 1860 240 {}
@@ -104,16 +104,16 @@ N 1800 280 1800 500 {}
 N 1800 500 1800 720 {}
 C {lab_pin.sym} 1860 500 0 0 {name=lz14 lab=dbar}
 N 1660 500 1800 500 {}
-C {autohv/PMOS33.sym} 2160 280 2 1 {name=G1 model=PMOS33 W=0.95u L=0.35u}
+C {autohv/PMOS3V3.sym} 2160 280 2 1 {name=G1 model=PMOS3V3 W=0.95u L=0.35u}
 T {G1} 2100 170 0 0 0.28 0.28 {}
 N 2180 280 2180 240 {}
-C {autohv/PMOS33.sym} 2160 460 2 1 {name=G2 model=PMOS33 W=0.95u L=0.35u}
+C {autohv/PMOS3V3.sym} 2160 460 2 1 {name=G2 model=PMOS3V3 W=0.95u L=0.35u}
 T {G2} 2100 350 0 0 0.28 0.28 {}
 C {lab_pin.sym} 2180 460 0 0 {name=lz15 lab=vdd}
-C {autohv/NMOS33.sym} 2160 740 0 0 {name=G3 model=NMOS33 W=0.4u L=0.35u}
+C {autohv/NMOS3V3.sym} 2160 740 0 0 {name=G3 model=NMOS3V3 W=0.4u L=0.35u}
 T {G3} 2100 630 0 0 0.28 0.28 {}
 N 2180 740 2180 780 {}
-C {autohv/NMOS33.sym} 2360 740 0 0 {name=G4 model=NMOS33 W=0.4u L=0.35u}
+C {autohv/NMOS3V3.sym} 2360 740 0 0 {name=G4 model=NMOS3V3 W=0.4u L=0.35u}
 T {G4} 2300 630 0 0 0.28 0.28 {}
 N 2380 740 2380 780 {}
 N 2180 100 2180 240 {}
@@ -134,10 +134,10 @@ N 2000 460 2120 460 {}
 N 2000 820 2320 820 {}
 N 2320 820 2320 740 {}
 C {lab_pin.sym} 2180 500 0 0 {name=lz18 lab=nnr}
-C {autohv/PMOS33.sym} 2560 280 2 1 {name=O1 model=PMOS33 W=0.95u L=0.35u}
+C {autohv/PMOS3V3.sym} 2560 280 2 1 {name=O1 model=PMOS3V3 W=0.95u L=0.35u}
 T {O1} 2500 170 0 0 0.28 0.28 {}
 N 2580 280 2580 240 {}
-C {autohv/NMOS33.sym} 2560 720 0 0 {name=O2 model=NMOS33 W=0.4u L=0.35u}
+C {autohv/NMOS3V3.sym} 2560 720 0 0 {name=O2 model=NMOS3V3 W=0.4u L=0.35u}
 T {O2} 2500 610 0 0 0.28 0.28 {}
 N 2580 720 2580 760 {}
 N 2580 100 2580 240 {}

@@ -322,7 +322,7 @@ w("  the 1.8 V dead-zone resistance relative to âˆ’40 Â°C, so it matters. 
 w("  repository's delay-cell characterization already runs at âˆ’55 Â°C, so this")
 w("  follows existing practice rather than setting it.")
 w("- **Â±10 % on the 3.3 V rail exceeds a device rating.** 3.63 V is above the")
-w("  `Vgs_dcmax` of 3.6 V for NMOS33/PMOS33 by 30 mV, and `en` sits at the rail.")
+w("  `Vgs_dcmax` of 3.6 V for NMOS3V3/PMOS3V3 by 30 mV, and `en` sits at the rail.")
 w("  The 5 V case lands exactly on its 5.5 V rating. The 1.8 V case has margin.")
 w("- **`TGB` body pins are not protected.** Driving `bn` above either switch")
 w("  terminal, or `bp` below either, forward-biases a body junction. Nothing in")

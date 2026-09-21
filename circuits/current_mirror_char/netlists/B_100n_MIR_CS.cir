@@ -4,10 +4,10 @@
 .options temp=27
 Vdd vdd 0 5
 Iin n2 0 1e-07
-Xin n1 n1 vdd vdd PMOS50 W=8.76825e-07 L=2e-06 M=1
-Xincs n2 n2 n1 vdd PMOS50 W=8.76825e-07 L=2e-06 M=1
-Xout n3 n1 vdd vdd PMOS50 W=8.76825e-07 L=2e-06 M=1
-Xoutcs nout n2 n3 vdd PMOS50 W=8.76825e-07 L=2e-06 M=1
+Xin n1 n1 vdd vdd PMOS5V0 W=8.76825e-07 L=2e-06 M=1
+Xincs n2 n2 n1 vdd PMOS5V0 W=8.76825e-07 L=2e-06 M=1
+Xout n3 n1 vdd vdd PMOS5V0 W=8.76825e-07 L=2e-06 M=1
+Xoutcs nout n2 n3 vdd PMOS5V0 W=8.76825e-07 L=2e-06 M=1
 Vout nout 0 0
 .control
 dc Vout 0 5 0.01

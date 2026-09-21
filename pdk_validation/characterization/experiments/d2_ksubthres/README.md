@@ -6,7 +6,7 @@ Phase-1 audit §2.8 assumed `ksubthres` **is** the subthreshold swing in V/decad
 read the ladder straight off the cards as `S = 95 → 60 mV/dec`, and concluded:
 
 1. the ladder slopes the **wrong way** with voltage class, and
-2. NDMOS200's `n = 1.01` is **below the room-temperature Boltzmann floor** —
+2. NDMOS200V's `n = 1.01` is **below the room-temperature Boltzmann floor** —
    "unphysical … it says the depletion capacitance is zero".
 
 If ngspice instead reads `ksubthres` as a natural-log (per-e-fold) slope, every
@@ -22,7 +22,7 @@ three-point regression into a thirteen-point one.
 
 Per card: fine Id–Vg sweep (`Vds = 0.1 V`, 4 mV step) from 1.2 V below the card's
 own `vto` to 0.2 V above, in the normalised coordinate `u = pol·Vgs` so
-n-channel, p-channel and the depletion DNMOS20 share one code path. Leakage
+n-channel, p-channel and the depletion DNMOS20V share one code path. Leakage
 plateau cut at 50× the floor, then `S` from a least-squares fit of
 `log10(|Id|)` vs `u`.
 
@@ -50,7 +50,7 @@ Equivalently `S ≈ 1.171 × (1000·ksubthres)`, tight: the per-card ratio spans
 1.167–1.180 across the whole family. The three brief-named cards alone give
 `m = 1150.8`, consistent.
 
-Measured swings reproduce `families/vdmos.py` exactly — NDMOS20 110.9, NDMOS200
+Measured swings reproduce `families/vdmos.py` exactly — NDMOS20V 110.9, NDMOS200V
 70.7 mV/dec.
 
 ### (b) The semantics
@@ -70,19 +70,19 @@ Boltzmann floor = 59.61 mV/dec.
 
 | device | class | `ksubthres` | S phase-1 | n phase-1 | **S measured** | **n measured** |
 |---|---|---|---|---|---|---|
-| DNMOS20 | 20 | 0.085 | 85.0 | 1.43 | 99.8 | **1.68** |
-| NDMOS20 | 20 | 0.095 | 95.0 | 1.59 | 110.9 | **1.86** |
-| PDMOS20 | 20 | 0.110 | 110.0 | 1.85 | 128.5 | **2.16** |
-| NDMOS40 | 40 | 0.088 | 88.0 | 1.48 | 102.8 | **1.73** |
-| PDMOS40 | 40 | 0.096 | 96.0 | 1.61 | 112.2 | **1.88** |
-| NDMOS60 | 60 | 0.080 | 80.0 | 1.34 | 93.4 | **1.57** |
-| PDMOS60 | 60 | 0.090 | 90.0 | 1.51 | 105.1 | **1.76** |
-| NDMOS80 | 80 | 0.075 | 75.0 | 1.26 | 87.6 | **1.47** |
-| PDMOS80 | 80 | 0.082 | 82.0 | 1.38 | 95.9 | **1.61** |
-| NDMOS120 | 120 | 0.070 | 70.0 | 1.18 | 81.9 | **1.37** |
-| PDMOS120 | 120 | 0.077 | 77.0 | 1.29 | 90.2 | **1.51** |
-| **NDMOS200** | 200 | 0.060 | 60.0 | **1.01** | **70.7** | **1.19** |
-| PDMOS200 | 200 | 0.065 | 65.0 | 1.09 | 76.7 | **1.29** |
+| DNMOS20V | 20 | 0.085 | 85.0 | 1.43 | 99.8 | **1.68** |
+| NDMOS20V | 20 | 0.095 | 95.0 | 1.59 | 110.9 | **1.86** |
+| PDMOS20V | 20 | 0.110 | 110.0 | 1.85 | 128.5 | **2.16** |
+| NDMOS40V | 40 | 0.088 | 88.0 | 1.48 | 102.8 | **1.73** |
+| PDMOS40V | 40 | 0.096 | 96.0 | 1.61 | 112.2 | **1.88** |
+| NDMOS60V | 60 | 0.080 | 80.0 | 1.34 | 93.4 | **1.57** |
+| PDMOS60V | 60 | 0.090 | 90.0 | 1.51 | 105.1 | **1.76** |
+| NDMOS80V | 80 | 0.075 | 75.0 | 1.26 | 87.6 | **1.47** |
+| PDMOS80V | 80 | 0.082 | 82.0 | 1.38 | 95.9 | **1.61** |
+| NDMOS120V | 120 | 0.070 | 70.0 | 1.18 | 81.9 | **1.37** |
+| PDMOS120V | 120 | 0.077 | 77.0 | 1.29 | 90.2 | **1.51** |
+| **NDMOS200V** | 200 | 0.060 | 60.0 | **1.01** | **70.7** | **1.19** |
+| PDMOS200V | 200 | 0.065 | 65.0 | 1.09 | 76.7 | **1.29** |
 
 **(i) Is the falling-with-class slope still wrong? — YES, STILL WRONG.**
 Physics requires `n = 1 + C_dep/Cox` to *rise* with class as the oxide thickens.
@@ -92,9 +92,9 @@ cannot change the sign of its slope. Measured n falls monotonically 1.86 → 1.1
 across the n-channel family. **This half of §2.8 survives unchanged, and it is
 the half that matters, because it is structural rather than numerical.**
 
-**(ii) Is NDMOS200 still sub-Boltzmann? — NO. OVERTURNED.**
+**(ii) Is NDMOS200V still sub-Boltzmann? — NO. OVERTURNED.**
 Measured `S = 70.7 mV/dec`, `n = 1.19`. Above 1 by a clear margin. **No card in
-the family is sub-Boltzmann.** NDMOS200 remains the softest card and sits
+the family is sub-Boltzmann.** NDMOS200V remains the softest card and sits
 marginally under the 1.2 industry-band edge, so "low" survives — but "physically
 impossible" does not, and those are different claims.
 
@@ -118,7 +118,7 @@ routes that agree. The measurement wins.
 
 **Fix worklist:**
 
-- **STRIKE** the "NDMOS200 is sub-Boltzmann / n = 1.01 unphysical" item. There is
+- **STRIKE** the "NDMOS200V is sub-Boltzmann / n = 1.01 unphysical" item. There is
   nothing to fix.
 - **KEEP** the "ksubthres ladder slopes the wrong way" item at unchanged
   severity — it sets the subthreshold gm/Id ceiling, which is what

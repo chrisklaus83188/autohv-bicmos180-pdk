@@ -1,5 +1,5 @@
 * TGB_1K_1V8 -- CMOS transmission gate, 1.8 V domain, ~1 kohm on-resistance
-* AutoHV BiCMOS 180 PDK | NMOS18/PMOS18, L = 0.18 um, Wp/Wn = 2.5
+* AutoHV BiCMOS 180 PDK | NMOS1V8/PMOS1V8, L = 0.18 um, Wp/Wn = 2.5
 *
 * Bodies are brought out on pins bn (NMOS) and bp (PMOS) so the caller
 * can bias them.  Driving bn/bp to the switch terminal removes the body
@@ -17,9 +17,9 @@
 
 .subckt TGB_1K_1V8 a b en bn bp vdd gnd
 * control inverter: enb = !en  (bodies always on the rails)
-XINVP enb en vdd vdd PMOS18 W=1u M=1 L=0.18u
-XINVN enb en gnd gnd NMOS18 W=0.4u M=1 L=0.18u
+XINVP enb en vdd vdd PMOS1V8 W=1u M=1 L=0.18u
+XINVN enb en gnd gnd NMOS1V8 W=0.4u M=1 L=0.18u
 * pass pair
-XN b en  a bn NMOS18 W=4u M=1 L=0.18u
-XP b enb a bp PMOS18 W=10u M=1 L=0.18u
+XN b en  a bn NMOS1V8 W=4u M=1 L=0.18u
+XP b enb a bp PMOS1V8 W=10u M=1 L=0.18u
 .ends TGB_1K_1V8

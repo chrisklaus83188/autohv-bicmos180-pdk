@@ -6,7 +6,7 @@ QUESTION
     Phase-1 audit 2.8 assumed `ksubthres` IS the subthreshold swing in V/decade,
     so it read the ladder straight off the cards as S = 95 -> 60 mV/dec and
     concluded (i) the ladder slopes the wrong way with voltage class and (ii)
-    NDMOS200's n = 1.01 is below the Boltzmann floor. If instead ngspice reads
+    NDMOS200V's n = 1.01 is below the Boltzmann floor. If instead ngspice reads
     ksubthres as a NATURAL-LOG (per-e-fold) slope, every S is larger by
     ln10 = 2.3026 and both conclusions have to be re-examined. That factor is
     the whole finding.
@@ -21,7 +21,7 @@ METHOD
 
     Per card: a fine Id-Vg sweep (Vds = 0.1 V, step 4 mV) from 1.2 V below the
     card's own vto to 0.2 V above it, run in the normalised coordinate
-    u = pol*Vgs so n-channel, p-channel and the depletion DNMOS20 share one code
+    u = pol*Vgs so n-channel, p-channel and the depletion DNMOS20V share one code
     path. The numerical/leakage plateau is cut at 50x the floor, then S is a
     least-squares fit of log10(|Id|) vs u over the widest clean window.
 
@@ -58,13 +58,13 @@ STEP = 0.004
 LN10 = math.log(10.0)
 
 # The three the brief names explicitly; the other ten are corroboration.
-BRIEF_CARDS = ["NDMOS20", "NDMOS80", "NDMOS200"]
+BRIEF_CARDS = ["NDMOS20V", "NDMOS80V", "NDMOS200V"]
 
 # Phase-1 audit 2.8's own table, for the side-by-side.
 AUDIT_2_8_N = {
-    "NDMOS20": 1.59, "PDMOS20": 1.85, "NDMOS40": 1.48, "PDMOS40": 1.61,
-    "NDMOS60": 1.34, "NDMOS80": 1.26, "NDMOS120": 1.17, "NDMOS200": 1.01,
-    "PDMOS200": 1.09,
+    "NDMOS20V": 1.59, "PDMOS20V": 1.85, "NDMOS40V": 1.48, "PDMOS40V": 1.61,
+    "NDMOS60V": 1.34, "NDMOS80V": 1.26, "NDMOS120V": 1.17, "NDMOS200V": 1.01,
+    "PDMOS200V": 1.09,
 }
 
 
@@ -219,12 +219,12 @@ def run() -> dict:
     #     only -- mixing polarities would fold the n/p threshold difference into
     #     the slope and is not what the audit's claim is about.
     nch = [z for z in ladder if not z["device"].startswith("P")
-           and z["device"] != "DNMOS20"]
+           and z["device"] != "DNMOS20V"]
     sl_meas, _ = linfit([z["vclass_V"] for z in nch],
                         [z["n_measured"] for z in nch])
     sl_p1, _ = linfit([z["vclass_V"] for z in nch], [z["n_phase1"] for z in nch])
     subb = [z["device"] for z in ladder if z["sub_boltzmann"]]
-    n200 = next(z for z in ladder if z["device"] == "NDMOS200")
+    n200 = next(z for z in ladder if z["device"] == "NDMOS200V")
 
     slope_still_wrong = sl_meas < 0.0
     still_sub_b = n200["n_measured"] < 1.0
@@ -260,7 +260,7 @@ def run() -> dict:
                    "does not survive either.")),
         },
         "ruling_ii_sub_boltzmann": {
-            "question": "Is NDMOS200 still sub-Boltzmann (n < 1)?",
+            "question": "Is NDMOS200V still sub-Boltzmann (n < 1)?",
             "ndmos200_n_phase1": n200["n_phase1"],
             "ndmos200_S_measured_mV_per_dec": n200["S_measured_mV_per_dec"],
             "ndmos200_n_measured": n200["n_measured"],
@@ -268,10 +268,10 @@ def run() -> dict:
             "answer": ("YES -- still sub-Boltzmann" if still_sub_b
                        else "NO -- OVERTURNED"),
             "detail": (
-                f"Phase 1 put NDMOS200 at n = {n200['n_phase1']:.2f}, sitting "
+                f"Phase 1 put NDMOS200V at n = {n200['n_phase1']:.2f}, sitting "
                 f"on the {E.S_IDEAL_MV_DEC:.1f} mV/dec room-temperature "
                 f"Boltzmann floor, and called it 'unphysical -- it says the "
-                f"depletion capacitance is zero'. Measured, NDMOS200 swings at "
+                f"depletion capacitance is zero'. Measured, NDMOS200V swings at "
                 f"{n200['S_measured_mV_per_dec']:.1f} mV/dec, giving "
                 f"n = {n200['n_measured']:.2f}. "
                 + (f"That is above 1 by a clear margin -- the device is NOT "
@@ -335,9 +335,9 @@ def run() -> dict:
             "SURVIVES -- the ladder still slopes wrong" if slope_still_wrong
             else "does not survive"),
         "phase1_2_8_sub_boltzmann_finding": (
-            f"OVERTURNED -- NDMOS200 n = {n200['n_measured']:.2f}, not "
+            f"OVERTURNED -- NDMOS200V n = {n200['n_measured']:.2f}, not "
             f"{n200['n_phase1']:.2f}" if not still_sub_b else
-            "SURVIVES -- NDMOS200 still below n = 1"),
+            "SURVIVES -- NDMOS200V still below n = 1"),
         "overturns_phase_1": bool(not still_sub_b),
         "plain_statement": (
             "Audit 2.8 made two claims and D2 splits them.\n"
@@ -347,11 +347,11 @@ def run() -> dict:
                "semantics correction, and it is what the fix worklist should "
                "act on.\n"
                if slope_still_wrong else "is NOT confirmed.\n")
-            + "  The HEADLINE claim -- that NDMOS200 sits at n = 1.01, "
+            + "  The HEADLINE claim -- that NDMOS200V sits at n = 1.01, "
               "'essentially ideal', below the room-temperature Boltzmann floor "
               "and therefore physically impossible -- is "
             + (f"OVERTURNED. It came from reading ksubthres as if it were S in "
-               f"V/dec. Measured, NDMOS200 swings at "
+               f"V/dec. Measured, NDMOS200V swings at "
                f"{n200['S_measured_mV_per_dec']:.1f} mV/dec for "
                f"n = {n200['n_measured']:.2f}. Low, but ordinary -- there is no "
                f"perfect gate and nothing unphysical. Every one of the 13 "
@@ -361,7 +361,7 @@ def run() -> dict:
               "states them. D2 measured them, twice, by independent routes "
               "that agree. Where they conflict, the measurement wins."),
         "consequence_for_worklist": (
-            "The 'NDMOS200 is sub-Boltzmann' line item should be STRUCK from "
+            "The 'NDMOS200V is sub-Boltzmann' line item should be STRUCK from "
             "the fix worklist -- there is nothing to fix. The 'ksubthres "
             "ladder slopes the wrong way' item stands, and its severity is "
             "unchanged (it sets the subthreshold gm/Id ceiling, which is what "

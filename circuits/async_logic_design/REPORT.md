@@ -10,9 +10,9 @@ Static CMOS standard-cell set (8 cells x 3 voltage domains = 24 cells), each siz
 
 | Domain | N / P device | L (um) | Nominal Vdd | Supply corners |
 |---|---|---|---|---|
-| 1v8 | NMOS18/PMOS18 | 0.18 | 1.80 V | 1.62, 1.80, 1.98 V |
-| 3v3 | NMOS33/PMOS33 | 0.35 | 3.30 V | 2.97, 3.30, 3.63 V |
-| 5v0 | NMOS50/PMOS50 | 0.50 | 5.00 V | 3.20, 5.00, 5.50 V |
+| 1v8 | NMOS1V8/PMOS1V8 | 0.18 | 1.80 V | 1.62, 1.80, 1.98 V |
+| 3v3 | NMOS3V3/PMOS3V3 | 0.35 | 3.30 V | 2.97, 3.30, 3.63 V |
+| 5v0 | NMOS5V0/PMOS5V0 | 0.50 | 5.00 V | 3.20, 5.00, 5.50 V |
 
 **PVT matrix** (45 points per cell): 5 process corners {TT,FF,SS,FS,SF} x 3 temperatures {-55, 27, 150 C} x 3 supplies (per table above).
 
@@ -26,7 +26,7 @@ Static CMOS standard-cell set (8 cells x 3 voltage domains = 24 cells), each siz
 
 **Area.** No layout was produced; area is a transparent estimate. *Active gate area* = sum of W*L over all transistors. *Layout estimate* = (poly columns x contacted-poly pitch) x (tallest PMOS + tallest NMOS + rail/well overhead), with CPP = 0.50/0.70/0.90 um and overhead = 1.5/2.0/2.5 um for 1.8/3.3/5 V. Treat as a relative/first-order figure.
 
-## 2.1  1.8 V (NMOS18/PMOS18) domain
+## 2.1  1.8 V (NMOS1V8/PMOS1V8) domain
 
 ### Sizing
 
@@ -56,7 +56,7 @@ Static CMOS standard-cell set (8 cells x 3 voltage domains = 24 cells), each siz
 
 <sub>V_M %Vdd = V_M as a fraction of the supply at that PVT point. XOR2/XNOR2 V_M spans both input conditions (other input = 0 and = Vdd).</sub>
 
-## 2.2  3.3 V (NMOS33/PMOS33) domain
+## 2.2  3.3 V (NMOS3V3/PMOS3V3) domain
 
 ### Sizing
 
@@ -86,7 +86,7 @@ Static CMOS standard-cell set (8 cells x 3 voltage domains = 24 cells), each siz
 
 <sub>V_M %Vdd = V_M as a fraction of the supply at that PVT point. XOR2/XNOR2 V_M spans both input conditions (other input = 0 and = Vdd).</sub>
 
-## 2.3  5.0 V (NMOS50/PMOS50) domain
+## 2.3  5.0 V (NMOS5V0/PMOS5V0) domain
 
 ### Sizing
 

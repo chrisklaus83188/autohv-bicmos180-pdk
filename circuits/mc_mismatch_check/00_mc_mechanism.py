@@ -7,7 +7,7 @@ because `.param AGAUSS` is evaluated at parse time and might not be re-drawn by
 `reset`.  The item is explicitly marked "not confirmed by running".  This script
 confirms or refutes it, and establishes which drive pattern to use.
 
-Six checks, all on the same NMOS50 mirror:
+Six checks, all on the same NMOS5V0 mirror:
 
   C1  MM_ON=0 produces no spread at all                      (negative control)
   C2  in-deck `reset` + `op` loop, unseeded                   (the disputed one)
@@ -72,7 +72,7 @@ def loop(n, seed=None, netlist_seed=None, tag="l"):
     return [float(x) for x in re.findall(r"abs\(i\(vout\)\)\s*=\s*([-\d.eE+]+)", o)]
 
 
-print("Monte Carlo mechanism check -- ngspice %s, NMOS50 mirror, MM_ON=1 PROC_ON=0"
+print("Monte Carlo mechanism check -- ngspice %s, NMOS5V0 mirror, MM_ON=1 PROC_ON=0"
       % M.ngspice_version())
 print()
 

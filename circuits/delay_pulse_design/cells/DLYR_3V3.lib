@@ -1,5 +1,5 @@
 * DLYR_3V3 -- rising-edge delay / falling passthrough
-* AutoHV BiCMOS 180 PDK | 3.3 V domain (NMOS33/PMOS33, L = 0.35 um)
+* AutoHV BiCMOS 180 PDK | 3.3 V domain (NMOS3V3/PMOS3V3, L = 0.35 um)
 * ~20 ns delay at the nominal corner (case=0/TT, nominal Vdd, 27 C).
 * Methodology, area and PVT/Monte-Carlo envelope: ../REPORT.md, ../CHARACTERIZATION.md.
 *
@@ -12,15 +12,15 @@
 * When several RC cells share one transient deck, add `.option method=gear maxord=2`.
 
 .subckt DLYR_3V3 in out vdd gnd
-XI1 nIN in vdd vdd PMOS33 W=0.95u L=0.35u
-XI2 nIN in gnd gnd NMOS33 W=0.4u L=0.35u
+XI1 nIN in vdd vdd PMOS3V3 W=0.95u L=0.35u
+XI2 nIN in gnd gnd NMOS3V3 W=0.4u L=0.35u
 XR  nIN nC RPOLY_HI L=53.7500u W=0.5u
 XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
-XBP nC in vdd vdd PMOS33 W=0.8u L=0.35u   $ pull-up bypass (fast falling out)
-XS1 s1 nC gnd gnd NMOS33 W=0.4u L=0.35u
-XS2 out nC s1 gnd NMOS33 W=0.4u L=0.35u
-XS3 s2 nC vdd vdd PMOS33 W=0.95u L=0.35u
-XS4 out nC s2 vdd PMOS33 W=0.95u L=0.35u
-XS5 vdd out s1 gnd NMOS33 W=0.4u L=0.35u
-XS6 gnd out s2 vdd PMOS33 W=0.95u L=0.35u
+XBP nC in vdd vdd PMOS3V3 W=0.8u L=0.35u   $ pull-up bypass (fast falling out)
+XS1 s1 nC gnd gnd NMOS3V3 W=0.4u L=0.35u
+XS2 out nC s1 gnd NMOS3V3 W=0.4u L=0.35u
+XS3 s2 nC vdd vdd PMOS3V3 W=0.95u L=0.35u
+XS4 out nC s2 vdd PMOS3V3 W=0.95u L=0.35u
+XS5 vdd out s1 gnd NMOS3V3 W=0.4u L=0.35u
+XS6 gnd out s2 vdd PMOS3V3 W=0.95u L=0.35u
 .ends DLYR_3V3

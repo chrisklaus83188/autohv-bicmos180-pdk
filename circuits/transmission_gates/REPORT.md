@@ -277,7 +277,7 @@ bash ../../xschem/gen_tg_syms.sh     # the 18 Xschem symbols
   repository's delay-cell characterization already runs at −55 °C, so this
   follows existing practice rather than setting it.
 - **±10 % on the 3.3 V rail exceeds a device rating.** 3.63 V is above the
-  `Vgs_dcmax` of 3.6 V for NMOS33/PMOS33 by 30 mV, and `en` sits at the rail.
+  `Vgs_dcmax` of 3.6 V for NMOS3V3/PMOS3V3 by 30 mV, and `en` sits at the rail.
   The 5 V case lands exactly on its 5.5 V rating. The 1.8 V case has margin.
 - **`TGB` body pins are not protected.** Driving `bn` above either switch
   terminal, or `bp` below either, forward-biases a body junction. Nothing in

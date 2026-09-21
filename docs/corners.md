@@ -26,7 +26,7 @@ corner library sets each variable to its own ±3σ simultaneously, which is more
 roughly `√k`, and that margin is the point of a sign-off corner rather than an error in it.
 
 A consequence worth stating plainly: because the corner is more pessimistic than the joint 3σ, a
-device's corner spread is wider than its measured 3σ swing. NMOS18's measured 3σ swing is 9.2 %;
+device's corner spread is wider than its measured 3σ swing. NMOS1V8's measured 3σ swing is 9.2 %;
 its FF/SS corner spread is wider, and both numbers are correct — they answer different questions.
 
 Two further consequences follow, and both are correct behaviour rather than defects:

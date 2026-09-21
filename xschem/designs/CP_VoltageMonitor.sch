@@ -135,30 +135,30 @@ N 2870 -825 2890 -825 {lab=VREF}
 N 2870 -650 2885 -650 {lab=VR_UV}
 N 2870 -610 2885 -610 {lab=VREF}
 C {designs/resistor_string.sym} 2680 -1320 0 0 {name=x1}
-C {autohv/PDMOS200.sym} 1480 -1160 2 0 {name=M1 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
-C {autohv/PDMOS200.sym} 2660 -1160 2 1 {name=M2 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/PDMOS200V.sym} 1480 -1160 2 0 {name=M1 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/PDMOS200V.sym} 2660 -1160 2 1 {name=M2 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
 C {noconn.sym} 2730 -1280 2 0 {name=l1}
 C {noconn.sym} 2730 -1320 2 0 {name=l2}
 C {noconn.sym} 2730 -1360 2 0 {name=l3}
-C {autohv/NDMOS200.sym} 2660 -860 0 0 {name=M3 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NDMOS200V.sym} 2660 -860 0 0 {name=M3 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
 C {designs/resistor_string.sym} 2680 -580 0 0 {name=LS_SNS[2:0]}
-C {autohv/NDMOS200.sym} 1440 -860 0 0 {name=M4 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
-C {autohv/NDMOS200.sym} 2430 -860 0 1 {name=M5 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NDMOS200V.sym} 1440 -860 0 0 {name=M4 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NDMOS200V.sym} 2430 -860 0 1 {name=M5 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X}
 C {designs/resistor_string.sym} 2410 -720 0 0 {name=LS_SNS1[2:0]}
 C {noconn.sym} 2460 -760 2 0 {name=l4}
 C {noconn.sym} 2460 -720 2 0 {name=l5}
 C {noconn.sym} 2460 -680 2 0 {name=l6}
-C {autohv/NMOS50.sym} 2390 -540 0 0 {name=M6 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
-C {autohv/NMOS50.sym} 2660 -720 0 0 {name=M8 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
-C {autohv/NMOS50.sym} 1590 -540 0 1 {name=M7 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
-C {autohv/NMOS50.sym} 1440 -540 0 0 {name=M9 W=10u L=4u M=1 MM_SIGMA=0 spiceprefix=X}
-C {autohv/NMOS50.sym} 1145 -540 0 1 {name=M10 W=10u L=4u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS5V0.sym} 2390 -540 0 0 {name=M6 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS5V0.sym} 2660 -720 0 0 {name=M8 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS5V0.sym} 1590 -540 0 1 {name=M7 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS5V0.sym} 1440 -540 0 0 {name=M9 W=10u L=4u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS5V0.sym} 1145 -540 0 1 {name=M10 W=10u L=4u M=1 MM_SIGMA=0 spiceprefix=X}
 C {ipin.sym} 1125 -680 1 0 {name=p3 lab=IBIAS}
-C {autohv/PMOS50.sym} 2210 -1140 3 0 {name=M11 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/PMOS5V0.sym} 2210 -1140 3 0 {name=M11 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
 C {autohv/RPOLY_HI.sym} 2270 -1110 0 0 {name=R1 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
 C {autohv/RPOLY_HI.sym} 2550 -1360 0 0 {name=R2 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
 C {autohv/RPOLY_HI.sym} 2210 -885 0 0 {name=R3 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
-C {autohv/NDMOS200.sym} 2190 -980 0 0 {name=M12 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NDMOS200V.sym} 2190 -980 0 0 {name=M12 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
 C {iopin.sym} 1070 -1480 2 0 {name=p5 lab=CP}
 C {iopin.sym} 1070 -1260 2 0 {name=p4 lab=VIN}
 C {iopin.sym} 1075 -480 2 0 {name=p1 lab=GND}
@@ -167,7 +167,7 @@ C {noconn.sym} 1105 -855 2 0 {name=l10}
 C {lab_wire.sym} 2210 -855 3 0 {name=p6 sig_type=std_logic lab=GND}
 C {lab_wire.sym} 2140 -980 0 0 {name=p10 sig_type=std_logic lab=ENbb}
 C {lab_wire.sym} 1390 -860 0 0 {name=p11 sig_type=std_logic lab=ENbb}
-C {autohv/NMOS50.sym} 2540 -540 0 0 {name=M13 W=1u L=0.5u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS5V0.sym} 2540 -540 0 0 {name=M13 W=1u L=0.5u M=1 MM_SIGMA=0 spiceprefix=X}
 C {lab_wire.sym} 2500 -540 0 0 {name=p12 sig_type=std_logic lab=ENb}
 C {comparators/CMP_PIN_5V0.sym} 2980 -630 0 0 {name=U3 VPWR=VDD VGND=GND spiceprefix=x IREF=5u WSCALE=1 WIN=80u LIN=2u LANA=2u FIN=1 HYSK=0}
 C {logic/INV_5V0.sym} 1240 -400 0 0 {name=U1 VPWR=VDD VGND=GND spiceprefix=x}
@@ -181,7 +181,7 @@ C {lab_wire.sym} 2920 -610 0 0 {name=p15 sig_type=std_logic lab=VREF}
 C {lab_wire.sym} 2795 -620 0 0 {name=p16 sig_type=std_logic lab=VR_OV}
 C {lab_wire.sym} 2795 -580 0 0 {name=p17 sig_type=std_logic lab=VR_REG}
 C {lab_wire.sym} 2795 -540 0 0 {name=p18 sig_type=std_logic lab=VR_UV}
-C {autohv/NMOS50.sym} 1285 -540 0 0 {name=M14<2:0> W=10u L=4u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS5V0.sym} 1285 -540 0 0 {name=M14<2:0> W=10u L=4u M=1 MM_SIGMA=0 spiceprefix=X}
 C {lab_wire.sym} 1305 -680 3 0 {name=p19 sig_type=std_logic lab=ICOMP<2:0>}
 C {lab_wire.sym} 2960 -490 1 0 {name=p21 sig_type=std_logic lab=ICOMP<0>}
 C {lab_wire.sym} 2925 -650 0 0 {name=p20 sig_type=std_logic lab=VR_UV}

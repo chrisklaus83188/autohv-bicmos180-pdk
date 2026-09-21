@@ -96,6 +96,6 @@ a rail is by design); they are saturated in their sole-active range and only dip
 the hand-off transition / skew-corner rail edges.
 
 ## Files
-`cmp_rr.lib` (CMP_RR, NMOS50/PMOS50) · `run_rr.py` (specs/MC) ·
+`cmp_rr.lib` (CMP_RR, NMOS5V0/PMOS5V0) · `run_rr.py` (specs/MC) ·
 `run_saturation.py` (`--pvt` sign-off) · `tb_example.cir` (rail-to-rail demo) ·
 `comparator_results.json`. Topology + tuning: `../general_purpose/DESIGN_NOTES.md`.

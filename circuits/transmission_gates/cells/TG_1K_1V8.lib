@@ -1,5 +1,5 @@
 * TG_1K_1V8 -- CMOS transmission gate, 1.8 V domain, ~1 kohm on-resistance
-* AutoHV BiCMOS 180 PDK | NMOS18/PMOS18, L = 0.18 um, Wp/Wn = 2.5
+* AutoHV BiCMOS 180 PDK | NMOS1V8/PMOS1V8, L = 0.18 um, Wp/Wn = 2.5
 *
 * Bodies are tied to the rails: NMOS body to gnd, PMOS body to vdd.
 * This is the shipping default.  Body effect is present and is already
@@ -15,9 +15,9 @@
 
 .subckt TG_1K_1V8 a b en vdd gnd
 * control inverter: enb = !en  (bodies always on the rails)
-XINVP enb en vdd vdd PMOS18 W=1u M=1 L=0.18u
-XINVN enb en gnd gnd NMOS18 W=0.4u M=1 L=0.18u
+XINVP enb en vdd vdd PMOS1V8 W=1u M=1 L=0.18u
+XINVN enb en gnd gnd NMOS1V8 W=0.4u M=1 L=0.18u
 * pass pair
-XN b en  a gnd NMOS18 W=4u M=1 L=0.18u
-XP b enb a vdd PMOS18 W=10u M=1 L=0.18u
+XN b en  a gnd NMOS1V8 W=4u M=1 L=0.18u
+XP b enb a vdd PMOS1V8 W=10u M=1 L=0.18u
 .ends TG_1K_1V8

@@ -7,7 +7,7 @@ measurement-extraction / breakdown-criterion / deferred-family items disposition
 the theta-extraction count growing with the (deliberate) larger drift resistance. This file is the
 freeze-line record; further model changes ride the normal fix process against the frozen anchors.
 
-**Trigger still holds:** 200 V NMOS, 100 µA mirror → NDMOS200, W 13.4 µm, Vov ≈ 0.39 V, gm/Id 6.4,
+**Trigger still holds:** 200 V NMOS, 100 µA mirror → NDMOS200V, W 13.4 µm, Vov ≈ 0.39 V, gm/Id 6.4,
 σ(ΔI/I) 8.7 %.
 
 ## Phase-4 fixes — landed and verified
@@ -15,10 +15,10 @@ freeze-line record; further model changes ride the normal fix process against th
 | step | fix | verification |
 |---|---|---|
 | 2.1 | HV resistive ladder re-anchor (60/80/120/200 N&P, two-regime) | ron_times_w all in-band (N 15/21/32/45 kΩ·µm; P × 2.5–3×). Idsat: N MV holds 0.23–0.39; P and 200 V drop per the penalty. |
-| 2.2 | λ re-fit on 120/200 V (last flattering parameter) | va_class by gds: NDMOS200 887 V, PDMOS200 889 V — inside the grounded 300–1000 V (was ~2400–3900 V). All VDMOS va_class in-band. |
+| 2.2 | λ re-fit on 120/200 V (last flattering parameter) | va_class by gds: NDMOS200V 887 V, PDMOS200V 889 V — inside the grounded 300–1000 V (was ~2400–3900 V). All VDMOS va_class in-band. |
 | 2.3 | DIO_SCH tt → ~0 | tt_transit_time now passes; the v1-sized residual is gone. |
 | 2.4 | Zener bv tempcos | +1.50 / +7.97 / +20.04 mV/°C (measured 27/125 °C), all on-anchor; 6.2 V zero-TC crossover documented. |
-| 2.5 | DNMOS20 depletion recentre | Idss 106 µA/µm at Vgs=0 (was 54.7), Vth −1.6 V; guide self-bias W ~2× smaller. |
+| 2.5 | DNMOS20V depletion recentre | Idss 106 µA/µm at Vgs=0 (was 54.7), Vth −1.6 V; guide self-bias W ~2× smaller. |
 | 2.6 | device_limits v2 + pre-flight reader | 40-device SOA envelope; preflight reads it (self-consistent, rated points in-SOA). |
 
 ## Residual scorecard items (20 hard-fail + 6 error) — all dispositioned, none sizing-relevant
@@ -27,7 +27,7 @@ freeze-line record; further model changes ride the normal fix process against th
 | items | disposition |
 |---|---|
 | **theta ×9** (NDMOS/PDMOS 40–200) | The harness extracts an *effective* theta that folds in the drift resistance, which the phase-4 ladder re-anchor made deliberately larger — so the count grew from 7 (v1) to 9. The card theta values are physical (0.12–0.20); the ≈1 readings are rd-contamination. Isolating rd in the extractor is a harness follow-up, **not** a model change. Expected, direct consequence of the grounded ladder. |
-| **cox ×2** (NMOS12/PMOS12) | `capmod=3` reports an *effective* Cox just below the ideal ε_ox/t_ox band. Measurement-definition, not an oxide error (31 nm tox is correct, D6). |
+| **cox ×2** (NMOS12V/PMOS12V) | `capmod=3` reports an *effective* Cox just below the ideal ε_ox/t_ox band. Measurement-definition, not an oxide error (31 nm tox is correct, D6). |
 
 ### B. Breakdown-criterion (8) — soft-knee / wrapper, not a card-BV error
 | items | disposition |
@@ -40,7 +40,7 @@ freeze-line record; further model changes ride the normal fix process against th
 |---|---|
 | **zener cjo_density ×3** | Zener junction-cap density not re-derived (synthetic-residue item; buried in the subckt). |
 | **DZ_5V6 bv ×1** (5.24 V) | Soft-knee: the 5.6 V part measures 5.24 V at the 1 mA criterion (knee below the label). Zener re-derivation deferred. |
-| **PDMOS200 cjo_per_cell ×1** (17) | 200 V p-cell junction cap just under the ±3.5× band at the high-BV end. Cosmetic; no sizing impact. |
+| **PDMOS200V cjo_per_cell ×1** (17) | 200 V p-cell junction cap just under the ±3.5× band at the high-BV end. Cosmetic; no sizing impact. |
 
 ## Bottom line
 

@@ -1,13 +1,13 @@
 * P3.1: switched-cap sample-and-hold testbench.
 *
 * Topology:
-*   Vin -> NMOS18 switch -> hold node -> CMIM_STD to GND
+*   Vin -> NMOS1V8 switch -> hold node -> CMIM_STD to GND
 *
 * Drive Vin with a slow ramp 0 -> 1 V over 10 clock periods. Clock at
 * 1 MHz, 50 % duty: phi high (switch on / sampling) for 500 ns, then
 * phi low (switch off / holding) for 500 ns.
 *
-* With a 10x10 um CMIM_STD (10 pF) and an NMOS18 (W=10u L=1u, Vth_TT
+* With a 10x10 um CMIM_STD (10 pF) and an NMOS1V8 (W=10u L=1u, Vth_TT
 * ~ 0.48 V), the switch's Ron at Vgs - Vth ~ 0.3 V is ~ 240 ohm, so the
 * sampling time constant is ~ 2.4 ns -- the 500 ns sampling window
 * gives ~ 200 tau, settling to <e-200. Any residual error reflects
@@ -30,8 +30,8 @@ Vin in 0 PWL(0 0 10u 1 100u 1)
 * PULSE(V_low V_high tdelay trise tfall t_high T_period)
 Vphi phi 0 PULSE(0 1.8 100n 5n 5n 495n 1u)
 
-* NMOS18 switch: gate driven by phi.
-XSW in phi hnode 0 NMOS18 W=10u L=1u M=1
+* NMOS1V8 switch: gate driven by phi.
+XSW in phi hnode 0 NMOS1V8 W=10u L=1u M=1
 
 * 10 pF hold cap (CMIM_STD at L=W=100u, cj=0.001 F/m^2 at TT).
 XCH hnode 0 CMIM_STD L=100u W=100u

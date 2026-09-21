@@ -1,4 +1,4 @@
-# Monte Carlo check + NMOS50 current-mirror mismatch
+# Monte Carlo check + NMOS5V0 current-mirror mismatch
 
 Two questions, answered in order: does the PDK's Monte Carlo machinery actually
 randomize, and what does local mismatch do to a simple 10 uA mirror.
@@ -60,16 +60,16 @@ the only pattern measured to be both statistically live and bit-reproducible
 
 ## 2. The mirror
 
-Simple two-transistor NMOS mirror, nothing cascoded. Both devices `NMOS50`,
+Simple two-transistor NMOS mirror, nothing cascoded. Both devices `NMOS5V0`,
 W = 4.7 um, L = 1 um, which is the sizing guide's own gm/Id ~ 6 entry for
-NMOS50 at 10 uA. Reference is an ideal 10 uA source into the diode-connected
+NMOS5V0 at 10 uA. Reference is an ideal 10 uA source into the diode-connected
 device; the output sits at Vdd/2.
 
 ```spice
 Vdd  dd 0 5
 Iref dd in 10u
-X1 in  in 0 0 NMOS50 W=4.7u L=1u    ; diode-connected reference
-X2 out in 0 0 NMOS50 W=4.7u L=1u    ; mirror output
+X1 in  in 0 0 NMOS5V0 W=4.7u L=1u    ; diode-connected reference
+X2 out in 0 0 NMOS5V0 W=4.7u L=1u    ; mirror output
 Vout out 0 2.5
 ```
 
@@ -125,7 +125,7 @@ Distribution of the output current over the 200 runs:
 ## 4. Cross-check against the model's own numbers
 
 The spread is not only self-consistent, it matches what the wrapper's mismatch
-formula says it should be before any simulation is run. `NMOS50` in
+formula says it should be before any simulation is run. `NMOS5V0` in
 `autohv_bicmos180_case.lib` draws its threshold offset as
 
 ```

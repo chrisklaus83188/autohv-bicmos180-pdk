@@ -29,7 +29,7 @@ Before touching anything, freeze a baseline that later phases must reproduce or 
 1. Commit `circuits/mc_mismatch_check/` as-is (it is untracked). Regenerate `REPORT.md`.
    Also commit or stash the unrelated transmission-gate deliverable so the tree is clean.
 2. Record `git rev-parse HEAD`, `ngspice --version`, and the values from HANDOFF §1
-   (200-run NMOS50 mirror: σ/µ = 4.33 %, σ(delvto) = 5.263 mV) into
+   (200-run NMOS5V0 mirror: σ/µ = 4.33 %, σ(delvto) = 5.263 mV) into
    `pdk_validation/baselines/mc_baseline_v2.2.json`.
 3. Enumerate every wrapper in the `.lib` files and produce `docs/stat-model-inventory.md`
    with one row per device: family (LV FET / HV FET / VDMOS / BJT / diode / R / C),
@@ -48,7 +48,7 @@ Before touching anything, freeze a baseline that later phases must reproduce or 
 | family | `M` | `NF` |
 |---|---|---|
 | LV FETs (1.8 V, 3.3 V, 5 V classes) | add | add |
-| HV FETs incl. VDMOS/LDMOS, NMOS12, DNMOS20 | **no** | add |
+| HV FETs incl. VDMOS/LDMOS, NMOS12V, DNMOS20V | **no** | add |
 | resistors | add | `NS` series segments instead (R3) |
 | capacitors | add | – |
 | BJT, diodes | no change | – |
@@ -150,7 +150,7 @@ series, each with its own two contact heads, joined by metal. Consequences:
 
 Each is a script under `pdk_validation/`, N = 200 fixed-seed samples, ±15 % tolerance on σ
 unless stated:
-- A1: NMOS50 mirror W=4.7 L=1: `M=4` gives σ(delvto) = σ(M=1)/2. Baseline showed 4.96 mV
+- A1: NMOS5V0 mirror W=4.7 L=1: `M=4` gives σ(delvto) = σ(M=1)/2. Baseline showed 4.96 mV
   unchanged; expected ≈ 2.5 mV. Same test on one PMOS LV device and one 1.8 V device.
 - A2: `NF` sweep at constant W (NF = 1, 2, 4): σ(delvto) unchanged within 3 %; Id at fixed
   bias unchanged within 1 %; total junction capacitance decreases monotonically.
@@ -229,7 +229,7 @@ Behaviour:
 Acceptance (Phase 3):
 - A7: `--mode mismatch --seed 0` twice → byte-identical JSON. Different seed → different
   samples, σ within sampling noise.
-- A8: NMOS50 mirror: driver σ/µ vs native `MM_ON=1` per-invocation `.option seed=k` σ/µ
+- A8: NMOS5V0 mirror: driver σ/µ vs native `MM_ON=1` per-invocation `.option seed=k` σ/µ
   agree within 10 % at N = 200. The old single-knob prototype gave 3.71 %; with three
   independent knobs expect ≈ 4.0–4.3 %.
 - A9: `sensitivity` RSS vs MC σ agree within 10 % on the mirror (linear regime). Record a
@@ -277,7 +277,7 @@ Acceptance (Phase 4):
   failure means the generator or plumbing is wrong, never that a card should be edited.
 - A13: the 36-corner regression is byte-identical before and after (cards untouched, path
   untouched).
-- A14: `mc_driver.py --mode process` on the NMOS50 mirror gives σ/µ ≪ mismatch σ/µ (the
+- A14: `mc_driver.py --mode process` on the NMOS5V0 mirror gives σ/µ ≪ mismatch σ/µ (the
   ratio cancels global shifts); on a single-device Idsat probe it gives σ such that the
   FF and SS Idsat sit at ≈ ±3σ from the mean. `--mode both` samples process and
   per-instance mismatch together and its variance is the sum of the two within 10 %.
@@ -325,7 +325,7 @@ Order matters; each step regenerates what the previous invalidated.
 
 | quantity | before | expected after | why |
 |---|---|---|---|
-| NMOS50 mirror σ/µ, M=1, N=200 | 4.33 % | 4.0–4.6 % | notation-only change + new seeds |
+| NMOS5V0 mirror σ/µ, M=1, N=200 | 4.33 % | 4.0–4.6 % | notation-only change + new seeds |
 | σ(delvto) at M=4 | 4.96 mV | ≈ 2.5 mV | R1 |
 | σ(delvto) vs NF at fixed W | not measured | flat | R2 |
 | external-driver σ/µ | 3.71 % | ≈ 4.0–4.3 % | three independent knobs |

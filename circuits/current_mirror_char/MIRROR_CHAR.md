@@ -1,13 +1,13 @@
-# PMOS Current-Mirror Characterization — AutoHV BiCMOS180, 5 V domain (PMOS50)
+# PMOS Current-Mirror Characterization — AutoHV BiCMOS180, 5 V domain (PMOS5V0)
 
-A general-purpose DC characterization of PMOS current mirrors for the 5 V (PMOS50)
+A general-purpose DC characterization of PMOS current mirrors for the 5 V (PMOS5V0)
 domain: three topologies, four decades of bias current, two sizing strategies, full
 PVT, and Monte Carlo (run count in the §6 table). The deliverable is a set of **specified, controlled
 mirror designs** and the `I_out(V_out)` curves that describe them completely, so a
 downstream block can predict its own bias/ramp behaviour by quadrature from the data
 here.
 
-**Instrumentation & discipline.** All mirror devices are PDK `PMOS50` (sources at Vdd,
+**Instrumentation & discipline.** All mirror devices are PDK `PMOS5V0` (sources at Vdd,
 bulk tied to source → V_SB = 0). `I_in` is an ideal forced current source; the
 wide-swing cascode bias is an ideal Vdd-referenced source — both are *instruments*,
 and the wide-swing source is additionally cross-checked against a self-biased build.

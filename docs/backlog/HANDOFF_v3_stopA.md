@@ -78,7 +78,7 @@ carry the band on the high-voltage devices — but that changes F3's fixed set, 
 ### 3.3 `DL_POLY` is not first-order at this bench — closes the F3a gap
 
 `DL_POLY` and `DW_ACT` now enter through the cards' `lint`/`wint` (`dL = −2·dlint`), so the fixed
-set is finally what F3a specifies. Their measured contribution is small: on NMOS50 the fixed-set
+set is finally what F3a specifies. Their measured contribution is small: on NMOS5V0 the fixed-set
 swing moves 7.73 % → 7.80 %, with `g(DL_POLY)` = −0.0031 against `g(VTH)` = −0.0251. F3a expected
 `DL_POLY` to be first-order at the classic bench; at L = 1 µm it is not. It would be at minimum L.
 

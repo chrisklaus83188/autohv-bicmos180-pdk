@@ -1,6 +1,6 @@
 """Does the M multiplier reduce mismatch?  (HANDOFF_monte_carlo.md section 3)
 
-NMOS50 mirror at 10 uA, mismatch only (MM_ON=1, PROC_ON=0), TT / 5.0 V / 27 C,
+NMOS5V0 mirror at 10 uA, mismatch only (MM_ON=1, PROC_ON=0), TT / 5.0 V / 27 C,
 120 fixed-seed runs per geometry, one ngspice invocation per run.
 
 Four geometries: the baseline device, then four times its area reached three
@@ -29,7 +29,7 @@ GEOMS = [          # (W um, L um, M)
     (18.8, 1.0, 1),
     (4.7, 4.0, 1),
 ]
-AVT = 0.033        # V.um, NMOS50 wrapper coefficient, AGAUSS 3-sigma convention
+AVT = 0.033        # V.um, NMOS5V0 wrapper coefficient, AGAUSS 3-sigma convention
 
 # HANDOFF_monte_carlo.md section 3, measured in-session with inline scripts
 HANDOFF_S3 = {
@@ -88,7 +88,7 @@ def one(job):
 
 
 rows_out = []
-print("M sweep -- ngspice %s, NMOS50 mirror, %d runs per geometry, MM_ON=1 PROC_ON=0"
+print("M sweep -- ngspice %s, NMOS5V0 mirror, %d runs per geometry, MM_ON=1 PROC_ON=0"
       % (M.ngspice_version(), NRUN))
 print()
 print("  %-14s %8s %14s %14s %14s %11s" % ("geometry", "area", "sigma(delvto)",

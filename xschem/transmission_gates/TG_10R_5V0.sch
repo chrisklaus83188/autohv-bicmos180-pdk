@@ -16,22 +16,22 @@ C {lab_pin.sym} 120 900 0 0 {name=lgnd lab=gnd}
 C {iopin.sym} 120 500 0 0 {name=pa lab=a sim_pinnumber=1}
 C {iopin.sym} 1400 500 0 0 {name=pb lab=b sim_pinnumber=2}
 C {ipin.sym} 120 300 0 0 {name=pen lab=en sim_pinnumber=3}
-C {autohv/PMOS50.sym} 400 240 2 1 {name=XINVP W=70u L=0.5u M=3}
+C {autohv/PMOS5V0.sym} 400 240 2 1 {name=XINVP W=70u L=0.5u M=3}
 C {lab_pin.sym} 420 280 0 0 {name=lXINVPd lab=enb}
 C {lab_pin.sym} 360 240 0 0 {name=lXINVPg lab=en}
 C {lab_pin.sym} 420 200 0 0 {name=lXINVPs lab=vdd}
 C {lab_pin.sym} 420 240 0 0 {name=lXINVPb lab=vdd}
-C {autohv/NMOS50.sym} 400 700 0 0 {name=XINVN W=84u L=0.5u M=1}
+C {autohv/NMOS5V0.sym} 400 700 0 0 {name=XINVN W=84u L=0.5u M=1}
 C {lab_pin.sym} 420 660 0 0 {name=lXINVNd lab=enb}
 C {lab_pin.sym} 360 700 0 0 {name=lXINVNg lab=en}
 C {lab_pin.sym} 420 740 0 0 {name=lXINVNs lab=gnd}
 C {lab_pin.sym} 420 700 0 0 {name=lXINVNb lab=gnd}
-C {autohv/NMOS50.sym} 1000 340 0 0 {name=XN W=93.3333u L=0.5u M=9}
+C {autohv/NMOS5V0.sym} 1000 340 0 0 {name=XN W=93.3333u L=0.5u M=9}
 C {lab_pin.sym} 1020 300 0 0 {name=lXNd lab=b}
 C {lab_pin.sym} 960 340 0 0 {name=lXNg lab=en}
 C {lab_pin.sym} 1020 380 0 0 {name=lXNs lab=a}
 C {lab_pin.sym} 1020 340 0 0 {name=lXNb lab=gnd}
-C {autohv/PMOS50.sym} 1000 640 0 0 {name=XP W=100u L=0.5u M=21}
+C {autohv/PMOS5V0.sym} 1000 640 0 0 {name=XP W=100u L=0.5u M=21}
 C {lab_pin.sym} 1020 600 0 0 {name=lXPd lab=b}
 C {lab_pin.sym} 960 640 0 0 {name=lXPg lab=enb}
 C {lab_pin.sym} 1020 680 0 0 {name=lXPs lab=a}

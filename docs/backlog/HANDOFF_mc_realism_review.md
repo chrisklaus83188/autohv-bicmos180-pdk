@@ -33,8 +33,8 @@ Chris has ruled the transmission-gate work complete and **not blocking**. That w
 | C8 | R7.2, A14 | **high** | grouping granularity is undefined and decides whether A14 can pass | group by pattern × family × voltage class; A14 band 3–4.3σ |
 | C9 | R3 | **high** | R3 needs coefficients that are not grounded; freeze line says residue is closed | amend the freeze with one scoped R3 item |
 | C10 | R2 | medium | "F6 extension lengths" do not exist; wrappers hardcode 0.5 µm | 0.5 µm = stripe width, shared inner stripe split per finger |
-| C11 | Phase 1 scope | medium | every HV wrapper already has `M`; VDMOS already scales mismatch with M | keep `M` on HV; fix `AUM2` on NMOS12/PMOS12 |
-| C12 | R2 (VDMOS) | medium | ngspice VDMOS has no W/L/AD/AS; `NF` has no electrical lever | no `NF` on VDMOS/LDMOS/DNMOS20; drop A2b VDMOS leg |
+| C11 | Phase 1 scope | medium | every HV wrapper already has `M`; VDMOS already scales mismatch with M | keep `M` on HV; fix `AUM2` on NMOS12V/PMOS12V |
+| C12 | R2 (VDMOS) | medium | ngspice VDMOS has no W/L/AD/AS; `NF` has no electrical lever | no `NF` on VDMOS/LDMOS/DNMOS20V; drop A2b VDMOS leg |
 | C13 | Phase 3 | medium | `alterparam` reaches top-level params only; hierarchy breaks per-instance z | per-instantiation-path subckt cloning; op-only for v2.3 |
 | C14 | header, Phase 5 | medium | CI runs apt ngspice 41–42, not 45; native seeding measured on 45 only | build and cache ngspice-45 in CI |
 | C15 | Phase 6 | low | `MM_SIGMA` in 137 files; `M>1` widespread; lib header count stale | enumerate affected artifacts in the results handoff |
@@ -46,7 +46,7 @@ Chris has ruled the transmission-gate work complete and **not blocking**. That w
 |---|---|---|
 | wrappers to modify | **40** subckts: 8 BSIM3 MOS, 13 VDMOS/LDMOS/DNMOS, 4 BJT, 6 diode, 5 R, 4 C. The lib header says 38 (stale). | `autohv_bicmos180_case.lib` |
 | `AUM2` defect is MOS-wide | `AUM2` appears in 17 wrappers = 8 BSIM3 MOS + 5 R + 4 C. The MOS ones omit `M`. R and C have **no `M` parameter at all**. | `.lib` lines 15, 25, …, 482+, 544+ |
-| HV FETs lack `M` | all 13 VDMOS-family wrappers have `M`, computing `mtot={(W/W_REF)*M}` with `DVTH_MM ∝ 1/sqrt(mtot)` — already R1-correct. NMOS12/PMOS12 are BSIM3 level 49 with the same `AUM2` defect as LV. | `.lib` 74–93, 94–116, 324–352; `.inc` 728–731 |
+| HV FETs lack `M` | all 13 VDMOS-family wrappers have `M`, computing `mtot={(W/W_REF)*M}` with `DVTH_MM ∝ 1/sqrt(mtot)` — already R1-correct. NMOS12V/PMOS12V are BSIM3 level 49 with the same `AUM2` defect as LV. | `.lib` 74–93, 94–116, 324–352; `.inc` 728–731 |
 | MOS mismatch terms | three: `DVTH_MM` (delvto), `DWREL_MM` (W), `DLREL_MM` (L). **No β/mobility term.** All `AGAUSS(0, 3σ, 3)`. | `.lib` 15–18 |
 | R/C mismatch | one lumped term each: R applied to L (`L={L*RMM}`), C applied to area (`L*LS`, `W*LS`). No head resistance, no NS. | `.lib` 482–494, 544–558 |
 | corners move geometry (R0 prerequisite) | **No.** 0 of 186 corner expressions touch `lint/wint/dwc/dlc/xl/xw/narrow/short`. Those exist as fixed values (table in C2). | `analysis/corner_precheck.md` |
@@ -77,14 +77,14 @@ Fixed geometry offsets per BSIM3 card (none corner-dependent):
 
 | card | wint (m) | lint (m) |
 |---|---|---|
-| NMOS18 | 5e-9 | 1.2e-8 |
-| PMOS18 | 7e-9 | 1.5e-8 |
-| NMOS33 | 8e-9 | 1.8e-8 |
-| PMOS33 | 1.0e-8 | 2.0e-8 |
-| NMOS50 | 1.2e-8 | 2.5e-8 |
-| PMOS50 | 1.4e-8 | 2.8e-8 |
-| NMOS12 | 1.5e-8 | 3.0e-8 |
-| PMOS12 | 1.6e-8 | 3.2e-8 |
+| NMOS1V8 | 5e-9 | 1.2e-8 |
+| PMOS1V8 | 7e-9 | 1.5e-8 |
+| NMOS3V3 | 8e-9 | 1.8e-8 |
+| PMOS3V3 | 1.0e-8 | 2.0e-8 |
+| NMOS5V0 | 1.2e-8 | 2.5e-8 |
+| PMOS5V0 | 1.4e-8 | 2.8e-8 |
+| NMOS12V | 1.5e-8 | 3.0e-8 |
+| PMOS12V | 1.6e-8 | 3.2e-8 |
 
 Consequences the brief does not state:
 - R7 derives variables only from corner deltas, so **`PROC_Z_DL` / `PROC_Z_DW` will not exist**.
@@ -109,9 +109,9 @@ Total effective width with `W/NF` fingers is `W − 2·NF·wint`, versus `W − 
 
 | device, W = 4.7 µm | NF=2 | NF=4 |
 |---|---|---|
-| NMOS18 (wint 5e-9) | 10 nm, 0.21 % | 30 nm, 0.64 % |
-| NMOS50 (wint 1.2e-8) | 24 nm, 0.51 % | 72 nm, 1.53 % |
-| PMOS12 (wint 1.6e-8) | 32 nm, 0.68 % | 96 nm, 2.04 % |
+| NMOS1V8 (wint 5e-9) | 10 nm, 0.21 % | 30 nm, 0.64 % |
+| NMOS5V0 (wint 1.2e-8) | 24 nm, 0.51 % | 72 nm, 1.53 % |
+| PMOS12V (wint 1.6e-8) | 32 nm, 0.68 % | 96 nm, 2.04 % |
 
 (First-order width loss; Id tracks it roughly linearly in strong inversion.)
 
@@ -152,9 +152,9 @@ Every corner-dependent parameter is an inline expression, and the current `PROC_
 lives inside the same expression:
 
 ```
-vth0={((0.48*_isTT + 0.4*_isFF + 0.56*_isSS + 0.4*_isFS + 0.56*_isSF))+P_DVTH_NMOS18}
-u0={((420*_isTT + 495.6*_isFF + 352.8*_isSS + 495.6*_isFS + 352.8*_isSF))*(1+P_DU0_NMOS18)}
-.param VTO_NDMOS20_STAT={(((1*_isTT + 0.96*_isFF + 1.06*_isSS + 0.96*_isFS + 1.06*_isSF))+P_DVTO_NDMOS20)}
+vth0={((0.48*_isTT + 0.4*_isFF + 0.56*_isSS + 0.4*_isFS + 0.56*_isSF))+P_DVTH_NMOS1V8}
+u0={((420*_isTT + 495.6*_isFF + 352.8*_isSS + 495.6*_isFS + 352.8*_isSF))*(1+P_DU0_NMOS1V8)}
+.param VTO_NDMOS20V_STAT={(((1*_isTT + 0.96*_isFF + 1.06*_isSS + 0.96*_isFS + 1.06*_isSF))+P_DVTO_NDMOS20V)}
 ```
 
 Derivation is straightforward: the generator evaluates each expression per case. But "rewire only
@@ -176,12 +176,12 @@ questions.)
 
 | parameter | current 1σ | derived 1σ | ratio |
 |---|---|---|---|
-| NMOS18 vth0 | 8.33 mV | 26.7 mV | 3.2× |
-| NMOS18 u0 | 3.33 % | 5.67 % | 1.7× |
-| PMOS18 u0 | 3.33 % | 6.33 % | 1.9× |
+| NMOS1V8 vth0 | 8.33 mV | 26.7 mV | 3.2× |
+| NMOS1V8 u0 | 3.33 % | 5.67 % | 1.7× |
+| PMOS1V8 u0 | 3.33 % | 6.33 % | 1.9× |
 | tox (18/33/50 V classes) | 0.333 %, three independent | 0.333 %, one shared (cards move tox ±1.000 % identically in all classes) | 1.0× (correlation changes) |
-| NDMOS20 vto | 13.3 mV | 16.7 mV | 1.25× |
-| NDMOS20 kp | 3.33 % | 5.00 % | 1.5× |
+| NDMOS20V vto | 13.3 mV | 16.7 mV | 1.25× |
+| NDMOS20V kp | 3.33 % | 5.00 % | 1.5× |
 
 Every `PROC_ON=1` result in the repo (for example the mirror's process+mismatch 1.344 %) will move.
 
@@ -189,14 +189,14 @@ Every `PROC_ON=1` result in the repo (for example the mirror's process+mismatch 
 
 ### C7 — A12 fails by construction under the asymmetry ruling
 
-Many corners are built as reciprocal multipliers, e.g. PMOS18 `rdsw` = 180 TT, 150 FF (=TT/1.2),
+Many corners are built as reciprocal multipliers, e.g. PMOS1V8 `rdsw` = 180 TT, 150 FF (=TT/1.2),
 219.512 SS (=TT/0.82). With `σ=(FF−SS)/6` centred at TT, `z=±3` cannot land on both cards. Full table
 in `analysis/corner_precheck.md`.
 
 | σ form | expressions over 1 % | worst | worst case |
 |---|---|---|---|
 | linear, centred at TT (brief R7.3) | 93 / 186 | 3.17 % | reciprocal-multiplier params (BJT `tr/rb/rc/re`, diode `rs`, `rdsw`) |
-| log-space, `TT·exp(s·z)`, `s=ln(FF/SS)/6` | 15 / 186 | 1.42 % | NMOS18 `vth0` (additive, symmetric; log hurts it) |
+| log-space, `TT·exp(s·z)`, `s=ln(FF/SS)/6` | 15 / 186 | 1.42 % | NMOS1V8 `vth0` (additive, symmetric; log hurts it) |
 | better of the two per parameter | 13 / 186 | 1.13 % | — |
 
 Linear-form failures by parameter: `u0` 8/8, `rdsw` 8/8, VDMOS `RD` 13/13 and `RS` 13/13, BJT
@@ -219,7 +219,7 @@ Patterns found (`analysis/corner_precheck.md`):
 
 | pattern | count | members |
 |---|---|---|
-| FS=FF, SF=SS (N-type speed) | 67 | NMOS18/33/50/12 `vth0/u0/vsat/rdsw`; all NDMOS/DNMOS `VTO/KP/RD/RS/bv`; NPN `bf/is/rb/rc/re/tf/tr`, NPN `BVCBO` |
+| FS=FF, SF=SS (N-type speed) | 67 | NMOS1V8/33/50/12 `vth0/u0/vsat/rdsw`; all NDMOS/DNMOS `VTO/KP/RD/RS/bv`; NPN `bf/is/rb/rc/re/tf/tr`, NPN `BVCBO` |
 | FS=SS, SF=FF (P-type speed) | 62 | PMOS mirror of the above; PDMOS; PNP |
 | FF/SS only (shared candidate) | 57 | LV `tox/pclm/js`; all diode params; all resistor `rsh`; all capacitor `cj/cjsw` |
 
@@ -231,7 +231,7 @@ separate) contradict co-movement, because vth0/u0/vsat/rdsw have identical patte
 Effect on A14's "FF/SS Idsat at ≈ ±3σ": with independent contributors of sizes aᵢ, all at z=+3 in FF,
 FF sits at `3·Σaᵢ/√(Σaᵢ²)` σ, which is 3σ for one dominant contributor and 3√k σ for k equal ones.
 
-| granularity | NMOS50 Idsat contributors | FF position |
+| granularity | NMOS5V0 Idsat contributors | FF position |
 |---|---|---|
 | (i) pattern × family | N-MOS speed + shared TOX group | 3–4.24σ |
 | (ii) pattern × family × voltage class | N50 speed + shared TOX group | 3–4.24σ |
@@ -278,9 +278,9 @@ mean the inner stripe is drawn at 0.25 µm?
 
 The scope table says HV FETs get **no** `M`, but every HV wrapper already has one, and the VDMOS family
 already scales mismatch with `1/√mtot`. Removing `M` would break existing instances, which the no-shims
-rule forbids papering over. NMOS12/PMOS12 are BSIM3 wrappers with exactly the LV `AUM2` defect.
+rule forbids papering over. NMOS12V/PMOS12V are BSIM3 wrappers with exactly the LV `AUM2` defect.
 
-**Q11.** Keep `M` on all HV wrappers, and apply the R1 `AUM2` fix to NMOS12/PMOS12 as well as LV?
+**Q11.** Keep `M` on all HV wrappers, and apply the R1 `AUM2` fix to NMOS12V/PMOS12V as well as LV?
 (Recommended.)
 
 ### C12 — VDMOS `NF` has no electrical lever (R2's stop-and-report case)
@@ -291,7 +291,7 @@ electrically, so A2's junction-cap monotonicity and A2b's width-bias leg cannot 
 silently does nothing is exactly the kind of trap this program exists to remove.
 
 - **(a)** `NF` as bookkeeping only: the limits reader enforces `W/NF ≥ 3 µm`; no electrical effect.
-- **(b)** no `NF` on VDMOS/LDMOS/DNMOS20 in this program; A2b runs on LV NMOS, LV PMOS and NMOS12
+- **(b)** no `NF` on VDMOS/LDMOS/DNMOS20V in this program; A2b runs on LV NMOS, LV PMOS and NMOS12V
   instead of VDMOS.
 
 **Q12.** (b)? (Recommended.)
@@ -344,7 +344,7 @@ with the tag and `git ls-remote --tags` verification only at close-out? (Recomme
 | earlier statement | corrected |
 |---|---|
 | "all 17 MOS wrappers" carry the `AUM2` defect | 17 wrappers compute `AUM2`: 8 BSIM3 MOS (defect) + 5 R + 4 C (which have no `M` at all) |
-| A2 width loss "1.3–2.0 %" | 0.64 % (NMOS18) to 2.04 % (PMOS12) at NF=4, W=4.7 µm; NMOS50 1.53 % |
+| A2 width loss "1.3–2.0 %" | 0.64 % (NMOS1V8) to 2.04 % (PMOS12V) at NF=4, W=4.7 µm; NMOS5V0 1.53 % |
 | VDMOS uses "a separate `*_STAT` mechanism" | same corner-plus-`P_*` pattern, hoisted into `.param`s |
 
 ## 5. Rulings requested (answer "accept recommendations" to take every default)
@@ -362,8 +362,8 @@ with the tag and `git ls-remote --tags` verification only at close-out? (Recomme
 | Q8 | grouping; A14 | pattern × family × voltage class, shared TOX; A14 band 3–4.3σ |
 | Q9 | residue freeze | add one R3 item with error bars; split constrained to today's lumped σ at reference geometry |
 | Q10 | diffusion geometry | 0.5 µm stripe for outer and shared inner; shared stripe split half per finger |
-| Q11 | HV `M` | keep; fix `AUM2` on NMOS12/PMOS12 |
-| Q12 | VDMOS `NF` | omit; A2b on LV NMOS, LV PMOS, NMOS12 |
+| Q11 | HV `M` | keep; fix `AUM2` on NMOS12V/PMOS12V |
+| Q12 | VDMOS `NF` | omit; A2b on LV NMOS, LV PMOS, NMOS12V |
 | Q13 | driver | per-path subckt cloning; `op` only |
 | Q14 | CI | build and cache ngspice-45 in CI as a Phase 0 item |
 | Q15 | cadence | review stops after Phase 0 and Phase 3; push branch per phase |

@@ -9,7 +9,7 @@
 *       - tran with sub-ns timesteps converges (NQS adds an internal
 *         channel-charge state variable, exercised by fast transients)
 *
-* Testbench: NMOS18 in common-source, light Rd load so V(d) is free to
+* Testbench: NMOS1V8 in common-source, light Rd load so V(d) is free to
 * respond to noise injected at the gate via Vbias.
 .include "../../../autohv_bicmos180_case.lib"
 .param case=0
@@ -19,7 +19,7 @@
 Vdd  vdd 0 1.8
 Vbias g 0 1.0
 Rd   vdd d 100k
-X1   d g 0 0 NMOS18 W=10u L=1u M=1
+X1   d g 0 0 NMOS1V8 W=10u L=1u M=1
 
 .control
 noise V(d) Vbias dec 5 1 1e9

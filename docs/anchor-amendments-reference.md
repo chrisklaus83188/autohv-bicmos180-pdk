@@ -69,24 +69,24 @@ be compared cleanly without the convention. Recorded as a grounding *touchpoint*
 
 | device | anchor `idsat_density` | proposed `[grounded]` | note |
 |---|---|---|---|
-| NMOS50 | 0.40 – 0.50 mA/µm | **0.48 – 0.60** | Reference 5 V NMOS ≈ **0.54 mA/µm** (direct 5 V↔5 V pair). AutoHV's measured 0.305 is weak; the anchor should center near 0.54. |
-| PMOS50 | 0.18 – 0.25 mA/µm | **0.22 – 0.30** | Reference 5 V PMOS ≈ **0.26 mA/µm**. |
-| NMOS18 | 0.55 – 0.60 mA/µm | **hold; note** | Reference has no 1.8 V class. Nearest is 2.5 V core at ~0.49 mA/µm. **2.5 V↔1.8 V is not a direct pair** (scale by tox/Vdd) — the audit's 0.55–0.60 is reasonable for a thinner-oxide 1.8 V device. No change, but flag as non-grounded. |
-| NMOS33/PMOS33 | 0.45–0.55 / 0.20–0.28 | **hold; touchpoint** | Reference 3.3 V ≈ 0.52 / 0.27 mA/µm — brackets the current bands well. Optional tighten to 0.48–0.56 / 0.24–0.30. |
+| NMOS5V0 | 0.40 – 0.50 mA/µm | **0.48 – 0.60** | Reference 5 V NMOS ≈ **0.54 mA/µm** (direct 5 V↔5 V pair). AutoHV's measured 0.305 is weak; the anchor should center near 0.54. |
+| PMOS5V0 | 0.18 – 0.25 mA/µm | **0.22 – 0.30** | Reference 5 V PMOS ≈ **0.26 mA/µm**. |
+| NMOS1V8 | 0.55 – 0.60 mA/µm | **hold; note** | Reference has no 1.8 V class. Nearest is 2.5 V core at ~0.49 mA/µm. **2.5 V↔1.8 V is not a direct pair** (scale by tox/Vdd) — the audit's 0.55–0.60 is reasonable for a thinner-oxide 1.8 V device. No change, but flag as non-grounded. |
+| NMOS3V3/PMOS3V3 | 0.45–0.55 / 0.20–0.28 | **hold; touchpoint** | Reference 3.3 V ≈ 0.52 / 0.27 mA/µm — brackets the current bands well. Optional tighten to 0.48–0.56 / 0.24–0.30. |
 
 ### 2b. Subthreshold swing
 
 | device | anchor `subthreshold_swing` | proposed `[grounded]` | note |
 |---|---|---|---|
-| NMOS50 / PMOS50 | 72 – 96 mV/dec | **85 – 100** | Reference 5 V S ≈ **95 mV/dec** (both n & p). AutoHV's PMOS50 measured 102 is only just out; the grounded band centers higher than the audit's generic 72–96. 2.5/3.3 V S not specified (silence) — hold those. |
+| NMOS5V0 / PMOS5V0 | 72 – 96 mV/dec | **85 – 100** | Reference 5 V S ≈ **95 mV/dec** (both n & p). AutoHV's PMOS5V0 measured 102 is only just out; the grounded band centers higher than the audit's generic 72–96. 2.5/3.3 V S not specified (silence) — hold those. |
 
 ### 2c. Vth linear
 
 | device | anchor `vth_lin` | proposed `[grounded]` | note |
 |---|---|---|---|
-| NMOS50 | 0.82 – 0.94 V | **0.79 – 0.92** | Reference 5 V Vtlin ≈ 0.79–0.85 V. Consistent; minor recentre. |
-| PMOS50 | 0.92 – 1.04 V | **0.83 – 0.95** | Reference 5 V PMOS Vtlin ≈ −0.86 to −0.87 V. AutoHV's band is ~0.1 V high. |
-| NMOS33/PMOS33 | per audit | **touchpoint** | Reference 3.3 V ≈ 0.58 / −0.80 V — brackets current bands. |
+| NMOS5V0 | 0.82 – 0.94 V | **0.79 – 0.92** | Reference 5 V Vtlin ≈ 0.79–0.85 V. Consistent; minor recentre. |
+| PMOS5V0 | 0.92 – 1.04 V | **0.83 – 0.95** | Reference 5 V PMOS Vtlin ≈ −0.86 to −0.87 V. AutoHV's band is ~0.1 V high. |
+| NMOS3V3/PMOS3V3 | per audit | **touchpoint** | Reference 3.3 V ≈ 0.58 / −0.80 V — brackets current bands. |
 
 ### 2d. Vth temperature coefficient (grounds phase-2 finding #6)
 
@@ -99,9 +99,9 @@ be compared cleanly without the convention. Recorded as a grounding *touchpoint*
 
 | device | anchor `avt_1sigma` | proposed `[grounded]` | note |
 |---|---|---|---|
-| NMOS18/PMOS18 | 4.25 ±50 % mV·µm | **hold** | Reference rule **AVT ≈ 1 mV·µm per nm oxide** (foundry footnote) = exactly the audit's assumption. At 4.25 nm → 4.25 mV·µm. **Confirmed, no change** — AutoHV's low-voltage AVT (measured 3.5) is fine. |
-| NMOS50/PMOS50 | 11.0 mV·µm | **hold band, confirm defect** | Rule gives 11 mV·µm at 11 nm; AutoHV measured 4.5 (2.4× optimistic) — grounding **confirms the F-anchor defect**, band unchanged. |
-| NMOS12/PMOS12 | 20.0 mV·µm | **31 (band 20–35)** | With the corrected ~31 nm oxide (D6), the rule gives **~31 mV·µm**, not 20. AutoHV measured 6.0 → now ~5× optimistic, not 3.3×. Recentre the anchor on the grounded oxide. |
+| NMOS1V8/PMOS1V8 | 4.25 ±50 % mV·µm | **hold** | Reference rule **AVT ≈ 1 mV·µm per nm oxide** (foundry footnote) = exactly the audit's assumption. At 4.25 nm → 4.25 mV·µm. **Confirmed, no change** — AutoHV's low-voltage AVT (measured 3.5) is fine. |
+| NMOS5V0/PMOS5V0 | 11.0 mV·µm | **hold band, confirm defect** | Rule gives 11 mV·µm at 11 nm; AutoHV measured 4.5 (2.4× optimistic) — grounding **confirms the F-anchor defect**, band unchanged. |
+| NMOS12V/PMOS12V | 20.0 mV·µm | **31 (band 20–35)** | With the corrected ~31 nm oxide (D6), the rule gives **~31 mV·µm**, not 20. AutoHV measured 6.0 → now ~5× optimistic, not 3.3×. Recentre the anchor on the grounded oxide. |
 | all | **convention note** | — | **Add to every mismatch entry:** the reference process implements AVT as a **1σ** coefficient normalized by √(W·L) in µm; AutoHV's literals are **3σ**. The 3× is real and must be applied when comparing. This resolves the standing convention ambiguity in the anchor `sigma_convention` fields. |
 
 ---
@@ -129,8 +129,8 @@ textbook tunneling→avalanche crossover.
 | device | anchor `bv_tempco` | proposed `[grounded]` | note |
 |---|---|---|---|
 | DZ_5V6 (5.6 V) | 0.13 – 0.40 mV/°C | **+0.5 – +1.5** | Just below the crossover → weakly positive, ~+1 mV/°C. AutoHV models 0 → fix target ~+1. |
-| DZ_12 (12 V) | 4.0 – 12.8 mV/°C | **+5 – +9** | ~+1 mV/°C per volt above the ~6 V crossover → ~+6 mV/°C at 12 V. Confirms the audit band, centers it. |
-| DZ_24 (24 V) | 10.0 – 32.0 mV/°C | **+15 – +22** | ~+18 mV/°C at 24 V by the same slope. Tightens the audit band. |
+| DZ_12V (12 V) | 4.0 – 12.8 mV/°C | **+5 – +9** | ~+1 mV/°C per volt above the ~6 V crossover → ~+6 mV/°C at 12 V. Confirms the audit band, centers it. |
+| DZ_24V (24 V) | 10.0 – 32.0 mV/°C | **+15 – +22** | ~+18 mV/°C at 24 V by the same slope. Tightens the audit band. |
 | all zeners | `cjo_density` | per audit | **hold** | Reference gives no zener cjo/area (silence). The hand-picked-ladder finding (audit 4.4) stands unground-able. |
 
 **Sign and crossover both grounded** — the reference process's 6.2 V zero-TC part is the textbook
@@ -193,7 +193,7 @@ Reference 30 V medium-voltage LDMOS, TT, 10 µm cell (per-µm = the AutoHV `W_RE
 
 | FoM (new anchors) | current AutoHV | proposed `[grounded]` (P2) | note |
 |---|---|---|---|
-| `ron_times_w` (HV NMOS, MV class) | ~2–6 Ω·µm (phase-2 measured, F1) | **3×10³ – 1×10⁴ Ω·µm** | 30 V ref = ~8400 Ω·µm at Vgs=5/Vds=0.1; AutoHV NDMOS20 is ~3600× low. Scale mildly down for the 20 V class. |
+| `ron_times_w` (HV NMOS, MV class) | ~2–6 Ω·µm (phase-2 measured, F1) | **3×10³ – 1×10⁴ Ω·µm** | 30 V ref = ~8400 Ω·µm at Vgs=5/Vds=0.1; AutoHV NDMOS20V is ~3600× low. Scale mildly down for the 20 V class. |
 | `idsat_density` (HV NMOS, MV class) | anchor 0.05–0.30 mA/µm; AutoHV measures ~1674 | **0.2 – 0.4 mA/µm** | 30 V ref = 0.33 mA/µm at Vgs=Vds=5. Confirms the anchor's upper band; AutoHV is ~5000× high. |
 | `bv` (30 V class) | — | **~33 V** for a 30 V-rated device | ref BVdss 33.5 V (gate off, 1 µA). Worst-corner must clear the class name — matches AutoHV's own bv convention. |
 | `cgs_per_cell` / drain cap (MV) | F2 targets | **~4 fF/µm gate, ~20 fF/µm drain** | ref 30 V Cgg 4.08, Cdd 21.1 fF/µm. Order-of-magnitude check on the F2 cap re-derivation. |
@@ -210,9 +210,9 @@ two geometries, solved C = cj·A + cjsw·P:
 
 | anchor | current | proposed `[grounded]` (P2) | note |
 |---|---|---|---|
-| NMOS50 `cj_area` | 0.42–0.90 fF/µm² | **1.1 – 1.6 fF/µm²** | n+/pwell 5 V ref ≈ 1.4 fF/µm². AutoHV's 5 V-class cj is low; recentre higher. |
-| PMOS50 `cj_area` | 0.45–0.90 fF/µm² | **1.2 – 1.7 fF/µm²** | p+/nwell 5 V ref ≈ 1.5 fF/µm². |
-| NMOS50/PMOS50 `cjsw_sidewall` | 0.11–0.29 fF/µm | **0.05 – 0.15 fF/µm** | ref ≈ 0.09–0.10 fF/µm — lower than the audit band (STI sidewall). |
+| NMOS5V0 `cj_area` | 0.42–0.90 fF/µm² | **1.1 – 1.6 fF/µm²** | n+/pwell 5 V ref ≈ 1.4 fF/µm². AutoHV's 5 V-class cj is low; recentre higher. |
+| PMOS5V0 `cj_area` | 0.45–0.90 fF/µm² | **1.2 – 1.7 fF/µm²** | p+/nwell 5 V ref ≈ 1.5 fF/µm². |
+| NMOS5V0/PMOS5V0 `cjsw_sidewall` | 0.11–0.29 fF/µm | **0.05 – 0.15 fF/µm** | ref ≈ 0.09–0.10 fF/µm — lower than the audit band (STI sidewall). |
 | all MOS junction | `pb`/`mj` | vj ≈ 0.8 (n+/pw), 0.95 (p+/nw); m ≈ 0.38 / 0.43 | grading grounded; abrupt-ish p+/nw, graded n+/pw. |
 
 **F6 fix targets are now grounded** (they were the phase-2 "cj/cjsw ungrounded" gap). Note the fix
@@ -226,7 +226,7 @@ are the densities to use once it does. The 5 V grounded value should scale up ~1
 |---|---|---|---|
 | all 8 `vth_tempco` | −2.0…−1.0 mV/°C (pass-1) | **−1.6 … −1.0 mV/°C** | ref dVth/dT = kt1/Tnom: −1.0 (core) to −1.6 (5 V). Tightens; confirms AutoHV's −0.37 (unset-kt1 default) is wrong. Fix: `kt1 ≈ −0.3` (core) to −0.48 (5 V). |
 | all 8 `mobility_tempco_exponent` | −1.4…−1.1 (pass-1) | **−1.2 … −1.6** | ref `ute` = −1.2 to −1.6 across classes (not a single −1.5). Still conditional (AutoHV leaves ute unset). |
-| NMOS18/33 `subthreshold_swing` | 72–96 (generic) | **hold; grounded nfactor** | ref `nfactor` ≈ 1.2 (3.3 V n), voff ≈ −0.12; consistent with 72–96 mV/dec. 2.5 V n nfactor is unusually low (0.1) — a device-specific fit, not general. |
+| NMOS1V8/33 `subthreshold_swing` | 72–96 (generic) | **hold; grounded nfactor** | ref `nfactor` ≈ 1.2 (3.3 V n), voff ≈ −0.12; consistent with 72–96 mV/dec. 2.5 V n nfactor is unusually low (0.1) — a device-specific fit, not general. |
 
 ## P2-4. Diodes — grounded `[grounded]`
 
@@ -305,20 +305,20 @@ ladder gives 0.76–0.89.
 No claim of grounding above 40 V: the 60–200 V rungs ride a **grounded exponent** on **extrapolated
 absolute values**. See the declarations doc for the D2 two-gate-flavor validation.
 
-## P3-2. Depletion LDMOS → DNMOS20 (T3)
+## P3-2. Depletion LDMOS → DNMOS20V (T3)
 
 | anchor | current | proposed | derivation | tag |
 |---|---|---|---|---|
-| DNMOS20 `idss_per_um` | 54.7 µA/µm (convention-only) | **~80–120 µA/µm** (central ~100) | Reference 40 V depletion LDMOS: Idss (Vgs=0, saturation) = **103 µA/µm**. A 20 V depletion (shorter drift) should exceed the 40 V, so AutoHV's 54.7 is ~2× low. | `[grounded]` (family), `[extrapolated]` (20 V value) |
-| DNMOS20 depletion `vth` | (negative, per model) | **−1.5 … −1.7 V** | reference depletion Vth −1.65 V (−2.2 / −1.1 range) | `[grounded]` |
+| DNMOS20V `idss_per_um` | 54.7 µA/µm (convention-only) | **~80–120 µA/µm** (central ~100) | Reference 40 V depletion LDMOS: Idss (Vgs=0, saturation) = **103 µA/µm**. A 20 V depletion (shorter drift) should exceed the 40 V, so AutoHV's 54.7 is ~2× low. | `[grounded]` (family), `[extrapolated]` (20 V value) |
+| DNMOS20V depletion `vth` | (negative, per model) | **−1.5 … −1.7 V** | reference depletion Vth −1.65 V (−2.2 / −1.1 range) | `[grounded]` |
 
 ## P3-3. Zeners & Schottkys (T4)
 
 | anchor | current | proposed `[grounded]` | derivation | tag |
 |---|---|---|---|---|
 | Zener `bv_tempco` DZ_5V6 (5.6 V) | 0 mV/°C | **+1.5 mV/°C** | reference 5.5 V zener TCBV +1.488; 5.15 V +1.11 | `[grounded]` |
-| Zener `bv_tempco` DZ_12 (12 V) | 0 mV/°C | **~+6 … +10 mV/°C** | avalanche regime; ref slope ~+3 mV/°C·V above the 6.2 V zero-TC crossover | `[extrapolated]` |
-| Zener `bv_tempco` DZ_24 (24 V) | 0 mV/°C | **~+15 … +25 mV/°C** | same slope extrapolated; large positive avalanche TC | `[extrapolated]` |
+| Zener `bv_tempco` DZ_12V (12 V) | 0 mV/°C | **~+6 … +10 mV/°C** | avalanche regime; ref slope ~+3 mV/°C·V above the 6.2 V zero-TC crossover | `[extrapolated]` |
+| Zener `bv_tempco` DZ_24V (24 V) | 0 mV/°C | **~+15 … +25 mV/°C** | same slope extrapolated; large positive avalanche TC | `[extrapolated]` |
 | Zener zero-TC reference | (none) | **~6.2 V is the BVTC=0 crossover** | reference explicitly models a BVTC=0 point at the 6.2 V device | `[grounded]` |
 | Schottky `bv` (18/30/40 V) | per audit | **25 / 38 / 50 V** | reference Schottky BV @50 µA: 24.8 / 38 / 50 | `[grounded]` |
 | Schottky `vf` @ rated | per audit | **~0.2 V @1 µA, ~0.33 V @2 µA/µm** | reference Vf(1 µA) 0.197–0.203; forward Ip 2.9–8.4 mA @Vf=1 V | `[grounded]` |
@@ -334,7 +334,7 @@ and the runnable 30 V LDMOS; terminal gds/Id).
 
 | anchor | current | proposed | derivation | tag |
 |---|---|---|---|---|
-| NMOS50/PMOS50 `lambda` (Lmin) | (implicit) | **~0.05–0.06 /V → VA ~17–20 V** | catalog λ 0.06 @Vds=2 V; sim 0.050 (VA 20 V). Confirms a low VA at Lmin — grows with L. | `[grounded]` |
+| NMOS5V0/PMOS5V0 `lambda` (Lmin) | (implicit) | **~0.05–0.06 /V → VA ~17–20 V** | catalog λ 0.06 @Vds=2 V; sim 0.050 (VA 20 V). Confirms a low VA at Lmin — grows with L. | `[grounded]` |
 | MV LDMOS `va_class` (30–40 V) | (implicit) | **VA ~130 V (strong drive) … ~1800 V (near-threshold)** | ref/sim λ 0.0079 @Vgs=5 (VA 127 V); λ 5.6e-4 @Vgs≈Vth (VA 1786 V) | `[grounded]` |
 | **200 V LDMOS `va_class`** | **measured VA ≈ 3900 V (too flat)** | **VA ~300–1000 V (λ ~1e-3 … 3e-3)** | AutoHV's 3900 V exceeds the entire real MV/HV envelope at every bias → the 200 V device's output is unphysically flat. Re-fit λ up so VA lands in the low-hundreds-to-~1 kV. | `[extrapolated-fitted]` |
 
@@ -355,4 +355,4 @@ correct.** The 1 mV·µm-per-nm-oxide rule (pass-1) is re-confirmed per-device.
 13. **P3-3 DIO_SCH tt → ~0** is the highest-value single amendment here (a 300 ps → ~0 correction, and it
     removes a residual on the v1-sized scorecard). Apply the zener `bv_tempco` ladder alongside.
 14. **P3-4**: re-fit the 200 V LDMOS λ upward (VA 3900 → ~300–1000 V) — the last flattering parameter.
-15. **P3-2** (DNMOS20 Idss ~2× up), **P3-5** (matching — no change, confirmation only).
+15. **P3-2** (DNMOS20V Idss ~2× up), **P3-5** (matching — no change, confirmation only).

@@ -170,7 +170,7 @@ These use the existing knobs (`IREF`, `WSCALE`, `WIN/LIN`, `LANA`, `FIN`, `HYSK`
 | Much higher gain | Cascode the loads, or telescopic/folded-cascode stage 1, or a 3rd stage |
 | ps-class speed, clocked | Replace with a StrongARM / double-tail dynamic latch (no static Iq) |
 | Full rail-to-rail input | Complementary input pairs summed in a folded cascode — **built**: see `../rail_to_rail_5v0/` and § 7 below |
-| Different supply class | Re-map devices: NMOS33/PMOS33 (3.3 V), NMOS18/PMOS18 (1.8 V), NMOS12/PMOS12 (12 V) — re-bias and re-check ICMR/saturation |
+| Different supply class | Re-map devices: NMOS3V3/PMOS3V3 (3.3 V), NMOS1V8/PMOS1V8 (1.8 V), NMOS12V/PMOS12V (12 V) — re-bias and re-check ICMR/saturation |
 | HV input sensing | Resistive/cascode attenuator (NDMOS) ahead of a low-voltage core |
 
 The first three move outside the "general-purpose CT" family by design; the PDK's

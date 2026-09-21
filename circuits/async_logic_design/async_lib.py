@@ -2,7 +2,7 @@
 Async logic cell design framework for the AutoHV BiCMOS 180 PDK.
 Generates ngspice decks, drives ngspice_con, parses results.
 
-Three voltage domains: 1.8V (NMOS18/PMOS18), 3.3V (NMOS33/PMOS33), 5.0V (NMOS50/PMOS50).
+Three voltage domains: 1.8V (NMOS1V8/PMOS1V8), 3.3V (NMOS3V3/PMOS3V3), 5.0V (NMOS5V0/PMOS5V0).
 Eight cells: INV, BUF, NAND2, NOR2, AND2, OR2, XOR2, XNOR2.
 """
 import subprocess, re, os, math, json, shutil
@@ -70,11 +70,11 @@ def ngspice_version() -> str:
 
 # ---------------------------------------------------------------- domains
 DOMAINS = {
-    "1v8": dict(n="NMOS18", p="PMOS18", L=0.18, vdd=1.8, vlist=[1.62, 1.80, 1.98],
+    "1v8": dict(n="NMOS1V8", p="PMOS1V8", L=0.18, vdd=1.8, vlist=[1.62, 1.80, 1.98],
                 cpp=0.50, hov=1.5),
-    "3v3": dict(n="NMOS33", p="PMOS33", L=0.35, vdd=3.3, vlist=[2.97, 3.30, 3.63],
+    "3v3": dict(n="NMOS3V3", p="PMOS3V3", L=0.35, vdd=3.3, vlist=[2.97, 3.30, 3.63],
                 cpp=0.70, hov=2.0),
-    "5v0": dict(n="NMOS50", p="PMOS50", L=0.50, vdd=5.0, vlist=[3.20, 5.00, 5.50],
+    "5v0": dict(n="NMOS5V0", p="PMOS5V0", L=0.50, vdd=5.0, vlist=[3.20, 5.00, 5.50],
                 cpp=0.90, hov=2.5),
 }
 CORNERS = [0, 1, 2, 3, 4]          # TT FF SS FS SF

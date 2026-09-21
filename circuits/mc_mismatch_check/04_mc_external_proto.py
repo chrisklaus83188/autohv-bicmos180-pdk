@@ -27,7 +27,7 @@ import mc_lib as M
 
 NRUN = 200
 SEED = 0
-AVT, AW, AL = 0.033, 0.0075, 0.0045    # NMOS50 wrapper coefficients, 3-sigma convention
+AVT, AW, AL = 0.033, 0.0075, 0.0045    # NMOS5V0 wrapper coefficients, 3-sigma convention
 
 
 def z_matrix(n=NRUN, seed=SEED):
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     }
     (M.RESULTS / "04_external_proto.json").write_text(json.dumps(out, indent=1))
 
-    print("External RNG driver prototype -- ngspice %s, NMOS50 mirror, %d samples, z seed %d"
+    print("External RNG driver prototype -- ngspice %s, NMOS5V0 mirror, %d samples, z seed %d"
           % (M.ngspice_version(), NRUN, SEED))
     print()
     print("  sigma/mu                                   %7.3f %%" % s["sigma_over_mu_pct"])

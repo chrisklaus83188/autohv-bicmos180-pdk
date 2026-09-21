@@ -1,4 +1,4 @@
-* Nominal operating point - NMOS18 at the TT corner
+* Nominal operating point - NMOS1V8 at the TT corner
 .include "../autohv_bicmos180_case.lib"
 .param case=0          ; TT corner
 .param PROC_ON=0       ; process variation off
@@ -6,7 +6,7 @@
 
 Vdd d 0 1.8
 Vg  g 0 1.8
-X1  d g 0 0 NMOS18 W=10u L=1u M=1   ; d g s b
+X1  d g 0 0 NMOS1V8 W=10u L=1u M=1   ; d g s b
 
 .op
 .end

@@ -1,7 +1,7 @@
 """Wall-clock cost of 200 Monte Carlo samples, three drive patterns.
 (HANDOFF_monte_carlo.md section 4, runtime table)
 
-Same NMOS50 mirror, same analysis (op), 200 samples each:
+Same NMOS5V0 mirror, same analysis (op), 200 samples each:
 
   inloop    one invocation, 200 x (reset + op), unseeded -- fast, not reproducible
   perrun    200 invocations with `.option seed=k`, 8 parallel workers --

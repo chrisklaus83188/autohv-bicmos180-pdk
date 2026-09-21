@@ -14,12 +14,12 @@ than guess at any of them.
 
 **The Idsat attribution, twice.** I pre-registered the 12 V refit as moving Idsat ≈ 0 %, "because
 `k1` only touches the body-bias term". It moved **−6.0 %**. I then corrected that to `k2` — which
-the card diff refutes on sight, because **NMOS12's `k2` was already −0.03 and never changed**, yet
+the card diff refutes on sight, because **NMOS12V's `k2` was already −0.03 and never changed**, yet
 its Idsat moved the full −6.0 %.
 
 Reverting **one** parameter at a time settles it:
 
-| reverted | NMOS12 Idsat | PMOS12 Idsat |
+| reverted | NMOS12V Idsat | PMOS12V Idsat |
 |---|---|---|
 | `k1` alone | **0.0 %** (exactly restores 1.854488e-03 / 8.652385e-04) | **0.0 %** |
 | `k2` alone | −6.0 % (i.e. no effect) | −6.0 % |
@@ -39,7 +39,7 @@ account for none. The rest is BSIM3 evaluating `√(φs − Vbs)` against my clo
 
 ## 2. The 12 V refit, landed (`da7e359`)
 
-| | NMOS12 | PMOS12 | target |
+| | NMOS12V | PMOS12V | target |
 |---|---|---|---|
 | `k1` | 0.750 → **1.552** | 0.820 → **1.715** | γ(nch, 31 nm) |
 | `k2` | −0.03 → −0.03 (**no change**) | −0.04 → **−0.03** | X2 |
@@ -53,8 +53,8 @@ account for none. The rest is BSIM3 evaluating `√(φs − Vbs)` against my clo
 | Idsat | **−5.7…−6.3 %** (cases 0–4) | same | within 10 % |
 
 Note the `k2` row against my last handoff: I reported it as a uniform "0.0 → −0.03". Both cards
-actually carried a **byte-copy of their 5 V counterpart** (NMOS50 −0.03, PMOS50 −0.04), and
-NMOS12's copy already equalled the declared value. Only PMOS12 moved. PMOS12 lands at 124.4 mV/dec
+actually carried a **byte-copy of their 5 V counterpart** (NMOS5V0 −0.03, PMOS5V0 −0.04), and
+NMOS12V's copy already equalled the declared value. Only PMOS12V moved. PMOS12V lands at 124.4 mV/dec
 per Y2 (accepted rather than over-fitted toward 120).
 
 `anchor-values.json` 12 V `subthreshold_swing`: 72–96 `industry` → **110–130 `autohv-derived`**.
@@ -69,14 +69,14 @@ fitted**. Inflated for non-RDF sources by `A_total = A_RDF/√(RDF fraction)`, f
 
 | card | t_ox nm | `k1` | N_a cm⁻³ | W_dep nm | **A_VT derived** | in JSON today | band lo / target / hi | in band? |
 |---|---|---|---|---|---|---|---|---|
-| NMOS18 | 4.25 | 0.560 | 6.237e17 | 43.9 | **2.336** | 4.60 | 2.12 / 4.25 / 6.38 | yes |
-| PMOS18 | 4.25 | 0.630 | 7.893e17 | 39.3 | **2.486** | 3.85 | 2.12 / 4.25 / 6.38 | yes |
-| NMOS33 | 6.75 | 0.620 | 3.031e17 | 61.7 | **3.066** | 6.17 | 3.38 / 6.75 / 10.12 | **no** |
-| PMOS33 | 6.75 | 0.700 | 3.863e17 | 55.0 | **3.269** | 5.14 | 3.38 / 6.75 / 10.12 | **no** |
-| NMOS50 | 11.00 | 0.680 | 1.373e17 | 89.5 | **4.051** | 6.89 | 5.50 / 11.0 / 16.5 | **no** |
-| PMOS50 | 11.00 | 0.780 | 1.806e17 | 78.7 | **4.357** | 5.63 | 5.50 / 11.0 / 16.5 | **no** |
-| NMOS12 | 31.00 | 1.552 | 9.004e16 | 109.1 | **10.207** | 15.03 | 20.0 / 31.0 / 35.0 | **no** |
-| PMOS12 | 31.00 | 1.715 | 1.099e17 | 99.3 | **10.763** | 12.07 | 20.0 / 31.0 / 35.0 | **no** |
+| NMOS1V8 | 4.25 | 0.560 | 6.237e17 | 43.9 | **2.336** | 4.60 | 2.12 / 4.25 / 6.38 | yes |
+| PMOS1V8 | 4.25 | 0.630 | 7.893e17 | 39.3 | **2.486** | 3.85 | 2.12 / 4.25 / 6.38 | yes |
+| NMOS3V3 | 6.75 | 0.620 | 3.031e17 | 61.7 | **3.066** | 6.17 | 3.38 / 6.75 / 10.12 | **no** |
+| PMOS3V3 | 6.75 | 0.700 | 3.863e17 | 55.0 | **3.269** | 5.14 | 3.38 / 6.75 / 10.12 | **no** |
+| NMOS5V0 | 11.00 | 0.680 | 1.373e17 | 89.5 | **4.051** | 6.89 | 5.50 / 11.0 / 16.5 | **no** |
+| PMOS5V0 | 11.00 | 0.780 | 1.806e17 | 78.7 | **4.357** | 5.63 | 5.50 / 11.0 / 16.5 | **no** |
+| NMOS12V | 31.00 | 1.552 | 9.004e16 | 109.1 | **10.207** | 15.03 | 20.0 / 31.0 / 35.0 | **no** |
+| PMOS12V | 31.00 | 1.715 | 1.099e17 | 99.3 | **10.763** | 12.07 | 20.0 / 31.0 / 35.0 | **no** |
 
 **The strong result:** `c` comes out **1.4716…1.5191, constant to 3.18 %** (mean **1.4940**
 mV·µm/√nm) across oxides spanning 4.25→31 nm and dopings spanning 9e16→7.9e17. That near-constancy
@@ -92,7 +92,7 @@ is the validation of V2's `N_a^{1/4}` form — a wrong exponent would drift `c` 
 Solving `lo ≤ c·√(t_ox·k1) ≤ hi` across all eight cards:
 
 > **a single fitted `c` ∈ [2.883, 3.899] satisfies every band** (midpoint 3.391), bound below by
-> NMOS12 and above by PMOS18.
+> NMOS12V and above by PMOS1V8.
 
 So V2's fitted route works. The derived constant sits **1.93×–2.61× below** that window.
 
@@ -100,7 +100,7 @@ So V2's fitted route works. The derived constant sits **1.93×–2.61× below** 
 
 The two laws differ in *slope* as well as scale: the band rule is linear in `t_ox`, RDF gives
 `A_VT ∝ t_ox·N_a^{1/4}`, and since `N_a` falls 6.9× as `t_ox` rises across our ladder, the
-derived/target ratio degrades **0.550 (NMOS18) → 0.329 (NMOS12)**.
+derived/target ratio degrades **0.550 (NMOS1V8) → 0.329 (NMOS12V)**.
 
 To lift the derived `c` into the feasible window, the **RDF variance fraction would have to be
 9.5–17.5 %, not 65 %.**

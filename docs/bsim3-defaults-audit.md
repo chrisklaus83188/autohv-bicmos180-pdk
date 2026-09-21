@@ -10,7 +10,7 @@ live, and a keep-or-ground decision.
 **Method.** Declared/undeclared status is parsed from the eight BSIM3 cards in
 `autohv_bicmos180_case_models.inc`. Default values are read back **out of this ngspice build**
 (`showmod` on an instantiated device), not quoted from a manual, so they are the values this PDK
-actually simulates with. Narrow-width evidence is measured on NMOS50, L = 1 µm, Vgs = Vds = 5 V.
+actually simulates with. Narrow-width evidence is measured on NMOS5V0, L = 1 µm, Vgs = Vds = 5 V.
 
 ## 1. Summary
 
@@ -30,7 +30,7 @@ All eight cards declare an identical parameter set, so there is no per-device ex
 `dvt0` `dvt1` `dvt2` `dwg` `dwb` `pdiblc1` `pdiblc2` `drout` `prwg` `prwb` `a0` `ags` `eta0`
 `etab` `ute` `kt1`
 
-These carry fitted values per card (e.g. NMOS50: `dvt0=1.8`, `dvt1=0.4`, `dvt2=-0.02`, `a0=1`,
+These carry fitted values per card (e.g. NMOS5V0: `dvt0=1.8`, `dvt1=0.4`, `dvt2=-0.02`, `a0=1`,
 `ags=0.18`, `ute=-1.2`, `kt1=-0.48`).
 
 ## 3. Undeclared in all eight cards — defaults live
@@ -69,7 +69,7 @@ BSIM3's narrow-width term raises Vth as width shrinks, scaled by `k3 · tox/(Wef
 `k3` undeclared, every AutoHV MOS runs the Berkeley default of 80 — a value appropriate to much
 older, thicker-oxide technologies. Fitted values for a 0.18 µm-class process are single digits.
 
-Measured on NMOS50 (L = 1 µm, Vgs = Vds = 5 V), Vth from the model's own readback, quoted against
+Measured on NMOS5V0 (L = 1 µm, Vgs = Vds = 5 V), Vth from the model's own readback, quoted against
 a 50 µm-wide device:
 
 | W | Vth rise, `k3 = 80` (today) | Vth rise, `k3 = 2, w0 = 2.5e-7` | Id/W today | Id/W grounded |
@@ -120,16 +120,16 @@ high. That is a different threshold definition, not a different device; the audi
 reproducible only by the audit's method, which is why the method is named here.
 
 **Direction re-measurement after landing** (ruling 1.1). Only the eight BSIM3 groups move, and
-they move in bench-width order — NMOS18's bench is 1.3 µm and moves most, PMOS12's is 63.2 µm and
+they move in bench-width order — NMOS1V8's bench is 1.3 µm and moves most, PMOS12V's is 63.2 µm and
 moves least:
 
 | group | before | after | Δ |
 |---|---|---|---|
-| NMOS18 | 9.64 % | 9.24 % | −0.41 |
-| PMOS18 | 11.96 % | 11.72 % | −0.24 |
-| NMOS33 | 7.22 % | 7.03 % | −0.19 |
-| NMOS50 | 6.80 % | 6.68 % | −0.12 |
-| PMOS33 / PMOS50 / NMOS12 / PMOS12 | — | — | −0.08 … −0.01 |
+| NMOS1V8 | 9.64 % | 9.24 % | −0.41 |
+| PMOS1V8 | 11.96 % | 11.72 % | −0.24 |
+| NMOS3V3 | 7.22 % | 7.03 % | −0.19 |
+| NMOS5V0 | 6.80 % | 6.68 % | −0.12 |
+| PMOS3V3 / PMOS5V0 / NMOS12V / PMOS12V | — | — | −0.08 … −0.01 |
 
 All 13 VDMOS, 5 resistors, 4 capacitors, 4 BJTs and 6 diodes are unchanged to 0.00. Corner
 distances move +0.005…+0.007. The expectation that the delta would be small — because the benches
@@ -142,7 +142,7 @@ next candidate for the same treatment — they carry no `tox` and only a handful
 parameters — but nothing in them was implicated by Phase 0, so they are listed here as a
 follow-up rather than audited now.
 
-## 6. Card self-consistency: `k1` vs `nch` (retained), and the PMOS50 slope fix
+## 6. Card self-consistency: `k1` vs `nch` (retained), and the PMOS5V0 slope fix
 
 Added after the statistical-model program measured every card's subthreshold slope and compared
 each card's `nch` against the doping its own `k1` implies.
@@ -155,14 +155,14 @@ and the ratio falls as the oxide thickens and halo matters less — which is the
 
 | card | `nch` cm⁻³ | `Na(k1)` cm⁻³ | ratio | measured S mV/dec |
 |---|---|---|---|---|
-| NMOS18 | 2.2e17 | 6.24e17 | 2.83 | 77.6 |
-| PMOS18 | 2.5e17 | 7.89e17 | 3.16 | 80.7 |
-| NMOS33 | 1.7e17 | 3.03e17 | 1.78 | 85.6 |
-| PMOS33 | 1.9e17 | 3.86e17 | 2.03 | 89.6 |
-| NMOS50 | 1.2e17 | 1.37e17 | 1.14 | 96.6 |
-| PMOS50 | 1.4e17 | 1.81e17 | 1.29 | 104.3 |
-| NMOS12 | 9.0e16 | 2.10e16 | 0.23 | 152.8 |
-| PMOS12 | 1.1e17 | 2.51e16 | 0.23 | 170.2 |
+| NMOS1V8 | 2.2e17 | 6.24e17 | 2.83 | 77.6 |
+| PMOS1V8 | 2.5e17 | 7.89e17 | 3.16 | 80.7 |
+| NMOS3V3 | 1.7e17 | 3.03e17 | 1.78 | 85.6 |
+| PMOS3V3 | 1.9e17 | 3.86e17 | 2.03 | 89.6 |
+| NMOS5V0 | 1.2e17 | 1.37e17 | 1.14 | 96.6 |
+| PMOS5V0 | 1.4e17 | 1.81e17 | 1.29 | 104.3 |
+| NMOS12V | 9.0e16 | 2.10e16 | 0.23 | 152.8 |
+| PMOS12V | 1.1e17 | 2.51e16 | 0.23 | 170.2 |
 
 **Ruling: retained, no change** on the six LV/mid cards — "retrograde-profile consistent". The
 12 V pair inverts the pattern and is handled separately (§7).
@@ -173,20 +173,20 @@ log₁₀(Id) over the 1e-12…1e-9 A decades, 27 °C.
 **Consequence for the statistical model:** every depletion-charge derivation uses `k1`, never
 `nch`. `nch` is not an input to any statistical quantity.
 
-### 6.2 PMOS50 subthreshold slope
+### 6.2 PMOS5V0 subthreshold slope
 
-PMOS50 measured 104.3 mV/dec against its **grounded** anchor of 85–100 (target 95) — a
+PMOS5V0 measured 104.3 mV/dec against its **grounded** anchor of 85–100 (target 95) — a
 pre-existing miss. Fixed with the one parameter meant for it:
 
 | parameter | before | after | result |
 |---|---|---|---|
-| `nfactor` (PMOS50 only) | 1.9000 | **1.5055** | S 104.3 → 95.32 mV/dec |
+| `nfactor` (PMOS5V0 only) | 1.9000 | **1.5055** | S 104.3 → 95.32 mV/dec |
 
 `k1`, `nch` and `vth0` untouched. Fitted by bisection against the measured slope.
 
 ## 7. The 12 V card refit
 
-NMOS12 and PMOS12 were built by scaling the 5 V cards without re-deriving the parameters that
+NMOS12V and PMOS12V were built by scaling the 5 V cards without re-deriving the parameters that
 depend on doping and oxide. Three independent lines of evidence agreed:
 
 1. **Body effect.** `γ = tox·√(2qε_si·Na)/ε_ox` from each card's own `nch` at 31 nm is 1.552 (N)
@@ -203,10 +203,10 @@ A parameter-by-parameter comparison also found **22 of 59 shared parameters byte
 
 ### 7.1 What changed
 
-| parameter | NMOS12 | PMOS12 | basis |
+| parameter | NMOS12V | PMOS12V | basis |
 |---|---|---|---|
 | `k1` | 0.750 → **1.552** | 0.820 → **1.715** | `γ(nch, 31 nm)` |
-| `k2` | −0.030 → **−0.03** (no change) | −0.040 → **−0.03** | declared per X2, not re-derived: there is no 12 V extraction data, and the standing value was a byte-copy of the 5 V card. NMOS12's copy already equalled the declared value, so only PMOS12 moved |
+| `k2` | −0.030 → **−0.03** (no change) | −0.040 → **−0.03** | declared per X2, not re-derived: there is no 12 V extraction data, and the standing value was a byte-copy of the 5 V card. NMOS12V's copy already equalled the declared value, so only PMOS12V moved |
 | `nfactor` | 1.7000 → **1.0625** | 1.8500 → **0.9713** | fitted to the 120 ± 10 mV/dec derived band |
 | `voff` | −0.0700 → **−0.1544** | −0.0800 → **−0.2015** | fitted to hold weak-inversion continuity |
 | `cj` | 0.0014 → **0.0012124** | 0.0015 → **0.001329** | `√(nch_5V/nch_12V)` = 0.866 / 0.886 |
@@ -220,7 +220,7 @@ that depth was genuine and density was the copy.
 
 ### 7.2 Acceptance, measured
 
-| quantity | NMOS12 | PMOS12 | target |
+| quantity | NMOS12V | PMOS12V | target |
 |---|---|---|---|
 | subthreshold slope | 152.8 → **120.9** mV/dec | 170.2 → **124.4** | 120 ± 10 |
 | weak-inversion Id at `vth0` − 0.3 V | 98 % of before | 100 % | ≥ 90 % |
@@ -229,7 +229,7 @@ that depth was genuine and density was the copy.
 | Idsat at Vgs = Vds = 12 V, cases 0–4 | **−5.7 to −6.3 %** | **−5.7 to −6.3 %** | within 10 % |
 
 Three extraction methods agree on ΔVth (constant-current at 1 µA and 100 nA, and gm-max linear
-extrapolation: 2.090 / 2.078 / 2.044 on NMOS12), so the numbers are not extraction artefacts.
+extrapolation: 2.090 / 2.078 / 2.044 on NMOS12V), so the numbers are not extraction artefacts.
 
 ### 7.3 Two predictions of mine that were wrong, and what actually happened
 
@@ -245,7 +245,7 @@ extrapolation: 2.090 / 2.078 / 2.044 on NMOS12), so the numbers are not extracti
 
   I mis-attributed this bullet **twice**: first to `k1`/`k2` jointly (the ablation reverted them
   together and could not separate them), then to `k2` alone — which the card diff already refuted,
-  since NMOS12's `k2` never changed yet its Idsat moved the full −6.0 %. The one-at-a-time
+  since NMOS12V's `k2` never changed yet its Idsat moved the full −6.0 %. The one-at-a-time
   measurement above is what settles it. The acceptance passes either way, but the reasoning behind
   the original prediction was wrong.
 - **"The measured body effect should equal the closed form."** It is ~16 % below it
@@ -256,7 +256,7 @@ extrapolation: 2.090 / 2.078 / 2.044 on NMOS12), so the numbers are not extracti
 
 ### 7.4 Anchor updated
 
-`docs/anchor-values.json`, NMOS12/PMOS12 `subthreshold_swing`: 72–96 (target 80, `industry`) →
+`docs/anchor-values.json`, NMOS12V/PMOS12V `subthreshold_swing`: 72–96 (target 80, `industry`) →
 **110–130 (target 120, `autohv-derived`)**. The retired value was a thin-oxide industry number and
 does not apply to a 31 nm gate. The first-principles floor (110.9 / 115.9) is recorded in the
 entry's basis.
@@ -266,4 +266,4 @@ entry's basis.
 12 V body effect roughly doubles: ΔVth at Vsb = 5 V rises by ≈ 1.2–1.5 V, so every 12 V circuit
 with source not tied to body moves. Subthreshold and weak-inversion entries move; strong-inversion
 Idsat moves −6 %. Junction capacitances drop 11–13 %, so 12 V delay and comparator timing moves.
-The NMOS12 analog-floor and every 12 V sizing-guide entry are re-derived in Phase 7.
+The NMOS12V analog-floor and every 12 V sizing-guide entry are re-derived in Phase 7.

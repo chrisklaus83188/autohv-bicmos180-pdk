@@ -1,11 +1,11 @@
 * Phase D: deterministic mismatch corner check (MM_SIGMA mechanism).
 *
-* Two identical NMOS50 in saturation at Vds=3, Vgs=2. M1 gets MM_SIGMA=+3,
+* Two identical NMOS5V0 in saturation at Vds=3, Vgs=2. M1 gets MM_SIGMA=+3,
 * M2 gets MM_SIGMA=-3. With AGAUSS HSPICE convention (X is 3-sigma, true
 * 1-sigma = X/3), each instance's DVTH_MM lands at exactly +/-X = +/-13.5
 * mV / sqrt(W*L/um^2) = +/-13.5 mV / sqrt(10) = +/-4.27 mV at W=10u L=1u.
 *
-* For NMOS50 at this bias:
+* For NMOS5V0 at this bias:
 *   Vth_TT_eff ~= 0.97 V (from Phase E gm probe)
 *   Vds_overdrive = 2 - 0.97 = 1.03 V
 *   gm/ID (empirical, Phase E) ~= 1.687 V^-1
@@ -29,8 +29,8 @@ Vg1 g1 0 2
 Vd2 d2 0 3
 Vg2 g2 0 2
 
-XM1 d1 g1 0 0 NMOS50 W=10u L=1u M=1 MM_SIGMA=+3
-XM2 d2 g2 0 0 NMOS50 W=10u L=1u M=1 MM_SIGMA=-3
+XM1 d1 g1 0 0 NMOS5V0 W=10u L=1u M=1 MM_SIGMA=+3
+XM2 d2 g2 0 0 NMOS5V0 W=10u L=1u M=1 MM_SIGMA=-3
 
 .control
 op

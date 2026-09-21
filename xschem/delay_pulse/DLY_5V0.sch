@@ -10,10 +10,10 @@ N 120 100 1580 100 {}
 C {iopin.sym} 120 100 0 0 {name=pz1 lab=vdd sim_pinnumber=3}
 N 120 860 1580 860 {}
 C {iopin.sym} 120 860 0 0 {name=pz2 lab=gnd sim_pinnumber=4}
-C {autohv/PMOS50.sym} 280 280 2 1 {name=I1 model=PMOS50 W=1.15u L=0.5u}
+C {autohv/PMOS5V0.sym} 280 280 2 1 {name=I1 model=PMOS5V0 W=1.15u L=0.5u}
 T {I1} 220 170 0 0 0.28 0.28 {}
 N 300 280 300 240 {}
-C {autohv/NMOS50.sym} 280 720 0 0 {name=I2 model=NMOS50 W=0.5u L=0.5u}
+C {autohv/NMOS5V0.sym} 280 720 0 0 {name=I2 model=NMOS5V0 W=0.5u L=0.5u}
 T {I2} 220 610 0 0 0.28 0.28 {}
 N 300 720 300 760 {}
 N 300 100 300 240 {}
@@ -40,16 +40,16 @@ C {autohv/CMIM_HI.sym} 940 640 0 0 {name=C L=5.3600u W=5.3600u}
 T {C} 970 600 0 0 0.22 0.22 {}
 N 940 500 940 610 {}
 N 940 670 940 860 {}
-C {autohv/PMOS50.sym} 1160 260 2 1 {name=S3 model=PMOS50 W=1.15u L=0.5u}
+C {autohv/PMOS5V0.sym} 1160 260 2 1 {name=S3 model=PMOS5V0 W=1.15u L=0.5u}
 T {S3} 1100 150 0 0 0.28 0.28 {}
 N 1180 260 1180 220 {}
-C {autohv/PMOS50.sym} 1160 420 2 1 {name=S4 model=PMOS50 W=1.15u L=0.5u}
+C {autohv/PMOS5V0.sym} 1160 420 2 1 {name=S4 model=PMOS5V0 W=1.15u L=0.5u}
 T {S4} 1100 310 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1180 420 0 0 {name=lz6 lab=vdd}
-C {autohv/NMOS50.sym} 1160 580 0 0 {name=S2 model=NMOS50 W=0.5u L=0.5u}
+C {autohv/NMOS5V0.sym} 1160 580 0 0 {name=S2 model=NMOS5V0 W=0.5u L=0.5u}
 T {S2} 1100 470 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1180 580 0 0 {name=lz7 lab=gnd}
-C {autohv/NMOS50.sym} 1160 740 0 0 {name=S1 model=NMOS50 W=0.5u L=0.5u}
+C {autohv/NMOS5V0.sym} 1160 740 0 0 {name=S1 model=NMOS5V0 W=0.5u L=0.5u}
 T {S1} 1100 630 0 0 0.28 0.28 {}
 N 1180 740 1180 780 {}
 N 1180 100 1180 220 {}
@@ -62,10 +62,10 @@ N 1180 660 1180 700 {}
 N 1180 780 1180 860 {}
 C {lab_pin.sym} 1180 300 0 0 {name=lz8 lab=s2}
 C {lab_pin.sym} 1180 620 0 0 {name=lz9 lab=s1}
-C {autohv/PMOS50.sym} 1360 420 2 0 {name=S6 model=PMOS50 W=1.15u L=0.5u}
+C {autohv/PMOS5V0.sym} 1360 420 2 0 {name=S6 model=PMOS5V0 W=1.15u L=0.5u}
 T {S6} 1300 310 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1340 420 0 0 {name=lz10 lab=vdd}
-C {autohv/NMOS50.sym} 1520 580 0 1 {name=S5 model=NMOS50 W=0.5u L=0.5u}
+C {autohv/NMOS5V0.sym} 1520 580 0 1 {name=S5 model=NMOS5V0 W=0.5u L=0.5u}
 T {S5} 1460 470 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1500 580 0 0 {name=lz11 lab=gnd}
 N 1340 460 1340 860 {}

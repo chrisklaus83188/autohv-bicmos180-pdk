@@ -13,19 +13,19 @@ here rather than the exception. Four questions, V1–V4. No model file changed y
 
 | card | tox nm | k1 | vth0 | `nch` cm⁻³ | `Na(k1)` cm⁻³ | ratio | literature window |
 |---|---|---|---|---|---|---|---|
-| NMOS18 | 4.25 | 0.5600 | 0.480 | 2.2e17 | 6.24e17 | **2.83** | above 2–5e17 |
-| PMOS18 | 4.25 | 0.6300 | −0.520 | 2.5e17 | 7.89e17 | **3.16** | above |
-| NMOS33 | 6.75 | 0.6200 | 0.660 | 1.7e17 | 3.03e17 | 1.78 | above 1–3e17 |
-| PMOS33 | 6.75 | 0.7000 | −0.740 | 1.9e17 | 3.86e17 | **2.03** | above |
-| NMOS50 | 11.00 | 0.6800 | 0.880 | 1.2e17 | 1.37e17 | 1.14 | **in window** |
-| PMOS50 | 11.00 | 0.7800 | −0.980 | 1.4e17 | 1.81e17 | 1.29 | above 5e16–1.5e17 |
-| NMOS12 | 31.00 | 0.7500 | 1.350 | 9e16 | 2.1e16 | **0.23** | below 3–8e16 |
-| PMOS12 | 31.00 | 0.8200 | −1.550 | 1.1e17 | 2.51e16 | **0.23** | below |
+| NMOS1V8 | 4.25 | 0.5600 | 0.480 | 2.2e17 | 6.24e17 | **2.83** | above 2–5e17 |
+| PMOS1V8 | 4.25 | 0.6300 | −0.520 | 2.5e17 | 7.89e17 | **3.16** | above |
+| NMOS3V3 | 6.75 | 0.6200 | 0.660 | 1.7e17 | 3.03e17 | 1.78 | above 1–3e17 |
+| PMOS3V3 | 6.75 | 0.7000 | −0.740 | 1.9e17 | 3.86e17 | **2.03** | above |
+| NMOS5V0 | 11.00 | 0.6800 | 0.880 | 1.2e17 | 1.37e17 | 1.14 | **in window** |
+| PMOS5V0 | 11.00 | 0.7800 | −0.980 | 1.4e17 | 1.81e17 | 1.29 | above 5e16–1.5e17 |
+| NMOS12V | 31.00 | 0.7500 | 1.350 | 9e16 | 2.1e16 | **0.23** | below 3–8e16 |
+| PMOS12V | 31.00 | 0.8200 | −1.550 | 1.1e17 | 2.51e16 | **0.23** | below |
 
 Two distinct failure modes, not one:
 
 - **LV and mid classes (1.8 / 3.3 / 5 V):** `k1` implies 1.1–3.2× *more* doping than `nch` states.
-  Only NMOS50 passes both the 2× ratio test and the window.
+  Only NMOS5V0 passes both the 2× ratio test and the window.
 - **12 V pair:** `k1` implies 4× *less* doping than `nch` states — the opposite direction, and
   `Na(k1)` falls below the window while `nch` sits inside it.
 
@@ -67,13 +67,13 @@ fallback applies: derive body doping from `VTO` and the oxide. Their thresholds:
 
 | device | VTO | device | VTO |
 |---|---|---|---|
-| NDMOS20 | 1.00 V | PDMOS20 | −1.05 V |
-| NDMOS40 | 1.05 | PDMOS40 | −1.10 |
-| NDMOS60 | 1.10 | PDMOS60 | −1.15 |
-| NDMOS80 | 1.15 | PDMOS80 | −1.20 |
-| NDMOS120 | 1.20 | PDMOS120 | −1.25 |
-| NDMOS200 | 1.25 | PDMOS200 | −1.31 |
-| DNMOS20 | −1.60 (depletion) | | |
+| NDMOS20V | 1.00 V | PDMOS20V | −1.05 V |
+| NDMOS40V | 1.05 | PDMOS40V | −1.10 |
+| NDMOS60V | 1.10 | PDMOS60V | −1.15 |
+| NDMOS80V | 1.15 | PDMOS80V | −1.20 |
+| NDMOS120V | 1.20 | PDMOS120V | −1.25 |
+| NDMOS200V | 1.25 | PDMOS200V | −1.31 |
+| DNMOS20V | −1.60 (depletion) | | |
 
 **One correction to U4.** It says to use "the 13 nm oxide" for the VDMOS derivation. 13 nm is the
 *reference* process's 5 V oxide. AutoHV's own 5 V oxide is **11 nm**, and under the governing rule

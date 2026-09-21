@@ -99,7 +99,7 @@ DESIGN_NOTES §§ 3–5):
 - **Faster:** raise `IREF` (current density); costs power and a little headroom.
 - **Lower power / wider ICMR:** lower `IREF` (also lowers Vdsat → more headroom).
 - **More gain:** longer `LANA` (GP) or move to a cascoded/3-stage front end.
-- **Different rail:** swap the device class (NMOS50/33/18, PMOS50/33/18), re-bias,
+- **Different rail:** swap the device class (NMOS5V0/33/18, PMOS5V0/33/18), re-bias,
   re-check (the ports in this directory are exactly this).
 - **Beyond these** (sub-100 µV offset, ps-class clocked, HV sense): topology change
   — see DESIGN_NOTES § 5; the PDK's separate Cells A–D set covers those roles.

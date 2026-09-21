@@ -64,14 +64,14 @@ saved at `/tmp/pdk_repro/repro_{1..4}_*.cir`.
 |:-:|---------------|-------------------------|--------------|
 | **1** | Resistor BVCR (RNWELL, 1 MHz sine through V(p,n)=0) | **PASS** — `R_VCR_OK` reached. 508 data rows. | `No. of Data Rows : 508` / `R_VCR_OK` / `ngspice-46 done` |
 | **2** | Capacitor Cextra (CMIM_HI, 1 MHz sine through V(p,n)=0) | **PASS** — `C_VCC_OK` reached. 508 data rows. | `No. of Data Rows : 508` / `C_VCC_OK` / `ngspice-46 done` |
-| **3** | Stacked NDMOS200 / NDMOS120 with shared gate, MM_ON=0 | **FAIL** — `Timestep too small; time = 1.01078e-09, timestep = 1.25e-21: trouble with node "v.xn4.vshift#branch"`. 818 data rows then `tran simulation(s) aborted`. | `doAnalyses: TRAN:  Timestep too small; time = 1.01078e-09 ... trouble with node "v.xn4.vshift#branch"` / `tran simulation(s) aborted` |
+| **3** | Stacked NDMOS200V / NDMOS120V with shared gate, MM_ON=0 | **FAIL** — `Timestep too small; time = 1.01078e-09, timestep = 1.25e-21: trouble with node "v.xn4.vshift#branch"`. 818 data rows then `tran simulation(s) aborted`. | `doAnalyses: TRAN:  Timestep too small; time = 1.01078e-09 ... trouble with node "v.xn4.vshift#branch"` / `tran simulation(s) aborted` |
 | **4** | BJT BVCBO ramp through breakdown (NPN_LV, 0→17 V over 1 µs) | **PASS** — `BJT_AVALANCHE_OK` reached. 251 data rows. | `No. of Data Rows : 251` / `BJT_AVALANCHE_OK` / `ngspice-46 done` |
 
 So your call was right on three out of four. The categorical language
 in `HANDOFF_ngspice_compat.md` was unjustified for #1, #2, and #4.
 
 The Vshift singular matrix problem (claim #3) **does** reproduce
-standalone on my ngspice. Even just two cascoded NDMOS200 with their
+standalone on my ngspice. Even just two cascoded NDMOS200V with their
 gates tied to the same drive line, MM_ON=0, no other devices, triggers
 `Timestep too small ... trouble with node "v.xn4.vshift#branch"` at
 t ≈ 1 ns. So this one is a genuine PDK-side issue that warrants the fix.
@@ -191,7 +191,7 @@ repro #3 result.
 
 2.  **Claim #3 (HV LDMOS Vshift singular matrix when MM_ON=0) stands.**
     It reproduces standalone on my ngspice 46 with two cascoded
-    NDMOS200, gates tied, MM_ON=0 — exactly your repro #3, which fails
+    NDMOS200V, gates tied, MM_ON=0 — exactly your repro #3, which fails
     here. And it's the one that bites the simplified
     level-shifter-class topology at SS / 125 °C with the unpatched PDK.
 

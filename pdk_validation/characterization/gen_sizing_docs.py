@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate docs/sizing-guide.{md,json} from the sizing sweep results + analytical R/C/BJT.
-Phase-3b: resistor rule defaults to RPOLY_HI (maintainer bug fix), DNMOS20 depletion row,
+Phase-3b: resistor rule defaults to RPOLY_HI (maintainer bug fix), DNMOS20V depletion row,
 post-O5 sigma columns. Regenerated, not patched."""
 import json, math, pathlib
 HERE = pathlib.Path(__file__).resolve().parent
@@ -9,16 +9,16 @@ res = HERE / "results"
 
 # --- v2.2-defaults: fabrication floor + analog (matched-use) floor ------------
 VDMOS_WMIN = 3.0            # um, fabrication min gate finger (device_limits [grounded])
-BSIM_WMIN = {"NMOS18":0.22,"PMOS18":0.22,"NMOS33":0.30,"PMOS33":0.30,
-             "NMOS50":0.40,"PMOS50":0.40,"NMOS12":0.22,"PMOS12":0.22}
+BSIM_WMIN = {"NMOS1V8":0.22,"PMOS1V8":0.22,"NMOS3V3":0.30,"PMOS3V3":0.30,
+             "NMOS5V0":0.40,"PMOS5V0":0.40,"NMOS12V":0.22,"PMOS12V":0.22}
 MOS_ANALOG_THRESH = 20.0   # % sigma(dI/I) matched-pair floor for MOS
 PASSIVE_ANALOG_THRESH = 1.0  # % sigma(dR/R, dC/C) matched floor for passives
 # 3-sigma Vth mismatch coefficients (same source as sizing_guide.py)
-MM_VDMOS={"NDMOS20":0.024,"PDMOS20":0.024,"DNMOS20":0.024,"NDMOS40":0.0255,"PDMOS40":0.0255,
- "NDMOS60":0.027,"PDMOS60":0.027,"NDMOS80":0.0285,"PDMOS80":0.0285,"NDMOS120":0.030,
- "PDMOS120":0.030,"NDMOS200":0.033,"PDMOS200":0.033}
-MM_BSIM={"NMOS18":0.0105,"PMOS18":0.0105,"NMOS33":0.012,"PMOS33":0.012,
- "NMOS50":0.033,"PMOS50":0.033,"NMOS12":0.093,"PMOS12":0.093}
+MM_VDMOS={"NDMOS20V":0.024,"PDMOS20V":0.024,"DNMOS20V":0.024,"NDMOS40V":0.0255,"PDMOS40V":0.0255,
+ "NDMOS60V":0.027,"PDMOS60V":0.027,"NDMOS80V":0.0285,"PDMOS80V":0.0285,"NDMOS120V":0.030,
+ "PDMOS120V":0.030,"NDMOS200V":0.033,"PDMOS200V":0.033}
+MM_BSIM={"NMOS1V8":0.0105,"PMOS1V8":0.0105,"NMOS3V3":0.012,"PMOS3V3":0.012,
+ "NMOS5V0":0.033,"PMOS5V0":0.033,"NMOS12V":0.093,"PMOS12V":0.093}
 
 def analog_W_mos(dev, gmid, L_um, vdmos):
     """Min matched-pair W where sigma(dI/I) crosses MOS_ANALOG_THRESH (20%), at this
@@ -64,7 +64,7 @@ for src in (vd, bs):
         if dev.startswith("_"): continue
         vdmos = "DMOS" in dev
         wmin = VDMOS_WMIN if vdmos else BSIM_WMIN.get(dev, 0.22)
-        L_um = 8.0 if dev in ("NDMOS200","PDMOS200") else 1.0
+        L_um = 8.0 if dev in ("NDMOS200V","PDMOS200V") else 1.0
         pts = {}
         for k, p in d["points"].items():
             q = dict(p)
@@ -85,12 +85,12 @@ for src in (vd, bs):
         lo_k = min(d["points"], key=lambda x: float(x))
         aW = analog_W_mos(dev, d["points"][lo_k].get("gm_id"), L_um, vdmos)
         g["mos"][dev]={"supply_V":d["supply"],
-            "L_policy":("L=L_REF(8u)" if dev in ("NDMOS200","PDMOS200") else
+            "L_policy":("L=L_REF(8u)" if dev in ("NDMOS200V","PDMOS200V") else
                         ("process-min" if vdmos else "L=1.0um (2xLmin-class, analog default)")),
             "fab_Wmin_um": wmin,
             "analog_min_W_um": aW,   # min matched W where sigma(dI/I) crosses 20% at lowest-I gm/Id
             "mirror_points":pts}
-# DNMOS20 depletion row (clamp self-bias W to the 3um VDMOS fab floor)
+# DNMOS20V depletion row (clamp self-bias W to the 3um VDMOS fab floor)
 if dep:
     dpts = {}
     for k, p in dep.get("points", {}).items():
@@ -101,7 +101,7 @@ if dep:
             q["note"] = (f"W<{VDMOS_WMIN:g}um: clamp to fab floor {VDMOS_WMIN:g}um + source-degen R "
                          f"to trim Idss to target")
         dpts[k] = q
-    g["mos"]["DNMOS20"]={"supply_V":dep.get("supply",10.0),"L_policy":"process-min (depletion)",
+    g["mos"]["DNMOS20V"]={"supply_V":dep.get("supply",10.0),"L_policy":"process-min (depletion)",
         "convention":"Vgs=0 self-biased current source (Idss), not a mirror-Vov device",
         "idss_per_um_uA":round(dep.get("idss_per_um_A",0)*1e6,3),
         "fab_Wmin_um": VDMOS_WMIN,
@@ -155,7 +155,7 @@ print("sizing-guide.json:", len(g["mos"]),"MOS,",len(g["resistors"]),"R,",
       len(g["capacitors"]),"C,",len(g["bjt"]),"BJT")
 
 # --- markdown assembly (phase-4 Step 3: ONE correct writer; JSON is the source of truth) ---
-# Sections are emitted strictly in order: MOS mirror table -> DNMOS20 depletion ->
+# Sections are emitted strictly in order: MOS mirror table -> DNMOS20V depletion ->
 # resistors -> capacitors -> BJT. No interleave, no duplicated rows.
 def _mirror_cells(pts):
     cells=[]
@@ -188,7 +188,7 @@ md.append("you must size up for matched use, where it is below the fab min the f
 md.append("`docs/geometry-minima.md`.\n")
 md.append("---\n")
 mos_mirror=[d for d in g["mos"] if "mirror_points" in g["mos"][d]]
-n_dev=len(mos_mirror)+(1 if "DNMOS20" in g["mos"] else 0)
+n_dev=len(mos_mirror)+(1 if "DNMOS20V" in g["mos"] else 0)
 md.append(f"## MOS -- mirror sizing (gm/Id ~ 6)  [{n_dev} devices]\n")
 md.append("W is Wmin-clamped to the fab floor where the gm/Id-6 width falls below it (\\*).\n")
 md.append("| device | supply | fab Wmin (um) | min matched W (sig<20%) | I(lo) W/Vgs/gmId/sig | I(mid) W/Vgs/gmId/sig | I(hi) W/Vgs/gmId/sig |")
@@ -198,9 +198,9 @@ for dev in mos_mirror:
     fab=m.get("fab_Wmin_um"); aW=m.get("analog_min_W_um")
     md.append(f"| {dev} | {m['supply_V']}V | {fab:g} | {aW if aW is not None else 'n/a'} | {c[0]} | {c[1]} | {c[2]} |")
 md.append("")
-if "DNMOS20" in g["mos"]:
-    dn=g["mos"]["DNMOS20"]
-    md.append("### DNMOS20 (depletion) -- Vgs=0 self-biased current source")
+if "DNMOS20V" in g["mos"]:
+    dn=g["mos"]["DNMOS20V"]
+    md.append("### DNMOS20V (depletion) -- Vgs=0 self-biased current source")
     md.append(f"Idss = **{dn.get('idss_per_um_uA')} uA/um** at Vgs=0. Not a mirror-Vov device; size for self-biased duty:\n")
     md.append("| target I | W (Vgs=0) | sigma(dI/I) | note |")
     md.append("|---|---|---|---|")
@@ -239,4 +239,4 @@ md.append("---\n")
 md.append(f"*Machine-readable: `docs/sizing-guide.json` (v{g['_meta']['version']}). "
           "Regenerate: `sizing_guide.py {vdmos,bsim}` then `gen_sizing_docs.py`.*")
 (REPO/"docs"/"sizing-guide.md").write_text("\n".join(md)+"\n",newline="\n",encoding="utf-8")
-print("sizing-guide.md:", len(mos_mirror),"MOS +", (1 if "DNMOS20" in g["mos"] else 0),"depletion, R/C/BJT")
+print("sizing-guide.md:", len(mos_mirror),"MOS +", (1 if "DNMOS20V" in g["mos"] else 0),"depletion, R/C/BJT")

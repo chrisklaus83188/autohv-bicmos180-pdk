@@ -220,28 +220,28 @@ solver is choking on. Two cleaner fixes are worth considering:
 
 ### Option A: use VDMOS `delvto` on the M-element directly
 
-Your LV-MOS wrappers (`NMOS18`, `PMOS18`, `NMOS33`, etc.) already do
+Your LV-MOS wrappers (`NMOS1V8`, `PMOS1V8`, `NMOS3V3`, etc.) already do
 this:
 
 ```spice
-M0 d g s b NMOS18_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
+M0 d g s b NMOS1V8_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM}
 ```
 
 For LV BSIM3 the `delvto` instance parameter cleanly injects the
 threshold shift without a series VSRC, no `g_int` internal node, no
 branch variable.
 
-ngspice's VDMOS model (used for NDMOS200_INT etc.) also supports a
+ngspice's VDMOS model (used for NDMOS200V_INT etc.) also supports a
 `delvto` instance parameter (I believe — please double-check against
 the ngspice manual / version you're targeting). If it does, the
-NDMOS200 wrapper could be flattened to:
+NDMOS200V wrapper could be flattened to:
 
 ```spice
-.subckt NDMOS200 d g s params: W=10u L=8u M=1
+.subckt NDMOS200V d g s params: W=10u L=8u M=1
 .param ...
 Rdrift d dd {RDRIFT}
-M0 dd g s NDMOS200_INT m={mtot} delvto={-DVTH_MM}    ; was: through Vshift to g_int
-.ends NDMOS200
+M0 dd g s NDMOS200V_INT m={mtot} delvto={-DVTH_MM}    ; was: through Vshift to g_int
+.ends NDMOS200V
 ```
 
 This eliminates `Vshift`, `Rgmin`, and the internal `g_int` node
@@ -259,7 +259,7 @@ branch-variable equation by adding any tiny series element on the
 Rg     g g_buf 1m            ; tiny series R, breaks the singular structure
 Vshift g_buf g_int DC {-DVTH_MM}
 Rgmin  g_buf g_int 1e9       ; still useful as belt-and-suspenders
-M0     dd g_int s NDMOS200_INT m={mtot}
+M0     dd g_int s NDMOS200V_INT m={mtot}
 ```
 
 The 1 mΩ resistor adds essentially zero series impedance to the gate

@@ -84,11 +84,11 @@ the same `literature:0.18um-BCD-class` tier as `TOX_*`.
 
 | device | today | **dose-only** | comparable | today/cmp | **mine/cmp** |
 |---|---|---|---|---|---|
-| NMOS33 / PMOS33 | 38.0 mV | **2.5 / 2.8** | 41–56 mV | 0.78 | **0.05 / 0.06** |
-| NMOS50 / PMOS50 | 45.0 mV | **2.7 / 3.1** | 16–22 mV | 2.37 | **0.14 / 0.16** |
-| NDMOS200 | 43.3 mV | **4.5** | 20–90 mV | 0.79 | **0.08** |
-| NMOS18 | 29.3 mV | **2.3** | *none available* | — | — |
-| NMOS12 | 50.0 mV | **6.0** | *none available* | — | — |
+| NMOS3V3 / PMOS3V3 | 38.0 mV | **2.5 / 2.8** | 41–56 mV | 0.78 | **0.05 / 0.06** |
+| NMOS5V0 / PMOS5V0 | 45.0 mV | **2.7 / 3.1** | 16–22 mV | 2.37 | **0.14 / 0.16** |
+| NDMOS200V | 43.3 mV | **4.5** | 20–90 mV | 0.79 | **0.08** |
+| NMOS1V8 | 29.3 mV | **2.3** | *none available* | — | — |
+| NMOS12V | 50.0 mV | **6.0** | *none available* | — | — |
 
 All 21 devices fall outside the ruled 0.5–2.0× band, so per §5.2 this is **reported, not clamped**.
 
@@ -102,8 +102,8 @@ Three triggers, any one of which would be sufficient:
 
 | trigger | evidence |
 |---|---|
-| designer-visible in an ordinary simulation | slow-corner Vth: NMOS50 **−73.5 → −4.4 mV**, NMOS18 **−70.2 → −5.5 mV**, NMOS33 −59.5 → −3.9 mV |
-| changes character of the corners | `VTH` carries **63.8 %** of NMOS18's corner direction and **72.5 %** of PMOS18's; collapsing it re-weights every LV corner and forces the U0 solve to absorb the difference |
+| designer-visible in an ordinary simulation | slow-corner Vth: NMOS5V0 **−73.5 → −4.4 mV**, NMOS1V8 **−70.2 → −5.5 mV**, NMOS3V3 −59.5 → −3.9 mV |
+| changes character of the corners | `VTH` carries **63.8 %** of NMOS1V8's corner direction and **72.5 %** of PMOS1V8's; collapsing it re-weights every LV corner and forces the U0 solve to absorb the difference |
 | plausibility miss > 2× with no explanation | 6–20× too narrow, on all 21 devices |
 
 ### 4.4 What is missing, physically

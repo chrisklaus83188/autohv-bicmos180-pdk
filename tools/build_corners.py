@@ -31,17 +31,17 @@ MODEL = ROOT / "models" / "stat_model.json"
 DIRECTIONS = ROOT / "models" / "stat_directions.json"
 OUT = ROOT / "models" / "corners.json"
 
-MOS_N = ["NMOS18", "NMOS33", "NMOS50", "NMOS12"]
-MOS_P = ["PMOS18", "PMOS33", "PMOS50", "PMOS12"]
-VDMOS_N = ["NDMOS20", "NDMOS40", "NDMOS60", "NDMOS80", "NDMOS120", "NDMOS200",
-           "DNMOS20"]          # DNMOS20 is an N-channel depletion device
-VDMOS_P = ["PDMOS20", "PDMOS40", "PDMOS60", "PDMOS80", "PDMOS120", "PDMOS200"]
+MOS_N = ["NMOS1V8", "NMOS3V3", "NMOS5V0", "NMOS12V"]
+MOS_P = ["PMOS1V8", "PMOS3V3", "PMOS5V0", "PMOS12V"]
+VDMOS_N = ["NDMOS20V", "NDMOS40V", "NDMOS60V", "NDMOS80V", "NDMOS120V", "NDMOS200V",
+           "DNMOS20V"]          # DNMOS20V is an N-channel depletion device
+VDMOS_P = ["PDMOS20V", "PDMOS40V", "PDMOS60V", "PDMOS80V", "PDMOS120V", "PDMOS200V"]
 VDMOS = VDMOS_N + VDMOS_P
 LV_MOS = MOS_N + MOS_P
 RES = ["RPOLY_HI", "RPOLY_LO", "RNWELL", "RNPLUS", "RPPLUS"]
 CAP = ["CMIM_STD", "CMIM_HI", "CMOM", "CFRINGE"]
 BJT = ["NPN_LV", "PNP_LAT", "NPN_HV", "PNP_HV"]
-DIO = ["DIO_PN", "DIO_FAST", "DIO_SCH", "DZ_5V6", "DZ_12", "DZ_24"]
+DIO = ["DIO_PN", "DIO_FAST", "DIO_SCH", "DZ_5V6", "DZ_12V", "DZ_24V"]
 
 # case -> (label, {group: +1 fast/hi | -1 slow/lo})
 def _all(groups, sign):
@@ -52,7 +52,7 @@ PRESETS: dict[int, tuple[str, dict[str, int]]] = {
     0: ("typical, nothing moved", {}),
     1: ("FF: all MOS fast", {**_all(LV_MOS, +1), **_all(VDMOS, +1)}),
     2: ("SS: all MOS slow", {**_all(LV_MOS, -1), **_all(VDMOS, -1)}),
-    # Explicit N/P lists, not a name-prefix test: DNMOS20 starts with "D" and so
+    # Explicit N/P lists, not a name-prefix test: DNMOS20V starts with "D" and so
     # fell into neither side, silently dropping out of FS/SF (ruling 2026-09-19 S2).
     3: ("FS: n-type fast, p-type slow", {**_all(MOS_N, +1), **_all(MOS_P, -1),
                                          **_all(VDMOS_N, +1), **_all(VDMOS_P, -1)}),

@@ -9,11 +9,11 @@ The maintainer has ruled. These are fixed inputs to phase 3 and every later phas
 3. **BJT/diode `AREA = 1 = 100 um^2`** (D3); `is` kept, cje/cjc reconciled to it. `[ruled]`
 4. **BJTs are BCD junction devices** (D4): fT anchor 0.5-2 GHz; `tf` stands. `[ruled]`
 5. **F3 fixed in place: BSIM3-convention noise on the level=49 cards** -- no BSIM4 migration this phase. `[ruled]`
-6. **NMOS12/PMOS12 are thick-oxide planar 12 V devices: tox = 31 nm, Lmin = 0.5 um** (D6). `[ruled]`
+6. **NMOS12V/PMOS12V are thick-oxide planar 12 V devices: tox = 31 nm, Lmin = 0.5 um** (D6). `[ruled]`
 7. **Qualification range -40 to +150 C** (D7), stated in both model-file headers. `[ruled]`
 8. **VDMOS Rsp per class -- grounded (P2-1):** anchored to the measured 30 V LDMOS, scaled per class; 80-200 V via silicon-limit scaling anchored at 30 V. `[ruled]`
 
-**Phase 3 applied these** (F1/F2/F-VD3 VDMOS; F6/F3 BSIM3; F7 passives; BJT; D6 NMOS12). See `CHANGELOG.md`, `sizing-guide.md`, and `sizing-open-findings.md`.
+**Phase 3 applied these** (F1/F2/F-VD3 VDMOS; F6/F3 BSIM3; F7 passives; BJT; D6 NMOS12V). See `CHANGELOG.md`, `sizing-guide.md`, and `sizing-open-findings.md`.
 
 ---
 
@@ -76,7 +76,7 @@ Two grounded conventions apply:
 model library is runnable for its 30 V LDMOS (the higher-voltage devices use a Verilog-A drift module
 this ngspice build cannot compile). Local TT simulation on the 30 V device, normalized to the 10 µm
 cell, gives **Ron·W ≈ 8400 Ω·µm, Idsat ≈ 0.33 mA/µm, BVdss ≈ 33.5 V** — see amendment
-[`P2-1`](anchor-amendments-reference.md). AutoHV's phase-2-measured NDMOS20 (Ron·W ≈ 2–6 Ω·µm, Idsat
+[`P2-1`](anchor-amendments-reference.md). AutoHV's phase-2-measured NDMOS20V (Ron·W ≈ 2–6 Ω·µm, Idsat
 ≈ 1674 mA/µm) is ~3600× low on Ron·W and ~5000× high on Idsat, so **F1's ~10³× magnitude is now
 grounded against a real medium-voltage LDMOS**, and fix #2/#3 have a measured target rather than only a
 silicon-limit estimate. The **100–200 V** magnitude is not runnable (Verilog-A) and reverts to
@@ -250,7 +250,7 @@ decision; F4 stays default.
 
 ---
 
-## D6 — NMOS12 device type · `[declared-grounded]`
+## D6 — NMOS12V device type · `[declared-grounded]`
 
 **Question.** Is AutoHV's 12 V pair a thick-oxide planar MOS or a drain-extended device, and what are
 its `tox` / `Lmin`?
@@ -267,11 +267,11 @@ its `tox` / `Lmin`?
   and tightened**. AutoHV's current 20 nm is too thin by ~1.5×.
 - **`Lmin`:** the current **0.15 µm is impossible** — below the 0.24 µm poly floor, and a 12 V device
   is not planar in a real process. Declare **`Lmin = 0.50 µm`** (the 5 V planar floor) at minimum, or
-  reclassify NMOS12 as drain-extended. `device_limits.csv` must be corrected.
+  reclassify NMOS12V as drain-extended. `device_limits.csv` must be corrected.
 - **Idsat / u0 / rdsw:** scale from the reference 5 V device (µ0 ≈ 490 n / 130 p cm²/V·s; the 12 V
-  device's thicker oxide lowers Cox → lower drive), tightening the four phase-2 NMOS12 fix targets.
+  device's thicker oxide lowers Cox → lower drive), tightening the four phase-2 NMOS12V fix targets.
 
-**Unblocks:** the NMOS12 fix cluster (tox, Lmin, u0, rdsw) and the `device_limits.csv` Lmin correction.
+**Unblocks:** the NMOS12V fix cluster (tox, Lmin, u0, rdsw) and the `device_limits.csv` Lmin correction.
 
 ---
 
@@ -423,7 +423,7 @@ declared error bar. Nothing is left "open for a later pass."
 | **VDMOS DC scale, 60–200 V** | **closed — literature-bracketed (phase-4 Step-0)** | two-regime ladder: 0.73 below 40 V (grounded), ~1.0–1.2 above (published 0.18 µm-BCD data); 200 V band 33–60 kΩ·µm, ±~35 %. |
 | **BJT emitter geometry / `AREA=1` cell** | **CLOSED — catalog** | square emitters 2×2 / 5×5 / 10×10 µm; `AREA=1≡100 µm²` = the 10×10 device (D3 grounded) |
 | **Output conductance λ / VA (CMOS + LDMOS)** | **CLOSED — catalog + sim** | 5 V CMOS VA ~17–20 V; MV LDMOS VA ~130–1800 V; 200 V re-fit target ~300–1000 V |
-| **Depletion LDMOS Idss / Vth** | **CLOSED — catalog** | Idss ~100 µA/µm (Vgs=0), Vth ~−1.65 V; DNMOS20 54.7 µA/µm is ~2× low |
+| **Depletion LDMOS Idss / Vth** | **CLOSED — catalog** | Idss ~100 µA/µm (Vgs=0), Vth ~−1.65 V; DNMOS20V 54.7 µA/µm is ~2× low |
 | **Zener bv tempco (sign + magnitude)** | **CLOSED — catalog** | +1.1…+3.6 mV/K, rising with bv, zero-TC crossover ~6.2 V |
 | **Schottky Vf / BV / recovery** | **CLOSED — catalog** | BV 25/38/50 V, Vf ~0.2 V @1 µA; **no recovery term (majority-carrier) → DIO_SCH tt≈0**, not 300 ps |
 | **Per-device matching (AVT)** | **CLOSED — catalog** | 5 V CMOS AVT ~6/5 mV·µm, LDMOS ~20 mV·µm; confirms the v1-sized coefficients |

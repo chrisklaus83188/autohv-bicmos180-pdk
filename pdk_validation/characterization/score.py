@@ -35,22 +35,22 @@ ANCHORS = REPO_ROOT / "docs" / "anchor-values.json"
 SCORECARD = REPO_ROOT / "docs" / "characterization-scorecard.md"
 
 # Explicit device lists. Globs bit us once: "DMOS" is NOT a substring of
-# "DNMOS20" (D-N-M-O-S has no consecutive D,M,O,S), so a "*DMOS*" pattern
+# "DNMOS20V" (D-N-M-O-S has no consecutive D,M,O,S), so a "*DMOS*" pattern
 # silently skipped the depletion device and reported its known F1/F2 failures
 # as unexpected. Enumerate instead of pattern-matching.
 VDMOS_DEVICES = [
-    "NDMOS20", "PDMOS20", "DNMOS20", "NDMOS40", "PDMOS40", "NDMOS60",
-    "PDMOS60", "NDMOS80", "PDMOS80", "NDMOS120", "PDMOS120",
-    "NDMOS200", "PDMOS200",
+    "NDMOS20V", "PDMOS20V", "DNMOS20V", "NDMOS40V", "PDMOS40V", "NDMOS60V",
+    "PDMOS60V", "NDMOS80V", "PDMOS80V", "NDMOS120V", "PDMOS120V",
+    "NDMOS200V", "PDMOS200V",
 ]
 # The 40/80/200 V classes -- phase 1 "ladder B", found ~3x optimistic (F-VD3).
 # The 20/60/120 classes ("ladder A") were found IN BAND, so a failure there
 # would be genuinely unexpected and must stay a hard-fail.
-LADDER_B = ["NDMOS40", "PDMOS40", "NDMOS80", "PDMOS80", "NDMOS200", "PDMOS200"]
-BSIM3_DEVICES = ["NMOS12", "PMOS12", "NMOS18", "PMOS18",
-                 "NMOS33", "PMOS33", "NMOS50", "PMOS50"]
+LADDER_B = ["NDMOS40V", "PDMOS40V", "NDMOS80V", "PDMOS80V", "NDMOS200V", "PDMOS200V"]
+BSIM3_DEVICES = ["NMOS12V", "PMOS12V", "NMOS1V8", "PMOS1V8",
+                 "NMOS3V3", "PMOS3V3", "NMOS5V0", "PMOS5V0"]
 BJT_DEVICES = ["NPN_LV", "PNP_LAT", "NPN_HV", "PNP_HV"]
-ZENERS = ["DZ_5V6", "DZ_12", "DZ_24"]
+ZENERS = ["DZ_5V6", "DZ_12V", "DZ_24V"]
 PASSIVES_R = ["RPOLY_HI", "RPOLY_LO", "RNWELL", "RNPLUS", "RPPLUS"]
 PASSIVES_C = ["CMIM_STD", "CMIM_HI", "CMOM", "CFRINGE"]
 
@@ -63,7 +63,7 @@ def _expand(devices, fom, ref):
 # they must be asserted (so a future fix is detected) but reported as expected
 # rather than as news. Anything NOT in here that fails is a phase-2 discovery.
 EXPECTED_FAIL: dict[tuple[str, str], str] = {}
-# PHASE3_FIXED: the fix batch closed F1/F2/F3/F4/F6/F7, ladder-B, NMOS12.
+# PHASE3_FIXED: the fix batch closed F1/F2/F3/F4/F6/F7, ladder-B, NMOS12V.
 # They now score as normal pass/fail against the merged (v2) anchor bands.
 _PHASE3_NEUTRALIZE = True
 EXPECTED_FAIL.update(_expand(BSIM3_DEVICES, "flicker_corner",
@@ -72,7 +72,7 @@ EXPECTED_FAIL.update(_expand(BSIM3_DEVICES, "junction_perimeter_set",
                              "F6 (AD/AS/PD/PS unset on the M0 line)"))
 EXPECTED_FAIL.update(_expand(BSIM3_DEVICES, "cj_area", "F6"))
 EXPECTED_FAIL.update(_expand(BSIM3_DEVICES, "cjsw_sidewall", "F6"))
-# F1 -- LDMOS DC scale, all 13 including DNMOS20
+# F1 -- LDMOS DC scale, all 13 including DNMOS20V
 EXPECTED_FAIL.update(_expand(VDMOS_DEVICES, "ron_times_w", "F1 (LDMOS DC scale)"))
 EXPECTED_FAIL.update(_expand(VDMOS_DEVICES, "rsp_specific_ron", "F1"))
 EXPECTED_FAIL.update(_expand(VDMOS_DEVICES, "idsat_density", "F1"))

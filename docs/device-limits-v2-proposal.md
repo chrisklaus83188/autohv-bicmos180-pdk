@@ -63,41 +63,41 @@ unless noted.**
 ### Thin/thick-oxide CMOS (8)
 | device | Vds_absmax | Vds_dcmax | Vgs_absmax | Vgs_dcmax | Idc_dens | Ipulse_dens | Tj_max |
 |---|---|---|---|---|---|---|---|
-| NMOS18 / PMOS18 | 2.3 | 2.0 | ±2.3 | ±2.0 | 2.0 | 40 | 150 |
-| NMOS33 / PMOS33 | 4.3 | 3.6 | ±4.3 | ±3.6 | 1.6 | 40 | 150 |
-| NMOS50 / PMOS50 | 7.0 | 5.5 | ±7.0 | ±5.5 | 1.2 | 35 | 150 |
-| NMOS12 / PMOS12 | 15 | 13.2 | ±15 | ±13.2 | 0.9 | 25 | 150 |
+| NMOS1V8 / PMOS1V8 | 2.3 | 2.0 | ±2.3 | ±2.0 | 2.0 | 40 | 150 |
+| NMOS3V3 / PMOS3V3 | 4.3 | 3.6 | ±4.3 | ±3.6 | 1.6 | 40 | 150 |
+| NMOS5V0 / PMOS5V0 | 7.0 | 5.5 | ±7.0 | ±5.5 | 1.2 | 35 | 150 |
+| NMOS12V / PMOS12V | 15 | 13.2 | ±15 | ±13.2 | 0.9 | 25 | 150 |
 
-*(NMOS50/PMOS50 Vds/Vgs absmax ±7 / dcmax ±5.5 are `grounded` — the reference 5 V device directly.)*
+*(NMOS5V0/PMOS5V0 Vds/Vgs absmax ±7 / dcmax ±5.5 are `grounded` — the reference 5 V device directly.)*
 
 ### N-VDMOS (6) — 5 V-gate, so Vgs_absmax ±7 / Vgs_dcmax ±5.5 for all
 | device | class | Vds_absmax | Vds_dcmax | Vgd_absmax | Idc_dens | Ipulse_dens | Viso | Tj_max |
 |---|---|---|---|---|---|---|---|---|
-| NDMOS20 | 20 | 23 | 22 | 23 | 1.0 | 30 | 23 | 150 |
-| NDMOS40 | 40 | 46 | 44 | 46 | 1.0 | 30 | 46 | 150 |
-| NDMOS60 | 60 | 69 | 66 | 69 | 0.9 | 27 | 69 | 150 |
-| NDMOS80 | 80 | 92 | 88 | 92 | 0.9 | 27 | 92 | 150 |
-| NDMOS120 | 120 | 138 | 132 | 138 | 0.8 | 24 | 138 | 150 |
-| NDMOS200 | 200 | 230 | 220 | 230 | 0.7 | 20 | 230 | 150 |
+| NDMOS20V | 20 | 23 | 22 | 23 | 1.0 | 30 | 23 | 150 |
+| NDMOS40V | 40 | 46 | 44 | 46 | 1.0 | 30 | 46 | 150 |
+| NDMOS60V | 60 | 69 | 66 | 69 | 0.9 | 27 | 69 | 150 |
+| NDMOS80V | 80 | 92 | 88 | 92 | 0.9 | 27 | 92 | 150 |
+| NDMOS120V | 120 | 138 | 132 | 138 | 0.8 | 24 | 138 | 150 |
+| NDMOS200V | 200 | 230 | 220 | 230 | 0.7 | 20 | 230 | 150 |
 
-*(NDMOS40 absmax 46 / dcmax 44 are `grounded`; 20 V is interpolated; 60–200 V `extrapolated`.)*
+*(NDMOS40V absmax 46 / dcmax 44 are `grounded`; 20 V is interpolated; 60–200 V `extrapolated`.)*
 
 ### P-VDMOS (6) — same gate/Vgs pattern; magnitudes negative
 | device | class | Vds_absmax | Vds_dcmax | Idc_dens | Ipulse_dens | Viso | Tj_max |
 |---|---|---|---|---|---|---|---|
-| PDMOS20 | 20 | −23 | −22 | 0.4 | 12 | −23 | 150 |
-| PDMOS40 | 40 | −46 | −44 | 0.35 | 11 | −46 | 150 |
-| PDMOS60 | 60 | −69 | −66 | 0.33 | 10 | −69 | 150 |
-| PDMOS80 | 80 | −92 | −88 | 0.30 | 9 | −92 | 150 |
-| PDMOS120 | 120 | −138 | −132 | 0.27 | 8 | −138 | 150 |
-| PDMOS200 | 200 | −230 | −220 | 0.22 | 7 | −230 | 150 |
+| PDMOS20V | 20 | −23 | −22 | 0.4 | 12 | −23 | 150 |
+| PDMOS40V | 40 | −46 | −44 | 0.35 | 11 | −46 | 150 |
+| PDMOS60V | 60 | −69 | −66 | 0.33 | 10 | −69 | 150 |
+| PDMOS80V | 80 | −92 | −88 | 0.30 | 9 | −92 | 150 |
+| PDMOS120V | 120 | −138 | −132 | 0.27 | 8 | −138 | 150 |
+| PDMOS200V | 200 | −230 | −220 | 0.22 | 7 | −230 | 150 |
 
-*(P current density ≈ N/2.5 — the grounded P/N penalty. PDMOS40 −46/−44 `grounded`.)*
+*(P current density ≈ N/2.5 — the grounded P/N penalty. PDMOS40V −46/−44 `grounded`.)*
 
 ### Depletion (1)
 | device | class | Vds_absmax | Vds_dcmax | Vgs_absmax | Idc_dens | Tj_max |
 |---|---|---|---|---|---|---|
-| DNMOS20 | 20 | 23 | 22 | ±7 | 1.0 (Idss ~0.1 at Vgs=0) | 150 |
+| DNMOS20V | 20 | 23 | 22 | ±7 | 1.0 (Idss ~0.1 at Vgs=0) | 150 |
 
 ### Bipolar (4) — current density per unit AREA (=100 µm² cell, D3 grounded)
 | device | Vce_max | Vcb_max | Vbe_rev | Idc (mA/AREA) | Ipulse (mA/AREA) | Tj_max |
@@ -117,8 +117,8 @@ BVceo ~25/BVcbo ~60; PNP ~18–22. Per-contact-current pattern 0.47→15 mA maps
 | DIO_FAST | 40 | 1.0 | — | 1.0 | 150 |
 | DIO_SCH | 40 | 0.45 | — | 1.0 | 150 |
 | DZ_5V6 | (working < 5.6) | 1.0 | 5.6 | 0.5 | 150 |
-| DZ_12 | (< 12) | 1.0 | 12 | 0.5 | 150 |
-| DZ_24 | (< 24) | 1.0 | 24 | 0.5 | 150 |
+| DZ_12V | (< 12) | 1.0 | 12 | 0.5 | 150 |
+| DZ_24V | (< 24) | 1.0 | 24 | 0.5 | 150 |
 
 *(Schottky Vf 0.45 / BV pattern `grounded` — reference DSCH Vf ~0.2 @1 µA, BV 25/38/50 for the 18/30/40 V
 Schottky classes. Zener Vz `grounded`.)*
@@ -135,7 +135,7 @@ Schottky classes. Zener Vz `grounded`.)*
 ## How to apply (maintainer)
 
 1. Extend the CSV header to `device,param,min,max,unit,basis,note`; keep all existing geometry rows.
-2. Add the SOA rows above as `min,max` pairs (e.g. `NDMOS40,Vds_dcmax,0,44,V,grounded,continuous`),
+2. Add the SOA rows above as `min,max` pairs (e.g. `NDMOS40V,Vds_dcmax,0,44,V,grounded,continuous`),
    tagging `basis` per the scaling rules. Symmetric limits use `−x,+x`.
 3. Wire the checker to warn when a bias in a testbench exceeds `dcmax` and error above `absmax`.
 4. The **only `grounded` rows** are the 5 V CMOS and 40 V-class LDMOS voltage limits, the Schottky/zener

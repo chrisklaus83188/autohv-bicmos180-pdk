@@ -24,7 +24,7 @@ end-to-end. Here is the current cross-check, at commit `0d16789`
 |:-:|---|---|---|
 | **#1** | `BVCR mid n V={V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n))}` in the 5 R subckts | "Timestep too small" abort in any non-trivial transient | `pdk_validation/regression/transients/r_thru_zero.cir` drives **1 MHz sine through V(p,n)=0** on **RNWELL** (strongest VCR, 8000 ppm/V). Runs in **~55 ms**. Pass since commit `0c4992e`. |
 | **#2** | `Cextra p n C={C0NOM*(VCC1*sqrt(...)+VCC2*V*V)}` in the 4 C subckts | "Timestep too small" at t=0 for any deck including one | `pdk_validation/regression/transients/c_thru_zero.cir` drives **1 MHz sine through V(p,n)=0** on **CMIM_HI** (strongest VCC). Runs in **~55 ms**. Pass since `0c4992e`. |
-| **#3** | `Vshift g g_int DC {-DVTH_MM}` collapses to 0 V VSRC when `MM_ON=0`; two LDMOSes sharing a gate ⇒ singular matrix | Failure cited as the immediate blocker in level shifters | Phase A smoke runs **every VDMOS device × all 5 corners × MM_ON ∈ {0,1} × PROC_ON ∈ {0,1} = 260 ops** (40 dev × 5 × 4 / 6 families ≈ 260 VDMOS ops), all converging. **Just ran a fresh cascoded-pair test** (two NDMOS200 + two NDMOS120, all four with shared gates and `MM_ON=0`): converges cleanly. No singular-matrix warning. |
+| **#3** | `Vshift g g_int DC {-DVTH_MM}` collapses to 0 V VSRC when `MM_ON=0`; two LDMOSes sharing a gate ⇒ singular matrix | Failure cited as the immediate blocker in level shifters | Phase A smoke runs **every VDMOS device × all 5 corners × MM_ON ∈ {0,1} × PROC_ON ∈ {0,1} = 260 ops** (40 dev × 5 × 4 / 6 families ≈ 260 VDMOS ops), all converging. **Just ran a fresh cascoded-pair test** (two NDMOS200V + two NDMOS120V, all four with shared gates and `MM_ON=0`): converges cleanly. No singular-matrix warning. |
 | **#4** | `Bavl ci b I={abs(i(Vsen))*( 1/(1-min(max(V(ci,b)/BVCBO,0),0.997)**4) - 1 )}` in the 4 BJT subckts | "Hits the same convergence wall" | **P2.1 audit** in `pdk_validation/bjt_avalanche_stress/` swept all 4 BJTs in DC from 0 to BVCBO+20 %, in transient ramp through BVCBO over 1 µs, and in transient switching with Ic crossing 0 on 1 ns edges. All converge in 50–250 ms each. `pdk_validation/regression/transients/bjt_breakdown_ramp.cir` exercises this on every CI run since commit `415d8ea`. |
 
 Full regression baseline at current `HEAD` (`0d16789`):
@@ -156,12 +156,12 @@ Vgd  gd 0 PULSE(0 5 5n 1n 1n 50n 100n)
 Vdd  vdd 0 100
 Rmid vdd mid 1k
 
-XN1 vdd gd mid  NDMOS200 W=40u L=8u
-XN2 mid gd 0    NDMOS200 W=40u L=8u
+XN1 vdd gd mid  NDMOS200V W=40u L=8u
+XN2 mid gd 0    NDMOS200V W=40u L=8u
 
 Vgd2 gd2 0 PULSE(0 5 5n 1n 1n 50n 100n)
-XN3 vdd  gd2 mid2 NDMOS120 W=40u
-XN4 mid2 gd2 0    NDMOS120 W=40u
+XN3 vdd  gd2 mid2 NDMOS120V W=40u
+XN4 mid2 gd2 0    NDMOS120V W=40u
 
 .control
 tran 1n 200n
@@ -201,7 +201,7 @@ reached, no `Timestep too small`.
 $ cd <pdk-checkout> && git rev-parse HEAD
 ```
 
-If you're on a commit older than `b90b132` (the PDMOS200 add), it
+If you're on a commit older than `b90b132` (the PDMOS200V add), it
 predates several P0/P1 fixes that may matter here.
 
 ## 4. What I'll do once you reply

@@ -7,7 +7,7 @@ QUESTION
     A factor of two that rescales every kp target in docs/anchor-values.json.
 
 METHOD
-    An isolation copy of NDMOS200_INT with rd/rs/rq forced to R_ZERO, so the
+    An isolation copy of NDMOS200V_INT with rd/rs/rq forced to R_ZERO, so the
     measured current is pure channel and no series drop can masquerade as a
     smaller prefactor. Nothing else is touched -- ksubthres in particular is
     left alone, and the bias points sit 1-3 V into strong inversion where the
@@ -48,7 +48,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import exp_lib as E                                                # noqa: E402
 
 SUBDIR = "d1_kp_convention"
-DEV = "NDMOS200"
+DEV = "NDMOS200V"
 VOV_LIST = [1.0, 2.0, 3.0]
 VDS = 10.0
 

@@ -3,7 +3,7 @@
 ## Summary
 
 Monte Carlo **works** in this PDK on ngspice-45: local-mismatch draws are live and
-independent per instance. A 200-run mismatch-only MC on a simple NMOS50 current mirror
+independent per instance. A 200-run mismatch-only MC on a simple NMOS5V0 current mirror
 gives **σ/µ = 4.33 %**, matching both the sizing guide (4.08 %) and a hand calculation
 from the wrapper's own mismatch expression (4.01 %) within sampling noise.
 
@@ -33,8 +33,8 @@ python 01_mc_mirror.py
 python report.py
 ```
 
-Device under test: two-transistor NMOS mirror, both `NMOS50` W = 4.7 µm, L = 1 µm (the
-sizing guide's gm/Id ≈ 6 entry for NMOS50 at 10 µA). Ideal 10 µA into the diode-connected
+Device under test: two-transistor NMOS mirror, both `NMOS5V0` W = 4.7 µm, L = 1 µm (the
+sizing guide's gm/Id ≈ 6 entry for NMOS5V0 at 10 µA). Ideal 10 µA into the diode-connected
 device, output held at 2.5 V. TT (`case=0`), 5.0 V, 27 °C, `MM_ON=1`, `PROC_ON=0`.
 Seeds 1..200, one ngspice invocation each, so results are bit-reproducible.
 
@@ -78,7 +78,7 @@ Spectre `montecarlo` are all parse errors. The loop must be built by hand.
 - **A fixed `.option seed` freezes an in-deck loop.** `reset` re-seeds to the same value.
   Adding a seed is good practice in other tools and here silently yields σ = 0.
 - **Recommended in-simulator pattern:** one invocation per sample, `.option seed=k`.
-- **`AGAUSS(nom, avar, n)` has σ = avar/n.** The wrapper coefficient 0.033 V·µm for NMOS50
+- **`AGAUSS(nom, avar, n)` has σ = avar/n.** The wrapper coefficient 0.033 V·µm for NMOS5V0
   is therefore a 3σ figure (1σ = 11 mV·µm). Reading it as 1σ predicts 3× the spread.
   The third argument scales; it does **not** truncate, so tails are unbounded Gaussian.
   Largest draw seen in 200 runs was 3.14σ; the run cannot distinguish truncated from
@@ -94,7 +94,7 @@ Spectre `montecarlo` are all parse errors. The loop must be built by hand.
 Every MOS wrapper computes `.param AUM2={(W/1u)*(L/1u)}` with no `M`, and all three
 mismatch terms (and the `MM_SIGMA` deterministic path) scale as `1/sqrt(AUM2)`.
 
-Measured in-session, NMOS50 mirror at 10 µA, 120 runs per row:
+Measured in-session, NMOS5V0 mirror at 10 µA, 120 runs per row:
 
 | geometry | total area | σ(delvto) | σ/µ(Iout) |
 |---|---|---|---|

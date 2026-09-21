@@ -9,7 +9,7 @@ A factor of two that rescales every `kp` target in `docs/anchor-values.json`
 
 ## METHOD
 
-An isolation copy of `NDMOS200_INT` with `rd`, `rs`, `rq` forced to
+An isolation copy of `NDMOS200V_INT` with `rd`, `rs`, `rq` forced to
 `R_ZERO = 1e-9 Ω`, so no series drop can suppress the measured prefactor.
 Everything else — `ksubthres` included — is byte-identical to the PDK card.
 
@@ -40,7 +40,7 @@ constant term.
 | quantity | value |
 |---|---|
 | fitted prefactor `A` (corrected) | **0.11000000 A/V²** |
-| card `kp` (NDMOS200, TT) | 0.22 |
+| card `kp` (NDMOS200V, TT) | 0.22 |
 | `kp/2` | 0.11 |
 | **ratio `A/kp`** | **0.4999999986** |
 | max relative residual | 2.8e-7 |
@@ -84,4 +84,4 @@ python run.py
 ```
 
 Decks land in `../../decks/d1_kp_convention/`, the isolation copy in
-`../../results/local_models/NDMOS200_d1.mod`.
+`../../results/local_models/NDMOS200V_d1.mod`.

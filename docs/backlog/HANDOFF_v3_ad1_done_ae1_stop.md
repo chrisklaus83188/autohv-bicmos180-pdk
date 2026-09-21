@@ -3,7 +3,7 @@
 **Responds to:** the AD1 ruling reply (author `BV_<bjt>`, fix presets 3/4, commit Phase 2)
 **Branch:** `mc-realism` @ `c89aa35`. **Nothing committed this round** — the tree is mid-transition.
 **Date:** 2026-09-19
-**Status:** AD1 is implemented and the DNMOS20 preset gap is fixed. The generator writes a correct
+**Status:** AD1 is implemented and the DNMOS20V preset gap is fixed. The generator writes a correct
 `.inc` and the whole PDK simulates. But **the generated file is unreadable to the tools that parse
 it**, which silently degraded 5 of 40 direction records and makes `--check` unable to ever fail.
 That is AE1, and it is a §2 stop.
@@ -37,17 +37,17 @@ The whole PDK simulates, BJTs included:
 
 | device | `abs(i)` at case 0 |
 |---|---|
-| NMOS18 / NDMOS200 | 1.083416e-03 / 1.003823e-03 |
+| NMOS1V8 / NDMOS200V | 1.083416e-03 / 1.003823e-03 |
 | NPN_LV / PNP_LAT | 9.775987e-06 / 6.124744e-06 |
 | NPN_HV / PNP_HV | 9.618406e-06 / 4.671346e-06 |
 
-**A mistake worth recording:** I first hand-wrote the 13-device `bv` list and dropped DNMOS20,
+**A mistake worth recording:** I first hand-wrote the 13-device `bv` list and dropped DNMOS20V,
 because its name does not match the `[NP]DMOS` shape I was eyeballing. It is now **derived from
 the cards** — membership is computed by looking for a `bv` line, not typed out.
 
-## 2. The DNMOS20 preset gap — fixed
+## 2. The DNMOS20V preset gap — fixed
 
-Presets 3/4 split the VDMOS by `startswith("N")` / `startswith("P")`. `DNMOS20` begins with "D", so
+Presets 3/4 split the VDMOS by `startswith("N")` / `startswith("P")`. `DNMOS20V` begins with "D", so
 it fell into neither and silently vanished from FS/SF. Replaced with explicit `VDMOS_N` / `VDMOS_P`
 lists, so a future device whose name starts with something else cannot be misfiled the same way.
 
@@ -76,11 +76,11 @@ Two failures, **one root cause**: the generated form is unreadable to code writt
 
 ### 3.1 σ changes cannot propagate; `--check` can never go red
 
-Edited `VTH_NMOS50` σ +10 % in a scratch copy. `variable_table` returned the new value
+Edited `VTH_NMOS5V0` σ +10 % in a scratch copy. `variable_table` returned the new value
 (**0.0181412**). The emitted card line kept the old one:
 
 ```
-+ vth0={0.88 + 0.016492*Z_VTH_NMOS50}
++ vth0={0.88 + 0.016492*Z_VTH_NMOS5V0}
 ```
 
 The card-line branch fires on `"_isTT" in expr or \bP_[A-Z]`. An already-generated line contains
@@ -94,9 +94,9 @@ change. B1's "editing a σ turns `--check` red" cannot hold.
 
 | card.param | TT parsed |
 |---|---|
-| `NMOS50.vth0`, `.u0`, `.rdsw` | **None** |
+| `NMOS5V0.vth0`, `.u0`, `.rdsw` | **None** |
 | `NPN_LV.bf`, `.rb` | **None** |
-| `DNMOS20.vto` | **None** |
+| `DNMOS20V.vto` | **None** |
 | `NPN_LV.is` | 2e-16 — a deterministic line the generator never touched |
 
 No TT → no override built → the variable is dropped from the direction **without a record**:
@@ -104,10 +104,10 @@ No TT → no override built → the variable is dropped from the direction **wit
 | group | was | now |
 |---|---|---|
 | NPN_LV / PNP_LAT / NPN_HV / PNP_HV | 3 terms, 26.0 / 31.4 / 25.9 / 32.2 % | **1 term** (`VBE_*` only), 23.2 % |
-| DNMOS20 | 3 terms, 9.35 % | **0 terms, 0.00 %** |
+| DNMOS20V | 3 terms, 9.35 % | **0 terms, 0.00 %** |
 
 A zero-length direction cannot be normalised to 3σ, so `corners.json` would carry a degenerate
-DNMOS20 vector.
+DNMOS20V vector.
 
 **I called this wrong once.** I reported the collapse as a measurement-time artifact of the
 half-broken tree and predicted it would clear once `.lib` and `.inc` were consistent. I
@@ -155,7 +155,7 @@ generated output goes.
 
 | claim / action | what was true |
 |---|---|
-| hand-wrote the 13-device `bv` scope | dropped DNMOS20; membership is now derived from the cards |
+| hand-wrote the 13-device `bv` scope | dropped DNMOS20V; membership is now derived from the cards |
 | "the direction collapse is a measurement-time artifact, it will clear" | it did not clear; same root cause as the σ bug |
 | dismissed the self-referential-input concern as an over-reach | it was the actual defect, two turns later |
 | `AUTOGEN` banner emitted unconditionally | stacked a second copy on re-run, so `--check` failed after a write |

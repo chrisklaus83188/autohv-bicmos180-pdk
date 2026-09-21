@@ -15,8 +15,8 @@ N 550 -545 640 -545 {lab=PG}
 N 545 -635 700 -635 {lab=SRC}
 N 545 -305 700 -305 {lab=SNK}
 N 700 -470 765 -470 {lab=OUT}
-C {autohv/NMOS50.sym} 680 -395 0 0 {name=M1 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
-C {autohv/PMOS50.sym} 680 -545 2 1 {name=M2 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/NMOS5V0.sym} 680 -395 0 0 {name=M1 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
+C {autohv/PMOS5V0.sym} 680 -545 2 1 {name=M2 W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X}
 C {ipin.sym} 550 -395 0 0 {name=p1 lab=NG}
 C {ipin.sym} 550 -545 0 0 {name=p2 lab=PG}
 C {iopin.sym} 545 -635 2 0 {name=p3 lab=SRC}

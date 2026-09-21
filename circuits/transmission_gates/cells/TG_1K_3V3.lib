@@ -1,5 +1,5 @@
 * TG_1K_3V3 -- CMOS transmission gate, 3.3 V domain, ~1 kohm on-resistance
-* AutoHV BiCMOS 180 PDK | NMOS33/PMOS33, L = 0.35 um, Wp/Wn = 2.5
+* AutoHV BiCMOS 180 PDK | NMOS3V3/PMOS3V3, L = 0.35 um, Wp/Wn = 2.5
 *
 * Bodies are tied to the rails: NMOS body to gnd, PMOS body to vdd.
 * This is the shipping default.  Body effect is present and is already
@@ -15,9 +15,9 @@
 
 .subckt TG_1K_3V3 a b en vdd gnd
 * control inverter: enb = !en  (bodies always on the rails)
-XINVP enb en vdd vdd PMOS33 W=1.15u M=1 L=0.35u
-XINVN enb en gnd gnd NMOS33 W=0.46u M=1 L=0.35u
+XINVP enb en vdd vdd PMOS3V3 W=1.15u M=1 L=0.35u
+XINVN enb en gnd gnd NMOS3V3 W=0.46u M=1 L=0.35u
 * pass pair
-XN b en  a gnd NMOS33 W=4.6u M=1 L=0.35u
-XP b enb a vdd PMOS33 W=11.5u M=1 L=0.35u
+XN b en  a gnd NMOS3V3 W=4.6u M=1 L=0.35u
+XP b enb a vdd PMOS3V3 W=11.5u M=1 L=0.35u
 .ends TG_1K_3V3

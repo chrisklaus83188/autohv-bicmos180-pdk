@@ -1,5 +1,5 @@
 {
- "NDMOS20": {
+ "NDMOS20V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {
@@ -23,7 +23,7 @@
    }
   }
  },
- "NDMOS40": {
+ "NDMOS40V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {
@@ -47,7 +47,7 @@
    }
   }
  },
- "NDMOS60": {
+ "NDMOS60V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {
@@ -71,7 +71,7 @@
    }
   }
  },
- "NDMOS80": {
+ "NDMOS80V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {
@@ -95,7 +95,7 @@
    }
   }
  },
- "NDMOS120": {
+ "NDMOS120V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {
@@ -119,7 +119,7 @@
    }
   }
  },
- "NDMOS200": {
+ "NDMOS200V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {
@@ -143,7 +143,7 @@
    }
   }
  },
- "PDMOS20": {
+ "PDMOS20V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {
@@ -167,7 +167,7 @@
    }
   }
  },
- "PDMOS40": {
+ "PDMOS40V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {
@@ -191,7 +191,7 @@
    }
   }
  },
- "PDMOS60": {
+ "PDMOS60V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {
@@ -215,7 +215,7 @@
    }
   }
  },
- "PDMOS80": {
+ "PDMOS80V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {
@@ -239,7 +239,7 @@
    }
   }
  },
- "PDMOS120": {
+ "PDMOS120V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {
@@ -263,7 +263,7 @@
    }
   }
  },
- "PDMOS200": {
+ "PDMOS200V": {
   "supply": 10.0,
   "vdmos": true,
   "points": {

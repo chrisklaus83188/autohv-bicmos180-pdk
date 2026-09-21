@@ -89,11 +89,11 @@ def provenance(extra=None):
 # also the wrapper defaults.  Wmax/Mmax from pdk_validation/device_limits.csv.
 # idc_dens is the DC current density rating (mA per um of drawn width).
 DOMAINS = {
-    "1v8": dict(n="NMOS18", p="PMOS18", vdd=1.80, Wmin=0.22, Lmin=0.18,
+    "1v8": dict(n="NMOS1V8", p="PMOS1V8", vdd=1.80, Wmin=0.22, Lmin=0.18,
                 Wmax=100.0, Mmax=1000, idc_dens=2.0, vgs_dcmax=2.0),
-    "3v3": dict(n="NMOS33", p="PMOS33", vdd=3.30, Wmin=0.30, Lmin=0.35,
+    "3v3": dict(n="NMOS3V3", p="PMOS3V3", vdd=3.30, Wmin=0.30, Lmin=0.35,
                 Wmax=100.0, Mmax=1000, idc_dens=1.6, vgs_dcmax=3.6),
-    "5v0": dict(n="NMOS50", p="PMOS50", vdd=5.00, Wmin=0.40, Lmin=0.50,
+    "5v0": dict(n="NMOS5V0", p="PMOS5V0", vdd=5.00, Wmin=0.40, Lmin=0.50,
                 Wmax=100.0, Mmax=1000, idc_dens=1.2, vgs_dcmax=5.5),
 }
 

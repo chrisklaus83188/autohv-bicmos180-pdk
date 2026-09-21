@@ -64,36 +64,36 @@
 
 .subckt CMP_RR inp inn out vdd vss ibp_5uA EN params: IREF=5u FIN=1
 * --- bias generation ---
-Xrbn  ibg_n  ibg_n  vss vss NMOS18 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
-Xmir  pmd ibg_n  vss vss NMOS18 W=10u L=1u M=1            ; mirror IREF up
-Xrbp  pmd pmd vdd vdd PMOS18 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
-Xvc1  k   k   vdd vdd PMOS18 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
-Xvc2  vcp vcp k   vdd PMOS18 W=20u L=1u M=1            ;   cascode bias: x tracks the rail so
-Xisk  vcp ibg_n  vss vss NMOS18 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
+Xrbn  ibg_n  ibg_n  vss vss NMOS1V8 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
+Xmir  pmd ibg_n  vss vss NMOS1V8 W=10u L=1u M=1            ; mirror IREF up
+Xrbp  pmd pmd vdd vdd PMOS1V8 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
+Xvc1  k   k   vdd vdd PMOS1V8 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
+Xvc2  vcp vcp k   vdd PMOS1V8 W=20u L=1u M=1            ;   cascode bias: x tracks the rail so
+Xisk  vcp ibg_n  vss vss NMOS1V8 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
 * --- rail-to-rail folded-cascode input stage ---
-Xmtn  sn  ibg_n  vss vss NMOS18 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
-Xn1   x   inp sn  vss NMOS18 W={40u*FIN} L={1u*FIN} M=1
-Xn2   y   inn sn  vss NMOS18 W={40u*FIN} L={1u*FIN} M=1
-Xmtp  sp  pmd vdd vdd PMOS18 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)
-Xp1   a   inp sp  vdd PMOS18 W={80u*FIN} L={1u*FIN} M=1
-Xp2   b   inn sp  vdd PMOS18 W={80u*FIN} L={1u*FIN} M=1
-Xf1   x   pmd vdd vdd PMOS18 W=60u L=1u M=1            ; top fold sources
-Xf2   y   pmd vdd vdd PMOS18 W=60u L=1u M=1
-Xcp1  a   vcp x   vdd PMOS18 W=40u L=1u M=1            ; PMOS cascodes x->a, y->b
-Xcp2  b   vcp y   vdd PMOS18 W=40u L=1u M=1
-Xmm1  a   a   vss vss NMOS18 W={20u*FIN} L={1u*FIN} M=1 ; bottom mirror diode (a)
-Xmm2  b   a   vss vss NMOS18 W={20u*FIN} L={1u*FIN} M=1 ; mirror out -> stage-1 out = b
+Xmtn  sn  ibg_n  vss vss NMOS1V8 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
+Xn1   x   inp sn  vss NMOS1V8 W={40u*FIN} L={1u*FIN} M=1
+Xn2   y   inn sn  vss NMOS1V8 W={40u*FIN} L={1u*FIN} M=1
+Xmtp  sp  pmd vdd vdd PMOS1V8 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)
+Xp1   a   inp sp  vdd PMOS1V8 W={80u*FIN} L={1u*FIN} M=1
+Xp2   b   inn sp  vdd PMOS1V8 W={80u*FIN} L={1u*FIN} M=1
+Xf1   x   pmd vdd vdd PMOS1V8 W=60u L=1u M=1            ; top fold sources
+Xf2   y   pmd vdd vdd PMOS1V8 W=60u L=1u M=1
+Xcp1  a   vcp x   vdd PMOS1V8 W=40u L=1u M=1            ; PMOS cascodes x->a, y->b
+Xcp2  b   vcp y   vdd PMOS1V8 W=40u L=1u M=1
+Xmm1  a   a   vss vss NMOS1V8 W={20u*FIN} L={1u*FIN} M=1 ; bottom mirror diode (a)
+Xmm2  b   a   vss vss NMOS1V8 W={20u*FIN} L={1u*FIN} M=1 ; mirror out -> stage-1 out = b
 * --- stage 2: common-source gain + current-source load ---
-Xs2n  o2  b   vss vss NMOS18 W=40u L=1u M=1
-Xs2p  o2  pmd vdd vdd PMOS18 W=40u L=1u M=1
+Xs2n  o2  b   vss vss NMOS1V8 W=40u L=1u M=1
+Xs2p  o2  pmd vdd vdd PMOS1V8 W=40u L=1u M=1
 * --- stage 3: CMOS inverter (rail-to-rail digital out) ---
-Xbp   out o2  vdd vdd PMOS18 W=20u L=0.5u M=1
-Xbn   out o2  vss vss NMOS18 W=10u L=0.5u M=1
+Xbp   out o2  vdd vdd PMOS1V8 W=20u L=0.5u M=1
+Xbn   out o2  vss vss NMOS1V8 W=10u L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
 Xei1  EN    ENB   vdd vss INV_1V8                          ; ENB   = /EN  (PDK cell)
 Xei2  ENB   ENbuf vdd vss INV_1V8                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg_n vss NMOS18 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
-Xshn  ibg_n ENB   vss     vss NMOS18 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
-Xshp  pmd   ENbuf vdd     vdd PMOS18 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
-Xsho2 o2    ENB   vss     vss NMOS18 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)
+Xser  ibp_5uA ENbuf ibg_n vss NMOS1V8 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
+Xshn  ibg_n ENB   vss     vss NMOS1V8 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
+Xshp  pmd   ENbuf vdd     vdd PMOS1V8 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
+Xsho2 o2    ENB   vss     vss NMOS1V8 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)
 .ends CMP_RR

@@ -28,8 +28,8 @@ at measured values; (4) HV charge pump = minimal first qualification, not deleti
 |---|---|---|
 | Delay/pulse cells ~12× off 20 ns target until re-bisected | C | ⚠ **did NOT move — premise error.** The design uses **RPOLY_HI** (sheet unchanged at 1200 Ω/□), never RPOLY_LO; the ÷12 was RPOLY_LO's change. Nominal L_R unchanged; what moved is the **slowest corner (hot→cold)** via RPOLY_HI tc1 sign-flip. Finding filed. |
 | Async worst pins (NOR2/OR2) `cap_limited` + off-centre V_M → centre under 6.5 fF | A | ☑ **confirmed** — NOR2 `cap_limited True→False` all 3 domains; V_M low-end lifted |
-| Comparator σ(offset) ×~2.4 on GP (NMOS50/PMOS50) cells | B | ☑ **confirmed** — 5 V cells ×2.1–2.8 (median 2.4); 3.3/1.8 V cells flat ×0.9–1.2 (correct: only the 50 V pair widened) |
-| Anything biased from NDMOS200/PDMOS200 drive ↓ ~35 % (phase-4 rd) | B,C,E | ☑ **N/A — no old baseline in circuits/.** Comparators & delay use core 50/33/18 V MOS (not 200 V). The only NDMOS200/PDMOS200 circuit is the level shifter (Phase E), which is a *first* qualification — no pre-fix number to compare against. |
+| Comparator σ(offset) ×~2.4 on GP (NMOS5V0/PMOS5V0) cells | B | ☑ **confirmed** — 5 V cells ×2.1–2.8 (median 2.4); 3.3/1.8 V cells flat ×0.9–1.2 (correct: only the 50 V pair widened) |
+| Anything biased from NDMOS200V/PDMOS200V drive ↓ ~35 % (phase-4 rd) | B,C,E | ☑ **N/A — no old baseline in circuits/.** Comparators & delay use core 50/33/18 V MOS (not 200 V). The only NDMOS200V/PDMOS200V circuit is the level shifter (Phase E), which is a *first* qualification — no pre-fix number to compare against. |
 | Mirror-study MC σ ×~2.4; DC conclusions (L=2 µm, cascode λ_eff) hold | D | ☑ **confirmed** — mismatch-mode σ ×2.21–2.61 (median 2.47); DC λ_eff/gain/r_out identical old→new (L=2 µm, cascode flattening hold) |
 | Anything sized on RPOLY_LO: 12× resistance shift | C | ☑ **N/A in circuits/** — the delay design (the only RPOLY user) uses RPOLY_HI, not RPOLY_LO. No circuits library sizes on RPOLY_LO. |
 | *(observed, not pre-registered)* async rise/fall net shift from F6 junction caps | A | ☑ noted — NOR/OR/XOR fall +45–60 %, simple cells ±10 % |
@@ -41,9 +41,9 @@ at measured values; (4) HV charge pump = minimal first qualification, not deleti
 All five phases' **data layers** are complete, committed (one commit per phase), and consistent with
 `v2-grounded`. Every pre-registered mover is accounted for (table above): three confirmed as expected,
 one confirmed ×2.4 (mirror σ), one localised (comparator σ — 5 V only), one **premise error caught**
-(delay L_R ÷12 — the design uses RPOLY_HI), and the NDMOS200 drive-down marked N/A (no old baseline in
+(delay L_R ÷12 — the design uses RPOLY_HI), and the NDMOS200V drive-down marked N/A (no old baseline in
 `circuits/`). Two things that *didn't* move were also verified: async input-pin cap (gate load,
-insensitive to F6) and the mirror DC conclusions (PMOS50 λ untouched). **Nothing moved that wasn't
+insensitive to F6) and the mirror DC conclusions (PMOS5V0 λ untouched). **Nothing moved that wasn't
 expected.**
 
 **Ground Rule 2 amendment (RULED + IMPLEMENTED).** The escalation
@@ -117,7 +117,7 @@ target** (`CAP_HARD`, `CAP_MODEL_TGT` in `async_run.py`). Old contract was met w
 (worst pin NOR2 = 4.978 fF against a 5.0 fF wall).
 
 **Key finding — the contract, not the raw cap number, is what F6 moved.** The input-pin capacitance
-is a *gate* load; the F6 BSIM3 junction caps (`cj=0.0018`, `cjsw=1e-10` on NMOS18/…) sit on
+is a *gate* load; the F6 BSIM3 junction caps (`cj=0.0018`, `cjsw=1e-10` on NMOS1V8/…) sit on
 drain/source diffusions and load the **output**, not the input gate. Re-measuring the *input* cap at
 fixed sizing therefore reproduces the old numbers to <0.01 fF — the pre-registered "worst pins above
 5 fF" does not appear as a raw-fF jump. What F6 actually moves is (a) **V_M centring** for the cells
@@ -198,7 +198,7 @@ no generator scripts, which conflicts with ground rule 2. Escalated to the orche
 ### Offset re-sign — σ(offset) old→new (the pre-registered ×~2.4 mover)
 
 **The 50 V pair moved, exactly as pre-registered; the 33/18 V devices did not.** `A_VT` was widened
-only on NMOS50/PMOS50, so only the 5 V comparators (GP-5V + RR-5V) re-sign upward. Iq and gain are
+only on NMOS5V0/PMOS5V0, so only the 5 V comparators (GP-5V + RR-5V) re-sign upward. Iq and gain are
 deterministic and unchanged everywhere.
 
 **5 V cells (re-signed — grades drop):**
@@ -250,7 +250,7 @@ sub-mV 5 V precision grade, raise `FIN` on the `lo2` variants by ~×2.4 (e.g. `F
 - **Joint NIN+PIN ICMR (GP):** 5 V rail [0.22, 4.75] V at VDD=5.0 (continuous); a low-CM coverage
   gap opens only at the 3.2 V UVLO corner. These are the first script-emitted (diffable) ICMR tables.
 
-Comparators use core 50/33/18 V MOS, **not** NDMOS200/PDMOS200 — so the phase-4 HV-rd drive mover
+Comparators use core 50/33/18 V MOS, **not** NDMOS200V/PDMOS200V — so the phase-4 HV-rd drive mover
 does not apply here.
 
 **Findings filed against frozen anchors:** none (the σ widening is the intended `A_VT` change).
@@ -304,7 +304,7 @@ Re-ran `gen_delay_cells.py` — netlists regenerate **identically** (sizing come
 testbenches against `v2-grounded`; updated the README table (old values kept in parentheses) and
 **preserved both documented simulation findings verbatim** (`.tran … uic` requirement; 100 µm reset
 switch). Every slope **dropped ~9 % (low I) to ~26 % (100 µA)**: the F6 junction caps now load the
-`RAMP` node (PMOS50 mirror drain + NMOS50 switch drain), raising C_eff ~10 % so dV/dt = I/C_eff falls —
+`RAMP` node (PMOS5V0 mirror drain + NMOS5V0 switch drain), raising C_eff ~10 % so dV/dt = I/C_eff falls —
 the same F6 mechanism as the async output slowdown. Design unchanged → re-measure, not re-design.
 
 > Note on ordering: this sub-directory nominally depends on Phase D (`designs.json`). The mirror DC
@@ -343,7 +343,7 @@ Provenance stamped in mc_results.json.
 
 - **DC conclusions HOLD (verified exactly).** `designs.json` W-sizing stable (only a 12th-significant-
   digit gm_ID/IC wiggle); the L = 2 µm lock and the cascode λ_eff flattening are **identical** old→new
-  (PMOS50 λ was not touched, as pre-registered):
+  (PMOS5V0 λ was not touched, as pre-registered):
 
   | topo (B_10u, TT, 27 °C) | gain | λ_eff (/V) | r_out | old→new |
   |---|---|---|---|---|
@@ -355,7 +355,7 @@ Provenance stamped in mc_results.json.
 
 - **MC σ re-signed — the pre-registered ×~2.4 mover confirmed.** Mismatch-mode σ/µ of I_out@Vdd/2
   **widened ×2.21–2.61 (median 2.47)** across all 3 designs × 3 topologies; procmm mode tracks it. Every
-  mirror is PMOS50-based, so the 50 V A_VT widening flows straight through. Example (B_10u MIR_S,
+  mirror is PMOS5V0-based, so the 50 V A_VT widening flows straight through. Example (B_10u MIR_S,
   mismatch): 0.52 % → 1.26 % σ/µ. The DC conclusions holding while σ doubles is exactly the
   pre-registered split (matching widened; λ/r_out did not).
 
@@ -372,7 +372,7 @@ Data layer (metrics.csv, mc_results.json, plots, netlists) is regenerated and co
 ## Phase E — `hv_charge_pump/hv_up_lvlsh/` · activity: **first qualification**
 
 The only phase producing *new* characterization rather than regenerating old. The high-side
-gate-driver level shifter (the repo's only 200 V circuit — NDMOS200/PDMOS200) had **never been
+gate-driver level shifter (the repo's only 200 V circuit — NDMOS200V/PDMOS200V) had **never been
 simulated**: its only testbench was the commented example in `levelshifter_top.spice`. Per Step-0
 ruling 4: minimal first qualification, not deletion — build a working testbench, verify function at
 the 200 V rail, measure levels/switching/bias; if broken beyond sizing, document the failure and the

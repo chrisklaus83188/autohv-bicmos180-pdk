@@ -19,10 +19,10 @@
   },
   "read_only": true,
   "version": "4.0-phase4-grounded",
-  "merge_note": "Phase-4 Step-1: merged pass-3 catalog amendments (P3-1..P3-5) and the Step-0 two-regime 200V ladder (0.73 below 40V grounded; ~1.0-1.2 above 40V literature). N 60/80/120/200V ron_times_w = 15/21/32/45 kohm.um; P = N x 2.5->3.0 rising penalty. Added VDMOS va_class and DNMOS20 depletion Idss/Vth anchors. 20-40V rungs and all kp grounded/unchanged.",
-  "expected_pass_now": "F1/F2/F3/F4/F6/F7, ladder-B, NMOS12 -- previously expected-fail, now expected to pass their amended bands after the phase-3 fix batch."
+  "merge_note": "Phase-4 Step-1: merged pass-3 catalog amendments (P3-1..P3-5) and the Step-0 two-regime 200V ladder (0.73 below 40V grounded; ~1.0-1.2 above 40V literature). N 60/80/120/200V ron_times_w = 15/21/32/45 kohm.um; P = N x 2.5->3.0 rising penalty. Added VDMOS va_class and DNMOS20V depletion Idss/Vth anchors. 20-40V rungs and all kp grounded/unchanged.",
+  "expected_pass_now": "F1/F2/F3/F4/F6/F7, ladder-B, NMOS12V -- previously expected-fail, now expected to pass their amended bands after the phase-3 fix batch."
  },
- "NMOS18": {
+ "NMOS1V8": {
   "cox": {
    "target": 8.125,
    "lo": 7.333,
@@ -150,7 +150,7 @@
    "tag": "model"
   }
  },
- "PMOS18": {
+ "PMOS1V8": {
   "cox": {
    "target": 8.125,
    "lo": 7.333,
@@ -278,7 +278,7 @@
    "tag": "model"
   }
  },
- "NMOS33": {
+ "NMOS3V3": {
   "cox": {
    "target": 5.116,
    "lo": 4.617,
@@ -406,7 +406,7 @@
    "tag": "model"
   }
  },
- "PMOS33": {
+ "PMOS3V3": {
   "cox": {
    "target": 5.116,
    "lo": 4.617,
@@ -534,7 +534,7 @@
    "tag": "model"
   }
  },
- "NMOS50": {
+ "NMOS5V0": {
   "cox": {
    "target": 3.139,
    "lo": 2.833,
@@ -662,7 +662,7 @@
    "tag": "model"
   }
  },
- "PMOS50": {
+ "PMOS5V0": {
   "cox": {
    "target": 3.139,
    "lo": 2.833,
@@ -790,7 +790,7 @@
    "tag": "model"
   }
  },
- "NMOS12": {
+ "NMOS12V": {
   "cox": {
    "target": 0.0,
    "lo": 0.95,
@@ -918,7 +918,7 @@
    "tag": "model"
   }
  },
- "PMOS12": {
+ "PMOS12V": {
   "cox": {
    "target": 0.0,
    "lo": 0.95,
@@ -1046,7 +1046,7 @@
    "tag": "model"
   }
  },
- "NDMOS20": {
+ "NDMOS20V": {
   "rsp_specific_ron": {
    "target": 0.3099,
    "lo": 0.1549,
@@ -1199,7 +1199,7 @@
    "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
- "PDMOS20": {
+ "PDMOS20V": {
   "rsp_specific_ron": {
    "target": 0.3099,
    "lo": 0.1549,
@@ -1352,7 +1352,7 @@
    "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
- "DNMOS20": {
+ "DNMOS20V": {
   "rsp_specific_ron": {
    "target": 0.3099,
    "lo": 0.1549,
@@ -1519,7 +1519,7 @@
    "basis": "P3-2: reference depletion Vth -1.65V"
   }
  },
- "NDMOS40": {
+ "NDMOS40V": {
   "rsp_specific_ron": {
    "target": 0.7296,
    "lo": 0.3648,
@@ -1672,7 +1672,7 @@
    "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
- "PDMOS40": {
+ "PDMOS40V": {
   "rsp_specific_ron": {
    "target": 0.7296,
    "lo": 0.3648,
@@ -1825,7 +1825,7 @@
    "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
- "NDMOS60": {
+ "NDMOS60V": {
   "rsp_specific_ron": {
    "target": 1.35,
    "lo": 0.675,
@@ -1978,7 +1978,7 @@
    "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
- "PDMOS60": {
+ "PDMOS60V": {
   "rsp_specific_ron": {
    "target": 3.3749,
    "lo": 1.6875,
@@ -2131,7 +2131,7 @@
    "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
- "NDMOS80": {
+ "NDMOS80V": {
   "rsp_specific_ron": {
    "target": 2.31,
    "lo": 1.155,
@@ -2284,7 +2284,7 @@
    "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
- "PDMOS80": {
+ "PDMOS80V": {
   "rsp_specific_ron": {
    "target": 6.1215,
    "lo": 3.0608,
@@ -2437,7 +2437,7 @@
    "basis": "pass-3 MV LDMOS output envelope VA 130-1800V (catalog+sim)"
   }
  },
- "NDMOS120": {
+ "NDMOS120V": {
   "rsp_specific_ron": {
    "target": 4.7999,
    "lo": 2.4,
@@ -2590,7 +2590,7 @@
    "basis": "P3-4 re-fit target: 200V VA 300-1000V (was ~3900V, too flat)"
   }
  },
- "PDMOS120": {
+ "PDMOS120V": {
   "rsp_specific_ron": {
    "target": 13.4398,
    "lo": 6.7199,
@@ -2743,7 +2743,7 @@
    "basis": "P3-4 re-fit target: 200V VA 300-1000V (was ~3900V, too flat)"
   }
  },
- "NDMOS200": {
+ "NDMOS200V": {
   "rsp_specific_ron": {
    "target": 9.8998,
    "lo": 4.95,
@@ -2896,7 +2896,7 @@
    "basis": "P3-4 re-fit target: 200V VA 300-1000V (was ~3900V, too flat)"
   }
  },
- "PDMOS200": {
+ "PDMOS200V": {
   "rsp_specific_ron": {
    "target": 29.6995,
    "lo": 14.85,
@@ -3730,7 +3730,7 @@
    "hi": 665.2,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "IF AREA=1 is declared as 100 um^2. Note DZ_12 and DZ_24 land nearly EQUAL - the physics ladder is not geometric.",
+   "basis": "IF AREA=1 is declared as 100 um^2. Note DZ_12V and DZ_24V land nearly EQUAL - the physics ladder is not geometric.",
    "tag": "physics",
    "conditional_on": "BJT/diode reference cell must be declared first (audit 4.3)"
   },
@@ -3753,7 +3753,7 @@
    "tag": "industry"
   }
  },
- "DZ_12": {
+ "DZ_12V": {
   "bv": {
    "target": 12,
    "lo": 11.4,
@@ -3778,7 +3778,7 @@
    "hi": 206.2,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "IF AREA=1 is declared as 100 um^2. Note DZ_12 and DZ_24 land nearly EQUAL - the physics ladder is not geometric.",
+   "basis": "IF AREA=1 is declared as 100 um^2. Note DZ_12V and DZ_24V land nearly EQUAL - the physics ladder is not geometric.",
    "tag": "physics",
    "conditional_on": "BJT/diode reference cell must be declared first (audit 4.3)"
   },
@@ -3801,7 +3801,7 @@
    "tag": "industry"
   }
  },
- "DZ_24": {
+ "DZ_24V": {
   "bv": {
    "target": 24,
    "lo": 22.8,
@@ -3826,7 +3826,7 @@
    "hi": 203.8,
    "units": "fF",
    "sigma_convention": "n/a",
-   "basis": "IF AREA=1 is declared as 100 um^2. Note DZ_12 and DZ_24 land nearly EQUAL - the physics ladder is not geometric.",
+   "basis": "IF AREA=1 is declared as 100 um^2. Note DZ_12V and DZ_24V land nearly EQUAL - the physics ladder is not geometric.",
    "tag": "physics",
    "conditional_on": "BJT/diode reference cell must be declared first (audit 4.3)"
   },
@@ -4309,7 +4309,7 @@
    "tag": "model"
   },
   "B_pdiss_includes_rdrift": {
-   "where": "NDMOS200/PDMOS200 SH_ON=1 branch",
+   "where": "NDMOS200V/PDMOS200V SH_ON=1 branch",
    "magnitude": "Vsense spans dd..dd_sense but power uses V(d,s), which includes the external Rdrift drop",
    "physical_truth": "the drift resistor is outside the transistor model, so its dissipation should not drive TJ",
    "corrupts": [
@@ -4329,7 +4329,7 @@
    "tag": "inventory"
   },
   "nmos12_pmos12_frozen_params": {
-   "where": "NMOS12_INT / PMOS12_INT",
+   "where": "NMOS12V_INT / PMOS12V_INT",
    "magnitude": "tox, cj, cjsw, js are bare constants with no corner or statistical term",
    "physical_truth": "the other six BSIM3 cards corner all four",
    "corrupts": [

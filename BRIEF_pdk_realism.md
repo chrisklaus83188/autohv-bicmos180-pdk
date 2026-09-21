@@ -34,7 +34,7 @@ W/L** — device size enters only through the multiplier `m`. The wrapper conver
 drawn width into that multiplier:
 
 ```spice
-.subckt NDMOS200 d g s params: W=10u L=8u M=1 MM_SIGMA=0
+.subckt NDMOS200V d g s params: W=10u L=8u M=1 MM_SIGMA=0
 * 200V LDMOS: W free (m=W/W_REF); L = drift length. RESURF window ~5u..16u.
 .param W_REF=10u
 .param L_REF=8u
@@ -44,7 +44,7 @@ drawn width into that multiplier:
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.011, 3)/sqrt(max(mtot,1e-6)) + ...}
 .param RDRIFT={max(1.2*(Leff/L_REF-1)/mtot, 1e-6)}
 Rdrift d dd {RDRIFT}
-M0 dd g_int s NDMOS200_INT m={mtot}
+M0 dd g_int s NDMOS200V_INT m={mtot}
 .ends
 ```
 
@@ -59,7 +59,7 @@ documented separately as fixed at process minimum, 0.6–1.0 µm.
 ## 3. The model card, verbatim `[model]`
 
 ```spice
-.model NDMOS200_INT VDMOS (nchan
+.model NDMOS200V_INT VDMOS (nchan
 + vto=1.25          kp=0.22           lambda=0.0012     theta=0.018
 + rd=1.2            rs=0.55           rg=6              rds=2e+10
 + cgdmax=3.5e-14    cgdmin=3e-15      cgs=4.8e-14       cjo=2.2e-14
@@ -68,7 +68,7 @@ documented separately as fixed at process minimum, 0.6–1.0 µm.
 + rq=1.10           vq=260            mtriode=0.45      ksubthres=0.060 )
 ```
 
-PDMOS200 is the same shape: `vto=-1.31, kp=0.088, rd=3.0, rs=1.38, bv=207`.
+PDMOS200V is the same shape: `vto=-1.31, kp=0.088, rd=3.0, rs=1.38, bv=207`.
 
 `kp` across the whole DMOS family `[model]` — note it is **monotonic in voltage
 class**, which is the signature of systematic generation:
@@ -88,7 +88,7 @@ W=10 µm, V_ov=70 mV, the model gives 1.0 mA and `kp·V_ov²` = 1.08 mA.
 
 All ngspice, typical corner, self-heating off, L = 8 µm.
 
-### 4a. Operating point at 100 µA — PDMOS200, Vds = 200 V
+### 4a. Operating point at 100 µA — PDMOS200V, Vds = 200 V
 
 | W (µm) | V_ov (mV) | gm/I (1/V) | σ(Vth) (mV) | σ(I)/I, matched pair |
 |---:|---:|---:|---:|---:|
@@ -107,22 +107,22 @@ W = 10 µm scaling as 1/√W; σ(I)/I = (gm/I)·σ(Vth)·√2.
 
 | device | Id | mA per µm of drawn width |
 |---|---:|---:|
-| NDMOS20 | 16.74 A | 1674 |
-| NDMOS40 | 11.33 A | 1133 |
-| NDMOS60 | 6.92 A | 692 |
-| NDMOS80 | 4.59 A | 459 |
-| NDMOS120 | 2.48 A | 248 |
-| NDMOS200 | 1.19 A | 119 |
-| PDMOS200 | 0.47 A | 47 |
+| NDMOS20V | 16.74 A | 1674 |
+| NDMOS40V | 11.33 A | 1133 |
+| NDMOS60V | 6.92 A | 692 |
+| NDMOS80V | 4.59 A | 459 |
+| NDMOS120V | 2.48 A | 248 |
+| NDMOS200V | 1.19 A | 119 |
+| PDMOS200V | 0.47 A | 47 |
 
 ### 4c. On-resistance at drawn W = 10 µm, V_ov = +4 V, Vds = 0.1 V
 
 | device | R_on | R_on·W (Ω·µm) |
 |---|---:|---:|
-| NDMOS200 | 4.47 Ω | 44.7 |
-| PDMOS200 | 11.59 Ω | 115.9 |
-| NDMOS20 | 0.23 Ω | 2.3 |
-| PDMOS20 | 0.48 Ω | 4.8 |
+| NDMOS200V | 4.47 Ω | 44.7 |
+| PDMOS200V | 11.59 Ω | 115.9 |
+| NDMOS20V | 0.23 Ω | 2.3 |
+| PDMOS20V | 0.48 Ω | 4.8 |
 
 ---
 
@@ -149,10 +149,10 @@ each parameter *implies*, against a drawn width of 10 µm:
 
 | device | implied W from `kp` | implied W from `R_on` | ratio between them |
 |---|---:|---:|---:|
-| NDMOS200 | 5936 µm | 2235 µm | 2.7× |
-| PDMOS200 | 2353 µm | 863 µm | 2.7× |
-| NDMOS20 | 83 720 µm | 43 288 µm | 1.9× |
-| PDMOS20 | 40 066 µm | 20 865 µm | 1.9× |
+| NDMOS200V | 5936 µm | 2235 µm | 2.7× |
+| PDMOS200V | 2353 µm | 863 µm | 2.7× |
+| NDMOS20V | 83 720 µm | 43 288 µm | 1.9× |
+| PDMOS20V | 40 066 µm | 20 865 µm | 1.9× |
 
 **Two independent DC parameters agree with each other to within ~2×, while both
 disagree with the drawn width by 200–8000×.** The residual 2× is presumably my
@@ -177,7 +177,7 @@ to a power die.
 
 The capacitances **had exactly this bug and it was found and fixed** a few months
 ago. All 13 VDMOS cards had `cgs`/`cgdmax`/`cgdmin`/`cjo` set ~1000× too large for
-the 10 µm reference cell; a 40 µm NDMOS200 measured 172 pF of drain capacitance
+the 10 µm reference cell; a 40 µm NDMOS200V measured 172 pF of drain capacitance
 where the physical figure is tens of fF. The maintainers' diagnosis was that the
 values were *"monotonic in voltage class, so they were generated systematically"* —
 a unit slip in the generator — and a uniform 1/1000 rescale landed every device in

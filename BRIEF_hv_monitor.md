@@ -27,7 +27,7 @@ missed, or is "HV = standoff only" the correct conclusion?
 | Core MOS | NMOS/PMOS at 1.2, 1.8, 3.3, 5.0 V | Full BSIM3, well characterized |
 | HV LDMOS | NDMOS 20/40/60/80/120/200 V, PDMOS 20/40/60/80/120/200 V | VDMOS macromodel + subckt wrapper |
 | Bipolar | NPN_LV (BV_CBO 14 V), PNP_LAT (18 V), NPN_HV (45 V), PNP_HV (32 V) | Gummel-Poon + behavioural avalanche |
-| Zeners | DZ_5V6, DZ_12, DZ_24 | |
+| Zeners | DZ_5V6, DZ_12V, DZ_24V | |
 | Resistors | RPOLY_HI, RPOLY_LO, RNWELL, RNPLUS, RPPLUS | |
 | Caps | CMIM_STD, CMIM_HI, CMOM, CFRINGE | |
 
@@ -36,7 +36,7 @@ stop at 5 V and the next device up is a 20 V LDMOS. Nothing in between.
 
 ### The 200 V devices in detail
 
-`NDMOS200` / `PDMOS200`, parameters `W`, `L`, `M`:
+`NDMOS200V` / `PDMOS200V`, parameters `W`, `L`, `M`:
 
 - **`L` is not channel length** — it's the drift/extended-drain length. Only the
   200 V pair exposes it; all lower-voltage LDMOS have it fixed at process minimum.
@@ -63,14 +63,14 @@ stop at 5 V and the next device up is a 20 V LDMOS. Nothing in between.
 
 | | W = 10 µm | W = 100 µm | W = 1000 µm |
 |---|---:|---:|---:|
-| NDMOS200 I_max | 1.8 A | 18 A | 180 A |
-| PDMOS200 I_max | 0.69 A | 6.9 A | 69 A |
+| NDMOS200V I_max | 1.8 A | 18 A | 180 A |
+| PDMOS200V I_max | 0.69 A | 6.9 A | 69 A |
 
 My budget is ~100 µA. That's four decades of margin. Conduction is never the limit.
 
 ### But at 100 µA every geometry is in subthreshold
 
-PDMOS200, Vds = 200 V, I = 100 µA:
+PDMOS200V, Vds = 200 V, I = 100 µA:
 
 | W (µm) | V_ov (mV) | gm/I (1/V) | σ(Vth) (mV) | σ(I)/I, matched pair |
 |---:|---:|---:|---:|---:|
@@ -110,9 +110,9 @@ that and I cannot change the model card.**
 `CP_VoltageMonitor` — senses a charge-pump output (`CP`) relative to a high-side
 input rail (`VIN`, up to 200 V), and closes a regulation loop. Current contents:
 
-- 4 × NDMOS200 and 2 × PDMOS200, **all at the default W = 10 µm, L = 8 µm**
+- 4 × NDMOS200V and 2 × PDMOS200V, **all at the default W = 10 µm, L = 8 µm**
 - 3 × RPOLY_HI resistor strings (L = 100 µm, W = 10 µm)
-- 6 × NMOS50, 1 × PMOS50, 2 × 5 V inverters
+- 6 × NMOS5V0, 1 × PMOS5V0, 2 × 5 V inverters
 - 1 × 5 V two-stage comparator (`CMP_PIN_5V0`)
 - An `IBIAS` current input
 - Basic sensing and regulation loop; **no disable switches yet**

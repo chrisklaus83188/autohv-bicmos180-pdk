@@ -45,176 +45,176 @@
 
 .subckt CMP_NIN_5V0 inp inn out vdd vss ibp_5uA EN params: IREF=5u WSCALE=1 WIN=40u LIN=2u LANA=2u FIN=1 HYSK=0
 * --- bias mirror ---
-Xmb   ibg  ibg  vss vss NMOS50 W={10u*WSCALE} L={LANA} M=1   ; diode ref (carries IREF)
+Xmb   ibg  ibg  vss vss NMOS5V0 W={10u*WSCALE} L={LANA} M=1   ; diode ref (carries IREF)
 * --- stage 1: NMOS pair, PMOS mirror load (both scaled by FIN for offset) ---
-Xtail tail ibg vss vss NMOS50 W={10u*WSCALE} L={LANA} M=2   ; Itail = 2*IREF
-Xm1   n1  inp tail vss NMOS50 W={WIN*FIN} L={LIN*FIN} M=1
-Xm2   n2  inn tail vss NMOS50 W={WIN*FIN} L={LIN*FIN} M=1
-Xm3   n1  n1  vdd vdd  PMOS50 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
-Xm4   n2  n1  vdd vdd  PMOS50 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
+Xtail tail ibg vss vss NMOS5V0 W={10u*WSCALE} L={LANA} M=2   ; Itail = 2*IREF
+Xm1   n1  inp tail vss NMOS5V0 W={WIN*FIN} L={LIN*FIN} M=1
+Xm2   n2  inn tail vss NMOS5V0 W={WIN*FIN} L={LIN*FIN} M=1
+Xm3   n1  n1  vdd vdd  PMOS5V0 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
+Xm4   n2  n1  vdd vdd  PMOS5V0 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
 * --- optional steered-current hysteresis ---
 .if (HYSK > 0)
-Xhtail sh ibg vss vss NMOS50 W={10u*WSCALE*HYSK} L={LANA} M=1
-Xmha   n1  out sh vss NMOS50 W={10u*WSCALE} L=0.5u M=1
-Xmhb   n2  o2  sh vss NMOS50 W={10u*WSCALE} L=0.5u M=1
+Xhtail sh ibg vss vss NMOS5V0 W={10u*WSCALE*HYSK} L={LANA} M=1
+Xmha   n1  out sh vss NMOS5V0 W={10u*WSCALE} L=0.5u M=1
+Xmhb   n2  o2  sh vss NMOS5V0 W={10u*WSCALE} L=0.5u M=1
 .endif
 * --- stage 2: PMOS common-source + NMOS current-source load ---
-Xm5   o2  n2  vdd vdd  PMOS50 W={80u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
-Xm6   o2  ibg  vss vss  NMOS50 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
+Xm5   o2  n2  vdd vdd  PMOS5V0 W={80u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
+Xm6   o2  ibg  vss vss  NMOS5V0 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
 * --- stage 3: CMOS output inverter (rail-to-rail) ---
-Xm7   out o2  vdd vdd  PMOS50 W={20u*WSCALE} L=0.5u M=1
-Xm8   out o2  vss vss  NMOS50 W={10u*WSCALE} L=0.5u M=1
+Xm7   out o2  vdd vdd  PMOS5V0 W={20u*WSCALE} L=0.5u M=1
+Xm8   out o2  vss vss  NMOS5V0 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
 Xei1  EN    ENB   vdd vss INV_5V0                          ; ENB   = /EN  (PDK cell)
 Xei2  ENB   ENbuf vdd vss INV_5V0                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg vss NMOS50 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
-Xsh   ibg ENB   vss     vss NMOS50 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
-Xsho2 o2  ENbuf vdd     vdd PMOS50 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
+Xser  ibp_5uA ENbuf ibg vss NMOS5V0 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xsh   ibg ENB   vss     vss NMOS5V0 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
+Xsho2 o2  ENbuf vdd     vdd PMOS5V0 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
 .ends CMP_NIN_5V0
 
 .subckt CMP_PIN_5V0 inp inn out vdd vss ibn_5uA EN params: IREF=5u WSCALE=1 WIN=80u LIN=2u LANA=2u FIN=1 HYSK=0
 * --- bias mirror (PMOS diode; ref current pulled from ibn_5uA down toward vss) ---
-Xmb   ibg  ibg  vdd vdd  PMOS50 W={20u*WSCALE} L={LANA} M=1  ; diode ref (carries IREF)
+Xmb   ibg  ibg  vdd vdd  PMOS5V0 W={20u*WSCALE} L={LANA} M=1  ; diode ref (carries IREF)
 * --- stage 1: PMOS pair, NMOS mirror load (both scaled by FIN for offset) ---
-Xtail tail ibg vdd vdd  PMOS50 W={20u*WSCALE} L={LANA} M=2  ; Itail = 2*IREF
-Xm1   n1  inp tail vdd PMOS50 W={WIN*FIN} L={LIN*FIN} M=1
-Xm2   n2  inn tail vdd PMOS50 W={WIN*FIN} L={LIN*FIN} M=1
-Xm3   n1  n1  vss vss  NMOS50 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
-Xm4   n2  n1  vss vss  NMOS50 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
+Xtail tail ibg vdd vdd  PMOS5V0 W={20u*WSCALE} L={LANA} M=2  ; Itail = 2*IREF
+Xm1   n1  inp tail vdd PMOS5V0 W={WIN*FIN} L={LIN*FIN} M=1
+Xm2   n2  inn tail vdd PMOS5V0 W={WIN*FIN} L={LIN*FIN} M=1
+Xm3   n1  n1  vss vss  NMOS5V0 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
+Xm4   n2  n1  vss vss  NMOS5V0 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
 * --- optional steered-current hysteresis ---
 .if (HYSK > 0)
-Xhtail sh ibg vdd vdd PMOS50 W={20u*WSCALE*HYSK} L={LANA} M=1
-Xmha   n1  out sh vdd PMOS50 W={20u*WSCALE} L=0.5u M=1
-Xmhb   n2  o2  sh vdd PMOS50 W={20u*WSCALE} L=0.5u M=1
+Xhtail sh ibg vdd vdd PMOS5V0 W={20u*WSCALE*HYSK} L={LANA} M=1
+Xmha   n1  out sh vdd PMOS5V0 W={20u*WSCALE} L=0.5u M=1
+Xmhb   n2  o2  sh vdd PMOS5V0 W={20u*WSCALE} L=0.5u M=1
 .endif
 * --- stage 2: NMOS common-source + PMOS current-source load ---
-Xm5   o2  n2  vss vss  NMOS50 W={40u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
-Xm6   o2  ibg  vdd vdd  PMOS50 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
+Xm5   o2  n2  vss vss  NMOS5V0 W={40u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
+Xm6   o2  ibg  vdd vdd  PMOS5V0 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
 * --- stage 3: CMOS output inverter (rail-to-rail) ---
-Xm7   out o2  vdd vdd  PMOS50 W={20u*WSCALE} L=0.5u M=1
-Xm8   out o2  vss vss  NMOS50 W={10u*WSCALE} L=0.5u M=1
+Xm7   out o2  vdd vdd  PMOS5V0 W={20u*WSCALE} L=0.5u M=1
+Xm8   out o2  vss vss  NMOS5V0 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
 Xei1  EN    ENB   vdd vss INV_5V0                          ; ENB   = /EN  (PDK cell)
 Xei2  ENB   ENbuf vdd vss INV_5V0                          ; ENbuf = EN   (PDK cell)
-Xser  ibn_5uA ENB   ibg vdd PMOS50 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
-Xsh   ibg ENbuf vdd     vdd PMOS50 W=4u L=0.5u M=1          ; gate-short: ibg -> vdd (EN=0)
-Xsho2 o2  ENB   vss     vss NMOS50 W=4u L=0.5u M=1          ; clamp o2 -> vss (OUT high when EN=0)
+Xser  ibn_5uA ENB   ibg vdd PMOS5V0 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xsh   ibg ENbuf vdd     vdd PMOS5V0 W=4u L=0.5u M=1          ; gate-short: ibg -> vdd (EN=0)
+Xsho2 o2  ENB   vss     vss NMOS5V0 W=4u L=0.5u M=1          ; clamp o2 -> vss (OUT high when EN=0)
 .ends CMP_PIN_5V0
 
 .subckt CMP_NIN_3V3 inp inn out vdd vss ibp_5uA EN params: IREF=5u WSCALE=1 WIN=40u LIN=2u LANA=2u FIN=1 HYSK=0
 * --- bias mirror ---
-Xmb   ibg  ibg  vss vss NMOS33 W={10u*WSCALE} L={LANA} M=1   ; diode ref (carries IREF)
+Xmb   ibg  ibg  vss vss NMOS3V3 W={10u*WSCALE} L={LANA} M=1   ; diode ref (carries IREF)
 * --- stage 1: NMOS pair, PMOS mirror load (both scaled by FIN for offset) ---
-Xtail tail ibg vss vss NMOS33 W={10u*WSCALE} L={LANA} M=2   ; Itail = 2*IREF
-Xm1   n1  inp tail vss NMOS33 W={WIN*FIN} L={LIN*FIN} M=1
-Xm2   n2  inn tail vss NMOS33 W={WIN*FIN} L={LIN*FIN} M=1
-Xm3   n1  n1  vdd vdd  PMOS33 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
-Xm4   n2  n1  vdd vdd  PMOS33 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
+Xtail tail ibg vss vss NMOS3V3 W={10u*WSCALE} L={LANA} M=2   ; Itail = 2*IREF
+Xm1   n1  inp tail vss NMOS3V3 W={WIN*FIN} L={LIN*FIN} M=1
+Xm2   n2  inn tail vss NMOS3V3 W={WIN*FIN} L={LIN*FIN} M=1
+Xm3   n1  n1  vdd vdd  PMOS3V3 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
+Xm4   n2  n1  vdd vdd  PMOS3V3 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
 * --- optional steered-current hysteresis ---
 .if (HYSK > 0)
-Xhtail sh ibg vss vss NMOS33 W={10u*WSCALE*HYSK} L={LANA} M=1
-Xmha   n1  out sh vss NMOS33 W={10u*WSCALE} L=0.5u M=1
-Xmhb   n2  o2  sh vss NMOS33 W={10u*WSCALE} L=0.5u M=1
+Xhtail sh ibg vss vss NMOS3V3 W={10u*WSCALE*HYSK} L={LANA} M=1
+Xmha   n1  out sh vss NMOS3V3 W={10u*WSCALE} L=0.5u M=1
+Xmhb   n2  o2  sh vss NMOS3V3 W={10u*WSCALE} L=0.5u M=1
 .endif
 * --- stage 2: PMOS common-source + NMOS current-source load ---
-Xm5   o2  n2  vdd vdd  PMOS33 W={80u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
-Xm6   o2  ibg  vss vss  NMOS33 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
+Xm5   o2  n2  vdd vdd  PMOS3V3 W={80u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
+Xm6   o2  ibg  vss vss  NMOS3V3 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
 * --- stage 3: CMOS output inverter (rail-to-rail) ---
-Xm7   out o2  vdd vdd  PMOS33 W={20u*WSCALE} L=0.5u M=1
-Xm8   out o2  vss vss  NMOS33 W={10u*WSCALE} L=0.5u M=1
+Xm7   out o2  vdd vdd  PMOS3V3 W={20u*WSCALE} L=0.5u M=1
+Xm8   out o2  vss vss  NMOS3V3 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
 Xei1  EN    ENB   vdd vss INV_3V3                          ; ENB   = /EN  (PDK cell)
 Xei2  ENB   ENbuf vdd vss INV_3V3                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg vss NMOS33 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
-Xsh   ibg ENB   vss     vss NMOS33 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
-Xsho2 o2  ENbuf vdd     vdd PMOS33 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
+Xser  ibp_5uA ENbuf ibg vss NMOS3V3 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xsh   ibg ENB   vss     vss NMOS3V3 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
+Xsho2 o2  ENbuf vdd     vdd PMOS3V3 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
 .ends CMP_NIN_3V3
 
 .subckt CMP_PIN_3V3 inp inn out vdd vss ibn_5uA EN params: IREF=5u WSCALE=1 WIN=80u LIN=2u LANA=2u FIN=1 HYSK=0
 * --- bias mirror (PMOS diode; ref current pulled from ibn_5uA down toward vss) ---
-Xmb   ibg  ibg  vdd vdd  PMOS33 W={20u*WSCALE} L={LANA} M=1  ; diode ref (carries IREF)
+Xmb   ibg  ibg  vdd vdd  PMOS3V3 W={20u*WSCALE} L={LANA} M=1  ; diode ref (carries IREF)
 * --- stage 1: PMOS pair, NMOS mirror load (both scaled by FIN for offset) ---
-Xtail tail ibg vdd vdd  PMOS33 W={20u*WSCALE} L={LANA} M=2  ; Itail = 2*IREF
-Xm1   n1  inp tail vdd PMOS33 W={WIN*FIN} L={LIN*FIN} M=1
-Xm2   n2  inn tail vdd PMOS33 W={WIN*FIN} L={LIN*FIN} M=1
-Xm3   n1  n1  vss vss  NMOS33 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
-Xm4   n2  n1  vss vss  NMOS33 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
+Xtail tail ibg vdd vdd  PMOS3V3 W={20u*WSCALE} L={LANA} M=2  ; Itail = 2*IREF
+Xm1   n1  inp tail vdd PMOS3V3 W={WIN*FIN} L={LIN*FIN} M=1
+Xm2   n2  inn tail vdd PMOS3V3 W={WIN*FIN} L={LIN*FIN} M=1
+Xm3   n1  n1  vss vss  NMOS3V3 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
+Xm4   n2  n1  vss vss  NMOS3V3 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
 * --- optional steered-current hysteresis ---
 .if (HYSK > 0)
-Xhtail sh ibg vdd vdd PMOS33 W={20u*WSCALE*HYSK} L={LANA} M=1
-Xmha   n1  out sh vdd PMOS33 W={20u*WSCALE} L=0.5u M=1
-Xmhb   n2  o2  sh vdd PMOS33 W={20u*WSCALE} L=0.5u M=1
+Xhtail sh ibg vdd vdd PMOS3V3 W={20u*WSCALE*HYSK} L={LANA} M=1
+Xmha   n1  out sh vdd PMOS3V3 W={20u*WSCALE} L=0.5u M=1
+Xmhb   n2  o2  sh vdd PMOS3V3 W={20u*WSCALE} L=0.5u M=1
 .endif
 * --- stage 2: NMOS common-source + PMOS current-source load ---
-Xm5   o2  n2  vss vss  NMOS33 W={40u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
-Xm6   o2  ibg  vdd vdd  PMOS33 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
+Xm5   o2  n2  vss vss  NMOS3V3 W={40u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
+Xm6   o2  ibg  vdd vdd  PMOS3V3 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
 * --- stage 3: CMOS output inverter (rail-to-rail) ---
-Xm7   out o2  vdd vdd  PMOS33 W={20u*WSCALE} L=0.5u M=1
-Xm8   out o2  vss vss  NMOS33 W={10u*WSCALE} L=0.5u M=1
+Xm7   out o2  vdd vdd  PMOS3V3 W={20u*WSCALE} L=0.5u M=1
+Xm8   out o2  vss vss  NMOS3V3 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
 Xei1  EN    ENB   vdd vss INV_3V3                          ; ENB   = /EN  (PDK cell)
 Xei2  ENB   ENbuf vdd vss INV_3V3                          ; ENbuf = EN   (PDK cell)
-Xser  ibn_5uA ENB   ibg vdd PMOS33 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
-Xsh   ibg ENbuf vdd     vdd PMOS33 W=4u L=0.5u M=1          ; gate-short: ibg -> vdd (EN=0)
-Xsho2 o2  ENB   vss     vss NMOS33 W=4u L=0.5u M=1          ; clamp o2 -> vss (OUT high when EN=0)
+Xser  ibn_5uA ENB   ibg vdd PMOS3V3 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xsh   ibg ENbuf vdd     vdd PMOS3V3 W=4u L=0.5u M=1          ; gate-short: ibg -> vdd (EN=0)
+Xsho2 o2  ENB   vss     vss NMOS3V3 W=4u L=0.5u M=1          ; clamp o2 -> vss (OUT high when EN=0)
 .ends CMP_PIN_3V3
 
 .subckt CMP_NIN_1V8 inp inn out vdd vss ibp_5uA EN params: IREF=5u WSCALE=1 WIN=40u LIN=2u LANA=2u FIN=1 HYSK=0
 * --- bias mirror ---
-Xmb   ibg  ibg  vss vss NMOS18 W={10u*WSCALE} L={LANA} M=1   ; diode ref (carries IREF)
+Xmb   ibg  ibg  vss vss NMOS1V8 W={10u*WSCALE} L={LANA} M=1   ; diode ref (carries IREF)
 * --- stage 1: NMOS pair, PMOS mirror load (both scaled by FIN for offset) ---
-Xtail tail ibg vss vss NMOS18 W={10u*WSCALE} L={LANA} M=2   ; Itail = 2*IREF
-Xm1   n1  inp tail vss NMOS18 W={WIN*FIN} L={LIN*FIN} M=1
-Xm2   n2  inn tail vss NMOS18 W={WIN*FIN} L={LIN*FIN} M=1
-Xm3   n1  n1  vdd vdd  PMOS18 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
-Xm4   n2  n1  vdd vdd  PMOS18 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
+Xtail tail ibg vss vss NMOS1V8 W={10u*WSCALE} L={LANA} M=2   ; Itail = 2*IREF
+Xm1   n1  inp tail vss NMOS1V8 W={WIN*FIN} L={LIN*FIN} M=1
+Xm2   n2  inn tail vss NMOS1V8 W={WIN*FIN} L={LIN*FIN} M=1
+Xm3   n1  n1  vdd vdd  PMOS1V8 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
+Xm4   n2  n1  vdd vdd  PMOS1V8 W={20u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
 * --- optional steered-current hysteresis ---
 .if (HYSK > 0)
-Xhtail sh ibg vss vss NMOS18 W={10u*WSCALE*HYSK} L={LANA} M=1
-Xmha   n1  out sh vss NMOS18 W={10u*WSCALE} L=0.5u M=1
-Xmhb   n2  o2  sh vss NMOS18 W={10u*WSCALE} L=0.5u M=1
+Xhtail sh ibg vss vss NMOS1V8 W={10u*WSCALE*HYSK} L={LANA} M=1
+Xmha   n1  out sh vss NMOS1V8 W={10u*WSCALE} L=0.5u M=1
+Xmhb   n2  o2  sh vss NMOS1V8 W={10u*WSCALE} L=0.5u M=1
 .endif
 * --- stage 2: PMOS common-source + NMOS current-source load ---
-Xm5   o2  n2  vdd vdd  PMOS18 W={80u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
-Xm6   o2  ibg  vss vss  NMOS18 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
+Xm5   o2  n2  vdd vdd  PMOS1V8 W={80u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
+Xm6   o2  ibg  vss vss  NMOS1V8 W={10u*WSCALE} L={LANA} M=4  ; sink 4*IREF
 * --- stage 3: CMOS output inverter (rail-to-rail) ---
-Xm7   out o2  vdd vdd  PMOS18 W={20u*WSCALE} L=0.5u M=1
-Xm8   out o2  vss vss  NMOS18 W={10u*WSCALE} L=0.5u M=1
+Xm7   out o2  vdd vdd  PMOS1V8 W={20u*WSCALE} L=0.5u M=1
+Xm8   out o2  vss vss  NMOS1V8 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
 Xei1  EN    ENB   vdd vss INV_1V8                          ; ENB   = /EN  (PDK cell)
 Xei2  ENB   ENbuf vdd vss INV_1V8                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg vss NMOS18 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
-Xsh   ibg ENB   vss     vss NMOS18 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
-Xsho2 o2  ENbuf vdd     vdd PMOS18 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
+Xser  ibp_5uA ENbuf ibg vss NMOS1V8 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xsh   ibg ENB   vss     vss NMOS1V8 W=4u L=0.5u M=1          ; gate-short: ibg -> vss (EN=0)
+Xsho2 o2  ENbuf vdd     vdd PMOS1V8 W=4u L=0.5u M=1          ; clamp o2 -> vdd (OUT low when EN=0)
 .ends CMP_NIN_1V8
 
 .subckt CMP_PIN_1V8 inp inn out vdd vss ibn_5uA EN params: IREF=5u WSCALE=1 WIN=80u LIN=2u LANA=2u FIN=1 HYSK=0
 * --- bias mirror (PMOS diode; ref current pulled from ibn_5uA down toward vss) ---
-Xmb   ibg  ibg  vdd vdd  PMOS18 W={20u*WSCALE} L={LANA} M=1  ; diode ref (carries IREF)
+Xmb   ibg  ibg  vdd vdd  PMOS1V8 W={20u*WSCALE} L={LANA} M=1  ; diode ref (carries IREF)
 * --- stage 1: PMOS pair, NMOS mirror load (both scaled by FIN for offset) ---
-Xtail tail ibg vdd vdd  PMOS18 W={20u*WSCALE} L={LANA} M=2  ; Itail = 2*IREF
-Xm1   n1  inp tail vdd PMOS18 W={WIN*FIN} L={LIN*FIN} M=1
-Xm2   n2  inn tail vdd PMOS18 W={WIN*FIN} L={LIN*FIN} M=1
-Xm3   n1  n1  vss vss  NMOS18 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
-Xm4   n2  n1  vss vss  NMOS18 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
+Xtail tail ibg vdd vdd  PMOS1V8 W={20u*WSCALE} L={LANA} M=2  ; Itail = 2*IREF
+Xm1   n1  inp tail vdd PMOS1V8 W={WIN*FIN} L={LIN*FIN} M=1
+Xm2   n2  inn tail vdd PMOS1V8 W={WIN*FIN} L={LIN*FIN} M=1
+Xm3   n1  n1  vss vss  NMOS1V8 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror in (diode)
+Xm4   n2  n1  vss vss  NMOS1V8 W={10u*WSCALE*FIN} L={LANA*FIN} M=1  ; mirror out -> stage1 out = n2
 * --- optional steered-current hysteresis ---
 .if (HYSK > 0)
-Xhtail sh ibg vdd vdd PMOS18 W={20u*WSCALE*HYSK} L={LANA} M=1
-Xmha   n1  out sh vdd PMOS18 W={20u*WSCALE} L=0.5u M=1
-Xmhb   n2  o2  sh vdd PMOS18 W={20u*WSCALE} L=0.5u M=1
+Xhtail sh ibg vdd vdd PMOS1V8 W={20u*WSCALE*HYSK} L={LANA} M=1
+Xmha   n1  out sh vdd PMOS1V8 W={20u*WSCALE} L=0.5u M=1
+Xmhb   n2  o2  sh vdd PMOS1V8 W={20u*WSCALE} L=0.5u M=1
 .endif
 * --- stage 2: NMOS common-source + PMOS current-source load ---
-Xm5   o2  n2  vss vss  NMOS18 W={40u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
-Xm6   o2  ibg  vdd vdd  PMOS18 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
+Xm5   o2  n2  vss vss  NMOS1V8 W={40u*WSCALE} L={LANA} M=1  ; 4x mirror unit -> ~4*IREF
+Xm6   o2  ibg  vdd vdd  PMOS1V8 W={20u*WSCALE} L={LANA} M=4  ; source 4*IREF
 * --- stage 3: CMOS output inverter (rail-to-rail) ---
-Xm7   out o2  vdd vdd  PMOS18 W={20u*WSCALE} L=0.5u M=1
-Xm8   out o2  vss vss  NMOS18 W={10u*WSCALE} L=0.5u M=1
+Xm7   out o2  vdd vdd  PMOS1V8 W={20u*WSCALE} L=0.5u M=1
+Xm8   out o2  vss vss  NMOS1V8 W={10u*WSCALE} L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
 Xei1  EN    ENB   vdd vss INV_1V8                          ; ENB   = /EN  (PDK cell)
 Xei2  ENB   ENbuf vdd vss INV_1V8                          ; ENbuf = EN   (PDK cell)
-Xser  ibn_5uA ENB   ibg vdd PMOS18 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
-Xsh   ibg ENbuf vdd     vdd PMOS18 W=4u L=0.5u M=1          ; gate-short: ibg -> vdd (EN=0)
-Xsho2 o2  ENB   vss     vss NMOS18 W=4u L=0.5u M=1          ; clamp o2 -> vss (OUT high when EN=0)
+Xser  ibn_5uA ENB   ibg vdd PMOS1V8 W=4u L=0.5u M=1          ; series: bias pin -> mirror gate (EN=1)
+Xsh   ibg ENbuf vdd     vdd PMOS1V8 W=4u L=0.5u M=1          ; gate-short: ibg -> vdd (EN=0)
+Xsho2 o2  ENB   vss     vss NMOS1V8 W=4u L=0.5u M=1          ; clamp o2 -> vss (OUT high when EN=0)
 .ends CMP_PIN_1V8
 
 
@@ -224,108 +224,108 @@ Xsho2 o2  ENB   vss     vss NMOS18 W=4u L=0.5u M=1          ; clamp o2 -> vss (O
 
 .subckt CMP_RR_5V0 inp inn out vdd vss ibp_5uA EN params: IREF=5u FIN=1
 * --- bias generation ---
-Xrbn  ibg_n  ibg_n  vss vss NMOS50 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
-Xmir  pmd ibg_n  vss vss NMOS50 W=10u L=1u M=1            ; mirror IREF up
-Xrbp  pmd pmd vdd vdd PMOS50 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
-Xvc1  k   k   vdd vdd PMOS50 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
-Xvc2  vcp vcp k   vdd PMOS50 W=20u L=1u M=1            ;   cascode bias: x tracks the rail so
-Xisk  vcp ibg_n  vss vss NMOS50 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
+Xrbn  ibg_n  ibg_n  vss vss NMOS5V0 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
+Xmir  pmd ibg_n  vss vss NMOS5V0 W=10u L=1u M=1            ; mirror IREF up
+Xrbp  pmd pmd vdd vdd PMOS5V0 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
+Xvc1  k   k   vdd vdd PMOS5V0 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
+Xvc2  vcp vcp k   vdd PMOS5V0 W=20u L=1u M=1            ;   cascode bias: x tracks the rail so
+Xisk  vcp ibg_n  vss vss NMOS5V0 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
 * --- rail-to-rail folded-cascode input stage ---
-Xmtn  sn  ibg_n  vss vss NMOS50 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
-Xn1   x   inp sn  vss NMOS50 W={40u*FIN} L={1u*FIN} M=1
-Xn2   y   inn sn  vss NMOS50 W={40u*FIN} L={1u*FIN} M=1
-Xmtp  sp  pmd vdd vdd PMOS50 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)
-Xp1   a   inp sp  vdd PMOS50 W={80u*FIN} L={1u*FIN} M=1
-Xp2   b   inn sp  vdd PMOS50 W={80u*FIN} L={1u*FIN} M=1
-Xf1   x   pmd vdd vdd PMOS50 W=60u L=1u M=1            ; top fold sources
-Xf2   y   pmd vdd vdd PMOS50 W=60u L=1u M=1
-Xcp1  a   vcp x   vdd PMOS50 W=40u L=1u M=1            ; PMOS cascodes x->a, y->b
-Xcp2  b   vcp y   vdd PMOS50 W=40u L=1u M=1
-Xmm1  a   a   vss vss NMOS50 W={20u*FIN} L={1u*FIN} M=1 ; bottom mirror diode (a)
-Xmm2  b   a   vss vss NMOS50 W={20u*FIN} L={1u*FIN} M=1 ; mirror out -> stage-1 out = b
+Xmtn  sn  ibg_n  vss vss NMOS5V0 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
+Xn1   x   inp sn  vss NMOS5V0 W={40u*FIN} L={1u*FIN} M=1
+Xn2   y   inn sn  vss NMOS5V0 W={40u*FIN} L={1u*FIN} M=1
+Xmtp  sp  pmd vdd vdd PMOS5V0 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)
+Xp1   a   inp sp  vdd PMOS5V0 W={80u*FIN} L={1u*FIN} M=1
+Xp2   b   inn sp  vdd PMOS5V0 W={80u*FIN} L={1u*FIN} M=1
+Xf1   x   pmd vdd vdd PMOS5V0 W=60u L=1u M=1            ; top fold sources
+Xf2   y   pmd vdd vdd PMOS5V0 W=60u L=1u M=1
+Xcp1  a   vcp x   vdd PMOS5V0 W=40u L=1u M=1            ; PMOS cascodes x->a, y->b
+Xcp2  b   vcp y   vdd PMOS5V0 W=40u L=1u M=1
+Xmm1  a   a   vss vss NMOS5V0 W={20u*FIN} L={1u*FIN} M=1 ; bottom mirror diode (a)
+Xmm2  b   a   vss vss NMOS5V0 W={20u*FIN} L={1u*FIN} M=1 ; mirror out -> stage-1 out = b
 * --- stage 2: common-source gain + current-source load ---
-Xs2n  o2  b   vss vss NMOS50 W=40u L=1u M=1
-Xs2p  o2  pmd vdd vdd PMOS50 W=40u L=1u M=1
+Xs2n  o2  b   vss vss NMOS5V0 W=40u L=1u M=1
+Xs2p  o2  pmd vdd vdd PMOS5V0 W=40u L=1u M=1
 * --- stage 3: CMOS inverter (rail-to-rail digital out) ---
-Xbp   out o2  vdd vdd PMOS50 W=20u L=0.5u M=1
-Xbn   out o2  vss vss NMOS50 W=10u L=0.5u M=1
+Xbp   out o2  vdd vdd PMOS5V0 W=20u L=0.5u M=1
+Xbn   out o2  vss vss NMOS5V0 W=10u L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
 Xei1  EN    ENB   vdd vss INV_5V0                          ; ENB   = /EN  (PDK cell)
 Xei2  ENB   ENbuf vdd vss INV_5V0                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg_n vss NMOS50 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
-Xshn  ibg_n ENB   vss     vss NMOS50 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
-Xshp  pmd   ENbuf vdd     vdd PMOS50 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
-Xsho2 o2    ENB   vss     vss NMOS50 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)
+Xser  ibp_5uA ENbuf ibg_n vss NMOS5V0 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
+Xshn  ibg_n ENB   vss     vss NMOS5V0 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
+Xshp  pmd   ENbuf vdd     vdd PMOS5V0 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
+Xsho2 o2    ENB   vss     vss NMOS5V0 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)
 .ends CMP_RR_5V0
 
 .subckt CMP_RR_3V3 inp inn out vdd vss ibp_5uA EN params: IREF=5u FIN=1
 * --- bias generation ---
-Xrbn  ibg_n  ibg_n  vss vss NMOS33 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
-Xmir  pmd ibg_n  vss vss NMOS33 W=10u L=1u M=1            ; mirror IREF up
-Xrbp  pmd pmd vdd vdd PMOS33 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
-Xvc1  k   k   vdd vdd PMOS33 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
-Xvc2  vcp vcp k   vdd PMOS33 W=20u L=1u M=1            ;   cascode bias: x tracks the rail so
-Xisk  vcp ibg_n  vss vss NMOS33 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
+Xrbn  ibg_n  ibg_n  vss vss NMOS3V3 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
+Xmir  pmd ibg_n  vss vss NMOS3V3 W=10u L=1u M=1            ; mirror IREF up
+Xrbp  pmd pmd vdd vdd PMOS3V3 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
+Xvc1  k   k   vdd vdd PMOS3V3 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
+Xvc2  vcp vcp k   vdd PMOS3V3 W=20u L=1u M=1            ;   cascode bias: x tracks the rail so
+Xisk  vcp ibg_n  vss vss NMOS3V3 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
 * --- rail-to-rail folded-cascode input stage ---
-Xmtn  sn  ibg_n  vss vss NMOS33 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
-Xn1   x   inp sn  vss NMOS33 W={40u*FIN} L={1u*FIN} M=1
-Xn2   y   inn sn  vss NMOS33 W={40u*FIN} L={1u*FIN} M=1
-Xmtp  sp  pmd vdd vdd PMOS33 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)
-Xp1   a   inp sp  vdd PMOS33 W={80u*FIN} L={1u*FIN} M=1
-Xp2   b   inn sp  vdd PMOS33 W={80u*FIN} L={1u*FIN} M=1
-Xf1   x   pmd vdd vdd PMOS33 W=60u L=1u M=1            ; top fold sources
-Xf2   y   pmd vdd vdd PMOS33 W=60u L=1u M=1
-Xcp1  a   vcp x   vdd PMOS33 W=40u L=1u M=1            ; PMOS cascodes x->a, y->b
-Xcp2  b   vcp y   vdd PMOS33 W=40u L=1u M=1
-Xmm1  a   a   vss vss NMOS33 W={20u*FIN} L={1u*FIN} M=1 ; bottom mirror diode (a)
-Xmm2  b   a   vss vss NMOS33 W={20u*FIN} L={1u*FIN} M=1 ; mirror out -> stage-1 out = b
+Xmtn  sn  ibg_n  vss vss NMOS3V3 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
+Xn1   x   inp sn  vss NMOS3V3 W={40u*FIN} L={1u*FIN} M=1
+Xn2   y   inn sn  vss NMOS3V3 W={40u*FIN} L={1u*FIN} M=1
+Xmtp  sp  pmd vdd vdd PMOS3V3 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)
+Xp1   a   inp sp  vdd PMOS3V3 W={80u*FIN} L={1u*FIN} M=1
+Xp2   b   inn sp  vdd PMOS3V3 W={80u*FIN} L={1u*FIN} M=1
+Xf1   x   pmd vdd vdd PMOS3V3 W=60u L=1u M=1            ; top fold sources
+Xf2   y   pmd vdd vdd PMOS3V3 W=60u L=1u M=1
+Xcp1  a   vcp x   vdd PMOS3V3 W=40u L=1u M=1            ; PMOS cascodes x->a, y->b
+Xcp2  b   vcp y   vdd PMOS3V3 W=40u L=1u M=1
+Xmm1  a   a   vss vss NMOS3V3 W={20u*FIN} L={1u*FIN} M=1 ; bottom mirror diode (a)
+Xmm2  b   a   vss vss NMOS3V3 W={20u*FIN} L={1u*FIN} M=1 ; mirror out -> stage-1 out = b
 * --- stage 2: common-source gain + current-source load ---
-Xs2n  o2  b   vss vss NMOS33 W=40u L=1u M=1
-Xs2p  o2  pmd vdd vdd PMOS33 W=40u L=1u M=1
+Xs2n  o2  b   vss vss NMOS3V3 W=40u L=1u M=1
+Xs2p  o2  pmd vdd vdd PMOS3V3 W=40u L=1u M=1
 * --- stage 3: CMOS inverter (rail-to-rail digital out) ---
-Xbp   out o2  vdd vdd PMOS33 W=20u L=0.5u M=1
-Xbn   out o2  vss vss NMOS33 W=10u L=0.5u M=1
+Xbp   out o2  vdd vdd PMOS3V3 W=20u L=0.5u M=1
+Xbn   out o2  vss vss NMOS3V3 W=10u L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
 Xei1  EN    ENB   vdd vss INV_3V3                          ; ENB   = /EN  (PDK cell)
 Xei2  ENB   ENbuf vdd vss INV_3V3                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg_n vss NMOS33 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
-Xshn  ibg_n ENB   vss     vss NMOS33 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
-Xshp  pmd   ENbuf vdd     vdd PMOS33 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
-Xsho2 o2    ENB   vss     vss NMOS33 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)
+Xser  ibp_5uA ENbuf ibg_n vss NMOS3V3 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
+Xshn  ibg_n ENB   vss     vss NMOS3V3 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
+Xshp  pmd   ENbuf vdd     vdd PMOS3V3 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
+Xsho2 o2    ENB   vss     vss NMOS3V3 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)
 .ends CMP_RR_3V3
 
 .subckt CMP_RR_1V8 inp inn out vdd vss ibp_5uA EN params: IREF=5u FIN=1
 * --- bias generation ---
-Xrbn  ibg_n  ibg_n  vss vss NMOS18 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
-Xmir  pmd ibg_n  vss vss NMOS18 W=10u L=1u M=1            ; mirror IREF up
-Xrbp  pmd pmd vdd vdd PMOS18 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
-Xvc1  k   k   vdd vdd PMOS18 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
-Xvc2  vcp vcp k   vdd PMOS18 W=20u L=1u M=1            ;   cascode bias: x tracks the rail so
-Xisk  vcp ibg_n  vss vss NMOS18 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
+Xrbn  ibg_n  ibg_n  vss vss NMOS1V8 W=10u L=1u M=1            ; NMOS diode ref (carries IREF)
+Xmir  pmd ibg_n  vss vss NMOS1V8 W=10u L=1u M=1            ; mirror IREF up
+Xrbp  pmd pmd vdd vdd PMOS1V8 W=20u L=1u M=1            ; PMOS diode -> vbp = pmd
+Xvc1  k   k   vdd vdd PMOS1V8 W=20u L=1u M=1            ; vcp = VDD - 2*|Vsg| (VDD-referenced
+Xvc2  vcp vcp k   vdd PMOS1V8 W=20u L=1u M=1            ;   cascode bias: x tracks the rail so
+Xisk  vcp ibg_n  vss vss NMOS1V8 W=10u L=1u M=1            ;   the fold sources keep Vds at brownout)
 * --- rail-to-rail folded-cascode input stage ---
-Xmtn  sn  ibg_n  vss vss NMOS18 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
-Xn1   x   inp sn  vss NMOS18 W={40u*FIN} L={1u*FIN} M=1
-Xn2   y   inn sn  vss NMOS18 W={40u*FIN} L={1u*FIN} M=1
-Xmtp  sp  pmd vdd vdd PMOS18 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)
-Xp1   a   inp sp  vdd PMOS18 W={80u*FIN} L={1u*FIN} M=1
-Xp2   b   inn sp  vdd PMOS18 W={80u*FIN} L={1u*FIN} M=1
-Xf1   x   pmd vdd vdd PMOS18 W=60u L=1u M=1            ; top fold sources
-Xf2   y   pmd vdd vdd PMOS18 W=60u L=1u M=1
-Xcp1  a   vcp x   vdd PMOS18 W=40u L=1u M=1            ; PMOS cascodes x->a, y->b
-Xcp2  b   vcp y   vdd PMOS18 W=40u L=1u M=1
-Xmm1  a   a   vss vss NMOS18 W={20u*FIN} L={1u*FIN} M=1 ; bottom mirror diode (a)
-Xmm2  b   a   vss vss NMOS18 W={20u*FIN} L={1u*FIN} M=1 ; mirror out -> stage-1 out = b
+Xmtn  sn  ibg_n  vss vss NMOS1V8 W=20u L=1u M=1            ; NMOS pair tail (~2*IREF)
+Xn1   x   inp sn  vss NMOS1V8 W={40u*FIN} L={1u*FIN} M=1
+Xn2   y   inn sn  vss NMOS1V8 W={40u*FIN} L={1u*FIN} M=1
+Xmtp  sp  pmd vdd vdd PMOS1V8 W=40u L=1u M=1            ; PMOS pair tail (~2*IREF)
+Xp1   a   inp sp  vdd PMOS1V8 W={80u*FIN} L={1u*FIN} M=1
+Xp2   b   inn sp  vdd PMOS1V8 W={80u*FIN} L={1u*FIN} M=1
+Xf1   x   pmd vdd vdd PMOS1V8 W=60u L=1u M=1            ; top fold sources
+Xf2   y   pmd vdd vdd PMOS1V8 W=60u L=1u M=1
+Xcp1  a   vcp x   vdd PMOS1V8 W=40u L=1u M=1            ; PMOS cascodes x->a, y->b
+Xcp2  b   vcp y   vdd PMOS1V8 W=40u L=1u M=1
+Xmm1  a   a   vss vss NMOS1V8 W={20u*FIN} L={1u*FIN} M=1 ; bottom mirror diode (a)
+Xmm2  b   a   vss vss NMOS1V8 W={20u*FIN} L={1u*FIN} M=1 ; mirror out -> stage-1 out = b
 * --- stage 2: common-source gain + current-source load ---
-Xs2n  o2  b   vss vss NMOS18 W=40u L=1u M=1
-Xs2p  o2  pmd vdd vdd PMOS18 W=40u L=1u M=1
+Xs2n  o2  b   vss vss NMOS1V8 W=40u L=1u M=1
+Xs2p  o2  pmd vdd vdd PMOS1V8 W=40u L=1u M=1
 * --- stage 3: CMOS inverter (rail-to-rail digital out) ---
-Xbp   out o2  vdd vdd PMOS18 W=20u L=0.5u M=1
-Xbn   out o2  vss vss NMOS18 W=10u L=0.5u M=1
+Xbp   out o2  vdd vdd PMOS1V8 W=20u L=0.5u M=1
+Xbn   out o2  vss vss NMOS1V8 W=10u L=0.5u M=1
 * --- enable / bias-shutdown disable (small switches; core on true rails) ---
 Xei1  EN    ENB   vdd vss INV_1V8                          ; ENB   = /EN  (PDK cell)
 Xei2  ENB   ENbuf vdd vss INV_1V8                          ; ENbuf = EN   (PDK cell)
-Xser  ibp_5uA ENbuf ibg_n vss NMOS18 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
-Xshn  ibg_n ENB   vss     vss NMOS18 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
-Xshp  pmd   ENbuf vdd     vdd PMOS18 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
-Xsho2 o2    ENB   vss     vss NMOS18 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)
+Xser  ibp_5uA ENbuf ibg_n vss NMOS1V8 W=4u L=0.5u M=1        ; series: bias pin -> NMOS mirror gate
+Xshn  ibg_n ENB   vss     vss NMOS1V8 W=4u L=0.5u M=1        ; gate-short: ibg_n -> vss (EN=0)
+Xshp  pmd   ENbuf vdd     vdd PMOS1V8 W=4u L=0.5u M=1        ; gate-short: pmd -> vdd (PMOS side off)
+Xsho2 o2    ENB   vss     vss NMOS1V8 W=4u L=0.5u M=1         ; clamp o2 -> vss (OUT high when EN=0)
 .ends CMP_RR_1V8

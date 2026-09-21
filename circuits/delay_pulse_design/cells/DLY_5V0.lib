@@ -1,5 +1,5 @@
 * DLY_5V0 -- two-sided delay: BOTH edges are RC-delayed (~20 ns each)
-* AutoHV BiCMOS 180 PDK | 5 V domain (NMOS50/PMOS50, L = 0.50 um)
+* AutoHV BiCMOS 180 PDK | 5 V domain (NMOS5V0/PMOS5V0, L = 0.50 um)
 * Symmetric delay cell: the RC node has no bypass FET, so the rising AND the
 * falling edge each charge/discharge through R into the Schmitt trigger.
 * R is centered between the rise-tuned (DLYR) and fall-tuned (DLYF) resistors
@@ -14,14 +14,14 @@
 * When several RC cells share one transient deck, add `.option method=gear maxord=2`.
 
 .subckt DLY_5V0 in out vdd gnd
-XI1 nIN in vdd vdd PMOS50 W=1.15u L=0.5u
-XI2 nIN in gnd gnd NMOS50 W=0.5u L=0.5u
+XI1 nIN in vdd vdd PMOS5V0 W=1.15u L=0.5u
+XI2 nIN in gnd gnd NMOS5V0 W=0.5u L=0.5u
 XR  nIN nC RPOLY_HI L=51.5625u W=0.5u
 XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
-XS1 s1 nC gnd gnd NMOS50 W=0.5u L=0.5u
-XS2 out nC s1 gnd NMOS50 W=0.5u L=0.5u
-XS3 s2 nC vdd vdd PMOS50 W=1.15u L=0.5u
-XS4 out nC s2 vdd PMOS50 W=1.15u L=0.5u
-XS5 vdd out s1 gnd NMOS50 W=0.5u L=0.5u
-XS6 gnd out s2 vdd PMOS50 W=1.15u L=0.5u
+XS1 s1 nC gnd gnd NMOS5V0 W=0.5u L=0.5u
+XS2 out nC s1 gnd NMOS5V0 W=0.5u L=0.5u
+XS3 s2 nC vdd vdd PMOS5V0 W=1.15u L=0.5u
+XS4 out nC s2 vdd PMOS5V0 W=1.15u L=0.5u
+XS5 vdd out s1 gnd NMOS5V0 W=0.5u L=0.5u
+XS6 gnd out s2 vdd PMOS5V0 W=1.15u L=0.5u
 .ends DLY_5V0

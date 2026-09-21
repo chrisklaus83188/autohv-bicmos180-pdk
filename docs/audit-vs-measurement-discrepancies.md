@@ -20,7 +20,7 @@ Measured on ngspice-45 (KLU), 548 measurements, 400 s wall.
 
 | # | item | phase-1 verdict | phase-2 measurement | outcome |
 |---|---|---|---|---|
-| 1 | NDMOS200 sub-Boltzmann | `n = 1.01`, "unphysical, below the Boltzmann floor" | `S = 70.7 mV/dec`, **`n = 1.19`** | **OVERTURNED — strike from worklist** |
+| 1 | NDMOS200V sub-Boltzmann | `n = 1.01`, "unphysical, below the Boltzmann floor" | `S = 70.7 mV/dec`, **`n = 1.19`** | **OVERTURNED — strike from worklist** |
 | 2 | §2.2 implied-width table | divided by `rd+rs` | series R is only **30–39 %** of Ron | **MISATTRIBUTED — reissue table** |
 | 3 | fix #2 scope | 13 per-card re-derivations | residual flattens 12.7× → **5.5×** under the theta-implied oxide ladder | **REFINED — ~6 numbers, not 13** |
 | 4 | `kp` convention | assumed `(kp/2)·Vov²` | `A/kp = 0.4999999986` | **CONFIRMED — no anchor change** |
@@ -34,23 +34,23 @@ Measured on ngspice-45 (KLU), 548 measurements, 400 s wall.
 | 12 | F1, F2, F3, F4, F6, F7, F-VD3, F-BJT1 | predicted | all reproduced, several to 3 significant figures | **CONFIRMED** |
 
 **Confirmation quality worth noting.** F2's predicted cgs excess was 48.2× / 4.6× / 3.3× for
-NDMOS20 / NDMOS200 / PDMOS200; measured 48.0× / 4.62× / 3.27×. The BV corner table matches
+NDMOS20V / NDMOS200V / PDMOS200V; measured 48.0× / 4.62× / 3.27×. The BV corner table matches
 `3a81be0` to 0.04 %. F4's predicted 3.12 MHz measured 2.97 MHz. The static audit's arithmetic was
 sound where its assumptions held — every discrepancy below traces to an *assumption*, not to an
 arithmetic error.
 
 ---
 
-## 1. OVERTURNED — NDMOS200 is not sub-Boltzmann (D2)
+## 1. OVERTURNED — NDMOS200V is not sub-Boltzmann (D2)
 
-**Phase 1 §2.8** read `ksubthres` as mV/decade directly, giving NDMOS200 `n = 1.01` and the
+**Phase 1 §2.8** read `ksubthres` as mV/decade directly, giving NDMOS200V `n = 1.01` and the
 conclusion *"unphysical — it says the depletion capacitance is zero, i.e. a perfect gate."*
 
 **Measured:** `S = 1155.6 · ksubthres + 1.21`, R² = 0.9998 across all 13 cards. `ksubthres` is a
 **per-decade** slope inflated by **1.17×** — the natural-log reading is excluded (50 % off). The
 gm/Id ceiling agrees independently on all 13.
 
-NDMOS200 swings at **70.7 mV/dec**, `n = 1.19`. **No card in the family is sub-Boltzmann.**
+NDMOS200V swings at **70.7 mV/dec**, `n = 1.19`. **No card in the family is sub-Boltzmann.**
 
 **But the structural half of §2.8 survives.** The ladder still slopes the wrong way with voltage
 class (measured −0.00356 per volt of class vs phase 1's −0.00310) where `n = 1 + C_dep/Cox` demands
@@ -59,7 +59,7 @@ it rise. Multiplying a ladder by a near-constant cannot flip its slope, and it d
 > **Anchor amendment 1.** No band changes — measured swings land where the anchor already expected.
 > Add next to every VDMOS `subthreshold_swing` entry:
 > `"ksubthres_to_S_mapping": "S_mV_per_dec = 1.171 * 1000 * ksubthres (D2, R^2=0.9998, 13 cards)"`.
-> **Worklist:** strike fix #11's "NDMOS200 `n = 1.01` is below the Boltzmann floor" clause; keep the
+> **Worklist:** strike fix #11's "NDMOS200V `n = 1.01` is below the Boltzmann floor" clause; keep the
 > ladder-slope clause at unchanged severity. Any re-laddering must target **measured S**, not
 > `1000·ksubthres` — a card wanting `S = 90 mV/dec` needs `ksubthres ≈ 0.0769`, not `0.090`.
 > **Code:** `families/vdmos.py` `_do_idvg` carries the wording *"the card's ksubthres IS S in V/dec
@@ -72,7 +72,7 @@ it rise. Multiplying a ladder by a near-constant cannot flip its slope, and it d
 **Phase 1 §2.2** took the card's whole on-resistance to be `rd + rs`.
 
 **Measured:** the decomposition validates to 0.03 % / 0.11 % against the carded `rd+rs`, and series
-resistance is only **30.3 %** (NDMOS20) and **39.2 %** (NDMOS200) of total Ron. **The channel
+resistance is only **30.3 %** (NDMOS20V) and **39.2 %** (NDMOS200V) of total Ron. **The channel
 dominates**, which §2.2 did not allow for.
 
 Two consequences pulling opposite ways:
@@ -85,7 +85,7 @@ Two consequences pulling opposite ways:
   **12.66× / 0.31×** — the family swing *widens* from 30× to 40×. The two-independent-slips
   conclusion of §2.5 is strengthened, not weakened.
 
-**Channel-only floor: NDMOS20 1.610 Ω·µm, NDMOS200 27.22 Ω·µm** (Vov = 4 V, Vds = 0.1 V).
+**Channel-only floor: NDMOS20V 1.610 Ω·µm, NDMOS200V 27.22 Ω·µm** (Vov = 4 V, Vds = 0.1 V).
 
 > **Anchor amendment 2.** Add to each VDMOS `ron_times_w` entry:
 > `"channel_only_floor_ohm_um"` (1.610 / 27.22 for the two measured; others need the same run) with
@@ -235,7 +235,7 @@ criterion rises, and the **sustaining voltage is 5.17 V — in band**. Turnover 
 
 Phase 1 §4.5 predicted an identically flat 0.000 mV/°C.
 
-**Measured: DZ_24 reads −0.73 mV/°C at a 1 µA criterion and +0.46 mV/°C at 1 mA.** `bv` itself is
+**Measured: DZ_24V reads −0.73 mV/°C at a 1 µA criterion and +0.46 mV/°C at 1 mA.** `bv` itself is
 temperature-invariant; what moves is the offset between `bv` and the criterion, because the breakdown
 branch carries `nbv·Vt` in its exponent.
 
@@ -285,8 +285,8 @@ Phase 1 §6.3 recorded an unexplained 1.6–2.1× gap between `HANDOFF_vdmos_cap
 Phase 1 §2.4 found `cjo` in band on every card (0.25×–2.9×) and called it *"the control that shows
 the cgs slope is real."*
 
-**Measured: 4 of 13 fall just outside** — NDMOS20 132 fF (band 19.9–124.2) and PDMOS20 141.4
-(20.8–129.8) slightly **high**; NDMOS200 20.74 (band 28.6–178.5) and PDMOS200 16.97 (28.3–176.6)
+**Measured: 4 of 13 fall just outside** — NDMOS20V 132 fF (band 19.9–124.2) and PDMOS20V 141.4
+(20.8–129.8) slightly **high**; NDMOS200V 20.74 (band 28.6–178.5) and PDMOS200V 16.97 (28.3–176.6)
 slightly **low**. So `cjo` carries a weak version of the same voltage-class slope as `cgs` — roughly
 2.7× at 20 V down to 0.3× at 200 V, against `cgs`'s 48× → 3.3×.
 

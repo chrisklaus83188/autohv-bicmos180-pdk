@@ -37,8 +37,8 @@
     "TOX_18": {
       "origin": "1.8 V gate-oxide growth",
       "shared_by": [
-        "NMOS18",
-        "PMOS18"
+        "NMOS1V8",
+        "PMOS1V8"
       ],
       "distribution": "lognormal",
       "sigma": 0.0133,
@@ -56,8 +56,8 @@
     "TOX_33": {
       "origin": "3.3 V gate-oxide growth",
       "shared_by": [
-        "NMOS33",
-        "PMOS33"
+        "NMOS3V3",
+        "PMOS3V3"
       ],
       "distribution": "lognormal",
       "sigma": 0.0133,
@@ -75,21 +75,21 @@
     "TOX_50": {
       "origin": "5 V gate-oxide growth",
       "shared_by": [
-        "NMOS50",
-        "PMOS50",
-        "NDMOS20",
-        "PDMOS20",
-        "NDMOS40",
-        "PDMOS40",
-        "NDMOS60",
-        "PDMOS60",
-        "NDMOS80",
-        "PDMOS80",
-        "NDMOS120",
-        "PDMOS120",
-        "NDMOS200",
-        "PDMOS200",
-        "DNMOS20"
+        "NMOS5V0",
+        "PMOS5V0",
+        "NDMOS20V",
+        "PDMOS20V",
+        "NDMOS40V",
+        "PDMOS40V",
+        "NDMOS60V",
+        "PDMOS60V",
+        "NDMOS80V",
+        "PDMOS80V",
+        "NDMOS120V",
+        "PDMOS120V",
+        "NDMOS200V",
+        "PDMOS200V",
+        "DNMOS20V"
       ],
       "distribution": "lognormal",
       "sigma": 0.0133,
@@ -112,8 +112,8 @@
     "TOX_12": {
       "origin": "12 V gate-oxide growth (31 nm, separate module)",
       "shared_by": [
-        "NMOS12",
-        "PMOS12"
+        "NMOS12V",
+        "PMOS12V"
       ],
       "distribution": "lognormal",
       "sigma": 0.0133,
@@ -128,10 +128,10 @@
         }
       ]
     },
-    "VTH_NMOS18": {
+    "VTH_NMOS1V8": {
       "origin": "1.8 V n-channel implant",
       "shared_by": [
-        "NMOS18"
+        "NMOS1V8"
       ],
       "distribution": "normal",
       "sigma": 0.010256,
@@ -162,10 +162,10 @@
         "note": "no comparable class in the local reference"
       }
     },
-    "VTH_PMOS18": {
+    "VTH_PMOS1V8": {
       "origin": "1.8 V p-channel implant",
       "shared_by": [
-        "PMOS18"
+        "PMOS1V8"
       ],
       "distribution": "normal",
       "sigma": 0.011314,
@@ -196,10 +196,10 @@
         "note": "no comparable class in the local reference"
       }
     },
-    "VTH_NMOS33": {
+    "VTH_NMOS3V3": {
       "origin": "3.3 V n-channel implant",
       "shared_by": [
-        "NMOS33"
+        "NMOS3V3"
       ],
       "distribution": "normal",
       "sigma": 0.012508,
@@ -233,10 +233,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_PMOS33": {
+    "VTH_PMOS3V3": {
       "origin": "3.3 V p-channel implant",
       "shared_by": [
-        "PMOS33"
+        "PMOS3V3"
       ],
       "distribution": "normal",
       "sigma": 0.013576,
@@ -270,10 +270,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_NMOS50": {
+    "VTH_NMOS5V0": {
       "origin": "5 V n-channel implant",
       "shared_by": [
-        "NMOS50"
+        "NMOS5V0"
       ],
       "distribution": "normal",
       "sigma": 0.016492,
@@ -307,10 +307,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_PMOS50": {
+    "VTH_PMOS5V0": {
       "origin": "5 V p-channel implant",
       "shared_by": [
-        "PMOS50"
+        "PMOS5V0"
       ],
       "distribution": "normal",
       "sigma": 0.017575,
@@ -344,10 +344,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_NMOS12": {
+    "VTH_NMOS12V": {
       "origin": "12 V n-channel implant",
       "shared_by": [
-        "NMOS12"
+        "NMOS12V"
       ],
       "distribution": "normal",
       "sigma": 0.04298,
@@ -378,10 +378,10 @@
         "note": "no comparable class in the local reference"
       }
     },
-    "VTH_PMOS12": {
+    "VTH_PMOS12V": {
       "origin": "12 V p-channel implant",
       "shared_by": [
-        "PMOS12"
+        "PMOS12V"
       ],
       "distribution": "normal",
       "sigma": 0.044477,
@@ -421,10 +421,10 @@
       "derivation": "Ruling AB1. Same three-term construction as the BSIM3 cards, but k1 comes from each card's own measured subthreshold slope at the 11 nm oxide (docs/stat-model.md S1.2), since VDMOS cards carry no k1 and no tox. Realised range across the thirteen devices: 0.02003-0.02307 V 1-sigma.",
       "supersedes": "sigma 0.0433 / 0.13 3-sigma tagged declared:LV-class-anchor, which borrowed the LV CMOS band because no enhancement-LDMOS threshold band was available. Each device now derives its own."
     },
-    "VTH_NDMOS20": {
+    "VTH_NDMOS20V": {
       "origin": "20 V n-LDMOS channel implant",
       "shared_by": [
-        "NDMOS20"
+        "NDMOS20V"
       ],
       "distribution": "normal",
       "sigma": 0.020025,
@@ -434,7 +434,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_NDMOS20_STAT",
+          "param": "VTO_NDMOS20V_STAT",
           "form": "additive"
         }
       ],
@@ -458,10 +458,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_PDMOS20": {
+    "VTH_PDMOS20V": {
       "origin": "20 V p-LDMOS channel implant",
       "shared_by": [
-        "PDMOS20"
+        "PDMOS20V"
       ],
       "distribution": "normal",
       "sigma": 0.020723,
@@ -471,7 +471,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_PDMOS20_STAT",
+          "param": "VTO_PDMOS20V_STAT",
           "form": "additive"
         }
       ],
@@ -495,10 +495,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_NDMOS40": {
+    "VTH_NDMOS40V": {
       "origin": "40 V n-LDMOS channel implant",
       "shared_by": [
-        "NDMOS40"
+        "NDMOS40V"
       ],
       "distribution": "normal",
       "sigma": 0.020547,
@@ -508,7 +508,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_NDMOS40_STAT",
+          "param": "VTO_NDMOS40V_STAT",
           "form": "additive"
         }
       ],
@@ -532,10 +532,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_PDMOS40": {
+    "VTH_PDMOS40V": {
       "origin": "40 V p-LDMOS channel implant",
       "shared_by": [
-        "PDMOS40"
+        "PDMOS40V"
       ],
       "distribution": "normal",
       "sigma": 0.02117,
@@ -545,7 +545,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_PDMOS40_STAT",
+          "param": "VTO_PDMOS40V_STAT",
           "form": "additive"
         }
       ],
@@ -569,10 +569,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_NDMOS60": {
+    "VTH_NDMOS60V": {
       "origin": "60 V n-LDMOS channel implant",
       "shared_by": [
-        "NDMOS60"
+        "NDMOS60V"
       ],
       "distribution": "normal",
       "sigma": 0.020111,
@@ -582,7 +582,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_NDMOS60_STAT",
+          "param": "VTO_NDMOS60V_STAT",
           "form": "additive"
         }
       ],
@@ -606,10 +606,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_PDMOS60": {
+    "VTH_PDMOS60V": {
       "origin": "60 V p-LDMOS channel implant",
       "shared_by": [
-        "PDMOS60"
+        "PDMOS60V"
       ],
       "distribution": "normal",
       "sigma": 0.020591,
@@ -619,7 +619,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_PDMOS60_STAT",
+          "param": "VTO_PDMOS60V_STAT",
           "form": "additive"
         }
       ],
@@ -643,10 +643,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_NDMOS80": {
+    "VTH_NDMOS80V": {
       "origin": "80 V n-LDMOS channel implant",
       "shared_by": [
-        "NDMOS80"
+        "NDMOS80V"
       ],
       "distribution": "normal",
       "sigma": 0.020768,
@@ -656,7 +656,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_NDMOS80_STAT",
+          "param": "VTO_NDMOS80V_STAT",
           "form": "additive"
         }
       ],
@@ -680,10 +680,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_PDMOS80": {
+    "VTH_PDMOS80V": {
       "origin": "80 V p-LDMOS channel implant",
       "shared_by": [
-        "PDMOS80"
+        "PDMOS80V"
       ],
       "distribution": "normal",
       "sigma": 0.02126,
@@ -693,7 +693,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_PDMOS80_STAT",
+          "param": "VTO_PDMOS80V_STAT",
           "form": "additive"
         }
       ],
@@ -717,10 +717,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_NDMOS120": {
+    "VTH_NDMOS120V": {
       "origin": "120 V n-LDMOS channel implant",
       "shared_by": [
-        "NDMOS120"
+        "NDMOS120V"
       ],
       "distribution": "normal",
       "sigma": 0.021486,
@@ -730,7 +730,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_NDMOS120_STAT",
+          "param": "VTO_NDMOS120V_STAT",
           "form": "additive"
         }
       ],
@@ -754,10 +754,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_PDMOS120": {
+    "VTH_PDMOS120V": {
       "origin": "120 V p-LDMOS channel implant",
       "shared_by": [
-        "PDMOS120"
+        "PDMOS120V"
       ],
       "distribution": "normal",
       "sigma": 0.02199,
@@ -767,7 +767,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_PDMOS120_STAT",
+          "param": "VTO_PDMOS120V_STAT",
           "form": "additive"
         }
       ],
@@ -791,10 +791,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_NDMOS200": {
+    "VTH_NDMOS200V": {
       "origin": "200 V n-LDMOS channel implant",
       "shared_by": [
-        "NDMOS200"
+        "NDMOS200V"
       ],
       "distribution": "normal",
       "sigma": 0.021623,
@@ -804,7 +804,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_NDMOS200_STAT",
+          "param": "VTO_NDMOS200V_STAT",
           "form": "additive"
         }
       ],
@@ -828,10 +828,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_PDMOS200": {
+    "VTH_PDMOS200V": {
       "origin": "200 V p-LDMOS channel implant",
       "shared_by": [
-        "PDMOS200"
+        "PDMOS200V"
       ],
       "distribution": "normal",
       "sigma": 0.023068,
@@ -841,7 +841,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_PDMOS200_STAT",
+          "param": "VTO_PDMOS200V_STAT",
           "form": "additive"
         }
       ],
@@ -865,10 +865,10 @@
         "note": "checked against a comparable-class magnitude held locally; the magnitude itself is never stored"
       }
     },
-    "VTH_DNMOS20": {
+    "VTH_DNMOS20V": {
       "origin": "20 V depletion n-LDMOS implant",
       "shared_by": [
-        "DNMOS20"
+        "DNMOS20V"
       ],
       "distribution": "normal",
       "sigma": 0.020241,
@@ -878,7 +878,7 @@
       "error_bar": "+-50%",
       "applies_to": [
         {
-          "param": "VTO_DNMOS20_STAT",
+          "param": "VTO_DNMOS20V_STAT",
           "form": "additive"
         }
       ],
@@ -911,29 +911,29 @@
       "source": "declared",
       "error_bar": "+-50%",
       "devices_mos": [
-        "NMOS18",
-        "PMOS18",
-        "NMOS33",
-        "PMOS33",
-        "NMOS50",
-        "PMOS50",
-        "NMOS12",
-        "PMOS12"
+        "NMOS1V8",
+        "PMOS1V8",
+        "NMOS3V3",
+        "PMOS3V3",
+        "NMOS5V0",
+        "PMOS5V0",
+        "NMOS12V",
+        "PMOS12V"
       ],
       "devices_vdmos": [
-        "NDMOS20",
-        "PDMOS20",
-        "NDMOS40",
-        "PDMOS40",
-        "NDMOS60",
-        "PDMOS60",
-        "NDMOS80",
-        "PDMOS80",
-        "NDMOS120",
-        "PDMOS120",
-        "NDMOS200",
-        "PDMOS200",
-        "DNMOS20"
+        "NDMOS20V",
+        "PDMOS20V",
+        "NDMOS40V",
+        "PDMOS40V",
+        "NDMOS60V",
+        "PDMOS60V",
+        "NDMOS80V",
+        "PDMOS80V",
+        "NDMOS120V",
+        "PDMOS120V",
+        "NDMOS200V",
+        "PDMOS200V",
+        "DNMOS20V"
       ],
       "applies_to_mos": [
         {
@@ -955,27 +955,27 @@
     "DL_POLY": {
       "origin": "poly gate litho/etch CD",
       "shared_by": [
-        "NMOS18",
-        "PMOS18",
-        "NMOS33",
-        "PMOS33",
-        "NMOS50",
-        "PMOS50",
-        "NMOS12",
-        "PMOS12",
-        "NDMOS20",
-        "PDMOS20",
-        "NDMOS40",
-        "PDMOS40",
-        "NDMOS60",
-        "PDMOS60",
-        "NDMOS80",
-        "PDMOS80",
-        "NDMOS120",
-        "PDMOS120",
-        "NDMOS200",
-        "PDMOS200",
-        "DNMOS20",
+        "NMOS1V8",
+        "PMOS1V8",
+        "NMOS3V3",
+        "PMOS3V3",
+        "NMOS5V0",
+        "PMOS5V0",
+        "NMOS12V",
+        "PMOS12V",
+        "NDMOS20V",
+        "PDMOS20V",
+        "NDMOS40V",
+        "PDMOS40V",
+        "NDMOS60V",
+        "PDMOS60V",
+        "NDMOS80V",
+        "PDMOS80V",
+        "NDMOS120V",
+        "PDMOS120V",
+        "NDMOS200V",
+        "PDMOS200V",
+        "DNMOS20V",
         "RPOLY_HI",
         "RPOLY_LO"
       ],
@@ -1000,12 +1000,12 @@
     "DW_ACT_LV": {
       "origin": "LV active/isolation CD",
       "shared_by": [
-        "NMOS18",
-        "PMOS18",
-        "NMOS33",
-        "PMOS33",
-        "NMOS50",
-        "PMOS50"
+        "NMOS1V8",
+        "PMOS1V8",
+        "NMOS3V3",
+        "PMOS3V3",
+        "NMOS5V0",
+        "PMOS5V0"
       ],
       "distribution": "normal",
       "sigma": 5e-09,
@@ -1023,21 +1023,21 @@
     "DW_ACT_HV": {
       "origin": "HV active/isolation CD",
       "shared_by": [
-        "NMOS12",
-        "PMOS12",
-        "NDMOS20",
-        "PDMOS20",
-        "NDMOS40",
-        "PDMOS40",
-        "NDMOS60",
-        "PDMOS60",
-        "NDMOS80",
-        "PDMOS80",
-        "NDMOS120",
-        "PDMOS120",
-        "NDMOS200",
-        "PDMOS200",
-        "DNMOS20"
+        "NMOS12V",
+        "PMOS12V",
+        "NDMOS20V",
+        "PDMOS20V",
+        "NDMOS40V",
+        "PDMOS40V",
+        "NDMOS60V",
+        "PDMOS60V",
+        "NDMOS80V",
+        "PDMOS80V",
+        "NDMOS120V",
+        "PDMOS120V",
+        "NDMOS200V",
+        "PDMOS200V",
+        "DNMOS20V"
       ],
       "distribution": "normal",
       "sigma": 6.67e-09,
@@ -1145,14 +1145,14 @@
     "RSH_GATE": {
       "origin": "silicided gate poly",
       "shared_by": [
-        "NMOS18",
-        "PMOS18",
-        "NMOS33",
-        "PMOS33",
-        "NMOS50",
-        "PMOS50",
-        "NMOS12",
-        "PMOS12"
+        "NMOS1V8",
+        "PMOS1V8",
+        "NMOS3V3",
+        "PMOS3V3",
+        "NMOS5V0",
+        "PMOS5V0",
+        "NMOS12V",
+        "PMOS12V"
       ],
       "distribution": "lognormal",
       "nominal": 8.0,
@@ -1328,8 +1328,8 @@
         "DIO_FAST",
         "DIO_SCH",
         "DZ_5V6",
-        "DZ_12",
-        "DZ_24"
+        "DZ_12V",
+        "DZ_24V"
       ],
       "applies_to": [
         {
@@ -1351,8 +1351,8 @@
         "DIO_FAST",
         "DIO_SCH",
         "DZ_5V6",
-        "DZ_12",
-        "DZ_24"
+        "DZ_12V",
+        "DZ_24V"
       ],
       "applies_to": [
         {
@@ -1373,8 +1373,8 @@
         "DIO_FAST",
         "DIO_SCH",
         "DZ_5V6",
-        "DZ_12",
-        "DZ_24"
+        "DZ_12V",
+        "DZ_24V"
       ],
       "applies_to": [
         {
@@ -1392,19 +1392,19 @@
       "source": "reference-class:diode-BV-tolerance",
       "error_bar": "+-50%",
       "devices": [
-        "NDMOS20",
-        "PDMOS20",
-        "NDMOS40",
-        "PDMOS40",
-        "NDMOS60",
-        "PDMOS60",
-        "NDMOS80",
-        "PDMOS80",
-        "NDMOS120",
-        "PDMOS120",
-        "NDMOS200",
-        "PDMOS200",
-        "DNMOS20",
+        "NDMOS20V",
+        "PDMOS20V",
+        "NDMOS40V",
+        "PDMOS40V",
+        "NDMOS60V",
+        "PDMOS60V",
+        "NDMOS80V",
+        "PDMOS80V",
+        "NDMOS120V",
+        "PDMOS120V",
+        "NDMOS200V",
+        "PDMOS200V",
+        "DNMOS20V",
         "NPN_LV",
         "NPN_HV",
         "PNP_LAT",
@@ -1415,21 +1415,21 @@
           "param": "bv",
           "form": "multiplicative",
           "devices": [
-            "NDMOS20",
-            "PDMOS20",
-            "NDMOS40",
-            "PDMOS40",
-            "NDMOS60",
-            "PDMOS60",
-            "NDMOS80",
-            "PDMOS80",
-            "NDMOS120",
-            "PDMOS120",
-            "NDMOS200",
-            "PDMOS200",
-            "DNMOS20"
+            "NDMOS20V",
+            "PDMOS20V",
+            "NDMOS40V",
+            "PDMOS40V",
+            "NDMOS60V",
+            "PDMOS60V",
+            "NDMOS80V",
+            "PDMOS80V",
+            "NDMOS120V",
+            "PDMOS120V",
+            "NDMOS200V",
+            "PDMOS200V",
+            "DNMOS20V"
           ],
-          "note": "These cards carry a bv parameter directly. Membership derived from the cards, not hand-listed: an earlier hand-written list omitted DNMOS20."
+          "note": "These cards carry a bv parameter directly. Membership derived from the cards, not hand-listed: an earlier hand-written list omitted DNMOS20V."
         },
         {
           "target": "wrapper_BVCBO",
@@ -1454,14 +1454,14 @@
     "JS_MOS": {
       "origin": "source/drain junction formation",
       "shared_by": [
-        "NMOS18",
-        "PMOS18",
-        "NMOS33",
-        "PMOS33",
-        "NMOS50",
-        "PMOS50",
-        "NMOS12",
-        "PMOS12"
+        "NMOS1V8",
+        "PMOS1V8",
+        "NMOS3V3",
+        "PMOS3V3",
+        "NMOS5V0",
+        "PMOS5V0",
+        "NMOS12V",
+        "PMOS12V"
       ],
       "distribution": "lognormal",
       "sigma": 0.0667,
@@ -1517,44 +1517,44 @@
         }
       ],
       "devices": [
-        "NMOS18",
-        "PMOS18",
-        "NMOS33",
-        "PMOS33",
-        "NMOS50",
-        "PMOS50",
-        "NMOS12",
-        "PMOS12",
-        "NDMOS20",
-        "PDMOS20",
-        "NDMOS40",
-        "PDMOS40",
-        "NDMOS60",
-        "PDMOS60",
-        "NDMOS80",
-        "PDMOS80",
-        "NDMOS120",
-        "PDMOS120",
-        "NDMOS200",
-        "PDMOS200",
-        "DNMOS20"
+        "NMOS1V8",
+        "PMOS1V8",
+        "NMOS3V3",
+        "PMOS3V3",
+        "NMOS5V0",
+        "PMOS5V0",
+        "NMOS12V",
+        "PMOS12V",
+        "NDMOS20V",
+        "PDMOS20V",
+        "NDMOS40V",
+        "PDMOS40V",
+        "NDMOS60V",
+        "PDMOS60V",
+        "NDMOS80V",
+        "PDMOS80V",
+        "NDMOS120V",
+        "PDMOS120V",
+        "NDMOS200V",
+        "PDMOS200V",
+        "DNMOS20V"
       ],
       "supersedes": "_U0_calibration, whose class_bands_3sigma {18: 0.20, 33: 0.20, 50: 0.14, 12: 0.14, vdmos: 0.14} came from an external Idsat FF/SS table and whose LDMOS entry was invented.",
       "anti_correlation": "U2 also adopts the U0/Rd anti-correlation as a structural feature, carried by sign rather than by a solved VDMOS calibration.",
       "sigma_zero_devices": [
-        "NDMOS120",
-        "NDMOS200",
-        "NDMOS80",
-        "PDMOS120",
-        "PDMOS200"
+        "NDMOS120V",
+        "NDMOS200V",
+        "NDMOS80V",
+        "PDMOS120V",
+        "PDMOS200V"
       ],
       "sigma_zero_criterion": "d ln(Id)/d ln(U0) on the device's own classic bench, below 0.4. Where the drift region dominates the current, mobility has no meaningful lever and a non-zero sigma(KP) would describe the model rather than the device.",
       "sigma_zero_measured_slopes": {
-        "NDMOS80": 0.365,
-        "NDMOS120": 0.265,
-        "PDMOS120": 0.285,
-        "NDMOS200": 0.212,
-        "PDMOS200": 0.216
+        "NDMOS80V": 0.365,
+        "NDMOS120V": 0.265,
+        "PDMOS120V": 0.285,
+        "NDMOS200V": 0.212,
+        "PDMOS200V": 0.216
       },
       "independence_note": "U0 and RD are INDEPENDENT draws. Channel mobility is set by the body implant and drift resistance by the drift implant -- separate process steps, so independent draws are the default under the identity rule. A shared signed draw (one variable moving KP up and RD down together) is a legitimate alternative structure used by some libraries; it is not adopted here for lack of a physical basis in AutoHV's declared flow. Note this is a statement about the PROCESS, not about the corner direction: the fast direction moves both because both raise current, which is a property of the direction, not a correlation."
     }
@@ -1614,70 +1614,70 @@
       "expression": "d vth0 = k1*sqrt(2*phi_F) * (d tox / tox)",
       "reason": "Ruling AB1 S2.1: the oxide contribution to Vth is NOT in the private VTH_<device> draw. It enters through the shared TOX_<class> draw so that same-oxide devices correlate in Monte Carlo. Thicker oxide -> higher |Vth|.",
       "per_device_sigma_V": {
-        "NMOS18": 0.007177,
-        "PMOS18": 0.008127,
-        "NMOS33": 0.007784,
-        "PMOS33": 0.00885,
-        "NMOS50": 0.008339,
-        "PMOS50": 0.009645,
-        "NMOS12": 0.018787,
-        "PMOS12": 0.020889,
-        "NDMOS20": 0.012316,
-        "PDMOS20": 0.013031,
-        "NDMOS40": 0.012852,
-        "PDMOS40": 0.01348,
-        "NDMOS60": 0.012405,
-        "PDMOS60": 0.012897,
-        "NDMOS80": 0.013076,
-        "PDMOS80": 0.01357,
-        "NDMOS120": 0.013795,
-        "PDMOS120": 0.014292,
-        "NDMOS200": 0.013931,
-        "PDMOS200": 0.015336,
-        "DNMOS20": 0.012539
+        "NMOS1V8": 0.007177,
+        "PMOS1V8": 0.008127,
+        "NMOS3V3": 0.007784,
+        "PMOS3V3": 0.00885,
+        "NMOS5V0": 0.008339,
+        "PMOS5V0": 0.009645,
+        "NMOS12V": 0.018787,
+        "PMOS12V": 0.020889,
+        "NDMOS20V": 0.012316,
+        "PDMOS20V": 0.013031,
+        "NDMOS40V": 0.012852,
+        "PDMOS40V": 0.01348,
+        "NDMOS60V": 0.012405,
+        "PDMOS60V": 0.012897,
+        "NDMOS80V": 0.013076,
+        "PDMOS80V": 0.01357,
+        "NDMOS120V": 0.013795,
+        "PDMOS120V": 0.014292,
+        "NDMOS200V": 0.013931,
+        "PDMOS200V": 0.015336,
+        "DNMOS20V": 0.012539
       },
       "validation": {
         "method": "tox perturbed +-1.33 % (the TOX_* 1-sigma); Vth read from the model itself (@m.xm1.m0[vth]) with no extraction criterion, at each group's own classic bench (sizing-guide W, L = Lmin_fab), after the k3 grounding landed",
-        "bsim3_residual_is_negative": "On every card |Vth| FALLS as tox rises at bench geometry. An L-sweep on NMOS50 (W 4.7 um) shows why: as carded the residual is -1.171 mV at L = 0.5 um, -0.222 at 1 um, then +0.035..+0.049 at L >= 2 um; with dvt0/dvt1/dvt2/k3 zeroed it collapses to ~0 at every length. So BSIM3's implicit tox dependence is entirely the short-channel and narrow-width terms, which dominate and reverse the trend at bench lengths. applied = analytic - (negative) is therefore 10-22 % LARGER than analytic.",
-        "supersedes": "The earlier decision to apply the full closed form, and the 3.7-19.5 % residual reported at Stop A'. That figure came from constant-current and gm-max extraction, both of which move with tox themselves and gave criterion-dependent, sign-unstable results (NMOS18 read -0.18 mV at a 1x W/L criterion, -0.61 at 0.1x, +3.52 at 10x)."
+        "bsim3_residual_is_negative": "On every card |Vth| FALLS as tox rises at bench geometry. An L-sweep on NMOS5V0 (W 4.7 um) shows why: as carded the residual is -1.171 mV at L = 0.5 um, -0.222 at 1 um, then +0.035..+0.049 at L >= 2 um; with dvt0/dvt1/dvt2/k3 zeroed it collapses to ~0 at every length. So BSIM3's implicit tox dependence is entirely the short-channel and narrow-width terms, which dominate and reverse the trend at bench lengths. applied = analytic - (negative) is therefore 10-22 % LARGER than analytic.",
+        "supersedes": "The earlier decision to apply the full closed form, and the 3.7-19.5 % residual reported at Stop A'. That figure came from constant-current and gm-max extraction, both of which move with tox themselves and gave criterion-dependent, sign-unstable results (NMOS1V8 read -0.18 mV at a 1x W/L criterion, -0.61 at 0.1x, +3.52 at 10x)."
       },
       "coefficients_V_per_sigma_TOX": {
-        "NMOS18": {
+        "NMOS1V8": {
           "analytic": 0.007177,
           "bsim3_residual": -0.0016,
           "applied": 0.008777
         },
-        "PMOS18": {
+        "PMOS1V8": {
           "analytic": 0.008127,
           "bsim3_residual": -0.001592,
           "applied": 0.009719
         },
-        "NMOS33": {
+        "NMOS3V3": {
           "analytic": 0.007784,
           "bsim3_residual": -0.000981,
           "applied": 0.008765
         },
-        "PMOS33": {
+        "PMOS3V3": {
           "analytic": 0.00885,
           "bsim3_residual": -0.000959,
           "applied": 0.009809
         },
-        "NMOS50": {
+        "NMOS5V0": {
           "analytic": 0.008339,
           "bsim3_residual": -0.001171,
           "applied": 0.00951
         },
-        "PMOS50": {
+        "PMOS5V0": {
           "analytic": 0.009645,
           "bsim3_residual": -0.001122,
           "applied": 0.010767
         },
-        "NMOS12": {
+        "NMOS12V": {
           "analytic": 0.018787,
           "bsim3_residual": -0.001904,
           "applied": 0.020691
         },
-        "PMOS12": {
+        "PMOS12V": {
           "analytic": 0.020889,
           "bsim3_residual": -0.001917,
           "applied": 0.022806
@@ -1724,7 +1724,7 @@
       ],
       "least_checked": "The 12 V (31 nm) rung is the least externally checked: no 12 V-class comparison exists, and the 31 nm end is where an oxide-charge term would matter most."
     },
-    "NMOS18": {
+    "NMOS1V8": {
       "A_VT": {
         "value": 3.44,
         "units": "mV.um",
@@ -1757,7 +1757,7 @@
         "source": "carried-over"
       }
     },
-    "PMOS18": {
+    "PMOS1V8": {
       "A_VT": {
         "value": 3.66,
         "units": "mV.um",
@@ -1790,7 +1790,7 @@
         "source": "carried-over"
       }
     },
-    "NMOS33": {
+    "NMOS3V3": {
       "A_VT": {
         "value": 4.51,
         "units": "mV.um",
@@ -1823,7 +1823,7 @@
         "source": "carried-over"
       }
     },
-    "PMOS33": {
+    "PMOS3V3": {
       "A_VT": {
         "value": 4.81,
         "units": "mV.um",
@@ -1856,7 +1856,7 @@
         "source": "carried-over"
       }
     },
-    "NMOS50": {
+    "NMOS5V0": {
       "A_VT": {
         "value": 5.96,
         "units": "mV.um",
@@ -1889,7 +1889,7 @@
         "source": "carried-over"
       }
     },
-    "PMOS50": {
+    "PMOS5V0": {
       "A_VT": {
         "value": 6.41,
         "units": "mV.um",
@@ -1922,7 +1922,7 @@
         "source": "carried-over"
       }
     },
-    "NMOS12": {
+    "NMOS12V": {
       "A_VT": {
         "value": 15.02,
         "units": "mV.um",
@@ -1955,7 +1955,7 @@
         "source": "carried-over"
       }
     },
-    "PMOS12": {
+    "PMOS12V": {
       "A_VT": {
         "value": 15.84,
         "units": "mV.um",
@@ -1993,37 +1993,37 @@
         "convention": "sigma(Vth) at the W_REF = 10 um reference cell, WIDTH-normalised: the wrapper computes AGAUSS(0, coef, 3)/sqrt(mtot) with mtot = (W/W_REF)*M. This is NOT an area-normalised Pelgrom coefficient and must not be converted into one -- see docs/stat-model.md S3.2.",
         "units": "V, 3-sigma at the reference cell",
         "ladder": {
-          "NDMOS20": 0.024,
-          "PDMOS20": 0.024,
-          "DNMOS20": 0.024,
-          "NDMOS40": 0.0255,
-          "PDMOS40": 0.0255,
-          "NDMOS60": 0.027,
-          "PDMOS60": 0.027,
-          "NDMOS80": 0.0285,
-          "PDMOS80": 0.0285,
-          "NDMOS120": 0.03,
-          "PDMOS120": 0.03,
-          "NDMOS200": 0.033,
-          "PDMOS200": 0.033
+          "NDMOS20V": 0.024,
+          "PDMOS20V": 0.024,
+          "DNMOS20V": 0.024,
+          "NDMOS40V": 0.0255,
+          "PDMOS40V": 0.0255,
+          "NDMOS60V": 0.027,
+          "PDMOS60V": 0.027,
+          "NDMOS80V": 0.0285,
+          "PDMOS80V": 0.0285,
+          "NDMOS120V": 0.03,
+          "PDMOS120V": 0.03,
+          "NDMOS200V": 0.033,
+          "PDMOS200V": 0.033
         },
         "source": "declared (phase-3, per-class; heavier body doping and drift-field Vth sensitivity rising with class)",
         "error_bar": "+-50%",
         "note": "The per-class dependence is deliberate and is retained. A Pelgrom form c_RDF*sqrt(tox*k1_equiv) was derived at the 11 nm oxide and gives a nearly flat 6.43-7.20 mV.um, which would erase that dependence and is in the wrong normalisation besides; it is not used. Any comparison against an external coefficient lives only in the local plausibility script as pass/fail.",
         "devices": [
-          "DNMOS20",
-          "NDMOS120",
-          "NDMOS20",
-          "NDMOS200",
-          "NDMOS40",
-          "NDMOS60",
-          "NDMOS80",
-          "PDMOS120",
-          "PDMOS20",
-          "PDMOS200",
-          "PDMOS40",
-          "PDMOS60",
-          "PDMOS80"
+          "DNMOS20V",
+          "NDMOS120V",
+          "NDMOS20V",
+          "NDMOS200V",
+          "NDMOS40V",
+          "NDMOS60V",
+          "NDMOS80V",
+          "PDMOS120V",
+          "PDMOS20V",
+          "PDMOS200V",
+          "PDMOS40V",
+          "PDMOS60V",
+          "PDMOS80V"
         ]
       }
     },
@@ -2100,8 +2100,8 @@
           "DIO_FAST",
           "DIO_SCH",
           "DZ_5V6",
-          "DZ_12",
-          "DZ_24"
+          "DZ_12V",
+          "DZ_24V"
         ]
       }
     }
@@ -2110,7 +2110,7 @@
     "_comment": "Reference bench per group, taken from docs/sizing-guide.json rather than invented. classic = the corner direction bench (ruling F8); analog = the gm/Id ~ 6 mirror point, reported alongside.",
     "_mos_classic": "Vgs = Vds = class supply, L = sizing-guide analog default, W = the 10 uA mirror-point width",
     "_mos_analog": "the sizing-guide 10 uA mirror point (W, Vgs, gm/Id ~ 6), Vds = supply/2",
-    "NMOS18": {
+    "NMOS1V8": {
       "W_um": 1.3,
       "L_um": 1.0,
       "supply_V": 1.8,
@@ -2125,7 +2125,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "PMOS18": {
+    "PMOS1V8": {
       "W_um": 3.7,
       "L_um": 1.0,
       "supply_V": 1.8,
@@ -2140,7 +2140,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "NMOS33": {
+    "NMOS3V3": {
       "W_um": 2.2,
       "L_um": 1.0,
       "supply_V": 3.3,
@@ -2155,7 +2155,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "PMOS33": {
+    "PMOS3V3": {
       "W_um": 6.1,
       "L_um": 1.0,
       "supply_V": 3.3,
@@ -2170,7 +2170,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "NMOS50": {
+    "NMOS5V0": {
       "W_um": 4.7,
       "L_um": 1.0,
       "supply_V": 5.0,
@@ -2185,7 +2185,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "PMOS50": {
+    "PMOS5V0": {
       "W_um": 13.4,
       "L_um": 1.0,
       "supply_V": 5.0,
@@ -2200,7 +2200,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "NMOS12": {
+    "NMOS12V": {
       "W_um": 22.4,
       "L_um": 1.0,
       "supply_V": 12.0,
@@ -2215,7 +2215,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "PMOS12": {
+    "PMOS12V": {
       "W_um": 63.2,
       "L_um": 1.0,
       "supply_V": 12.0,
@@ -2252,7 +2252,7 @@
       "AREA": 1,
       "metric": "ln If"
     },
-    "NDMOS20": {
+    "NDMOS20V": {
       "W_um": 3.0,
       "supply_V": 10.0,
       "classic": {
@@ -2268,7 +2268,7 @@
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
-    "PDMOS20": {
+    "PDMOS20V": {
       "W_um": 4.7,
       "supply_V": 10.0,
       "classic": {
@@ -2283,7 +2283,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "NDMOS40": {
+    "NDMOS40V": {
       "W_um": 3.0,
       "supply_V": 10.0,
       "classic": {
@@ -2299,7 +2299,7 @@
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
-    "PDMOS40": {
+    "PDMOS40V": {
       "W_um": 4.7,
       "supply_V": 10.0,
       "classic": {
@@ -2314,7 +2314,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "NDMOS60": {
+    "NDMOS60V": {
       "W_um": 3.0,
       "supply_V": 10.0,
       "classic": {
@@ -2330,7 +2330,7 @@
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
-    "PDMOS60": {
+    "PDMOS60V": {
       "W_um": 4.7,
       "supply_V": 10.0,
       "classic": {
@@ -2345,7 +2345,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "NDMOS80": {
+    "NDMOS80V": {
       "W_um": 3.0,
       "supply_V": 10.0,
       "classic": {
@@ -2361,7 +2361,7 @@
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
-    "PDMOS80": {
+    "PDMOS80V": {
       "W_um": 4.7,
       "supply_V": 10.0,
       "classic": {
@@ -2376,7 +2376,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "NDMOS120": {
+    "NDMOS120V": {
       "W_um": 3.0,
       "supply_V": 10.0,
       "classic": {
@@ -2392,7 +2392,7 @@
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
-    "PDMOS120": {
+    "PDMOS120V": {
       "W_um": 4.7,
       "supply_V": 10.0,
       "classic": {
@@ -2407,7 +2407,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "NDMOS200": {
+    "NDMOS200V": {
       "W_um": 3.0,
       "supply_V": 10.0,
       "classic": {
@@ -2423,7 +2423,7 @@
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
       "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
     },
-    "PDMOS200": {
+    "PDMOS200V": {
       "W_um": 4.7,
       "supply_V": 10.0,
       "classic": {
@@ -2438,7 +2438,7 @@
       },
       "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
     },
-    "DNMOS20": {
+    "DNMOS20V": {
       "W_um": 3.0,
       "supply_V": 10.0,
       "classic": {
@@ -2474,14 +2474,14 @@
       "source": "literature:0.18um-class-fitted",
       "error_bar": "+-100%",
       "applies_to": [
-        "NMOS18",
-        "PMOS18",
-        "NMOS33",
-        "PMOS33",
-        "NMOS50",
-        "PMOS50",
-        "NMOS12",
-        "PMOS12"
+        "NMOS1V8",
+        "PMOS1V8",
+        "NMOS3V3",
+        "PMOS3V3",
+        "NMOS5V0",
+        "PMOS5V0",
+        "NMOS12V",
+        "PMOS12V"
       ],
       "evidence": "docs/bsim3-defaults-audit.md: at W=0.4 um the default raises Vth +238 mV vs a 50 um device (+29 mV once grounded); Id/W 111.9 -> 125.5 uA/um"
     },
@@ -2491,14 +2491,14 @@
       "source": "default:BSIM3-retained",
       "error_bar": "n/a",
       "applies_to": [
-        "NMOS18",
-        "PMOS18",
-        "NMOS33",
-        "PMOS33",
-        "NMOS50",
-        "PMOS50",
-        "NMOS12",
-        "PMOS12"
+        "NMOS1V8",
+        "PMOS1V8",
+        "NMOS3V3",
+        "PMOS3V3",
+        "NMOS5V0",
+        "PMOS5V0",
+        "NMOS12V",
+        "PMOS12V"
       ]
     },
     "w0": {
@@ -2508,119 +2508,119 @@
       "source": "literature:0.18um-class-fitted",
       "error_bar": "+-100%",
       "applies_to": [
-        "NMOS18",
-        "PMOS18",
-        "NMOS33",
-        "PMOS33",
-        "NMOS50",
-        "PMOS50",
-        "NMOS12",
-        "PMOS12"
+        "NMOS1V8",
+        "PMOS1V8",
+        "NMOS3V3",
+        "PMOS3V3",
+        "NMOS5V0",
+        "PMOS5V0",
+        "NMOS12V",
+        "PMOS12V"
       ]
     }
   },
   "expected_terms": {
-    "NMOS18": {
+    "NMOS1V8": {
       "realised": 8,
       "terms": 6,
       "excluded": 2
     },
-    "PMOS18": {
+    "PMOS1V8": {
       "realised": 8,
       "terms": 6,
       "excluded": 2
     },
-    "NMOS33": {
+    "NMOS3V3": {
       "realised": 8,
       "terms": 6,
       "excluded": 2
     },
-    "PMOS33": {
+    "PMOS3V3": {
       "realised": 8,
       "terms": 6,
       "excluded": 2
     },
-    "NMOS50": {
+    "NMOS5V0": {
       "realised": 8,
       "terms": 6,
       "excluded": 2
     },
-    "PMOS50": {
+    "PMOS5V0": {
       "realised": 8,
       "terms": 6,
       "excluded": 2
     },
-    "NMOS12": {
+    "NMOS12V": {
       "realised": 8,
       "terms": 6,
       "excluded": 2
     },
-    "PMOS12": {
+    "PMOS12V": {
       "realised": 8,
       "terms": 6,
       "excluded": 2
     },
-    "NDMOS20": {
+    "NDMOS20V": {
       "realised": 7,
       "terms": 3,
       "excluded": 4
     },
-    "PDMOS20": {
+    "PDMOS20V": {
       "realised": 7,
       "terms": 3,
       "excluded": 4
     },
-    "NDMOS40": {
+    "NDMOS40V": {
       "realised": 7,
       "terms": 3,
       "excluded": 4
     },
-    "PDMOS40": {
+    "PDMOS40V": {
       "realised": 7,
       "terms": 3,
       "excluded": 4
     },
-    "NDMOS60": {
+    "NDMOS60V": {
       "realised": 7,
       "terms": 3,
       "excluded": 4
     },
-    "PDMOS60": {
+    "PDMOS60V": {
       "realised": 7,
       "terms": 3,
       "excluded": 4
     },
-    "NDMOS80": {
+    "NDMOS80V": {
       "realised": 7,
       "terms": 2,
       "excluded": 5
     },
-    "PDMOS80": {
+    "PDMOS80V": {
       "realised": 7,
       "terms": 3,
       "excluded": 4
     },
-    "NDMOS120": {
+    "NDMOS120V": {
       "realised": 7,
       "terms": 2,
       "excluded": 5
     },
-    "PDMOS120": {
+    "PDMOS120V": {
       "realised": 7,
       "terms": 2,
       "excluded": 5
     },
-    "NDMOS200": {
+    "NDMOS200V": {
       "realised": 7,
       "terms": 2,
       "excluded": 5
     },
-    "PDMOS200": {
+    "PDMOS200V": {
       "realised": 7,
       "terms": 2,
       "excluded": 5
     },
-    "DNMOS20": {
+    "DNMOS20V": {
       "realised": 7,
       "terms": 3,
       "excluded": 4
@@ -2710,12 +2710,12 @@
       "terms": 2,
       "excluded": 1
     },
-    "DZ_12": {
+    "DZ_12V": {
       "realised": 3,
       "terms": 2,
       "excluded": 1
     },
-    "DZ_24": {
+    "DZ_24V": {
       "realised": 3,
       "terms": 2,
       "excluded": 1

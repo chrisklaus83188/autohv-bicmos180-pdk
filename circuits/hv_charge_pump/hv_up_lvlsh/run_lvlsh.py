@@ -130,7 +130,7 @@ def write_report(res, op_ok, tr_ok):
     L = []
     A = L.append
     A("# High-Side Gate-Driver Level Shifter — First-Qualification Report")
-    A("### AutoHV BiCMOS180 PDK · 200 V class (NDMOS200 / PDMOS200) · `circuits/hv_charge_pump/hv_up_lvlsh/`\n")
+    A("### AutoHV BiCMOS180 PDK · 200 V class (NDMOS200V / PDMOS200V) · `circuits/hv_charge_pump/hv_up_lvlsh/`\n")
     A(f"<sub>Models: **{p['model_tag']}** (frozen) · simulator: **{p['ngspice_version']}** · "
       f"V_HV = {p['vhv']} V rail, V_BOOT = {p['vboot']} V bootstrap, V_DDL = {p['vddl']} V logic.</sub>\n")
     A("**First characterization of this circuit.** Its only prior testbench was the commented example "

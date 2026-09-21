@@ -6,27 +6,27 @@
 .options temp=-40
 
 .subckt HSL high low vbiasc out vss wp=30u lp=5u wc=60u lc=5u wrs=1u lrs=90u wro=1u lro=43u msr=0 msm=0 msc=0 msrs=0 msro=0
-X_M_ref refg refg high PDMOS200 W={wp} L={lp} MM_SIGMA={msr}
+X_M_ref refg refg high PDMOS200V W={wp} L={lp} MM_SIGMA={msr}
 X_R_ref refg low RPOLY_HI W={wrs} L={lrs} MM_SIGMA={msrs}
-X_M_mir mird refg high PDMOS200 W={wp} L={lp} MM_SIGMA={msm}
+X_M_mir mird refg high PDMOS200V W={wp} L={lp} MM_SIGMA={msm}
 R_pull mird vss 10Meg
-X_M_casc mird vbiasc out NDMOS200 W={wc} L={lc} MM_SIGMA={msc}
+X_M_casc mird vbiasc out NDMOS200V W={wc} L={lc} MM_SIGMA={msc}
 X_R_out out vss RPOLY_HI W={wro} L={lro} MM_SIGMA={msro}
 .ends HSL
 
 .subckt CMP vinp vinn vout vdd vss vbn wt=3u lt=2u wi=22u li=2u wl=10u ll=2u mst=0 md1=0 md2=0 ml1=0 ml2=0
-X_t  tail vbn  vss vss NMOS50 W={wt} L={lt} MM_SIGMA={mst}
-X_d1 d1   vinp tail vss NMOS50 W={wi} L={li} MM_SIGMA={md1}
-X_d2 d2   vinn tail vss NMOS50 W={wi} L={li} MM_SIGMA={md2}
-X_l1 d1   d1   vdd vdd PMOS50 W={wl} L={ll} MM_SIGMA={ml1}
-X_l2 d2   d1   vdd vdd PMOS50 W={wl} L={ll} MM_SIGMA={ml2}
-X_inA voutn d2    vss vss NMOS50 W=10u L=0.5u
-X_ipA voutn d2    vdd vdd PMOS50 W=20u L=0.5u
-X_inB vout  voutn vss vss NMOS50 W=10u L=0.5u
-X_ipB vout  voutn vdd vdd PMOS50 W=20u L=0.5u
+X_t  tail vbn  vss vss NMOS5V0 W={wt} L={lt} MM_SIGMA={mst}
+X_d1 d1   vinp tail vss NMOS5V0 W={wi} L={li} MM_SIGMA={md1}
+X_d2 d2   vinn tail vss NMOS5V0 W={wi} L={li} MM_SIGMA={md2}
+X_l1 d1   d1   vdd vdd PMOS5V0 W={wl} L={ll} MM_SIGMA={ml1}
+X_l2 d2   d1   vdd vdd PMOS5V0 W={wl} L={ll} MM_SIGMA={ml2}
+X_inA voutn d2    vss vss NMOS5V0 W=10u L=0.5u
+X_ipA voutn d2    vdd vdd PMOS5V0 W=20u L=0.5u
+X_inB vout  voutn vss vss NMOS5V0 W=10u L=0.5u
+X_ipB vout  voutn vdd vdd PMOS5V0 W=20u L=0.5u
 .ends CMP
 
-X_bias vbn vbn 0 0 NMOS50 W=10u L=1u MM_SIGMA=0.0000
+X_bias vbn vbn 0 0 NMOS5V0 W=10u L=1u MM_SIGMA=0.0000
 X_R_bias vcc vbn RPOLY_HI W=0.5u L=270u MM_SIGMA=0.0000
 
 X_hsl_cp vcp vin vcasc v_cp_lo 0 HSL wp=30u lp=5u wc=12u lc=5u wrs=1u lrs=90u wro=1.5u lro=75u msr=0.0000 msm=0.0000 msc=0.0000 msrs=0.0000 msro=0.0000

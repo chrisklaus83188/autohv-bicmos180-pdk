@@ -10,8 +10,8 @@ separately under [`../handoffs/`](../handoffs/).
 
 | # | Item | Devices | Impact | Reproducer |
 |---|------|---------|--------|------------|
-| 1 | [HV DMOS are subthreshold at analog (µA) currents](HANDOFF_dmos200_subthreshold_analog.md) | `NDMOS200`, `PDMOS200` | `kp` is a power-FET value, so the devices sit in subthreshold below ~mA. A current mirror at a µA budget hits max gm/I, amplifying ~2 mV Vth mismatch into a ~400 mV (1σ) trip shift — unusable as a precision analog mirror. | Self-biased diode sweep in the doc (§Reproducer) |
-| 2 | [Fast HV transients micro-step into timeouts above ~100 V](HANDOFF_dynamic_transient_microstepping.md) | `NDMOS200`, `PDMOS200` | With ≥1 floating HV LDMOS front-end, a fast edge / slew drives the timestep toward zero above ~120 V and never completes. DC and quasi-static transients are fine (the `Rcond` fix handled those). | [`repro_slew_vin{100,200}.cir`](../../repro_slew_vin100.cir), [`repro_delay_vin{100,200}.cir`](../../repro_delay_vin100.cir) at repo root |
+| 1 | [HV DMOS are subthreshold at analog (µA) currents](HANDOFF_dmos200_subthreshold_analog.md) | `NDMOS200V`, `PDMOS200V` | `kp` is a power-FET value, so the devices sit in subthreshold below ~mA. A current mirror at a µA budget hits max gm/I, amplifying ~2 mV Vth mismatch into a ~400 mV (1σ) trip shift — unusable as a precision analog mirror. | Self-biased diode sweep in the doc (§Reproducer) |
+| 2 | [Fast HV transients micro-step into timeouts above ~100 V](HANDOFF_dynamic_transient_microstepping.md) | `NDMOS200V`, `PDMOS200V` | With ≥1 floating HV LDMOS front-end, a fast edge / slew drives the timestep toward zero above ~120 V and never completes. DC and quasi-static transients are fine (the `Rcond` fix handled those). | [`repro_slew_vin{100,200}.cir`](../../repro_slew_vin100.cir), [`repro_delay_vin{100,200}.cir`](../../repro_delay_vin100.cir) at repo root |
 | 3 | [Monte Carlo: seeding traps, `M` does not reduce mismatch, eval-task notes](HANDOFF_monte_carlo.md) | all MOS wrappers | MC works on ngspice-45, but `set rndseed` does not pin draws and a fixed `.option seed` freezes an in-deck loop. `AUM2` omits `M`, so device arrays get no matching benefit. | [`circuits/mc_mismatch_check/`](../../circuits/mc_mismatch_check/) |
 | 4 | [MC realism program (v2.3-stats)](HANDOFF_mc_realism_brief.md) | all statistical wrappers | Structural MC overhaul: `M`/`NF`/`NS`, 1σ convention, independent z-knobs, external driver, process stat model derived from the corners. Brief amended by the [rulings](HANDOFF_mc_realism_rulings.md) after the [pre-start review](HANDOFF_mc_realism_review.md); in progress on branch `mc-realism`. | [Phase 0 results](HANDOFF_mc_realism_phase0.md) |
 
@@ -19,7 +19,7 @@ separately under [`../handoffs/`](../handoffs/).
 
 ### 1 — Subthreshold `kp` (open design question)
 
-The core question is **intent**: are `KP_NDMOS200` / `KP_PDMOS200` meant to model
+The core question is **intent**: are `KP_NDMOS200V` / `KP_PDMOS200V` meant to model
 an HV *drift* MOSFET used as an analog device, or a discrete power FET? The
 handoff proposes three resolutions: re-fit `kp`/`vto`/`theta` for moderate
 inversion at µA, confirm the family is power-only and add a separate HV analog

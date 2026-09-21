@@ -2,7 +2,7 @@
 """
 run_mc.py -- Monte Carlo (brief 5), nominal PVT (TT/5.0V/27C), two SEPARATE modes:
   * mismatch : MM_ON=1 PROC_ON=0  (local device-to-device Vth/W/L mismatch --
-               the delvto series-shift mechanism inside each PMOS50 subckt)
+               the delvto series-shift mechanism inside each PMOS5V0 subckt)
   * procmm   : MM_ON=1 PROC_ON=1  (global process + local mismatch)
 
 >=500 runs each, on the full V_out grid.  Per run we extract I_out(1.2V) and the

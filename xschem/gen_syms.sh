@@ -84,14 +84,14 @@ emit_mos() {
 }
 
 # LV 4-terminal MOS (d g s b)
-for d in NMOS12 NMOS18 NMOS33 NMOS50; do emit_mos "$d" N 0 L; done
-for d in PMOS12 PMOS18 PMOS33 PMOS50; do emit_mos "$d" P 0 L; done
+for d in NMOS12V NMOS1V8 NMOS3V3 NMOS5V0; do emit_mos "$d" N 0 L; done
+for d in PMOS12V PMOS1V8 PMOS3V3 PMOS5V0; do emit_mos "$d" P 0 L; done
 # HV DMOS, 3-terminal (d g s), no L
-for d in NDMOS20 NDMOS40 NDMOS60 NDMOS80 NDMOS120 DNMOS20; do emit_mos "$d" N 1 NOL; done
-for d in PDMOS20 PDMOS40 PDMOS60 PDMOS80 PDMOS120;          do emit_mos "$d" P 1 NOL; done
+for d in NDMOS20V NDMOS40V NDMOS60V NDMOS80V NDMOS120V DNMOS20V; do emit_mos "$d" N 1 NOL; done
+for d in PDMOS20V PDMOS40V PDMOS60V PDMOS80V PDMOS120V;          do emit_mos "$d" P 1 NOL; done
 # HV DMOS 200 V, 3-terminal (d g s), L = drift length (8u)
-emit_mos NDMOS200 N 1 L8
-emit_mos PDMOS200 P 1 L8
+emit_mos NDMOS200V N 1 L8
+emit_mos PDMOS200V P 1 L8
 
 # ===========================================================================
 # BJT / diode / resistor / capacitor  (unchanged; validated)
@@ -222,8 +222,8 @@ emit_dev DIO_PN   diode glyph_diode    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@A
 emit_dev DIO_FAST diode glyph_diode    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
 emit_dev DIO_SCH  diode glyph_schottky pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
 emit_dev DZ_5V6   diode glyph_zener    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
-emit_dev DZ_12    diode glyph_zener    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
-emit_dev DZ_24    diode glyph_zener    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
+emit_dev DZ_12V    diode glyph_zener    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
+emit_dev DZ_24V    diode glyph_zener    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
 # Resistors (p n), L W -- per-material distinguishing mark
 emit_dev RPOLY_HI resistor glyph_res_poly2 pins_pn "$RES_FMT" "$RES_TDEF" R 'L=@L W=@W'
 emit_dev RPOLY_LO resistor glyph_res_poly1 pins_pn "$RES_FMT" "$RES_TDEF" R 'L=@L W=@W'

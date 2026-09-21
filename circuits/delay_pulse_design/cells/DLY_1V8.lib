@@ -1,5 +1,5 @@
 * DLY_1V8 -- two-sided delay: BOTH edges are RC-delayed (~20 ns each)
-* AutoHV BiCMOS 180 PDK | 1.8 V domain (NMOS18/PMOS18, L = 0.18 um)
+* AutoHV BiCMOS 180 PDK | 1.8 V domain (NMOS1V8/PMOS1V8, L = 0.18 um)
 * Symmetric delay cell: the RC node has no bypass FET, so the rising AND the
 * falling edge each charge/discharge through R into the Schmitt trigger.
 * R is centered between the rise-tuned (DLYR) and fall-tuned (DLYF) resistors
@@ -14,14 +14,14 @@
 * When several RC cells share one transient deck, add `.option method=gear maxord=2`.
 
 .subckt DLY_1V8 in out vdd gnd
-XI1 nIN in vdd vdd PMOS18 W=0.7u L=0.18u
-XI2 nIN in gnd gnd NMOS18 W=0.3u L=0.18u
+XI1 nIN in vdd vdd PMOS1V8 W=0.7u L=0.18u
+XI2 nIN in gnd gnd NMOS1V8 W=0.3u L=0.18u
 XR  nIN nC RPOLY_HI L=52.6563u W=0.5u
 XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
-XS1 s1 nC gnd gnd NMOS18 W=0.3u L=0.18u
-XS2 out nC s1 gnd NMOS18 W=0.3u L=0.18u
-XS3 s2 nC vdd vdd PMOS18 W=0.7u L=0.18u
-XS4 out nC s2 vdd PMOS18 W=0.7u L=0.18u
-XS5 vdd out s1 gnd NMOS18 W=0.3u L=0.18u
-XS6 gnd out s2 vdd PMOS18 W=0.7u L=0.18u
+XS1 s1 nC gnd gnd NMOS1V8 W=0.3u L=0.18u
+XS2 out nC s1 gnd NMOS1V8 W=0.3u L=0.18u
+XS3 s2 nC vdd vdd PMOS1V8 W=0.7u L=0.18u
+XS4 out nC s2 vdd PMOS1V8 W=0.7u L=0.18u
+XS5 vdd out s1 gnd NMOS1V8 W=0.3u L=0.18u
+XS6 gnd out s2 vdd PMOS1V8 W=0.7u L=0.18u
 .ends DLY_1V8

@@ -11,7 +11,7 @@ with no spaces in the path.
 - **Open:** same location, or `xschem ~/xschem_lib/designs/<name>.sch`.
 
 ## In a design
-- Place devices as `autohv/<DEVICE>` (e.g. `autohv/NMOS12`).
+- Place devices as `autohv/<DEVICE>` (e.g. `autohv/NMOS12V`).
 - Drop one `autohv_lib` block and set its `CASE` (0=TT 1=FF 2=SS 3=FS 4=SF) to
   pull in the model `.include` + corner.
 - Copy stimulus from `autohv/examples/device_sheet.sch` (PWL sources, etc.).

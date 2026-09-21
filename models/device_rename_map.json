@@ -1,0 +1,41 @@
+{
+  "_comment": "Device rename map (ruling 2.2). THE single source of truth: every tool, doc and generated artefact derives its names from here, never by typing. NMOS50 read as 50 V and NMOS12 as 1.2 V; the circuits libraries already use 1V8/3V3/5V0, so the devices adopt it, with V explicit everywhere.",
+  "_unchanged": [
+    "DZ_5V6 (already unambiguous)",
+    "NPN_LV",
+    "NPN_HV",
+    "PNP_LAT",
+    "PNP_HV",
+    "DIO_PN",
+    "DIO_FAST",
+    "DIO_SCH",
+    "all resistors",
+    "all capacitors"
+  ],
+  "_token_rule": "Match with (?<![A-Za-z0-9])<old>(?![A-Za-z0-9]) so that composites rename too -- NMOS18_INT, VTH_NMOS18, Z_VTH_NMOS18, c_NMOS18, KP_NDMOS20_STAT, TC_KP_NDMOS20 -- while NDMOS20 never matches inside NDMOS200 (the next character is a digit) and NMOS20 never matches inside DNMOS20 (the previous character is a letter). A plain \b would fail: _ is a word character, so \bNMOS18\b does not match NMOS18_INT.",
+  "map": {
+    "NMOS18": "NMOS1V8",
+    "PMOS18": "PMOS1V8",
+    "NMOS33": "NMOS3V3",
+    "PMOS33": "PMOS3V3",
+    "NMOS50": "NMOS5V0",
+    "PMOS50": "PMOS5V0",
+    "NMOS12": "NMOS12V",
+    "PMOS12": "PMOS12V",
+    "NDMOS20": "NDMOS20V",
+    "PDMOS20": "PDMOS20V",
+    "NDMOS40": "NDMOS40V",
+    "PDMOS40": "PDMOS40V",
+    "NDMOS60": "NDMOS60V",
+    "PDMOS60": "PDMOS60V",
+    "NDMOS80": "NDMOS80V",
+    "PDMOS80": "PDMOS80V",
+    "NDMOS120": "NDMOS120V",
+    "PDMOS120": "PDMOS120V",
+    "NDMOS200": "NDMOS200V",
+    "PDMOS200": "PDMOS200V",
+    "DNMOS20": "DNMOS20V",
+    "DZ_12": "DZ_12V",
+    "DZ_24": "DZ_24V"
+  }
+}

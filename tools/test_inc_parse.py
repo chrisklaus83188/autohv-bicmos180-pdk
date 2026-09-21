@@ -51,35 +51,35 @@ check("marker1.draw", p.draw, None)
 check("marker1.is_statistical", is_statistical(M1), False)   # no draw: corner-only
 
 # --- generated additive ------------------------------------------------------
-A = "{0.88 + 0.016492*Z_VTH_NMOS50}"
+A = "{0.88 + 0.016492*Z_VTH_NMOS5V0}"
 p = parse(A)
 check("additive.kind", p.kind, "additive")
 check("additive.tt", p.tt, 0.88)
 check("additive.sigma", p.sigma, 0.016492)
-check("additive.z", p.z, "Z_VTH_NMOS50")
+check("additive.z", p.z, "Z_VTH_NMOS5V0")
 check("additive.sigma_of", sigma_of(A), 0.016492)
-check("additive.z_of", z_of(A), "Z_VTH_NMOS50")
+check("additive.z_of", z_of(A), "Z_VTH_NMOS5V0")
 
 # --- generated multiplicative ------------------------------------------------
-X = "{190*exp(0.026667*Z_U0_NMOS50)}"
+X = "{190*exp(0.026667*Z_U0_NMOS5V0)}"
 p = parse(X)
 check("mult.kind", p.kind, "multiplicative")
 check("mult.tt", p.tt, 190.0)
 check("mult.sigma", p.sigma, 0.026667)
-check("mult.z", p.z, "Z_U0_NMOS50")
+check("mult.z", p.z, "Z_U0_NMOS5V0")
 
 # --- reference: a tempco wrapper around a _STAT param ------------------------
-R = "{KP_NDMOS20_STAT*(1+TC_KP_NDMOS20*(temper-27))}"
+R = "{KP_NDMOS20V_STAT*(1+TC_KP_NDMOS20V*(temper-27))}"
 p = parse(R)
 check("ref.kind", p.kind, "reference")
 check("ref.tt", p.tt, None)
-check("ref.z", p.z, "KP_NDMOS20_STAT")
+check("ref.z", p.z, "KP_NDMOS20V_STAT")
 check_raises("ref.tt_of raises", tt_of, R)       # no TT to give
 
 # --- a trailing $ comment must not defeat the brace strip --------------------
 # The comment has to come off BEFORE the braces: such a line does not end in "}",
 # so stripping braces first leaves them attached and every form misses.
-check("comment.additive", tt_of("{0.88 + 0.016492*Z_VTH_NMOS50} $ measured"), 0.88)
+check("comment.additive", tt_of("{0.88 + 0.016492*Z_VTH_NMOS5V0} $ measured"), 0.88)
 check("comment.plain", tt_of("{1.4e-07}  $ Leff"), 1.4e-07)
 check("comment.unbraced", tt_of("1  $ NOTE: single global fit"), 1.0)
 

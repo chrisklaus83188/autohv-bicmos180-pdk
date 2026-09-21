@@ -57,10 +57,10 @@ Per-device entries in the JSON. Common structure, 14 FoM each:
 
 | device | tox | PDK A_VT (1σ) | anchor | ratio | verdict |
 |---|---|---|---|---|---|
-| NMOS18 / PMOS18 | 4.25 nm | 3.50 mV·µm | 4.25 (2.13–6.38) | 0.82× | **in band** |
-| NMOS33 / PMOS33 | 6.75 | 4.00 | 6.75 (3.38–10.13) | 0.59× | just inside |
-| NMOS50 / PMOS50 | 11.0 | 4.50 | 11.0 (5.50–16.50) | **0.41×** | **out — 2.4× optimistic** |
-| NMOS12 / PMOS12 | 20.0 / 21.0 | 6.00 | 20.0 (10.0–30.0) | **0.30×** | **out — 3.3× optimistic** |
+| NMOS1V8 / PMOS1V8 | 4.25 nm | 3.50 mV·µm | 4.25 (2.13–6.38) | 0.82× | **in band** |
+| NMOS3V3 / PMOS3V3 | 6.75 | 4.00 | 6.75 (3.38–10.13) | 0.59× | just inside |
+| NMOS5V0 / PMOS5V0 | 11.0 | 4.50 | 11.0 (5.50–16.50) | **0.41×** | **out — 2.4× optimistic** |
+| NMOS12V / PMOS12V | 20.0 / 21.0 | 6.00 | 20.0 (10.0–30.0) | **0.30×** | **out — 3.3× optimistic** |
 
 **Phase-2 note on `flicker_corner`:** this anchor is currently unmeasurable as written, because
 `noia`/`noib`/`noic` are BSIM4 defaults in BSIM3 cards (audit §3.4, ~6.25e21×). Expect a corner far
@@ -71,9 +71,9 @@ above f_T until fix #4 lands. Assert it anyway — it is the only check that wou
 ## 2. VDMOS / LDMOS — 13 cards
 
 Per-device entries in the JSON, 15 FoM each. Class-dependent values are computed per card; the table
-below shows the structure and gives NDMOS20 / NDMOS200 as worked endpoints.
+below shows the structure and gives NDMOS20V / NDMOS200V as worked endpoints.
 
-| FoM | NDMOS20 | NDMOS200 | Units | Tag | Basis |
+| FoM | NDMOS20V | NDMOS200V | Units | Tag | Basis |
 |---|---|---|---|---|---|
 | `rsp_specific_ron` | 0.058 (0.033–0.083) | 15.68 (8.96–22.40) | mΩ·cm² | `[physics]` | 5.9e-9·BV^2.5 × (2–5× RESURF), pitch 5 → 22 µm |
 | **`ron_times_w`** | **1054 (666–1665)** | **64 400 (40 730–101 825)** | Ω·µm | `[physics]` | for the W_REF = 10 µm cell. **PDK is 0.7–44 Ω·µm** (audit §2.2) |
@@ -93,7 +93,7 @@ below shows the structure and gives NDMOS20 / NDMOS200 as worked endpoints.
 
 ### The proposed unified mismatch ladder
 
-The PDK has two ladders (audit §2.6). Ladder A (20/60/120 V, plus DNMOS20) lands at 0.65–0.82× of the
+The PDK has two ladders (audit §2.6). Ladder A (20/60/120 V, plus DNMOS20V) lands at 0.65–0.82× of the
 tox-based expectation — **in band**. Ladder B (40/80/200 V) is uniformly ~3× optimistic. The anchor
 extends A's slope across the whole family:
 
@@ -169,15 +169,15 @@ it and phase 3 should put it in `device_limits.csv`.
 | zener | `bv` | `cjo_density` `[physics]` | `cjo_at_100um2_cell` | **`bv_tempco`** `[industry]` |
 |---|---|---|---|---|
 | DZ_5V6 | 5.6 ±5 % | 3.326 (1.66–6.65) fF/µm² | 333 (166–665) fF | **0.25 (0.13–0.40) mV/°C** — the crossover part |
-| DZ_12 | 12 ±5 % | 1.031 (0.52–2.06) | 103 (52–206) fF | **8.0 (4.0–12.8) mV/°C** |
-| DZ_24 | 24 ±5 % | 1.019 (0.51–2.04) | 102 (51–204) fF | **20.0 (10.0–32.0) mV/°C** |
+| DZ_12V | 12 ±5 % | 1.031 (0.52–2.06) | 103 (52–206) fF | **8.0 (4.0–12.8) mV/°C** |
+| DZ_24V | 24 ±5 % | 1.019 (0.51–2.04) | 102 (51–204) fF | **20.0 (10.0–32.0) mV/°C** |
 
 Two things phase 2 must know. **First**, `cjo_at_100um2_cell` is conditional on declaring what
-`AREA=1` means — note that DZ_12 and DZ_24 land **nearly equal**, because C ∝ √N flattens above
+`AREA=1` means — note that DZ_12V and DZ_24V land **nearly equal**, because C ∝ √N flattens above
 1e17 cm⁻³. The PDK's smooth 120/55/28 pF ladder cannot be produced by any doping profile, which is how
 the audit concluded it was hand-picked rather than derived (§4.4). **Second**, `bv_tempco` is currently
 **not modelled at all** — no `tbv1`/`tbv2` anywhere — so all three zeners are temperature-invariant.
-Over −40…+150 °C, DZ_24 should move +2.9 to +4.8 V. Phase 2 will measure zero; that is the finding,
+Over −40…+150 °C, DZ_24V should move +2.9 to +4.8 V. Phase 2 will measure zero; that is the finding,
 not a harness bug.
 
 ---
@@ -221,7 +221,7 @@ does not.
 | self-heating scope (SH_ON=1) | Vth feedback only | thermal runaway; Rdson vs T under self-heating; inter-device coupling (absent) | documented first-cut limitation |
 | `B_pdiss` includes `Rdrift` (200 V pair) | power uses `V(d,s)`, which spans the external drift resistor | junction temperature on the 200 V parts, overestimated | artifact of the `Rdrift` wrapper construction |
 | VDMOS caps not corner-parametrized | fixed across all 5 corners | **switching-time corner spread on every VDMOS is identically zero** | `HANDOFF_vdmos_caps.md` suggestion #3, never implemented |
-| NMOS12/PMOS12 frozen `tox`/`cj`/`cjsw`/`js` | bare constants, no corner or stat term | all 12 V dynamic corner spread is identically zero; FF mobility sits on TT oxide | Level-3 → BSIM3 migration residue |
+| NMOS12V/PMOS12V frozen `tox`/`cj`/`cjsw`/`js` | bare constants, no corner or stat term | all 12 V dynamic corner spread is identically zero; FF mobility sits on TT oxide | Level-3 → BSIM3 migration residue |
 | AGAUSS consumed when `MM_SIGMA ≠ 0` | one RNG draw per instance | reproducibility of an MC sequence run alongside corner sims | ngspice `.param` has no comparison operators |
 | `MM_ON` and `MM_SIGMA` **add** | the two terms sum | any run with both non-zero — explicitly "don't do this" | documented contract, `MISMATCH_CORNERS.md` |
 
@@ -236,7 +236,7 @@ Five anchors are conditional. JSON key `_open_maintainer_decisions`.
 | **VDMOS scale** — is `W_REF=10u` a real 10 µm cell or a power-die label? | `kp`, `rd`, `rs`, `rq` targets | **10 µm cell.** `cjo` and the body diode already agree with it |
 | **BJT/diode reference cell** — what area is `AREA=1`? | `is`, `cje`, `cjc`, `cjo` targets for 4 BJTs + 6 diodes | must be declared; currently `is` implies 4–80 µm² and `cje`/`cjc` imply 300–900 µm² |
 | **BSIM3 vs BSIM4** — fix `noia`/`noib`/`noic`, or migrate the cards to `level=54`? | flicker anchors on all 8 BSIM3 | either is defensible; the current values are exactly right for BSIM4 |
-| **NMOS12 device type** — thick-oxide 12 V gate or drain-extended? | `tox`, `rdsw`, `Lmin` | the wrapper (plain `M0`, no drift element) says thick-oxide → `tox` 24–30 nm |
+| **NMOS12V device type** — thick-oxide 12 V gate or drain-extended? | `tox`, `rdsw`, `Lmin` | the wrapper (plain `M0`, no drift element) says thick-oxide → `tox` 24–30 nm |
 | **Qualification temperature range** | every tempco sweep in phase 2 | −40 … +150 °C |
 
 Where a decision is unresolved, the JSON carries a `conditional_on` field on the affected entry.

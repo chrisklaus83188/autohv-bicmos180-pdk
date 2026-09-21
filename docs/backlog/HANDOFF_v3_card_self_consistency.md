@@ -14,14 +14,14 @@ DC sweep at Vds = 0.1 V, W = 10 µm, L = 1 µm, linear fit of Vg against log₁�
 
 | card | measured S | n | repo anchor band | tag | verdict today |
 |---|---|---|---|---|---|
-| NMOS18 | 77.6 mV/dec | 1.30 | 72–96 (target 80) | industry | in |
-| PMOS18 | 80.7 | 1.35 | 72–96 | industry | in |
-| NMOS33 | 85.6 | 1.44 | 72–96 | industry | in |
-| PMOS33 | 89.6 | 1.50 | 72–96 | industry | in |
-| NMOS50 | 96.6 | 1.62 | 85–100 (target 95) | **grounded** | in |
-| PMOS50 | 104.3 | 1.75 | 85–100 | **grounded** | **out by 4.3** |
-| NMOS12 | 152.8 | 2.56 | 72–96 | industry | **out by 57** |
-| PMOS12 | 170.2 | 2.86 | 72–96 | industry | **out by 74** |
+| NMOS1V8 | 77.6 mV/dec | 1.30 | 72–96 (target 80) | industry | in |
+| PMOS1V8 | 80.7 | 1.35 | 72–96 | industry | in |
+| NMOS3V3 | 85.6 | 1.44 | 72–96 | industry | in |
+| PMOS3V3 | 89.6 | 1.50 | 72–96 | industry | in |
+| NMOS5V0 | 96.6 | 1.62 | 85–100 (target 95) | **grounded** | in |
+| PMOS5V0 | 104.3 | 1.75 | 85–100 | **grounded** | **out by 4.3** |
+| NMOS12V | 152.8 | 2.56 | 72–96 | industry | **out by 57** |
+| PMOS12V | 170.2 | 2.86 | 72–96 | industry | **out by 74** |
 
 Anchors are from the repo's own `docs/anchor-values.json`.
 
@@ -35,7 +35,7 @@ Three problems, in increasing order of seriousness:
 1. **The window disagrees with the repo's own anchors.** The repo has 72–96 (industry) for
    1.8/3.3/12 V and **85–100 grounded** for the 5 V pair. The ruling's 70–90 is narrower than
    either, and the 5 V pair cannot satisfy both — its grounded target is 95.
-2. **Two cards are already outside before any change**: PMOS50 by 4.3 mV/dec against its grounded
+2. **Two cards are already outside before any change**: PMOS5V0 by 4.3 mV/dec against its grounded
    band, and both 12 V cards by 57–74 against theirs.
 3. **The correction pushes every card the wrong way.** Raising `nch` raises `C_dep`, and
    `n = 1 + C_dep/C_ox` with `C_dep ∝ √Na`, so the slope rises. Predicted analytically from the
@@ -43,12 +43,12 @@ Three problems, in increasing order of seriousness:
 
 | card | ratio | S today | S predicted after | movement | vs ruling 70–90 | vs repo band |
 |---|---|---|---|---|---|---|
-| NMOS18 | 2.83 | 77.6 | ≈ 89.9 | +16 % | at the edge | in |
-| PMOS18 | 3.16 | 80.7 | ≈ 97.1 | **+20 %** | **out** | **out** |
-| NMOS33 | 1.78 | 85.6 | ≈ 94.3 | +10 % | **out** | in |
-| PMOS33 | 2.03 | 89.6 | ≈ 102.3 | +14 % | **out** | **out** |
-| NMOS50 | 1.14 | 96.6 | ≈ 99.1 | +3 % | **out** | in |
-| PMOS50 | 1.29 | 104.3 | ≈ 110.3 | +6 % | **out** | **out** |
+| NMOS1V8 | 2.83 | 77.6 | ≈ 89.9 | +16 % | at the edge | in |
+| PMOS1V8 | 3.16 | 80.7 | ≈ 97.1 | **+20 %** | **out** | **out** |
+| NMOS3V3 | 1.78 | 85.6 | ≈ 94.3 | +10 % | **out** | in |
+| PMOS3V3 | 2.03 | 89.6 | ≈ 102.3 | +14 % | **out** | **out** |
+| NMOS5V0 | 1.14 | 96.6 | ≈ 99.1 | +3 % | **out** | in |
+| PMOS5V0 | 1.29 | 104.3 | ≈ 110.3 | +6 % | **out** | **out** |
 
 (Analytic prediction, not simulated — the real numbers will differ somewhat through `voff` and
 `vth0` interplay, but the direction and rough size are not in doubt.)
@@ -67,8 +67,8 @@ First principles, `γ = tox·√(2qε_si·Na)/ε_ox` using each card's own `nch`
 
 | card | nch | γ(nch) | card `k1` | ratio | ΔVth at Vsb = 5 V, γ vs card |
 |---|---|---|---|---|---|
-| NMOS12 | 9.0e16 | 1.552 | 0.750 | **2.07** | 2.05 V vs 0.99 V — card understates by 1.06 V |
-| PMOS12 | 1.1e17 | 1.715 | 0.820 | **2.09** | 2.26 V vs 1.08 V — understates by 1.18 V |
+| NMOS12V | 9.0e16 | 1.552 | 0.750 | **2.07** | 2.05 V vs 0.99 V — card understates by 1.06 V |
+| PMOS12V | 1.1e17 | 1.715 | 0.820 | **2.09** | 2.26 V vs 1.08 V — understates by 1.18 V |
 
 The ruling predicted ≈1.5 V^½ and roughly 2×; both land there. The measured subthreshold slope is
 independent corroboration from a third direction: n ≈ 2.56–2.86 is what a high `C_dep` (high `nch`)
@@ -81,8 +81,8 @@ device does, so `nch` is the trustworthy parameter on these two cards, exactly a
 
 | card | first-principles Vth | card `vth0` | delta |
 |---|---|---|---|
-| NMOS12 | 2.12 V | 1.350 | **+0.77 V** |
-| PMOS12 | −2.33 V | −1.550 | **−0.78 V** |
+| NMOS12V | 2.12 V | 1.350 | **+0.77 V** |
+| PMOS12V | −2.33 V | −1.550 | **−0.78 V** |
 
 Outside the ±0.3 V window by more than 2.5×. Combined with §3 and the out-of-band slope, the 12 V
 pair now has **three independently suspect parameters**: `k1`, `vth0`, and a subthreshold slope
@@ -93,9 +93,9 @@ pair now has **three independently suspect parameters**: `k1`, `vth0`, and a sub
 22 of 59 shared parameters are byte-identical between the 12 V and 5 V cards:
 
 ```
-NMOS12 vs NMOS50:  a0 af capmod cj cjsw ef elm em k2 kt1 level mobmod nfactor
+NMOS12V vs NMOS5V0:  a0 af capmod cj cjsw ef elm em k2 kt1 level mobmod nfactor
                    noib noic noimod nqsmod tnom ute version voff wr
-PMOS12 vs PMOS50:  same list, with ub identical instead of nfactor
+PMOS12V vs PMOS5V0:  same list, with ub identical instead of nfactor
 ```
 
 `k2` is on that list, which §1.2 explicitly asked me to check: an identical `k2` sitting next to a

@@ -9,8 +9,8 @@ driven by a BUF_5V0 buffer whose input is the RST pin.
 
   ports:  RST  RAMP  VDD  GND      (active-high reset: RST=1 -> ramp held at 0)
 
-Signal-path devices are all PDK (PMOS50 mirror, CMIM_STD cap, NMOS50 switch,
-BUF_5V0 = PMOS50/NMOS50).  The mirror reference current and the MIR_CW wide-swing
+Signal-path devices are all PDK (PMOS5V0 mirror, CMIM_STD cap, NMOS5V0 switch,
+BUF_5V0 = PMOS5V0/NMOS5V0).  The mirror reference current and the MIR_CW wide-swing
 cascode bias are ideal sources -- bias *instruments*, exactly as in the
 current-mirror characterization study (see MIRROR_CHAR.md).
 
@@ -38,7 +38,7 @@ CURRENTS = [
 
 L_MIR = "2u"          # locked mirror channel length
 CAP_LW = "31.623u"    # CMIM_STD ~1.0 pF (CJ0=1 fF/um^2 * 1000 um^2)
-# NMOS50 reset switch: sized to firmly sink the largest bias (100 uA) and hold the
+# NMOS5V0 reset switch: sized to firmly sink the largest bias (100 uA) and hold the
 # ramp node stably low (Ron ~50 ohm -> ~5 mV at 100 uA).  A weaker switch lets the
 # node drift, which dithers CMIM_STD's behavioral branch and stalls the transient.
 SW_W, SW_L = "100u", "0.5u"
@@ -49,7 +49,7 @@ def _tail():
         f"* --- ramp capacitor: PDK MIM, ~1 pF ---\n"
         f"Xcap RAMP GND CMIM_STD L={CAP_LW} W={CAP_LW}\n"
         f"* --- reset switch across the cap; gate = buffered RST (active-high) ---\n"
-        f"Xrst RAMP nrstb GND GND NMOS50 W={SW_W} L={SW_L} M=1\n"
+        f"Xrst RAMP nrstb GND GND NMOS5V0 W={SW_W} L={SW_L} M=1\n"
         f"Xbuf RST nrstb VDD GND BUF_5V0\n"
     )
 
@@ -58,8 +58,8 @@ def cell_S(lbl, iref, w, _vb):
         f".subckt DLYRAMP_S_{lbl.upper()} RST RAMP VDD GND\n"
         f"* Simple PMOS current mirror -> RAMP.  Iref: ideal reference (instrument).\n"
         f"Iref nin GND {iref}\n"
-        f"Xin  nin  nin VDD VDD PMOS50 W={w} L={L_MIR} M=1\n"
-        f"Xout RAMP nin VDD VDD PMOS50 W={w} L={L_MIR} M=1\n"
+        f"Xin  nin  nin VDD VDD PMOS5V0 W={w} L={L_MIR} M=1\n"
+        f"Xout RAMP nin VDD VDD PMOS5V0 W={w} L={L_MIR} M=1\n"
         f"{_tail()}"
         f".ends DLYRAMP_S_{lbl.upper()}\n"
     )
@@ -69,10 +69,10 @@ def cell_CS(lbl, iref, w, _vb):
         f".subckt DLYRAMP_CS_{lbl.upper()} RST RAMP VDD GND\n"
         f"* Standard diode-stack cascode mirror -> RAMP (recommended: flat I over PVT).\n"
         f"Iref n2 GND {iref}\n"
-        f"Xin    n1   n1 VDD VDD PMOS50 W={w} L={L_MIR} M=1\n"
-        f"Xincs  n2   n2 n1  VDD PMOS50 W={w} L={L_MIR} M=1\n"
-        f"Xout   n3   n1 VDD VDD PMOS50 W={w} L={L_MIR} M=1\n"
-        f"Xoutcs RAMP n2 n3  VDD PMOS50 W={w} L={L_MIR} M=1\n"
+        f"Xin    n1   n1 VDD VDD PMOS5V0 W={w} L={L_MIR} M=1\n"
+        f"Xincs  n2   n2 n1  VDD PMOS5V0 W={w} L={L_MIR} M=1\n"
+        f"Xout   n3   n1 VDD VDD PMOS5V0 W={w} L={L_MIR} M=1\n"
+        f"Xoutcs RAMP n2 n3  VDD PMOS5V0 W={w} L={L_MIR} M=1\n"
         f"{_tail()}"
         f".ends DLYRAMP_CS_{lbl.upper()}\n"
     )
@@ -83,10 +83,10 @@ def cell_CW(lbl, iref, w, vb):
         f"* Wide-swing cascode mirror -> RAMP.  Vbcw: ideal Vdd-referenced bias (instrument).\n"
         f"Iref ng GND {iref}\n"
         f"Vbcw VDD ncw {vb}\n"
-        f"Xin    nA ng  VDD VDD PMOS50 W={w} L={L_MIR} M=1\n"
-        f"Xincw  ng ncw nA  VDD PMOS50 W={w} L={L_MIR} M=1\n"
-        f"Xout   nB ng  VDD VDD PMOS50 W={w} L={L_MIR} M=1\n"
-        f"Xoutcw RAMP ncw nB VDD PMOS50 W={w} L={L_MIR} M=1\n"
+        f"Xin    nA ng  VDD VDD PMOS5V0 W={w} L={L_MIR} M=1\n"
+        f"Xincw  ng ncw nA  VDD PMOS5V0 W={w} L={L_MIR} M=1\n"
+        f"Xout   nB ng  VDD VDD PMOS5V0 W={w} L={L_MIR} M=1\n"
+        f"Xoutcw RAMP ncw nB VDD PMOS5V0 W={w} L={L_MIR} M=1\n"
         f"{_tail()}"
         f".ends DLYRAMP_CW_{lbl.upper()}\n"
     )

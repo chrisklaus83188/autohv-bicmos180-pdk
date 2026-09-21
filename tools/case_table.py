@@ -11,7 +11,7 @@ Reuses the direction harness's deck builders and benches, so the bench a device 
 on here is the same one its direction was measured on.
 
     python tools/case_table.py                     # all 40 groups, markdown to stdout
-    python tools/case_table.py --groups NPN_LV,NMOS18
+    python tools/case_table.py --groups NPN_LV,NMOS1V8
     python tools/case_table.py --out docs/case-table.md
 """
 from __future__ import annotations

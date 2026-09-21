@@ -78,7 +78,7 @@ def render(schfile):
                 col = {"ipin": "#0a0", "opin": "#a00"}.get(kind, "#0077aa")
                 out["nets"].append((x, y, net, col, kind))
             else:
-                p = HERE / sym            # autohv/NMOS18.sym -> <xschem>/autohv/..
+                p = HERE / sym            # autohv/NMOS1V8.sym -> <xschem>/autohv/..
                 if p.exists():
                     load_syms(p, x, y, rot, flip, props, out)
             continue

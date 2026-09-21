@@ -34,8 +34,8 @@ BAND_LO, BAND_HI = 0.5, 2.0
 NO_COMPARABLE = "no comparable class in the local reference"
 NO_LOCAL_FILE = "no local magnitudes file present; check not run"
 
-VDMOS = {"NDMOS20", "PDMOS20", "NDMOS40", "PDMOS40", "NDMOS60", "PDMOS60", "NDMOS80",
-         "PDMOS80", "NDMOS120", "PDMOS120", "NDMOS200", "PDMOS200", "DNMOS20"}
+VDMOS = {"NDMOS20V", "PDMOS20V", "NDMOS40V", "PDMOS40V", "NDMOS60V", "PDMOS60V", "NDMOS80V",
+         "PDMOS80V", "NDMOS120V", "PDMOS120V", "NDMOS200V", "PDMOS200V", "DNMOS20V"}
 
 
 def class_of(device: str) -> str:

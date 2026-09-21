@@ -21,8 +21,8 @@ MEASURED CORRECTION to char_lib's stated mechanism
 char_lib.write_local_model()/lib_include() document the isolation copy as being
 ".include'd AFTER the PDK so this card shadows the original". **That does not
 work in ngspice-45.** Verified directly: a deck that includes the PDK and then a
-second `.model NDMOS200_INT VDMOS (... rd=0 rs=0 ...)` reads back
-`@NDMOS200_INT[rd] = 1.2`, i.e. ngspice keeps the FIRST definition of a model
+second `.model NDMOS200V_INT VDMOS (... rd=0 rs=0 ...)` reads back
+`@NDMOS200V_INT[rd] = 1.2`, i.e. ngspice keeps the FIRST definition of a model
 name and silently discards the later one. There is no warning. Any experiment
 built on the documented shadowing assumption would have run entirely on stock
 cards while believing it had zeroed rd/rs.
@@ -41,7 +41,7 @@ Sign handling
 -------------
 Mirrors families/vdmos.py: every sweep runs in the normalised gate coordinate
 
-    u = pol * Vgs        pol = +1 n-channel (incl. depletion DNMOS20), -1 p-channel
+    u = pol * Vgs        pol = +1 n-channel (incl. depletion DNMOS20V), -1 p-channel
 
 so one code path serves n/p/depletion parts and drain current rises monotonically
 with u everywhere. Vov = u - pol*vto is therefore always positive-going.
@@ -76,24 +76,24 @@ from char_lib import (                                             # noqa: E402
 MODELS_INC = REPO_ROOT / "autohv_bicmos180_case_models.inc"
 
 # The thirteen VDMOS wrappers, in voltage-class order.
-DEVICES = ["NDMOS20", "PDMOS20", "DNMOS20",
-           "NDMOS40", "PDMOS40",
-           "NDMOS60", "PDMOS60",
-           "NDMOS80", "PDMOS80",
-           "NDMOS120", "PDMOS120",
-           "NDMOS200", "PDMOS200"]
+DEVICES = ["NDMOS20V", "PDMOS20V", "DNMOS20V",
+           "NDMOS40V", "PDMOS40V",
+           "NDMOS60V", "PDMOS60V",
+           "NDMOS80V", "PDMOS80V",
+           "NDMOS120V", "PDMOS120V",
+           "NDMOS200V", "PDMOS200V"]
 
-HAS_L = {"NDMOS200", "PDMOS200"}
+HAS_L = {"NDMOS200V", "PDMOS200V"}
 W_UM = 10.0                     # W_REF: the reference cell every measurement uses
 
 # Card BV ratings (TT), used only to place bias ladders.
 BV_RATED = {
-    "NDMOS20": 24.0, "PDMOS20": 22.0, "DNMOS20": 24.0,
-    "NDMOS40": 48.0, "PDMOS40": 45.0,
-    "NDMOS60": 75.0, "PDMOS60": 70.0,
-    "NDMOS80": 95.0, "PDMOS80": 90.0,
-    "NDMOS120": 135.0, "PDMOS120": 128.0,
-    "NDMOS200": 225.0, "PDMOS200": 230.0,
+    "NDMOS20V": 24.0, "PDMOS20V": 22.0, "DNMOS20V": 24.0,
+    "NDMOS40V": 48.0, "PDMOS40V": 45.0,
+    "NDMOS60V": 75.0, "PDMOS60V": 70.0,
+    "NDMOS80V": 95.0, "PDMOS80V": 90.0,
+    "NDMOS120V": 135.0, "PDMOS120V": 128.0,
+    "NDMOS200V": 225.0, "PDMOS200V": 230.0,
 }
 
 # audit 2.1 inputs
@@ -107,7 +107,7 @@ TOX_FLAT_NM = 30.0
 # An EXACT rd=0 / rs=0 makes ngspice-45's VDMOS fail to find an operating point
 # at all -- gmin stepping, source stepping and the transient op all fail and the
 # run dies with "Timestep too small; trouble with <model>-instance m0". Verified
-# on NDMOS200: rd=rs=0 aborts, rd=rs=1e-9 converges and reads back 1e-9.
+# on NDMOS200V: rd=rs=0 aborts, rd=rs=1e-9 converges and reads back 1e-9.
 # 1e-9 ohm is negligible by any measure that matters here: at the ~1 A drain
 # currents these cards produce it drops 1 nV, against the 0.070-4.38 ohm the
 # stock cards carry, i.e. nine orders of magnitude down. Every "rd=rs=0" in D1,
@@ -233,7 +233,7 @@ def card_params(card: str) -> dict[str, float]:
 # --------------------------------------------------------------------------
 
 def pol(dev: str) -> float:
-    """+1 n-channel (including the depletion DNMOS20), -1 p-channel."""
+    """+1 n-channel (including the depletion DNMOS20V), -1 p-channel."""
     return -1.0 if dev.startswith("P") else 1.0
 
 

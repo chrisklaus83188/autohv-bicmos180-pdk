@@ -5,7 +5,7 @@
   "version": "5.0-v2.2-defaults"
  },
  "mos": {
-  "NDMOS20": {
+  "NDMOS20V": {
    "supply_V": 10.0,
    "L_policy": "process-min",
    "fab_Wmin_um": 3.0,
@@ -33,7 +33,7 @@
     }
    }
   },
-  "NDMOS40": {
+  "NDMOS40V": {
    "supply_V": 10.0,
    "L_policy": "process-min",
    "fab_Wmin_um": 3.0,
@@ -61,7 +61,7 @@
     }
    }
   },
-  "NDMOS60": {
+  "NDMOS60V": {
    "supply_V": 10.0,
    "L_policy": "process-min",
    "fab_Wmin_um": 3.0,
@@ -89,7 +89,7 @@
     }
    }
   },
-  "NDMOS80": {
+  "NDMOS80V": {
    "supply_V": 10.0,
    "L_policy": "process-min",
    "fab_Wmin_um": 3.0,
@@ -117,7 +117,7 @@
     }
    }
   },
-  "NDMOS120": {
+  "NDMOS120V": {
    "supply_V": 10.0,
    "L_policy": "process-min",
    "fab_Wmin_um": 3.0,
@@ -145,7 +145,7 @@
     }
    }
   },
-  "NDMOS200": {
+  "NDMOS200V": {
    "supply_V": 10.0,
    "L_policy": "L=L_REF(8u)",
    "fab_Wmin_um": 3.0,
@@ -173,7 +173,7 @@
     }
    }
   },
-  "PDMOS20": {
+  "PDMOS20V": {
    "supply_V": 10.0,
    "L_policy": "process-min",
    "fab_Wmin_um": 3.0,
@@ -199,7 +199,7 @@
     }
    }
   },
-  "PDMOS40": {
+  "PDMOS40V": {
    "supply_V": 10.0,
    "L_policy": "process-min",
    "fab_Wmin_um": 3.0,
@@ -225,7 +225,7 @@
     }
    }
   },
-  "PDMOS60": {
+  "PDMOS60V": {
    "supply_V": 10.0,
    "L_policy": "process-min",
    "fab_Wmin_um": 3.0,
@@ -251,7 +251,7 @@
     }
    }
   },
-  "PDMOS80": {
+  "PDMOS80V": {
    "supply_V": 10.0,
    "L_policy": "process-min",
    "fab_Wmin_um": 3.0,
@@ -277,7 +277,7 @@
     }
    }
   },
-  "PDMOS120": {
+  "PDMOS120V": {
    "supply_V": 10.0,
    "L_policy": "process-min",
    "fab_Wmin_um": 3.0,
@@ -303,7 +303,7 @@
     }
    }
   },
-  "PDMOS200": {
+  "PDMOS200V": {
    "supply_V": 10.0,
    "L_policy": "L=L_REF(8u)",
    "fab_Wmin_um": 3.0,
@@ -329,7 +329,7 @@
     }
    }
   },
-  "NMOS18": {
+  "NMOS1V8": {
    "supply_V": 1.8,
    "L_policy": "L=1.0um (2xLmin-class, analog default)",
    "fab_Wmin_um": 0.22,
@@ -355,7 +355,7 @@
     }
    }
   },
-  "PMOS18": {
+  "PMOS1V8": {
    "supply_V": 1.8,
    "L_policy": "L=1.0um (2xLmin-class, analog default)",
    "fab_Wmin_um": 0.22,
@@ -381,7 +381,7 @@
     }
    }
   },
-  "NMOS33": {
+  "NMOS3V3": {
    "supply_V": 3.3,
    "L_policy": "L=1.0um (2xLmin-class, analog default)",
    "fab_Wmin_um": 0.3,
@@ -407,7 +407,7 @@
     }
    }
   },
-  "PMOS33": {
+  "PMOS3V3": {
    "supply_V": 3.3,
    "L_policy": "L=1.0um (2xLmin-class, analog default)",
    "fab_Wmin_um": 0.3,
@@ -433,7 +433,7 @@
     }
    }
   },
-  "NMOS50": {
+  "NMOS5V0": {
    "supply_V": 5.0,
    "L_policy": "L=1.0um (2xLmin-class, analog default)",
    "fab_Wmin_um": 0.4,
@@ -459,7 +459,7 @@
     }
    }
   },
-  "PMOS50": {
+  "PMOS5V0": {
    "supply_V": 5.0,
    "L_policy": "L=1.0um (2xLmin-class, analog default)",
    "fab_Wmin_um": 0.4,
@@ -485,7 +485,7 @@
     }
    }
   },
-  "NMOS12": {
+  "NMOS12V": {
    "supply_V": 12.0,
    "L_policy": "L=1.0um (2xLmin-class, analog default)",
    "fab_Wmin_um": 0.22,
@@ -511,7 +511,7 @@
     }
    }
   },
-  "PMOS12": {
+  "PMOS12V": {
    "supply_V": 12.0,
    "L_policy": "L=1.0um (2xLmin-class, analog default)",
    "fab_Wmin_um": 0.22,
@@ -537,7 +537,7 @@
     }
    }
   },
-  "DNMOS20": {
+  "DNMOS20V": {
    "supply_V": 10.0,
    "L_policy": "process-min (depletion)",
    "convention": "Vgs=0 self-biased current source (Idss), not a mirror-Vov device",

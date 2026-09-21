@@ -1,5 +1,5 @@
 # High-Side Gate-Driver Level Shifter — First-Qualification Report
-### AutoHV BiCMOS180 PDK · 200 V class (NDMOS200 / PDMOS200) · `circuits/hv_charge_pump/hv_up_lvlsh/`
+### AutoHV BiCMOS180 PDK · 200 V class (NDMOS200V / PDMOS200V) · `circuits/hv_charge_pump/hv_up_lvlsh/`
 
 <sub>Models: **v2-grounded** (frozen) · simulator: **ngspice-45** · V_HV = 200 V rail, V_BOOT = 12 V bootstrap, V_DDL = 5 V logic.</sub>
 

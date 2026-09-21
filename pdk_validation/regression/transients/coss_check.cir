@@ -1,7 +1,7 @@
-* Phase D: NDMOS200 terminal Coss sanity check (HANDOFF_vdmos_caps.md).
+* Phase D: NDMOS200V terminal Coss sanity check (HANDOFF_vdmos_caps.md).
 *
 * Catches re-introduction of the ~1000x VDMOS cap unit slip that was fixed
-* on 2026-06-01. AC analysis at 1 MHz with Vds=0.1V on a 40um x 8um NDMOS200,
+* on 2026-06-01. AC analysis at 1 MHz with Vds=0.1V on a 40um x 8um NDMOS200V,
 * gate held off. Drain terminal capacitance is computed from displacement
 * current: Cdrain = |i(VB)| / (2 pi f Vac).
 *
@@ -17,7 +17,7 @@
 
 VB d 0 DC 0.1 AC 1
 Vg g 0 DC 0
-XN5 d g 0 NDMOS200 W=40u L=8u
+XN5 d g 0 NDMOS200V W=40u L=8u
 
 .ac lin 1 1meg 1meg
 .control

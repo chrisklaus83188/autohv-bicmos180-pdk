@@ -33,111 +33,111 @@
 .param P_TOX_50={PROC_ON*AGAUSS(0,0.01,3)}
 .param P_CJ_50={PROC_ON*AGAUSS(0,0.05,3)}
 .param P_CJSW_50={PROC_ON*AGAUSS(0,0.05,3)}
-.param P_DVTH_NMOS18={PROC_ON*AGAUSS(0,0.025,3)}
-.param P_DU0_NMOS18={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DVSAT_NMOS18={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DRDSW_NMOS18={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DJS_NMOS18={PROC_ON*AGAUSS(0,0.2,3)}
-.param P_DVTH_PMOS18={PROC_ON*AGAUSS(0,0.025,3)}
-.param P_DU0_PMOS18={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DVSAT_PMOS18={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DRDSW_PMOS18={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DJS_PMOS18={PROC_ON*AGAUSS(0,0.2,3)}
-.param P_DVTH_NMOS33={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DU0_NMOS33={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DVSAT_NMOS33={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DRDSW_NMOS33={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DJS_NMOS33={PROC_ON*AGAUSS(0,0.2,3)}
-.param P_DVTH_PMOS33={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DU0_PMOS33={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DVSAT_PMOS33={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DRDSW_PMOS33={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DJS_PMOS33={PROC_ON*AGAUSS(0,0.2,3)}
-.param P_DVTH_NMOS50={PROC_ON*AGAUSS(0,0.035,3)}
-.param P_DU0_NMOS50={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DVSAT_NMOS50={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DRDSW_NMOS50={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DJS_NMOS50={PROC_ON*AGAUSS(0,0.2,3)}
-.param P_DVTH_PMOS50={PROC_ON*AGAUSS(0,0.035,3)}
-.param P_DU0_PMOS50={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DVSAT_PMOS50={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DRDSW_PMOS50={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DJS_PMOS50={PROC_ON*AGAUSS(0,0.2,3)}
-.param P_DVTO_NMOS12={PROC_ON*AGAUSS(0,0.035,3)}
-.param P_DUO_NMOS12={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DKP_NMOS12={PROC_ON*AGAUSS(0,0.12,3)}
-.param P_DVSAT_NMOS12={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DRDSW_NMOS12={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DVTO_PMOS12={PROC_ON*AGAUSS(0,0.035,3)}
-.param P_DUO_PMOS12={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DKP_PMOS12={PROC_ON*AGAUSS(0,0.12,3)}
-.param P_DVSAT_PMOS12={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DRDSW_PMOS12={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DVTO_NDMOS20={PROC_ON*AGAUSS(0,0.04,3)}
-.param P_DKP_NDMOS20={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_NDMOS20={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_NDMOS20={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_NDMOS20={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_PDMOS20={PROC_ON*AGAUSS(0,0.04,3)}
-.param P_DKP_PDMOS20={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_PDMOS20={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_PDMOS20={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_PDMOS20={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_NDMOS60={PROC_ON*AGAUSS(0,0.045,3)}
-.param P_DKP_NDMOS60={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_NDMOS60={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_NDMOS60={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_NDMOS60={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_PDMOS60={PROC_ON*AGAUSS(0,0.045,3)}
-.param P_DKP_PDMOS60={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_PDMOS60={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_PDMOS60={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_PDMOS60={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_NDMOS120={PROC_ON*AGAUSS(0,0.05,3)}
-.param P_DKP_NDMOS120={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_NDMOS120={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_NDMOS120={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_NDMOS120={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_PDMOS120={PROC_ON*AGAUSS(0,0.05,3)}
-.param P_DKP_PDMOS120={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_PDMOS120={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_PDMOS120={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_PDMOS120={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_DNMOS20={PROC_ON*AGAUSS(0,0.04,3)}
-.param P_DKP_DNMOS20={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_DNMOS20={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_DNMOS20={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_DNMOS20={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_NDMOS40={PROC_ON*AGAUSS(0,0.0425,3)}
-.param P_DKP_NDMOS40={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_NDMOS40={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_NDMOS40={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_NDMOS40={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_PDMOS40={PROC_ON*AGAUSS(0,0.0425,3)}
-.param P_DKP_PDMOS40={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_PDMOS40={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_PDMOS40={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_PDMOS40={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_NDMOS80={PROC_ON*AGAUSS(0,0.0475,3)}
-.param P_DKP_NDMOS80={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_NDMOS80={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_NDMOS80={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_NDMOS80={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_PDMOS80={PROC_ON*AGAUSS(0,0.0475,3)}
-.param P_DKP_PDMOS80={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_PDMOS80={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_PDMOS80={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_PDMOS80={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_NDMOS200={PROC_ON*AGAUSS(0,0.055,3)}
-.param P_DKP_NDMOS200={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_NDMOS200={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_NDMOS200={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_NDMOS200={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DVTO_PDMOS200={PROC_ON*AGAUSS(0,0.055,3)}
-.param P_DKP_PDMOS200={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRD_PDMOS200={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DRS_PDMOS200={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_PDMOS200={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTH_NMOS1V8={PROC_ON*AGAUSS(0,0.025,3)}
+.param P_DU0_NMOS1V8={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DVSAT_NMOS1V8={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DRDSW_NMOS1V8={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DJS_NMOS1V8={PROC_ON*AGAUSS(0,0.2,3)}
+.param P_DVTH_PMOS1V8={PROC_ON*AGAUSS(0,0.025,3)}
+.param P_DU0_PMOS1V8={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DVSAT_PMOS1V8={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DRDSW_PMOS1V8={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DJS_PMOS1V8={PROC_ON*AGAUSS(0,0.2,3)}
+.param P_DVTH_NMOS3V3={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DU0_NMOS3V3={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DVSAT_NMOS3V3={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DRDSW_NMOS3V3={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DJS_NMOS3V3={PROC_ON*AGAUSS(0,0.2,3)}
+.param P_DVTH_PMOS3V3={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DU0_PMOS3V3={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DVSAT_PMOS3V3={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DRDSW_PMOS3V3={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DJS_PMOS3V3={PROC_ON*AGAUSS(0,0.2,3)}
+.param P_DVTH_NMOS5V0={PROC_ON*AGAUSS(0,0.035,3)}
+.param P_DU0_NMOS5V0={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DVSAT_NMOS5V0={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DRDSW_NMOS5V0={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DJS_NMOS5V0={PROC_ON*AGAUSS(0,0.2,3)}
+.param P_DVTH_PMOS5V0={PROC_ON*AGAUSS(0,0.035,3)}
+.param P_DU0_PMOS5V0={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DVSAT_PMOS5V0={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DRDSW_PMOS5V0={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DJS_PMOS5V0={PROC_ON*AGAUSS(0,0.2,3)}
+.param P_DVTO_NMOS12V={PROC_ON*AGAUSS(0,0.035,3)}
+.param P_DUO_NMOS12V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DKP_NMOS12V={PROC_ON*AGAUSS(0,0.12,3)}
+.param P_DVSAT_NMOS12V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DRDSW_NMOS12V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DVTO_PMOS12V={PROC_ON*AGAUSS(0,0.035,3)}
+.param P_DUO_PMOS12V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DKP_PMOS12V={PROC_ON*AGAUSS(0,0.12,3)}
+.param P_DVSAT_PMOS12V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DRDSW_PMOS12V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DVTO_NDMOS20V={PROC_ON*AGAUSS(0,0.04,3)}
+.param P_DKP_NDMOS20V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_NDMOS20V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_NDMOS20V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_NDMOS20V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_PDMOS20V={PROC_ON*AGAUSS(0,0.04,3)}
+.param P_DKP_PDMOS20V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_PDMOS20V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_PDMOS20V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_PDMOS20V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_NDMOS60V={PROC_ON*AGAUSS(0,0.045,3)}
+.param P_DKP_NDMOS60V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_NDMOS60V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_NDMOS60V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_NDMOS60V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_PDMOS60V={PROC_ON*AGAUSS(0,0.045,3)}
+.param P_DKP_PDMOS60V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_PDMOS60V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_PDMOS60V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_PDMOS60V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_NDMOS120V={PROC_ON*AGAUSS(0,0.05,3)}
+.param P_DKP_NDMOS120V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_NDMOS120V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_NDMOS120V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_NDMOS120V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_PDMOS120V={PROC_ON*AGAUSS(0,0.05,3)}
+.param P_DKP_PDMOS120V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_PDMOS120V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_PDMOS120V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_PDMOS120V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_DNMOS20V={PROC_ON*AGAUSS(0,0.04,3)}
+.param P_DKP_DNMOS20V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_DNMOS20V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_DNMOS20V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_DNMOS20V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_NDMOS40V={PROC_ON*AGAUSS(0,0.0425,3)}
+.param P_DKP_NDMOS40V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_NDMOS40V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_NDMOS40V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_NDMOS40V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_PDMOS40V={PROC_ON*AGAUSS(0,0.0425,3)}
+.param P_DKP_PDMOS40V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_PDMOS40V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_PDMOS40V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_PDMOS40V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_NDMOS80V={PROC_ON*AGAUSS(0,0.0475,3)}
+.param P_DKP_NDMOS80V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_NDMOS80V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_NDMOS80V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_NDMOS80V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_PDMOS80V={PROC_ON*AGAUSS(0,0.0475,3)}
+.param P_DKP_PDMOS80V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_PDMOS80V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_PDMOS80V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_PDMOS80V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_NDMOS200V={PROC_ON*AGAUSS(0,0.055,3)}
+.param P_DKP_NDMOS200V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_NDMOS200V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_NDMOS200V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_NDMOS200V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DVTO_PDMOS200V={PROC_ON*AGAUSS(0,0.055,3)}
+.param P_DKP_PDMOS200V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRD_PDMOS200V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DRS_PDMOS200V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_PDMOS200V={PROC_ON*AGAUSS(0,0.03,3)}
 .param P_DIS_NPN_LV={PROC_ON*AGAUSS(0,0.2,3)}
 .param P_DBF_NPN_LV={PROC_ON*AGAUSS(0,0.2,3)}
 .param P_DRB_NPN_LV={PROC_ON*AGAUSS(0,0.1,3)}
@@ -190,16 +190,16 @@
 .param P_DBV_DZ_5V6={PROC_ON*AGAUSS(0,0.03,3)}
 .param P_DCJO_DZ_5V6={PROC_ON*AGAUSS(0,0.05,3)}
 .param P_DTT_DZ_5V6={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DIS_DZ_12={PROC_ON*AGAUSS(0,0.2,3)}
-.param P_DRS_DZ_12={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_DZ_12={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DCJO_DZ_12={PROC_ON*AGAUSS(0,0.05,3)}
-.param P_DTT_DZ_12={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DIS_DZ_24={PROC_ON*AGAUSS(0,0.2,3)}
-.param P_DRS_DZ_24={PROC_ON*AGAUSS(0,0.1,3)}
-.param P_DBV_DZ_24={PROC_ON*AGAUSS(0,0.03,3)}
-.param P_DCJO_DZ_24={PROC_ON*AGAUSS(0,0.05,3)}
-.param P_DTT_DZ_24={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DIS_DZ_12V={PROC_ON*AGAUSS(0,0.2,3)}
+.param P_DRS_DZ_12V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_DZ_12V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DCJO_DZ_12V={PROC_ON*AGAUSS(0,0.05,3)}
+.param P_DTT_DZ_12V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DIS_DZ_24V={PROC_ON*AGAUSS(0,0.2,3)}
+.param P_DRS_DZ_24V={PROC_ON*AGAUSS(0,0.1,3)}
+.param P_DBV_DZ_24V={PROC_ON*AGAUSS(0,0.03,3)}
+.param P_DCJO_DZ_24V={PROC_ON*AGAUSS(0,0.05,3)}
+.param P_DTT_DZ_24V={PROC_ON*AGAUSS(0,0.1,3)}
 * Die-to-die absolute tolerance is layer-dependent (random part of "absolute
 * accuracy"). Low-sheet poly is tightest; lightly-doped well is widest. Ranges
 * follow the trend in Allen, CMOS Analog Circuit Design (poly ~+/-30%, n-well
@@ -219,58 +219,58 @@
 * === VDMOS temperature coefficients (deterministic; CALIBRATE) ===========
 * Applied via runtime 'temper' to vto/kp/rd/rs of each HV drift-MOS card.
 * Sign convention: rd,rs rise with T (+), kp falls (-), vto falls (-).
-.param TC_RD_NDMOS20=0.005
-.param TC_RS_NDMOS20=0.004
-.param TC_KP_NDMOS20=-0.005
-.param TC_VTO_NDMOS20=-0.002
-.param TC_RD_PDMOS20=0.005
-.param TC_RS_PDMOS20=0.004
-.param TC_KP_PDMOS20=-0.005
-.param TC_VTO_PDMOS20=-0.002
-.param TC_RD_DNMOS20=0.005
-.param TC_RS_DNMOS20=0.004
-.param TC_KP_DNMOS20=-0.005
-.param TC_VTO_DNMOS20=-0.002
-.param TC_RD_NDMOS40=0.0055
-.param TC_RS_NDMOS40=0.0045
-.param TC_KP_NDMOS40=-0.0052
-.param TC_VTO_NDMOS40=-0.0022
-.param TC_RD_PDMOS40=0.0055
-.param TC_RS_PDMOS40=0.0045
-.param TC_KP_PDMOS40=-0.0052
-.param TC_VTO_PDMOS40=-0.0022
-.param TC_RD_NDMOS60=0.006
-.param TC_RS_NDMOS60=0.0048
-.param TC_KP_NDMOS60=-0.0055
-.param TC_VTO_NDMOS60=-0.0023
-.param TC_RD_PDMOS60=0.006
-.param TC_RS_PDMOS60=0.0048
-.param TC_KP_PDMOS60=-0.0055
-.param TC_VTO_PDMOS60=-0.0023
-.param TC_RD_NDMOS80=0.0065
-.param TC_RS_NDMOS80=0.005
-.param TC_KP_NDMOS80=-0.0055
-.param TC_VTO_NDMOS80=-0.0024
-.param TC_RD_PDMOS80=0.0065
-.param TC_RS_PDMOS80=0.005
-.param TC_KP_PDMOS80=-0.0055
-.param TC_VTO_PDMOS80=-0.0024
-.param TC_RD_NDMOS120=0.0075
-.param TC_RS_NDMOS120=0.0055
-.param TC_KP_NDMOS120=-0.0058
-.param TC_VTO_NDMOS120=-0.0025
-.param TC_RD_PDMOS120=0.0075
-.param TC_RS_PDMOS120=0.0055
-.param TC_KP_PDMOS120=-0.0058
-.param TC_VTO_PDMOS120=-0.0025
-.param TC_RD_NDMOS200=0.009
-.param TC_RS_NDMOS200=0.006
-.param TC_KP_NDMOS200=-0.006
-.param TC_VTO_NDMOS200=-0.0028
-.param TC_RD_PDMOS200=0.009
-.param TC_RS_PDMOS200=0.006
-.param TC_KP_PDMOS200=-0.006
-.param TC_VTO_PDMOS200=-0.0028
+.param TC_RD_NDMOS20V=0.005
+.param TC_RS_NDMOS20V=0.004
+.param TC_KP_NDMOS20V=-0.005
+.param TC_VTO_NDMOS20V=-0.002
+.param TC_RD_PDMOS20V=0.005
+.param TC_RS_PDMOS20V=0.004
+.param TC_KP_PDMOS20V=-0.005
+.param TC_VTO_PDMOS20V=-0.002
+.param TC_RD_DNMOS20V=0.005
+.param TC_RS_DNMOS20V=0.004
+.param TC_KP_DNMOS20V=-0.005
+.param TC_VTO_DNMOS20V=-0.002
+.param TC_RD_NDMOS40V=0.0055
+.param TC_RS_NDMOS40V=0.0045
+.param TC_KP_NDMOS40V=-0.0052
+.param TC_VTO_NDMOS40V=-0.0022
+.param TC_RD_PDMOS40V=0.0055
+.param TC_RS_PDMOS40V=0.0045
+.param TC_KP_PDMOS40V=-0.0052
+.param TC_VTO_PDMOS40V=-0.0022
+.param TC_RD_NDMOS60V=0.006
+.param TC_RS_NDMOS60V=0.0048
+.param TC_KP_NDMOS60V=-0.0055
+.param TC_VTO_NDMOS60V=-0.0023
+.param TC_RD_PDMOS60V=0.006
+.param TC_RS_PDMOS60V=0.0048
+.param TC_KP_PDMOS60V=-0.0055
+.param TC_VTO_PDMOS60V=-0.0023
+.param TC_RD_NDMOS80V=0.0065
+.param TC_RS_NDMOS80V=0.005
+.param TC_KP_NDMOS80V=-0.0055
+.param TC_VTO_NDMOS80V=-0.0024
+.param TC_RD_PDMOS80V=0.0065
+.param TC_RS_PDMOS80V=0.005
+.param TC_KP_PDMOS80V=-0.0055
+.param TC_VTO_PDMOS80V=-0.0024
+.param TC_RD_NDMOS120V=0.0075
+.param TC_RS_NDMOS120V=0.0055
+.param TC_KP_NDMOS120V=-0.0058
+.param TC_VTO_NDMOS120V=-0.0025
+.param TC_RD_PDMOS120V=0.0075
+.param TC_RS_PDMOS120V=0.0055
+.param TC_KP_PDMOS120V=-0.0058
+.param TC_VTO_PDMOS120V=-0.0025
+.param TC_RD_NDMOS200V=0.009
+.param TC_RS_NDMOS200V=0.006
+.param TC_KP_NDMOS200V=-0.006
+.param TC_VTO_NDMOS200V=-0.0028
+.param TC_RD_PDMOS200V=0.009
+.param TC_RS_PDMOS200V=0.006
+.param TC_KP_PDMOS200V=-0.006
+.param TC_VTO_PDMOS200V=-0.0028
 * =========================================================================
 
 * === VDMOS parse-time statistical params (corner * (1+P_D*) products) ====
@@ -280,62 +280,62 @@
 * mentions temper to runtime per-temperature evaluation, where agauss is
 * unresolvable; isolating the statistical product here keeps it parse-time.
 * Each card line then reads e.g. vto={VTO_<dev>_STAT + TC_VTO_<dev>*(temper-27)}.
-.param VTO_NDMOS20_STAT={(((1*_isTT + 0.96*_isFF + 1.06*_isSS + 0.96*_isFS + 1.06*_isSF))+P_DVTO_NDMOS20)}
-.param KP_NDMOS20_STAT={(((0.00209281*_isTT + 0.00242766*_isFF + 0.00179981*_isSS + 0.00242766*_isFS + 0.00179981*_isSF))*(1+P_DKP_NDMOS20))}
-.param RD_NDMOS20_STAT={(((302.067*_isTT + 265.819*_isFF + 347.377*_isSS + 265.819*_isFS + 347.377*_isSF))*(1+P_DRD_NDMOS20))}
-.param RS_NDMOS20_STAT={(((129.457*_isTT + 113.922*_isFF + 148.876*_isSS + 113.922*_isFS + 148.876*_isSF))*(1+P_DRS_NDMOS20))}
-.param VTO_PDMOS20_STAT={(((-1.05*_isTT + -1*_isFF + -1.11*_isSS + -1.11*_isFS + -1*_isSF))+P_DVTO_PDMOS20)}
-.param KP_PDMOS20_STAT={(((0.000680162*_isTT + 0.000775385*_isFF + 0.000598544*_isSS + 0.000598544*_isFS + 0.000775385*_isSF))*(1+P_DKP_PDMOS20))}
-.param RD_PDMOS20_STAT={(((83.4057*_isTT + 75.0652*_isFF + 94.2485*_isSS + 94.2485*_isFS + 75.0652*_isSF))*(1+P_DRD_PDMOS20))}
-.param RS_PDMOS20_STAT={(((32.4356*_isTT + 29.192*_isFF + 36.6522*_isSS + 36.6522*_isFS + 29.192*_isSF))*(1+P_DRS_PDMOS20))}
-.param VTO_NDMOS60_STAT={(((1.1*_isTT + 1.05*_isFF + 1.17*_isSS + 1.05*_isFS + 1.17*_isSF))+P_DVTO_NDMOS60)}
-.param KP_NDMOS60_STAT={(((0.00209281*_isTT + 0.0023858*_isFF + 0.00184167*_isSS + 0.0023858*_isFS + 0.00184167*_isSF))*(1+P_DKP_NDMOS60))}
-.param RD_NDMOS60_STAT={(((918.239*_isTT + 826.415*_isFF + 1037.62*_isSS + 826.415*_isFS + 1037.62*_isSF))*(1+P_DRD_NDMOS60))}
-.param RS_NDMOS60_STAT={(((393.531*_isTT + 354.177*_isFF + 444.689*_isSS + 354.177*_isFS + 444.689*_isSF))*(1+P_DRS_NDMOS60))}
-.param VTO_PDMOS60_STAT={(((-1.15*_isTT + -1.09*_isFF + -1.23*_isSS + -1.23*_isFS + -1.09*_isSF))+P_DVTO_PDMOS60)}
-.param KP_PDMOS60_STAT={(((0.000680162*_isTT + 0.000761782*_isFF + 0.000605345*_isSS + 0.000605345*_isFS + 0.000761782*_isSF))*(1+P_DKP_PDMOS60))}
-.param RD_PDMOS60_STAT={(((2282.98*_isTT + 2077.51*_isFF + 2556.95*_isSS + 2556.95*_isFS + 2077.51*_isSF))*(1+P_DRD_PDMOS60))}
-.param RS_PDMOS60_STAT={(((887.827*_isTT + 807.923*_isFF + 994.363*_isSS + 994.363*_isFS + 807.923*_isSF))*(1+P_DRS_PDMOS60))}
-.param VTO_NDMOS120_STAT={(((1.2*_isTT + 1.14*_isFF + 1.28*_isSS + 1.14*_isFS + 1.28*_isSF))+P_DVTO_NDMOS120)}
-.param KP_NDMOS120_STAT={(((0.00209281*_isTT + 0.00232302*_isFF + 0.00188352*_isSS + 0.00232302*_isFS + 0.00188352*_isSF))*(1+P_DKP_NDMOS120))}
-.param RD_NDMOS120_STAT={(((2108.24*_isTT + 1939.58*_isFF + 2340.15*_isSS + 1939.58*_isFS + 2340.15*_isSF))*(1+P_DRD_NDMOS120))}
-.param RS_NDMOS120_STAT={(((903.532*_isTT + 831.255*_isFF + 1002.92*_isSS + 831.255*_isFS + 1002.92*_isSF))*(1+P_DRS_NDMOS120))}
-.param VTO_PDMOS120_STAT={(((-1.25*_isTT + -1.1875*_isFF + -1.34375*_isSS + -1.34375*_isFS + -1.1875*_isSF))+P_DVTO_PDMOS120)}
-.param KP_PDMOS120_STAT={(((0.000680162*_isTT + 0.000754981*_isFF + 0.000612146*_isSS + 0.000612146*_isFS + 0.000754981*_isSF))*(1+P_DKP_PDMOS120))}
-.param RD_PDMOS120_STAT={(((6034.29*_isTT + 5551.59*_isFF + 6698.09*_isSS + 6698.09*_isFS + 5551.59*_isSF))*(1+P_DRD_PDMOS120))}
-.param RS_PDMOS120_STAT={(((2346.68*_isTT + 2158.95*_isFF + 2604.82*_isSS + 2604.82*_isFS + 2158.95*_isSF))*(1+P_DRS_PDMOS120))}
-.param VTO_NDMOS40_STAT={(((1.05*_isTT + 1*_isFF + 1.11*_isSS + 1*_isFS + 1.11*_isSF))+P_DVTO_NDMOS40)}
-.param KP_NDMOS40_STAT={(((0.00209281*_isTT + 0.00240673*_isFF + 0.00182074*_isSS + 0.00240673*_isFS + 0.00182074*_isSF))*(1+P_DKP_NDMOS40))}
-.param RD_NDMOS40_STAT={(((597.842*_isTT + 532.08*_isFF + 681.539*_isSS + 532.08*_isFS + 681.539*_isSF))*(1+P_DRD_NDMOS40))}
-.param RS_NDMOS40_STAT={(((256.218*_isTT + 228.034*_isFF + 292.088*_isSS + 228.034*_isFS + 292.088*_isSF))*(1+P_DRS_NDMOS40))}
-.param VTO_PDMOS40_STAT={(((-1.1*_isTT + -1.04*_isFF + -1.17*_isSS + -1.17*_isFS + -1.04*_isSF))+P_DVTO_PDMOS40)}
-.param KP_PDMOS40_STAT={(((0.000680162*_isTT + 0.000768584*_isFF + 0.000598544*_isSS + 0.000598544*_isFS + 0.000768584*_isSF))*(1+P_DKP_PDMOS40))}
-.param RD_PDMOS40_STAT={(((333.411*_isTT + 300.07*_isFF + 376.754*_isSS + 376.754*_isFS + 300.07*_isSF))*(1+P_DRD_PDMOS40))}
-.param RS_PDMOS40_STAT={(((129.66*_isTT + 116.694*_isFF + 146.516*_isSS + 146.516*_isFS + 116.694*_isSF))*(1+P_DRS_PDMOS40))}
-.param VTO_NDMOS80_STAT={(((1.15*_isTT + 1.09*_isFF + 1.22*_isSS + 1.09*_isFS + 1.22*_isSF))+P_DVTO_NDMOS80)}
-.param KP_NDMOS80_STAT={(((0.00209281*_isTT + 0.00236488*_isFF + 0.0018626*_isSS + 0.00236488*_isFS + 0.0018626*_isSF))*(1+P_DKP_NDMOS80))}
-.param RD_NDMOS80_STAT={(((1338.23*_isTT + 1217.79*_isFF + 1498.82*_isSS + 1217.79*_isFS + 1498.82*_isSF))*(1+P_DRD_NDMOS80))}
-.param RS_NDMOS80_STAT={(((573.531*_isTT + 521.913*_isFF + 642.355*_isSS + 521.913*_isFS + 642.355*_isSF))*(1+P_DRS_NDMOS80))}
-.param VTO_PDMOS80_STAT={(((-1.2*_isTT + -1.14*_isFF + -1.29*_isSS + -1.29*_isFS + -1.14*_isSF))+P_DVTO_PDMOS80)}
-.param KP_PDMOS80_STAT={(((0.000680162*_isTT + 0.000754981*_isFF + 0.000612146*_isSS + 0.000612146*_isFS + 0.000754981*_isSF))*(1+P_DKP_PDMOS80))}
-.param RD_PDMOS80_STAT={(((3589.76*_isTT + 3302.57*_isFF + 3984.62*_isSS + 3984.62*_isFS + 3302.57*_isSF))*(1+P_DRD_PDMOS80))}
-.param RS_PDMOS80_STAT={(((1396.02*_isTT + 1284.34*_isFF + 1549.58*_isSS + 1549.58*_isFS + 1284.34*_isSF))*(1+P_DRS_PDMOS80))}
-.param VTO_NDMOS200_STAT={(((1.25*_isTT + 1.19*_isFF + 1.34*_isSS + 1.19*_isFS + 1.34*_isSF))+P_DVTO_NDMOS200)}
-.param KP_NDMOS200_STAT={(((0.00209281*_isTT + 0.00228116*_isFF + 0.00192538*_isSS + 0.00228116*_isFS + 0.00192538*_isSF))*(1+P_DKP_NDMOS200))}
-.param RD_NDMOS200_STAT={(((3018.24*_isTT + 2806.97*_isFF + 3320.07*_isSS + 2806.97*_isFS + 3320.07*_isSF))*(1+P_DRD_NDMOS200))}
-.param RS_NDMOS200_STAT={(((1293.53*_isTT + 1202.99*_isFF + 1422.89*_isSS + 1202.99*_isFS + 1422.89*_isSF))*(1+P_DRS_NDMOS200))}
-.param VTO_PDMOS200_STAT={(((-1.31*_isTT + -1.247*_isFF + -1.404*_isSS + -1.404*_isFS + -1.247*_isSF))+P_DVTO_PDMOS200)}
-.param KP_PDMOS200_STAT={(((0.000680162*_isTT + 0.000741222*_isFF + 0.000626059*_isSS + 0.000626059*_isFS + 0.000741222*_isSF))*(1+P_DKP_PDMOS200))}
-.param RD_PDMOS200_STAT={(((9303.12*_isTT + 8651.92*_isFF + 10233.4*_isSS + 10233.4*_isFS + 8651.92*_isSF))*(1+P_DRD_PDMOS200))}
-.param RS_PDMOS200_STAT={(((3617.87*_isTT + 3363.58*_isFF + 3979.67*_isSS + 3979.67*_isFS + 3363.58*_isSF))*(1+P_DRS_PDMOS200))}
-.param VTO_DNMOS20_STAT={(((-1.6*_isTT + -1.67111*_isFF + -1.51111*_isSS + -1.67111*_isFS + -1.51111*_isSF))+P_DVTO_DNMOS20)}
-.param KP_DNMOS20_STAT={(((0.00145115*_isTT + 0.0016253*_isFF + 0.00130604*_isSS + 0.0016253*_isFS + 0.00130604*_isSF))*(1+P_DKP_DNMOS20))}
-.param RD_DNMOS20_STAT={(((302.067*_isTT + 271.861*_isFF + 338.315*_isSS + 271.861*_isFS + 338.315*_isSF))*(1+P_DRD_DNMOS20))}
-.param RS_DNMOS20_STAT={(((129.457*_isTT + 116.512*_isFF + 144.992*_isSS + 116.512*_isFS + 144.992*_isSF))*(1+P_DRS_DNMOS20))}
+.param VTO_NDMOS20V_STAT={(((1*_isTT + 0.96*_isFF + 1.06*_isSS + 0.96*_isFS + 1.06*_isSF))+P_DVTO_NDMOS20V)}
+.param KP_NDMOS20V_STAT={(((0.00209281*_isTT + 0.00242766*_isFF + 0.00179981*_isSS + 0.00242766*_isFS + 0.00179981*_isSF))*(1+P_DKP_NDMOS20V))}
+.param RD_NDMOS20V_STAT={(((302.067*_isTT + 265.819*_isFF + 347.377*_isSS + 265.819*_isFS + 347.377*_isSF))*(1+P_DRD_NDMOS20V))}
+.param RS_NDMOS20V_STAT={(((129.457*_isTT + 113.922*_isFF + 148.876*_isSS + 113.922*_isFS + 148.876*_isSF))*(1+P_DRS_NDMOS20V))}
+.param VTO_PDMOS20V_STAT={(((-1.05*_isTT + -1*_isFF + -1.11*_isSS + -1.11*_isFS + -1*_isSF))+P_DVTO_PDMOS20V)}
+.param KP_PDMOS20V_STAT={(((0.000680162*_isTT + 0.000775385*_isFF + 0.000598544*_isSS + 0.000598544*_isFS + 0.000775385*_isSF))*(1+P_DKP_PDMOS20V))}
+.param RD_PDMOS20V_STAT={(((83.4057*_isTT + 75.0652*_isFF + 94.2485*_isSS + 94.2485*_isFS + 75.0652*_isSF))*(1+P_DRD_PDMOS20V))}
+.param RS_PDMOS20V_STAT={(((32.4356*_isTT + 29.192*_isFF + 36.6522*_isSS + 36.6522*_isFS + 29.192*_isSF))*(1+P_DRS_PDMOS20V))}
+.param VTO_NDMOS60V_STAT={(((1.1*_isTT + 1.05*_isFF + 1.17*_isSS + 1.05*_isFS + 1.17*_isSF))+P_DVTO_NDMOS60V)}
+.param KP_NDMOS60V_STAT={(((0.00209281*_isTT + 0.0023858*_isFF + 0.00184167*_isSS + 0.0023858*_isFS + 0.00184167*_isSF))*(1+P_DKP_NDMOS60V))}
+.param RD_NDMOS60V_STAT={(((918.239*_isTT + 826.415*_isFF + 1037.62*_isSS + 826.415*_isFS + 1037.62*_isSF))*(1+P_DRD_NDMOS60V))}
+.param RS_NDMOS60V_STAT={(((393.531*_isTT + 354.177*_isFF + 444.689*_isSS + 354.177*_isFS + 444.689*_isSF))*(1+P_DRS_NDMOS60V))}
+.param VTO_PDMOS60V_STAT={(((-1.15*_isTT + -1.09*_isFF + -1.23*_isSS + -1.23*_isFS + -1.09*_isSF))+P_DVTO_PDMOS60V)}
+.param KP_PDMOS60V_STAT={(((0.000680162*_isTT + 0.000761782*_isFF + 0.000605345*_isSS + 0.000605345*_isFS + 0.000761782*_isSF))*(1+P_DKP_PDMOS60V))}
+.param RD_PDMOS60V_STAT={(((2282.98*_isTT + 2077.51*_isFF + 2556.95*_isSS + 2556.95*_isFS + 2077.51*_isSF))*(1+P_DRD_PDMOS60V))}
+.param RS_PDMOS60V_STAT={(((887.827*_isTT + 807.923*_isFF + 994.363*_isSS + 994.363*_isFS + 807.923*_isSF))*(1+P_DRS_PDMOS60V))}
+.param VTO_NDMOS120V_STAT={(((1.2*_isTT + 1.14*_isFF + 1.28*_isSS + 1.14*_isFS + 1.28*_isSF))+P_DVTO_NDMOS120V)}
+.param KP_NDMOS120V_STAT={(((0.00209281*_isTT + 0.00232302*_isFF + 0.00188352*_isSS + 0.00232302*_isFS + 0.00188352*_isSF))*(1+P_DKP_NDMOS120V))}
+.param RD_NDMOS120V_STAT={(((2108.24*_isTT + 1939.58*_isFF + 2340.15*_isSS + 1939.58*_isFS + 2340.15*_isSF))*(1+P_DRD_NDMOS120V))}
+.param RS_NDMOS120V_STAT={(((903.532*_isTT + 831.255*_isFF + 1002.92*_isSS + 831.255*_isFS + 1002.92*_isSF))*(1+P_DRS_NDMOS120V))}
+.param VTO_PDMOS120V_STAT={(((-1.25*_isTT + -1.1875*_isFF + -1.34375*_isSS + -1.34375*_isFS + -1.1875*_isSF))+P_DVTO_PDMOS120V)}
+.param KP_PDMOS120V_STAT={(((0.000680162*_isTT + 0.000754981*_isFF + 0.000612146*_isSS + 0.000612146*_isFS + 0.000754981*_isSF))*(1+P_DKP_PDMOS120V))}
+.param RD_PDMOS120V_STAT={(((6034.29*_isTT + 5551.59*_isFF + 6698.09*_isSS + 6698.09*_isFS + 5551.59*_isSF))*(1+P_DRD_PDMOS120V))}
+.param RS_PDMOS120V_STAT={(((2346.68*_isTT + 2158.95*_isFF + 2604.82*_isSS + 2604.82*_isFS + 2158.95*_isSF))*(1+P_DRS_PDMOS120V))}
+.param VTO_NDMOS40V_STAT={(((1.05*_isTT + 1*_isFF + 1.11*_isSS + 1*_isFS + 1.11*_isSF))+P_DVTO_NDMOS40V)}
+.param KP_NDMOS40V_STAT={(((0.00209281*_isTT + 0.00240673*_isFF + 0.00182074*_isSS + 0.00240673*_isFS + 0.00182074*_isSF))*(1+P_DKP_NDMOS40V))}
+.param RD_NDMOS40V_STAT={(((597.842*_isTT + 532.08*_isFF + 681.539*_isSS + 532.08*_isFS + 681.539*_isSF))*(1+P_DRD_NDMOS40V))}
+.param RS_NDMOS40V_STAT={(((256.218*_isTT + 228.034*_isFF + 292.088*_isSS + 228.034*_isFS + 292.088*_isSF))*(1+P_DRS_NDMOS40V))}
+.param VTO_PDMOS40V_STAT={(((-1.1*_isTT + -1.04*_isFF + -1.17*_isSS + -1.17*_isFS + -1.04*_isSF))+P_DVTO_PDMOS40V)}
+.param KP_PDMOS40V_STAT={(((0.000680162*_isTT + 0.000768584*_isFF + 0.000598544*_isSS + 0.000598544*_isFS + 0.000768584*_isSF))*(1+P_DKP_PDMOS40V))}
+.param RD_PDMOS40V_STAT={(((333.411*_isTT + 300.07*_isFF + 376.754*_isSS + 376.754*_isFS + 300.07*_isSF))*(1+P_DRD_PDMOS40V))}
+.param RS_PDMOS40V_STAT={(((129.66*_isTT + 116.694*_isFF + 146.516*_isSS + 146.516*_isFS + 116.694*_isSF))*(1+P_DRS_PDMOS40V))}
+.param VTO_NDMOS80V_STAT={(((1.15*_isTT + 1.09*_isFF + 1.22*_isSS + 1.09*_isFS + 1.22*_isSF))+P_DVTO_NDMOS80V)}
+.param KP_NDMOS80V_STAT={(((0.00209281*_isTT + 0.00236488*_isFF + 0.0018626*_isSS + 0.00236488*_isFS + 0.0018626*_isSF))*(1+P_DKP_NDMOS80V))}
+.param RD_NDMOS80V_STAT={(((1338.23*_isTT + 1217.79*_isFF + 1498.82*_isSS + 1217.79*_isFS + 1498.82*_isSF))*(1+P_DRD_NDMOS80V))}
+.param RS_NDMOS80V_STAT={(((573.531*_isTT + 521.913*_isFF + 642.355*_isSS + 521.913*_isFS + 642.355*_isSF))*(1+P_DRS_NDMOS80V))}
+.param VTO_PDMOS80V_STAT={(((-1.2*_isTT + -1.14*_isFF + -1.29*_isSS + -1.29*_isFS + -1.14*_isSF))+P_DVTO_PDMOS80V)}
+.param KP_PDMOS80V_STAT={(((0.000680162*_isTT + 0.000754981*_isFF + 0.000612146*_isSS + 0.000612146*_isFS + 0.000754981*_isSF))*(1+P_DKP_PDMOS80V))}
+.param RD_PDMOS80V_STAT={(((3589.76*_isTT + 3302.57*_isFF + 3984.62*_isSS + 3984.62*_isFS + 3302.57*_isSF))*(1+P_DRD_PDMOS80V))}
+.param RS_PDMOS80V_STAT={(((1396.02*_isTT + 1284.34*_isFF + 1549.58*_isSS + 1549.58*_isFS + 1284.34*_isSF))*(1+P_DRS_PDMOS80V))}
+.param VTO_NDMOS200V_STAT={(((1.25*_isTT + 1.19*_isFF + 1.34*_isSS + 1.19*_isFS + 1.34*_isSF))+P_DVTO_NDMOS200V)}
+.param KP_NDMOS200V_STAT={(((0.00209281*_isTT + 0.00228116*_isFF + 0.00192538*_isSS + 0.00228116*_isFS + 0.00192538*_isSF))*(1+P_DKP_NDMOS200V))}
+.param RD_NDMOS200V_STAT={(((3018.24*_isTT + 2806.97*_isFF + 3320.07*_isSS + 2806.97*_isFS + 3320.07*_isSF))*(1+P_DRD_NDMOS200V))}
+.param RS_NDMOS200V_STAT={(((1293.53*_isTT + 1202.99*_isFF + 1422.89*_isSS + 1202.99*_isFS + 1422.89*_isSF))*(1+P_DRS_NDMOS200V))}
+.param VTO_PDMOS200V_STAT={(((-1.31*_isTT + -1.247*_isFF + -1.404*_isSS + -1.404*_isFS + -1.247*_isSF))+P_DVTO_PDMOS200V)}
+.param KP_PDMOS200V_STAT={(((0.000680162*_isTT + 0.000741222*_isFF + 0.000626059*_isSS + 0.000626059*_isFS + 0.000741222*_isSF))*(1+P_DKP_PDMOS200V))}
+.param RD_PDMOS200V_STAT={(((9303.12*_isTT + 8651.92*_isFF + 10233.4*_isSS + 10233.4*_isFS + 8651.92*_isSF))*(1+P_DRD_PDMOS200V))}
+.param RS_PDMOS200V_STAT={(((3617.87*_isTT + 3363.58*_isFF + 3979.67*_isSS + 3979.67*_isFS + 3363.58*_isSF))*(1+P_DRS_PDMOS200V))}
+.param VTO_DNMOS20V_STAT={(((-1.6*_isTT + -1.67111*_isFF + -1.51111*_isSS + -1.67111*_isFS + -1.51111*_isSF))+P_DVTO_DNMOS20V)}
+.param KP_DNMOS20V_STAT={(((0.00145115*_isTT + 0.0016253*_isFF + 0.00130604*_isSS + 0.0016253*_isFS + 0.00130604*_isSF))*(1+P_DKP_DNMOS20V))}
+.param RD_DNMOS20V_STAT={(((302.067*_isTT + 271.861*_isFF + 338.315*_isSS + 271.861*_isFS + 338.315*_isSF))*(1+P_DRD_DNMOS20V))}
+.param RS_DNMOS20V_STAT={(((129.457*_isTT + 116.512*_isFF + 144.992*_isSS + 116.512*_isFS + 144.992*_isSF))*(1+P_DRS_DNMOS20V))}
 * =========================================================================
 
 * ============================== DEVICE MODELS ===============================
-.model NMOS18_INT NMOS (
+.model NMOS1V8_INT NMOS (
 + level=49
 + version=3.3.0
 + tnom=27
@@ -347,14 +347,14 @@
 + xj=1.4e-07
 + nch=2.2e+17
 + nsub=5.5e+16
-+ vth0={((0.48*_isTT + 0.4*_isFF + 0.56*_isSS + 0.4*_isFS + 0.56*_isSF))+P_DVTH_NMOS18}
++ vth0={((0.48*_isTT + 0.4*_isFF + 0.56*_isSS + 0.4*_isFS + 0.56*_isSF))+P_DVTH_NMOS1V8}
 + k1=0.56
 + k2=-0.045
-+ u0={((420*_isTT + 495.6*_isFF + 352.8*_isSS + 495.6*_isFS + 352.8*_isSF))*(1+P_DU0_NMOS18)}
++ u0={((420*_isTT + 495.6*_isFF + 352.8*_isSS + 495.6*_isFS + 352.8*_isSF))*(1+P_DU0_NMOS1V8)}
 + ua=1.8e-09
 + ub=5e-19
 + uc=-5e-11
-+ vsat={((140000*_isTT + 142520*_isFF + 137760*_isSS + 142520*_isFS + 137760*_isSF))*(1+P_DVSAT_NMOS18)}
++ vsat={((140000*_isTT + 142520*_isFF + 137760*_isSS + 142520*_isFS + 137760*_isSF))*(1+P_DVSAT_NMOS1V8)}
 + a0=1
 + ags=0.22
 + nfactor=1.6
@@ -377,7 +377,7 @@
 + lint=1.2e-08
 + dwg=3e-09
 + dwb=2e-09
-+ rdsw={((120*_isTT + 101.69492*_isFF + 142.85714*_isSS + 101.69492*_isFS + 142.85714*_isSF))*(1+P_DRDSW_NMOS18)}
++ rdsw={((120*_isTT + 101.69492*_isFF + 142.85714*_isSS + 101.69492*_isFS + 142.85714*_isSF))*(1+P_DRDSW_NMOS1V8)}
 + cgso=2.2e-10
 + cgdo=2.2e-10
 + cgbo=5e-10
@@ -387,7 +387,7 @@
 + pbsw=0.92
 + mj=0.46
 + mjsw=0.32
-+ js={((2e-08*_isTT + 2.036e-08*_isFF + 1.968e-08*_isSS + 2e-08*_isFS + 2e-08*_isSF))*(1+P_DJS_NMOS18)}
++ js={((2e-08*_isTT + 2.036e-08*_isFF + 1.968e-08*_isSS + 2e-08*_isFS + 2e-08*_isSF))*(1+P_DJS_NMOS1V8)}
 * 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; 180nm reference values, tox=4.25n NMOS)
 + noia=1e+20
 + noib=5e+04
@@ -403,7 +403,7 @@
 + w0=2.5e-07
 + )
 
-.model PMOS18_INT PMOS (
+.model PMOS1V8_INT PMOS (
 + level=49
 + version=3.3.0
 + tnom=27
@@ -415,14 +415,14 @@
 + xj=1.5e-07
 + nch=2.5e+17
 + nsub=6e+16
-+ vth0={((-0.52*_isTT + -0.44*_isFF + -0.6*_isSS + -0.6*_isFS + -0.44*_isSF))+P_DVTH_PMOS18}
++ vth0={((-0.52*_isTT + -0.44*_isFF + -0.6*_isSS + -0.6*_isFS + -0.44*_isSF))+P_DVTH_PMOS1V8}
 + k1=0.63
 + k2=-0.055
-+ u0={((145*_isTT + 174*_isFF + 118.9*_isSS + 118.9*_isFS + 174*_isSF))*(1+P_DU0_PMOS18)}
++ u0={((145*_isTT + 174*_isFF + 118.9*_isSS + 118.9*_isFS + 174*_isSF))*(1+P_DU0_PMOS1V8)}
 + ua=2.2e-09
 + ub=8e-19
 + uc=-1e-10
-+ vsat={((100000*_isTT + 102000*_isFF + 98200*_isSS + 98200*_isFS + 102000*_isSF))*(1+P_DVSAT_PMOS18)}
++ vsat={((100000*_isTT + 102000*_isFF + 98200*_isSS + 98200*_isFS + 102000*_isSF))*(1+P_DVSAT_PMOS1V8)}
 + a0=1.05
 + ags=0.24
 + nfactor=1.75
@@ -445,7 +445,7 @@
 + lint=1.5e-08
 + dwg=4e-09
 + dwb=3e-09
-+ rdsw={((180*_isTT + 150*_isFF + 219.5122*_isSS + 219.5122*_isFS + 150*_isSF))*(1+P_DRDSW_PMOS18)}
++ rdsw={((180*_isTT + 150*_isFF + 219.5122*_isSS + 219.5122*_isFS + 150*_isSF))*(1+P_DRDSW_PMOS1V8)}
 + cgso=2.4e-10
 + cgdo=2.4e-10
 + cgbo=5.2e-10
@@ -455,7 +455,7 @@
 + pbsw=0.9
 + mj=0.45
 + mjsw=0.31
-+ js={((3e-08*_isTT + 3.06e-08*_isFF + 2.946e-08*_isSS + 3e-08*_isFS + 3e-08*_isSF))*(1+P_DJS_PMOS18)}
++ js={((3e-08*_isTT + 3.06e-08*_isFF + 2.946e-08*_isSS + 3e-08*_isFS + 3e-08*_isSF))*(1+P_DJS_PMOS1V8)}
 * 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; 180nm reference values, tox=4.25n PMOS)
 + noia=6.2e+18
 + noib=5e+04
@@ -471,7 +471,7 @@
 + w0=2.5e-07
 + )
 
-.model NMOS33_INT NMOS (
+.model NMOS3V3_INT NMOS (
 + level=49
 + version=3.3.0
 + tnom=27
@@ -483,14 +483,14 @@
 + xj=1.8e-07
 + nch=1.7e+17
 + nsub=4e+16
-+ vth0={((0.66*_isTT + 0.58*_isFF + 0.74*_isSS + 0.58*_isFS + 0.74*_isSF))+P_DVTH_NMOS33}
++ vth0={((0.66*_isTT + 0.58*_isFF + 0.74*_isSS + 0.58*_isFS + 0.74*_isSF))+P_DVTH_NMOS3V3}
 + k1=0.62
 + k2=-0.04
-+ u0={((300*_isTT + 354*_isFF + 252*_isSS + 354*_isFS + 252*_isSF))*(1+P_DU0_NMOS33)}
++ u0={((300*_isTT + 354*_isFF + 252*_isSS + 354*_isFS + 252*_isSF))*(1+P_DU0_NMOS3V3)}
 + ua=2e-09
 + ub=6e-19
 + uc=-4e-11
-+ vsat={((110000*_isTT + 111980*_isFF + 108240*_isSS + 111980*_isFS + 108240*_isSF))*(1+P_DVSAT_NMOS33)}
++ vsat={((110000*_isTT + 111980*_isFF + 108240*_isSS + 111980*_isFS + 108240*_isSF))*(1+P_DVSAT_NMOS3V3)}
 + a0=1
 + ags=0.2
 + nfactor=1.65
@@ -513,7 +513,7 @@
 + lint=1.8e-08
 + dwg=5e-09
 + dwb=3e-09
-+ rdsw={((160*_isTT + 135.59322*_isFF + 190.47619*_isSS + 135.59322*_isFS + 190.47619*_isSF))*(1+P_DRDSW_NMOS33)}
++ rdsw={((160*_isTT + 135.59322*_isFF + 190.47619*_isSS + 135.59322*_isFS + 190.47619*_isSF))*(1+P_DRDSW_NMOS3V3)}
 + cgso=2e-10
 + cgdo=2e-10
 + cgbo=4.5e-10
@@ -523,8 +523,8 @@
 + pbsw=0.95
 + mj=0.45
 + mjsw=0.3
-+ js={((1.2e-08*_isTT + 1.2216e-08*_isFF + 1.1808e-08*_isSS + 1.2e-08*_isFS + 1.2e-08*_isSF))*(1+P_DJS_NMOS33)}
-* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=6.75n -> NMOS18 NOIA * (4.25/6.75)^2 ~ 0.40)
++ js={((1.2e-08*_isTT + 1.2216e-08*_isFF + 1.1808e-08*_isSS + 1.2e-08*_isFS + 1.2e-08*_isSF))*(1+P_DJS_NMOS3V3)}
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=6.75n -> NMOS1V8 NOIA * (4.25/6.75)^2 ~ 0.40)
 + noia=3.96e+19
 + noib=5e+04
 + noic=-1.4e-12
@@ -539,7 +539,7 @@
 + w0=2.5e-07
 + )
 
-.model PMOS33_INT PMOS (
+.model PMOS3V3_INT PMOS (
 + level=49
 + version=3.3.0
 + tnom=27
@@ -551,14 +551,14 @@
 + xj=2e-07
 + nch=1.9e+17
 + nsub=4.6e+16
-+ vth0={((-0.74*_isTT + -0.66*_isFF + -0.82*_isSS + -0.82*_isFS + -0.66*_isSF))+P_DVTH_PMOS33}
++ vth0={((-0.74*_isTT + -0.66*_isFF + -0.82*_isSS + -0.82*_isFS + -0.66*_isSF))+P_DVTH_PMOS3V3}
 + k1=0.7
 + k2=-0.05
-+ u0={((115*_isTT + 138*_isFF + 94.3*_isSS + 94.3*_isFS + 138*_isSF))*(1+P_DU0_PMOS33)}
++ u0={((115*_isTT + 138*_isFF + 94.3*_isSS + 94.3*_isFS + 138*_isSF))*(1+P_DU0_PMOS3V3)}
 + ua=2.5e-09
 + ub=8.5e-19
 + uc=-8e-11
-+ vsat={((85000*_isTT + 86700*_isFF + 83470*_isSS + 83470*_isFS + 86700*_isSF))*(1+P_DVSAT_PMOS33)}
++ vsat={((85000*_isTT + 86700*_isFF + 83470*_isSS + 83470*_isFS + 86700*_isSF))*(1+P_DVSAT_PMOS3V3)}
 + a0=1.05
 + ags=0.22
 + nfactor=1.8
@@ -581,7 +581,7 @@
 + lint=2e-08
 + dwg=6e-09
 + dwb=4e-09
-+ rdsw={((240*_isTT + 200*_isFF + 292.68293*_isSS + 292.68293*_isFS + 200*_isSF))*(1+P_DRDSW_PMOS33)}
++ rdsw={((240*_isTT + 200*_isFF + 292.68293*_isSS + 292.68293*_isFS + 200*_isSF))*(1+P_DRDSW_PMOS3V3)}
 + cgso=2.2e-10
 + cgdo=2.2e-10
 + cgbo=4.8e-10
@@ -591,8 +591,8 @@
 + pbsw=0.93
 + mj=0.44
 + mjsw=0.29
-+ js={((1.6e-08*_isTT + 1.632e-08*_isFF + 1.5712e-08*_isSS + 1.6e-08*_isFS + 1.6e-08*_isSF))*(1+P_DJS_PMOS33)}
-* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=6.75n -> PMOS18 NOIA * (4.25/6.75)^2 ~ 0.50)
++ js={((1.6e-08*_isTT + 1.632e-08*_isFF + 1.5712e-08*_isSS + 1.6e-08*_isFS + 1.6e-08*_isSF))*(1+P_DJS_PMOS3V3)}
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=6.75n -> PMOS1V8 NOIA * (4.25/6.75)^2 ~ 0.50)
 + noia=2.46e+18
 + noib=5e+04
 + noic=-1.4e-12
@@ -607,7 +607,7 @@
 + w0=2.5e-07
 + )
 
-.model NMOS50_INT NMOS (
+.model NMOS5V0_INT NMOS (
 + level=49
 + version=3.3.0
 + tnom=27
@@ -619,14 +619,14 @@
 + xj=2.6e-07
 + nch=1.2e+17
 + nsub=2.8e+16
-+ vth0={((0.88*_isTT + 0.8*_isFF + 0.96*_isSS + 0.8*_isFS + 0.96*_isSF))+P_DVTH_NMOS50}
++ vth0={((0.88*_isTT + 0.8*_isFF + 0.96*_isSS + 0.8*_isFS + 0.96*_isSF))+P_DVTH_NMOS5V0}
 + k1=0.68
 + k2=-0.03
-+ u0={((190*_isTT + 224.2*_isFF + 159.6*_isSS + 224.2*_isFS + 159.6*_isSF))*(1+P_DU0_NMOS50)}
++ u0={((190*_isTT + 224.2*_isFF + 159.6*_isSS + 224.2*_isFS + 159.6*_isSF))*(1+P_DU0_NMOS5V0)}
 + ua=2.3e-09
 + ub=6.5e-19
 + uc=-3e-11
-+ vsat={((80000*_isTT + 81440*_isFF + 78720*_isSS + 81440*_isFS + 78720*_isSF))*(1+P_DVSAT_NMOS50)}
++ vsat={((80000*_isTT + 81440*_isFF + 78720*_isSS + 81440*_isFS + 78720*_isSF))*(1+P_DVSAT_NMOS5V0)}
 + a0=1
 + ags=0.18
 + nfactor=1.7
@@ -649,7 +649,7 @@
 + lint=2.5e-08
 + dwg=8e-09
 + dwb=5e-09
-+ rdsw={((280*_isTT + 237.28814*_isFF + 333.33333*_isSS + 237.28814*_isFS + 333.33333*_isSF))*(1+P_DRDSW_NMOS50)}
++ rdsw={((280*_isTT + 237.28814*_isFF + 333.33333*_isSS + 237.28814*_isFS + 333.33333*_isSF))*(1+P_DRDSW_NMOS5V0)}
 + cgso=1.8e-10
 + cgdo=1.8e-10
 + cgbo=4.2e-10
@@ -659,8 +659,8 @@
 + pbsw=0.97
 + mj=0.43
 + mjsw=0.28
-+ js={((6e-09*_isTT + 6.108e-09*_isFF + 5.904e-09*_isSS + 6e-09*_isFS + 6e-09*_isSF))*(1+P_DJS_NMOS50)}
-* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=11n -> NMOS18 NOIA * (4.25/11)^2 ~ 0.15)
++ js={((6e-09*_isTT + 6.108e-09*_isFF + 5.904e-09*_isSS + 6e-09*_isFS + 6e-09*_isSF))*(1+P_DJS_NMOS5V0)}
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=11n -> NMOS1V8 NOIA * (4.25/11)^2 ~ 0.15)
 + noia=1.49e+19
 + noib=5e+04
 + noic=-1.4e-12
@@ -675,7 +675,7 @@
 + w0=2.5e-07
 + )
 
-.model PMOS50_INT PMOS (
+.model PMOS5V0_INT PMOS (
 + level=49
 + version=3.3.0
 + tnom=27
@@ -687,14 +687,14 @@
 + xj=2.9e-07
 + nch=1.4e+17
 + nsub=3.2e+16
-+ vth0={((-0.98*_isTT + -0.9*_isFF + -1.06*_isSS + -1.06*_isFS + -0.9*_isSF))+P_DVTH_PMOS50}
++ vth0={((-0.98*_isTT + -0.9*_isFF + -1.06*_isSS + -1.06*_isFS + -0.9*_isSF))+P_DVTH_PMOS5V0}
 + k1=0.78
 + k2=-0.04
-+ u0={((80*_isTT + 96*_isFF + 65.6*_isSS + 65.6*_isFS + 96*_isSF))*(1+P_DU0_PMOS50)}
++ u0={((80*_isTT + 96*_isFF + 65.6*_isSS + 65.6*_isFS + 96*_isSF))*(1+P_DU0_PMOS5V0)}
 + ua=2.8e-09
 + ub=9e-19
 + uc=-6e-11
-+ vsat={((65000*_isTT + 66300*_isFF + 63830*_isSS + 63830*_isFS + 66300*_isSF))*(1+P_DVSAT_PMOS50)}
++ vsat={((65000*_isTT + 66300*_isFF + 63830*_isSS + 63830*_isFS + 66300*_isSF))*(1+P_DVSAT_PMOS5V0)}
 + a0=1.05
 + ags=0.2
 + nfactor=1.5055
@@ -717,7 +717,7 @@
 + lint=2.8e-08
 + dwg=9e-09
 + dwb=6e-09
-+ rdsw={((380*_isTT + 316.66667*_isFF + 463.41463*_isSS + 463.41463*_isFS + 316.66667*_isSF))*(1+P_DRDSW_PMOS50)}
++ rdsw={((380*_isTT + 316.66667*_isFF + 463.41463*_isSS + 463.41463*_isFS + 316.66667*_isSF))*(1+P_DRDSW_PMOS5V0)}
 + cgso=1.9e-10
 + cgdo=1.9e-10
 + cgbo=4.3e-10
@@ -727,8 +727,8 @@
 + pbsw=0.95
 + mj=0.42
 + mjsw=0.27
-+ js={((8e-09*_isTT + 8.16e-09*_isFF + 7.856e-09*_isSS + 8e-09*_isFS + 8e-09*_isSF))*(1+P_DJS_PMOS50)}
-* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=11n -> PMOS18 NOIA * (4.25/11)^2 ~ 0.25)
++ js={((8e-09*_isTT + 8.16e-09*_isFF + 7.856e-09*_isSS + 8e-09*_isFS + 8e-09*_isSF))*(1+P_DJS_PMOS5V0)}
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=11n -> PMOS1V8 NOIA * (4.25/11)^2 ~ 0.25)
 + noia=9.24e+17
 + noib=5e+04
 + noic=-1.4e-12
@@ -743,7 +743,7 @@
 + w0=2.5e-07
 + )
 
-.model NMOS12_INT NMOS (
+.model NMOS12V_INT NMOS (
 + level=49
 + version=3.3.0
 + tnom=27
@@ -754,14 +754,14 @@
 + xj=5e-07
 + nch=9e+16
 + nsub=2e+16
-+ vth0={((1.35*_isTT + 1.27*_isFF + 1.43*_isSS + 1.27*_isFS + 1.43*_isSF))+P_DVTO_NMOS12}
++ vth0={((1.35*_isTT + 1.27*_isFF + 1.43*_isSS + 1.27*_isFS + 1.43*_isSF))+P_DVTO_NMOS12V}
 + k1=1.552
 + k2=-0.03
-+ u0={((80*_isTT + 94.4*_isFF + 67.2*_isSS + 94.4*_isFS + 67.2*_isSF))*(1+P_DUO_NMOS12)}
++ u0={((80*_isTT + 94.4*_isFF + 67.2*_isSS + 94.4*_isFS + 67.2*_isSF))*(1+P_DUO_NMOS12V)}
 + ua=2.5e-09
 + ub=7e-19
 + uc=-2e-11
-+ vsat={((75000*_isTT + 76200*_isFF + 73800*_isSS + 76200*_isFS + 73800*_isSF))*(1+P_DVSAT_NMOS12)}
++ vsat={((75000*_isTT + 76200*_isFF + 73800*_isSS + 76200*_isFS + 73800*_isSF))*(1+P_DVSAT_NMOS12V)}
 + a0=1
 + ags=0.16
 + nfactor=1.0625
@@ -784,7 +784,7 @@
 + lint=3e-08
 + dwg=1e-08
 + dwb=6e-09
-+ rdsw={((300*_isTT + 254.2*_isFF + 357.1*_isSS + 254.2*_isFS + 357.1*_isSF))*(1+P_DRDSW_NMOS12)}
++ rdsw={((300*_isTT + 254.2*_isFF + 357.1*_isSS + 254.2*_isFS + 357.1*_isSF))*(1+P_DRDSW_NMOS12V)}
 + cgso=1.5e-10
 + cgdo=1.5e-10
 + cgbo=5e-11
@@ -795,7 +795,7 @@
 + mj=0.4
 + mjsw=0.26
 + js=3e-09
-* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=20n (analog HV BSIM3) -> NMOS18 NOIA * (4.25/20)^2 ~ 0.05)
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=20n (analog HV BSIM3) -> NMOS1V8 NOIA * (4.25/20)^2 ~ 0.05)
 + noia=1.88e+18
 + noib=5e+04
 + noic=-1.4e-12
@@ -810,7 +810,7 @@
 + w0=2.5e-07
 + )
 
-.model PMOS12_INT PMOS (
+.model PMOS12V_INT PMOS (
 + level=49
 + version=3.3.0
 + tnom=27
@@ -821,14 +821,14 @@
 + xj=5.5e-07
 + nch=1.1e+17
 + nsub=2.4e+16
-+ vth0={((-1.55*_isTT + -1.47*_isFF + -1.63*_isSS + -1.63*_isFS + -1.47*_isSF))+P_DVTO_PMOS12}
++ vth0={((-1.55*_isTT + -1.47*_isFF + -1.63*_isSS + -1.63*_isFS + -1.47*_isSF))+P_DVTO_PMOS12V}
 + k1=1.715
 + k2=-0.03
-+ u0={((40*_isTT + 48*_isFF + 32.8*_isSS + 32.8*_isFS + 48*_isSF))*(1+P_DUO_PMOS12)}
++ u0={((40*_isTT + 48*_isFF + 32.8*_isSS + 32.8*_isFS + 48*_isSF))*(1+P_DUO_PMOS12V)}
 + ua=3e-09
 + ub=9e-19
 + uc=-4e-11
-+ vsat={((62000*_isTT + 62992*_isFF + 61256*_isSS + 61256*_isFS + 62992*_isSF))*(1+P_DVSAT_PMOS12)}
++ vsat={((62000*_isTT + 62992*_isFF + 61256*_isSS + 61256*_isFS + 62992*_isSF))*(1+P_DVSAT_PMOS12V)}
 + a0=1.05
 + ags=0.18
 + nfactor=0.9713
@@ -851,7 +851,7 @@
 + lint=3.2e-08
 + dwg=1.1e-08
 + dwb=7e-09
-+ rdsw={((350*_isTT + 291.6*_isFF + 426.7*_isSS + 426.7*_isFS + 291.6*_isSF))*(1+P_DRDSW_PMOS12)}
++ rdsw={((350*_isTT + 291.6*_isFF + 426.7*_isSS + 426.7*_isFS + 291.6*_isSF))*(1+P_DRDSW_PMOS12V)}
 + cgso=1.6e-10
 + cgdo=1.6e-10
 + cgbo=5.2e-11
@@ -862,7 +862,7 @@
 + mj=0.39
 + mjsw=0.25
 + js=4e-09
-* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=21n (analog HV BSIM3) -> PMOS18 NOIA * (4.25/21)^2 ~ 0.05)
+* 1/f noise (item #1: calibrated NOIA/NOIB/NOIC; tox=21n (analog HV BSIM3) -> PMOS1V8 NOIA * (4.25/21)^2 ~ 0.05)
 + noia=1.16e+17
 + noib=5e+04
 + noic=-1.4e-12
@@ -877,13 +877,13 @@
 + w0=2.5e-07
 + )
 
-.model NDMOS20_INT VDMOS (nchan
-+ vto={VTO_NDMOS20_STAT+TC_VTO_NDMOS20*(temper-27)}
-+ kp={KP_NDMOS20_STAT*(1+TC_KP_NDMOS20*(temper-27))}
+.model NDMOS20V_INT VDMOS (nchan
++ vto={VTO_NDMOS20V_STAT+TC_VTO_NDMOS20V*(temper-27)}
++ kp={KP_NDMOS20V_STAT*(1+TC_KP_NDMOS20V*(temper-27))}
 + lambda=0.008
 + theta=0.236364
-+ rd={RD_NDMOS20_STAT*(1+TC_RD_NDMOS20*(temper-27))}
-+ rs={RS_NDMOS20_STAT*(1+TC_RS_NDMOS20*(temper-27))}
++ rd={RD_NDMOS20V_STAT*(1+TC_RD_NDMOS20V*(temper-27))}
++ rs={RS_NDMOS20V_STAT*(1+TC_RS_NDMOS20V*(temper-27))}
 + rg=2
 + rds=1e+09
 + cgdmax=3.13922e-14
@@ -893,7 +893,7 @@
 + cjo=1.4e-13
 + is=5e-13
 + rb=0.06
-+ bv={((24*_isTT + 23.4*_isFF + 24.6*_isSS + 23.4*_isFS + 24.6*_isSF))*(1+P_DBV_NDMOS20)}
++ bv={((24*_isTT + 23.4*_isFF + 24.6*_isSS + 23.4*_isFS + 24.6*_isSF))*(1+P_DBV_NDMOS20V)}
 + ibv=5e-05
 + nbv=1.6
 + tt=1.8e-08
@@ -903,13 +903,13 @@
 + ksubthres=0.0726496
 + )
 
-.model PDMOS20_INT VDMOS (pchan
-+ vto={VTO_PDMOS20_STAT+TC_VTO_PDMOS20*(temper-27)}
-+ kp={KP_PDMOS20_STAT*(1+TC_KP_PDMOS20*(temper-27))}
+.model PDMOS20V_INT VDMOS (pchan
++ vto={VTO_PDMOS20V_STAT+TC_VTO_PDMOS20V*(temper-27)}
++ kp={KP_PDMOS20V_STAT*(1+TC_KP_PDMOS20V*(temper-27))}
 + lambda=0.007
 + theta=0.236364
-+ rd={RD_PDMOS20_STAT*(1+TC_RD_PDMOS20*(temper-27))}
-+ rs={RS_PDMOS20_STAT*(1+TC_RS_PDMOS20*(temper-27))}
++ rd={RD_PDMOS20V_STAT*(1+TC_RD_PDMOS20V*(temper-27))}
++ rs={RS_PDMOS20V_STAT*(1+TC_RS_PDMOS20V*(temper-27))}
 + rg=3
 + rds=1e+09
 + cgdmax=3.13922e-14
@@ -919,7 +919,7 @@
 + cjo=1.5e-13
 + is=8e-13
 + rb=0.08
-+ bv={((22*_isTT + 21.45*_isFF + 22.55*_isSS + 22.55*_isFS + 21.45*_isSF))*(1+P_DBV_PDMOS20)}
++ bv={((22*_isTT + 21.45*_isFF + 22.55*_isSS + 22.55*_isFS + 21.45*_isSF))*(1+P_DBV_PDMOS20V)}
 + ibv=6e-05
 + nbv=1.7
 + tt=2.2e-08
@@ -929,13 +929,13 @@
 + ksubthres=0.0726496
 + )
 
-.model NDMOS60_INT VDMOS (nchan
-+ vto={VTO_NDMOS60_STAT+TC_VTO_NDMOS60*(temper-27)}
-+ kp={KP_NDMOS60_STAT*(1+TC_KP_NDMOS60*(temper-27))}
+.model NDMOS60V_INT VDMOS (nchan
++ vto={VTO_NDMOS60V_STAT+TC_VTO_NDMOS60V*(temper-27)}
++ kp={KP_NDMOS60V_STAT*(1+TC_KP_NDMOS60V*(temper-27))}
 + lambda=0.004
 + theta=0.189091
-+ rd={RD_NDMOS60_STAT*(1+TC_RD_NDMOS60*(temper-27))}
-+ rs={RS_NDMOS60_STAT*(1+TC_RS_NDMOS60*(temper-27))}
++ rd={RD_NDMOS60V_STAT*(1+TC_RD_NDMOS60V*(temper-27))}
++ rs={RS_NDMOS60V_STAT*(1+TC_RS_NDMOS60V*(temper-27))}
 + rg=3
 + rds=5e+09
 + cgdmax=3.13922e-14
@@ -945,7 +945,7 @@
 + cjo=7.5e-14
 + is=1.2e-13
 + rb=0.15
-+ bv={((75*_isTT + 72.375*_isFF + 77.625*_isSS + 72.375*_isFS + 77.625*_isSF))*(1+P_DBV_NDMOS60)}
++ bv={((75*_isTT + 72.375*_isFF + 77.625*_isSS + 72.375*_isFS + 77.625*_isSF))*(1+P_DBV_NDMOS60V)}
 + ibv=2e-05
 + nbv=1.8
 + tt=4e-08
@@ -955,13 +955,13 @@
 + ksubthres=0.0760684
 + )
 
-.model PDMOS60_INT VDMOS (pchan
-+ vto={VTO_PDMOS60_STAT+TC_VTO_PDMOS60*(temper-27)}
-+ kp={KP_PDMOS60_STAT*(1+TC_KP_PDMOS60*(temper-27))}
+.model PDMOS60V_INT VDMOS (pchan
++ vto={VTO_PDMOS60V_STAT+TC_VTO_PDMOS60V*(temper-27)}
++ kp={KP_PDMOS60V_STAT*(1+TC_KP_PDMOS60V*(temper-27))}
 + lambda=0.0035
 + theta=0.189091
-+ rd={RD_PDMOS60_STAT*(1+TC_RD_PDMOS60*(temper-27))}
-+ rs={RS_PDMOS60_STAT*(1+TC_RS_PDMOS60*(temper-27))}
++ rd={RD_PDMOS60V_STAT*(1+TC_RD_PDMOS60V*(temper-27))}
++ rs={RS_PDMOS60V_STAT*(1+TC_RS_PDMOS60V*(temper-27))}
 + rg=4
 + rds=5e+09
 + cgdmax=3.13922e-14
@@ -971,7 +971,7 @@
 + cjo=6.5e-14
 + is=1.8e-13
 + rb=0.2
-+ bv={((70*_isTT + 67.55*_isFF + 72.45*_isSS + 72.45*_isFS + 67.55*_isSF))*(1+P_DBV_PDMOS60)}
++ bv={((70*_isTT + 67.55*_isFF + 72.45*_isSS + 72.45*_isFS + 67.55*_isSF))*(1+P_DBV_PDMOS60V)}
 + ibv=2e-05
 + nbv=1.9
 + tt=5e-08
@@ -981,13 +981,13 @@
 + ksubthres=0.0760684
 + )
 
-.model NDMOS120_INT VDMOS (nchan
-+ vto={VTO_NDMOS120_STAT+TC_VTO_NDMOS120*(temper-27)}
-+ kp={KP_NDMOS120_STAT*(1+TC_KP_NDMOS120*(temper-27))}
+.model NDMOS120V_INT VDMOS (nchan
++ vto={VTO_NDMOS120V_STAT+TC_VTO_NDMOS120V*(temper-27)}
++ kp={KP_NDMOS120V_STAT*(1+TC_KP_NDMOS120V*(temper-27))}
 + lambda=0.0033
 + theta=0.153636
-+ rd={RD_NDMOS120_STAT*(1+TC_RD_NDMOS120*(temper-27))}
-+ rs={RS_NDMOS120_STAT*(1+TC_RS_NDMOS120*(temper-27))}
++ rd={RD_NDMOS120V_STAT*(1+TC_RD_NDMOS120V*(temper-27))}
++ rs={RS_NDMOS120V_STAT*(1+TC_RS_NDMOS120V*(temper-27))}
 + rg=5
 + rds=1e+10
 + cgdmax=3.13922e-14
@@ -997,7 +997,7 @@
 + cjo=3.5e-14
 + is=5e-14
 + rb=0.35
-+ bv={((135*_isTT + 128.25*_isFF + 141.75*_isSS + 128.25*_isFS + 141.75*_isSF))*(1+P_DBV_NDMOS120)}
++ bv={((135*_isTT + 128.25*_isFF + 141.75*_isSS + 128.25*_isFS + 141.75*_isSF))*(1+P_DBV_NDMOS120V)}
 + ibv=8e-06
 + nbv=2.1
 + tt=8e-08
@@ -1007,13 +1007,13 @@
 + ksubthres=0.0794872
 + )
 
-.model PDMOS120_INT VDMOS (pchan
-+ vto={VTO_PDMOS120_STAT+TC_VTO_PDMOS120*(temper-27)}
-+ kp={KP_PDMOS120_STAT*(1+TC_KP_PDMOS120*(temper-27))}
+.model PDMOS120V_INT VDMOS (pchan
++ vto={VTO_PDMOS120V_STAT+TC_VTO_PDMOS120V*(temper-27)}
++ kp={KP_PDMOS120V_STAT*(1+TC_KP_PDMOS120V*(temper-27))}
 + lambda=0.003
 + theta=0.153636
-+ rd={RD_PDMOS120_STAT*(1+TC_RD_PDMOS120*(temper-27))}
-+ rs={RS_PDMOS120_STAT*(1+TC_RS_PDMOS120*(temper-27))}
++ rd={RD_PDMOS120V_STAT*(1+TC_RD_PDMOS120V*(temper-27))}
++ rs={RS_PDMOS120V_STAT*(1+TC_RS_PDMOS120V*(temper-27))}
 + rg=6
 + rds=1e+10
 + cgdmax=3.13922e-14
@@ -1023,7 +1023,7 @@
 + cjo=2.9e-14
 + is=7e-14
 + rb=0.45
-+ bv={((128*_isTT + 122.88*_isFF + 133.12*_isSS + 133.12*_isFS + 122.88*_isSF))*(1+P_DBV_PDMOS120)}
++ bv={((128*_isTT + 122.88*_isFF + 133.12*_isSS + 133.12*_isFS + 122.88*_isSF))*(1+P_DBV_PDMOS120V)}
 + ibv=8e-06
 + nbv=2.15
 + tt=9.5e-08
@@ -1033,13 +1033,13 @@
 + ksubthres=0.0794872
 + )
 
-.model NDMOS40_INT VDMOS (nchan
-+ vto={VTO_NDMOS40_STAT+TC_VTO_NDMOS40*(temper-27)}
-+ kp={KP_NDMOS40_STAT*(1+TC_KP_NDMOS40*(temper-27))}
+.model NDMOS40V_INT VDMOS (nchan
++ vto={VTO_NDMOS40V_STAT+TC_VTO_NDMOS40V*(temper-27)}
++ kp={KP_NDMOS40V_STAT*(1+TC_KP_NDMOS40V*(temper-27))}
 + lambda=0.0055
 + theta=0.212727
-+ rd={RD_NDMOS40_STAT*(1+TC_RD_NDMOS40*(temper-27))}
-+ rs={RS_NDMOS40_STAT*(1+TC_RS_NDMOS40*(temper-27))}
++ rd={RD_NDMOS40V_STAT*(1+TC_RD_NDMOS40V*(temper-27))}
++ rs={RS_NDMOS40V_STAT*(1+TC_RS_NDMOS40V*(temper-27))}
 + rg=3
 + rds=2e+09
 + cgdmax=3.13922e-14
@@ -1049,7 +1049,7 @@
 + cjo=1e-13
 + is=2.5e-13
 + rb=0.10
-+ bv={((48*_isTT + 46.56*_isFF + 49.44*_isSS + 46.56*_isFS + 49.44*_isSF))*(1+P_DBV_NDMOS40)}
++ bv={((48*_isTT + 46.56*_isFF + 49.44*_isSS + 46.56*_isFS + 49.44*_isSF))*(1+P_DBV_NDMOS40V)}
 + ibv=3e-05
 + nbv=1.7
 + tt=2.8e-08
@@ -1059,13 +1059,13 @@
 + ksubthres=0.074359
 + )
 
-.model PDMOS40_INT VDMOS (pchan
-+ vto={VTO_PDMOS40_STAT+TC_VTO_PDMOS40*(temper-27)}
-+ kp={KP_PDMOS40_STAT*(1+TC_KP_PDMOS40*(temper-27))}
+.model PDMOS40V_INT VDMOS (pchan
++ vto={VTO_PDMOS40V_STAT+TC_VTO_PDMOS40V*(temper-27)}
++ kp={KP_PDMOS40V_STAT*(1+TC_KP_PDMOS40V*(temper-27))}
 + lambda=0.0048
 + theta=0.212727
-+ rd={RD_PDMOS40_STAT*(1+TC_RD_PDMOS40*(temper-27))}
-+ rs={RS_PDMOS40_STAT*(1+TC_RS_PDMOS40*(temper-27))}
++ rd={RD_PDMOS40V_STAT*(1+TC_RD_PDMOS40V*(temper-27))}
++ rs={RS_PDMOS40V_STAT*(1+TC_RS_PDMOS40V*(temper-27))}
 + rg=3
 + rds=2e+09
 + cgdmax=3.13922e-14
@@ -1075,7 +1075,7 @@
 + cjo=1.05e-13
 + is=3.3e-13
 + rb=0.13
-+ bv={((45*_isTT + 43.65*_isFF + 46.35*_isSS + 46.35*_isFS + 43.65*_isSF))*(1+P_DBV_PDMOS40)}
++ bv={((45*_isTT + 43.65*_isFF + 46.35*_isSS + 46.35*_isFS + 43.65*_isSF))*(1+P_DBV_PDMOS40V)}
 + ibv=3.5e-05
 + nbv=1.8
 + tt=3.5e-08
@@ -1085,13 +1085,13 @@
 + ksubthres=0.074359
 + )
 
-.model NDMOS80_INT VDMOS (nchan
-+ vto={VTO_NDMOS80_STAT+TC_VTO_NDMOS80*(temper-27)}
-+ kp={KP_NDMOS80_STAT*(1+TC_KP_NDMOS80*(temper-27))}
+.model NDMOS80V_INT VDMOS (nchan
++ vto={VTO_NDMOS80V_STAT+TC_VTO_NDMOS80V*(temper-27)}
++ kp={KP_NDMOS80V_STAT*(1+TC_KP_NDMOS80V*(temper-27))}
 + lambda=0.003
 + theta=0.177273
-+ rd={RD_NDMOS80_STAT*(1+TC_RD_NDMOS80*(temper-27))}
-+ rs={RS_NDMOS80_STAT*(1+TC_RS_NDMOS80*(temper-27))}
++ rd={RD_NDMOS80V_STAT*(1+TC_RD_NDMOS80V*(temper-27))}
++ rs={RS_NDMOS80V_STAT*(1+TC_RS_NDMOS80V*(temper-27))}
 + rg=4
 + rds=7e+09
 + cgdmax=3.13922e-14
@@ -1101,7 +1101,7 @@
 + cjo=5.5e-14
 + is=9e-14
 + rb=0.22
-+ bv={((95*_isTT + 91.2*_isFF + 98.8*_isSS + 91.2*_isFS + 98.8*_isSF))*(1+P_DBV_NDMOS80)}
++ bv={((95*_isTT + 91.2*_isFF + 98.8*_isSS + 91.2*_isFS + 98.8*_isSF))*(1+P_DBV_NDMOS80V)}
 + ibv=1.5e-05
 + nbv=1.95
 + tt=5.5e-08
@@ -1111,13 +1111,13 @@
 + ksubthres=0.0777778
 + )
 
-.model PDMOS80_INT VDMOS (pchan
-+ vto={VTO_PDMOS80_STAT+TC_VTO_PDMOS80*(temper-27)}
-+ kp={KP_PDMOS80_STAT*(1+TC_KP_PDMOS80*(temper-27))}
+.model PDMOS80V_INT VDMOS (pchan
++ vto={VTO_PDMOS80V_STAT+TC_VTO_PDMOS80V*(temper-27)}
++ kp={KP_PDMOS80V_STAT*(1+TC_KP_PDMOS80V*(temper-27))}
 + lambda=0.0027
 + theta=0.177273
-+ rd={RD_PDMOS80_STAT*(1+TC_RD_PDMOS80*(temper-27))}
-+ rs={RS_PDMOS80_STAT*(1+TC_RS_PDMOS80*(temper-27))}
++ rd={RD_PDMOS80V_STAT*(1+TC_RD_PDMOS80V*(temper-27))}
++ rs={RS_PDMOS80V_STAT*(1+TC_RS_PDMOS80V*(temper-27))}
 + rg=5
 + rds=7e+09
 + cgdmax=3.13922e-14
@@ -1127,7 +1127,7 @@
 + cjo=4.5e-14
 + is=1.3e-13
 + rb=0.28
-+ bv={((90*_isTT + 86.4*_isFF + 93.6*_isSS + 93.6*_isFS + 86.4*_isSF))*(1+P_DBV_PDMOS80)}
++ bv={((90*_isTT + 86.4*_isFF + 93.6*_isSS + 93.6*_isFS + 86.4*_isSF))*(1+P_DBV_PDMOS80V)}
 + ibv=1.5e-05
 + nbv=2.0
 + tt=6.5e-08
@@ -1137,13 +1137,13 @@
 + ksubthres=0.0777778
 + )
 
-.model NDMOS200_INT VDMOS (nchan
-+ vto={VTO_NDMOS200_STAT+TC_VTO_NDMOS200*(temper-27)}
-+ kp={KP_NDMOS200_STAT*(1+TC_KP_NDMOS200*(temper-27))}
+.model NDMOS200V_INT VDMOS (nchan
++ vto={VTO_NDMOS200V_STAT+TC_VTO_NDMOS200V*(temper-27)}
++ kp={KP_NDMOS200V_STAT*(1+TC_KP_NDMOS200V*(temper-27))}
 + lambda=0.005
 + theta=0.141818
-+ rd={RD_NDMOS200_STAT*(1+TC_RD_NDMOS200*(temper-27))}
-+ rs={RS_NDMOS200_STAT*(1+TC_RS_NDMOS200*(temper-27))}
++ rd={RD_NDMOS200V_STAT*(1+TC_RD_NDMOS200V*(temper-27))}
++ rs={RS_NDMOS200V_STAT*(1+TC_RS_NDMOS200V*(temper-27))}
 + rg=6
 + rds=2e+10
 + cgdmax=3.13922e-14
@@ -1153,7 +1153,7 @@
 + cjo=2.2e-14
 + is=1e-13
 + rb=0.65
-+ bv={((225*_isTT + 211.5*_isFF + 238.5*_isSS + 211.5*_isFS + 238.5*_isSF))*(1+P_DBV_NDMOS200)}
++ bv={((225*_isTT + 211.5*_isFF + 238.5*_isSS + 211.5*_isFS + 238.5*_isSF))*(1+P_DBV_NDMOS200V)}
 + ibv=4e-06
 + nbv=2.2
 + tt=1.3e-07
@@ -1163,13 +1163,13 @@
 + ksubthres=0.0811966
 + )
 
-.model PDMOS200_INT VDMOS (pchan
-+ vto={VTO_PDMOS200_STAT+TC_VTO_PDMOS200*(temper-27)}
-+ kp={KP_PDMOS200_STAT*(1+TC_KP_PDMOS200*(temper-27))}
+.model PDMOS200V_INT VDMOS (pchan
++ vto={VTO_PDMOS200V_STAT+TC_VTO_PDMOS200V*(temper-27)}
++ kp={KP_PDMOS200V_STAT*(1+TC_KP_PDMOS200V*(temper-27))}
 + lambda=0.0046
 + theta=0.141818
-+ rd={RD_PDMOS200_STAT*(1+TC_RD_PDMOS200*(temper-27))}
-+ rs={RS_PDMOS200_STAT*(1+TC_RS_PDMOS200*(temper-27))}
++ rd={RD_PDMOS200V_STAT*(1+TC_RD_PDMOS200V*(temper-27))}
++ rs={RS_PDMOS200V_STAT*(1+TC_RS_PDMOS200V*(temper-27))}
 + rg=7.5
 + rds=2e+10
 + cgdmax=3.13922e-14
@@ -1179,7 +1179,7 @@
 + cjo=1.8e-14
 + is=1e-13
 + rb=0.82
-+ bv={((230*_isTT + 216.2*_isFF + 243.8*_isSS + 243.8*_isFS + 216.2*_isSF))*(1+P_DBV_PDMOS200)}
++ bv={((230*_isTT + 216.2*_isFF + 243.8*_isSS + 243.8*_isFS + 216.2*_isSF))*(1+P_DBV_PDMOS200V)}
 + ibv=4e-06
 + nbv=2.27
 + tt=1.55e-07
@@ -1189,13 +1189,13 @@
 + ksubthres=0.0811966
 + )
 
-.model DNMOS20_INT VDMOS (nchan
-+ vto={VTO_DNMOS20_STAT+TC_VTO_DNMOS20*(temper-27)}
-+ kp={KP_DNMOS20_STAT*(1+TC_KP_DNMOS20*(temper-27))}
+.model DNMOS20V_INT VDMOS (nchan
++ vto={VTO_DNMOS20V_STAT+TC_VTO_DNMOS20V*(temper-27)}
++ kp={KP_DNMOS20V_STAT*(1+TC_KP_DNMOS20V*(temper-27))}
 + lambda=0.005
 + theta=0.236364
-+ rd={RD_DNMOS20_STAT*(1+TC_RD_DNMOS20*(temper-27))}
-+ rs={RS_DNMOS20_STAT*(1+TC_RS_DNMOS20*(temper-27))}
++ rd={RD_DNMOS20V_STAT*(1+TC_RD_DNMOS20V*(temper-27))}
++ rs={RS_DNMOS20V_STAT*(1+TC_RS_DNMOS20V*(temper-27))}
 + rg=2
 + rds=1e+09
 + cgdmax=3.13922e-14
@@ -1205,7 +1205,7 @@
 + cjo=7e-14
 + is=2e-13
 + rb=0.1
-+ bv={((24*_isTT + 23.4*_isFF + 24.6*_isSS + 23.4*_isFS + 24.6*_isSF))*(1+P_DBV_DNMOS20)}
++ bv={((24*_isTT + 23.4*_isFF + 24.6*_isSS + 23.4*_isFS + 24.6*_isSF))*(1+P_DBV_DNMOS20V)}
 + ibv=4e-05
 + nbv=1.7
 + tt=2e-08
@@ -1426,32 +1426,32 @@
 + xti=3
 + )
 
-.model DZ_12_INT D (
-+ is={((2.5e-13*_isTT + 2.625e-13*_isFF + 2.3875e-13*_isSS + 2.5e-13*_isFS + 2.5e-13*_isSF))*(1+P_DIS_DZ_12)}
+.model DZ_12V_INT D (
++ is={((2.5e-13*_isTT + 2.625e-13*_isFF + 2.3875e-13*_isSS + 2.5e-13*_isFS + 2.5e-13*_isSF))*(1+P_DIS_DZ_12V)}
 + n=1.18
-+ rs={((2.5*_isTT + 2.0833333*_isFF + 3.0487805*_isSS + 2.5*_isFS + 2.5*_isSF))*(1+P_DRS_DZ_12)}
-+ bv={((12*_isTT + 11.4*_isFF + 12.6*_isSS + 12*_isFS + 12*_isSF))*(1+P_DBV_DZ_12)}
++ rs={((2.5*_isTT + 2.0833333*_isFF + 3.0487805*_isSS + 2.5*_isFS + 2.5*_isSF))*(1+P_DRS_DZ_12V)}
++ bv={((12*_isTT + 11.4*_isFF + 12.6*_isSS + 12*_isFS + 12*_isSF))*(1+P_DBV_DZ_12V)}
 + ibv=0.00012
 + nbv=2.2
-+ cjo={((5.5e-11*_isTT + 5.665e-11*_isFF + 5.335e-11*_isSS + 5.5e-11*_isFS + 5.5e-11*_isSF))*(1+P_DCJO_DZ_12)}
++ cjo={((5.5e-11*_isTT + 5.665e-11*_isFF + 5.335e-11*_isSS + 5.5e-11*_isFS + 5.5e-11*_isSF))*(1+P_DCJO_DZ_12V)}
 + vj=0.78
 + m=0.33
-+ tt={((5.5e-08*_isTT + 4.58333e-08*_isFF + 6.70732e-08*_isSS + 5.5e-08*_isFS + 5.5e-08*_isSF))*(1+P_DTT_DZ_12)}
++ tt={((5.5e-08*_isTT + 4.58333e-08*_isFF + 6.70732e-08*_isSS + 5.5e-08*_isFS + 5.5e-08*_isSF))*(1+P_DTT_DZ_12V)}
 + eg=1.11
 + xti=3
 + )
 
-.model DZ_24_INT D (
-+ is={((1.2e-13*_isTT + 1.26e-13*_isFF + 1.146e-13*_isSS + 1.2e-13*_isFS + 1.2e-13*_isSF))*(1+P_DIS_DZ_24)}
+.model DZ_24V_INT D (
++ is={((1.2e-13*_isTT + 1.26e-13*_isFF + 1.146e-13*_isSS + 1.2e-13*_isFS + 1.2e-13*_isSF))*(1+P_DIS_DZ_24V)}
 + n=1.22
-+ rs={((3.5*_isTT + 2.9166667*_isFF + 4.2682927*_isSS + 3.5*_isFS + 3.5*_isSF))*(1+P_DRS_DZ_24)}
-+ bv={((24*_isTT + 22.8*_isFF + 25.2*_isSS + 24*_isFS + 24*_isSF))*(1+P_DBV_DZ_24)}
++ rs={((3.5*_isTT + 2.9166667*_isFF + 4.2682927*_isSS + 3.5*_isFS + 3.5*_isSF))*(1+P_DRS_DZ_24V)}
++ bv={((24*_isTT + 22.8*_isFF + 25.2*_isSS + 24*_isFS + 24*_isSF))*(1+P_DBV_DZ_24V)}
 + ibv=8e-05
 + nbv=2
-+ cjo={((2.8e-11*_isTT + 2.884e-11*_isFF + 2.716e-11*_isSS + 2.8e-11*_isFS + 2.8e-11*_isSF))*(1+P_DCJO_DZ_24)}
++ cjo={((2.8e-11*_isTT + 2.884e-11*_isFF + 2.716e-11*_isSS + 2.8e-11*_isFS + 2.8e-11*_isSF))*(1+P_DCJO_DZ_24V)}
 + vj=0.8
 + m=0.3
-+ tt={((7.5e-08*_isTT + 6.25e-08*_isFF + 9.14634e-08*_isSS + 7.5e-08*_isFS + 7.5e-08*_isSF))*(1+P_DTT_DZ_24)}
++ tt={((7.5e-08*_isTT + 6.25e-08*_isFF + 9.14634e-08*_isSS + 7.5e-08*_isFS + 7.5e-08*_isSF))*(1+P_DTT_DZ_24V)}
 + eg=1.11
 + xti=3
 + )

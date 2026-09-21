@@ -29,10 +29,10 @@ plausibility miss and one correction to a figure I had been quoting.
 
 | device | 1σ mV | | device | 1σ mV |
 |---|---|---|---|---|
-| NMOS18 | 10.3 | | NMOS50 | 16.5 |
-| PMOS18 | 11.3 | | PMOS50 | 17.6 |
-| NMOS33 | 12.5 | | NMOS12 | 43.0 |
-| PMOS33 | 13.6 | | PMOS12 | 44.5 |
+| NMOS1V8 | 10.3 | | NMOS5V0 | 16.5 |
+| PMOS1V8 | 11.3 | | PMOS5V0 | 17.6 |
+| NMOS3V3 | 12.5 | | NMOS12V | 43.0 |
+| PMOS3V3 | 13.6 | | PMOS12V | 44.5 |
 | VDMOS ×13 | 20.0–23.1 | | | |
 
 **`A_VT`, derived (Z1)** — `c_RDF` = 2.1991 mV·µm/√nm, constant to 3.18 % across four oxide
@@ -42,11 +42,11 @@ classes: 3.44 / 3.66 / 4.51 / 4.81 / 5.96 / 6.41 / 15.02 / 15.84 mV·µm.
 
 | group | swing | dominant |
 |---|---|---|
-| NMOS18 / PMOS18 | 9.64 / 11.96 % | `U0` |
-| NMOS33 / NMOS50 / NMOS12 | 7.22 / 6.80 / 6.79 % | `U0` |
-| NDMOS20 | 7.30 % | `U0` |
-| NDMOS80 | 9.76 % | **`RDSW`** |
-| NDMOS200 | 11.59 % | **`RDSW`** |
+| NMOS1V8 / PMOS1V8 | 9.64 / 11.96 % | `U0` |
+| NMOS3V3 / NMOS5V0 / NMOS12V | 7.22 / 6.80 / 6.79 % | `U0` |
+| NDMOS20V | 7.30 % | `U0` |
+| NDMOS80V | 9.76 % | **`RDSW`** |
+| NDMOS200V | 11.59 % | **`RDSW`** |
 
 The `U0`→`RDSW` flip is measured, not declared: it happens exactly where drift resistance takes
 over, as the `U0` slope falls through 0.4. That is the U0/Rd anti-correlation as a device property.
@@ -68,13 +68,13 @@ over it (reported as shared-variable conflicts on presets 3 and 4).
 
 > **Corrected 2026-09-19.** The 3.7–19.5 % residual quoted above is wrong. It came from
 > constant-current and gm-max extraction, both of which move with `tox` themselves and gave
-> criterion-dependent, sign-unstable results (NMOS18 read −0.18 mV at a 1× W/L criterion,
+> criterion-dependent, sign-unstable results (NMOS1V8 read −0.18 mV at a 1× W/L criterion,
 > −0.61 at 0.1×, +3.52 at 10×). Measured from the model's own `@m.xm1.m0[vth]` at bench
 > geometry the residual is **negative**, −0.96 to −1.92 mV, i.e. 9–22 %, which makes
 > `applied = analytic − residual` *larger* than analytic rather than smaller. See
 > `docs/stat-model.md` §2.2a.
 
-**The reported miss:** NMOS33 and PMOS33 land at 0.26× and 0.28× of their comparable midpoint.
+**The reported miss:** NMOS3V3 and PMOS3V3 land at 0.26× and 0.28× of their comparable midpoint.
 Per U3 this is reported, not clamped. Your own §2.4 anticipated it and attributed it to a probable
 shared 3.3/5 V implant artefact in the reference — worth noting that the comparable for 3.3 V
 (41–56 mV) is *wider* than the one for 5 V (16–22 mV), which is backwards for a thinner oxide.
@@ -113,5 +113,5 @@ Phase 2 (`tools/gen_models.py`) honouring the `follows` couplings — they are a
 pass** per §5 of the rule (inventory, disposition, renames, CI guard, provenance taxonomy), which
 that 100-occurrence inventory now sizes properly, followed by Phases 3–7.
 
-Open and unchanged: `k3` grounding at 2.0 awaits the audit landing; the NDMOS200 trigger-case
+Open and unchanged: `k3` grounding at 2.0 awaits the audit landing; the NDMOS200V trigger-case
 drift is logged for Phase 7 per AA3.

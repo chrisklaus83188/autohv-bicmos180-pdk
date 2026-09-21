@@ -38,12 +38,12 @@ Vgd  gd 0 PULSE(0 5 5n 1n 1n 50n 100n)
 Vdd  vdd 0 100
 Rmid vdd mid 1k
 
-XN1 vdd gd  mid  NDMOS200 W=40u L=8u
-XN2 mid gd  0    NDMOS200 W=40u L=8u
+XN1 vdd gd  mid  NDMOS200V W=40u L=8u
+XN2 mid gd  0    NDMOS200V W=40u L=8u
 
 Vgd2 gd2 0 PULSE(0 5 5n 1n 1n 50n 100n)
-XN3 vdd  gd2 mid2 NDMOS120 W=40u
-XN4 mid2 gd2 0    NDMOS120 W=40u
+XN3 vdd  gd2 mid2 NDMOS120V W=40u
+XN4 mid2 gd2 0    NDMOS120V W=40u
 
 .control
 tran 1n 200n

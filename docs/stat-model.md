@@ -97,7 +97,7 @@ literature rather than grounded — hence the wide error bar. It is 4× what tod
 **Which oxide each device uses is set by the gate rating, not the drain rating.** Every AutoHV
 VDMOS is rated ±5.5 V DC on the gate, so all 13 sit on `TOX_50` — AutoHV's own **11 nm** 5 V
 oxide (declaration D2, re-ruled 2026-09-18) — regardless of their 20–200 V drain ratings.
-`TOX_12` serves NMOS12/PMOS12 only. VDMOS cards carry no `tox` parameter at all, so the oxide
+`TOX_12` serves NMOS12V/PMOS12V only. VDMOS cards carry no `tox` parameter at all, so the oxide
 reaches them through their `KP`/`VTO` loadings and through the couplings in §2.2a.
 
 ### 2.2 Threshold voltage — `VTH_<device>`
@@ -114,16 +114,16 @@ private draw is the quadrature sum of two terms; the oxide term is separate and 
 
 | device | 1σ mV | 3σ mV |
 |---|---|---|
-| NMOS18 | 10.3 | 30.8 |
-| PMOS18 | 11.3 | 33.9 |
-| NMOS33 | 12.5 | 37.5 |
-| PMOS33 | 13.6 | 40.7 |
-| NMOS50 | 16.5 | 49.5 |
-| PMOS50 | 17.6 | 52.7 |
-| NMOS12 | 43.0 | 128.9 |
-| PMOS12 | 44.5 | 133.4 |
-| NDMOS20 | 20.0 | 60.1 |
-| NDMOS200 | 21.6 | 64.9 |
+| NMOS1V8 | 10.3 | 30.8 |
+| PMOS1V8 | 11.3 | 33.9 |
+| NMOS3V3 | 12.5 | 37.5 |
+| PMOS3V3 | 13.6 | 40.7 |
+| NMOS5V0 | 16.5 | 49.5 |
+| PMOS5V0 | 17.6 | 52.7 |
+| NMOS12V | 43.0 | 128.9 |
+| PMOS12V | 44.5 | 133.4 |
+| NDMOS20V | 20.0 | 60.1 |
+| NDMOS200V | 21.6 | 64.9 |
 
 VDMOS `k1` comes from each card's own measured subthreshold slope at 11 nm (§1.2), since those
 cards carry no `k1`. All entries are `autohv-derived`, ±50 %.
@@ -160,13 +160,13 @@ extraction criterion:
 
 | card | analytic | BSIM3 residual | applied |
 |---|---|---|---|
-| NMOS18 / PMOS18 | 7.18 / 8.13 mV | **−1.60 / −1.59** | 8.78 / 9.72 |
-| NMOS33 / PMOS33 | 7.78 / 8.85 | −0.98 / −0.96 | 8.77 / 9.81 |
-| NMOS50 / PMOS50 | 8.34 / 9.65 | −1.17 / −1.12 | 9.51 / 10.77 |
-| NMOS12 / PMOS12 | 18.79 / 20.89 | −1.90 / −1.92 | 20.69 / 22.81 |
+| NMOS1V8 / PMOS1V8 | 7.18 / 8.13 mV | **−1.60 / −1.59** | 8.78 / 9.72 |
+| NMOS3V3 / PMOS3V3 | 7.78 / 8.85 | −0.98 / −0.96 | 8.77 / 9.81 |
+| NMOS5V0 / PMOS5V0 | 8.34 / 9.65 | −1.17 / −1.12 | 9.51 / 10.77 |
+| NMOS12V / PMOS12V | 18.79 / 20.89 | −1.90 / −1.92 | 20.69 / 22.81 |
 
 **The residual is negative**, so `applied` is 9–22 % *larger* than the analytic value. An L-sweep
-on NMOS50 shows why: as carded it runs −1.171 mV at L = 0.5 µm, −0.222 at 1 µm, then +0.035…+0.049
+on NMOS5V0 shows why: as carded it runs −1.171 mV at L = 0.5 µm, −0.222 at 1 µm, then +0.035…+0.049
 at L ≥ 2 µm; with `dvt0/dvt1/dvt2/k3` zeroed it collapses to ≈0 at every length. BSIM3's implicit
 oxide-to-threshold coupling *is* those terms, and at bench lengths they dominate and reverse the
 depletion-charge trend.
@@ -185,27 +185,27 @@ group's Idsat spread is **whatever its own inputs predict**, reported rather tha
 
 | group | `U0` 1σ | `U0` slope | dominant | predicted 3σ Idsat |
 |---|---|---|---|---|
-| NMOS18 | 2.67 | 0.650 | U0 | **9.24 %** |
-| PMOS18 | 2.67 | 0.867 | U0 | **11.72 %** |
-| NMOS33 | 2.67 | 0.703 | U0 | **7.03 %** |
-| PMOS33 | 2.67 | 0.881 | U0 | **8.55 %** |
-| NMOS50 | 2.67 | 0.719 | U0 | **6.68 %** |
-| PMOS50 | 2.67 | 0.878 | U0 | **7.95 %** |
-| NMOS12 | 2.67 | 0.726 | U0 | **6.75 %** |
-| PMOS12 | 2.67 | 0.858 | U0 | **7.78 %** |
-| NDMOS20 | 2.67 | 0.693 | U0 | **7.30 %** |
-| PDMOS20 | 2.67 | 0.957 | U0 | **7.97 %** |
-| NDMOS40 | 2.67 | 0.554 | U0 | **8.08 %** |
-| PDMOS40 | 2.67 | 0.863 | U0 | **7.52 %** |
-| NDMOS60 | 2.67 | 0.459 | U0 | **8.91 %** |
-| PDMOS60 | 2.67 | 0.524 | U0 | **8.35 %** |
-| NDMOS80 | 0.00 | 0.365 | RDSW | **9.32 %** |
-| PDMOS80 | 2.67 | 0.412 | U0 | **9.32 %** |
-| NDMOS120 | 0.00 | 0.265 | RDSW | **10.66 %** |
-| PDMOS120 | 0.00 | 0.285 | RDSW | **10.42 %** |
-| NDMOS200 | 0.00 | 0.212 | RDSW | **11.47 %** |
-| PDMOS200 | 0.00 | 0.216 | RDSW | **11.46 %** |
-| DNMOS20 | 2.67 | 0.837 | U0 | **9.35 %** |
+| NMOS1V8 | 2.67 | 0.650 | U0 | **9.24 %** |
+| PMOS1V8 | 2.67 | 0.867 | U0 | **11.72 %** |
+| NMOS3V3 | 2.67 | 0.703 | U0 | **7.03 %** |
+| PMOS3V3 | 2.67 | 0.881 | U0 | **8.55 %** |
+| NMOS5V0 | 2.67 | 0.719 | U0 | **6.68 %** |
+| PMOS5V0 | 2.67 | 0.878 | U0 | **7.95 %** |
+| NMOS12V | 2.67 | 0.726 | U0 | **6.75 %** |
+| PMOS12V | 2.67 | 0.858 | U0 | **7.78 %** |
+| NDMOS20V | 2.67 | 0.693 | U0 | **7.30 %** |
+| PDMOS20V | 2.67 | 0.957 | U0 | **7.97 %** |
+| NDMOS40V | 2.67 | 0.554 | U0 | **8.08 %** |
+| PDMOS40V | 2.67 | 0.863 | U0 | **7.52 %** |
+| NDMOS60V | 2.67 | 0.459 | U0 | **8.91 %** |
+| PDMOS60V | 2.67 | 0.524 | U0 | **8.35 %** |
+| NDMOS80V | 0.00 | 0.365 | RDSW | **9.32 %** |
+| PDMOS80V | 2.67 | 0.412 | U0 | **9.32 %** |
+| NDMOS120V | 0.00 | 0.265 | RDSW | **10.66 %** |
+| PDMOS120V | 0.00 | 0.285 | RDSW | **10.42 %** |
+| NDMOS200V | 0.00 | 0.212 | RDSW | **11.47 %** |
+| PDMOS200V | 0.00 | 0.216 | RDSW | **11.46 %** |
+| DNMOS20V | 2.67 | 0.837 | U0 | **9.35 %** |
 
 **`U0` and `RD` are independent draws (separate implants).** The fast corner direction moves
 both — higher mobility, lower drift resistance — because both raise current. That is a property of
@@ -216,9 +216,9 @@ by the drift implant.
 
 **`σ(KP) = 0` where the drift region dominates.** Measured per device as `d ln(Id)/d ln(U0)` on its
 own classic bench; below 0.4 the mobility lever is not meaningful and a non-zero `σ(KP)` would
-describe the model rather than the device. Five devices qualify — NDMOS80 (0.365), NDMOS120
-(0.265), PDMOS120 (0.285), NDMOS200 (0.212), PDMOS200 (0.216). The 80 V pair straddles the
-boundary: NDMOS80 is drift-dominated and PDMOS80 (0.412) is not, so this is recorded per device
+describe the model rather than the device. Five devices qualify — NDMOS80V (0.365), NDMOS120V
+(0.265), PDMOS120V (0.285), NDMOS200V (0.212), PDMOS200V (0.216). The 80 V pair straddles the
+boundary: NDMOS80V is drift-dominated and PDMOS80V (0.412) is not, so this is recorded per device
 rather than per voltage class.
 
 **Consequence, pre-registered.** LV/mid Idsat 3σ roughly halves against the retired bands — 5 V
@@ -328,14 +328,14 @@ applies at ≤ 45 nm.
 
 | device | `A_VT` mV·µm |
 |---|---|
-| NMOS18 | 3.44 |
-| PMOS18 | 3.66 |
-| NMOS33 | 4.51 |
-| PMOS33 | 4.81 |
-| NMOS50 | 5.96 |
-| PMOS50 | 6.41 |
-| NMOS12 | 15.02 |
-| PMOS12 | 15.84 |
+| NMOS1V8 | 3.44 |
+| PMOS1V8 | 3.66 |
+| NMOS3V3 | 4.51 |
+| PMOS3V3 | 4.81 |
+| NMOS5V0 | 5.96 |
+| PMOS5V0 | 6.41 |
+| NMOS12V | 15.02 |
+| PMOS12V | 15.84 |
 
 **The check that it is right:** `c_RDF` holds to 3.18 % across t_ox 4.25–31 nm and
 N_a 9.0e16–7.9e17 cm⁻³. A wrong doping exponent would drift it systematically with oxide
@@ -388,7 +388,7 @@ Each group has a reference bench taken from `docs/sizing-guide.json` rather than
   that is what FF/SS means to a fab and to anyone using `case`.
 - **analog** — the gm/Id ≈ 6 mirror point, reported alongside.
 
-They differ, and materially. On NMOS50 the threshold sensitivity is −0.025 on the classic bench
+They differ, and materially. On NMOS5V0 the threshold sensitivity is −0.025 on the classic bench
 but −0.269 on the analog bench — a factor of ten. A corner picked for digital drive strength is
 not the worst point for a gm/Id-biased analog circuit, which is exactly why the exhaustive sweep
 and Monte Carlo exist alongside the presets.

@@ -6,8 +6,8 @@
 
 Vdd  dd 0 3.3
 Iref dd in 10u
-X1 in in 0 0 NMOS33 W=20u L=1u      ; diode-connected reference
-X2 out in 0 0 NMOS33 W=20u L=1u     ; mirror output
+X1 in in 0 0 NMOS3V3 W=20u L=1u      ; diode-connected reference
+X2 out in 0 0 NMOS3V3 W=20u L=1u     ; mirror output
 Vout dd out 0
 
 .control

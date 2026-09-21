@@ -9,12 +9,12 @@ for these devices. A different one-line fix works — details below so you can l
 ---
 
 ## 1. The breakdown re-rating is confirmed ✓
-`PDMOS200` FF/SF = 216.2 V is in; VIN=200 V no longer avalanches in my circuit. Nothing more
+`PDMOS200V` FF/SF = 216.2 V is in; VIN=200 V no longer avalanches in my circuit. Nothing more
 needed there.
 
-## 2. The proposed convergence fixes do NOT work for `NDMOS200`/`PDMOS200`
+## 2. The proposed convergence fixes do NOT work for `NDMOS200V`/`PDMOS200V`
 Both suggestions in `HANDOFF_cascode_vshift_singularity.md` §"Suggested fixes" were written for
-BSIM3/4, but `NDMOS200_INT`/`PDMOS200_INT` are **`VDMOS`** models. Tested on ngspice (the
+BSIM3/4, but `NDMOS200V_INT`/`PDMOS200V_INT` are **`VDMOS`** models. Tested on ngspice (the
 4-floating-front-end reproducer from my handoff):
 
 - **Fix #1 — `delvto` on `M0`:** ngspice rejects it → **`unknown parameter (delvto)`**. `VDMOS`
@@ -28,7 +28,7 @@ The `vshift#branch` row is singular because `g_int` (the internal gate node afte
 `Vshift` source) has **no DC path to any determined node** — `Rgmin` only ties it to `g`, which
 in these circuits is itself a floating high-impedance node (a diode-connected mirror gate). Give
 `g_int` a high-value path to the **source** terminal `s` (which *is* determined) and the row
-becomes well-posed. In both the `NDMOS200` and `PDMOS200` subckts, add one line after `Rgmin`:
+becomes well-posed. In both the `NDMOS200V` and `PDMOS200V` subckts, add one line after `Rgmin`:
 
 ```spice
 Vshift g g_int DC {-DVTH_MM}
@@ -51,7 +51,7 @@ actually determined, which is what `Rgmin`'s 1 GΩ-to-`g` could not guarantee on
 
 ## 4. Acceptance test (please verify before landing)
 ```spice
-.title PDMOS200 multi-instance floating-mirror convergence (4 front-ends)
+.title PDMOS200V multi-instance floating-mirror convergence (4 front-ends)
 .include "autohv_bicmos180_case.lib"
 .param case=0 PROC_ON=0 MM_ON=0
 .options temp=27
@@ -59,11 +59,11 @@ V_vin vin 0 DC 200
 V_casc vcasc 0 DC 5
 * repeat this block for tags A/B/C/D with V(vin)+5 / +4.3 / +5.7 / +4.8 :
 B_cpA  vcpA 0 V=V(vin)+5
-X_MrefA refgA refgA vcpA PDMOS200 W=30u L=5u
+X_MrefA refgA refgA vcpA PDMOS200V W=30u L=5u
 X_RrefA refgA vin   RPOLY_HI W=1u L=90u
-X_MmirA mirdA refgA vcpA PDMOS200 W=30u L=5u
+X_MmirA mirdA refgA vcpA PDMOS200V W=30u L=5u
 R_pullA mirdA 0 10Meg
-X_McascA mirdA vcasc voutA NDMOS200 W=60u L=5u
+X_McascA mirdA vcasc voutA NDMOS200V W=60u L=5u
 X_RoutA voutA 0 RPOLY_HI W=1u L=43u
 * ...B, C, D...
 .control

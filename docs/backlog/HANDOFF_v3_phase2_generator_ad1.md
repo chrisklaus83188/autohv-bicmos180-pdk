@@ -50,7 +50,7 @@ and make `--check` byte-compare meaningless, so the tool rewrites only what the 
 `Z_*` resolution is one expression per variable, as §1.1 specifies:
 
 ```
-.param Z_VTH_NMOS50={((case==-1) ? (per-group c_ terms) : (preset terms)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VTH_NMOS5V0={((case==-1) ? (per-group c_ terms) : (preset terms)) + PROC_ON*AGAUSS(0,1,1)}
 ```
 
 `case = -1` resolves `c_<GROUP>` as 0 → 0, 1 → +z_fast, 2 → −z_fast, since `z_slow = −z_fast` by
@@ -94,7 +94,7 @@ landed since Stop A′ showing through, and it is the pre-registered "all values
 - **`pclm` collapses to TT** on six cards, removing a ±2.72 % (n) / ±3.04 % (p) FF–SS spread on
   output conductance. Authorised: `dependent_parameters.pclm` is `held_at_TT` — "no corner or
   spread data; affects output conductance, not the corner metric".
-- **DNMOS20 loses its FS/SF corner values** (−10.0 % / +11.2 %). It appears in **no** FS/SF preset —
+- **DNMOS20V loses its FS/SF corner values** (−10.0 % / +11.2 %). It appears in **no** FS/SF preset —
   only 1, 2, 5, 6, 13–16 — yet the old card carried hand-written `_isFS`/`_isSF` coefficients
   (`VTO` −1.67111 / −1.51111). The old file was asserting corner behaviour with no basis in the
   preset table; the generated TT is what `corners.json` actually says.

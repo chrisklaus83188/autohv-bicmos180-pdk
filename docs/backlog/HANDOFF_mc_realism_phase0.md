@@ -21,7 +21,7 @@ model, wrapper or card behaviour has changed (the only library edit is the heade
 
 ## 2. Measured values
 
-All local runs: ngspice-45, TT, 27 °C, NMOS50 mirror W=4.7 µm L=1 µm, Iref 10 µA, `MM_ON=1 PROC_ON=0`
+All local runs: ngspice-45, TT, 27 °C, NMOS5V0 mirror W=4.7 µm L=1 µm, Iref 10 µA, `MM_ON=1 PROC_ON=0`
 unless stated.
 
 ### 2.1 Mirror baseline (01, N=200, `.option seed=k`)
@@ -80,7 +80,7 @@ defect shown directly, and it is the "before" for A1. HANDOFF §3's numbers (5.0
 
 | check | result |
 |---|---|
-| wrappers | 40: 6 LV FET, 2 HV FET (NMOS12/PMOS12 by rated `Vds_dcmax` 13.2 V), 13 VDMOS/LDMOS, 4 BJT, 6 diode, 5 R, 4 C |
+| wrappers | 40: 6 LV FET, 2 HV FET (NMOS12V/PMOS12V by rated `Vds_dcmax` 13.2 V), 13 VDMOS/LDMOS, 4 BJT, 6 diode, 5 R, 4 C |
 | corner-selected expressions | 186 (182 models file, 4 library) |
 | of those moving a geometry parameter | 0 (R0 answered; D3 applies) |
 | gate-resistance term | absent (follow-up) |
@@ -118,7 +118,7 @@ this branch is a header comment. Diagnosis:
 
 | quantity | value |
 |---|---|
-| `run_mc.py` hardcoded NMOS50 threshold coefficient | `DVTH_3SIG_BASE = 0.0135` V·µm |
+| `run_mc.py` hardcoded NMOS5V0 threshold coefficient | `DVTH_3SIG_BASE = 0.0135` V·µm |
 | wrapper coefficient since `dc7de19` (O5 A_VT widening, 2026-07-24) | 0.033 V·µm (2.44×) |
 | measured σ(log I1/I2), N = 400 | 1.014 % |
 | intended, as coded | 0.364 % (measured ÷ intended = 2.79×) |

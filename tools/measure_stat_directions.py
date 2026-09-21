@@ -20,7 +20,7 @@
 Metrics, per ruling G3:
   MOS, VDMOS   ln Id.  classic bench Vgs = Vds = class supply (ruling F8);
                analog bench = the sizing guide's gm/Id ~ 6 mirror point.
-               DNMOS20 is a depletion device: ln Idss at Vgs = 0.
+               DNMOS20V is a depletion device: ln Idss at Vgs = 0.
   resistor     ln R at 0.1 V, low enough that the VCR term stays out of it.
   capacitor    ln C from a small-signal AC current at 0 V bias.
   BJT          ln Ic at the sizing guide's 10 uA point (fixed Vbe).
@@ -39,7 +39,7 @@ Variables with no lever on a group's metric are excluded with a recorded reason
 rather than carried as zero components.
 
   python tools/measure_stat_directions.py --out models/stat_directions.json
-  python tools/measure_stat_directions.py --groups NMOS50,RPOLY_HI
+  python tools/measure_stat_directions.py --groups NMOS5V0,RPOLY_HI
 
 Requires NGSPICE_BIN or ngspice on PATH. Nothing in the repo is modified: every
 perturbation is written into a scratch copy of the model cards.
@@ -84,15 +84,15 @@ INERT = {
     "DL_vdmos": "VDMOS cards carry no channel-length parameter to bias",
 }
 
-MOS_GROUPS = ["NMOS18", "PMOS18", "NMOS33", "PMOS33", "NMOS50", "PMOS50",
-              "NMOS12", "PMOS12"]
-VDMOS_GROUPS = ["NDMOS20", "PDMOS20", "NDMOS40", "PDMOS40", "NDMOS60", "PDMOS60",
-                "NDMOS80", "PDMOS80", "NDMOS120", "PDMOS120", "NDMOS200",
-                "PDMOS200", "DNMOS20"]
+MOS_GROUPS = ["NMOS1V8", "PMOS1V8", "NMOS3V3", "PMOS3V3", "NMOS5V0", "PMOS5V0",
+              "NMOS12V", "PMOS12V"]
+VDMOS_GROUPS = ["NDMOS20V", "PDMOS20V", "NDMOS40V", "PDMOS40V", "NDMOS60V", "PDMOS60V",
+                "NDMOS80V", "PDMOS80V", "NDMOS120V", "PDMOS120V", "NDMOS200V",
+                "PDMOS200V", "DNMOS20V"]
 RES_GROUPS = ["RPOLY_HI", "RPOLY_LO", "RNWELL", "RNPLUS", "RPPLUS"]
 CAP_GROUPS = ["CMIM_STD", "CMIM_HI", "CMOM", "CFRINGE"]
 BJT_GROUPS = ["NPN_LV", "PNP_LAT", "NPN_HV", "PNP_HV"]
-DIO_GROUPS = ["DIO_PN", "DIO_FAST", "DIO_SCH", "DZ_5V6", "DZ_12", "DZ_24"]
+DIO_GROUPS = ["DIO_PN", "DIO_FAST", "DIO_SCH", "DZ_5V6", "DZ_12V", "DZ_24V"]
 POLY_RES = {"RPOLY_HI", "RPOLY_LO"}
 
 
@@ -427,7 +427,7 @@ SKIPPED: set[str] = set()
 """(card, param) targets a variable named but the model file does not carry.
 
 Not an error -- the model may legitimately point at a parameter a given card lacks --
-but never silent either. An unnoticed skip here is precisely how DNMOS20 fell to a
+but never silent either. An unnoticed skip here is precisely how DNMOS20V fell to a
 zero-length direction with nothing in the record to show for it.
 """
 

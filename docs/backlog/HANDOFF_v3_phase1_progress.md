@@ -29,14 +29,14 @@ baselines frozen (34 files), leftover copies deleted, ngspice-45 CI verified.
 
 | group | class band | fixed set alone | solved `U0` 1σ | achieved | error |
 |---|---|---|---|---|---|
-| NMOS18 | 20 % | 16.0 % | 4.29 % | 19.9 % | −0.6 % |
-| PMOS18 | 20 % | 17.0 % | 3.57 % | 19.9 % | −0.3 % |
-| NMOS33 | 20 % | 10.4 % | 6.42 % | 19.6 % | −1.9 % |
-| PMOS33 | 20 % | 11.2 % | 5.76 % | 19.7 % | −1.6 % |
-| NMOS50 | 14 % | 7.7 % | 4.57 % | 13.8 % | −1.2 % |
-| PMOS50 | 14 % | 8.4 % | 3.98 % | 13.9 % | −0.9 % |
-| NMOS12 | 14 % | 3.6 % | 5.45 % | 13.7 % | −2.0 % |
-| PMOS12 | 14 % | 3.8 % | 4.98 % | 13.8 % | −1.8 % |
+| NMOS1V8 | 20 % | 16.0 % | 4.29 % | 19.9 % | −0.6 % |
+| PMOS1V8 | 20 % | 17.0 % | 3.57 % | 19.9 % | −0.3 % |
+| NMOS3V3 | 20 % | 10.4 % | 6.42 % | 19.6 % | −1.9 % |
+| PMOS3V3 | 20 % | 11.2 % | 5.76 % | 19.7 % | −1.6 % |
+| NMOS5V0 | 14 % | 7.7 % | 4.57 % | 13.8 % | −1.2 % |
+| PMOS5V0 | 14 % | 8.4 % | 3.98 % | 13.9 % | −0.9 % |
+| NMOS12V | 14 % | 3.6 % | 5.45 % | 13.7 % | −2.0 % |
+| PMOS12V | 14 % | 3.8 % | 4.98 % | 13.8 % | −1.8 % |
 
 No group hit the 3 % floor. The ≤ 2 % residual is left alone on purpose: the band carries a
 ±25 % error bar, so removing it would be false precision.
@@ -45,7 +45,7 @@ No group hit the 3 % floor. The ≤ 2 % residual is left alone on purpose: the b
 
 ### 3.1 `k3 = 80` costs 238 mV on a minimum-width device
 
-Measured on NMOS50, L = 1 µm, Vgs = Vds = 5 V; Vth from the model's own readback, against a
+Measured on NMOS5V0, L = 1 µm, Vgs = Vds = 5 V; Vth from the model's own readback, against a
 50 µm device:
 
 | W | today (`k3` undeclared → 80) | grounded (`k3=2, w0=2.5e-7`) | Id/W today | Id/W grounded |
@@ -107,7 +107,7 @@ probe σ before solving.
 
 ### 3.5 The classic and analog benches disagree by 10×
 
-On NMOS50, the threshold sensitivity is **−0.025** at the classic bench (Vgs = Vds = 5 V) and
+On NMOS5V0, the threshold sensitivity is **−0.025** at the classic bench (Vgs = Vds = 5 V) and
 **−0.269** at the analog bench (gm/Id ≈ 6). Ruling F8 picks classic for the corner direction,
 which is right for what `case` means — and this measurement is the evidence for the paragraph F8
 asked for in `docs/corners.md`: a corner chosen for drive strength is not the worst point for a
@@ -117,7 +117,7 @@ gm/Id-biased analog circuit, which is why the exhaustive sweep and MC exist.
 
 - **All 13 VDMOS sit on `TOX_50`.** Gate oxide follows the gate rating (the reference process's 200 V LDMOS with
   a 5 V gate uses the 13 nm oxide), and every AutoHV VDMOS is rated ±5.5 V DC on the gate.
-  `TOX_12` serves NMOS12/PMOS12 only.
+  `TOX_12` serves NMOS12V/PMOS12V only.
 - **`JS_MOS` has no lever** on an Idsat direction — junction leakage is picoamps against ~166 µA.
   It stays in the model but is excluded from directions, with the reason recorded, rather than
   sitting in the vector as a zero.
@@ -135,7 +135,7 @@ gm/Id-biased analog circuit, which is why the exhaustive sweep and MC exist.
 |---|---|---|
 | **G1** (blocks `A_VT`) | §3.2: the reference process's measured 5 V `A_VT` contradicts the oxide rule F5 rests on. | Re-anchor on the measurement: 3.4 / 5.5 / 5.3 / 15.0 mV·µm, `source: reference-class:measured-5V-scaled-by-oxide`. This *narrows* 5 V and 12 V mismatch, so it moves published σ the opposite way from F5 — pre-register both directions. |
 | **G2** | §2: the 12 V class is the weakest-grounded — its fixed set covers only 3.6 % of the 14 % band, so `U0` carries nearly the whole corner, because `VTH_12` is declared rather than measured. | Accept it and label the 12 V corner as the weakest-grounded class in `docs/corners.md`. The alternative is to widen `VTH_12` on the oxide ratio (31/13.1 × 135 mV ≈ 320 mV 3σ), which I do **not** recommend without a source. |
-| **G3** | Metrics for the remaining 32 groups. | Resistors `ln R` at 1 V; capacitors `ln C` from a small-signal step at 0 V; BJT `ln Ic` at the sizing-guide 10 µA point (fixed `Vbe`); diodes `ln If` at 1 mA; **DNMOS20 `ln Idss` at Vgs = 0**, since it is a depletion device with no mirror point in the sizing guide. |
+| **G3** | Metrics for the remaining 32 groups. | Resistors `ln R` at 1 V; capacitors `ln C` from a small-signal step at 0 V; BJT `ln Ic` at the sizing-guide 10 µA point (fixed `Vbe`); diodes `ln If` at 1 mA; **DNMOS20V `ln Idss` at Vgs = 0**, since it is a depletion device with no mirror point in the sizing guide. |
 | **G4** | VDMOS perturbation target. Those cards carry no `tox`, `u0` or `rdsw`; their statistics live in top-level `*_STAT` params (`VTO_*`, `KP_*`, `RD_*`, `RS_*`) plus a card-level `bv`. | Perturb the `*_STAT` params directly and `bv` on the card. This is what makes `TOX_50` and `DL_POLY` reach VDMOS "via loading" as the model already declares. |
 
 ## 5. Next work package

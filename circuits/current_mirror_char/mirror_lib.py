@@ -1,8 +1,8 @@
 """
 mirror_lib.py -- deck builders + ngspice runner for the PMOS current-mirror
-characterization study (AutoHV BiCMOS180, 5 V domain / PMOS50).
+characterization study (AutoHV BiCMOS180, 5 V domain / PMOS5V0).
 
-Topologies (all PMOS50, source=Vdd, bulk=Vdd so V_SB=0):
+Topologies (all PMOS5V0, source=Vdd, bulk=Vdd so V_SB=0):
   MIR_S  : simple mirror  (diode input device + output device on shared gate)
   MIR_CS : standard cascode (cascode gate from a diode-connected stack)
   MIR_CW : wide-swing cascode (cascode gate from an ideal Vdd-referenced source;
@@ -73,7 +73,7 @@ for d in (NETLISTS, RAW):
 # device-instance emitter.  geometry goes in the deck, never in a script param.
 # ---------------------------------------------------------------------------
 def _dev(name, d, g, s, b, W, L, M):
-    return f"X{name} {d} {g} {s} {b} PMOS50 W={W:.6g} L={L:.6g} M={int(M)}"
+    return f"X{name} {d} {g} {s} {b} PMOS5V0 W={W:.6g} L={L:.6g} M={int(M)}"
 
 
 def build_core(topo, geom, node_out="nout"):
@@ -236,7 +236,7 @@ def parse_op(text):
 VT_THERMAL = 0.02585  # kT/q at 27C
 
 def diode_op(W, L, Iin, Vdd=5.0, case=0, temp=27):
-    """OP of a single diode-connected PMOS50 forced at Iin. Returns dict."""
+    """OP of a single diode-connected PMOS5V0 forced at Iin. Returns dict."""
     d = _header("diode", case, 0, 0, temp)
     d += [f"Vdd vdd 0 {Vdd:.6g}", f"Iin nd 0 {Iin:.9g}",
           _dev("d", "nd", "nd", "vdd", "vdd", W, L, 1)]

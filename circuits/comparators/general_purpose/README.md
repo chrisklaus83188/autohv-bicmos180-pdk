@@ -1,7 +1,7 @@
 # General-purpose comparators (AutoHV BiCMOS 180, 5 V)
 
 A family of **continuous-time (static)** voltage comparators on the 5 V core
-devices (`NMOS50` / `PMOS50`). One topology, one low-area base sizing, with a
+devices (`NMOS5V0` / `PMOS5V0`). One topology, one low-area base sizing, with a
 single knob (`FIN`) that trades **input offset against area** — so you can get a
 lower offset by spending area on the input stage, with no auto-zeroing or other
 dynamic-offset-cancellation tricks.

@@ -1,5 +1,5 @@
 * PHI_5V0 -- HIGH pulse on rising edge / falling passthrough
-* AutoHV BiCMOS 180 PDK | 5.0 V domain (NMOS50/PMOS50, L = 0.5 um)
+* AutoHV BiCMOS 180 PDK | 5.0 V domain (NMOS5V0/PMOS5V0, L = 0.5 um)
 * ~20 ns pulse width at the nominal corner (case=0/TT, nominal Vdd, 27 C).
 * Methodology, area and PVT/Monte-Carlo envelope: ../REPORT.md, ../CHARACTERIZATION.md.
 *
@@ -12,23 +12,23 @@
 * When several RC cells share one transient deck, add `.option method=gear maxord=2`.
 
 .subckt PHI_5V0 in out vdd gnd
-XI1 nIN in vdd vdd PMOS50 W=1.15u L=0.5u
-XI2 nIN in gnd gnd NMOS50 W=0.5u L=0.5u
+XI1 nIN in vdd vdd PMOS5V0 W=1.15u L=0.5u
+XI2 nIN in gnd gnd NMOS5V0 W=0.5u L=0.5u
 XR  nIN nC RPOLY_HI L=51.5625u W=0.5u
 XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
-XBP nC in vdd vdd PMOS50 W=1.0u L=0.5u   $ pull-up bypass (fast falling out)
-XS1 s1 nC gnd gnd NMOS50 W=0.5u L=0.5u
-XS2 dco nC s1 gnd NMOS50 W=0.5u L=0.5u
-XS3 s2 nC vdd vdd PMOS50 W=1.15u L=0.5u
-XS4 dco nC s2 vdd PMOS50 W=1.15u L=0.5u
-XS5 vdd dco s1 gnd NMOS50 W=0.5u L=0.5u
-XS6 gnd dco s2 vdd PMOS50 W=1.15u L=0.5u
-XPI1 dbar dco vdd vdd PMOS50 W=1.15u L=0.5u
-XPI2 dbar dco gnd gnd NMOS50 W=0.5u L=0.5u
-XG1 nnd in   vdd vdd PMOS50 W=1.15u L=0.5u
-XG2 nnd dbar vdd vdd PMOS50 W=1.15u L=0.5u
-XG3 nnd in   q   gnd NMOS50 W=0.5u L=0.5u
-XG4 q   dbar gnd gnd NMOS50 W=0.5u L=0.5u
-XO1 out nnd vdd vdd PMOS50 W=1.15u L=0.5u
-XO2 out nnd gnd gnd NMOS50 W=0.5u L=0.5u
+XBP nC in vdd vdd PMOS5V0 W=1.0u L=0.5u   $ pull-up bypass (fast falling out)
+XS1 s1 nC gnd gnd NMOS5V0 W=0.5u L=0.5u
+XS2 dco nC s1 gnd NMOS5V0 W=0.5u L=0.5u
+XS3 s2 nC vdd vdd PMOS5V0 W=1.15u L=0.5u
+XS4 dco nC s2 vdd PMOS5V0 W=1.15u L=0.5u
+XS5 vdd dco s1 gnd NMOS5V0 W=0.5u L=0.5u
+XS6 gnd dco s2 vdd PMOS5V0 W=1.15u L=0.5u
+XPI1 dbar dco vdd vdd PMOS5V0 W=1.15u L=0.5u
+XPI2 dbar dco gnd gnd NMOS5V0 W=0.5u L=0.5u
+XG1 nnd in   vdd vdd PMOS5V0 W=1.15u L=0.5u
+XG2 nnd dbar vdd vdd PMOS5V0 W=1.15u L=0.5u
+XG3 nnd in   q   gnd NMOS5V0 W=0.5u L=0.5u
+XG4 q   dbar gnd gnd NMOS5V0 W=0.5u L=0.5u
+XO1 out nnd vdd vdd PMOS5V0 W=1.15u L=0.5u
+XO2 out nnd gnd gnd NMOS5V0 W=0.5u L=0.5u
 .ends PHI_5V0

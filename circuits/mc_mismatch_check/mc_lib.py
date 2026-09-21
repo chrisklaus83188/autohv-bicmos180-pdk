@@ -1,10 +1,10 @@
-"""Monte Carlo mechanism check + mismatch characterization of a simple NMOS50
+"""Monte Carlo mechanism check + mismatch characterization of a simple NMOS5V0
 current mirror.  AutoHV BiCMOS 180 PDK.
 
 Device under test
 -----------------
-Simple two-transistor NMOS mirror, both devices NMOS50, W = 4.7 um, L = 1.0 um.
-That geometry is the sizing guide's own gm/Id ~ 6 entry for NMOS50 at 10 uA
+Simple two-transistor NMOS mirror, both devices NMOS5V0, W = 4.7 um, L = 1.0 um.
+That geometry is the sizing guide's own gm/Id ~ 6 entry for NMOS5V0 at 10 uA
 (docs/sizing-guide.md), which also pre-registers a matched-pair sigma(dI/I) of
 4.08 % -- so the guide gives an independent number to check the MC against.
 
@@ -41,8 +41,8 @@ LIB = "../../../autohv_bicmos180_case.lib"
 MODEL_TAG = "v2-grounded"
 
 # device under test
-DEV = "NMOS50"
-W = 4.7        # um   -- sizing guide gm/Id~6 entry for NMOS50 at 10 uA
+DEV = "NMOS5V0"
+W = 4.7        # um   -- sizing guide gm/Id~6 entry for NMOS5V0 at 10 uA
 L = 1.0        # um   -- sizing guide BSIM3 analog default
 IREF = 10e-6   # A
 VDD = 5.0      # V

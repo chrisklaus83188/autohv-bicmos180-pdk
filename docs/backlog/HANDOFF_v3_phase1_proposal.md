@@ -18,7 +18,7 @@ accepted. The `k3` finding became the defaults-audit deliverable (§5).
 **One ruling I derived and am applying** (flagged for confirmation as F6): the reference process states the gate
 oxide follows the **gate** rating, not the drain rating (its 200 V LDMOS with a 5 V gate uses the
 13 nm oxide). Every one of the 13 AutoHV VDMOS/LDMOS devices is rated ±5.5 V DC / ±7 V absolute
-on the gate. **So all 13 load onto `TOX_50`, and `TOX_12` is used only by NMOS12/PMOS12** —
+on the gate. **So all 13 load onto `TOX_50`, and `TOX_12` is used only by NMOS12V/PMOS12V** —
 regardless of their 20–200 V drain ratings.
 
 ## 2. What the grounding actually supports

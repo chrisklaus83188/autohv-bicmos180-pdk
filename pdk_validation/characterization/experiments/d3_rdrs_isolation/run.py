@@ -5,13 +5,13 @@ D3 -- how much of the F1 kp-route vs Ron-route disagreement is series
 
 QUESTION
     Audit 2.5 backs an implied cell width out of the model two ways -- from kp
-    and from rd+rs -- and the two disagree by 2.43x on NDMOS20 and 0.08x on
-    NDMOS200, a 30x swing across the family. If rd/rs were simply eating the
+    and from rd+rs -- and the two disagree by 2.43x on NDMOS20V and 0.08x on
+    NDMOS200V, a 30x swing across the family. If rd/rs were simply eating the
     drive current, the two routes would be measuring the same defect twice and
     the "disagreement" would be an artifact. Removing rd/rs settles it.
 
 METHOD
-    NDMOS20 and NDMOS200, each measured on the stock card and on an isolation
+    NDMOS20V and NDMOS200V, each measured on the stock card and on an isolation
     copy with rd and rs forced to R_ZERO. `rq` is deliberately KEPT (unlike D1)
     -- quasi-saturation is a channel/drift-velocity effect, not a series
     resistance, and zeroing it would remove a mechanism the question is not
@@ -43,14 +43,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import exp_lib as E                                                # noqa: E402
 
 SUBDIR = "d3_rdrs_isolation"
-CARDS = ["NDMOS20", "NDMOS200"]
+CARDS = ["NDMOS20V", "NDMOS200V"]
 VOV = 4.0
 VDS_LIN = 0.1
 
 # audit 2.5 implied-width disagreement (W-from-kp / W-from-rd+rs at 2x RESURF)
-AUDIT_2_5_DISAGREEMENT = {"NDMOS20": 2.43, "NDMOS200": 0.08}
-AUDIT_2_1_W_FROM_KP = {"NDMOS20": 3649.0, "NDMOS200": 287.0}   # x, at tox=30nm
-AUDIT_2_2_W_FROM_RDRS = {"NDMOS20": 951.0, "NDMOS200": 2327.0}  # x, at 2x RESURF
+AUDIT_2_5_DISAGREEMENT = {"NDMOS20V": 2.43, "NDMOS200V": 0.08}
+AUDIT_2_1_W_FROM_KP = {"NDMOS20V": 3649.0, "NDMOS200V": 287.0}   # x, at tox=30nm
+AUDIT_2_2_W_FROM_RDRS = {"NDMOS20V": 951.0, "NDMOS200V": 2327.0}  # x, at 2x RESURF
 
 
 def _measure(dut: E.DUT) -> dict:
@@ -183,26 +183,26 @@ def run() -> dict:
         }
     out["disagreement_survival"] = surv
 
-    f20 = decomp["NDMOS20"]["series_fraction_of_stock_ron"]
-    f200 = decomp["NDMOS200"]["series_fraction_of_stock_ron"]
-    ch20 = decomp["NDMOS20"]["channel_only_ron_times_w_ohm_um"]
-    ch200 = decomp["NDMOS200"]["channel_only_ron_times_w_ohm_um"]
-    lift20 = decomp["NDMOS20"]["idsat_lift_from_removing_rd_rs"]
-    lift200 = decomp["NDMOS200"]["idsat_lift_from_removing_rd_rs"]
+    f20 = decomp["NDMOS20V"]["series_fraction_of_stock_ron"]
+    f200 = decomp["NDMOS200V"]["series_fraction_of_stock_ron"]
+    ch20 = decomp["NDMOS20V"]["channel_only_ron_times_w_ohm_um"]
+    ch200 = decomp["NDMOS200V"]["channel_only_ron_times_w_ohm_um"]
+    lift20 = decomp["NDMOS20V"]["idsat_lift_from_removing_rd_rs"]
+    lift200 = decomp["NDMOS200V"]["idsat_lift_from_removing_rd_rs"]
 
-    swing_before = (AUDIT_2_5_DISAGREEMENT["NDMOS20"]
-                    / AUDIT_2_5_DISAGREEMENT["NDMOS200"])
-    swing_after = (surv["NDMOS20"]["disagreement_recomputed_on_total_ron_x"]
-                   / surv["NDMOS200"]["disagreement_recomputed_on_total_ron_x"])
+    swing_before = (AUDIT_2_5_DISAGREEMENT["NDMOS20V"]
+                    / AUDIT_2_5_DISAGREEMENT["NDMOS200V"])
+    swing_after = (surv["NDMOS20V"]["disagreement_recomputed_on_total_ron_x"]
+                   / surv["NDMOS200V"]["disagreement_recomputed_on_total_ron_x"])
     # The kp route is contaminated only if series resistance explains a
     # meaningful share of its 10^2-10^3x gap. It explains <0.2%.
-    kp_clean = max((lift20 - 1) / (AUDIT_2_1_W_FROM_KP["NDMOS20"] - 1),
-                   (lift200 - 1) / (AUDIT_2_1_W_FROM_KP["NDMOS200"] - 1)) < 0.01
+    kp_clean = max((lift20 - 1) / (AUDIT_2_1_W_FROM_KP["NDMOS20V"] - 1),
+                   (lift200 - 1) / (AUDIT_2_1_W_FROM_KP["NDMOS200V"] - 1)) < 0.01
     survives = kp_clean and swing_after > 3.0
 
     out["verdict"] = {
-        "series_share_of_measured_ron": {"NDMOS20": f20, "NDMOS200": f200},
-        "channel_only_ron_times_w_ohm_um": {"NDMOS20": ch20, "NDMOS200": ch200},
+        "series_share_of_measured_ron": {"NDMOS20V": f20, "NDMOS200V": f200},
+        "channel_only_ron_times_w_ohm_um": {"NDMOS20V": ch20, "NDMOS200V": ch200},
         "disagreement_swing_across_family_before_x": swing_before,
         "disagreement_swing_across_family_after_x": swing_after,
         "one_line": ("TWO INDEPENDENT SLIPS -- the disagreement survives"
@@ -213,17 +213,17 @@ def run() -> dict:
             f"The decomposition is clean: subtracting the rd=rs=0 "
             f"on-resistance from the stock one recovers the card's own rd+rs "
             f"to "
-            f"{abs(decomp['NDMOS20']['series_component_over_card_rd_plus_rs']-1)*100:.2f}% "
-            f"(NDMOS20) and "
-            f"{abs(decomp['NDMOS200']['series_component_over_card_rd_plus_rs']-1)*100:.2f}% "
-            f"(NDMOS200), so Ron really does separate into a channel term and "
+            f"{abs(decomp['NDMOS20V']['series_component_over_card_rd_plus_rs']-1)*100:.2f}% "
+            f"(NDMOS20V) and "
+            f"{abs(decomp['NDMOS200V']['series_component_over_card_rd_plus_rs']-1)*100:.2f}% "
+            f"(NDMOS200V), so Ron really does separate into a channel term and "
             f"a series term and the split below can be trusted.\n"
-            f"Series resistance is only {f20*100:.1f}% of NDMOS20's Ron and "
-            f"{f200*100:.1f}% of NDMOS200's -- the CHANNEL dominates both, "
+            f"Series resistance is only {f20*100:.1f}% of NDMOS20V's Ron and "
+            f"{f200*100:.1f}% of NDMOS200V's -- the CHANNEL dominates both, "
             f"which audit 2.2 did not allow for.\n"
             f"Two consequences, pulling in opposite directions.\n"
             f"  (1) The kp route is CLEAN. Removing rd/rs lifts Idsat density "
-            f"by {lift20:.3f}x on NDMOS20 and {lift200:.3f}x on NDMOS200, "
+            f"by {lift20:.3f}x on NDMOS20V and {lift200:.3f}x on NDMOS200V, "
             f"against implied-width gaps of 3649x and 287x. Series resistance "
             f"explains under 0.2% of the kp finding. F1's kp half cannot be "
             f"blamed on rd/rs.\n"
@@ -232,12 +232,12 @@ def run() -> dict:
             f"{f20*100:.0f}%/{f200*100:.0f}% of it, so its implied widths are "
             f"overstated by {1/f20:.2f}x and {1/f200:.2f}x. Re-cast on the "
             f"total measured Ron they become "
-            f"{surv['NDMOS20']['W_from_total_measured_ron_x']:.0f}x and "
-            f"{surv['NDMOS200']['W_from_total_measured_ron_x']:.0f}x.\n"
+            f"{surv['NDMOS20V']['W_from_total_measured_ron_x']:.0f}x and "
+            f"{surv['NDMOS200V']['W_from_total_measured_ron_x']:.0f}x.\n"
             f"The disagreement therefore does not collapse -- it MOVES. It "
             f"goes from 2.43x/0.08x to "
-            f"{surv['NDMOS20']['disagreement_recomputed_on_total_ron_x']:.2f}x/"
-            f"{surv['NDMOS200']['disagreement_recomputed_on_total_ron_x']:.2f}x, "
+            f"{surv['NDMOS20V']['disagreement_recomputed_on_total_ron_x']:.2f}x/"
+            f"{surv['NDMOS200V']['disagreement_recomputed_on_total_ron_x']:.2f}x, "
             f"and the swing across the family widens from {swing_before:.0f}x "
             f"to {swing_after:.0f}x. "
             + ("These are two genuinely independent defects, as audit 2.5 "
@@ -247,7 +247,7 @@ def run() -> dict:
                "The correction is large enough that audit 2.5's numbers should "
                "not be quoted as they stand.")),
         "channel_only_number_for_the_rd_rs_rederivation": (
-            f"NDMOS20 {ch20:.4g} Ohm.um, NDMOS200 {ch200:.4g} Ohm.um, at "
+            f"NDMOS20V {ch20:.4g} Ohm.um, NDMOS200V {ch200:.4g} Ohm.um, at "
             f"Vov = 4 V and Vds = 0.1 V. This is a FLOOR. Whatever rd/rs are "
             "re-derived to, total Ron*W can never fall below these, because "
             "this is the channel resistance the same kp that sets Idsat also "

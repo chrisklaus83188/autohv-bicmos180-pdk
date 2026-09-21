@@ -5,7 +5,7 @@ r=json.load(open(A.os.path.join(A.WORK,"results.json")))
 PROV=r.get("_provenance",{})
 CAP_HARD=PROV.get("cap_hard_ff",6.5)
 CAP_TGT=PROV.get("cap_target_ff",6.0)
-DOMN={"1v8":"1.8 V (NMOS18/PMOS18)","3v3":"3.3 V (NMOS33/PMOS33)","5v0":"5.0 V (NMOS50/PMOS50)"}
+DOMN={"1v8":"1.8 V (NMOS1V8/PMOS1V8)","3v3":"3.3 V (NMOS3V3/PMOS3V3)","5v0":"5.0 V (NMOS5V0/PMOS5V0)"}
 ORDER=["INV","BUF","NAND2","NOR2","AND2","OR2","XOR2","XNOR2"]
 DOMKEYS=["1v8","3v3","5v0"]
 def hh(x): return f"{x:.1f}"

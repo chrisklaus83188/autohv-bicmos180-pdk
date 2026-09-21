@@ -1,5 +1,5 @@
 {
- "NMOS18": {
+ "NMOS1V8": {
   "supply": 1.8,
   "vdmos": false,
   "points": {
@@ -23,7 +23,7 @@
    }
   }
  },
- "PMOS18": {
+ "PMOS1V8": {
   "supply": 1.8,
   "vdmos": false,
   "points": {
@@ -47,7 +47,7 @@
    }
   }
  },
- "NMOS33": {
+ "NMOS3V3": {
   "supply": 3.3,
   "vdmos": false,
   "points": {
@@ -71,7 +71,7 @@
    }
   }
  },
- "PMOS33": {
+ "PMOS3V3": {
   "supply": 3.3,
   "vdmos": false,
   "points": {
@@ -95,7 +95,7 @@
    }
   }
  },
- "NMOS50": {
+ "NMOS5V0": {
   "supply": 5.0,
   "vdmos": false,
   "points": {
@@ -119,7 +119,7 @@
    }
   }
  },
- "PMOS50": {
+ "PMOS5V0": {
   "supply": 5.0,
   "vdmos": false,
   "points": {
@@ -143,7 +143,7 @@
    }
   }
  },
- "NMOS12": {
+ "NMOS12V": {
   "supply": 12.0,
   "vdmos": false,
   "points": {
@@ -167,7 +167,7 @@
    }
   }
  },
- "PMOS12": {
+ "PMOS12V": {
   "supply": 12.0,
   "vdmos": false,
   "points": {

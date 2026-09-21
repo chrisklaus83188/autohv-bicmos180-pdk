@@ -32,14 +32,14 @@ on doping and oxide. Three independent lines of evidence agreed that `k1` was th
 body effect vs γ(nch), subthreshold slope vs the `n = 1 + C_dep/C_ox` floor, and `vth0` being
 consistent with the *corrected* γ but not with the card's own `k1`.
 
-| quantity | NMOS12 | PMOS12 | target |
+| quantity | NMOS12V | PMOS12V | target |
 |---|---|---|---|
 | subthreshold slope | 152.8 → **120.9** mV/dec | 170.2 → **124.4** | 120 ± 10 |
 | ΔVth at Vsb = 5 V | 0.825 → **2.090 V** | 0.910 → **2.406 V** | ≈ γ-implied |
 | implied `k1_eff`, long device | **1.463 (94 %)** | **1.677 (98 %)** | = γ(nch) |
 | Idsat at Vgs = Vds = 12 V | **−5.7…−6.3 %** | same | within 10 % |
 
-Three extraction methods agree on ΔVth (2.090 / 2.078 / 2.044 on NMOS12), so these are not
+Three extraction methods agree on ΔVth (2.090 / 2.078 / 2.044 on NMOS12V), so these are not
 extraction artefacts.
 
 ### 2.2 Mismatch is derived, not interpolated from anyone's measurements
@@ -75,8 +75,8 @@ same-oxide devices correlate.
 
 | device | 1σ mV | | device | 1σ mV |
 |---|---|---|---|---|
-| NMOS18 / PMOS18 | 10.3 / 11.3 | | NMOS50 / PMOS50 | 16.5 / 17.6 |
-| NMOS33 / PMOS33 | 12.5 / 13.6 | | NMOS12 / PMOS12 | 43.0 / 44.5 |
+| NMOS1V8 / PMOS1V8 | 10.3 / 11.3 | | NMOS5V0 / PMOS5V0 | 16.5 / 17.6 |
+| NMOS3V3 / PMOS3V3 | 12.5 / 13.6 | | NMOS12V / PMOS12V | 43.0 / 44.5 |
 | VDMOS ×13 | 20.0–23.1 | | | |
 
 No automotive tightening factor anywhere — that was rejected in U3.
@@ -105,7 +105,7 @@ whatever its own inputs predict: **6.79–11.96 %**, reported rather than target
   so the generator applies `analytic − bsim3_residual`. (The 3.7–19.5 % figure first reported
   here was an extraction artefact; corrected in §5.)
 - **The U0/Rd anti-correlation is a measurable device property.** `dominant_variable` flips from
-  `U0` to `RDSW` exactly where drift resistance takes over (NDMOS80 onward, as the U0 slope falls
+  `U0` to `RDSW` exactly where drift resistance takes over (NDMOS80V onward, as the U0 slope falls
   through 0.4). On a 200 V LDMOS, mobility barely moves the current at all.
 - **The phase-2 mapping `S ≈ 1.17·1000·ksubthres` is not a constant** — it drifts 0.99–1.09 with
   voltage class. Retired.
@@ -117,7 +117,7 @@ whatever its own inputs predict: **6.79–11.96 %**, reported rather than target
 | claim | what was true | caught by |
 |---|---|---|
 | "Idsat won't move; `k1` only touches the body-bias term" | it moved −6.0 % | measurement |
-| then "the mover is `k2`" | NMOS12's `k2` never changed yet its Idsat moved fully | the card diff |
+| then "the mover is `k2`" | NMOS12V's `k2` never changed yet its Idsat moved fully | the card diff |
 | "σ(VTH) dose-only is the answer" | 6–20× too narrow on all 21 devices | plausibility check |
 | "U1 must land before the re-measure or distances shift" | nothing reads the ρ layer | `grep` |
 | plausibility bands for the 1.8 V and 12 V classes | invented by copying/spanning unrelated rows | re-reading the source |
@@ -146,13 +146,13 @@ derivative-peak window — resolves every card without hand-picking.
 
 > **Corrected 2026-09-19.** The 3.7–19.5 % residual quoted above is wrong. It came from
 > constant-current and gm-max extraction, both of which move with `tox` themselves and gave
-> criterion-dependent, sign-unstable results (NMOS18 read −0.18 mV at a 1× W/L criterion,
+> criterion-dependent, sign-unstable results (NMOS1V8 read −0.18 mV at a 1× W/L criterion,
 > −0.61 at 0.1×, +3.52 at 10×). Measured from the model's own `@m.xm1.m0[vth]` at bench
 > geometry the residual is **negative**, −0.96 to −1.92 mV, i.e. 9–22 %, which makes
 > `applied = analytic − residual` *larger* than analytic rather than smaller. See
 > `docs/stat-model.md` §2.2a.
 
-**The reported miss:** NMOS33/PMOS33 at 0.26× and 0.28× of the comparable midpoint. Reported, not
+**The reported miss:** NMOS3V3/PMOS3V3 at 0.26× and 0.28× of the comparable midpoint. Reported, not
 clamped, per U3. Worth noting the comparable for 3.3 V is *wider* than the one for 5 V, which is
 backwards for a thinner oxide.
 
@@ -172,4 +172,4 @@ mostly documentation rather than model content.
 Phase 2 (`tools/gen_models.py`) honouring the `follows` couplings — recorded in
 `dependent_parameters` as a contract, with nothing generating perturbed cards from them yet. Then
 the naming pass, then Phases 3–7. Open and unchanged: `k3` grounding at 2.0 awaits the audit
-landing; the NDMOS200 trigger-case drift is logged for Phase 7.
+landing; the NDMOS200V trigger-case drift is logged for Phase 7.

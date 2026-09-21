@@ -1,7 +1,7 @@
-"""200-run Monte Carlo, local mismatch only, on a simple NMOS50 current mirror.
+"""200-run Monte Carlo, local mismatch only, on a simple NMOS5V0 current mirror.
 
 Nominal PVT: TT (case=0), Vdd = 5.0 V, 27 C.  MM_ON=1, PROC_ON=0.
-Iref = 10 uA.  Both devices NMOS50 W = 4.7 um, L = 1.0 um -- the sizing guide's
+Iref = 10 uA.  Both devices NMOS5V0 W = 4.7 um, L = 1.0 um -- the sizing guide's
 own gm/Id ~ 6 entry for this device and current.
 
 Each run is its own ngspice invocation carrying `.option seed=k`, which is the
@@ -78,7 +78,7 @@ gain0 = base["iout"] / M.IREF
 
 # what the wrapper's own formula predicts, independent of the simulation:
 #   ngspice AGAUSS(nom, avar, n) has standard deviation avar/n, so the per-device
-#   threshold sigma is A_VT / (3 * sqrt(W*L)) with A_VT = 0.033 V.um for NMOS50.
+#   threshold sigma is A_VT / (3 * sqrt(W*L)) with A_VT = 0.033 V.um for NMOS5V0.
 AVT, AW, AL = 0.033, 0.0075, 0.0045
 area = M.W * M.L
 sig_vth_dev = AVT / 3.0 / area ** 0.5
@@ -117,7 +117,7 @@ out = {
 (M.RESULTS / "01_mc_mirror.json").write_text(json.dumps(out, indent=1))
 
 print("200-run Monte Carlo, mismatch only, TT / 5.0 V / 27 C")
-print("  NMOS50 mirror, W = %g um, L = %g um, Iref = %g uA" % (M.W, M.L, M.IREF * 1e6))
+print("  NMOS5V0 mirror, W = %g um, L = %g um, Iref = %g uA" % (M.W, M.L, M.IREF * 1e6))
 print()
 print("  Iout mean        %10.4f uA" % (s_io["mean"] * 1e6))
 print("  Iout sigma       %10.4f uA" % (s_io["std"] * 1e6))

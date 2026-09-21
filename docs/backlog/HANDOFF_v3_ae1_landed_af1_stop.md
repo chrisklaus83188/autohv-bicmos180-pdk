@@ -28,10 +28,10 @@ Evidence, each measured rather than argued:
 | check | result |
 |---|---|
 | generated `.inc` from `.in` vs. the previously generated file | **byte-identical**, 1553 lines |
-| σ(`VTH_NMOS50`) +10 % → card | `0.016492` → **`0.0181412`** (before: unchanged) |
+| σ(`VTH_NMOS5V0`) +10 % → card | `0.016492` → **`0.0181412`** (before: unchanged) |
 | σ edit → `--check` | **red**; restore → **green** (before: could never go red) |
 | input == output path | **guard fires** |
-| `tt_of` on the five degraded records | all read; `kp DNMOS20_INT` → `0.00145115` via its `_STAT` reference |
+| `tt_of` on the five degraded records | all read; `kp DNMOS20V_INT` → `0.00145115` via its `_STAT` reference |
 | skipped targets in the 40-group run | **none** |
 
 The five degraded records return to their Stop A′ values **exactly**, not merely within the
@@ -43,7 +43,7 @@ allowed deltas:
 | PNP_LAT | 31.4 % | **31.4 %** | 3 |
 | NPN_HV | 25.9 % | **25.9 %** | 3 |
 | PNP_HV | 32.2 % | **32.2 %** | 3 |
-| DNMOS20 | 9.35 % | **9.3540 %** | 3 |
+| DNMOS20V | 9.35 % | **9.3540 %** | 3 |
 
 All four checks green: `test_inc_parse`, `gen_models --check`, `stat_model_inventory --check`,
 `build_corners --check`. Corner distances unchanged (presets 3/4 at 13.1787).
@@ -63,17 +63,17 @@ it on `b1d333d` and on its parent, so only the notation differs.
 
 | device | FF before | FF after | SS before | SS after |
 |---|---|---|---|---|
-| NMOS18 | +24.902 % | **+4.945 %** | −21.745 % | **−4.800 %** |
-| PMOS18 | +33.839 % | **+7.021 %** | −27.476 % | **−6.643 %** |
-| NMOS50 | +18.286 % | +6.479 % | −16.567 % | −6.192 % |
-| DNMOS20 | +20.010 % | +9.820 % | −18.104 % | −9.059 % |
+| NMOS1V8 | +24.902 % | **+4.945 %** | −21.745 % | **−4.800 %** |
+| PMOS1V8 | +33.839 % | **+7.021 %** | −27.476 % | **−6.643 %** |
+| NMOS5V0 | +18.286 % | +6.479 % | −16.567 % | −6.192 % |
+| DNMOS20V | +20.010 % | +9.820 % | −18.104 % | −9.059 % |
 
 I believe this is correct and is the point of the program: the new corners equal the
-**measured 3σ direction**. NMOS18's FF/SS spread is now 9.7 % against a measured 3σ swing of
+**measured 3σ direction**. NMOS1V8's FF/SS spread is now 9.7 % against a measured 3σ swing of
 9.2 %; the old hand-set ±25 % was roughly 5σ of the statistics we now have. But it changes
 the result of every existing corner simulation, so I am not calling it silently.
 
-Only three devices (PDMOS80, NDMOS120, PDMOS120) are unchanged within 2 pp.
+Only three devices (PDMOS80V, NDMOS120V, PDMOS120V) are unchanged within 2 pp.
 
 ### 2.2 BJTs and diodes have no corner response on ANY preset — a defect
 

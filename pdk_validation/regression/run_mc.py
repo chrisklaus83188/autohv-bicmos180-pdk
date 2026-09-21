@@ -11,7 +11,7 @@ Goals (per handoff P1 "Monte Carlo validation"):
   3. Document the exact ngspice invocation needed for repeatable MC.
 
 Scope here is the "validate the flow" first cut: one device family
-(BSIM3 NMOS50), one bias point, one statistical axis (--axis mm or
+(BSIM3 NMOS5V0), one bias point, one statistical axis (--axis mm or
 proc). Cross-family / W*L scaling sweeps are follow-on work.
 
 ngspice incantation (verified on 45.2):
@@ -35,13 +35,13 @@ AGAUSS convention in ngspice 45.2 (HSPICE-style, empirically verified):
   not 13.5 mV. The numbers in autohv_bicmos180_case.lib are written
   as 3-sigma bounds; divide by 3 when reasoning about 1-sigma.
 
-Testbench: two identical NMOS50 in saturation (Vds=3 V, Vgs=2 V),
+Testbench: two identical NMOS5V0 in saturation (Vds=3 V, Vgs=2 V),
 W=10u, L=1u. Per iteration we capture i(Vd1), i(Vd2) and gm via
 @m.xm1.m0[gm] / @m.xm2.m0[gm], and form log(I1/I2). Expected sigma at
 this size:
 
   sigma(DVTH_MM, per device) = A_VT / sqrt(W*L_um2) / 3, with A_VT read
-                               from the NMOS50 wrapper in the .lib
+                               from the NMOS5V0 wrapper in the .lib
   sigma(delta_Vth, pair)     = sqrt(2) x above
   gm/ID at this bias (empirical, BSIM3) ~ 1.7 V^-1
   Vth-only contribution to sigma(log(I1/I2)) ~ 0.34 %
@@ -72,7 +72,7 @@ REPO_ROOT = HERE.parents[1]
 LIB_PATH = REPO_ROOT / "autohv_bicmos180_case.lib"
 
 DECK_TEMPLATE = """\
-* MC iteration: NMOS50 mismatch testbench (axis={axis})
+* MC iteration: NMOS5V0 mismatch testbench (axis={axis})
 .include "{lib}"
 .param case=0
 .param PROC_ON={proc}
@@ -83,8 +83,8 @@ Vg1 g1 0 2
 Vd2 d2 0 3
 Vg2 g2 0 2
 
-XM1 d1 g1 0 0 NMOS50 W=10u L=1u M=1
-XM2 d2 g2 0 0 NMOS50 W=10u L=1u M=1
+XM1 d1 g1 0 0 NMOS5V0 W=10u L=1u M=1
+XM2 d2 g2 0 0 NMOS5V0 W=10u L=1u M=1
 
 .control
 op
@@ -96,7 +96,7 @@ quit
 .end
 """
 
-# The NMOS50 mismatch coefficients are READ FROM THE .lib at run time. They are
+# The NMOS5V0 mismatch coefficients are READ FROM THE .lib at run time. They are
 # not constants here: commit dc7de19 widened A_VT from 0.0135 to 0.033 V.um and
 # this check kept the old value, so it reported a 179 % deviation against a
 # correct model until 2026-09-16.
@@ -108,7 +108,7 @@ VGS = 2.0
 VDS = 3.0
 
 SENS_TEMPLATE = """\
-* sensitivity probe: one NMOS50, deterministic MM_SIGMA knob (MM_ON=0)
+* sensitivity probe: one NMOS5V0, deterministic MM_SIGMA knob (MM_ON=0)
 .include "{lib}"
 .param case=0
 .param PROC_ON=0
@@ -117,7 +117,7 @@ SENS_TEMPLATE = """\
 Vd1 d1 0 {vds}
 Vg1 g1 0 {vgs}
 
-XM1 d1 g1 0 0 NMOS50 W={w}u L={l}u M=1 MM_SIGMA={z}
+XM1 d1 g1 0 0 NMOS5V0 W={w}u L={l}u M=1 MM_SIGMA={z}
 
 .control
 option numdgt=12
@@ -132,18 +132,18 @@ quit
 
 
 def read_nmos50_coefficients() -> dict[str, float]:
-    """3-sigma Pelgrom coefficients from the NMOS50 wrapper in the .lib."""
+    """3-sigma Pelgrom coefficients from the NMOS5V0 wrapper in the .lib."""
     text = LIB_PATH.read_text(encoding="utf-8")
-    m = re.search(r"^\.subckt\s+NMOS50\b(.*?)^\.ends", text, re.S | re.M | re.I)
+    m = re.search(r"^\.subckt\s+NMOS5V0\b(.*?)^\.ends", text, re.S | re.M | re.I)
     if not m:
-        raise RuntimeError(f"NMOS50 wrapper not found in {LIB_PATH}")
+        raise RuntimeError(f"NMOS5V0 wrapper not found in {LIB_PATH}")
     body, out = m.group(1), {}
     for key, param in (("vth", "DVTH_MM"), ("w", "DWREL_MM"), ("l", "DLREL_MM")):
         mm = re.search(
             r"\.param\s+%s\s*=\s*\{[^}]*AGAUSS\(\s*0\s*,\s*([-\d.eE+]+)\s*/\s*sqrt" % param,
             body, re.IGNORECASE)
         if not mm:
-            raise RuntimeError(f"could not read {param} from the NMOS50 wrapper")
+            raise RuntimeError(f"could not read {param} from the NMOS5V0 wrapper")
         out[key] = float(mm.group(1))
     return out
 
@@ -331,7 +331,7 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"ngspice    : {ngspice}")
     print(f"lib        : {LIB_PATH}")
-    print(f"testbench  : NMOS50, W=10u L=1u, Vds=3 V, Vgs=2 V")
+    print(f"testbench  : NMOS5V0, W=10u L=1u, Vds=3 V, Vgs=2 V")
     print(f"axis       : {axis_label}")
     print(f"iterations : {args.iterations}")
     print()

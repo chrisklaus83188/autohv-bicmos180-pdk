@@ -18,10 +18,10 @@ deterministic and depends only on the corner selector.
 
 Probes (one per device family/polarity):
 
-  BSIM3 NMOS (NMOS18)    -> ID @ VGS=VDS=1.2 V
-  BSIM3 PMOS (PMOS18)    -> |ID| @ |VGS|=|VDS|=1.2 V
-  VDMOS NMOS (NDMOS20)   -> ID @ Vgs=2.5 V, Vds=3 V
-  VDMOS PMOS (PDMOS20)   -> |ID| @ Vgs=-2.5 V, Vds=-3 V
+  BSIM3 NMOS (NMOS1V8)    -> ID @ VGS=VDS=1.2 V
+  BSIM3 PMOS (PMOS1V8)    -> |ID| @ |VGS|=|VDS|=1.2 V
+  VDMOS NMOS (NDMOS20V)   -> ID @ Vgs=2.5 V, Vds=3 V
+  VDMOS PMOS (PDMOS20V)   -> |ID| @ Vgs=-2.5 V, Vds=-3 V
   BJT NPN  (NPN_LV)      -> Ic @ Ib=10 uA, Vcc=2 V
   BJT PNP  (PNP_LAT)     -> |Ic| @ Ib=10 uA, Vec=2 V
   Diode    (DIO_PN)      -> Vf @ Ifwd = 1 mA
@@ -136,7 +136,7 @@ DECK_BSIM_N = """\
 .param MM_ON=0
 Vd d 0 1.2
 Vg g 0 1.2
-X1 d g 0 0 NMOS18 W=10u L=1u M=1
+X1 d g 0 0 NMOS1V8 W=10u L=1u M=1
 .control
 op
 print i(Vd)
@@ -152,7 +152,7 @@ DECK_BSIM_P = """\
 .param MM_ON=0
 Vd d 0 -1.2
 Vg g 0 -1.2
-X1 d g 0 0 PMOS18 W=10u L=1u M=1
+X1 d g 0 0 PMOS1V8 W=10u L=1u M=1
 .control
 op
 print i(Vd)
@@ -168,7 +168,7 @@ DECK_VDMOS_N = """\
 .param MM_ON=0
 Vd d 0 3
 Vg g 0 2.5
-X1 d g 0 NDMOS20 W=20u M=1
+X1 d g 0 NDMOS20V W=20u M=1
 .control
 op
 print i(Vd)
@@ -184,7 +184,7 @@ DECK_VDMOS_P = """\
 .param MM_ON=0
 Vd d 0 -3
 Vg g 0 -2.5
-X1 d g 0 PDMOS20 W=20u M=1
+X1 d g 0 PDMOS20V W=20u M=1
 .control
 op
 print i(Vd)
@@ -344,16 +344,16 @@ class Probe:
 
 
 PROBES = [
-    Probe("BSIM3 NMOS  (NMOS18)  ID @ VGS=VDS=1.2 V",
+    Probe("BSIM3 NMOS  (NMOS1V8)  ID @ VGS=VDS=1.2 V",
           DECK_BSIM_N, metric_load_i_into_vd, "A",
           {"FF": +1, "SS": -1, "FS": +1, "SF": -1}),
-    Probe("BSIM3 PMOS  (PMOS18)  |ID| @ |VGS|=|VDS|=1.2 V",
+    Probe("BSIM3 PMOS  (PMOS1V8)  |ID| @ |VGS|=|VDS|=1.2 V",
           DECK_BSIM_P, metric_load_i_into_vd, "A",
           {"FF": +1, "SS": -1, "FS": -1, "SF": +1}),
-    Probe("VDMOS NMOS  (NDMOS20) ID @ Vgs=2.5 Vds=3 V",
+    Probe("VDMOS NMOS  (NDMOS20V) ID @ Vgs=2.5 Vds=3 V",
           DECK_VDMOS_N, metric_load_i_into_vd, "A",
           {"FF": +1, "SS": -1, "FS": +1, "SF": -1}),
-    Probe("VDMOS PMOS  (PDMOS20) |ID| @ Vgs=-2.5 Vds=-3 V",
+    Probe("VDMOS PMOS  (PDMOS20V) |ID| @ Vgs=-2.5 Vds=-3 V",
           DECK_VDMOS_P, metric_load_i_into_vd, "A",
           {"FF": +1, "SS": -1, "FS": -1, "SF": +1}),
     Probe("BJT NPN     (NPN_LV)  Ic @ Ib=10uA Vc=2 V",

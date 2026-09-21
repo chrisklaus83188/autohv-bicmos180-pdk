@@ -27,7 +27,7 @@ and is not needed for simulation.)
 
 Vdd d 0 1.8
 Vg  g 0 1.8
-X1  d g 0 0 NMOS18 W=10u L=1u M=1   ; pin order: d g s b
+X1  d g 0 0 NMOS1V8 W=10u L=1u M=1   ; pin order: d g s b
 
 .op
 .end
@@ -76,8 +76,8 @@ Quick example — worst-case differential pair offset:
 
 ```spice
 .param MM_ON=0
-XM1 d1 g1 s b NMOS50 W=100u L=2u MM_SIGMA=+3
-XM2 d2 g2 s b NMOS50 W=100u L=2u MM_SIGMA=-3
+XM1 d1 g1 s b NMOS5V0 W=100u L=2u MM_SIGMA=+3
+XM2 d2 g2 s b NMOS5V0 W=100u L=2u MM_SIGMA=-3
 ```
 
 The full flow (sensitivity scan → compose worst-case pattern → lock as a
@@ -92,13 +92,13 @@ sign across operating points, PROC ⊥ MM independence) are in
 | Family | Examples | Ports (pin order) | Size parameters |
 |--------|----------|-------------------|-----------------|
 | Core MOSFET | NMOS/PMOS 12, 18, 33, 50 | d g s b | `W`, `L`, `M` |
-| HV DMOS/LDMOS | NDMOS 20–200, PDMOS 20–200, DNMOS20 | d g s | `W`, `M` (plus `L` on the 200 V LDMOSes) |
+| HV DMOS/LDMOS | NDMOS 20–200, PDMOS 20–200, DNMOS20V | d g s | `W`, `M` (plus `L` on the 200 V LDMOSes) |
 | Bipolar | NPN_LV/HV, PNP_HV/LAT | c b e | `AREA` |
 | Diode / Zener | DIO_PN/FAST/SCH, DZ_5V6/12/24 | a c | `AREA` |
 | Resistor | RPOLY_HI/LO, RNWELL, RNPLUS, RPPLUS | p n | `L`, `W` |
 | Capacitor | CMIM_STD/HI, CMOM, CFRINGE | p n | `L`, `W` |
 
-Voltage classes are encoded in the name (NMOS18 = 1.8 V, NDMOS200 = 200 V). Pin order
+Voltage classes are encoded in the name (NMOS1V8 = 1.8 V, NDMOS200V = 200 V). Pin order
 is what the netlist uses, so list nodes in that order on the instance line. Full
 descriptions are in the reference manual.
 

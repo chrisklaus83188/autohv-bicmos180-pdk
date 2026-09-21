@@ -18,7 +18,7 @@ Pinned to ngspice-45.2 (the version P0 was developed against).
 Usage:
   python run_smoke.py                 # full matrix (800 ops)
   python run_smoke.py --quick         # case=0 + (PROC,MM)=(1,1) only (38 ops)
-  python run_smoke.py --device NDMOS20 PDMOS40   # only listed devices
+  python run_smoke.py --device NDMOS20V PDMOS40V   # only listed devices
   python run_smoke.py --jobs 4        # parallel workers (default 1)
 
 Env:
@@ -47,27 +47,27 @@ CORNERS = [0, 1, 2, 3, 4]
 STAT_COMBOS = [(0, 0), (0, 1), (1, 0), (1, 1)]  # (PROC_ON, MM_ON)
 
 DEVICES = [
-    ("NMOS18",   "bsim_n",    ""),
-    ("PMOS18",   "bsim_p",    ""),
-    ("NMOS33",   "bsim_n",    ""),
-    ("PMOS33",   "bsim_p",    ""),
-    ("NMOS50",   "bsim_n",    ""),
-    ("PMOS50",   "bsim_p",    ""),
-    ("NMOS12",   "bsim_n",    ""),
-    ("PMOS12",   "bsim_p",    ""),
-    ("NDMOS20",  "vdmos_n",   ""),
-    ("PDMOS20",  "vdmos_p",   ""),
-    ("NDMOS40",  "vdmos_n",   ""),
-    ("PDMOS40",  "vdmos_p",   ""),
-    ("NDMOS60",  "vdmos_n",   ""),
-    ("PDMOS60",  "vdmos_p",   ""),
-    ("NDMOS80",  "vdmos_n",   ""),
-    ("PDMOS80",  "vdmos_p",   ""),
-    ("NDMOS120", "vdmos_n",   ""),
-    ("PDMOS120", "vdmos_p",   ""),
-    ("NDMOS200", "vdmos_n",   "L=8u"),
-    ("PDMOS200", "vdmos_p",   "L=8u"),
-    ("DNMOS20",  "vdmos_dep", ""),
+    ("NMOS1V8",   "bsim_n",    ""),
+    ("PMOS1V8",   "bsim_p",    ""),
+    ("NMOS3V3",   "bsim_n",    ""),
+    ("PMOS3V3",   "bsim_p",    ""),
+    ("NMOS5V0",   "bsim_n",    ""),
+    ("PMOS5V0",   "bsim_p",    ""),
+    ("NMOS12V",   "bsim_n",    ""),
+    ("PMOS12V",   "bsim_p",    ""),
+    ("NDMOS20V",  "vdmos_n",   ""),
+    ("PDMOS20V",  "vdmos_p",   ""),
+    ("NDMOS40V",  "vdmos_n",   ""),
+    ("PDMOS40V",  "vdmos_p",   ""),
+    ("NDMOS60V",  "vdmos_n",   ""),
+    ("PDMOS60V",  "vdmos_p",   ""),
+    ("NDMOS80V",  "vdmos_n",   ""),
+    ("PDMOS80V",  "vdmos_p",   ""),
+    ("NDMOS120V", "vdmos_n",   ""),
+    ("PDMOS120V", "vdmos_p",   ""),
+    ("NDMOS200V", "vdmos_n",   "L=8u"),
+    ("PDMOS200V", "vdmos_p",   "L=8u"),
+    ("DNMOS20V",  "vdmos_dep", ""),
     ("NPN_LV",   "npn",       ""),
     ("PNP_LAT",  "pnp",       ""),
     ("NPN_HV",   "npn",       ""),
@@ -76,8 +76,8 @@ DEVICES = [
     ("DIO_FAST", "dio",       ""),
     ("DIO_SCH",  "dio",       ""),
     ("DZ_5V6",   "dio",       ""),
-    ("DZ_12",    "dio",       ""),
-    ("DZ_24",    "dio",       ""),
+    ("DZ_12V",    "dio",       ""),
+    ("DZ_24V",    "dio",       ""),
     ("RPOLY_HI", "r",         ""),
     ("RPOLY_LO", "r",         ""),
     ("RNWELL",   "r",         ""),

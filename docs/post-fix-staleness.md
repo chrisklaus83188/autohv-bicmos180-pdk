@@ -9,9 +9,9 @@ re-run.
 |---|---|---|
 | ~~`circuits/delay_pulse_design/`~~ **✅ DONE (v2.1-circuits Phase C)** | RPOLY_HI **tc1 sign flip** (+0.0006→−0.0014) changes the delay's temperature drift. (The RPOLY_LO 12× note does **not** apply — this design uses RPOLY_HI, sheet unchanged; see finding.) | re-ran full pipeline: nominal L_R unchanged (no ÷12), slowest corner flipped hot→cold, verify.py ALL OK. See `circuits-requalification.md` Phase C |
 | ~~`circuits/delay_cells_voltage_ramp/`~~ **✅ DONE (v2.1-circuits Phase C)** | junction caps (F6) load the RAMP node → ramp slope drops ~9–26 % | re-ran `gen_delay_cells.py` (netlists identical) + re-measured slopes; README updated, 2 findings preserved. See `circuits-requalification.md` Phase C.2 |
-| ~~`circuits/comparators/` (9 cells)~~ **✅ DONE (v2.1-circuits Phase B + report layer)** | matching widened → offset σ increases; PMOS50 tempco → offset drift | re-ran `run_comparators.py`/`run_rr.py` at N=200: 5 V σ ×2.1–2.8 (median 2.4), 3.3/1.8 V flat. Saturation orphan fixed. Reports regenerated via `report_refresh.py` AUTOGEN fences (GR2-amendment mechanism). See `circuits-requalification.md` Phase B |
+| ~~`circuits/comparators/` (9 cells)~~ **✅ DONE (v2.1-circuits Phase B + report layer)** | matching widened → offset σ increases; PMOS5V0 tempco → offset drift | re-ran `run_comparators.py`/`run_rr.py` at N=200: 5 V σ ×2.1–2.8 (median 2.4), 3.3/1.8 V flat. Saturation orphan fixed. Reports regenerated via `report_refresh.py` AUTOGEN fences (GR2-amendment mechanism). See `circuits-requalification.md` Phase B |
 | ~~`circuits/async_logic_design/` (24 cells)~~ **✅ DONE (v2.1-circuits Phase A)** | BSIM3 **junction caps (F6)** → input-cap contract re-verified; **drive** unaffected (Idsat cards unchanged for BSIM3) | re-ran `async_run.py` under the 6.5 fF contract; see `circuits-requalification.md` Phase A |
-| ~~`circuits/current_mirror_char/` (PMOS50 study)~~ **✅ DONE (v2.1-circuits Phase D + report layer)** | **matching widened** → MC σ up; λ/r_out unaffected (DC) | re-ran pipeline (DC identical, MC σ ×2.47 mismatch at N=200). Fixed macOS-home-dir + space-in-path wrdata + 2 pdk_validation decks. `MIRROR_CHAR.md` DC/MC sign-off tables regenerated via `report_refresh.py` fences. See `circuits-requalification.md` Phase D |
+| ~~`circuits/current_mirror_char/` (PMOS5V0 study)~~ **✅ DONE (v2.1-circuits Phase D + report layer)** | **matching widened** → MC σ up; λ/r_out unaffected (DC) | re-ran pipeline (DC identical, MC σ ×2.47 mismatch at N=200). Fixed macOS-home-dir + space-in-path wrdata + 2 pdk_validation decks. `MIRROR_CHAR.md` DC/MC sign-off tables regenerated via `report_refresh.py` fences. See `circuits-requalification.md` Phase D |
 | ~~`circuits/hv_charge_pump/`~~ **✅ FIRST-QUAL DONE (v2.1-circuits Phase E)** | was uncharacterized; VDMOS kp/rd re-derivation | built the first working testbench; DC function VERIFIED at 200 V (12 V high-side swing SW↔BOOT, bias currents measured). Switching transient does NOT converge — documented failure mode + redesign scope. See `circuits-requalification.md` Phase E |
 | `pdk_validation/regression/goldens/*.json` | **passive rsh + tc1 + VCC extraction** — the 9 passive goldens were generated against old sheets/TCs | **`run_passives.py --regenerate`** (phase-3 deferred — see below) |
 | `pdk_validation/regression/transients/` wall-time baselines | **VDMOS cap re-derivation** shifts switching speed; **F6 junction caps** shift BSIM3 switching | re-baseline Phase D wall times |
@@ -36,9 +36,9 @@ re-run.
 - **Full harness re-baseline: DONE** — `run_all.py` re-run (561 measurements) → `characterization-scorecard.md`
   regenerated against `anchor-values.json` v4.0-phase4-grounded → **298 pass** (was 280), 20 hard-fail +
   6 error, all dispositioned in `sizing-open-findings.md` (v3). Movers vs v1: DIO_SCH tt resolved,
-  va_class ×11 now pass, zener bv-vs-T non-flat, DNMOS20 recentred; theta-extraction count 7→9 (larger
+  va_class ×11 now pass, zener bv-vs-T non-flat, DNMOS20V recentred; theta-extraction count 7→9 (larger
   rd) — all expected. New: `va_class` (2-point gds Early voltage) added to the VDMOS family module.
-- **Sizing guide: REGENERATED** from the final model state (`sizing-guide.{md,json}` v4.0-phase4). DNMOS20
+- **Sizing guide: REGENERATED** from the final model state (`sizing-guide.{md,json}` v4.0-phase4). DNMOS20V
   self-bias W ~2× smaller (Idss 54.7→106 µA/µm); VDMOS mirror points stable (the gm/Id≈6 point is
   insensitive to rd); md now assembled by a single correct writer (interleave bug fixed).
 - **device_limits.csv v2** adopted (geometry + V/I/P/T SOA) with a real pre-flight reader in `run_all.py`.

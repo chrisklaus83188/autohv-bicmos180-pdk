@@ -15,10 +15,10 @@ The derived ladder reproduced your table exactly, from an independent path:
 
 | card | A_VT mV·µm | card | A_VT mV·µm |
 |---|---|---|---|
-| NMOS18 | 3.44 | PMOS18 | 3.66 |
-| NMOS33 | 4.51 | PMOS33 | 4.81 |
-| NMOS50 | 5.96 | PMOS50 | 6.41 |
-| NMOS12 | 15.02 | PMOS12 | 15.84 |
+| NMOS1V8 | 3.44 | PMOS1V8 | 3.66 |
+| NMOS3V3 | 4.51 | PMOS3V3 | 4.81 |
+| NMOS5V0 | 5.96 | PMOS5V0 | 6.41 |
+| NMOS12V | 15.02 | PMOS12V | 15.84 |
 
 `c_RDF` = **2.1991 mV·µm/√nm**, constant to **3.18 %** (2.1661…2.2361) across t_ox 4.25–31 nm and
 N_a 9.0e16–7.9e17 cm⁻³. 5 V class lands at **0.542 / 0.583** mV·µm per nm of t_ox. `f_RDF` = 0.30
@@ -72,7 +72,7 @@ arithmetic, never in the simulator. **Left untouched.**
 ### 3.2 `VTO` shift is outside the ruling's scope
 
 Deriving body doping from each `VTO` and moving to 11 nm implies a uniform **−13.1 to −13.6 %**
-threshold shift on all ten enhancement cards (e.g. NDMOS20 1.000 → 0.869). Z2's mover list names
+threshold shift on all ten enhancement cards (e.g. NDMOS20V 1.000 → 0.869). Z2's mover list names
 `kp`, gate caps, `theta`, `ksubthres` — not `VTO` — and a 13 % threshold move on every LDMOS is far
 larger than anything pre-registered.
 
@@ -109,14 +109,14 @@ Measured before/after on all thirteen cards, at Vov = 3 V:
 | Ron | −5 … −10 % | **−1.3 … −8.9 %** |
 
 `kp` × 1.1818 and `theta` × 1.1818 push **opposite ways** — more drive, more mobility degradation —
-so roughly half the expected gain cancels. The effect is class-dependent: PDMOS20 +10.4 %,
-NDMOS200 +4.1 %. Ron reaches the pre-registered band only at the low-voltage end; above 60 V it is
+so roughly half the expected gain cancels. The effect is class-dependent: PDMOS20V +10.4 %,
+NDMOS200V +4.1 %. Ron reaches the pre-registered band only at the low-voltage end; above 60 V it is
 drift-dominated and `rd`/`rs` are (correctly) untouched.
 
 ## 4. One finding that is not Z2's doing
 
 The phase-3 trigger case does not reproduce. Conditions identical to the record
-(`CHANGELOG.md:370`: NDMOS200, W = 10 µm, diode-connected, 100 µA), measured on the **committed
+(`CHANGELOG.md:370`: NDMOS200V, W = 10 µm, diode-connected, 100 µA), measured on the **committed
 13 nm cards before any rescale**:
 
 | | recorded | measured |
@@ -128,14 +128,14 @@ I first assumed my secant estimator was at fault; the proper operating-point mea
 *lower*, so that explanation was wrong. The qualitative claim survives — gm/Id 3.30 is firmly
 strong-inversion, nowhere near the subthreshold collapse that triggered the original audit — but the
 numbers do not, and I am not going to report it as "re-reported, unchanged".
-`characterization-inventory.md` already flags NDMOS200 as **contested**, with its mismatch
+`characterization-inventory.md` already flags NDMOS200V as **contested**, with its mismatch
 coefficient "assigned, never validated". Pre-existing and independent of Z2.
 
 ## 5. Work behind these numbers, including what went wrong
 
 - **The VDMOS slope harness took four passes.** Pass 1 fit a fixed 1e-12…1e-9 A window and returned
   357–678 mV/dec — it was fitting the numerical floor, not subthreshold. Pass 2 anchored the window
-  on each card's own `VTO` and got 11 of 13. Pass 3 fixed the depletion card (DNMOS20, `VTO` −1.60)
+  on each card's own `VTO` and got 11 of 13. Pass 3 fixed the depletion card (DNMOS20V, `VTO` −1.60)
   but broke all six PMOS cards, because I sorted by signed voltage and differentiated in ascending-V
   order — for a p-channel the current rises as Vg goes *more negative*, so the derivative was
   negative everywhere. Pass 4 differentiates along each device's own overdrive direction and adds a

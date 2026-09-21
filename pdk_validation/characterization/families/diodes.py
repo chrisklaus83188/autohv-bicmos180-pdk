@@ -3,7 +3,7 @@
 Diode and zener characterization -- phase-2 harness family module.
 
 Covers the six two-terminal junction wrappers in autohv_bicmos180_case.lib:
-DIO_PN, DIO_FAST, DIO_SCH (signal/rectifier) and DZ_5V6, DZ_12, DZ_24
+DIO_PN, DIO_FAST, DIO_SCH (signal/rectifier) and DZ_5V6, DZ_12V, DZ_24V
 (zeners).  Ports are `a c` (anode, cathode), parameter AREA=1.  Zeners are
 characterized in REVERSE breakdown, which is how they are used.
 
@@ -42,7 +42,7 @@ from char_lib import (header, run_deck, deck_path, parse_dc_sweep, parse_prints,
                       load_anchors, T300, Q, K_B)
 
 SIGNAL = ["DIO_PN", "DIO_FAST", "DIO_SCH"]
-ZENERS = ["DZ_5V6", "DZ_12", "DZ_24"]
+ZENERS = ["DZ_5V6", "DZ_12V", "DZ_24V"]
 DEVICES = SIGNAL + ZENERS
 
 SUBDIR = "diodes"
@@ -67,7 +67,7 @@ REV_BALLAST = 1e3
 # Reverse sweep ceiling per device. Generous headroom above the card's bv so
 # both the 1 uA and the 1 mA crossings are inside the sweep.
 REV_VMAX = {"DIO_PN": 130.0, "DIO_FAST": 110.0, "DIO_SCH": 70.0,
-            "DZ_5V6": 12.0, "DZ_12": 22.0, "DZ_24": 38.0}
+            "DZ_5V6": 12.0, "DZ_12V": 22.0, "DZ_24V": 38.0}
 
 TEMPS_C = [-40.0, 27.0, 150.0]
 
@@ -516,7 +516,7 @@ def _run_zener(col: Collector, dev: str) -> None:
                           "change sign with the measurement current; this one "
                           "does, which is the proof there is no bv tempco in "
                           "the model at all. Audit 4.5: over -40..150 degC "
-                          "DZ_24 should move +2.9 to +4.8 V, and it is flat -- "
+                          "DZ_24V should move +2.9 to +4.8 V, and it is flat -- "
                           "wrong in the unsafe direction, since a real clamp "
                           "passes more voltage hot than simulated. The model "
                           "also gives no way to tell the good near-zero-tempco "

@@ -65,7 +65,7 @@ global parameters control everything:
 
 Vdd d 0 1.8
 Vg  g 0 1.8
-X1  d g 0 0 NMOS18 W=10u L=1u M=1   ; d g s b
+X1  d g 0 0 NMOS1V8 W=10u L=1u M=1   ; d g s b
 
 .op
 .end
@@ -82,8 +82,8 @@ bracketing, CI gating, and sensitivity analysis. Set `MM_ON=0` when using
 ```spice
 * Worst-case differential pair input offset:
 .param case=0 PROC_ON=0 MM_ON=0
-XM1 d1 g1 s b NMOS50 W=100u L=2u MM_SIGMA=+3   ; +3σ Vth shift
-XM2 d2 g2 s b NMOS50 W=100u L=2u MM_SIGMA=-3   ; -3σ Vth shift, opposing
+XM1 d1 g1 s b NMOS5V0 W=100u L=2u MM_SIGMA=+3   ; +3σ Vth shift
+XM2 d2 g2 s b NMOS5V0 W=100u L=2u MM_SIGMA=-3   ; -3σ Vth shift, opposing
 ```
 
 Full flow (sensitivity scan → compose worst-case pattern → lock as testbench
@@ -111,7 +111,7 @@ ngspice -b 01_nominal_op.cir
 | Family | Ports | Size parameters |
 |--------|-------|-----------------|
 | Core MOSFET (NMOS/PMOS 12/18/33/50) | d g s b | `W`, `L`, `M` |
-| HV DMOS/LDMOS (N/PDMOS 20–200, DNMOS20) | d g s | `W`, `M` (plus `L` on `NDMOS200`/`PDMOS200`) |
+| HV DMOS/LDMOS (N/PDMOS 20–200, DNMOS20V) | d g s | `W`, `M` (plus `L` on `NDMOS200V`/`PDMOS200V`) |
 | Bipolar (NPN/PNP)                   | c b e   | `AREA` |
 | Diode / Zener                       | a c     | `AREA` |
 | Resistor                            | p n     | `L`, `W` |
@@ -124,7 +124,7 @@ for deterministic mismatch corners — see the section above and
 
 ## Notes
 
-The DMOS drift-length window and coefficients on `NDMOS200`, and the qualitative
+The DMOS drift-length window and coefficients on `NDMOS200V`, and the qualitative
 resistor/capacitor descriptions, are physically plausible defaults rather than
 silicon-extracted values — calibrate to your process. Breakdown is held at the model
 card rating regardless of `L`. See the reference manual, Section 8, for the full list

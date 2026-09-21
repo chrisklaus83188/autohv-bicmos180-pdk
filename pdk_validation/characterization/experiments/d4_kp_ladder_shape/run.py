@@ -76,10 +76,10 @@ VOV_LO, VOV_HI, STEP = 0.5, 4.0, 0.05
 # audit 2.1's implied-width ratios at tox = 30 nm flat, for cross-checking that
 # the recomputation reproduces the audit before it departs from it.
 AUDIT_2_1_RATIO = {
-    "NDMOS20": 3649, "PDMOS20": 5213, "DNMOS20": 1303,
-    "NDMOS40": 2476, "PDMOS40": 3408, "NDMOS60": 1564, "PDMOS60": 2205,
-    "NDMOS80": 1043, "PDMOS80": 1524, "NDMOS120": 586, "PDMOS120": 842,
-    "NDMOS200": 287, "PDMOS200": 353,
+    "NDMOS20V": 3649, "PDMOS20V": 5213, "DNMOS20V": 1303,
+    "NDMOS40V": 2476, "PDMOS40V": 3408, "NDMOS60V": 1564, "PDMOS60V": 2205,
+    "NDMOS80V": 1043, "PDMOS80V": 1524, "NDMOS120V": 586, "PDMOS120V": 842,
+    "NDMOS200V": 287, "PDMOS200V": 353,
 }
 
 
@@ -150,7 +150,7 @@ def run() -> dict:
                                 "Cox = eps_ox / tox"},
     }
     out["wrapper_equivalence_check"] = E.wrapper_equivalence_check(
-        "NDMOS200", SUBDIR)
+        "NDMOS200V", SUBDIR)
 
     rows, errors = [], []
     for dev in E.DEVICES:
@@ -178,7 +178,7 @@ def run() -> dict:
             "the card's theta and, from the intercept, the card's kp under "
             "D1's Id = (kp/2)Vov^2 convention. That is the point of the "
             "control, not a tautology: it demonstrates (i) that D1's "
-            "convention holds on all thirteen cards, not just NDMOS200, and "
+            "convention holds on all thirteen cards, not just NDMOS200V, and "
             "(ii) that once series resistance is removed the MEASURED theta "
             "equals the CARD theta, so audit 2.7's tox inferences -- which "
             "were computed from card values -- are not corrupted by rd/rs. On "

@@ -19,17 +19,17 @@ FORMS
                   The _isXX terms mark "this parameter is statistical" and carry the
                   per-corner values; P_X marks which draw applied.
 
-`additive`        generated:  {0.88 + 0.016492*Z_VTH_NMOS50}
-`multiplicative`  generated:  {190*exp(0.026667*Z_U0_NMOS50)}
+`additive`        generated:  {0.88 + 0.016492*Z_VTH_NMOS5V0}
+`multiplicative`  generated:  {190*exp(0.026667*Z_U0_NMOS5V0)}
 `reference`       a tempco wrapper around a _STAT param, which the generator does not
-                  own:        {KP_NDMOS20_STAT*(1+TC_KP_NDMOS20*(temper-27))}
+                  own:        {KP_NDMOS20V_STAT*(1+TC_KP_NDMOS20V*(temper-27))}
 `plain`           a deterministic value: 1.4e-07
 `text`            a non-numeric literal: version=3.3.0
 
 USAGE
     from inc_parse import parse, tt_of, sigma_of, z_of, IncParseError
-    p = parse("{0.88 + 0.016492*Z_VTH_NMOS50}")
-    p.kind, p.tt, p.sigma, p.z   -> "additive", 0.88, 0.016492, "Z_VTH_NMOS50"
+    p = parse("{0.88 + 0.016492*Z_VTH_NMOS5V0}")
+    p.kind, p.tt, p.sigma, p.z   -> "additive", 0.88, 0.016492, "Z_VTH_NMOS5V0"
 """
 from __future__ import annotations
 
@@ -49,14 +49,14 @@ class Parsed:
     raw: str
     tt: float | None = None         # the typical value, where the form carries one
     sigma: float | None = None      # generated forms only
-    z: str | None = None            # generated forms only, e.g. "Z_VTH_NMOS50"
-    draw: str | None = None         # marker form only, e.g. "P_DVTH_NMOS18"
+    z: str | None = None            # generated forms only, e.g. "Z_VTH_NMOS5V0"
+    draw: str | None = None         # marker form only, e.g. "P_DVTH_NMOS1V8"
     corners: dict = field(default_factory=dict)   # marker form: {"TT": .., "FF": .., ...}
 
 
 def _strip(expr: str) -> str:
     # Order matters: the comment goes first. A braced expression with a trailing
-    # note -- `{0.88 + 0.016492*Z_VTH_NMOS50} $ measured` -- does not *end* in "}",
+    # note -- `{0.88 + 0.016492*Z_VTH_NMOS5V0} $ measured` -- does not *end* in "}",
     # so stripping braces first leaves them attached and every form below misses.
     e = re.sub(r"\s*\$.*$", "", expr).strip()      # drop an inline $ comment
     if e.startswith("{") and e.endswith("}"):

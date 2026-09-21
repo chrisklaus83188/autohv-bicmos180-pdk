@@ -8,25 +8,25 @@
 * --- N-channel drains @ +3 V, gates @ +2.5 V ---
 Vdn dn 0 3
 Vgn gn 0 2.5
-XND20  dn gn 0 NDMOS20  W=20u
-XND40  dn gn 0 NDMOS40  W=20u
-XND60  dn gn 0 NDMOS60  W=20u
-XND80  dn gn 0 NDMOS80  W=20u
-XND120 dn gn 0 NDMOS120 W=20u
-XND200 dn gn 0 NDMOS200 W=20u L=8u
+XND20  dn gn 0 NDMOS20V  W=20u
+XND40  dn gn 0 NDMOS40V  W=20u
+XND60  dn gn 0 NDMOS60V  W=20u
+XND80  dn gn 0 NDMOS80V  W=20u
+XND120 dn gn 0 NDMOS120V W=20u
+XND200 dn gn 0 NDMOS200V W=20u L=8u
 
 * --- P-channel drains @ -3 V, gates @ -2.5 V ---
 Vdp dp 0 -3
 Vgp gp 0 -2.5
-XPD20 dp gp 0 PDMOS20 W=20u
-XPD40 dp gp 0 PDMOS40 W=20u
-XPD60 dp gp 0 PDMOS60 W=20u
-XPD80 dp gp 0 PDMOS80 W=20u
+XPD20 dp gp 0 PDMOS20V W=20u
+XPD40 dp gp 0 PDMOS40V W=20u
+XPD60 dp gp 0 PDMOS60V W=20u
+XPD80 dp gp 0 PDMOS80V W=20u
 
 * --- Depletion n-channel (vto < 0): drain @ +3 V, gate @ 0 V ---
 Vdd dd 0 3
 Vgd gd 0 0
-XDN20 dd gd 0 DNMOS20 W=20u
+XDN20 dd gd 0 DNMOS20V W=20u
 
 .control
 op

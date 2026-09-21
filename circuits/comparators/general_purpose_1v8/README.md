@@ -2,7 +2,7 @@
 
 The 1.8 V port of the [`general_purpose`](../general_purpose/) (5 V) comparator
 family. **Same topology, knobs, and tooling** — core devices are the 1.8 V class
-(`NMOS18` / `PMOS18`). Topology + re-tuning guide:
+(`NMOS1V8` / `PMOS1V8`). Topology + re-tuning guide:
 [`../general_purpose/DESIGN_NOTES.md`](../general_purpose/DESIGN_NOTES.md).
 
 - Two input flavours: `CMP_NIN` (high CM), `CMP_PIN` (low CM).
@@ -69,6 +69,6 @@ Reproduce: `python run_comparators.py` (specs) · `python run_saturation.py --pv
 range auto-derives to ±10 %.
 
 ## Files
-`cmp_gp.lib` (NMOS18/PMOS18) · `run_comparators.py` · `run_saturation.py` ·
+`cmp_gp.lib` (NMOS1V8/PMOS1V8) · `run_comparators.py` · `run_saturation.py` ·
 `tb_example.cir` · `comparator_results.json`. Topology + tuning: the 5 V
 `DESIGN_NOTES.md`.

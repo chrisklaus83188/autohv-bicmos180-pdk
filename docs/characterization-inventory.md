@@ -36,7 +36,7 @@ autohv-bicmos180-pdk/
 ├── circuits/                          Design + characterization work built ON the PDK
 │   ├── async_logic_design/            24 static-CMOS logic cells, 3 domains, 120 decks
 │   ├── comparators/                   9 comparator cells (GP two-stage + rail-to-rail), 3 rails
-│   ├── current_mirror_char/           PMOS50 mirror DC/MC study — the cleanest work in the tree
+│   ├── current_mirror_char/           PMOS5V0 mirror DC/MC study — the cleanest work in the tree
 │   ├── delay_pulse_design/            12 DLYR/DLYF/PHI/PLO cells, 45-pt PVT + 200-run MC
 │   ├── delay_cells_voltage_ramp/      UNTRACKED. Mirror-into-cap voltage-ramp front-end
 │   └── hv_charge_pump/hv_up_lvlsh/    5 hand-written .spice files, ZERO characterization
@@ -61,17 +61,17 @@ autohv-bicmos180-pdk/
 
 | Path | Covers | Devices | Key results / conclusions | Repro |
 |---|---|---|---|---|
-| `docs/CHANGELOG.md` | Every model change since 2026-05-22, reverse-chronological, all under `[Unreleased]` | All | The single most complete fix record. Carries before/after numbers for the VDMOS cap fix, PDMOS200 bv re-rating, Rcond sweep, 1/f calibration, self-heating, SC audit, corner sanity. | n/a (prose) |
+| `docs/CHANGELOG.md` | Every model change since 2026-05-22, reverse-chronological, all under `[Unreleased]` | All | The single most complete fix record. Carries before/after numbers for the VDMOS cap fix, PDMOS200V bv re-rating, Rcond sweep, 1/f calibration, self-heating, SC audit, corner sanity. | n/a (prose) |
 | `docs/MISMATCH_CORNERS.md` | Mismatch model contract + `MM_SIGMA` semantics | All 40 | `X_MM = MM_ON*AGAUSS(0,X,3)/scale + MM_SIGMA*X/3/scale`. HSPICE convention: **X is the 3σ bound, true 1σ = X/3**. Four-mode table; `(MM_ON=1, MM_SIGMA≠0)` explicitly "don't do this". | `transients/mismatch_corner.cir` |
 | `docs/handoffs/HANDOFF_vdmos_caps.md` | **The VDMOS capacitance diagnosis** | 13 VDMOS | See §3 and §6.2. Full pre-fix table for `cgs`/`cgdmax`/`cgdmin`/`cjo`; the 10 µm-cell physical argument; pF-vs-fF unit-slip hypothesis. | `coss_check.cir` (partial) |
-| `docs/handoffs/HANDOFF_cascode_vshift_singularity.md` | `vshift#branch` singular matrix on cascodes | NDMOS200/120 | `method=gear` aborts; `method=trap` "limps through but the operating point is corrupted — e.g. an average supply current measured as `-25.9 A`". | inline repro |
-| `docs/handoffs/HANDOFF_dmos200_breakdown.md` | PDMOS200 sub-200 V breakdown | PDMOS200 | Worst corner 194.58 V (FF/SF) vs 200 V class name. `"LEVEL=1 hid this entirely (no bv)"`. | inline repro |
-| `docs/handoffs/HANDOFF_dmos200_vshift_multiinstance{,_REPLY}.md` | Multi-instance floating-mirror singularity + the fix | NDMOS200/PDMOS200 | `delvto` rejected by ngspice for VDMOS; `Rgmin` at 1e7/1e6/1e5 still singular; **`Rcond g_int s` is the working fix.** | 4-front-end acceptance test |
+| `docs/handoffs/HANDOFF_cascode_vshift_singularity.md` | `vshift#branch` singular matrix on cascodes | NDMOS200V/120 | `method=gear` aborts; `method=trap` "limps through but the operating point is corrupted — e.g. an average supply current measured as `-25.9 A`". | inline repro |
+| `docs/handoffs/HANDOFF_dmos200_breakdown.md` | PDMOS200V sub-200 V breakdown | PDMOS200V | Worst corner 194.58 V (FF/SF) vs 200 V class name. `"LEVEL=1 hid this entirely (no bv)"`. | inline repro |
+| `docs/handoffs/HANDOFF_dmos200_vshift_multiinstance{,_REPLY}.md` | Multi-instance floating-mirror singularity + the fix | NDMOS200V/PDMOS200V | `delvto` rejected by ngspice for VDMOS; `Rgmin` at 1e7/1e6/1e5 still singular; **`Rcond g_int s` is the working fix.** | 4-front-end acceptance test |
 | `docs/handoffs/HANDOFF_ngspice_compat*.md` (6 docs) | The ngspice-46 compatibility thread | VDMOS + passives | 3 of 4 claims retracted by the reporter. Only `Vshift` reproduced. Establishes the CI convention: failure on ngspice 46 = known issue; failure on 45.2/47+ = real regression. | 4 mini-repro decks quoted inline |
-| `docs/backlog/HANDOFF_dmos200_subthreshold_analog.md` | **OPEN.** HV DMOS `kp` is a power-FET value | NDMOS200/PDMOS200 | `KP_PDMOS200=0.088`, `KP_NDMOS200=0.22` A/V²; strong inversion only near 5 mA; gm/I≈26/V at 10–55 µA → σ(trip) ≈ 340–440 mV. "Needs a maintainer decision before any model-card change." | inline repro |
-| `docs/backlog/HANDOFF_dynamic_transient_microstepping.md` | **Filed OPEN, actually resolved.** | NDMOS200/PDMOS200 | 100 V all-clear / 120 V dynamics die. "Not the slew rate. 2 V/µs times out too." | `repro_*.cir` ×4 |
-| `BRIEF_pdk_realism.md` (untracked) | **The audit plan.** Thesis: `kp`/`rd`/`rs` scaled to a power die, not the 10 µm cell | NDMOS200/PDMOS200 (+20 V pair) | See §6.1 — this is the most consequential unfiled document in the tree. | measurements described, not committed |
-| `BRIEF_hv_monitor.md` (untracked) | HV monitor architecture question | NDMOS200/PDMOS200 | "**Critical gap: there is no analog MOS device between 5 V and 20 V.**" Subthreshold tables at W = 2…1000 µm. | none |
+| `docs/backlog/HANDOFF_dmos200_subthreshold_analog.md` | **OPEN.** HV DMOS `kp` is a power-FET value | NDMOS200V/PDMOS200V | `KP_PDMOS200V=0.088`, `KP_NDMOS200V=0.22` A/V²; strong inversion only near 5 mA; gm/I≈26/V at 10–55 µA → σ(trip) ≈ 340–440 mV. "Needs a maintainer decision before any model-card change." | inline repro |
+| `docs/backlog/HANDOFF_dynamic_transient_microstepping.md` | **Filed OPEN, actually resolved.** | NDMOS200V/PDMOS200V | 100 V all-clear / 120 V dynamics die. "Not the slew rate. 2 V/µs times out too." | `repro_*.cir` ×4 |
+| `BRIEF_pdk_realism.md` (untracked) | **The audit plan.** Thesis: `kp`/`rd`/`rs` scaled to a power die, not the 10 µm cell | NDMOS200V/PDMOS200V (+20 V pair) | See §6.1 — this is the most consequential unfiled document in the tree. | measurements described, not committed |
+| `BRIEF_hv_monitor.md` (untracked) | HV monitor architecture question | NDMOS200V/PDMOS200V | "**Critical gap: there is no analog MOS device between 5 V and 20 V.**" Subthreshold tables at W = 2…1000 µm. | none |
 | `circuits/*/REPORT.md`, `SUMMARY.md`, `CHARACTERIZATION.md`, `MIRROR_CHAR.md`, `DESIGN_NOTES.md`, `SATURATION_SIGNOFF.md` | Per-circuit design reports | see §2.2 | Generated from results JSON by `report.py` / `summary.py` / `char_report.py` in each dir. | yes (generated) |
 | `xschem/*/README.md` (5) | Usage/install only | — | Essentially no characterization data. Exceptions: `autohv/README.md` `"Id ramps to ~2.7 mA at Vgs=12 V"`; `delay_pulse/README.md` `"~20 ns nominal"`, `"≈ −20 %/+40 % over the PVT matrix"`. | — |
 
@@ -83,15 +83,15 @@ autohv-bicmos180-pdk/
 | `pdk_validation/regression/run_passives.py` | 5 R + 4 C | `R(V)` from `.dc Vp -5 5 0.25`; `C(V)` from PWL 0→5 V/1 ms tran (dV/dt = 5000 V/s); diff vs golden at `--tol 1e-3` | **yes** — `goldens/*.json`, regenerable |
 | `pdk_validation/regression/run_corners.py` | 9 probes, one per family | sign of `(v − v_TT)/|v_TT|` vs the expected sign table; 36 checks; `EQ_TOL=1e-4` | no file |
 | `pdk_validation/regression/run_transients.py` | 13 decks | convergence + `TRAN_OK` marker + per-deck wall budget (2.0/3.0/4.0 s) | no file |
-| `pdk_validation/regression/run_mc.py` | NMOS50 pair | σ(I) per device and σ(log I1/I2) per pair, MM and PROC axes, N=200; asserts within `--tol 0.30` | no file |
-| `pdk_validation/switched_cap_audit/run_sc_audit.py` | NMOS18 switch + CMIM_STD/HI | Q-injection offset, gain error, RMS residual vs kT/C floor | no file (scratch deleted) |
+| `pdk_validation/regression/run_mc.py` | NMOS5V0 pair | σ(I) per device and σ(log I1/I2) per pair, MM and PROC axes, N=200; asserts within `--tol 0.30` | no file |
+| `pdk_validation/switched_cap_audit/run_sc_audit.py` | NMOS1V8 switch + CMIM_STD/HI | Q-injection offset, gain error, RMS residual vs kT/C floor | no file (scratch deleted) |
 | `circuits/async_logic_design/async_run.py` + `async_lib.py` | 8 cells × 3 domains | `gnp_` per-µm gate cap; `ratio_` β-ratio for V_M centering; `cap_` per-pin C_in (AC 1 MHz, rail-averaged); `vm_` V_M over 45 PVT pts; `tr_` rise/fall over 45 PVT pts | **yes** — `results.json` |
 | `circuits/comparators/*/run_comparators.py`, `run_rr.py` | 9 comparator cells | offset σ (500-run MC for GP, 200 for RR), systematic offset, DC gain, tpd LH/HL, Iq, hysteresis, area | **yes** — `comparator_results.json` ×6 |
 | `circuits/comparators/*/run_saturation.py` | same | ICMR bands via `Vds/Vdsat ≥ 1.4` (≥ 1.1 at 1.8 V) over 5 corners × 3 temps × 3 supplies | **NO FILE** — see §6.4 |
-| `circuits/current_mirror_char/run_phase0.py`, `build_designs.py`, `run_dc.py`, `run_mc.py`, `compute_metrics.py`, `make_plots.py` | PMOS50, 3 mirror topologies | λ_eff, r_out, gain@Vdd/2, ramp nonlinearity, compliance, area; 1440 DC rows + 9000 MC runs | **yes** — 8 artifacts, all regenerable |
+| `circuits/current_mirror_char/run_phase0.py`, `build_designs.py`, `run_dc.py`, `run_mc.py`, `compute_metrics.py`, `make_plots.py` | PMOS5V0, 3 mirror topologies | λ_eff, r_out, gain@Vdd/2, ramp nonlinearity, compliance, area; 1440 DC rows + 9000 MC runs | **yes** — 8 artifacts, all regenerable |
 | `circuits/delay_pulse_design/dp_run.py`, `dp_char.py`, `gen_lib.py`, `verify.py` | 12 delay/pulse cells | `size_` L_R bisection to 20 ns; `pvt_` 45-pt delay/passthrough/edges; `mc_` 200-run σ; `verify_` functional | **yes** — `results.json`, `char.json` |
-| `circuits/delay_cells_voltage_ramp/gen_delay_cells.py` (untracked) | PMOS50 mirror + CMIM_STD | ramp slope dV/dt over the 1→3 V window, 3 topologies × 4 currents | **NO FILE** — prose table only |
-| `circuits/hv_charge_pump/hv_up_lvlsh/*.spice` | NDMOS200/PDMOS200 + NMOS50/PMOS50 | **nothing** — the only testbench in the directory is entirely commented out | none |
+| `circuits/delay_cells_voltage_ramp/gen_delay_cells.py` (untracked) | PMOS5V0 mirror + CMIM_STD | ramp slope dV/dt over the 1→3 V window, 3 topologies × 4 currents | **NO FILE** — prose table only |
+| `circuits/hv_charge_pump/hv_up_lvlsh/*.spice` | NDMOS200V/PDMOS200V + NMOS5V0/PMOS5V0 | **nothing** — the only testbench in the directory is entirely commented out | none |
 
 ### 2.3 Results artifacts
 
@@ -134,9 +134,9 @@ The model files carry substantive provenance comments. Quoted verbatim, with the
   Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity
   ```
 - **DMOS sizing convention** (`.lib` 94 et al.): *"HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min"*.
-- **200 V drift physics** (`.lib` 353–356): *"RDRIFT scale factor is 3.0 (vs 1.2 on NDMOS200): PMOS drift in n-well has ~2.5x higher per-um R, so the per-um delta-R also scales by ~2.5x."*
+- **200 V drift physics** (`.lib` 353–356): *"RDRIFT scale factor is 3.0 (vs 1.2 on NDMOS200V): PMOS drift in n-well has ~2.5x higher per-um R, so the per-um delta-R also scales by ~2.5x."*
 - **Passive matching with literature citations** (`.lib` 473–581, `.inc` 202–205): Allen *CMOS Analog Circuit Design* for poly ~±30 % / n-well ~±40 % absolute and n-well VCR ~8000 ppm/V; Subramanian et al. for MIM σ ~0.1 % vs MOM ~0.65 %; US Pat 6,313,516 and US Pat 12,464,737 (**the latter number is above the currently issued US range — see §6.5**).
-- **1/f noise derivation**, on each of 8 BSIM3 cards: *"tox=6.75n -> NMOS18 NOIA * (4.25/6.75)^2 ~ 0.40"* etc.
+- **1/f noise derivation**, on each of 8 BSIM3 cards: *"tox=6.75n -> NMOS1V8 NOIA * (4.25/6.75)^2 ~ 0.40"* etc.
 - **Binning assumption**, on the 18/33/50 cards: `+ binunit=1  $ NOTE: single global fit, no L/W bins defined`.
 
 ### 2.5 Git history as documentation channel
@@ -163,7 +163,7 @@ VDMOS used the `Vshift` VSRC. This is the origin of the mismatch-model migration
 `BVCR` and `Cextra` behavioral branches and the per-layer matching coefficients, justified by the
 Allen / patent citations quoted in §2.4.
 
-**`0e08f84` · 2026-05-25 · NDMOS200 drift window corrected to ~5.4–10 µm**; `L` relabelled as drift
+**`0e08f84` · 2026-05-25 · NDMOS200V drift window corrected to ~5.4–10 µm**; `L` relabelled as drift
 length (not channel length); DMOS channel length documented separately.
 
 **`6493511` · 2026-05-25 · `device_limits.csv` added.** Geometry bounds only — no voltage, current,
@@ -171,7 +171,7 @@ power, SOA or temperature ratings, then or now.
 
 **`21d72ba` · 2026-05-27 · Four model-level bugs fixed in one commit** (empty body; documented in the
 CHANGELOG diff): BJT breakdown rebuilt behaviorally as `BVCBO` after discovering the Gummel-Poon
-`bv`/`ibv` parameters *"are not GP parameters and were silently ignored"*; NMOS12/PMOS12 migrated
+`bv`/`ibv` parameters *"are not GP parameters and were silently ignored"*; NMOS12V/PMOS12V migrated
 Level-3 → BSIM3 level 49; VDMOS temperature coefficients added; bipolar `kf`/`af` added.
 **This single commit covers three of the checklist items** (BSIM3 12 V fix, VDMOS tempco, BJT 1/f).
 
@@ -197,8 +197,8 @@ simulation-time non-smooth constructs in the entire lib are the 4 BJT avalanche 
 every DMOS `max()` is parse-time. `abs(i(Vsen))` found to be *stabilizing*, and the 0.997 clamp turns
 the high-Vcb region into a finite plateau rather than a divergence.
 
-**`b4ce4e1` · 2026-05-27 · P2.2 corner sanity, 36/36.** Magnitudes recorded: NMOS18 ID +50 % FF /
-−36 % SS; PMOS18 +57/−39; NDMOS20 ±22 %; NPN_LV ±18 %; PNP_LAT ±19 %; DIO_PN Vf ±0.23 %; RPOLY_HI
+**`b4ce4e1` · 2026-05-27 · P2.2 corner sanity, 36/36.** Magnitudes recorded: NMOS1V8 ID +50 % FF /
+−36 % SS; PMOS1V8 +57/−39; NDMOS20V ±22 %; NPN_LV ±18 %; PNP_LAT ±19 %; DIO_PN Vf ±0.23 %; RPOLY_HI
 −10 %/+12 %; CMIM_STD ±3 %.
 
 **`3b045ed` · 2026-05-27 · P3 switched-cap precision audit.** CMIM_STD 10 pF: Q_inj −4.67 mV, gain
@@ -206,8 +206,8 @@ the high-Vcb region into a finite plateau rather than a divergence.
 Conclusion: deterministic errors are 100–1000× the kT/C floor, so explicit thermal-noise injection
 into the cap model is moot for SC apps.
 
-**`b90b132` · 2026-05-27 · PDMOS120 + PDMOS200 added**, completing the HV PMOS family (38 → 40
-devices, smoke 760 → 800). PDMOS200 `kp=0.088, rd=3.00, rs=1.38, bv=207, vto=−1.31`. Explicitly
+**`b90b132` · 2026-05-27 · PDMOS120V + PDMOS200V added**, completing the HV PMOS family (38 → 40
+devices, smoke 760 → 800). PDMOS200V `kp=0.088, rd=3.00, rs=1.38, bv=207, vto=−1.31`. Explicitly
 flagged: *"the new models are engineered (NMOS→PMOS scaling from the existing 80 V pair), not
 silicon-fit."* **The `bv=207` introduced here is the bug fixed a week later by `3a81be0`.**
 
@@ -224,8 +224,8 @@ the CI convention on the residual ngspice-46 failure.
 
 **`a4f2eaa` · 2026-05-30 · Parasitics #1 + #2: calibrated BSIM3 1/f noise + NQS.** `noimod=2` had been
 set but `noia/noib/noic` left at ngspice defaults. Added per-class values scaled as 1/tox²:
-NMOS18/PMOS18 (tox 4.25 n) NOIA 6.25e41 / 6.188e40; NMOS33/PMOS33 (6.75 n) 3.13e41 / 3.09e40;
-NMOS50/PMOS50 (11 n) 1.56e41 / 1.55e40; NMOS12/PMOS12 (20 n) 9.38e40 / 9.28e39; plus `em=4.1e7, af=1,
+NMOS1V8/PMOS1V8 (tox 4.25 n) NOIA 6.25e41 / 6.188e40; NMOS3V3/PMOS3V3 (6.75 n) 3.13e41 / 3.09e40;
+NMOS5V0/PMOS5V0 (11 n) 1.56e41 / 1.55e40; NMOS12V/PMOS12V (20 n) 9.38e40 / 9.28e39; plus `em=4.1e7, af=1,
 ef=1`. NQS `nqsmod=1, elm=5`; op-time median 60 → 75 ms.
 
 **`2f7f1ce` · 2026-05-30 · Parasitics #3: soft self-heating, `SH_ON` gated, default OFF.** Per-class
@@ -237,7 +237,7 @@ solver problem. Cost ~40 ms parse overhead; smoke budget 2.0 → 4.0 s.
 
 **`2cfb8de` · 2026-06-02 · THE VDMOS CAPACITANCE FIX.** All 13 VDMOS `_INT` cards had `cgs`,
 `cgdmax`, `cgdmin`, `cjo` ~1000× too large for the `W_REF=10u` reference cell. **52 numerical edits =
-4 cap params × 13 cards**, uniform ÷1000. Verified on NDMOS200 W=40u L=8u at AC 1 MHz:
+4 cap params × 13 cards**, uniform ÷1000. Verified on NDMOS200V W=40u L=8u at AC 1 MHz:
 
 | Vds | before | after |
 |---|---|---|
@@ -246,8 +246,8 @@ solver problem. Cost ~40 ms parse overhead; smoke budget 2.0 → 4.0 s.
 | 100 V | 11.4 pF | 11.4 fF |
 | 200 V | 8.84 pF | 8.84 fF |
 
-Worked examples: `NDMOS20_INT: cgdmax 4.032e-10 → 4.032e-13, cgs 4.992e-10 → 4.992e-13, cjo 1.4e-10 →
-1.4e-13`; `NDMOS200_INT: cgdmax 3.5e-11 → 3.5e-14, cgs 4.8e-11 → 4.8e-14, cjo 2.2e-11 → 2.2e-14`.
+Worked examples: `NDMOS20V_INT: cgdmax 4.032e-10 → 4.032e-13, cgs 4.992e-10 → 4.992e-13, cjo 1.4e-10 →
+1.4e-13`; `NDMOS200V_INT: cgdmax 3.5e-11 → 3.5e-14, cgs 4.8e-11 → 4.8e-14, cjo 2.2e-11 → 2.2e-14`.
 Physical consequence: *"the oversized drain-source cjo coupled HV drain slew straight onto
 high-impedance cascode source nodes via displacement current, parking them at ~14 V instead of the
 intended VDD−Vth ~4 V… Any HV-stack design using NMOS cascodes showed false SOA violations."*
@@ -258,16 +258,16 @@ expressions extended. The additive form was forced by a simulator limitation: *"
 .param expression parser and confirmed it does NOT support ==, !=, <, >= operators inside
 expressions."* Regression `mismatch_corner.cir`: analytic −1.44 %, measured −1.48 %, tol ±10 %.
 
-**`3a81be0` · 2026-06-05 · PDMOS200 breakdown re-rating.** Worst corner was 194.58 V — below its own
+**`3a81be0` · 2026-06-05 · PDMOS200V breakdown re-rating.** Worst corner was 194.58 V — below its own
 200 V class name, and the only VDMOS in the lib whose worst corner sat under its class. Audit table:
-PDMOS20 +7.3 %, PDMOS60 +12.6 %, PDMOS80 +8.0 %, **PDMOS200 −2.7 % ← bug**, NDMOS200 +5.8 %. Fix: TT
+PDMOS20V +7.3 %, PDMOS60V +12.6 %, PDMOS80V +8.0 %, **PDMOS200V −2.7 % ← bug**, NDMOS200V +5.8 %. Fix: TT
 207 → **230 V**, giving FF/SF 216.2 V (+8.1 % margin). Verified at FF/125 °C: 195 V went from
 "Avalanche (mA+)" to "29.8 nA leakage". The N/P corner asymmetry was investigated and ruled *correct
 physics*: *"FS = fast-N/slow-P → P-weak; SF = slow-N/fast-P → P-weak."*
 
 **`4b05308` · 2026-06-05 · `Rcond g_int s 1e7` added to all 13 VDMOS.** `Rgmin` shunts `g_int`→`g`,
 but in floating high-side mirrors `g` is itself floating; `s` is determined. Verified on 4 floating
-PDMOS200 mirrors at VIN = 200 V: `voutA 2.19 V (5.0 V diff)`, `voutB 1.79 (4.3)`, `voutC 2.59 (5.7)`,
+PDMOS200V mirrors at VIN = 200 V: `voutA 2.19 V (5.0 V diff)`, `voutB 1.79 (4.3)`, `voutC 2.59 (5.7)`,
 `voutD 2.07 (4.8)` — correctly ordered. Known limitation recorded: `.tran` on the same topology at
 200 V still fails.
 
@@ -316,10 +316,10 @@ results, or model files were ever deleted.**
 
 - `W_REF = 10u`, declared in **all 13 VDMOS subckts**. The `.model` card describes **one 10 µm-wide
   reference cell**; instance sizing is purely by multiplier: `.param mtot={(W/W_REF)*M}`, then
-  `M0 d g_int s NDMOS20_INT m={mtot}`. The `VDMOS` primitive has no W/L of its own.
-- `L_REF = 8u`, declared **only** on NDMOS200 and PDMOS200, with `L_MIN=5u` and `Leff={max(L,L_MIN)}`.
+  `M0 d g_int s NDMOS20V_INT m={mtot}`. The `VDMOS` primitive has no W/L of its own.
+- `L_REF = 8u`, declared **only** on NDMOS200V and PDMOS200V, with `L_MIN=5u` and `Leff={max(L,L_MIN)}`.
   `L_REF` is the drift length at which the card's built-in `rd` is exact; a series resistor adds the
-  delta: `RDRIFT={max(1.2*(Leff/L_REF-1)/mtot, 1e-6)}` (NDMOS200) / `3.0*` (PDMOS200).
+  delta: `RDRIFT={max(1.2*(Leff/L_REF-1)/mtot, 1e-6)}` (NDMOS200V) / `3.0*` (PDMOS200V).
 - The 8 BSIM3 subckts have **no** `W_REF`/`L_REF` — they pass real `W`/`L` (defaults `W=10u L=1u`).
 
 ### 4.2 Units
@@ -341,7 +341,7 @@ Five, selected by one global `.param case=0`: **0=TT, 1=FF, 2=SS, 3=FS, 4=SF**, 
 ```
 
 Every corner-dependent parameter is a dot product, e.g.
-`vth0={((0.48*_isTT + 0.4*_isFF + 0.56*_isSS + 0.4*_isFS + 0.56*_isSF))+P_DVTH_NMOS18}`.
+`vth0={((0.48*_isTT + 0.4*_isFF + 0.56*_isSS + 0.4*_isFS + 0.56*_isSF))+P_DVTH_NMOS1V8}`.
 Convention is consistent: **FS = fast-NMOS / slow-PMOS**, SF the reverse. Two orthogonal statistical
 gates, both default OFF: `PROC_ON` (die-to-die) and `MM_ON` (local mismatch).
 
@@ -380,9 +380,9 @@ true 1-sigma = X / N. Empirically: `AGAUSS(0, 1, 3)` over 200 samples → sigma 
 | 4 capacitors | `CMM`, with `LS=sqrt(CMM)` applied to both L and W | `1/sqrt(AUM2)` |
 
 **Coefficients (3σ):**
-- Vth, BSIM3 (V·µm): NMOS18/PMOS18 **0.0105**; NMOS33/PMOS33 **0.012**; NMOS50/PMOS50 **0.0135**;
-  NMOS12/PMOS12 **0.018**. ΔW/W = **0.0075**, ΔL/L = **0.0045** for all eight.
-- Vth, VDMOS: 20 V + DNMOS20 **0.024**; 60 V **0.027**; 120 V **0.030**; 40 V **0.0085**;
+- Vth, BSIM3 (V·µm): NMOS1V8/PMOS1V8 **0.0105**; NMOS3V3/PMOS3V3 **0.012**; NMOS5V0/PMOS5V0 **0.0135**;
+  NMOS12V/PMOS12V **0.018**. ΔW/W = **0.0075**, ΔL/L = **0.0045** for all eight.
+- Vth, VDMOS: 20 V + DNMOS20V **0.024**; 60 V **0.027**; 120 V **0.030**; 40 V **0.0085**;
   80 V **0.0095**; 200 V **0.011**. (Non-monotonic — see §6.5.)
 - BJT/diode AREA: **0.012** for all ten.
 - Resistors: RPOLY_HI 0.0075, RPOLY_LO 0.003, RNWELL 0.013, RNPLUS 0.005, RPPLUS 0.0055.
@@ -408,10 +408,10 @@ the terms *add*, they do not exclude.
 `pdk_validation/device_limits.csv`, columns `device,param,min,max,note`, 86 rows, 38 distinct devices,
 params ∈ {L, W, M, AREA, LCH}. **Geometry bounds only** — no voltage, current, power, SOA, or
 temperature ratings. The single electrical statement in the whole file is the embedded note
-`"~5.4u = realistic 200V minimum"` on `NDMOS200,L,5.4,10.0`.
+`"~5.4u = realistic 200V minimum"` on `NDMOS200V,L,5.4,10.0`.
 
-In-model breakdown lives on the cards instead: VDMOS `bv` 24/22 (20 V class) … 225 (NDMOS200) /
-**230** (PDMOS200, post-re-rating), each with corner spread and a `P_DBV_*` statistical term;
+In-model breakdown lives on the cards instead: VDMOS `bv` 24/22 (20 V class) … 225 (NDMOS200V) /
+**230** (PDMOS200V, post-re-rating), each with corner spread and a `P_DBV_*` statistical term;
 diode `bv` DIO_PN 100 / DIO_FAST 80 / DIO_SCH 45 / DZ 5.6/12/24; BJT `BVCBO` in the subckt
 (NPN_LV 14, PNP_LAT 18, NPN_HV 45, PNP_HV 32) with a behavioral avalanche branch (`MAV_BJT=4`,
 clamped at 0.997).
@@ -433,12 +433,12 @@ Rows = device families. Columns = characterization type. **C** = characterized (
 
 | Family | DC | AC / caps | Noise | Mismatch-MC | Temperature | Corners |
 |---|---|---|---|---|---|---|
-| **BSIM3 NMOS/PMOS 18/33/50** | **C** `regression/run_smoke.py`, `run_corners.py`, `circuits/async_logic_design/decks/ratio_*`, `vm_*` | **C** `async_logic_design/decks/cap_*`, `gnp_*` (per-pin C_in, per-µm fF/µm) | **P** `transients/noise_check.cir` runs `.noise` on NMOS18 only — parses and converges, **no value asserted** | **C** `run_mc.py` (NMOS50 pair, σ 0.29 %/device, 0.42 % pair), `transients/mismatch_corner.cir` | **C** `async_logic_design/decks/vm_*`, `tr_*` at −55/+27/+150 °C | **C** `run_corners.py` (NMOS18/PMOS18 probes), 45-pt PVT in async + delay-pulse |
-| **BSIM3 NMOS12/PMOS12** | **P** smoke + `xschem/autohv/examples/tb_nmos12_idvg.sch` (`Id ~2.7 mA at Vgs=12 V`) | ✗ | ✗ (NOIA assigned in `a4f2eaa`, never measured) | ✗ (not in `run_mc.py`; no `binunit`, no `P_TOX_*`/`P_CJ_*` — §6.5) | ✗ | **P** smoke only — **not among the 9 `run_corners.py` probes** |
-| **PMOS50 specifically** | **C** `circuits/current_mirror_char/` — 1440 rows, 4 current decades, 3 topologies, λ_eff/r_out/compliance | ✗ | ✗ | **C** `mc_results.json`, **9000 runs** (3 designs × 3 topos × 2 modes × 500) | **C** `metrics.csv` −55/+27/+150 °C | **C** `metrics.csv` all 5 corners × 4 Vdd |
-| **VDMOS 20/40/60/80/120 V** | **P** smoke + `run_corners.py` (NDMOS20/PDMOS20 only) | ✗ **no AC characterization of any VDMOS other than NDMOS200** | ✗ (explicitly out of scope in `a4f2eaa`) | ✗ no MC on any VDMOS | **P** tempcos applied (`21d72ba`) but flagged `CALIBRATE`; only smoke at 27/125 °C | **P** NDMOS20/PDMOS20 probed; 40/60/80/120 never |
-| **NDMOS200 / PDMOS200** | **C** — and **contested**. `run_smoke.py`, `HANDOFF_dmos200_subthreshold_analog.md` (gm/I, Vov tables), `BRIEF_pdk_realism.md` (Isat, R_on at W = 10 µm) | **P** `transients/coss_check.cir` — NDMOS200 only, single point (W=40u L=8u, Vds=0.1 V), asserts only `< 1 pF` | ✗ | ✗ — mismatch coefficient (0.011) assigned, never validated. **Trigger-case drift logged 2026-09-18 (ruling AA3):** the phase-3 verification figure (NDMOS200, W = 10 um, diode-connected, 100 uA -> Vov ~0.57 V, gm/Id 5.6) does not reproduce on the unchanged 13 nm cards: measured **Vov 0.4646 V, gm/Id 3.30** from the operating point (4.07 by two-point secant, which reads high). Conclusion is qualitatively unchanged -- gm/Id 3.30 is firmly strong-inversion, not the subthreshold collapse that triggered the audit -- but the numbers differ. Pre-existing and independent of the Z2 oxide change; investigate in Phase 7 when the sizing guide is regenerated, likely a bench-definition difference or a theta/rd interaction at 100 uA. Note the 0.011 above is the 1-sigma of the carded 3-sigma 0.033, not a separate discrepancy | **P** `smoke_p0_vdmos_all.cir` at 27/125 °C; PDMOS200 breakdown verified at FF/125 °C | **C** for `bv` (`3a81be0` audit across all 5); DC otherwise unverified per corner |
-| **DNMOS20 (depletion)** | **P** smoke only | ✗ | ✗ | ✗ | **P** smoke at 27/125 °C | ✗ not a `run_corners.py` probe |
+| **BSIM3 NMOS/PMOS 18/33/50** | **C** `regression/run_smoke.py`, `run_corners.py`, `circuits/async_logic_design/decks/ratio_*`, `vm_*` | **C** `async_logic_design/decks/cap_*`, `gnp_*` (per-pin C_in, per-µm fF/µm) | **P** `transients/noise_check.cir` runs `.noise` on NMOS1V8 only — parses and converges, **no value asserted** | **C** `run_mc.py` (NMOS5V0 pair, σ 0.29 %/device, 0.42 % pair), `transients/mismatch_corner.cir` | **C** `async_logic_design/decks/vm_*`, `tr_*` at −55/+27/+150 °C | **C** `run_corners.py` (NMOS1V8/PMOS1V8 probes), 45-pt PVT in async + delay-pulse |
+| **BSIM3 NMOS12V/PMOS12V** | **P** smoke + `xschem/autohv/examples/tb_nmos12_idvg.sch` (`Id ~2.7 mA at Vgs=12 V`) | ✗ | ✗ (NOIA assigned in `a4f2eaa`, never measured) | ✗ (not in `run_mc.py`; no `binunit`, no `P_TOX_*`/`P_CJ_*` — §6.5) | ✗ | **P** smoke only — **not among the 9 `run_corners.py` probes** |
+| **PMOS5V0 specifically** | **C** `circuits/current_mirror_char/` — 1440 rows, 4 current decades, 3 topologies, λ_eff/r_out/compliance | ✗ | ✗ | **C** `mc_results.json`, **9000 runs** (3 designs × 3 topos × 2 modes × 500) | **C** `metrics.csv` −55/+27/+150 °C | **C** `metrics.csv` all 5 corners × 4 Vdd |
+| **VDMOS 20/40/60/80/120 V** | **P** smoke + `run_corners.py` (NDMOS20V/PDMOS20V only) | ✗ **no AC characterization of any VDMOS other than NDMOS200V** | ✗ (explicitly out of scope in `a4f2eaa`) | ✗ no MC on any VDMOS | **P** tempcos applied (`21d72ba`) but flagged `CALIBRATE`; only smoke at 27/125 °C | **P** NDMOS20V/PDMOS20V probed; 40/60/80/120 never |
+| **NDMOS200V / PDMOS200V** | **C** — and **contested**. `run_smoke.py`, `HANDOFF_dmos200_subthreshold_analog.md` (gm/I, Vov tables), `BRIEF_pdk_realism.md` (Isat, R_on at W = 10 µm) | **P** `transients/coss_check.cir` — NDMOS200V only, single point (W=40u L=8u, Vds=0.1 V), asserts only `< 1 pF` | ✗ | ✗ — mismatch coefficient (0.011) assigned, never validated. **Trigger-case drift logged 2026-09-18 (ruling AA3):** the phase-3 verification figure (NDMOS200V, W = 10 um, diode-connected, 100 uA -> Vov ~0.57 V, gm/Id 5.6) does not reproduce on the unchanged 13 nm cards: measured **Vov 0.4646 V, gm/Id 3.30** from the operating point (4.07 by two-point secant, which reads high). Conclusion is qualitatively unchanged -- gm/Id 3.30 is firmly strong-inversion, not the subthreshold collapse that triggered the audit -- but the numbers differ. Pre-existing and independent of the Z2 oxide change; investigate in Phase 7 when the sizing guide is regenerated, likely a bench-definition difference or a theta/rd interaction at 100 uA. Note the 0.011 above is the 1-sigma of the carded 3-sigma 0.033, not a separate discrepancy | **P** `smoke_p0_vdmos_all.cir` at 27/125 °C; PDMOS200V breakdown verified at FF/125 °C | **C** for `bv` (`3a81be0` audit across all 5); DC otherwise unverified per corner |
+| **DNMOS20V (depletion)** | **P** smoke only | ✗ | ✗ | ✗ | **P** smoke at 27/125 °C | ✗ not a `run_corners.py` probe |
 | **BJT NPN_LV/HV, PNP_LAT/HV** | **C** smoke, `run_corners.py` (NPN_LV/PNP_LAT), `bjt_avalanche_stress/` ×4 (DC to BVCBO+20 %, ramp, switching above BVCEO) | **P** `transients/bjt_common_emitter.cir` exercises Miller loading; no C extraction | **P** `kf=1e-12, af=1` assigned on all four (`21d72ba`); never measured | ✗ AREA-mismatch coefficient (0.012) assigned, never validated | ✗ no temperature sweep (only `eg`/`xti`/`xtb` on the cards) | **C** `run_corners.py`, ±18 %/±19 % |
 | **Diodes / Zeners** | **C** smoke, `run_corners.py` (DIO_PN Vf), `transients/diode_rectifier.cir` | **P** rectifier exercises junction cap + `tt`; **Zener `cjo` flagged 100–400× signal-diode value and never investigated** (§6.4) | ✗ | ✗ | ✗ | **C** DIO_PN Vf ±0.23 % |
 | **Resistors (5)** | **C** `goldens/*.json` R(V), 41 pts, −5…+5 V | **C** same | **P** `kf/af/wf/lf/ef` assigned per layer; never measured | **C** `autohv_mismatch_mc.cir` — **but likely statistically inert, §6.5** | **P** `autohv_passive_validation.cir` sweeps −40/27/125 °C, no assert | **C** `run_corners.py` RPOLY_HI −10 %/+12 % |
@@ -446,7 +446,7 @@ Rows = device families. Columns = characterization type. **C** = characterized (
 
 **The clearest structural gap the matrix exposes:** the 40/60/80/120 V VDMOS classes have essentially
 no characterization beyond `.op` convergence — no AC, no noise, no mismatch, no per-corner DC. They
-were engineered by interpolation and never checked. NMOS12/PMOS12 are nearly as thin.
+were engineered by interpolation and never checked. NMOS12V/PMOS12V are nearly as thin.
 
 ---
 
@@ -463,10 +463,10 @@ Its evidence, which the audit should either build on or refute:
 
 | device | implied W from `kp` | implied W from `R_on` | ratio | drawn W |
 |---|---|---|---|---|
-| NDMOS200 | 5936 µm | 2235 µm | 2.7× | 10 µm |
-| PDMOS200 | 2353 µm | 863 µm | 2.7× | 10 µm |
-| NDMOS20 | 83 720 µm | 43 288 µm | 1.9× | 10 µm |
-| PDMOS20 | 40 066 µm | 20 865 µm | 1.9× | 10 µm |
+| NDMOS200V | 5936 µm | 2235 µm | 2.7× | 10 µm |
+| PDMOS200V | 2353 µm | 863 µm | 2.7× | 10 µm |
+| NDMOS20V | 83 720 µm | 43 288 µm | 1.9× | 10 µm |
+| PDMOS20V | 40 066 µm | 20 865 µm | 1.9× | 10 µm |
 
 *"Two independent DC parameters agree with each other to within ~2×, while both disagree with the
 drawn width by 200–8000×."* The split-halves argument: `cgs = 48 fF` implies a 10 µm × 0.6 µm channel
@@ -493,7 +493,7 @@ of `circuits/delay_cells_voltage_ramp/`.
 |---|---|---|---|
 | 1 | **VDMOS capacitance fix** (13 cards, `cgs`/`cgdmax`/`cgdmin`/`cjo` ~1000× too large, uniform ÷1000) | **DOCUMENTED** — the best-documented change in the repo | Diagnosis: `docs/handoffs/HANDOFF_vdmos_caps.md` (156 lines, full pre-fix table for all 13 cards with line numbers). Fix: `2cfb8de` + CHANGELOG 2026-06-01 with the 4-point before/after AC table. Guard: `transients/coss_check.cir`. **But see the three sub-gaps below.** |
 | 2 | **Gate-capacitance bug** (behavioral V-sources presenting 0 F at MOS gates) | **UNDOCUMENTED — no trace found** | Two independent agents searched the full tree (`*.md`, `*.py`, `*.cir`, `*.lib`, `*.json`) and the git log for `0 F`, `zero cap`, `no gate load`, `behavioral`, `B-source`, `Egate`, `gate cap`, `presents 0`, `does not load`, `VCVS`, `infinite impedance`. **Zero hits.** The nearest neighbours are all different bugs: `HANDOFF_cascode_vshift_singularity.md` describes a 0 V behavioral source at the gate but the complaint is a *singular matrix from the branch unknown*, and it argues the gate capacitance is *present* (*"connects to nothing but the MOSFET gate (a capacitance, no DC path)"*); the VDMOS cap bug is the opposite polarity (1000× too large); `b3v33check.log` reports missing `Pd`/`Ps` — drain/source *perimeter*, not gate. Note the async `cap_*` decks measure gate C correctly, with the AC source at the gate node and C extracted from its own branch current — a 0 F bug would have been visible there. **Recommend confirming this item is real before treating it as a property of this PDK.** |
-| 3 | **BSIM3 NMOS12/PMOS12 fixes** | **PARTIALLY DOCUMENTED** | `21d72ba` (2026-05-27) migrated them Level-3 → BSIM3 level 49. **The commit body is empty**; the record lives only in the CHANGELOG diff. No characterization followed — see the NMOS12/PMOS12 row in §5 and the four residual defects in §6.5. |
+| 3 | **BSIM3 NMOS12V/PMOS12V fixes** | **PARTIALLY DOCUMENTED** | `21d72ba` (2026-05-27) migrated them Level-3 → BSIM3 level 49. **The commit body is empty**; the record lives only in the CHANGELOG diff. No characterization followed — see the NMOS12V/PMOS12V row in §5 and the four residual defects in §6.5. |
 | 4 | **VDMOS temperature dependence** | **PARTIALLY DOCUMENTED** | Applied in `21d72ba` (empty body), mechanism documented in the model file (`.inc` 218–273, `temper-27` on vto/kp/rd/rs). **Explicitly marked uncalibrated in-file: `(deterministic; CALIBRATE)`.** No temperature characterization deck exists for any VDMOS beyond the 27/125 °C smoke pair. |
 | 5 | **BJT flicker noise + avalanche branches** | **DOCUMENTED (avalanche) / PARTIAL (flicker)** | Avalanche: `21d72ba` added the `Bavl` behavioral branch after finding GP `bv`/`ibv` *"are not GP parameters and were silently ignored"*; audited in depth by `415d8ea` (P2.1) across three stress regimes with a written conclusion; 4 audit decks + 1 regression deck. Flicker: `kf=1e-12, af=1` assigned in the same empty-bodied commit; **never measured or validated**. |
 | 6 | **Mismatch migration BGSHIFT → series Vshift** | **DOCUMENTED, but split across sources and partly mis-stated** | The actual history is three-legged: initial `BGSHIFT g_int s V={V(g,s)-DVTH_MM}` B-source (`4f6e1cd`) → BSIM3 moved to native **`delvto`** (`4855fdf`), VDMOS stayed on the **series `Vshift` VSRC** because `delvto` is BSIM-only (proven twice: `unknown parameter (delvto)`). So it is not one migration but a fork. **`MISMATCH_CORNERS.md`, the doc that owns this contract, records none of it** — it documents only the end state. |
@@ -522,7 +522,7 @@ of `circuits/delay_cells_voltage_ramp/`.
 ### 6.3 An unexplained numerical discrepancy inside the capacitance fix
 
 The handoff and the maintainer report **different measurements from the nominally identical deck**
-(NDMOS200 W=40u L=8u, AC 1 MHz):
+(NDMOS200V W=40u L=8u, AC 1 MHz):
 
 | Vds | `HANDOFF_vdmos_caps.md` (pre-fix) | CHANGELOG 2026-06-01 (pre-fix) | ratio |
 |---|---|---|---|
@@ -558,7 +558,7 @@ audit re-measures, this is a known fork in the record.
 - **`circuits/hv_charge_pump/hv_up_lvlsh/`** — the only HV (200 V) *circuit* in the tree, and the only
   directory with zero characterization of any kind: no results file, no driver script, no sign-off, and
   its only testbench is entirely commented out. Its sizing params are labelled *"tunable"* / *"size for
-  bias I"*, i.e. placeholders. NDMOS200/PDMOS200 appear nowhere else in `circuits/`.
+  bias I"*, i.e. placeholders. NDMOS200V/PDMOS200V appear nowhere else in `circuits/`.
 
 ### 6.5 Contradictions and defects found
 
@@ -575,12 +575,12 @@ audit re-measures, this is a known fork in the record.
    the CHANGELOG entry of 2026-06-06 reports all four reproducers passing with `Rcond=1e6` and
    declares the downstream task unblocked at the full 200 V range. The backlog was never reconciled.
    The genuine residual is much narrower (a bare `.tran` that jumps the rail at t=0).
-4. **Both `BRIEF_*.md` files quote the pre-re-rating `PDMOS200 bv=207`.** Current TT is **230 V**
+4. **Both `BRIEF_*.md` files quote the pre-re-rating `PDMOS200V bv=207`.** Current TT is **230 V**
    (`3a81be0`, 2026-06-05). If the audit reasons from the brief's verbatim model card, that field is
    stale.
 5. **Three different minimum drift lengths for the 200 V LDMOS.** Code clamps at `L_MIN=5u`; the
    `.lib` comment says *"Recommended RESURF window ~5u..16u"*; `device_limits.csv` says
-   `NDMOS200,L,5.4,10.0`. Both the minimum (5 vs 5.4) and the maximum (16 vs 10) disagree.
+   `NDMOS200V,L,5.4,10.0`. Both the minimum (5 vs 5.4) and the maximum (16 vs 10) disagree.
 6. **Two incompatible temperature ranges in use.** Logic and delay-cell characterization uses
    −55/+27/+150 °C; comparator characterization uses −40/+27/+125 °C. Neither is stated anywhere as
    *the* PDK qualification range, and the model files encode no range at all.
@@ -604,7 +604,7 @@ audit re-measures, this is a known fork in the record.
     60 V = 0.027, 120 V = 0.030 (rising with class) but 40 V = 0.0085, 80 V = 0.0095, 200 V = 0.011 —
     roughly 3× smaller. The 200 V part ends up better-matched than the 20 V part. The two sets look
     like they came from different generator passes (corroborated by cosmetic formatting differences:
-    `NDMOS40_INT` writes `a=0.30`/`rb=0.10` where 20/60/120 write `0.3`/`0.1`).
+    `NDMOS40V_INT` writes `a=0.30`/`rb=0.10` where 20/60/120 write `0.3`/`0.1`).
 12. **`Rcond g_int s 1e6` is a 1 MΩ DC leakage path from gate to source on every VDMOS** — ~5 µA of
     static gate current at 5 V drive, which a real MOS gate does not have. It exists purely as a
     matrix-conditioning fix and is not flagged as a modelling artefact anywhere outside the inline
@@ -619,16 +619,16 @@ audit re-measures, this is a known fork in the record.
 16. **`B_pdiss` on the 200 V parts measures the wrong power.** Sense source is `Vsense dd dd_sense`
     but power is `I={V(d,s)*i(Vsense)}` — `V(d,s)` includes the drop across the external `Rdrift`, so
     the dissipation driving `TJ` includes a resistor the transistor model does not.
-17. **NMOS12/PMOS12 carry four distinct residual defects** from the Level-3 → BSIM3 migration:
+17. **NMOS12V/PMOS12V carry four distinct residual defects** from the Level-3 → BSIM3 migration:
     stale Level-1 statistical parameter names applied to BSIM3 parameters (`P_DVTO_` → `vth0`,
     `P_DVMAX_` → `vsat`, `P_DRSH_` → `rdsw`, where every other MOS uses `P_DVTH_`/`P_DVSAT_`/
     `P_DRDSW_`); **two independent random draws multiplied into `u0`**
-    (`u0={(…)*(1+P_DUO_NMOS12)*(1+P_DKP_NMOS12)}`, inflating σ(u0) to ~15.6 % vs a single 10 % term
+    (`u0={(…)*(1+P_DUO_NMOS12V)*(1+P_DKP_NMOS12V)}`, inflating σ(u0) to ~15.6 % vs a single 10 % term
     elsewhere — a leftover from a Level-1 card that had separate UO and KP); hard-constant
     `tox`/`cj`/`cjsw`/`js` with no corner or statistical terms, unlike the other six; and no
     `binunit=1` line.
-18. **`device_limits.csv` has no rows at all for PDMOS120 or PDMOS200** (38 devices listed vs 40 in
-    the lib). PDMOS200 is one of only two devices that takes an `L`, and it is the one device whose
+18. **`device_limits.csv` has no rows at all for PDMOS120V or PDMOS200V** (38 devices listed vs 40 in
+    the lib). PDMOS200V is one of only two devices that takes an `L`, and it is the one device whose
     `L` is unbounded by the limits table. The same two are missing from `smoke_p0_vdmos_all.cir`,
     which instantiates 11 of 13 VDMOS while its header claims "all 11". Plausibly the origin of the
     stale "38" in the READMEs.
@@ -681,13 +681,13 @@ audit re-measures, this is a known fork in the record.
 - **VDMOS 40/60/80/120 V classes.** Present in the smoke suite, symbol libraries, `device_limits.csv`
   and the sizing tables — but never AC-characterized, never noise-characterized, never MC'd, and not
   among the corner probes. Their `bv` values were audited once (`3a81be0`) only as a side-effect of
-  the PDMOS200 investigation.
+  the PDMOS200V investigation.
 - **VDMOS capacitances post-fix.** `coss_check.cir` checks **one device at one bias point** with a
   threshold 10× above the expected value. It would catch a re-introduced 1000× slip; it would not
   catch a 5× error, and it says nothing about the other 12 cards.
 - **All assigned-but-unmeasured statistical and noise parameters:** BJT `kf`/`af`, the BSIM3
   `NOIA/NOIB/NOIC` sets, the VDMOS `TC_*` tempcos (self-flagged `CALIBRATE`), `MAV_BJT`, all Rth/Cth
-  thermal defaults, and every mismatch coefficient except the NMOS50 Vth term validated in Phase E.
+  thermal defaults, and every mismatch coefficient except the NMOS5V0 Vth term validated in Phase E.
 - **The whole library's absolute magnitudes.** Stated repeatedly and honestly, most compactly in
   `README.md:128-131`: *"physically plausible defaults rather than silicon-extracted values —
   calibrate to your process. Breakdown is held at the model card rating regardless of `L`."*

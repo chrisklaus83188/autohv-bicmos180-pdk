@@ -1,7 +1,7 @@
 # PDK handoff: HV-cascode mismatch-shift element causes a singular matrix when the gate node is driven by a real network
 
-**Models affected:** `NDMOS200`, `PDMOS200` (in `autohv_bicmos180_case.lib`). The same
-`Vshift`/`g_int` pattern is also used in `NMOS50`/`PMOS50`, but those have not been observed to
+**Models affected:** `NDMOS200V`, `PDMOS200V` (in `autohv_bicmos180_case.lib`). The same
+`Vshift`/`g_int` pattern is also used in `NMOS5V0`/`PMOS5V0`, but those have not been observed to
 trigger the failure (their gates are not tied to a shared, externally-driven bias node).
 
 **Requested by:** the level-shifter eval task (`xqmfaf10`). Not blocking that task's current
@@ -12,7 +12,7 @@ and is the root cause of intermittent convergence "cliffs" — so worth fixing i
 
 ## Symptom
 
-When the **gate terminal of an `NDMOS200`/`PDMOS200` is tied to a bias node that is NOT a
+When the **gate terminal of an `NDMOS200V`/`PDMOS200V` is tied to a bias node that is NOT a
 perfectly stiff ideal voltage source** — e.g. a supply pin fed through a series resistor, an
 RC decoupling network, or driven by a real CMOS driver — ngspice reports:
 
@@ -42,13 +42,13 @@ The Vth-mismatch shift is injected as a **0 V behavioral voltage source in serie
 gate**:
 
 ```spice
-.subckt NDMOS200 d g s params: W=10u L=8u M=1 ZVTH=0
+.subckt NDMOS200V d g s params: W=10u L=8u M=1 ZVTH=0
   ...
   .param DVTH_MM={MM_ON*(0.011/3.0)*ZVTH/sqrt(max(mtot,1e-6))}
   Vshift g g_int DC {-DVTH_MM}        ; <-- 0 V source when MM_ON=0
   Rgmin  g g_int 1e9                  ; <-- existing mitigation (see below)
   Rdrift d dd {RDRIFT}
-  M0 dd g_int s NDMOS200_INT m={mtot}
+  M0 dd g_int s NDMOS200V_INT m={mtot}
 .ends
 ```
 
@@ -85,7 +85,7 @@ All three abort (Gear) or corrupt the op-point (trap) with the `vshift#branch` s
 
 1. **Eliminate the series source — apply the shift via the model's Vth-offset parameter.**
    BSIM3/4 expose `delvto` (a.k.a. `delvt0`) for exactly this. Set it on the `M0` instance:
-   `M0 dd g s NDMOS200_INT m={mtot} delvto={-DVTH_MM}` and delete `Vshift`/`g_int`/`Rgmin`
+   `M0 dd g s NDMOS200V_INT m={mtot} delvto={-DVTH_MM}` and delete `Vshift`/`g_int`/`Rgmin`
    entirely. No series gate source → no `vshift#branch` unknown → no singularity, and the gate
    connects directly to `g`. This is the clean fix and removes the `Rgmin` kludge.
 2. **If the shift must stay as a source,** strengthen the conditioning so it survives a non-stiff

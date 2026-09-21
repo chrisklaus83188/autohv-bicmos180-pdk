@@ -2,7 +2,7 @@
 
 The 3.3 V port of the [`general_purpose`](../general_purpose/) (5 V) comparator
 family. **Same topology, knobs, and tooling** — only the core devices change to
-the 3.3 V class (`NMOS33` / `PMOS33`). For the topology explanation and the
+the 3.3 V class (`NMOS3V3` / `PMOS3V3`). For the topology explanation and the
 re-tuning guide, see [`../general_purpose/DESIGN_NOTES.md`](../general_purpose/DESIGN_NOTES.md).
 
 - Two input flavours: `CMP_NIN` (high CM), `CMP_PIN` (low CM).
@@ -56,6 +56,6 @@ Reproduce: `python run_comparators.py` (specs) · `python run_saturation.py --pv
 supply range auto-derives to ±10 %.
 
 ## Files
-`cmp_gp.lib` (NMOS33/PMOS33) · `run_comparators.py` · `run_saturation.py` ·
+`cmp_gp.lib` (NMOS3V3/PMOS3V3) · `run_comparators.py` · `run_saturation.py` ·
 `tb_example.cir` · `comparator_results.json`. Topology + tuning: the 5 V
 `DESIGN_NOTES.md`; sign-off method: the 5 V `SATURATION_SIGNOFF.md`.

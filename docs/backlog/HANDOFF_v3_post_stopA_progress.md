@@ -49,9 +49,9 @@ off the band:
 
 | group | `U0` slope | solved | σ 1σ | achieved swing | band error |
 |---|---|---|---|---|---|
-| NMOS50 (Lmin bench) | 0.73 | `U0` | 5.55 % | 13.8 % | −1.6 % |
-| NDMOS40 | 0.57 | `U0` | 6.84 % | 13.7 % | −1.9 % |
-| NDMOS200 | 0.23 | **`RDSW`** | 3.44 % | **8.4 %** | **−40.0 %** |
+| NMOS5V0 (Lmin bench) | 0.73 | `U0` | 5.55 % | 13.8 % | −1.6 % |
+| NDMOS40V | 0.57 | `U0` | 6.84 % | 13.7 % | −1.9 % |
+| NDMOS200V | 0.23 | **`RDSW`** | 3.44 % | **8.4 %** | **−40.0 %** |
 
 The defect is mine, in the solve rather than the ruling. I compute
 `need = √(band² − fixed²)/3/slope` from a slope measured at a 1 % probe. That inversion is only
@@ -69,7 +69,7 @@ with a cap and an explicit failure if it will not converge.
 ## 4. §4.1 — the Lmin bench does what the ruling expected
 
 Classic benches now use each class's `Lmin_fab` from `device_limits` (0.18 / 0.35 / 0.5 / 0.5 µm
-for the 18 / 33 / 50 / 12 classes) instead of the L = 1 µm analog default. On NMOS50 that roughly
+for the 18 / 33 / 50 / 12 classes) instead of the L = 1 µm analog default. On NMOS5V0 that roughly
 doubles the `DL_POLY` sensitivity, **−0.0031 → −0.0067**, which is the effect F3a originally
 expected and my L = 1 µm measurement did not show. `VTH` and `TOX` sensitivities are essentially
 unchanged. The L = 1 µm and analog-bench directions are retained as additional records.

@@ -4,11 +4,11 @@
 .options temp=27
 Vdd vdd 0 5
 Iin ng 0 0.0001
-Xin nA ng vdd vdd PMOS50 W=0.000795653 L=2e-06 M=1
-Xincw ng ncw nA vdd PMOS50 W=0.000795653 L=2e-06 M=1
+Xin nA ng vdd vdd PMOS5V0 W=0.000795653 L=2e-06 M=1
+Xincw ng ncw nA vdd PMOS5V0 W=0.000795653 L=2e-06 M=1
 Vbcw vdd ncw 1.65
-Xout nB ng vdd vdd PMOS50 W=0.000795653 L=2e-06 M=1
-Xoutcw nout ncw nB vdd PMOS50 W=0.000795653 L=2e-06 M=1
+Xout nB ng vdd vdd PMOS5V0 W=0.000795653 L=2e-06 M=1
+Xoutcw nout ncw nB vdd PMOS5V0 W=0.000795653 L=2e-06 M=1
 Vout nout 0 0
 .control
 dc Vout 0 5 0.01

@@ -14,17 +14,17 @@ Added a 1 GΩ gmin shunt in parallel with each of the 13 VDMOS subckts'
 ```spice
 * before
 Vshift g g_int DC {-DVTH_MM}
-M0 d g_int s NDMOS200_INT m={mtot}
+M0 d g_int s NDMOS200V_INT m={mtot}
 
 * after
 Vshift g g_int DC {-DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 ...
-M0 d g_int s NDMOS200_INT m={mtot}
+M0 d g_int s NDMOS200V_INT m={mtot}
 ```
 
-Applied to all 13: `NDMOS20`, `NDMOS40`, `NDMOS60`, `NDMOS80`,
-`NDMOS120`, `NDMOS200`, `PDMOS20`, `PDMOS40`, `PDMOS60`, `PDMOS80`,
-`PDMOS120`, `PDMOS200`, `DNMOS20`.
+Applied to all 13: `NDMOS20V`, `NDMOS40V`, `NDMOS60V`, `NDMOS80V`,
+`NDMOS120V`, `NDMOS200V`, `PDMOS20V`, `PDMOS40V`, `PDMOS60V`, `PDMOS80V`,
+`PDMOS120V`, `PDMOS200V`, `DNMOS20V`.
 
 The mechanism: when `MM_ON=0`, `Vshift` is a 0 V VSRC and KCL at the
 shared external gate becomes 0=0 (dependent equation) ⇒ singular
@@ -39,7 +39,7 @@ This is the foundry-standard idiom for HV mismatch-shift wrappers.
 ### The regression suite
 
 A new `pdk_validation/regression/transients/cascoded_ldmos.cir` deck
-encodes the exact failure pattern: two `NDMOS200` + two `NDMOS120`
+encodes the exact failure pattern: two `NDMOS200V` + two `NDMOS120V`
 with their gates tied to the same drive line, `MM_ON=0`. Runs at
 `case=0` in 84 ms on ngspice 45.2. This catches the regression
 class on every CI run going forward. **You were right that the suite

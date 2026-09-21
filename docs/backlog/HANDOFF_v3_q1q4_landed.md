@@ -12,8 +12,8 @@ Two things I found while implementing need you: the diode `n` factor, and Zener 
 
 | ruling | predicted | measured | |
 |---|---|---|---|
-| Q1 NMOS18 FF/SS | ≈ ±10–13 % | **+13.06 / −11.69 %** | in band |
-| Q1 5 V (NMOS50) | ≈ ±10 % | **+12.32 / −11.13 %** | ~1–2 pp above |
+| Q1 NMOS1V8 FF/SS | ≈ ±10–13 % | **+13.06 / −11.69 %** | in band |
+| Q1 5 V (NMOS5V0) | ≈ ±10 % | **+12.32 / −11.13 %** | ~1–2 pp above |
 | Q2 NPN_LV at preset 11 | ≈ −18.7 % | **−18.672 %** | exact |
 | Q2 BJT/diode flatness | none within ±0.5 % of 0 on 11–14 | **none** | met |
 | Q4 flat on own preset | none | **none of 40** | met |
@@ -61,8 +61,8 @@ the same point for a one-variable group, and those groups have one contributing 
 | DIO_PN | 1.05 | 0.0984 | 0.10328 | +5 % |
 | DIO_SCH | 1.08 | 0.0957 | 0.10328 | +8 % |
 | DZ_5V6 | 1.15 | 0.0898 | 0.10328 | +15 % |
-| DZ_12 | 1.18 | 0.0875 | 0.10328 | +18 % |
-| DZ_24 | 1.22 | 0.0847 | 0.10328 | **+22 %** |
+| DZ_12V | 1.18 | 0.0875 | 0.10328 | +18 % |
+| DZ_24V | 1.22 | 0.0847 | 0.10328 | **+22 %** |
 
 **I implemented 0.10328 as ruled** rather than silently substituting my own number, and it is a
 one-line change either way. But it makes the diode corner up to 22 % wider than the template's
@@ -85,8 +85,8 @@ breakdown *is* the device's reason for existing:
 | device | `bv` | varies? |
 |---|---|---|
 | DZ_5V6 | 5.6 | no |
-| DZ_12 | 12 | no |
-| DZ_24 | 24 | no |
+| DZ_12V | 12 | no |
+| DZ_24V | 24 | no |
 
 A Zener reference whose breakdown has exactly zero spread will make any shunt-regulator or
 clamp margin look perfect. The VDMOS `BV_*` variables are declared but resolve to 0 at every

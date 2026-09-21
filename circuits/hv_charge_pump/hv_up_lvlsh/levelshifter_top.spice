@@ -12,7 +12,7 @@
 *    delay_cell.spice            DELAY_CELL  (2 chains: invx2-R-C-invx3) -> INV
 *    levelshifter.spice          LEVELSHIFTER (main circuit) -> BUFFER, DELAY_CELL
 *
-*  Device class: HV = 200V (NDMOS200/PDMOS200), LV = 5V (NMOS50/PMOS50).
+*  Device class: HV = 200V (NDMOS200V/PDMOS200V), LV = 5V (NMOS5V0/PMOS5V0).
 *  Corner defaults to TT (case=0); no mismatch/process (MM_ON=PROC_ON=0).
 * ===========================================================================
 
@@ -22,9 +22,9 @@
 .param wp   = 20u      $ LV PMOS width  (latch / mirror / buffer / delay inv)
 .param wn   = 10u      $ LV NMOS width
 .param llv  = 1u       $ LV channel length
-.param whv  = 40u      $ HV NMOS (NDMOS200) width
-.param lhv  = 8u       $ HV drift length (NDMOS200 / PDMOS200)
-.param whvp = 40u      $ HV PMOS (PDMOS200) width
+.param whv  = 40u      $ HV NMOS (NDMOS200V) width
+.param lhv  = 8u       $ HV drift length (NDMOS200V / PDMOS200V)
+.param whvp = 40u      $ HV PMOS (PDMOS200V) width
 .param rl   = 100u     $ bias-resistor length  (R1,R2) - size for bias I
 .param rw   = 2u       $ bias-resistor width
 .param rdl  = 100u     $ DELAY-CELL series resistor length (RPOLY_HI)

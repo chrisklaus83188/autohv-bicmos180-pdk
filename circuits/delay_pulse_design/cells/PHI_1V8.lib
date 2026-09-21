@@ -1,5 +1,5 @@
 * PHI_1V8 -- HIGH pulse on rising edge / falling passthrough
-* AutoHV BiCMOS 180 PDK | 1.8 V domain (NMOS18/PMOS18, L = 0.18 um)
+* AutoHV BiCMOS 180 PDK | 1.8 V domain (NMOS1V8/PMOS1V8, L = 0.18 um)
 * ~20 ns pulse width at the nominal corner (case=0/TT, nominal Vdd, 27 C).
 * Methodology, area and PVT/Monte-Carlo envelope: ../REPORT.md, ../CHARACTERIZATION.md.
 *
@@ -12,23 +12,23 @@
 * When several RC cells share one transient deck, add `.option method=gear maxord=2`.
 
 .subckt PHI_1V8 in out vdd gnd
-XI1 nIN in vdd vdd PMOS18 W=0.7u L=0.18u
-XI2 nIN in gnd gnd NMOS18 W=0.3u L=0.18u
+XI1 nIN in vdd vdd PMOS1V8 W=0.7u L=0.18u
+XI2 nIN in gnd gnd NMOS1V8 W=0.3u L=0.18u
 XR  nIN nC RPOLY_HI L=53.7500u W=0.5u
 XC  nC  gnd CMIM_HI L=5.3600u W=5.3600u
-XBP nC in vdd vdd PMOS18 W=0.6u L=0.18u   $ pull-up bypass (fast falling out)
-XS1 s1 nC gnd gnd NMOS18 W=0.3u L=0.18u
-XS2 dco nC s1 gnd NMOS18 W=0.3u L=0.18u
-XS3 s2 nC vdd vdd PMOS18 W=0.7u L=0.18u
-XS4 dco nC s2 vdd PMOS18 W=0.7u L=0.18u
-XS5 vdd dco s1 gnd NMOS18 W=0.3u L=0.18u
-XS6 gnd dco s2 vdd PMOS18 W=0.7u L=0.18u
-XPI1 dbar dco vdd vdd PMOS18 W=0.7u L=0.18u
-XPI2 dbar dco gnd gnd NMOS18 W=0.3u L=0.18u
-XG1 nnd in   vdd vdd PMOS18 W=0.7u L=0.18u
-XG2 nnd dbar vdd vdd PMOS18 W=0.7u L=0.18u
-XG3 nnd in   q   gnd NMOS18 W=0.3u L=0.18u
-XG4 q   dbar gnd gnd NMOS18 W=0.3u L=0.18u
-XO1 out nnd vdd vdd PMOS18 W=0.7u L=0.18u
-XO2 out nnd gnd gnd NMOS18 W=0.3u L=0.18u
+XBP nC in vdd vdd PMOS1V8 W=0.6u L=0.18u   $ pull-up bypass (fast falling out)
+XS1 s1 nC gnd gnd NMOS1V8 W=0.3u L=0.18u
+XS2 dco nC s1 gnd NMOS1V8 W=0.3u L=0.18u
+XS3 s2 nC vdd vdd PMOS1V8 W=0.7u L=0.18u
+XS4 dco nC s2 vdd PMOS1V8 W=0.7u L=0.18u
+XS5 vdd dco s1 gnd NMOS1V8 W=0.3u L=0.18u
+XS6 gnd dco s2 vdd PMOS1V8 W=0.7u L=0.18u
+XPI1 dbar dco vdd vdd PMOS1V8 W=0.7u L=0.18u
+XPI2 dbar dco gnd gnd NMOS1V8 W=0.3u L=0.18u
+XG1 nnd in   vdd vdd PMOS1V8 W=0.7u L=0.18u
+XG2 nnd dbar vdd vdd PMOS1V8 W=0.7u L=0.18u
+XG3 nnd in   q   gnd NMOS1V8 W=0.3u L=0.18u
+XG4 q   dbar gnd gnd NMOS1V8 W=0.3u L=0.18u
+XO1 out nnd vdd vdd PMOS1V8 W=0.7u L=0.18u
+XO2 out nnd gnd gnd NMOS1V8 W=0.3u L=0.18u
 .ends PHI_1V8

@@ -1,4 +1,4 @@
-* CMOS inverter transient - NMOS18 pull-down, PMOS18 pull-up (TT corner)
+* CMOS inverter transient - NMOS1V8 pull-down, PMOS1V8 pull-up (TT corner)
 .include "../autohv_bicmos180_case.lib"
 .param case=0
 .param VDD=1.8
@@ -7,9 +7,9 @@ Vdd vdd 0 {VDD}
 Vin in  0 PULSE(0 {VDD} 1n 0.2n 0.2n 4n 10n)
 
 * PMOS: drain=out gate=in source=vdd bulk=vdd
-XP out in vdd vdd PMOS18 W=20u L=1u M=1
+XP out in vdd vdd PMOS1V8 W=20u L=1u M=1
 * NMOS: drain=out gate=in source=0 bulk=0
-XN out in 0 0 NMOS18 W=10u L=1u M=1
+XN out in 0 0 NMOS1V8 W=10u L=1u M=1
 CL out 0 50f
 
 .tran 0.05n 20n

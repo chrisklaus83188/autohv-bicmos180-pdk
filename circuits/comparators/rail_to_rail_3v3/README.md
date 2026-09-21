@@ -2,7 +2,7 @@
 
 The 3.3 V port of the rail-to-rail [`CMP_RR`](../rail_to_rail_5v0/) cell — same
 topology, knobs, and tooling, devices swapped to the 3.3 V class
-(`NMOS33`/`PMOS33`), supply ±10 %. Input common mode spans the full rail (0 → VDD).
+(`NMOS3V3`/`PMOS3V3`), supply ±10 %. Input common mode spans the full rail (0 → VDD).
 Topology, the VDD-referenced-bias lesson, and tuning are in the 5 V folder:
 [`README`](../rail_to_rail_5v0/README.md) · [`DESIGN_NOTES`](../general_purpose/DESIGN_NOTES.md).
 
@@ -45,6 +45,6 @@ per-VDD margins below). Input pairs exempt in hand-off, as in the 5 V part.
 <!-- /AUTOGEN:rr_sat -->
 
 ## Files
-`cmp_rr.lib` (NMOS33/PMOS33) · `run_rr.py` · `run_saturation.py` ·
+`cmp_rr.lib` (NMOS3V3/PMOS3V3) · `run_rr.py` · `run_saturation.py` ·
 `tb_example.cir` · `comparator_results.json`. Topology/tuning: the 5 V
 `DESIGN_NOTES.md`.

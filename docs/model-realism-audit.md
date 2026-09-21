@@ -21,7 +21,7 @@ Seven findings block realism. Ranked by severity × breadth:
 | # | Finding | Devices | Factor | Severity |
 |---|---|---|---|---|
 | **F1** | **LDMOS DC scale confirmed across all 13 cards** — and `kp` and `rd`/`rs` are displaced by *different amounts in opposite directions*, so this is **not one slip** | 13 VDMOS | `rd`+`rs` ~10³× uniformly; `kp` 287×–3649×, sloped | blocks-realism |
-| **F2** | **VDMOS capacitances are still 3–48× too large after the June-2 ÷1000 fix**, and the residual is voltage-class-sloped. The fix was verified on NDMOS200 — the one card where ÷1000 was nearly right | 13 VDMOS | `cgs` 3.3×–48×; `cgdmax` 2.3×–35× | blocks-realism |
+| **F2** | **VDMOS capacitances are still 3–48× too large after the June-2 ÷1000 fix**, and the residual is voltage-class-sloped. The fix was verified on NDMOS200V — the one card where ÷1000 was nearly right | 13 VDMOS | `cgs` 3.3×–48×; `cgdmax` 2.3×–35× | blocks-realism |
 | **F3** | **BSIM3 flicker parameters are verbatim BSIM4 defaults in `level=49` cards** | 8 BSIM3 | ~6.25×10²¹ | blocks-realism |
 | **F4** | **BJT `kf`/`af` placeholder** → flicker corner 3.12 MHz, current-independent | 4 BJT | 312–3121× | blocks-realism |
 | **F5** | **Zener `cjo` is a hand-picked ladder, not derived** — residual after doping is non-uniform (101×/133×/196×), so no single divisor fixes it | 3 zeners | ~100–200× | blocks-realism |
@@ -35,7 +35,7 @@ assumptions are made explicit. One inventory finding is **withdrawn**: US Pat 12
 **What is genuinely good and should survive any fix:** the BJT avalanche `Bavl` construction and every
 BVCEO/BVCBO ratio; the whole PNP_LAT DC parameter set; the Schottky thermionic-emission parameters;
 all four capacitor densities and all VCC/TCC values; the BSIM3 18 V/33 V junction-cap trends; the
-resistor VCR block; NDMOS200's `cjo` (the one VDMOS cap that lands in band).
+resistor VCR block; NDMOS200V's `cjo` (the one VDMOS cap that lands in band).
 
 ---
 
@@ -77,24 +77,24 @@ min"*); `µ_n = 400`, `µ_p = 130 cm²/V·s` `[industry]` (LDMOS p-body channel,
 of the high body doping needed for punchthrough control); `tox = 30 nm` nominal, band 20–50 nm
 `[industry]`.
 
-Worked example, NDMOS20: `Cox = 3.453e-11/30e-9 = 1.151e-3 F/m²`; `µCox = 400e-4 × 1.151e-3 =
+Worked example, NDMOS20V: `Cox = 3.453e-11/30e-9 = 1.151e-3 F/m²`; `µCox = 400e-4 × 1.151e-3 =
 4.604e-5 A/V²`; `W = 2.8 / 4.604e-5 × 0.6 µm = 36 489 µm`.
 
 | device | `kp` [model] | W @20 nm | **W @30 nm** | W @50 nm | **ratio vs 10 µm** |
 |---|---|---|---|---|---|
-| NDMOS20 | 2.800 | 24 326 | **36 489** | 60 814 | **3649×** |
-| PDMOS20 | 1.300 | 34 751 | **52 127** | 86 878 | **5213×** |
-| DNMOS20 | 1.000 | 8 688 | **13 032** | 21 719 | **1303×** |
-| NDMOS40 | 1.900 | 16 507 | **24 760** | 41 267 | **2476×** |
-| PDMOS40 | 0.850 | 22 722 | **34 083** | 56 805 | **3408×** |
-| NDMOS60 | 1.200 | 10 425 | **15 638** | 26 063 | **1564×** |
-| PDMOS60 | 0.550 | 14 702 | **22 054** | 36 756 | **2205×** |
-| NDMOS80 | 0.800 | 6 950 | **10 425** | 17 376 | **1043×** |
-| PDMOS80 | 0.380 | 10 158 | **15 237** | 25 395 | **1524×** |
-| NDMOS120 | 0.450 | 3 909 | **5 864** | 9 774 | **586×** |
-| PDMOS120 | 0.210 | 5 614 | **8 420** | 14 034 | **842×** |
-| NDMOS200 | 0.220 | 1 911 | **2 867** | 4 778 | **287×** |
-| PDMOS200 | 0.088 | 2 352 | **3 529** | 5 881 | **353×** |
+| NDMOS20V | 2.800 | 24 326 | **36 489** | 60 814 | **3649×** |
+| PDMOS20V | 1.300 | 34 751 | **52 127** | 86 878 | **5213×** |
+| DNMOS20V | 1.000 | 8 688 | **13 032** | 21 719 | **1303×** |
+| NDMOS40V | 1.900 | 16 507 | **24 760** | 41 267 | **2476×** |
+| PDMOS40V | 0.850 | 22 722 | **34 083** | 56 805 | **3408×** |
+| NDMOS60V | 1.200 | 10 425 | **15 638** | 26 063 | **1564×** |
+| PDMOS60V | 0.550 | 14 702 | **22 054** | 36 756 | **2205×** |
+| NDMOS80V | 0.800 | 6 950 | **10 425** | 17 376 | **1043×** |
+| PDMOS80V | 0.380 | 10 158 | **15 237** | 25 395 | **1524×** |
+| NDMOS120V | 0.450 | 3 909 | **5 864** | 9 774 | **586×** |
+| PDMOS120V | 0.210 | 5 614 | **8 420** | 14 034 | **842×** |
+| NDMOS200V | 0.220 | 1 911 | **2 867** | 4 778 | **287×** |
+| PDMOS200V | 0.088 | 2 352 | **3 529** | 5 881 | **353×** |
 
 **Verdict: wrong, 287×–5213×. Severity: blocks-realism.** The ratio is *not constant* — it falls
 12.7× from the 20 V to the 200 V card. A single uniform divisor **cannot** fix `kp`, unlike the
@@ -111,24 +111,24 @@ Ron_physics(10 µm cell) = Rsp / A ,  A = 10 µm × pitch
 W_implied = 10 µm × Ron_physics / Ron_model
 ```
 
-Worked example, NDMOS20: `Rsp,ideal = 5.9e-9 × 24^2.5 = 1.665e-5 Ω·cm²`; at 2× RESURF `3.33e-5`;
+Worked example, NDMOS20V: `Rsp,ideal = 5.9e-9 × 24^2.5 = 1.665e-5 Ω·cm²`; at 2× RESURF `3.33e-5`;
 `A = 10e-4 × 5e-4 = 5e-7 cm²`; `Ron_physics = 66.6 Ω` against `rd+rs = 0.070 Ω` `[model]` → **951×**.
 
 | device | `rd+rs` | BV | pitch | Rsp ideal | Ron@2× | **ratio@2×** | ratio@5× |
 |---|---|---|---|---|---|---|---|
-| NDMOS20 | 0.070 | 24 | 5 | 0.0166 mΩ·cm² | 66.6 Ω | **951×** | 2378× |
-| PDMOS20 | 0.110 | 22 | 5 | 0.0134 | 53.6 | **487×** | 1218× |
-| DNMOS20 | 0.180 | 24 | 5 | 0.0166 | 66.6 | **370×** | 925× |
-| NDMOS40 | 0.135 | 48 | 7 | 0.0942 | 269.1 | **1993×** | 4983× |
-| PDMOS40 | 0.250 | 45 | 7 | 0.0801 | 229.0 | **916×** | 2290× |
-| NDMOS60 | 0.240 | 75 | 9 | 0.2874 | 638.7 | **2661×** | 6653× |
-| PDMOS60 | 0.530 | 70 | 9 | 0.2419 | 537.5 | **1014×** | 2535× |
-| NDMOS80 | 0.380 | 95 | 11 | 0.5190 | 943.6 | **2483×** | 6208× |
-| PDMOS80 | 0.830 | 90 | 11 | 0.4534 | 824.3 | **993×** | 2483× |
-| NDMOS120 | 0.800 | 135 | 15 | 1.2494 | 1665.8 | **2082×** | 5206× |
-| PDMOS120 | 1.730 | 128 | 15 | 1.0936 | 1458.2 | **843×** | 2107× |
-| NDMOS200 | 1.750 | 225 | 22 | 4.4803 | 4073.0 | **2327×** | 5819× |
-| PDMOS200 | 4.380 | 230 | 22 | 4.7334 | 4303.1 | **982×** | 2456× |
+| NDMOS20V | 0.070 | 24 | 5 | 0.0166 mΩ·cm² | 66.6 Ω | **951×** | 2378× |
+| PDMOS20V | 0.110 | 22 | 5 | 0.0134 | 53.6 | **487×** | 1218× |
+| DNMOS20V | 0.180 | 24 | 5 | 0.0166 | 66.6 | **370×** | 925× |
+| NDMOS40V | 0.135 | 48 | 7 | 0.0942 | 269.1 | **1993×** | 4983× |
+| PDMOS40V | 0.250 | 45 | 7 | 0.0801 | 229.0 | **916×** | 2290× |
+| NDMOS60V | 0.240 | 75 | 9 | 0.2874 | 638.7 | **2661×** | 6653× |
+| PDMOS60V | 0.530 | 70 | 9 | 0.2419 | 537.5 | **1014×** | 2535× |
+| NDMOS80V | 0.380 | 95 | 11 | 0.5190 | 943.6 | **2483×** | 6208× |
+| PDMOS80V | 0.830 | 90 | 11 | 0.4534 | 824.3 | **993×** | 2483× |
+| NDMOS120V | 0.800 | 135 | 15 | 1.2494 | 1665.8 | **2082×** | 5206× |
+| PDMOS120V | 1.730 | 128 | 15 | 1.0936 | 1458.2 | **843×** | 2107× |
+| NDMOS200V | 1.750 | 225 | 22 | 4.4803 | 4073.0 | **2327×** | 5819× |
+| PDMOS200V | 4.380 | 230 | 22 | 4.7334 | 4303.1 | **982×** | 2456× |
 
 Stated the other way: **the model's specific on-resistance is 370×–2660× below the 1-D unipolar
 silicon limit.** No lateral RESURF device can beat that limit; only a superjunction can, and not by
@@ -142,7 +142,7 @@ the clean uniform-slip signature. **A single divisor is a defensible fix for `rd
 ### 2.3 Conflict with `BRIEF_pdk_realism.md` — its `[assumed]` R_on is below the silicon limit
 
 `[inventory]` §6.1 records the brief's `[assumed]` **2 mΩ·cm² specific R_on for the 200 V class**,
-which it uses to back out an implied width of 2235 µm for NDMOS200.
+which it uses to back out an implied width of 2235 µm for NDMOS200V.
 
 `[physics]` the 1-D unipolar limit at 225 V is `5.9e-9 × 225^2.5 = 4.48 mΩ·cm²`.
 
@@ -172,32 +172,32 @@ cjo_der    = A_cell · sqrt(q·ε_si·N_d/(2·V_bi)) ,  A_cell = W_REF × pitch
 
 | device | `cgs` [model] | derived | **×** | `cgdmax` [model] | derived | **×** | `cgdmin` | **×** | `cjo` [model] | derived | **×** |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| NDMOS20 | 499.2 fF | 10.4 | **48.2×** | 403.2 fF | 11.5 | **35.0×** | 35.0 fF | **12.2×** | 140 fF | 49.7 | 2.8× |
-| PDMOS20 | 403.2 | 10.4 | **38.9×** | 345.6 | 11.5 | **30.0×** | 30.0 | **10.4×** | 150 | 51.9 | 2.9× |
-| DNMOS20 | 201.6 | 10.4 | **19.5×** | 144.0 | 11.5 | **12.5×** | 12.0 | 4.2× | 70 | 49.7 | 1.4× |
-| NDMOS40 | 336.0 | 10.4 | **32.4×** | 252.0 | 11.5 | **21.9×** | 22.0 | 7.7× | 100 | 49.2 | 2.0× |
-| PDMOS40 | 252.0 | 10.4 | **24.3×** | 192.0 | 11.5 | **16.7×** | 17.0 | 5.9× | 105 | 50.8 | 2.1× |
-| NDMOS60 | 211.2 | 10.4 | **20.4×** | 153.6 | 11.5 | **13.3×** | 14.0 | 4.9× | 75 | 50.6 | 1.5× |
-| PDMOS60 | 144.0 | 10.4 | **13.9×** | 115.2 | 11.5 | **10.0×** | 10.0 | 3.5× | 65 | 52.4 | 1.2× |
-| NDMOS80 | 135.0 | 10.4 | **13.0×** | 100.0 | 11.5 | 8.7× | 8.5 | 3.0× | 55 | 55.0 | **1.0×** |
-| PDMOS80 | 95.0 | 10.4 | 9.2× | 75.0 | 11.5 | 6.5× | 7.0 | 2.4× | 45 | 56.5 | **0.8×** |
-| NDMOS120 | 86.4 | 10.4 | 8.3× | 62.4 | 11.5 | 5.4× | 5.0 | 1.7× | 35 | 62.9 | 0.6× |
-| PDMOS120 | 61.0 | 10.4 | 5.9× | 47.0 | 11.5 | 4.1× | 4.0 | 1.4× | 29 | 64.6 | 0.4× |
-| **NDMOS200** | 48.0 | 10.4 | **4.6×** | 35.0 | 11.5 | **3.0×** | 3.0 | **1.0×** | 22 | 71.4 | 0.3× |
-| **PDMOS200** | 34.0 | 10.4 | **3.3×** | 26.0 | 11.5 | **2.3×** | 2.5 | **0.9×** | 18 | 70.6 | 0.3× |
+| NDMOS20V | 499.2 fF | 10.4 | **48.2×** | 403.2 fF | 11.5 | **35.0×** | 35.0 fF | **12.2×** | 140 fF | 49.7 | 2.8× |
+| PDMOS20V | 403.2 | 10.4 | **38.9×** | 345.6 | 11.5 | **30.0×** | 30.0 | **10.4×** | 150 | 51.9 | 2.9× |
+| DNMOS20V | 201.6 | 10.4 | **19.5×** | 144.0 | 11.5 | **12.5×** | 12.0 | 4.2× | 70 | 49.7 | 1.4× |
+| NDMOS40V | 336.0 | 10.4 | **32.4×** | 252.0 | 11.5 | **21.9×** | 22.0 | 7.7× | 100 | 49.2 | 2.0× |
+| PDMOS40V | 252.0 | 10.4 | **24.3×** | 192.0 | 11.5 | **16.7×** | 17.0 | 5.9× | 105 | 50.8 | 2.1× |
+| NDMOS60V | 211.2 | 10.4 | **20.4×** | 153.6 | 11.5 | **13.3×** | 14.0 | 4.9× | 75 | 50.6 | 1.5× |
+| PDMOS60V | 144.0 | 10.4 | **13.9×** | 115.2 | 11.5 | **10.0×** | 10.0 | 3.5× | 65 | 52.4 | 1.2× |
+| NDMOS80V | 135.0 | 10.4 | **13.0×** | 100.0 | 11.5 | 8.7× | 8.5 | 3.0× | 55 | 55.0 | **1.0×** |
+| PDMOS80V | 95.0 | 10.4 | 9.2× | 75.0 | 11.5 | 6.5× | 7.0 | 2.4× | 45 | 56.5 | **0.8×** |
+| NDMOS120V | 86.4 | 10.4 | 8.3× | 62.4 | 11.5 | 5.4× | 5.0 | 1.7× | 35 | 62.9 | 0.6× |
+| PDMOS120V | 61.0 | 10.4 | 5.9× | 47.0 | 11.5 | 4.1× | 4.0 | 1.4× | 29 | 64.6 | 0.4× |
+| **NDMOS200V** | 48.0 | 10.4 | **4.6×** | 35.0 | 11.5 | **3.0×** | 3.0 | **1.0×** | 22 | 71.4 | 0.3× |
+| **PDMOS200V** | 34.0 | 10.4 | **3.3×** | 26.0 | 11.5 | **2.3×** | 2.5 | **0.9×** | 18 | 70.6 | 0.3× |
 
 **Three results, and the third is the important one.**
 
 1. **`cjo` is correct** — 0.25×–2.9× across the whole family, well inside assumption error. `[model]`
-   NDMOS80's `cjo = 55 fF` against a derived 55.0 fF is an exact hit. **Verdict: OK. No action.**
+   NDMOS80V's `cjo = 55 fF` against a derived 55.0 fF is an exact hit. **Verdict: OK. No action.**
 2. **`cgs` and `cgdmax` are still too large by 3.3×–48×** even after the ÷1000. Anything beyond ~3× is
    a finding per the brief's own threshold; twelve of thirteen `cgs` values exceed it.
 3. **The residual is strongly voltage-class-sloped** — 48× at 20 V falling monotonically to 3.3× at
    200 V. **The ÷1000 was approximately right for the 200 V pair and left the 20 V pair ~48× off.**
 
-Result 3 explains why the error survived: `HANDOFF_vdmos_caps.md` diagnosed on a **40 µm NDMOS200**,
+Result 3 explains why the error survived: `HANDOFF_vdmos_caps.md` diagnosed on a **40 µm NDMOS200V**,
 the CHANGELOG verified on the **same device**, and the permanent regression `coss_check.cir` tests
-**only NDMOS200** with a threshold (`Cdrain < 1 pF` against a ~105 fF baseline) that is ~10× loose
+**only NDMOS200V** with a threshold (`Cdrain < 1 pF` against a ~105 fF baseline) that is ~10× loose
 `[inventory]` §2.3. The fix was validated on the one card where a uniform ÷1000 was nearly correct,
 by a guard that cannot see the other twelve. This is a **coverage** failure as much as a modelling one.
 
@@ -209,14 +209,14 @@ in band above 80 V). **`cjo` OK.**
 
 | device | W from `kp` | W from `rd`+`rs` (2×–5×) | **kp/rd disagreement** |
 |---|---|---|---|
-| NDMOS20 | 3649× | 951×–2378× | 2.43× |
-| PDMOS20 | 5213× | 487×–1218× | 6.77× |
-| NDMOS40 | 2476× | 1993×–4983× | 0.79× |
-| NDMOS60 | 1564× | 2661×–6653× | 0.37× |
-| NDMOS80 | 1043× | 2483×–6208× | 0.27× |
-| NDMOS120 | 586× | 2082×–5206× | 0.18× |
-| **NDMOS200** | **287×** | **2327×–5819×** | **0.08×** |
-| PDMOS200 | 353× | 982×–2456× | 0.23× |
+| NDMOS20V | 3649× | 951×–2378× | 2.43× |
+| PDMOS20V | 5213× | 487×–1218× | 6.77× |
+| NDMOS40V | 2476× | 1993×–4983× | 0.79× |
+| NDMOS60V | 1564× | 2661×–6653× | 0.37× |
+| NDMOS80V | 1043× | 2483×–6208× | 0.27× |
+| NDMOS120V | 586× | 2082×–5206× | 0.18× |
+| **NDMOS200V** | **287×** | **2327×–5819×** | **0.08×** |
+| PDMOS200V | 353× | 982×–2456× | 0.23× |
 
 The two routes cross near 40 V and diverge to **12×** at 200 V. **Conclusion: `rd`/`rs` carry a clean
 uniform ~10³ slip; `kp` carries a slip *and* a wrong ladder slope.** They are two separate defects
@@ -236,7 +236,7 @@ and is not a user knob, so `1/√mtot` is the correct form. That is not a findin
 
 | group | devices | X (3σ) | σ 1σ @10 µm | **implied A_VT (1σ)** | vs 30 mV·µm | verdict |
 |---|---|---|---|---|---|---|
-| **A** | 20 V, DNMOS20 | 0.0240 | 8.00 mV | **19.6 mV·µm** | 0.65× | **in band** |
+| **A** | 20 V, DNMOS20V | 0.0240 | 8.00 mV | **19.6 mV·µm** | 0.65× | **in band** |
 | **A** | 60 V | 0.0270 | 9.00 mV | **22.1 mV·µm** | 0.73× | **in band** |
 | **A** | 120 V | 0.0300 | 10.00 mV | **24.5 mV·µm** | 0.82× | **in band** |
 | **B** | 40 V | 0.0085 | 2.83 mV | **6.94 mV·µm** | 0.23× | **3.2× optimistic** |
@@ -267,10 +267,10 @@ other, which is worth knowing before either is fixed alone.
 
 | device | `theta` [model] | expected @30 nm | ratio | **tox implied if θ is right** |
 |---|---|---|---|---|
-| NDMOS20 | 0.040 | 0.033–0.100 | 0.69× | 25–75 nm |
-| NDMOS60 | 0.030 | 0.033–0.100 | 0.52× | 33–100 nm |
-| NDMOS120 | 0.022 | 0.033–0.100 | 0.38× | 45–136 nm |
-| **NDMOS200** | **0.018** | 0.033–0.100 | **0.31×** | **56–167 nm** |
+| NDMOS20V | 0.040 | 0.033–0.100 | 0.69× | 25–75 nm |
+| NDMOS60V | 0.030 | 0.033–0.100 | 0.52× | 33–100 nm |
+| NDMOS120V | 0.022 | 0.033–0.100 | 0.38× | 45–136 nm |
+| **NDMOS200V** | **0.018** | 0.033–0.100 | **0.31×** | **56–167 nm** |
 
 **Correction to the brief's framing.** `[inventory]`/`BRIEF_pdk_realism.md` treats `theta = 0.018` on
 the 200 V card as an established finding. On my arithmetic it is **low by ~3×** against a 30 nm oxide,
@@ -290,17 +290,17 @@ VDMOS class explicitly; it is currently unknowable and three separate findings d
 
 | device | `ksubthres` | S (mV/dec) | **n** | verdict |
 |---|---|---|---|---|
-| NDMOS20 | 0.095 | 95.0 | 1.59 | OK (ceiling) |
-| PDMOS20 | 0.110 | 110.0 | **1.85** | **out, 1.16×** |
-| NDMOS40 | 0.088 | 88.0 | 1.48 | OK |
-| PDMOS40 | 0.096 | 96.0 | **1.61** | out (edge) |
-| NDMOS60 | 0.080 | 80.0 | 1.34 | OK |
-| NDMOS80 | 0.075 | 75.0 | 1.26 | OK |
-| NDMOS120 | 0.070 | 70.0 | **1.17** | **out** |
-| **NDMOS200** | **0.060** | **60.0** | **1.01** | **out — essentially ideal** |
-| PDMOS200 | 0.065 | 65.0 | **1.09** | **out** |
+| NDMOS20V | 0.095 | 95.0 | 1.59 | OK (ceiling) |
+| PDMOS20V | 0.110 | 110.0 | **1.85** | **out, 1.16×** |
+| NDMOS40V | 0.088 | 88.0 | 1.48 | OK |
+| PDMOS40V | 0.096 | 96.0 | **1.61** | out (edge) |
+| NDMOS60V | 0.080 | 80.0 | 1.34 | OK |
+| NDMOS80V | 0.075 | 75.0 | 1.26 | OK |
+| NDMOS120V | 0.070 | 70.0 | **1.17** | **out** |
+| **NDMOS200V** | **0.060** | **60.0** | **1.01** | **out — essentially ideal** |
+| PDMOS200V | 0.065 | 65.0 | **1.09** | **out** |
 
-Two findings. First, **NDMOS200's `n = 1.01` is unphysical** — it says the depletion capacitance is
+Two findings. First, **NDMOS200V's `n = 1.01` is unphysical** — it says the depletion capacitance is
 zero, i.e. a perfect gate. No bulk MOSFET achieves this; 60 mV/dec is the room-temperature Boltzmann
 floor.
 
@@ -320,9 +320,9 @@ which is precisely the quantity the open `HANDOFF_dmos200_subthreshold_analog.md
 
 | device | BV [model] | L needed @25 V/µm | L needed @15 V/µm | L in model | verdict |
 |---|---|---|---|---|---|
-| NDMOS20…PDMOS120 (11 cards) | 22–135 | 0.9–5.4 µm | 1.5–9.0 µm | **no L knob at all** | BV asserted, not derived |
-| **NDMOS200** | 225 | **9.0 µm** | **15.0 µm** | `L_REF = 8 µm`, `L_MIN = 5 µm` | **too short** |
-| **PDMOS200** | 230 | **9.2 µm** | **15.3 µm** | same | **too short** |
+| NDMOS20V…PDMOS120V (11 cards) | 22–135 | 0.9–5.4 µm | 1.5–9.0 µm | **no L knob at all** | BV asserted, not derived |
+| **NDMOS200V** | 225 | **9.0 µm** | **15.0 µm** | `L_REF = 8 µm`, `L_MIN = 5 µm` | **too short** |
+| **PDMOS200V** | 230 | **9.2 µm** | **15.3 µm** | same | **too short** |
 
 At `L = L_REF = 8 µm` the implied sustaining field is `225/8 = 28 V/µm`, above the 15–25 band. At
 `L_MIN = 5 µm` it is **45 V/µm** — a device that cannot physically hold 225 V, yet the model reports
@@ -344,11 +344,11 @@ Recommended anchor for phase 2 and beyond: make `bv` a function of `Leff`, e.g.
 
 | device | `is` [model] | A_cell | implied Js | verdict | `tt` [model] | `[industry]` expected |
 |---|---|---|---|---|---|---|
-| NDMOS20 | 5.0e-13 | 50 µm² | 1.0e-14 | **in band** | 18 ns | 10–100 ns ✓ |
-| NDMOS60 | 1.2e-13 | 90 | 1.3e-15 | in band (edge) | 40 ns | 10–100 ns ✓ |
-| NDMOS120 | 5.0e-14 | 150 | 3.3e-16 | 3× below | 80 ns | 50–500 ns ✓ |
-| NDMOS200 | 2.5e-14 | 220 | 1.1e-16 | **9× below** | **130 ns** | **50–500 ns ✓** |
-| PDMOS200 | 3.6e-14 | 220 | 1.6e-16 | 6× below | 155 ns | 50–500 ns ✓ |
+| NDMOS20V | 5.0e-13 | 50 µm² | 1.0e-14 | **in band** | 18 ns | 10–100 ns ✓ |
+| NDMOS60V | 1.2e-13 | 90 | 1.3e-15 | in band (edge) | 40 ns | 10–100 ns ✓ |
+| NDMOS120V | 5.0e-14 | 150 | 3.3e-16 | 3× below | 80 ns | 50–500 ns ✓ |
+| NDMOS200V | 2.5e-14 | 220 | 1.1e-16 | **9× below** | **130 ns** | **50–500 ns ✓** |
+| PDMOS200V | 3.6e-14 | 220 | 1.6e-16 | 6× below | 155 ns | 50–500 ns ✓ |
 
 **Correction to the brief's framing.** The brief lists *"the 130 ns-class values are a known smell on
 VDMOS body diodes"*. **I disagree.** For a 225 V device the drift region is long and lightly doped,
@@ -373,7 +373,7 @@ quasi-saturation onset voltage tracks breakdown. That is a defensible constructi
 
 Full workup in the per-device tables below; derivation and arithmetic are as computed.
 
-### 3.1 NMOS18 / PMOS18 — the healthiest cards in the PDK
+### 3.1 NMOS1V8 / PMOS1V8 — the healthiest cards in the PDK
 
 | parameter | [model] | expected + tag + basis | verdict | severity |
 |---|---|---|---|---|
@@ -388,17 +388,17 @@ Full workup in the per-device tables below; derivation and arithmetic are as com
 | **`noia`** | **6.25e41** | BSIM3 default 1e20 | **F3, 6.25e21×** | **blocks-realism** |
 | **`AD/AS/PD/PS`** | **unset** | must be set | **F6, 100 % of C_j missing** | distorts-results |
 
-### 3.2 NMOS50 / PMOS50
+### 3.2 NMOS5V0 / PMOS5V0
 
 As above, plus: **A_VT = 4.50 mV·µm (1σ) against 11.0 expected → 2.4× optimistic**, `blocks-realism`.
-`S = 95.0 / 102.1 mV/dec` — PMOS50 out of band. `u0 = 190 / 80` OK for the oxide. Idsat in band.
+`S = 95.0 / 102.1 mV/dec` — PMOS5V0 out of band. `u0 = 190 / 80` OK for the oxide. Idsat in band.
 
-### 3.3 NMOS12 / PMOS12 — the worst BSIM3 cards
+### 3.3 NMOS12V / PMOS12V — the worst BSIM3 cards
 
 | parameter | [model] | expected + tag + basis | verdict | severity |
 |---|---|---|---|---|
 | `vth0` | 1.35 / −1.55 V | 0.8–1.5 `[industry]` 12 V thick-ox; consistent with tox=20 nm, k1=0.75, nch=9e16 `[physics]` | **OK — defensible** | — |
-| **`u0`** | **120** cm²/V·s | 200–300 `[industry]` degraded thick-ox n-channel | **LOW 1.7–2.5×** — below PMOS18's 145, i.e. an n-channel less mobile than a p-channel | distorts-results |
+| **`u0`** | **120** cm²/V·s | 200–300 `[industry]` degraded thick-ox n-channel | **LOW 1.7–2.5×** — below PMOS1V8's 145, i.e. an n-channel less mobile than a p-channel | distorts-results |
 | **`rdsw`** | **30** Ω·µm | family is 120 (18 V) → 160 (33) → 280 (50); should rise with class `[physics]` | **LOW ~10×**, breaks a clean monotone trend | distorts-results |
 | `vsat` | 75 000 m/s | 6–9e4 surface-channel `[industry]`; family 140k→110k→80k→75k monotone | **OK** | — |
 | **S** | **115.9 / 130.3** mV/dec | 72–96 | **out 1.21–1.36×** — `nfactor` held ~constant while Cox falls 4.9× `[physics]` | distorts-results |
@@ -411,12 +411,12 @@ As above, plus: **A_VT = 4.50 mV·µm (1σ) against 11.0 expected → 2.4× opti
 **Device-type ambiguity, unresolved by the card.** A true 12 V gate wants tox ≈ 24–30 nm
 (`[industry]` ~2 nm/V for 10-year TDDB; at 20 nm, E_ox = 6.0 MV/cm `[physics]`, above the ~5 MV/cm
 target). A drain-extended device would want ~11 nm. Evidence is contradictory: `xj = 500 nm` says
-drain-extended; the wrapper is a plain `M0` with **no drift element** (unlike NDMOS20's explicit
+drain-extended; the wrapper is a plain `M0` with **no drift element** (unlike NDMOS20V's explicit
 `Rdrift`) which says true thick-oxide. **The wrapper is decisive → Reading 1 → `tox` should be
 24–30 nm, not 20.** `rdsw = 30` fits neither reading.
 
-**Separate finding, outside the card: `device_limits.csv` gives NMOS12/PMOS12 `Lmin = 0.15 µm` —
-shorter than NMOS18's 0.18 µm, on a 20 nm oxide, with `xj = 500 nm` (junction depth 3.3× the channel
+**Separate finding, outside the card: `device_limits.csv` gives NMOS12V/PMOS12V `Lmin = 0.15 µm` —
+shorter than NMOS1V8's 0.18 µm, on a 20 nm oxide, with `xj = 500 nm` (junction depth 3.3× the channel
 length).** Physically impossible; punchthrough control at 12 V needs L ≥ 0.8–1.5 µm `[industry]`. This
 single CSV row is what makes the 12 V Idsat estimate blow out to 1.17–7.83 mA/µm; at a realistic
 L = 2 µm the card lands at 0.41 mA/µm, in band. **Severity: blocks-realism.**
@@ -427,13 +427,13 @@ current in opposite directions, which is plausibly why `tb_nmos12_idvg.sch`'s 2.
 
 ### 3.4 F3 — the flicker parameters are BSIM4 defaults
 
-| | PDK NMOS18 | BSIM4 default | ratio | BSIM3 default | ratio |
+| | PDK NMOS1V8 | BSIM4 default | ratio | BSIM3 default | ratio |
 |---|---|---|---|---|---|
 | `noia` | 6.25e41 | **6.25e41** | **1.000** | 1e20 | 6.25e21 |
 | `noib` | 3.125e26 | **3.125e26** | **1.000** | 5e4 | 6.25e21 |
 | `noic` | 8.75e9 | **8.75e9** | **1.000** | −1.4e-12 | −6.25e21 |
 
-PMOS18 matches the BSIM4 p-channel defaults equally exactly, including the distinctive non-round
+PMOS1V8 matches the BSIM4 p-channel defaults equally exactly, including the distinctive non-round
 `6.188e40` and `1.4e8`. **These cards are `level=49 version=3.3.0` — BSIM3.** The two models use
 different unit conventions for oxide-trap density (BSIM3 ~1e20 m⁻³eV⁻¹; BSIM4 a rescaled ~1e41 form),
 so the values are **~6.25e21× too large in the convention the simulator will apply**, and BSIM3
@@ -450,10 +450,10 @@ converges — it asserts no magnitude, so nothing in CI could catch this.
 
 | card | (4.25/tox)² `[physics]` | stated in the card comment | **actual value ratio** |
 |---|---|---|---|
-| NMOS33 | 0.3964 | 0.40 ✓ | **0.5008** |
-| NMOS50 | 0.1493 | 0.15 ✓ | **0.2496** |
-| NMOS12 | 0.0452 | 0.05 ✓ | **0.1501** |
-| PMOS33 / PMOS50 | 0.3964 / 0.1493 | 0.50 / 0.25 ✗ | 0.4994 / 0.2505 |
+| NMOS3V3 | 0.3964 | 0.40 ✓ | **0.5008** |
+| NMOS5V0 | 0.1493 | 0.15 ✓ | **0.2496** |
+| NMOS12V | 0.0452 | 0.05 ✓ | **0.1501** |
+| PMOS3V3 / PMOS5V0 | 0.3964 / 0.1493 | 0.50 / 0.25 ✗ | 0.4994 / 0.2505 |
 
 The NMOS comments quote the intended physics; the PMOS comments quote the delivered value. Both
 conventions collide at the 12 V card where both say ~0.05 and the delivered ratio is 0.15 — **3.3×
@@ -471,14 +471,14 @@ family-wide omission.
 
 | device | `cj·AD` | `cjsw·PD` | **C_j total missing** | sidewall share | `cgdo·W` modelled | **drain node: true → modelled** |
 |---|---|---|---|---|---|---|
-| NMOS18 | 5.00 fF | 5.88 fF | **10.88 fF** | 54 % | 2.20 fF | 13.08 → 2.20 fF (**17 %**) |
-| NMOS50 | 3.00 | 3.78 | **6.78** | 56 % | 1.80 | 8.58 → 1.80 (**21 %**) |
-| NMOS12 | 1.75 | 2.52 | **4.27** | 59 % | 1.50 | 5.77 → 1.50 (**26 %**) |
+| NMOS1V8 | 5.00 fF | 5.88 fF | **10.88 fF** | 54 % | 2.20 fF | 13.08 → 2.20 fF (**17 %**) |
+| NMOS5V0 | 3.00 | 3.78 | **6.78** | 56 % | 1.80 | 8.58 → 1.80 (**21 %**) |
+| NMOS12V | 1.75 | 2.52 | **4.27** | 59 % | 1.50 | 5.77 → 1.50 (**26 %**) |
 
 **100 % of junction capacitance is missing, not a partial error** — the simulator sees only the gate
 overlap, i.e. **17–26 % of the true drain node; 74–83 % absent.** The sidewall term is the larger half,
 so `PD = 0` costs more than `AD = 0`. All transient/delay/slew results on these devices are
-optimistically fast, worst on NMOS18 where the missing 10.9 fF is 5× the modelled 2.2 fF. Junction
+optimistically fast, worst on NMOS1V8 where the missing 10.9 fF is 5× the modelled 2.2 fF. Junction
 leakage is also identically zero (`I_leak = js·AD + jsw·PD`).
 
 **Conflict to record.** `circuits/current_mirror_char/MIRROR_CHAR.md` §8 flags this and concludes the
@@ -577,8 +577,8 @@ capacitance per area — thinner depletion — but the dependence is only **√N
 | junction | N_eff `[industry]` | V_bi (card `vj`) | **C_j0/A** |
 |---|---|---|---|
 | DZ_5V6 | 1e18 cm⁻³ | 0.75 | **3.326 fF/µm²** |
-| DZ_12 | 1e17 | 0.78 | 1.031 |
-| DZ_24 | 1e17 | 0.80 | 1.019 |
+| DZ_12V | 1e17 | 0.78 | 1.031 |
+| DZ_24V | 1e17 | 0.80 | 1.019 |
 | DIO_PN | 1e16 | 0.78 | 0.326 |
 
 Doping legitimately explains **3.2×–10.2×**. It cannot explain more: reaching 429× from doping alone
@@ -590,8 +590,8 @@ any dopant in silicon**. That junction would be a tunnel diode, not a 5.6 V zene
 | device | `cjo` [model] | its C/A | **implied area** | as a square |
 |---|---|---|---|---|
 | DZ_5V6 | 120 pF | 3.326 | **36 070 µm² = 0.036 mm²** | **190 × 190 µm** |
-| DZ_12 | 55 pF | 1.031 | 53 320 µm² | 231 × 231 µm |
-| DZ_24 | 28 pF | 1.019 | 27 490 µm² | 166 × 166 µm |
+| DZ_12V | 55 pF | 1.031 | 53 320 µm² | 231 × 231 µm |
+| DZ_24V | 28 pF | 1.019 | 27 490 µm² | 166 × 166 µm |
 | DIO_PN | 280 fF | 1.031 | 272 µm² | 16.5 × 16.5 µm |
 
 **Answer: no, 120 pF is not defensible at any sane on-chip area, and it is a distinct scale slip.**
@@ -599,7 +599,7 @@ At the default `AREA=1` a 5.6 V zener would be 190 µm on a side; `device_limits
 to 1000, i.e. 36 mm² and 120 nF.
 
 **Is the factor uniform?** Normalising each implied area to DIO_PN's (doping fully removed):
-**DZ_24 101.3× · DZ_5V6 132.9× · DZ_12 196.4×** — a **1.94× spread, and non-monotonic in `bv`.**
+**DZ_24V 101.3× · DZ_5V6 132.9× · DZ_12V 196.4×** — a **1.94× spread, and non-monotonic in `bv`.**
 
 **This settles the question the CHANGELOG left open.** A uniform factor would indicate a generator
 slip, fixable by one divisor as the VDMOS caps were. A varying, non-monotonic factor indicates the
@@ -620,10 +620,10 @@ tunneling dominates (heating narrows the gap → bv falls, **negative**); above 
 | device | expected sign | `[industry]` magnitude |
 |---|---|---|
 | DZ_5V6 | ≈ 0 (transition zone) | 0 to +0.5 mV/°C — **this is why 5.6 V zeners are the classic near-zero-tempco reference** |
-| DZ_12 | positive | +6 to +10 mV/°C |
-| DZ_24 | positive | +15 to +25 mV/°C |
+| DZ_12V | positive | +6 to +10 mV/°C |
+| DZ_24V | positive | +15 to +25 mV/°C |
 
-Over −40…+150 °C, DZ_24 should move **+2.9 to +4.8 V**; the model holds it at 24.0 V, and wrong in the
+Over −40…+150 °C, DZ_24V should move **+2.9 to +4.8 V**; the model holds it at 24.0 V, and wrong in the
 unsafe direction (a real clamp passes more voltage hot than simulated). And the model gives **no way to
 distinguish the good reference part from the bad ones**, since all three are equally flat.
 **Severity: distorts-results, rising to blocks-realism for OVP/clamp/reference sign-off across temperature.**
@@ -704,8 +704,8 @@ weaknesses are in the physics values, not the sourcing.
 
 | device | check | verdict | severity |
 |---|---|---|---|
-| NMOS33/PMOS33 | Cox 5.116 fF/µm²; u0 300/115; Idsat 0.75–1.53 / 0.37–0.55 mA/µm; vth0 0.66/−0.74; S 84.4/88.1; A_VT 4.00 vs 6.75 expected (**0.59×**) | mostly OK; A_VT marginal; PMOS33 vth0 slightly high | cosmetic |
-| DNMOS20 | vto −0.90 (depletion ✓); shares ladder-A mismatch (OK); `kp` implies 1303×; caps 19.5× | carries F1, F2 | blocks-realism |
+| NMOS3V3/PMOS3V3 | Cox 5.116 fF/µm²; u0 300/115; Idsat 0.75–1.53 / 0.37–0.55 mA/µm; vth0 0.66/−0.74; S 84.4/88.1; A_VT 4.00 vs 6.75 expected (**0.59×**) | mostly OK; A_VT marginal; PMOS3V3 vth0 slightly high | cosmetic |
+| DNMOS20V | vto −0.90 (depletion ✓); shares ladder-A mismatch (OK); `kp` implies 1303×; caps 19.5× | carries F1, F2 | blocks-realism |
 | NPN_HV | bf 80, vaf 120 V, fT 1.77 GHz (just under band), Johnson 26.6 GHz·V ✓, BVCEO 15.05 V ✓; **cje/cjc 75–88× vs `is`** — worst in family | carries F-BJT1, F4 | blocks-realism |
 | PNP_HV | bf 18, vaf 50 V, fT 0.64 GHz ✓, BVCEO 15.54 V ✓; cje/cjc 45× | carries F-BJT1, F4 | blocks-realism |
 | DIO_PN | is 2e-14, n 1.05, Vf@1 mA = 669 mV `[physics]` ✓, bv 100 V, tt 6 ns (2–17× fast vs 10–100 band) | OK; tt marginal | cosmetic |
@@ -737,14 +737,14 @@ Proposals only — **nothing has been applied.**
 | 7 | **Add `AD/AS/PD/PS` to all 8 BSIM3 wrappers** as geometry expressions | §3.5 | **low** — 8 instance lines | e.g. `AD={W*0.5u} PD={2*(W+0.5u)}`. Recovers 74–83 % of the drain node. |
 | 8 | **Flip `RPOLY_HI` `tc1` to −500…−1500 ppm/°C** | §5.1 | **low** — 1 number | Also revisit whether `RPOLY_LO`'s +1000 is right for the same module. |
 | 9 | **Unify the VDMOS mismatch ladder** onto the proposed A-slope | §2.6 | **low** — 6 numbers | Only ladder B changes. |
-| 10 | **Fix `device_limits.csv` NMOS12/PMOS12 `Lmin` 0.15 → ~1.0 µm**; add PDMOS120/PDMOS200 rows | §3.3 | **low** — 3 rows | The single row causing the 12 V Idsat blow-out. |
-| 11 | **Fix `ksubthres` ladder slope** — derive `n` from Cox per class rather than hand-laddering | §2.8 | medium — 13 numbers | NDMOS200's `n = 1.01` is below the Boltzmann floor. |
+| 10 | **Fix `device_limits.csv` NMOS12V/PMOS12V `Lmin` 0.15 → ~1.0 µm**; add PDMOS120V/PDMOS200V rows | §3.3 | **low** — 3 rows | The single row causing the 12 V Idsat blow-out. |
+| 11 | **Fix `ksubthres` ladder slope** — derive `n` from Cox per class rather than hand-laddering | §2.8 | medium — 13 numbers | NDMOS200V's `n = 1.01` is below the Boltzmann floor. |
 | 12 | **Declare the BJT/diode reference cell** (what AREA=1 means), and reconcile `is` vs `cje`/`cjc` | §4.1, §4.3 | **high** — needs a decision then 4 cards | The `cje`/`cjc` route says 300–900 µm²; `is` says 4–80. Pick one and re-derive the other. |
 | 13 | **Add zener `bv` tempco** | §4.5 | **high** — ngspice level-1 D has no `tbv1`; needs level-3 or a behavioural series source | Likely why it was never done. |
 | 14 | **Make VDMOS `bv` a function of `Leff`** | §2.9 | **high** — model restructure | e.g. `min(bv_rated, 20 V/µm · Leff)`. Removes the free-lunch short-L device. |
 | 15 | Raise `RPOLY_LO` `rsh` 25 → 100–400 Ω/□; `RNPLUS` 32 → 50–150 | §7 | low — 2 numbers | Both currently read as silicide straps. |
 | 16 | **Widen all passive matching coefficients ~3–14×**; widen BJT `is` corner spread ~3× | §5.2, §4.1 | medium — 9 + 4 numbers | Systematic optimism; affects every MC result. |
-| 17 | Set `DIO_SCH` `tt = 0`; fix NMOS12 `u0` and `rdsw`; state `tox` per VDMOS class; add a qualification temperature range | §4.6, §3.3, §2.7, `[inventory]` §4.4 | low each | Housekeeping cluster. |
+| 17 | Set `DIO_SCH` `tt = 0`; fix NMOS12V `u0` and `rdsw`; state `tox` per VDMOS class; add a qualification temperature range | §4.6, §3.3, §2.7, `[inventory]` §4.4 | low each | Housekeeping cluster. |
 | 18 | Correct `BRIEF_pdk_realism.md`'s 2 mΩ·cm² assumption before filing; withdraw `[inventory]` §6.5 #19 | §2.3, §6 | trivial | Both are documentation-only. |
 
 **Two cautions for whoever executes this list.** (i) Fixes 1, 2 and 9 interact: `kp` currently makes

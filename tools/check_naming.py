@@ -82,6 +82,44 @@ def scan_names(files: list[str]) -> list[str]:
     return bad
 
 
+def scan_old_device_names(files: list[str]) -> list[str]:
+    """The retired device names must never come back (ruling 2.3).
+
+    Read from models/device_rename_map.json rather than typed here, so the map stays the
+    single source of truth and this guard cannot drift from it. NMOS50 read as 50 V and
+    NMOS12 as 1.2 V; that ambiguity is the whole reason for the rename, so letting an old
+    name reappear in a new file would quietly reintroduce it.
+
+    Same separator-aware token rule as the rename itself: `_` counts as a boundary, so
+    VTH_NMOS50 is caught, while NDMOS20 does not match inside NDMOS200.
+    """
+    m = json.loads((ROOT / "models" / "device_rename_map.json").read_text(encoding="utf-8"))
+    mapping = m["map"]
+    rx = re.compile(r"(?<![A-Za-z0-9])(%s)(?![A-Za-z0-9])"
+                    % "|".join(re.escape(k) for k in sorted(mapping, key=len, reverse=True)))
+    skip = {"models/device_rename_map.json", "tools/check_naming.py",
+            "tools/rename_devices.py"}
+    bad = []
+    for rel in files:
+        r = rel.replace("\\", "/")
+        # Frozen baselines keep their original names on purpose; the comparison tools
+        # apply the map when reading them.
+        if r in skip or r.startswith("pdk_validation/baselines/"):
+            continue
+        if rx.search(r):
+            bad.append("path uses a retired device name: %s" % r)
+        try:
+            txt = (ROOT / rel).read_text(encoding="utf-8")
+        except (UnicodeDecodeError, IsADirectoryError, PermissionError, FileNotFoundError):
+            continue
+        for i, line in enumerate(txt.splitlines(), 1):
+            hit = rx.search(line)
+            if hit:
+                bad.append("%s:%d uses retired %s (now %s)"
+                           % (r, i, hit.group(1), mapping[hit.group(1)]))
+    return bad
+
+
 def scan_sources() -> list[str]:
     bad, seen = [], []
 
@@ -128,7 +166,7 @@ def main(argv=None) -> int:
         return 0
 
     files = tracked()
-    bad = scan_names(files) + scan_sources()
+    bad = scan_names(files) + scan_old_device_names(files) + scan_sources()
     if bad:
         print("naming check FAILED (%d):" % len(bad))
         for b in bad[:40]:
@@ -139,8 +177,8 @@ def main(argv=None) -> int:
         print("Reference-specific material belongs in a gitignored LOCAL_* file; only the")
         print("boolean outcome of a comparison may be committed.")
         return 1
-    print("ok: %d tracked files carry no reference name; every source is taxonomy-prefixed"
-          % len(files))
+    print("ok: %d tracked files: no reference name, no retired device name, every "
+          "source taxonomy-prefixed" % len(files))
     return 0
 
 

@@ -1,51 +1,51 @@
 device,param,min,max,unit,basis,note
-NMOS12,L,0.5,50.0,um,grounded,drawn channel length (um)
-NMOS12,W,0.22,100.0,um,grounded,drawn channel width per device (um); use M for arrays
-NMOS12,M,1,1000,-,declared,integer device multiplier
-PMOS12,L,0.5,50.0,um,grounded,drawn channel length (um)
-PMOS12,W,0.22,100.0,um,grounded,drawn channel width per device (um); use M for arrays
-PMOS12,M,1,1000,-,declared,integer device multiplier
-NMOS18,L,0.18,50.0,um,grounded,drawn channel length (um)
-NMOS18,W,0.22,100.0,um,grounded,drawn channel width per device (um); use M for arrays
-NMOS18,M,1,1000,-,declared,integer device multiplier
-PMOS18,L,0.18,50.0,um,grounded,drawn channel length (um)
-PMOS18,W,0.22,100.0,um,grounded,drawn channel width per device (um); use M for arrays
-PMOS18,M,1,1000,-,declared,integer device multiplier
-NMOS33,L,0.35,50.0,um,grounded,drawn channel length (um)
-NMOS33,W,0.3,100.0,um,grounded,drawn channel width per device (um); use M for arrays
-NMOS33,M,1,1000,-,declared,integer device multiplier
-PMOS33,L,0.35,50.0,um,grounded,drawn channel length (um)
-PMOS33,W,0.3,100.0,um,grounded,drawn channel width per device (um); use M for arrays
-PMOS33,M,1,1000,-,declared,integer device multiplier
-NMOS50,L,0.5,50.0,um,grounded,drawn channel length (um)
-NMOS50,W,0.4,100.0,um,grounded,drawn channel width per device (um); use M for arrays
-NMOS50,M,1,1000,-,declared,integer device multiplier
-PMOS50,L,0.5,50.0,um,grounded,drawn channel length (um)
-PMOS50,W,0.4,100.0,um,grounded,drawn channel width per device (um); use M for arrays
-PMOS50,M,1,1000,-,declared,integer device multiplier
-NDMOS20,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-NDMOS20,M,1,10000,-,declared,integer device multiplier
-NDMOS40,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-NDMOS40,M,1,10000,-,declared,integer device multiplier
-NDMOS60,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-NDMOS60,M,1,10000,-,declared,integer device multiplier
-NDMOS80,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-NDMOS80,M,1,10000,-,declared,integer device multiplier
-NDMOS120,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-NDMOS120,M,1,10000,-,declared,integer device multiplier
-NDMOS200,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-NDMOS200,M,1,10000,-,declared,integer device multiplier
-PDMOS20,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-PDMOS20,M,1,10000,-,declared,integer device multiplier
-PDMOS40,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-PDMOS40,M,1,10000,-,declared,integer device multiplier
-PDMOS60,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-PDMOS60,M,1,10000,-,declared,integer device multiplier
-PDMOS80,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-PDMOS80,M,1,10000,-,declared,integer device multiplier
-DNMOS20,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-DNMOS20,M,1,10000,-,declared,integer device multiplier
-NDMOS200,L,5.4,10.0,um,grounded,"drift/extended-drain length (um); RESURF window, ~5.4u = realistic 200V minimum"
+NMOS12V,L,0.5,50.0,um,grounded,drawn channel length (um)
+NMOS12V,W,0.22,100.0,um,grounded,drawn channel width per device (um); use M for arrays
+NMOS12V,M,1,1000,-,declared,integer device multiplier
+PMOS12V,L,0.5,50.0,um,grounded,drawn channel length (um)
+PMOS12V,W,0.22,100.0,um,grounded,drawn channel width per device (um); use M for arrays
+PMOS12V,M,1,1000,-,declared,integer device multiplier
+NMOS1V8,L,0.18,50.0,um,grounded,drawn channel length (um)
+NMOS1V8,W,0.22,100.0,um,grounded,drawn channel width per device (um); use M for arrays
+NMOS1V8,M,1,1000,-,declared,integer device multiplier
+PMOS1V8,L,0.18,50.0,um,grounded,drawn channel length (um)
+PMOS1V8,W,0.22,100.0,um,grounded,drawn channel width per device (um); use M for arrays
+PMOS1V8,M,1,1000,-,declared,integer device multiplier
+NMOS3V3,L,0.35,50.0,um,grounded,drawn channel length (um)
+NMOS3V3,W,0.3,100.0,um,grounded,drawn channel width per device (um); use M for arrays
+NMOS3V3,M,1,1000,-,declared,integer device multiplier
+PMOS3V3,L,0.35,50.0,um,grounded,drawn channel length (um)
+PMOS3V3,W,0.3,100.0,um,grounded,drawn channel width per device (um); use M for arrays
+PMOS3V3,M,1,1000,-,declared,integer device multiplier
+NMOS5V0,L,0.5,50.0,um,grounded,drawn channel length (um)
+NMOS5V0,W,0.4,100.0,um,grounded,drawn channel width per device (um); use M for arrays
+NMOS5V0,M,1,1000,-,declared,integer device multiplier
+PMOS5V0,L,0.5,50.0,um,grounded,drawn channel length (um)
+PMOS5V0,W,0.4,100.0,um,grounded,drawn channel width per device (um); use M for arrays
+PMOS5V0,M,1,1000,-,declared,integer device multiplier
+NDMOS20V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+NDMOS20V,M,1,10000,-,declared,integer device multiplier
+NDMOS40V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+NDMOS40V,M,1,10000,-,declared,integer device multiplier
+NDMOS60V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+NDMOS60V,M,1,10000,-,declared,integer device multiplier
+NDMOS80V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+NDMOS80V,M,1,10000,-,declared,integer device multiplier
+NDMOS120V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+NDMOS120V,M,1,10000,-,declared,integer device multiplier
+NDMOS200V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+NDMOS200V,M,1,10000,-,declared,integer device multiplier
+PDMOS20V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+PDMOS20V,M,1,10000,-,declared,integer device multiplier
+PDMOS40V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+PDMOS40V,M,1,10000,-,declared,integer device multiplier
+PDMOS60V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+PDMOS60V,M,1,10000,-,declared,integer device multiplier
+PDMOS80V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+PDMOS80V,M,1,10000,-,declared,integer device multiplier
+DNMOS20V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+DNMOS20V,M,1,10000,-,declared,integer device multiplier
+NDMOS200V,L,5.4,10.0,um,grounded,"drift/extended-drain length (um); RESURF window, ~5.4u = realistic 200V minimum"
 NPN_LV,AREA,0.04,1000.0,-,grounded,relative area multiplier; AREA=1=100um2 cell; min=2x2um emitter (4um2)=0.04 (menu 0.04/0.25/1.0)
 NPN_HV,AREA,0.10,1000.0,-,grounded,relative area multiplier; AREA=1=100um2 cell; min=3.2x3.2um emitter (10um2)=0.10
 PNP_HV,AREA,0.10,1000.0,-,grounded,relative area multiplier; AREA=1=100um2 cell; min=3.2x3.2um emitter (10um2)=0.10
@@ -54,8 +54,8 @@ DIO_PN,AREA,0.04,1000.0,-,derived,relative area multiplier; catalog silent on mi
 DIO_FAST,AREA,0.04,1000.0,-,derived,relative area multiplier; catalog silent on min junction area; derived min contactable junction ~0.04
 DIO_SCH,AREA,0.04,1000.0,-,derived,relative area multiplier; catalog silent on min junction area; derived min contactable junction ~0.04
 DZ_5V6,AREA,0.04,1000.0,-,derived,relative area multiplier; catalog silent on min junction area; derived min contactable junction ~0.04
-DZ_12,AREA,0.04,1000.0,-,derived,relative area multiplier; catalog silent on min junction area; derived min contactable junction ~0.04
-DZ_24,AREA,0.04,1000.0,-,derived,relative area multiplier; catalog silent on min junction area; derived min contactable junction ~0.04
+DZ_12V,AREA,0.04,1000.0,-,derived,relative area multiplier; catalog silent on min junction area; derived min contactable junction ~0.04
+DZ_24V,AREA,0.04,1000.0,-,derived,relative area multiplier; catalog silent on min junction area; derived min contactable junction ~0.04
 RPOLY_HI,L,0.5,1000.0,um,derived,drawn length (um)
 RPOLY_HI,W,0.5,50.0,um,derived,drawn width (um)
 RPOLY_LO,L,0.5,1000.0,um,derived,drawn length (um)
@@ -74,191 +74,191 @@ CMOM,L,2.0,1000.0,um,derived,drawn length (um)
 CMOM,W,2.0,1000.0,um,derived,drawn width (um)
 CFRINGE,L,2.0,1000.0,um,derived,drawn length (um)
 CFRINGE,W,2.0,1000.0,um,derived,drawn width (um)
-NDMOS20,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
-NDMOS40,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
-NDMOS60,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
-NDMOS80,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
-NDMOS120,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
-NDMOS200,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
-PDMOS20,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
-PDMOS40,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
-PDMOS60,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
-PDMOS80,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
-DNMOS20,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
-PDMOS120,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-PDMOS120,M,1,10000,-,declared,integer device multiplier
-PDMOS200,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
-PDMOS200,M,1,10000,-,declared,integer device multiplier
-PDMOS200,L,5.4,10.0,um,grounded,drift/extended-drain length (um)
-NMOS18,Vds_absmax,0,2.3,V,scaled,
-NMOS18,Vds_dcmax,0,2.0,V,scaled,
-NMOS18,Vgs_absmax,-2.3,2.3,V,scaled,
-NMOS18,Vgs_dcmax,-2.0,2.0,V,scaled,
-NMOS18,Idc_dens,0,2.0,mA/um,scaled,
-NMOS18,Ipulse_dens,0,40,mA/um,scaled,
-NMOS18,Tj_max,-40,150,degC,industry,
-PMOS18,Vds_absmax,-2.3,0,V,scaled,
-PMOS18,Vds_dcmax,-2.0,0,V,scaled,
-PMOS18,Vgs_absmax,-2.3,2.3,V,scaled,
-PMOS18,Vgs_dcmax,-2.0,2.0,V,scaled,
-PMOS18,Idc_dens,0,2.0,mA/um,scaled,
-PMOS18,Ipulse_dens,0,40,mA/um,scaled,
-PMOS18,Tj_max,-40,150,degC,industry,
-NMOS33,Vds_absmax,0,4.3,V,scaled,
-NMOS33,Vds_dcmax,0,3.6,V,scaled,
-NMOS33,Vgs_absmax,-4.3,4.3,V,scaled,
-NMOS33,Vgs_dcmax,-3.6,3.6,V,scaled,
-NMOS33,Idc_dens,0,1.6,mA/um,scaled,
-NMOS33,Ipulse_dens,0,40,mA/um,scaled,
-NMOS33,Tj_max,-40,150,degC,industry,
-PMOS33,Vds_absmax,-4.3,0,V,scaled,
-PMOS33,Vds_dcmax,-3.6,0,V,scaled,
-PMOS33,Vgs_absmax,-4.3,4.3,V,scaled,
-PMOS33,Vgs_dcmax,-3.6,3.6,V,scaled,
-PMOS33,Idc_dens,0,1.6,mA/um,scaled,
-PMOS33,Ipulse_dens,0,40,mA/um,scaled,
-PMOS33,Tj_max,-40,150,degC,industry,
-NMOS50,Vds_absmax,0,7.0,V,grounded,
-NMOS50,Vds_dcmax,0,5.5,V,grounded,
-NMOS50,Vgs_absmax,-7.0,7.0,V,grounded,
-NMOS50,Vgs_dcmax,-5.5,5.5,V,grounded,
-NMOS50,Idc_dens,0,1.2,mA/um,scaled,
-NMOS50,Ipulse_dens,0,35,mA/um,scaled,
-NMOS50,Tj_max,-40,150,degC,industry,
-PMOS50,Vds_absmax,-7.0,0,V,grounded,
-PMOS50,Vds_dcmax,-5.5,0,V,grounded,
-PMOS50,Vgs_absmax,-7.0,7.0,V,grounded,
-PMOS50,Vgs_dcmax,-5.5,5.5,V,grounded,
-PMOS50,Idc_dens,0,1.2,mA/um,scaled,
-PMOS50,Ipulse_dens,0,35,mA/um,scaled,
-PMOS50,Tj_max,-40,150,degC,industry,
-NMOS12,Vds_absmax,0,15,V,scaled,
-NMOS12,Vds_dcmax,0,13.2,V,scaled,
-NMOS12,Vgs_absmax,-15,15,V,scaled,
-NMOS12,Vgs_dcmax,-13.2,13.2,V,scaled,
-NMOS12,Idc_dens,0,0.9,mA/um,scaled,
-NMOS12,Ipulse_dens,0,25,mA/um,scaled,
-NMOS12,Tj_max,-40,150,degC,industry,
-PMOS12,Vds_absmax,-15,0,V,scaled,
-PMOS12,Vds_dcmax,-13.2,0,V,scaled,
-PMOS12,Vgs_absmax,-15,15,V,scaled,
-PMOS12,Vgs_dcmax,-13.2,13.2,V,scaled,
-PMOS12,Idc_dens,0,0.9,mA/um,scaled,
-PMOS12,Ipulse_dens,0,25,mA/um,scaled,
-PMOS12,Tj_max,-40,150,degC,industry,
-NDMOS20,Vds_absmax,0,23,V,grounded,
-NDMOS20,Vds_dcmax,0,22,V,grounded,
-NDMOS20,Vgd_absmax,0,23,V,grounded,
-NDMOS20,Vgs_absmax,-7,7,V,grounded,
-NDMOS20,Vgs_dcmax,-5.5,5.5,V,grounded,
-NDMOS20,Idc_dens,0,1.0,mA/um,scaled,
-NDMOS20,Ipulse_dens,0,30,mA/um,scaled,
-NDMOS20,Viso,0,23,V,scaled,substrate isolation (isolated variant)
-NDMOS20,Tj_max,-40,150,degC,industry,
-PDMOS20,Vds_absmax,-23,0,V,grounded,
-PDMOS20,Vds_dcmax,-22,0,V,grounded,
-PDMOS20,Vgd_absmax,-23,0,V,grounded,
-PDMOS20,Vgs_absmax,-7,7,V,grounded,
-PDMOS20,Vgs_dcmax,-5.5,5.5,V,grounded,
-PDMOS20,Idc_dens,0,0.4,mA/um,scaled,
-PDMOS20,Ipulse_dens,0,12,mA/um,scaled,
-PDMOS20,Viso,-23,0,V,scaled,substrate isolation (isolated variant)
-PDMOS20,Tj_max,-40,150,degC,industry,
-NDMOS40,Vds_absmax,0,46,V,grounded,
-NDMOS40,Vds_dcmax,0,44,V,grounded,
-NDMOS40,Vgd_absmax,0,46,V,grounded,
-NDMOS40,Vgs_absmax,-7,7,V,grounded,
-NDMOS40,Vgs_dcmax,-5.5,5.5,V,grounded,
-NDMOS40,Idc_dens,0,1.0,mA/um,scaled,
-NDMOS40,Ipulse_dens,0,30,mA/um,scaled,
-NDMOS40,Viso,0,46,V,scaled,substrate isolation (isolated variant)
-NDMOS40,Tj_max,-40,150,degC,industry,
-PDMOS40,Vds_absmax,-46,0,V,grounded,
-PDMOS40,Vds_dcmax,-44,0,V,grounded,
-PDMOS40,Vgd_absmax,-46,0,V,grounded,
-PDMOS40,Vgs_absmax,-7,7,V,grounded,
-PDMOS40,Vgs_dcmax,-5.5,5.5,V,grounded,
-PDMOS40,Idc_dens,0,0.35,mA/um,scaled,
-PDMOS40,Ipulse_dens,0,11,mA/um,scaled,
-PDMOS40,Viso,-46,0,V,scaled,substrate isolation (isolated variant)
-PDMOS40,Tj_max,-40,150,degC,industry,
-NDMOS60,Vds_absmax,0,69,V,extrapolated,
-NDMOS60,Vds_dcmax,0,66,V,extrapolated,
-NDMOS60,Vgd_absmax,0,69,V,extrapolated,
-NDMOS60,Vgs_absmax,-7,7,V,grounded,
-NDMOS60,Vgs_dcmax,-5.5,5.5,V,grounded,
-NDMOS60,Idc_dens,0,0.9,mA/um,scaled,
-NDMOS60,Ipulse_dens,0,27,mA/um,scaled,
-NDMOS60,Viso,0,69,V,scaled,substrate isolation (isolated variant)
-NDMOS60,Tj_max,-40,150,degC,industry,
-PDMOS60,Vds_absmax,-69,0,V,extrapolated,
-PDMOS60,Vds_dcmax,-66,0,V,extrapolated,
-PDMOS60,Vgd_absmax,-69,0,V,extrapolated,
-PDMOS60,Vgs_absmax,-7,7,V,grounded,
-PDMOS60,Vgs_dcmax,-5.5,5.5,V,grounded,
-PDMOS60,Idc_dens,0,0.33,mA/um,scaled,
-PDMOS60,Ipulse_dens,0,10,mA/um,scaled,
-PDMOS60,Viso,-69,0,V,scaled,substrate isolation (isolated variant)
-PDMOS60,Tj_max,-40,150,degC,industry,
-NDMOS80,Vds_absmax,0,92,V,extrapolated,
-NDMOS80,Vds_dcmax,0,88,V,extrapolated,
-NDMOS80,Vgd_absmax,0,92,V,extrapolated,
-NDMOS80,Vgs_absmax,-7,7,V,grounded,
-NDMOS80,Vgs_dcmax,-5.5,5.5,V,grounded,
-NDMOS80,Idc_dens,0,0.9,mA/um,scaled,
-NDMOS80,Ipulse_dens,0,27,mA/um,scaled,
-NDMOS80,Viso,0,92,V,scaled,substrate isolation (isolated variant)
-NDMOS80,Tj_max,-40,150,degC,industry,
-PDMOS80,Vds_absmax,-92,0,V,extrapolated,
-PDMOS80,Vds_dcmax,-88,0,V,extrapolated,
-PDMOS80,Vgd_absmax,-92,0,V,extrapolated,
-PDMOS80,Vgs_absmax,-7,7,V,grounded,
-PDMOS80,Vgs_dcmax,-5.5,5.5,V,grounded,
-PDMOS80,Idc_dens,0,0.3,mA/um,scaled,
-PDMOS80,Ipulse_dens,0,9,mA/um,scaled,
-PDMOS80,Viso,-92,0,V,scaled,substrate isolation (isolated variant)
-PDMOS80,Tj_max,-40,150,degC,industry,
-NDMOS120,Vds_absmax,0,138,V,extrapolated,
-NDMOS120,Vds_dcmax,0,132,V,extrapolated,
-NDMOS120,Vgd_absmax,0,138,V,extrapolated,
-NDMOS120,Vgs_absmax,-7,7,V,grounded,
-NDMOS120,Vgs_dcmax,-5.5,5.5,V,grounded,
-NDMOS120,Idc_dens,0,0.8,mA/um,scaled,
-NDMOS120,Ipulse_dens,0,24,mA/um,scaled,
-NDMOS120,Viso,0,138,V,scaled,substrate isolation (isolated variant)
-NDMOS120,Tj_max,-40,150,degC,industry,
-PDMOS120,Vds_absmax,-138,0,V,extrapolated,
-PDMOS120,Vds_dcmax,-132,0,V,extrapolated,
-PDMOS120,Vgd_absmax,-138,0,V,extrapolated,
-PDMOS120,Vgs_absmax,-7,7,V,grounded,
-PDMOS120,Vgs_dcmax,-5.5,5.5,V,grounded,
-PDMOS120,Idc_dens,0,0.27,mA/um,scaled,
-PDMOS120,Ipulse_dens,0,8,mA/um,scaled,
-PDMOS120,Viso,-138,0,V,scaled,substrate isolation (isolated variant)
-PDMOS120,Tj_max,-40,150,degC,industry,
-NDMOS200,Vds_absmax,0,230,V,extrapolated,
-NDMOS200,Vds_dcmax,0,220,V,extrapolated,
-NDMOS200,Vgd_absmax,0,230,V,extrapolated,
-NDMOS200,Vgs_absmax,-7,7,V,grounded,
-NDMOS200,Vgs_dcmax,-5.5,5.5,V,grounded,
-NDMOS200,Idc_dens,0,0.7,mA/um,scaled,
-NDMOS200,Ipulse_dens,0,20,mA/um,scaled,
-NDMOS200,Viso,0,230,V,scaled,substrate isolation (isolated variant)
-NDMOS200,Tj_max,-40,150,degC,industry,
-PDMOS200,Vds_absmax,-230,0,V,extrapolated,
-PDMOS200,Vds_dcmax,-220,0,V,extrapolated,
-PDMOS200,Vgd_absmax,-230,0,V,extrapolated,
-PDMOS200,Vgs_absmax,-7,7,V,grounded,
-PDMOS200,Vgs_dcmax,-5.5,5.5,V,grounded,
-PDMOS200,Idc_dens,0,0.22,mA/um,scaled,
-PDMOS200,Ipulse_dens,0,7,mA/um,scaled,
-PDMOS200,Viso,-230,0,V,scaled,substrate isolation (isolated variant)
-PDMOS200,Tj_max,-40,150,degC,industry,
-DNMOS20,Vds_absmax,0,23,V,scaled,
-DNMOS20,Vds_dcmax,0,22,V,scaled,
-DNMOS20,Vgs_absmax,-7,7,V,scaled,
-DNMOS20,Idc_dens,0,1.0,mA/um,scaled,
-DNMOS20,Tj_max,-40,150,degC,industry,
+NDMOS20V,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+NDMOS40V,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+NDMOS60V,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+NDMOS80V,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+NDMOS120V,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+NDMOS200V,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+PDMOS20V,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+PDMOS40V,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+PDMOS60V,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+PDMOS80V,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+DNMOS20V,LCH,0.6,1.0,um,grounded,"gate/channel length (um); fixed at process min in this PDK - documentation only, not a settable parameter"
+PDMOS120V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+PDMOS120V,M,1,10000,-,declared,integer device multiplier
+PDMOS200V,W,3.0,100000.0,um,grounded,total drawn width (um); >=1 min gate finger (3.0um); sub-finger W<3um not buildable
+PDMOS200V,M,1,10000,-,declared,integer device multiplier
+PDMOS200V,L,5.4,10.0,um,grounded,drift/extended-drain length (um)
+NMOS1V8,Vds_absmax,0,2.3,V,scaled,
+NMOS1V8,Vds_dcmax,0,2.0,V,scaled,
+NMOS1V8,Vgs_absmax,-2.3,2.3,V,scaled,
+NMOS1V8,Vgs_dcmax,-2.0,2.0,V,scaled,
+NMOS1V8,Idc_dens,0,2.0,mA/um,scaled,
+NMOS1V8,Ipulse_dens,0,40,mA/um,scaled,
+NMOS1V8,Tj_max,-40,150,degC,industry,
+PMOS1V8,Vds_absmax,-2.3,0,V,scaled,
+PMOS1V8,Vds_dcmax,-2.0,0,V,scaled,
+PMOS1V8,Vgs_absmax,-2.3,2.3,V,scaled,
+PMOS1V8,Vgs_dcmax,-2.0,2.0,V,scaled,
+PMOS1V8,Idc_dens,0,2.0,mA/um,scaled,
+PMOS1V8,Ipulse_dens,0,40,mA/um,scaled,
+PMOS1V8,Tj_max,-40,150,degC,industry,
+NMOS3V3,Vds_absmax,0,4.3,V,scaled,
+NMOS3V3,Vds_dcmax,0,3.6,V,scaled,
+NMOS3V3,Vgs_absmax,-4.3,4.3,V,scaled,
+NMOS3V3,Vgs_dcmax,-3.6,3.6,V,scaled,
+NMOS3V3,Idc_dens,0,1.6,mA/um,scaled,
+NMOS3V3,Ipulse_dens,0,40,mA/um,scaled,
+NMOS3V3,Tj_max,-40,150,degC,industry,
+PMOS3V3,Vds_absmax,-4.3,0,V,scaled,
+PMOS3V3,Vds_dcmax,-3.6,0,V,scaled,
+PMOS3V3,Vgs_absmax,-4.3,4.3,V,scaled,
+PMOS3V3,Vgs_dcmax,-3.6,3.6,V,scaled,
+PMOS3V3,Idc_dens,0,1.6,mA/um,scaled,
+PMOS3V3,Ipulse_dens,0,40,mA/um,scaled,
+PMOS3V3,Tj_max,-40,150,degC,industry,
+NMOS5V0,Vds_absmax,0,7.0,V,grounded,
+NMOS5V0,Vds_dcmax,0,5.5,V,grounded,
+NMOS5V0,Vgs_absmax,-7.0,7.0,V,grounded,
+NMOS5V0,Vgs_dcmax,-5.5,5.5,V,grounded,
+NMOS5V0,Idc_dens,0,1.2,mA/um,scaled,
+NMOS5V0,Ipulse_dens,0,35,mA/um,scaled,
+NMOS5V0,Tj_max,-40,150,degC,industry,
+PMOS5V0,Vds_absmax,-7.0,0,V,grounded,
+PMOS5V0,Vds_dcmax,-5.5,0,V,grounded,
+PMOS5V0,Vgs_absmax,-7.0,7.0,V,grounded,
+PMOS5V0,Vgs_dcmax,-5.5,5.5,V,grounded,
+PMOS5V0,Idc_dens,0,1.2,mA/um,scaled,
+PMOS5V0,Ipulse_dens,0,35,mA/um,scaled,
+PMOS5V0,Tj_max,-40,150,degC,industry,
+NMOS12V,Vds_absmax,0,15,V,scaled,
+NMOS12V,Vds_dcmax,0,13.2,V,scaled,
+NMOS12V,Vgs_absmax,-15,15,V,scaled,
+NMOS12V,Vgs_dcmax,-13.2,13.2,V,scaled,
+NMOS12V,Idc_dens,0,0.9,mA/um,scaled,
+NMOS12V,Ipulse_dens,0,25,mA/um,scaled,
+NMOS12V,Tj_max,-40,150,degC,industry,
+PMOS12V,Vds_absmax,-15,0,V,scaled,
+PMOS12V,Vds_dcmax,-13.2,0,V,scaled,
+PMOS12V,Vgs_absmax,-15,15,V,scaled,
+PMOS12V,Vgs_dcmax,-13.2,13.2,V,scaled,
+PMOS12V,Idc_dens,0,0.9,mA/um,scaled,
+PMOS12V,Ipulse_dens,0,25,mA/um,scaled,
+PMOS12V,Tj_max,-40,150,degC,industry,
+NDMOS20V,Vds_absmax,0,23,V,grounded,
+NDMOS20V,Vds_dcmax,0,22,V,grounded,
+NDMOS20V,Vgd_absmax,0,23,V,grounded,
+NDMOS20V,Vgs_absmax,-7,7,V,grounded,
+NDMOS20V,Vgs_dcmax,-5.5,5.5,V,grounded,
+NDMOS20V,Idc_dens,0,1.0,mA/um,scaled,
+NDMOS20V,Ipulse_dens,0,30,mA/um,scaled,
+NDMOS20V,Viso,0,23,V,scaled,substrate isolation (isolated variant)
+NDMOS20V,Tj_max,-40,150,degC,industry,
+PDMOS20V,Vds_absmax,-23,0,V,grounded,
+PDMOS20V,Vds_dcmax,-22,0,V,grounded,
+PDMOS20V,Vgd_absmax,-23,0,V,grounded,
+PDMOS20V,Vgs_absmax,-7,7,V,grounded,
+PDMOS20V,Vgs_dcmax,-5.5,5.5,V,grounded,
+PDMOS20V,Idc_dens,0,0.4,mA/um,scaled,
+PDMOS20V,Ipulse_dens,0,12,mA/um,scaled,
+PDMOS20V,Viso,-23,0,V,scaled,substrate isolation (isolated variant)
+PDMOS20V,Tj_max,-40,150,degC,industry,
+NDMOS40V,Vds_absmax,0,46,V,grounded,
+NDMOS40V,Vds_dcmax,0,44,V,grounded,
+NDMOS40V,Vgd_absmax,0,46,V,grounded,
+NDMOS40V,Vgs_absmax,-7,7,V,grounded,
+NDMOS40V,Vgs_dcmax,-5.5,5.5,V,grounded,
+NDMOS40V,Idc_dens,0,1.0,mA/um,scaled,
+NDMOS40V,Ipulse_dens,0,30,mA/um,scaled,
+NDMOS40V,Viso,0,46,V,scaled,substrate isolation (isolated variant)
+NDMOS40V,Tj_max,-40,150,degC,industry,
+PDMOS40V,Vds_absmax,-46,0,V,grounded,
+PDMOS40V,Vds_dcmax,-44,0,V,grounded,
+PDMOS40V,Vgd_absmax,-46,0,V,grounded,
+PDMOS40V,Vgs_absmax,-7,7,V,grounded,
+PDMOS40V,Vgs_dcmax,-5.5,5.5,V,grounded,
+PDMOS40V,Idc_dens,0,0.35,mA/um,scaled,
+PDMOS40V,Ipulse_dens,0,11,mA/um,scaled,
+PDMOS40V,Viso,-46,0,V,scaled,substrate isolation (isolated variant)
+PDMOS40V,Tj_max,-40,150,degC,industry,
+NDMOS60V,Vds_absmax,0,69,V,extrapolated,
+NDMOS60V,Vds_dcmax,0,66,V,extrapolated,
+NDMOS60V,Vgd_absmax,0,69,V,extrapolated,
+NDMOS60V,Vgs_absmax,-7,7,V,grounded,
+NDMOS60V,Vgs_dcmax,-5.5,5.5,V,grounded,
+NDMOS60V,Idc_dens,0,0.9,mA/um,scaled,
+NDMOS60V,Ipulse_dens,0,27,mA/um,scaled,
+NDMOS60V,Viso,0,69,V,scaled,substrate isolation (isolated variant)
+NDMOS60V,Tj_max,-40,150,degC,industry,
+PDMOS60V,Vds_absmax,-69,0,V,extrapolated,
+PDMOS60V,Vds_dcmax,-66,0,V,extrapolated,
+PDMOS60V,Vgd_absmax,-69,0,V,extrapolated,
+PDMOS60V,Vgs_absmax,-7,7,V,grounded,
+PDMOS60V,Vgs_dcmax,-5.5,5.5,V,grounded,
+PDMOS60V,Idc_dens,0,0.33,mA/um,scaled,
+PDMOS60V,Ipulse_dens,0,10,mA/um,scaled,
+PDMOS60V,Viso,-69,0,V,scaled,substrate isolation (isolated variant)
+PDMOS60V,Tj_max,-40,150,degC,industry,
+NDMOS80V,Vds_absmax,0,92,V,extrapolated,
+NDMOS80V,Vds_dcmax,0,88,V,extrapolated,
+NDMOS80V,Vgd_absmax,0,92,V,extrapolated,
+NDMOS80V,Vgs_absmax,-7,7,V,grounded,
+NDMOS80V,Vgs_dcmax,-5.5,5.5,V,grounded,
+NDMOS80V,Idc_dens,0,0.9,mA/um,scaled,
+NDMOS80V,Ipulse_dens,0,27,mA/um,scaled,
+NDMOS80V,Viso,0,92,V,scaled,substrate isolation (isolated variant)
+NDMOS80V,Tj_max,-40,150,degC,industry,
+PDMOS80V,Vds_absmax,-92,0,V,extrapolated,
+PDMOS80V,Vds_dcmax,-88,0,V,extrapolated,
+PDMOS80V,Vgd_absmax,-92,0,V,extrapolated,
+PDMOS80V,Vgs_absmax,-7,7,V,grounded,
+PDMOS80V,Vgs_dcmax,-5.5,5.5,V,grounded,
+PDMOS80V,Idc_dens,0,0.3,mA/um,scaled,
+PDMOS80V,Ipulse_dens,0,9,mA/um,scaled,
+PDMOS80V,Viso,-92,0,V,scaled,substrate isolation (isolated variant)
+PDMOS80V,Tj_max,-40,150,degC,industry,
+NDMOS120V,Vds_absmax,0,138,V,extrapolated,
+NDMOS120V,Vds_dcmax,0,132,V,extrapolated,
+NDMOS120V,Vgd_absmax,0,138,V,extrapolated,
+NDMOS120V,Vgs_absmax,-7,7,V,grounded,
+NDMOS120V,Vgs_dcmax,-5.5,5.5,V,grounded,
+NDMOS120V,Idc_dens,0,0.8,mA/um,scaled,
+NDMOS120V,Ipulse_dens,0,24,mA/um,scaled,
+NDMOS120V,Viso,0,138,V,scaled,substrate isolation (isolated variant)
+NDMOS120V,Tj_max,-40,150,degC,industry,
+PDMOS120V,Vds_absmax,-138,0,V,extrapolated,
+PDMOS120V,Vds_dcmax,-132,0,V,extrapolated,
+PDMOS120V,Vgd_absmax,-138,0,V,extrapolated,
+PDMOS120V,Vgs_absmax,-7,7,V,grounded,
+PDMOS120V,Vgs_dcmax,-5.5,5.5,V,grounded,
+PDMOS120V,Idc_dens,0,0.27,mA/um,scaled,
+PDMOS120V,Ipulse_dens,0,8,mA/um,scaled,
+PDMOS120V,Viso,-138,0,V,scaled,substrate isolation (isolated variant)
+PDMOS120V,Tj_max,-40,150,degC,industry,
+NDMOS200V,Vds_absmax,0,230,V,extrapolated,
+NDMOS200V,Vds_dcmax,0,220,V,extrapolated,
+NDMOS200V,Vgd_absmax,0,230,V,extrapolated,
+NDMOS200V,Vgs_absmax,-7,7,V,grounded,
+NDMOS200V,Vgs_dcmax,-5.5,5.5,V,grounded,
+NDMOS200V,Idc_dens,0,0.7,mA/um,scaled,
+NDMOS200V,Ipulse_dens,0,20,mA/um,scaled,
+NDMOS200V,Viso,0,230,V,scaled,substrate isolation (isolated variant)
+NDMOS200V,Tj_max,-40,150,degC,industry,
+PDMOS200V,Vds_absmax,-230,0,V,extrapolated,
+PDMOS200V,Vds_dcmax,-220,0,V,extrapolated,
+PDMOS200V,Vgd_absmax,-230,0,V,extrapolated,
+PDMOS200V,Vgs_absmax,-7,7,V,grounded,
+PDMOS200V,Vgs_dcmax,-5.5,5.5,V,grounded,
+PDMOS200V,Idc_dens,0,0.22,mA/um,scaled,
+PDMOS200V,Ipulse_dens,0,7,mA/um,scaled,
+PDMOS200V,Viso,-230,0,V,scaled,substrate isolation (isolated variant)
+PDMOS200V,Tj_max,-40,150,degC,industry,
+DNMOS20V,Vds_absmax,0,23,V,scaled,
+DNMOS20V,Vds_dcmax,0,22,V,scaled,
+DNMOS20V,Vgs_absmax,-7,7,V,scaled,
+DNMOS20V,Idc_dens,0,1.0,mA/um,scaled,
+DNMOS20V,Tj_max,-40,150,degC,industry,
 NPN_LV,Vce_max,0,7,V,grounded,
 NPN_LV,Vcb_max,0,18,V,grounded,
 NPN_LV,Vbe_rev,0,4,V,grounded,
@@ -300,16 +300,16 @@ DZ_5V6,Vr_absmax,0,5.6,V,grounded,working reverse < Vz
 DZ_5V6,Vf_max,0,1.0,V,grounded,
 DZ_5V6,Idc_dens,0,0.5,mA/um,scaled,
 DZ_5V6,Tj_max,-40,150,degC,industry,
-DZ_12,Vz_nom,12,12,V,grounded,
-DZ_12,Vr_absmax,0,12,V,grounded,working reverse < Vz
-DZ_12,Vf_max,0,1.0,V,grounded,
-DZ_12,Idc_dens,0,0.5,mA/um,scaled,
-DZ_12,Tj_max,-40,150,degC,industry,
-DZ_24,Vz_nom,24,24,V,grounded,
-DZ_24,Vr_absmax,0,24,V,grounded,working reverse < Vz
-DZ_24,Vf_max,0,1.0,V,grounded,
-DZ_24,Idc_dens,0,0.5,mA/um,scaled,
-DZ_24,Tj_max,-40,150,degC,industry,
+DZ_12V,Vz_nom,12,12,V,grounded,
+DZ_12V,Vr_absmax,0,12,V,grounded,working reverse < Vz
+DZ_12V,Vf_max,0,1.0,V,grounded,
+DZ_12V,Idc_dens,0,0.5,mA/um,scaled,
+DZ_12V,Tj_max,-40,150,degC,industry,
+DZ_24V,Vz_nom,24,24,V,grounded,
+DZ_24V,Vr_absmax,0,24,V,grounded,working reverse < Vz
+DZ_24V,Vf_max,0,1.0,V,grounded,
+DZ_24V,Idc_dens,0,0.5,mA/um,scaled,
+DZ_24V,Tj_max,-40,150,degC,industry,
 RPOLY_HI,Vop_max,-5,5,V,industry,poly/diffusion body working voltage
 RPOLY_HI,Tj_max,-40,150,degC,industry,
 RPOLY_LO,Vop_max,-5,5,V,industry,poly/diffusion body working voltage

@@ -25,7 +25,7 @@ This library provides eight asynchronous (combinational) logic cells - inverter,
 ## 2. Performance summary by domain
 All ranges are min..max **across the full 45-point PVT matrix**. Widths in um.
 
-### 1.8 V domain - NMOS18 / PMOS18, L = 0.18 um
+### 1.8 V domain - NMOS1V8 / PMOS1V8, L = 0.18 um
 
 | Cell | Wn/Wp (um) | Cin (fF) | V_M (V) | V_M (%Vdd) | t_rise (ps) | t_fall (ps) | Active (um^2) | Layout est (um^2) |
 |---|---|---|---|---|---|---|---|---|
@@ -40,7 +40,7 @@ All ranges are min..max **across the full 45-point PVT matrix**. Widths in um.
 
 <sub>`*` = capacitance-limited (see notes). Wn/Wp for multi-stage cells: BUF = stage1 -> stage2; AND2/OR2 = input gate + output inverter; XOR2/XNOR2 = core + input inverter.</sub>
 
-### 3.3 V domain - NMOS33 / PMOS33, L = 0.35 um
+### 3.3 V domain - NMOS3V3 / PMOS3V3, L = 0.35 um
 
 | Cell | Wn/Wp (um) | Cin (fF) | V_M (V) | V_M (%Vdd) | t_rise (ps) | t_fall (ps) | Active (um^2) | Layout est (um^2) |
 |---|---|---|---|---|---|---|---|---|
@@ -55,7 +55,7 @@ All ranges are min..max **across the full 45-point PVT matrix**. Widths in um.
 
 <sub>`*` = capacitance-limited (see notes). Wn/Wp for multi-stage cells: BUF = stage1 -> stage2; AND2/OR2 = input gate + output inverter; XOR2/XNOR2 = core + input inverter.</sub>
 
-### 5.0 V domain - NMOS50 / PMOS50, L = 0.50 um
+### 5.0 V domain - NMOS5V0 / PMOS5V0, L = 0.50 um
 
 | Cell | Wn/Wp (um) | Cin (fF) | V_M (V) | V_M (%Vdd) | t_rise (ps) | t_fall (ps) | Active (um^2) | Layout est (um^2) |
 |---|---|---|---|---|---|---|---|---|

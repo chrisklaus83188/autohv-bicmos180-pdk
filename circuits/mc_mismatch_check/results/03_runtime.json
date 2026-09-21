@@ -2,7 +2,7 @@
  "provenance": {
   "model_tag": "v2-grounded",
   "ngspice_version": "ngspice-45",
-  "device": "NMOS50",
+  "device": "NMOS5V0",
   "W_um": 4.7,
   "L_um": 1.0,
   "iref_A": 1e-05,

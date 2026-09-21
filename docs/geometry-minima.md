@@ -37,13 +37,13 @@ minimum; where analog > fab, you must size up for matching.*
 
 | device | fab Wmin | fab Lmin | tag | one-line basis | T2 cross-check (Wmin) | analog min W (σ<20%) | default |
 |---|---|---|---|---|---|---|---|
-| NMOS18/PMOS18 | 0.22 | 0.18 | `[grounded]` | the reference process 2.5 V-core DRM 0.30/0.24 × 0.72 (0.25→0.18 node) | contact 0.22 + 2×enc 0.06 ≈ 0.34 (thin-ox; within 2×) | 0.17 / 0.06 | W=0.22u L=0.18u |
-| NMOS33/PMOS33 | 0.30 | 0.35 | `[grounded]` | the reference process 3.3 V DRM 0.40/0.35 × 0.72 | ≈ 0.36 | 0.13 / 0.04 | W=0.30u L=0.35u |
-| NMOS50/PMOS50 | 0.40 | 0.50 | `[grounded]` | the reference process 5 V DRM 0.60/0.50 (thick-ox, W scaled) | ≈ 0.40 (thick-ox relaxed ×1.2) | 0.45 / 0.19 | W=0.40u L=0.50u |
-| NMOS12/PMOS12 | 0.22 | 0.50 | `[grounded]` | 12 V has no planar Lmin → nearest planar = 5 V's 0.50; W core-scaled | ≈ 0.34 | 1.91 / 1.88 | W=0.22u L=0.50u |
+| NMOS1V8/PMOS1V8 | 0.22 | 0.18 | `[grounded]` | the reference process 2.5 V-core DRM 0.30/0.24 × 0.72 (0.25→0.18 node) | contact 0.22 + 2×enc 0.06 ≈ 0.34 (thin-ox; within 2×) | 0.17 / 0.06 | W=0.22u L=0.18u |
+| NMOS3V3/PMOS3V3 | 0.30 | 0.35 | `[grounded]` | the reference process 3.3 V DRM 0.40/0.35 × 0.72 | ≈ 0.36 | 0.13 / 0.04 | W=0.30u L=0.35u |
+| NMOS5V0/PMOS5V0 | 0.40 | 0.50 | `[grounded]` | the reference process 5 V DRM 0.60/0.50 (thick-ox, W scaled) | ≈ 0.40 (thick-ox relaxed ×1.2) | 0.45 / 0.19 | W=0.40u L=0.50u |
+| NMOS12V/PMOS12V | 0.22 | 0.50 | `[grounded]` | 12 V has no planar Lmin → nearest planar = 5 V's 0.50; W core-scaled | ≈ 0.34 | 1.91 / 1.88 | W=0.22u L=0.50u |
 
-*NMOS50 analog (0.45) slightly exceeds its fab floor (0.40): a 5 V matched pair wants the fab min or a
-hair more. NMOS12/PMOS12 analog (~1.9) is ~9× the fab floor — the high 12 V-oxide A_VT means matched
+*NMOS5V0 analog (0.45) slightly exceeds its fab floor (0.40): a 5 V matched pair wants the fab min or a
+hair more. NMOS12V/PMOS12V analog (~1.9) is ~9× the fab floor — the high 12 V-oxide A_VT means matched
 12 V pairs must be sized up hard.*
 
 ### VDMOS (LDMOS + depletion) — W (µm), min gate finger
@@ -51,7 +51,7 @@ hair more. NMOS12/PMOS12 analog (~1.9) is ~9× the fab floor — the high 12 V-o
 | device | fab Wmin | tag | one-line basis | T2 cross-check | analog min W (σ<20%) | default |
 |---|---|---|---|---|---|---|
 | NDMOS/PDMOS 20/40/60/80/120/200 | **3.0** | `[grounded]` | the reference process DRM **HV min gate width 3.0 µm** | contact row + body tie + gate finger ≈ 3 µm | 1.1 – 2.4 | W=3u (200: +L=5.4u) |
-| DNMOS20 (depletion) | **3.0** | `[grounded]` | same HV min gate finger | ≈ 3 µm | n/a (Idss self-bias) | W=3u |
+| DNMOS20V (depletion) | **3.0** | `[grounded]` | same HV min gate finger | ≈ 3 µm | n/a (Idss self-bias) | W=3u |
 
 **Ruling (maintainer-confirmed):** W < 3 µm is **clamped** — a fractional finger has no physical
 construction, so sub-3 µm is *not* an extrapolation region. `m<1` is disallowed. The sizing guide's
@@ -75,7 +75,7 @@ with the menu listed as guidance.*
 | device | fab AREAmin | tag | one-line basis | default |
 |---|---|---|---|---|
 | DIO_PN / DIO_FAST / DIO_SCH | **0.04** | `[derived]` | catalog silent on min junction area; min contactable junction ≈ BJT emitter fraction | AREA=0.04 |
-| DZ_5V6 / DZ_12 / DZ_24 | **0.04** | `[derived]` | buried junction; catalog silent on min area | AREA=0.04 |
+| DZ_5V6 / DZ_12V / DZ_24V | **0.04** | `[derived]` | buried junction; catalog silent on min area | AREA=0.04 |
 
 ### Resistors / capacitors — W / L (µm)
 

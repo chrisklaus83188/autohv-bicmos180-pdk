@@ -3,7 +3,7 @@
 **To:** AutoHV-BiCMOS180 PDK maintainer
 **From:** chuba14f task author (high-side rail-threshold monitor)
 **Date:** 2026-06-05
-**Models:** `NDMOS200` / `PDMOS200` (`VDMOS`-based).
+**Models:** `NDMOS200V` / `PDMOS200V` (`VDMOS`-based).
 **Related (both resolved):** `HANDOFF_dmos200_vshift_multiinstance.md` (+ `_REPLY`) — the DC
 `vshift#branch` singularity, fixed by `Rcond`; and `HANDOFF_dmos200_breakdown.md` — the FF
 breakdown re-rating. **This is the time-domain analog of the vshift issue and is the last
@@ -25,7 +25,7 @@ limit with confidence.
 
 ## Reproducers (in this repo root — run them directly)
 Generated from the actual task grader. Each is the full chuba14f topology (4 floating
-`PDMOS200`/`NDMOS200` current-mirror front-ends + 5 V comparators + bias), brought up with a
+`PDMOS200V`/`NDMOS200V` current-mirror front-ends + 5 V comparators + bias), brought up with a
 dV/dt-matched VIN soft-start, then the dynamic stimulus.
 
 ```
@@ -53,11 +53,11 @@ Sharp: 100 V all-clear, 120 V the dynamics die; the quasi-static trip is unaffec
 - **Not the slew rate.** 2 V/µs times out too, so it isn't `dV/dt` magnitude.
 - **It's the floating HV LDMOS.** The dynamic stimulus swings the device drains fast at high Vds
   (`vcp = VIN + CP-VIN` moves with the edge/slew); with 4 such devices above ~100 V the solver
-  micro-steps. The 5 V comparators (`NMOS50`/`PMOS50`) are not implicated (they're low-voltage).
+  micro-steps. The 5 V comparators (`NMOS5V0`/`PMOS5V0`) are not implicated (they're low-voltage).
 
 ## What I exhausted (so you don't repeat it)
 Faster soft-start (4–8 V/µs), **softening the VDMOS Cgd transition** (`a=0.22→0.05` on
-`NDMOS200_INT`/`PDMOS200_INT` — no effect, and it broke the trip), removing the HV coupling caps,
+`NDMOS200V_INT`/`PDMOS200V_INT` — no effect, and it broke the trip), removing the HV coupling caps,
 `.options chgtol`=1e-12…1e-10 / `trtol`=50…100 / `cshunt` / `method=gear`, a gentle 100 ns delay
 edge, a 2 V small-excursion slew, coarse global tstep, `tstart`+`tmax` split-resolution, and
 breakpoint-localized fine stepping. Every one times out at VIN ≥ ~120 V.

@@ -29,7 +29,7 @@ Phase 0; nothing is estimated unless marked.
 | F3 | Baseline reproduces: mirror σ/µ 4.331 %, JSON byte-identical; all mechanism checks pass on re-run | — | baseline |
 | F4 | External single-knob driver prototype: σ/µ 3.965 %, bit-identical on repeat, within 0.03 points of its first-order prediction | — | Phase 3 "before" |
 | F5 | Runtime, 200 samples: in-deck loop 0.63 s, per-invocation seeding 3.09 s, external driver 0.71 s | — | A11 "before" |
-| F6 | **CI's Monte Carlo mismatch flow check fails locally and CI hides it** (`continue-on-error`). Stale NMOS50 A_VT in the test (13.5 vs 33 mV·µm), plus an unexplained +21 % residual after correcting it | **high** | Q21 |
+| F6 | **CI's Monte Carlo mismatch flow check fails locally and CI hides it** (`continue-on-error`). Stale NMOS5V0 A_VT in the test (13.5 vs 33 mV·µm), plus an unexplained +21 % residual after correcting it | **high** | Q21 |
 | F7 | Capacitors have no edge-bias lever; D3 covers MOS and R only | high | Q17 |
 | F8 | D5's exact reproduction holds only at the reference geometry; resistor coefficients differ by type | high | Q16 |
 | F9 | Corner cards move every voltage class, every NPN/PNP, every diode, resistor and capacitor type **identically** — Q8's per-class grouping is a correlation assumption the cards neither support nor contradict | medium | Q19 |
@@ -50,7 +50,7 @@ Phase 0; nothing is estimated unless marked.
 
 ## 3. Measurements
 
-Local runs: ngspice-45, TT, 27 °C; NMOS50 mirror W = 4.7 µm, L = 1 µm, Iref = 10 µA, `MM_ON=1`,
+Local runs: ngspice-45, TT, 27 °C; NMOS5V0 mirror W = 4.7 µm, L = 1 µm, Iref = 10 µA, `MM_ON=1`,
 `PROC_ON=0` unless stated.
 
 ### 3.1 Mirror baseline (N = 200, `.option seed=k` per invocation)
@@ -99,7 +99,7 @@ draws, and a fixed `.option seed` freezes an in-deck loop.
 
 | check | result |
 |---|---|
-| wrappers | 40: 6 LV FET, 2 HV FET (NMOS12/PMOS12, rated `Vds_dcmax` 13.2 V), 13 VDMOS/LDMOS, 4 BJT, 6 diode, 5 R, 4 C |
+| wrappers | 40: 6 LV FET, 2 HV FET (NMOS12V/PMOS12V, rated `Vds_dcmax` 13.2 V), 13 VDMOS/LDMOS, 4 BJT, 6 diode, 5 R, 4 C |
 | corner-selected expressions | 186 (182 models file, 4 library) |
 | of those moving a geometry parameter | 0 (R0 answered; D3 applies) |
 | gate-resistance term / β mismatch term | both absent (follow-up / D6) |
@@ -126,7 +126,7 @@ The failure predates this program.
 
 | quantity | value |
 |---|---|
-| test bench | two NMOS50, W = 10 µm, L = 1 µm, Vgs = 2 V, Vds = 3 V; empirical gm/Id 1.686 V⁻¹ |
+| test bench | two NMOS5V0, W = 10 µm, L = 1 µm, Vgs = 2 V, Vds = 3 V; empirical gm/Id 1.686 V⁻¹ |
 | coefficient hardcoded in the test | `DVTH_3SIG_BASE = 0.0135` V·µm |
 | coefficient in the wrapper since `dc7de19` (O5 A_VT widening, 2026-07-24) | 0.033 V·µm (2.44×) |
 | measured σ(log I1/I2), N = 80 / N = 400 | 1.078 % / 1.014 % |
@@ -195,7 +195,7 @@ information about cross-class or cross-type correlation.
 | parameters D1 listed as multiplicative where linear wins | **none** |
 | parameters D1 did not list where log wins | **41**: VDMOS `VTO` 12 of 13; `vsat` 7 of 8; `pclm` 6; `js` 6; `is` 10 (BJT 4, diode 6) |
 | margins on the non-VTO disagreements | all small, both forms well under 1 % (e.g. `vsat` 0.102 % linear vs 0.085 % log) |
-| VDMOS `VTO` if forced linear | worst 1.316 % (PDMOS80, PDMOS120) — still ≤ 1.5 % |
+| VDMOS `VTO` if forced linear | worst 1.316 % (PDMOS80V, PDMOS120V) — still ≤ 1.5 % |
 
 D1's rationale (lognormal for positive-definite quantities like resistance and mobility) covers
 `vsat`, `pclm`, `js` and `is`. It does not obviously cover a threshold voltage.

@@ -72,8 +72,8 @@ pass it on the X-lines).
 ```spice
 .param MM_ON=0
 * Worst case: matched devices shifted in OPPOSITE directions.
-XM1 d1 g1 s b NMOS50 W=100u L=2u MM_SIGMA=+3
-XM2 d2 g2 s b NMOS50 W=100u L=2u MM_SIGMA=-3
+XM1 d1 g1 s b NMOS5V0 W=100u L=2u MM_SIGMA=+3
+XM2 d2 g2 s b NMOS5V0 W=100u L=2u MM_SIGMA=-3
 ```
 
 The input offset is `(gm/ID) * 2 * X / 3 / sqrt(W*L_um²)` — the pair
@@ -84,9 +84,9 @@ difference is `+X − (−X) = 2X` in 3-σ units.
 ```spice
 .param MM_ON=0
 * Worst case: reference shifts up, all outputs shift down.
-XM_REF c c 0 b NMOS50 W=100u L=2u MM_SIGMA=+3
-XM_O1  o1 c 0 b NMOS50 W=100u L=2u MM_SIGMA=-3
-XM_O2  o2 c 0 b NMOS50 W=100u L=2u MM_SIGMA=-3
+XM_REF c c 0 b NMOS5V0 W=100u L=2u MM_SIGMA=+3
+XM_O1  o1 c 0 b NMOS5V0 W=100u L=2u MM_SIGMA=-3
+XM_O2  o2 c 0 b NMOS5V0 W=100u L=2u MM_SIGMA=-3
 ```
 
 Each output current's ratio error is bracketed by the gm/ID times the
@@ -97,10 +97,10 @@ Each output current's ratio error is bracketed by the gm/ID times the
 ```spice
 .param MM_ON=0
 * Mirror pair + cascode pair, each pair shifted opposing.
-XM_REF c c x b NMOS50 W=100u L=2u MM_SIGMA=+3
-XM_OUT o c y b NMOS50 W=100u L=2u MM_SIGMA=-3
-XC_REF x b1 0 b NMOS50 W=100u L=1u MM_SIGMA=+3
-XC_OUT y b1 0 b NMOS50 W=100u L=1u MM_SIGMA=-3
+XM_REF c c x b NMOS5V0 W=100u L=2u MM_SIGMA=+3
+XM_OUT o c y b NMOS5V0 W=100u L=2u MM_SIGMA=-3
+XC_REF x b1 0 b NMOS5V0 W=100u L=1u MM_SIGMA=+3
+XC_OUT y b1 0 b NMOS5V0 W=100u L=1u MM_SIGMA=-3
 ```
 
 Note: the cascode pair's contribution to output current error is
@@ -115,9 +115,9 @@ needed. Worst case for SOA on the top device:
 
 ```spice
 .param MM_ON=0
-XM1 d1 gd  0  b NMOS50 W=100u L=2u MM_SIGMA=+3   ; bottom
-XM2 d2 gd d1  b NMOS50 W=100u L=2u MM_SIGMA=+3   ; mid
-XM3 d3 gd d2  b NMOS50 W=100u L=2u MM_SIGMA=+3   ; top -- needs most headroom
+XM1 d1 gd  0  b NMOS5V0 W=100u L=2u MM_SIGMA=+3   ; bottom
+XM2 d2 gd d1  b NMOS5V0 W=100u L=2u MM_SIGMA=+3   ; mid
+XM3 d3 gd d2  b NMOS5V0 W=100u L=2u MM_SIGMA=+3   ; top -- needs most headroom
 ```
 
 All `+3` (all Vth high) maximises the gate-drive headroom requirement
@@ -129,7 +129,7 @@ sign is the same for all instances on this metric.
 ```spice
 .param MM_ON=0
 .param SCAN=0
-XM1 d g s b NMOS50 W=100u L=2u MM_SIGMA={SCAN}
+XM1 d g s b NMOS5V0 W=100u L=2u MM_SIGMA={SCAN}
 ... rest of testbench ...
 .dc Vin <range>
 .step SCAN -3 3 0.5
@@ -248,7 +248,7 @@ For reference, here's the form used in each device subckt.
 ```
 Same form for DWREL_MM and DLREL_MM (one MM_SIGMA, three params).
 
-**VDMOS** (13 devices: NDMOS/PDMOS 20/40/60/80/120/200, DNMOS20):
+**VDMOS** (13 devices: NDMOS/PDMOS 20/40/60/80/120/200, DNMOS20V):
 ```
 .param DVTH_MM = MM_ON*AGAUSS(0, X, 3)/sqrt(max(mtot,1e-6))
               + MM_SIGMA*X/3/sqrt(max(mtot,1e-6))
@@ -283,7 +283,7 @@ specific values per device.
 ## 8. Regression coverage
 
 `pdk_validation/regression/transients/mismatch_corner.cir` exercises
-the mechanism end-to-end: two NMOS50 in saturation at MM_SIGMA=±3 with
+the mechanism end-to-end: two NMOS5V0 in saturation at MM_SIGMA=±3 with
 MM_ON=0, asserts that `log(I1/I2)` matches the analytic prediction
 within ±10 %. This catches any future regression in the deterministic
 term computation.

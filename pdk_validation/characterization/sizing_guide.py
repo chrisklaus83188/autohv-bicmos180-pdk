@@ -18,11 +18,11 @@ import char_lib as cl
 VT = cl.K_B * 300.15 / cl.Q
 
 # 3-sigma mismatch Vth coefficients (from the fixed .lib), for analytical pair sigma(dI/I)
-MM_VDMOS={"NDMOS20":0.024,"PDMOS20":0.024,"DNMOS20":0.024,"NDMOS40":0.0255,"PDMOS40":0.0255,
- "NDMOS60":0.027,"PDMOS60":0.027,"NDMOS80":0.0285,"PDMOS80":0.0285,"NDMOS120":0.030,
- "PDMOS120":0.030,"NDMOS200":0.033,"PDMOS200":0.033}
-MM_BSIM={"NMOS18":0.0105,"PMOS18":0.0105,"NMOS33":0.012,"PMOS33":0.012,
- "NMOS50":0.033,"PMOS50":0.033,"NMOS12":0.093,"PMOS12":0.093}
+MM_VDMOS={"NDMOS20V":0.024,"PDMOS20V":0.024,"DNMOS20V":0.024,"NDMOS40V":0.0255,"PDMOS40V":0.0255,
+ "NDMOS60V":0.027,"PDMOS60V":0.027,"NDMOS80V":0.0285,"PDMOS80V":0.0285,"NDMOS120V":0.030,
+ "PDMOS120V":0.030,"NDMOS200V":0.033,"PDMOS200V":0.033}
+MM_BSIM={"NMOS1V8":0.0105,"PMOS1V8":0.0105,"NMOS3V3":0.012,"PMOS3V3":0.012,
+ "NMOS5V0":0.033,"PMOS5V0":0.033,"NMOS12V":0.093,"PMOS12V":0.093}
 def sigma_di_analytic(dev, W, gmid, vdmos, Lum=1.0):
     if vdmos:
         X=MM_VDMOS[dev]; area=W/10.0            # mtot
@@ -34,9 +34,9 @@ def sigma_di_analytic(dev, W, gmid, vdmos, Lum=1.0):
 
 # device: (name, kind, vto_sign, rated_supply, L policy, ports)
 # VDMOS: diode-connected mirror at Ibias, sweep W. BSIM3: same.
-VDMOS = ["NDMOS20","NDMOS40","NDMOS60","NDMOS80","NDMOS120","NDMOS200",
-         "PDMOS20","PDMOS40","PDMOS60","PDMOS80","PDMOS120","PDMOS200"]
-BSIM = ["NMOS18","PMOS18","NMOS33","PMOS33","NMOS50","PMOS50","NMOS12","PMOS12"]
+VDMOS = ["NDMOS20V","NDMOS40V","NDMOS60V","NDMOS80V","NDMOS120V","NDMOS200V",
+         "PDMOS20V","PDMOS40V","PDMOS60V","PDMOS80V","PDMOS120V","PDMOS200V"]
+BSIM = ["NMOS1V8","PMOS1V8","NMOS3V3","PMOS3V3","NMOS5V0","PMOS5V0","NMOS12V","PMOS12V"]
 SUPPLY = {"18":1.8,"33":3.3,"50":5.0,"12":12.0}
 def supply_of(n):
     for k,v in SUPPLY.items():
@@ -50,7 +50,7 @@ def vdmos_supply(n):  # HV rail ~ class-nominal; use a safe operating rail
 def measure_point(dev, W, Ibias, vdmos, supply, case=0):
     """Diode-connected device at Ibias; return Vgs, gm, gmid, vdsat proxy, Vov."""
     pol = -1 if is_p(dev) else 1
-    L = "L=8u" if dev in ("NDMOS200","PDMOS200") else ""
+    L = "L=8u" if dev in ("NDMOS200V","PDMOS200V") else ""
     if vdmos:
         inst = f"X1 dg dg s {dev} W={W:g}u {L}"
         rail = supply
@@ -92,7 +92,7 @@ def find_width(dev, Ibias, vdmos, supply, gmid_target, wlo=1, whi=4000):
 def mc_sigma_di(dev, W, Ibias, vdmos, supply, n=100):
     """Matched-pair sigma(dI/I) at fixed Vgs, MM_ON=1."""
     pol=-1 if is_p(dev) else 1
-    L="L=8u" if dev in ("NDMOS200","PDMOS200") else ("L=1u" if not vdmos else "")
+    L="L=8u" if dev in ("NDMOS200V","PDMOS200V") else ("L=1u" if not vdmos else "")
     def deck(i):
         # first size a nominal Vgs via one op, then two devices at that Vgs
         d=cl.header(f"mc {dev}",case=0,mm=1)
@@ -124,15 +124,15 @@ def mc_sigma_di(dev, W, Ibias, vdmos, supply, n=100):
     return statistics.stdev(d)*100 if len(d)>2 else float("nan")
 
 def measure_idss(dev, W, supply):
-    """Depletion device (DNMOS20, vto<0): Idss per um at Vgs=0."""
+    """Depletion device (DNMOS20V, vto<0): Idss per um at Vgs=0."""
     d=cl.header(f"idss {dev} W={W}",instruments="Vd drain, Vg=0")
     d+=f"Vd d 0 {supply}\nVg g 0 0\nVs s 0 0\nX1 d g s {dev} W={W:g}u\n"
     d+=".control\nset noaskquit\nop\nprint abs(i(Vd))\n.endc\n.end\n"
     out,_=cl.run_deck(d,f"idss_{dev}_W{W:g}","sizing")
     return 0.0, abs(cl.parse_prints(out).get("abs(i(vd))",float("nan")) or float("nan"))
 
-def run_depletion(dev="DNMOS20", supply=10.0):
-    """DNMOS20: Idss/um at Vgs=0, and W for 1/10/100 uA self-biased current-source."""
+def run_depletion(dev="DNMOS20V", supply=10.0):
+    """DNMOS20V: Idss/um at Vgs=0, and W for 1/10/100 uA self-biased current-source."""
     _,idss1=measure_idss(dev,10.0,supply)         # 10um reference
     idss_per_um=idss1/10.0 if idss1==idss1 else float("nan")
     rows={"supply":supply,"vdmos":True,"idss_per_um_A":idss_per_um,"points":{}}
@@ -173,8 +173,8 @@ if __name__=="__main__":
         print("VDMOS sizing (mirror target gm/Id~6):")
         r=run(VDMOS, True, [10e-6,100e-6,1e-3])
     elif which=="depletion":
-        print("DNMOS20 depletion (Vgs=0 self-biased current source):")
-        r=run_depletion("DNMOS20")
+        print("DNMOS20V depletion (Vgs=0 self-biased current source):")
+        r=run_depletion("DNMOS20V")
     else:
         print("BSIM3 sizing:")
         r=run(BSIM, False, [1e-6,10e-6,100e-6])

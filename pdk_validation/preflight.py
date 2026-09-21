@@ -133,10 +133,10 @@ def self_consistency(lim: dict) -> list[str]:
 # rated operating points the characterization harness actually drives (Vds=Vds_dcmax's
 # rating source): these MUST sit inside abs-max. A representative sanity set.
 _RATED = {
-    "NMOS50": {"vds": 5.0, "vgs": 5.0}, "PMOS50": {"vds": -5.0, "vgs": -5.0},
-    "NMOS12": {"vds": 12.0, "vgs": 12.0}, "NDMOS200": {"vds": 200.0, "vgs": 5.0},
-    "PDMOS200": {"vds": -200.0, "vgs": -5.0}, "NDMOS40": {"vds": 40.0, "vgs": 5.0},
-    "NPN_HV": {"vce": 20.0}, "DZ_24": {"vr": 22.0},
+    "NMOS5V0": {"vds": 5.0, "vgs": 5.0}, "PMOS5V0": {"vds": -5.0, "vgs": -5.0},
+    "NMOS12V": {"vds": 12.0, "vgs": 12.0}, "NDMOS200V": {"vds": 200.0, "vgs": 5.0},
+    "PDMOS200V": {"vds": -200.0, "vgs": -5.0}, "NDMOS40V": {"vds": 40.0, "vgs": 5.0},
+    "NPN_HV": {"vce": 20.0}, "DZ_24V": {"vr": 22.0},
 }
 
 

@@ -36,7 +36,7 @@ python pdk_validation/regression/run_smoke.py
 python pdk_validation/regression/run_smoke.py --quick
 
 # Restrict to specific devices
-python pdk_validation/regression/run_smoke.py --device NDMOS200 RPOLY_HI
+python pdk_validation/regression/run_smoke.py --device NDMOS200V RPOLY_HI
 
 # Parallelize for faster CI runs
 python pdk_validation/regression/run_smoke.py --jobs 4
@@ -85,7 +85,7 @@ The harness looks for `ngspice_con` in this order:
 Each failure prints the device, axes, and the matched error line:
 
 ```
-  NDMOS20 (2 fail(s)):
+  NDMOS20V (2 fail(s)):
     case=1 PROC=1 MM=1 -> Error: no such function 'agauss'
     case=2 PROC=1 MM=1 -> Error: no such function 'agauss'
 ```
@@ -162,8 +162,8 @@ One canonical `.cir` per device class lives under `transients/`:
 
 | Deck                       | Class  | Stress                                                |
 |----------------------------|--------|-------------------------------------------------------|
-| `bsim_inverter.cir`        | BSIM3  | NMOS18+PMOS18 inverter switching at 1.8 V w/ 10 fF    |
-| `vdmos_switching.cir`      | VDMOS  | NDMOS20 switching a 10 Ω load from 12 V (5 V gate)    |
+| `bsim_inverter.cir`        | BSIM3  | NMOS1V8+PMOS1V8 inverter switching at 1.8 V w/ 10 fF    |
+| `vdmos_switching.cir`      | VDMOS  | NDMOS20V switching a 10 Ω load from 12 V (5 V gate)    |
 | `bjt_common_emitter.cir`   | BJT    | NPN_LV common-emitter pulse response                  |
 | `diode_rectifier.cir`      | Diode  | DIO_PN half-wave rectifier, 5 V / 1 MHz, RC load      |
 | `r_thru_zero.cir`          | R      | RNWELL with 1 MHz sine — V(p,n) crosses 0 V each ½-cycle |
@@ -219,12 +219,12 @@ PDK's statistics actually behave end-to-end:
    with no special flags gives fresh draws. No `--rndseed` CLI flag
    exists; `-D rndseed=N` is silently ignored by `.param AGAUSS`.
 2. **Per-instance subckt mismatch produces independent draws.** Two
-   identical NMOS50 instances in the same deck get different
+   identical NMOS5V0 instances in the same deck get different
    `delvto` values when `MM_ON=1`.
 3. **Measured σ matches intended σ** on a mismatch-sensitive
    testbench, within statistical noise.
 
-Testbench: two `NMOS50` (W=10u L=1u) in saturation at the same bias
+Testbench: two `NMOS5V0` (W=10u L=1u) in saturation at the same bias
 (Vds=3 V, Vgs=2 V). Per iteration the harness captures
 `i(Vd1), i(Vd2)` and the empirical `gm` via `@m.xm1.m0[gm]` /
 `@m.xm2.m0[gm]`, then forms `log(I1/I2)`. Over N iterations it
@@ -284,10 +284,10 @@ measures one canonical quantity at all 5 corners and asserts that
 
 | Family / polarity                  | Metric                | FF | SS | FS | SF |
 |------------------------------------|-----------------------|---:|---:|---:|---:|
-| BSIM3 NMOS (NMOS18)                | ID @ VGS=VDS=1.2 V    | +1 | −1 | +1 | −1 |
-| BSIM3 PMOS (PMOS18)                | \|ID\| @ \|VGS\|=\|VDS\|=1.2 V | +1 | −1 | −1 | +1 |
-| VDMOS NMOS (NDMOS20)               | ID @ Vgs=2.5 Vds=3 V  | +1 | −1 | +1 | −1 |
-| VDMOS PMOS (PDMOS20)               | \|ID\| @ Vgs=−2.5 Vds=−3 V | +1 | −1 | −1 | +1 |
+| BSIM3 NMOS (NMOS1V8)                | ID @ VGS=VDS=1.2 V    | +1 | −1 | +1 | −1 |
+| BSIM3 PMOS (PMOS1V8)                | \|ID\| @ \|VGS\|=\|VDS\|=1.2 V | +1 | −1 | −1 | +1 |
+| VDMOS NMOS (NDMOS20V)               | ID @ Vgs=2.5 Vds=3 V  | +1 | −1 | +1 | −1 |
+| VDMOS PMOS (PDMOS20V)               | \|ID\| @ Vgs=−2.5 Vds=−3 V | +1 | −1 | −1 | +1 |
 | BJT NPN (NPN_LV)                   | Ic @ Ib=10 µA Vc=2 V  | +1 | −1 | +1 | −1 |
 | BJT PNP (PNP_LAT)                  | \|Ic\| @ Ib=10 µA Vec=2 V | +1 | −1 | −1 | +1 |
 | Diode (DIO_PN)                     | Vf @ Ifwd=1 mA        | −1 | +1 |  0 |  0 |

@@ -18,9 +18,9 @@ Read-only with respect to the PDK. `autohv_bicmos180_case.lib` and
 
 | # | question | method | **verdict** | consequence |
 |---|---|---|---|---|
-| **D1** | Is VDMOS saturation `kp·Vov²` or `(kp/2)·Vov²`? | NDMOS200 with `rd=rs=rq≈0`, bias at `Vov ∈ {1,2,3} V`, fit `A` in `Id = A·Vov²` with `theta`/`lambda` divided out analytically | **`kp/2`** — `A = 0.11000000`, `A/kp = 0.4999999986`, residual 2.8e-7 | **No anchor change.** Both `_vdmos_kp_conditional` routes already assume this convention. The §2.1 F1 finding (287×–5213×) survives intact. Add a `convention` note. |
+| **D1** | Is VDMOS saturation `kp·Vov²` or `(kp/2)·Vov²`? | NDMOS200V with `rd=rs=rq≈0`, bias at `Vov ∈ {1,2,3} V`, fit `A` in `Id = A·Vov²` with `theta`/`lambda` divided out analytically | **`kp/2`** — `A = 0.11000000`, `A/kp = 0.4999999986`, residual 2.8e-7 | **No anchor change.** Both `_vdmos_kp_conditional` routes already assume this convention. The §2.1 F1 finding (287×–5213×) survives intact. Add a `convention` note. |
 | **D2** | Is `ksubthres` V/decade, V/e-fold, or something else? | Direct subthreshold fit on all 13 stock cards; regress `S_measured` on `ksubthres`; cross-check via gm/Id ceiling | **Per-decade, inflated 1.17×.** `S = 1155.6·ksubthres + 1.21`, R² = 0.9998. Natural-log reading excluded (50 % off). | **OVERTURNS phase-1 §2.8 in part** — see below. Strike the sub-Boltzmann item; keep the slope item; re-ladder against measured `S`. |
-| **D3** | How much of the `kp`-route vs Ron-route disagreement is series resistance? | NDMOS20 + NDMOS200, stock vs `rd=rs≈0`; Ron·W and Idsat density on each | **Two independent slips.** Series is only 30 %/39 % of Ron; removing it moves Idsat 1.24×/1.41× against 3649×/287× gaps | Channel-only floor **1.610 / 27.22 Ω·µm**. §2.5 stands but §2.2's table must be recomputed (÷ by full Ron, not `rd+rs`) — 3.30×/2.55× correction. Re-derive `kp` **before** `rd`/`rs`. |
+| **D3** | How much of the `kp`-route vs Ron-route disagreement is series resistance? | NDMOS20V + NDMOS200V, stock vs `rd=rs≈0`; Ron·W and Idsat density on each | **Two independent slips.** Series is only 30 %/39 % of Ron; removing it moves Idsat 1.24×/1.41× against 3649×/287× gaps | Channel-only floor **1.610 / 27.22 Ω·µm**. §2.5 stands but §2.2's table must be recomputed (÷ by full Ron, not `rd+rs`) — 3.30×/2.55× correction. Re-derive `kp` **before** `rd`/`rs`. |
 | **D4** | Is fix #2 one divisor or thirteen re-derivations? | All 13 cards with `rd=rs≈0`; fit `theta`; convert to a `tox` band; recompute the §2.1 width table at flat vs laddered `tox`; compare spreads | **Neither — six.** n-channel spread 12.7× (flat `tox`) → **5.5×** (theta-laddered). Flattens 2.3×, not to 1. | One divisor **+ per-class trim** (6 numbers). ⚠ **Conditional on the maintainer declaring `tox` per class** — D4 says what each declaration implies, it does not decide it. |
 
 ## D2 overturns a phase-1 finding
@@ -32,7 +32,7 @@ Audit §2.8 made two claims. D2 splits them:
   −0.00356 per volt of class (phase 1: −0.00310). Multiplying a ladder by a
   near-constant 1.17× cannot flip the sign of its slope, and it does not. This is
   the real defect.
-- **Headline claim — NDMOS200 at `n = 1.01`, below the room-temperature
+- **Headline claim — NDMOS200V at `n = 1.01`, below the room-temperature
   Boltzmann floor, "unphysical". → OVERTURNED.** Measured `S = 70.7 mV/dec`,
   `n = 1.19`. **No card in the family is sub-Boltzmann.** The finding was an
   artifact of reading `ksubthres` as if it were `S` in V/dec.
@@ -47,8 +47,8 @@ measurement wins.
 `write_local_model()` / `lib_include()` state the copy is *".include'd AFTER the
 PDK so this card shadows the original"*. **ngspice-45 keeps the FIRST definition
 of a model name and silently discards the later one — no warning.** Verified: a
-deck including the PDK then a second `.model NDMOS200_INT VDMOS (… rd=0 rs=0 …)`
-reads back `@NDMOS200_INT[rd] = 1.2`. Any experiment built on the documented
+deck including the PDK then a second `.model NDMOS200V_INT VDMOS (… rd=0 rs=0 …)`
+reads back `@NDMOS200V_INT[rd] = 1.2`. Any experiment built on the documented
 assumption would have run entirely on stock cards while believing it had zeroed
 `rd`/`rs`.
 
@@ -56,7 +56,7 @@ assumption would have run entirely on stock cards while believing it had zeroed
 it as a raw VDMOS device, bypassing the subckt wrapper.
 `wrapper_equivalence_check()` proves the bypass is exact rather than asserting
 it — it runs the *unmodified* card both ways and reports the Id ratio, which came
-back **1.0 exactly** for n-channel, p-channel and the depletion DNMOS20.
+back **1.0 exactly** for n-channel, p-channel and the depletion DNMOS20V.
 
 Every experiment also reads its isolation card back through ngspice's
 `@<MODEL>[param]` accessors, so the edit is *proven* to have landed.

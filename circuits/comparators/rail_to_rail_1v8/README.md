@@ -2,7 +2,7 @@
 
 The 1.8 V port of the rail-to-rail [`CMP_RR`](../rail_to_rail_5v0/) cell — same
 topology, knobs, and tooling, devices swapped to the 1.8 V class
-(`NMOS18`/`PMOS18`), supply ±10 %. Topology, the VDD-referenced-bias lesson, and
+(`NMOS1V8`/`PMOS1V8`), supply ±10 %. Topology, the VDD-referenced-bias lesson, and
 tuning: [`../rail_to_rail_5v0/README`](../rail_to_rail_5v0/README.md) ·
 [`DESIGN_NOTES`](../general_purpose/DESIGN_NOTES.md).
 
@@ -57,6 +57,6 @@ cell covers mid-rail at **all** corners — that's the whole point of the rail-t
 front end here. Input pairs exempt in hand-off, as in the 5 V part.
 
 ## Files
-`cmp_rr.lib` (NMOS18/PMOS18) · `run_rr.py` · `run_saturation.py` ·
+`cmp_rr.lib` (NMOS1V8/PMOS1V8) · `run_rr.py` · `run_saturation.py` ·
 `tb_example.cir` · `comparator_results.json`. Topology/tuning: the 5 V
 `DESIGN_NOTES.md`.

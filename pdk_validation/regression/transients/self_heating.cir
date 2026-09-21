@@ -1,7 +1,7 @@
 * Phase D: SH_ON=1 self-heating regression (item #3 in parasitics roadmap).
 *
-* NDMOS200 sourcing ~92 mA at V_DS ~ 0.77 V => Pdiss ~ 71 mW.
-* With Rth=80 K/W and Cth=5e-6 J/K (NDMOS200 defaults), steady-state
+* NDMOS200V sourcing ~92 mA at V_DS ~ 0.77 V => Pdiss ~ 71 mW.
+* With Rth=80 K/W and Cth=5e-6 J/K (NDMOS200V defaults), steady-state
 * V(TJ) settles to ~5.69 K above ambient with time constant Rth*Cth = 400 us.
 *
 * This deck verifies:
@@ -24,7 +24,7 @@
 Vdd vdd 0 10
 Vgs g 0 3
 Rload vdd d 100
-XN d g 0 NDMOS200 W=10u L=8u
+XN d g 0 NDMOS200V W=10u L=8u
 
 .control
 * Reach thermal steady state in a few ms (Rth*Cth = 400 us)

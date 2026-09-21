@@ -1,9 +1,9 @@
-# Handoff: refit prep — PMOS50 fitted, `vth0` cleared, 12 V slope target needs correcting
+# Handoff: refit prep — PMOS5V0 fitted, `vth0` cleared, 12 V slope target needs correcting
 
 **Responds to:** the W1–W2 rulings reply (§1.1 withdrawn, 12 V refit authorised)
 **Branch:** `mc-realism` @ `811fca2`
 **Date:** 2026-09-17
-**Status:** §1's PMOS50 fit is solved and ready to apply. Two numbers in the ruling need
+**Status:** §1's PMOS5V0 fit is solved and ready to apply. Two numbers in the ruling need
 correcting first — one of mine, one of the reply's. Three requests, X1–X3. **No model file has
 been changed yet**; the 12 V `nfactor`/`voff` fit is held because it targets the band in X1.
 
@@ -14,8 +14,8 @@ using each card's own `k1`:
 
 | card | first-principles Vth | card `vth0` | delta | verdict |
 |---|---|---|---|---|
-| NMOS12 | +1.50 V | +1.350 | **+0.15** | inside ±0.3 |
-| PMOS12 | −1.60 V | −1.550 | **−0.05** | inside ±0.3 |
+| NMOS12V | +1.50 V | +1.350 | **+0.15** | inside ±0.3 |
+| PMOS12V | −1.60 V | −1.550 | **−0.05** | inside ±0.3 |
 
 My earlier +0.77 / −0.78 came from using φ_ms = −(0.56 + φ_F) ≈ −1.32 V instead. **`vth0` on the
 12 V pair is consistent and is not a finding.** That drops the 12 V suspect list from three
@@ -40,7 +40,7 @@ Worth stating in the audit so the 1.15 V gap is not later read as a defect.
 §2 sets the refit target at "`n = 1 + C_dep/C_ox ≈ 1.8–1.9`, i.e. ≈ 105–115 mV/dec". Worked
 through with each card's own `nch` and its 31 nm oxide:
 
-| quantity | NMOS12 | PMOS12 |
+| quantity | NMOS12V | PMOS12V |
 |---|---|---|
 | `Na` (card `nch`) | 9.0e16 cm⁻³ | 1.1e17 cm⁻³ |
 | `C_ox = ε_ox/tox` | 1.114e-3 F/m² | 1.114e-3 F/m² |
@@ -61,7 +61,7 @@ from an input I don't have.
 
 ## 3. §1 is solved and ready to apply
 
-**PMOS50 `nfactor`**, fitted by bisection against the measured slope, everything else untouched:
+**PMOS5V0 `nfactor`**, fitted by bisection against the measured slope, everything else untouched:
 
 | nfactor | measured S |
 |---|---|
@@ -92,7 +92,7 @@ should not pass unnoticed.
 
 ## 5. Order I will work in, once X1 is answered
 
-1. §1 commit: PMOS50 `nfactor`, audit entries, `stat-model.md` statement.
+1. §1 commit: PMOS5V0 `nfactor`, audit entries, `stat-model.md` statement.
 2. 12 V refit commit: `k1` = 1.552 / 1.715 (γ from `nch`), `k2` per X2, `nfactor`/`voff` fitted to
    the X1 band, `cj`/`cjsw` per X3, plus the acceptance set — body effect equals γ(nch), slope in
    band, Idsat within 10 % (expected ≈ 0 % per §1.1), 12 V corner regression re-run with movers

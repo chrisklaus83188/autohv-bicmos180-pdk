@@ -25,7 +25,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 CELLS = HERE.parent / "circuits" / "delay_pulse_design" / "cells"
 OUT = HERE / "delay_pulse"
 
-MODELS_4 = {"NMOS18", "PMOS18", "NMOS33", "PMOS33", "NMOS50", "PMOS50"}
+MODELS_4 = {"NMOS1V8", "PMOS1V8", "NMOS3V3", "PMOS3V3", "NMOS5V0", "PMOS5V0"}
 MODELS_2 = {"RPOLY_HI", "CMIM_HI"}
 # raw pin offsets for the passive symbols (RPOLY_HI / CMIM_HI): p top, n bottom
 RAW_PASSIVE = {"p": (0, -30), "n": (0, 30)}

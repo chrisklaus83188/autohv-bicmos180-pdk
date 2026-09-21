@@ -3,7 +3,7 @@
 P3.1: switched-cap precision audit.
 
 Topology (in sample_and_hold.cir):
-  Vin -> NMOS18 switch (gate = phi) -> hold node -> CMIM_STD to GND
+  Vin -> NMOS1V8 switch (gate = phi) -> hold node -> CMIM_STD to GND
 
 Drive Vin with a slow ramp 0 -> 1 V over 10 us; clock phi at 1 MHz
 50 % duty. After each phi falling edge (sample taken, then switch
@@ -78,7 +78,7 @@ def find_ngspice() -> str | None:
 
 
 DECK = """\
-* P3.1 SC audit (generated): {cap_name} hold cap, NMOS18 switch.
+* P3.1 SC audit (generated): {cap_name} hold cap, NMOS1V8 switch.
 .include "{lib}"
 .param case=0
 .param PROC_ON=0
@@ -87,7 +87,7 @@ DECK = """\
 Vin in 0 PWL(0 0 {ramp_end:g} 1 100u 1)
 Vphi phi 0 PULSE(0 1.8 100n {trise:g} {trise:g} {tphi_h:g} {tclk:g})
 
-XSW in phi hnode 0 NMOS18 W=10u L=1u M=1
+XSW in phi hnode 0 NMOS1V8 W=10u L=1u M=1
 XCH hnode 0 {cap_name} L=100u W=100u
 
 .control

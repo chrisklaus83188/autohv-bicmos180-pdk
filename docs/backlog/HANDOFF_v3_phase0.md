@@ -30,7 +30,7 @@ discrepancy unchanged (1.165 → 1.166) and weakening CLM barely moves it (1.117
 L term only).
 
 The real cause is that `run_mc.py` compared the measured σ against **textbook first-order
-sensitivities**, which are 9–17 % low on this card. Measured on its own bench (NMOS50,
+sensitivities**, which are 9–17 % low on this card. Measured on its own bench (NMOS5V0,
 W = 10 µm, L = 1 µm, Vgs = 2 V, Vds = 3 V):
 
 | term | assumed | measured | ratio | attribution (by ablation) |
@@ -48,14 +48,14 @@ and never propagated here), then the sensitivity model 1.21×. With both correct
 0.978 % against measured 1.014 % — about 1.1 standard errors. **The mismatch model was never
 wrong; the checker's expectation was.**
 
-**Finding for Stop A:** the NMOS50 card declares no `k3`, `k3b` or `w0`, so **BSIM3's default
+**Finding for Stop A:** the NMOS5V0 card declares no `k3`, `k3b` or `w0`, so **BSIM3's default
 `k3 = 80` is active** — an undeclared narrow-width Vth term that shifts every narrow device and
 that nothing in the PDK documents. Brief §0 unfreezes the models, so this belongs in the §3
 authoring pass.
 
 ### The fix
 
-`pdk_validation/regression/run_mc.py` now reads `A_VT`, `A_W` and `A_L` from the NMOS50 wrapper
+`pdk_validation/regression/run_mc.py` now reads `A_VT`, `A_W` and `A_L` from the NMOS5V0 wrapper
 in the `.lib` (no hardcoded copies to go stale), and computes the intended σ from sensitivities
 measured on the bench — seven op points, about 0.6 s — printing the first-order estimate
 alongside so the difference stays visible:
@@ -86,7 +86,7 @@ OK: within 30 % of intended sigma
 
 ### Deviations from §3.1 I will apply unless told otherwise
 
-- **`TOX_50` is not shared with the 12 V devices.** NMOS12/PMOS12 carry their own fixed
+- **`TOX_50` is not shared with the 12 V devices.** NMOS12V/PMOS12V carry their own fixed
   `tox = 31 nm` against 11 nm at 5 V, and the reference process confirms a separate 12 V oxide. So: `TOX_12`,
   its own variable.
 - **VDMOS devices get no `TOX` variable at all.** The ngspice VDMOS cards have no `tox`

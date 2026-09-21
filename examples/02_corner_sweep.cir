@@ -1,11 +1,11 @@
-* Corner sweep - NMOS18 across all five corners
+* Corner sweep - NMOS1V8 across all five corners
 .include "../autohv_bicmos180_case.lib"
 .param PROC_ON=0
 .param MM_ON=0
 
 Vdd d 0 1.8
 Vg  g 0 1.8
-X1  d g 0 0 NMOS18 W=10u L=1u
+X1  d g 0 0 NMOS1V8 W=10u L=1u
 
 .control
   foreach c 0 1 2 3 4

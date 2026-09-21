@@ -58,9 +58,9 @@ any deck that includes one of these caps.
 Vshift g g_int DC {-DVTH_MM}
 ```
 
-Appears in every drift-MOS subckt: `NDMOS20`, `NDMOS40`, `NDMOS60`,
-`NDMOS80`, `NDMOS120`, `NDMOS200`, `PDMOS20`, `PDMOS40`, `PDMOS60`,
-`PDMOS80`, `PDMOS120`, `PDMOS200`, `DNMOS20`. When `MM_ON=0` (the
+Appears in every drift-MOS subckt: `NDMOS20V`, `NDMOS40V`, `NDMOS60V`,
+`NDMOS80V`, `NDMOS120V`, `NDMOS200V`, `PDMOS20V`, `PDMOS40V`, `PDMOS60V`,
+`PDMOS80V`, `PDMOS120V`, `PDMOS200V`, `DNMOS20V`. When `MM_ON=0` (the
 default), `DVTH_MM` evaluates to 0 and `Vshift` becomes a 0-V VSRC. Two
 LDMOS instances whose gates connect to the same node form a singular
 matrix block — ngspice prints `Warning: singular matrix: check nodes
@@ -148,7 +148,7 @@ V1 vdd 0 5
 V2 in  0 PULSE(0 5 100n 1n 1n 500n 1u)
 
 * Class 3: HV LDMOS with mismatch Vshift collapsed
-XN1 d1 in 0 NDMOS200 W=40u L=8u
+XN1 d1 in 0 NDMOS200V W=40u L=8u
 R1  vdd d1 100
 
 * Class 1: resistor VCR collapsed

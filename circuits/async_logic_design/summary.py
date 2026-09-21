@@ -9,7 +9,7 @@ ORDER=["INV","BUF","NAND2","NOR2","AND2","OR2","XOR2","XNOR2"]
 PRETTY={"INV":"Inverter","BUF":"Buffer","NAND2":"NAND2","NOR2":"NOR2","AND2":"AND2",
         "OR2":"OR2","XOR2":"XOR2","XNOR2":"XNOR2"}
 DOMN={"1v8":"1.8 V","3v3":"3.3 V","5v0":"5.0 V"}
-DEVN={"1v8":"NMOS18 / PMOS18","3v3":"NMOS33 / PMOS33","5v0":"NMOS50 / PMOS50"}
+DEVN={"1v8":"NMOS1V8 / PMOS1V8","3v3":"NMOS3V3 / PMOS3V3","5v0":"NMOS5V0 / PMOS5V0"}
 def ps(x): return f"{x*1e12:.0f}"
 out=[]
 def w(s=""): out.append(s)

@@ -6,43 +6,43 @@ S {}
 E {}
 T {CMP_PIN_1V8} 620 -280 0 0 0.6 0.6 {}
 T {body: circuits/comparators/comparators_all.lib (authority) | PMOS input pair, NMOS mirror load} 620 -220 0 0 0.3 0.3 {}
-C {autohv/PMOS18.sym} 300 200 0 0 {name=ser model=PMOS18 W=4u L=0.5u M=1}
+C {autohv/PMOS1V8.sym} 300 200 0 0 {name=ser model=PMOS1V8 W=4u L=0.5u M=1}
 T {ser} 240 90 0 0 0.28 0.28 {}
 C {lab_pin.sym} 320 200 0 0 {name=lz1 lab=vdd}
-C {autohv/PMOS18.sym} 460 200 2 0 {name=mb model=PMOS18 W=\{20u*WSCALE\} L=\{LANA\} M=1}
+C {autohv/PMOS1V8.sym} 460 200 2 0 {name=mb model=PMOS1V8 W=\{20u*WSCALE\} L=\{LANA\} M=1}
 T {mb} 400 90 0 0 0.28 0.28 {}
 N 440 200 440 160 {}
-C {autohv/PMOS18.sym} 600 200 2 1 {name=sh model=PMOS18 W=4u L=0.5u M=1}
+C {autohv/PMOS1V8.sym} 600 200 2 1 {name=sh model=PMOS1V8 W=4u L=0.5u M=1}
 T {sh} 540 90 0 0 0.28 0.28 {}
 N 620 200 620 160 {}
-C {autohv/PMOS18.sym} 910 200 2 1 {name=tail model=PMOS18 W=\{20u*WSCALE\} L=\{LANA\} M=2}
+C {autohv/PMOS1V8.sym} 910 200 2 1 {name=tail model=PMOS1V8 W=\{20u*WSCALE\} L=\{LANA\} M=2}
 T {tail} 850 90 0 0 0.28 0.28 {}
 N 930 200 930 160 {}
-C {autohv/PMOS18.sym} 760 560 2 1 {name=m1 model=PMOS18 W=\{WIN*FIN\} L=\{LIN*FIN\} M=1}
+C {autohv/PMOS1V8.sym} 760 560 2 1 {name=m1 model=PMOS1V8 W=\{WIN*FIN\} L=\{LIN*FIN\} M=1}
 T {m1} 700 450 0 0 0.28 0.28 {}
 C {lab_pin.sym} 780 560 0 0 {name=lz2 lab=vdd}
-C {autohv/PMOS18.sym} 1060 560 2 1 {name=m2 model=PMOS18 W=\{WIN*FIN\} L=\{LIN*FIN\} M=1}
+C {autohv/PMOS1V8.sym} 1060 560 2 1 {name=m2 model=PMOS1V8 W=\{WIN*FIN\} L=\{LIN*FIN\} M=1}
 T {m2} 1000 450 0 0 0.28 0.28 {}
 C {lab_pin.sym} 1080 560 0 0 {name=lz3 lab=vdd}
-C {autohv/NMOS18.sym} 800 880 0 1 {name=m3 model=NMOS18 W=\{10u*WSCALE*FIN\} L=\{LANA*FIN\} M=1}
+C {autohv/NMOS1V8.sym} 800 880 0 1 {name=m3 model=NMOS1V8 W=\{10u*WSCALE*FIN\} L=\{LANA*FIN\} M=1}
 T {m3} 740 770 0 0 0.28 0.28 {}
 N 780 880 780 920 {}
-C {autohv/NMOS18.sym} 1060 880 0 0 {name=m4 model=NMOS18 W=\{10u*WSCALE*FIN\} L=\{LANA*FIN\} M=1}
+C {autohv/NMOS1V8.sym} 1060 880 0 0 {name=m4 model=NMOS1V8 W=\{10u*WSCALE*FIN\} L=\{LANA*FIN\} M=1}
 T {m4} 1000 770 0 0 0.28 0.28 {}
 N 1080 880 1080 920 {}
-C {autohv/NMOS18.sym} 1360 880 0 0 {name=m5 model=NMOS18 W=\{40u*WSCALE\} L=\{LANA\} M=1}
+C {autohv/NMOS1V8.sym} 1360 880 0 0 {name=m5 model=NMOS1V8 W=\{40u*WSCALE\} L=\{LANA\} M=1}
 T {m5} 1300 770 0 0 0.28 0.28 {}
 N 1380 880 1380 920 {}
-C {autohv/PMOS18.sym} 1360 200 2 1 {name=m6 model=PMOS18 W=\{20u*WSCALE\} L=\{LANA\} M=4}
+C {autohv/PMOS1V8.sym} 1360 200 2 1 {name=m6 model=PMOS1V8 W=\{20u*WSCALE\} L=\{LANA\} M=4}
 T {m6} 1300 90 0 0 0.28 0.28 {}
 N 1380 200 1380 160 {}
-C {autohv/PMOS18.sym} 1660 200 2 1 {name=m7 model=PMOS18 W=\{20u*WSCALE\} L=0.5u M=1}
+C {autohv/PMOS1V8.sym} 1660 200 2 1 {name=m7 model=PMOS1V8 W=\{20u*WSCALE\} L=0.5u M=1}
 T {m7} 1600 90 0 0 0.28 0.28 {}
 N 1680 200 1680 160 {}
-C {autohv/NMOS18.sym} 1660 880 0 0 {name=m8 model=NMOS18 W=\{10u*WSCALE\} L=0.5u M=1}
+C {autohv/NMOS1V8.sym} 1660 880 0 0 {name=m8 model=NMOS1V8 W=\{10u*WSCALE\} L=0.5u M=1}
 T {m8} 1600 770 0 0 0.28 0.28 {}
 N 1680 880 1680 920 {}
-C {autohv/NMOS18.sym} 1500 880 0 0 {name=sho2 model=NMOS18 W=4u L=0.5u M=1}
+C {autohv/NMOS1V8.sym} 1500 880 0 0 {name=sho2 model=NMOS1V8 W=4u L=0.5u M=1}
 T {sho2} 1440 770 0 0 0.28 0.28 {}
 N 1520 880 1520 920 {}
 C {logic/INV_1V8.sym} 400 1240 0 0 {name=ei1 VPWR=vdd VGND=vss}
@@ -141,19 +141,19 @@ T {* input pair + mirror load} 700 -120 0 0 0.4 0.4 {}
 T {* gain stage} 1300 -120 0 0 0.4 0.4 {}
 T {* output} 1600 -120 0 0 0.4 0.4 {}
 T {* optional hysteresis - instantiated ONLY when HYSK>0 (default HYSK=0: these devices do not exist)} 240 1440 0 0 0.4 0.4 {}
-C {autohv/PMOS18.sym} 300 1640 2 1 {name=htail model=PMOS18 W=\{20u*WSCALE*HYSK\} L=\{LANA\} M=1}
+C {autohv/PMOS1V8.sym} 300 1640 2 1 {name=htail model=PMOS1V8 W=\{20u*WSCALE*HYSK\} L=\{LANA\} M=1}
 T {htail} 240 1530 0 0 0.28 0.28 {}
 N 320 1640 320 1600 {}
 C {lab_pin.sym} 320 1680 0 0 {name=lz21 lab=sh}
 C {lab_pin.sym} 260 1640 0 0 {name=lz22 lab=ibg}
 C {lab_pin.sym} 320 1600 0 0 {name=lz23 lab=vdd}
-C {autohv/PMOS18.sym} 600 1640 2 1 {name=mha model=PMOS18 W=\{20u*WSCALE\} L=0.5u M=1}
+C {autohv/PMOS1V8.sym} 600 1640 2 1 {name=mha model=PMOS1V8 W=\{20u*WSCALE\} L=0.5u M=1}
 T {mha} 540 1530 0 0 0.28 0.28 {}
 C {lab_pin.sym} 620 1640 0 0 {name=lz24 lab=vdd}
 C {lab_pin.sym} 620 1680 0 0 {name=lz25 lab=n1}
 C {lab_pin.sym} 560 1640 0 0 {name=lz26 lab=out}
 C {lab_pin.sym} 620 1600 0 0 {name=lz27 lab=sh}
-C {autohv/PMOS18.sym} 900 1640 2 1 {name=mhb model=PMOS18 W=\{20u*WSCALE\} L=0.5u M=1}
+C {autohv/PMOS1V8.sym} 900 1640 2 1 {name=mhb model=PMOS1V8 W=\{20u*WSCALE\} L=0.5u M=1}
 T {mhb} 840 1530 0 0 0.28 0.28 {}
 C {lab_pin.sym} 920 1640 0 0 {name=lz28 lab=vdd}
 C {lab_pin.sym} 920 1680 0 0 {name=lz29 lab=n2}

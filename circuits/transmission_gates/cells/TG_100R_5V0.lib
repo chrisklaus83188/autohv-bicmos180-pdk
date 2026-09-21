@@ -1,5 +1,5 @@
 * TG_100R_5V0 -- CMOS transmission gate, 5 V domain, ~100 ohm on-resistance
-* AutoHV BiCMOS 180 PDK | NMOS50/PMOS50, L = 0.5 um, Wp/Wn = 2.5
+* AutoHV BiCMOS 180 PDK | NMOS5V0/PMOS5V0, L = 0.5 um, Wp/Wn = 2.5
 *
 * Bodies are tied to the rails: NMOS body to gnd, PMOS body to vdd.
 * This is the shipping default.  Body effect is present and is already
@@ -15,9 +15,9 @@
 
 .subckt TG_100R_5V0 a b en vdd gnd
 * control inverter: enb = !en  (bodies always on the rails)
-XINVP enb en vdd vdd PMOS50 W=21u M=1 L=0.5u
-XINVN enb en gnd gnd NMOS50 W=8.4u M=1 L=0.5u
+XINVP enb en vdd vdd PMOS5V0 W=21u M=1 L=0.5u
+XINVN enb en gnd gnd NMOS5V0 W=8.4u M=1 L=0.5u
 * pass pair
-XN b en  a gnd NMOS50 W=84u M=1 L=0.5u
-XP b enb a vdd PMOS50 W=70u M=3 L=0.5u
+XN b en  a gnd NMOS5V0 W=84u M=1 L=0.5u
+XP b enb a vdd PMOS5V0 W=70u M=3 L=0.5u
 .ends TG_100R_5V0
