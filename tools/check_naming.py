@@ -98,7 +98,13 @@ def scan_old_device_names(files: list[str]) -> list[str]:
     rx = re.compile(r"(?<![A-Za-z0-9])(%s)(?![A-Za-z0-9])"
                     % "|".join(re.escape(k) for k in sorted(mapping, key=len, reverse=True)))
     skip = {"models/device_rename_map.json", "tools/check_naming.py",
-            "tools/rename_devices.py"}
+            "tools/rename_devices.py",
+            # A changelog's job is to record what a thing used to be called. Exempting it
+            # is the same principle as the frozen baselines below: a historical record
+            # keeps the old names deliberately. Note this exemption is from the RETIRED-
+            # DEVICE scan only -- the reference-process rule still applies to it, because
+            # that name was never ours to record.
+            "docs/CHANGELOG.md"}
     bad = []
     for rel in files:
         r = rel.replace("\\", "/")
