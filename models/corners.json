@@ -2371,9 +2371,9 @@
    },
    "mahalanobis_corner": 5.1962,
    "z_direction": {
-    "VBE_PNP_LAT": 2.217033,
-    "BF_PNP_LAT": 2.021079,
-    "RPAR_PNP_LAT": -0.002268
+    "VBE_PNP_LAT": 2.196983,
+    "BF_PNP_LAT": 2.042856,
+    "RPAR_PNP_LAT": -0.002293
    },
    "mahalanobis_direction": 3.0,
    "terms": 3,
@@ -2421,9 +2421,9 @@
    },
    "mahalanobis_corner": 5.1962,
    "z_direction": {
-    "VBE_PNP_HV": 2.157037,
-    "BF_PNP_HV": 2.08499,
-    "RPAR_PNP_HV": -0.003175
+    "VBE_PNP_HV": 2.125994,
+    "BF_PNP_HV": 2.116634,
+    "RPAR_PNP_HV": -0.003224
    },
    "mahalanobis_direction": 3.0,
    "terms": 3,
@@ -2445,8 +2445,8 @@
    },
    "mahalanobis_corner": 4.2426,
    "z_direction": {
-    "VF_DIO_PN": 2.999989,
-    "RS_DIO_PN": -0.008293
+    "VF_DIO_PN": 2.999987,
+    "RS_DIO_PN": -0.008708
    },
    "mahalanobis_direction": 3.0,
    "terms": 2,
@@ -2466,8 +2466,8 @@
    },
    "mahalanobis_corner": 4.2426,
    "z_direction": {
-    "VF_DIO_FAST": 2.999995,
-    "RS_DIO_FAST": -0.005636
+    "VF_DIO_FAST": 2.999994,
+    "RS_DIO_FAST": -0.005805
    },
    "mahalanobis_direction": 3.0,
    "terms": 2,
@@ -2488,7 +2488,7 @@
    "mahalanobis_corner": 4.2426,
    "z_direction": {
     "VF_DIO_SCH": 2.999998,
-    "RS_DIO_SCH": -0.003024
+    "RS_DIO_SCH": -0.003266
    },
    "mahalanobis_direction": 3.0,
    "terms": 2,
@@ -2508,8 +2508,8 @@
    },
    "mahalanobis_corner": 4.2426,
    "z_direction": {
-    "VF_DZ_5V6": 2.999979,
-    "RS_DZ_5V6": -0.011358
+    "VF_DZ_5V6": 2.999972,
+    "RS_DZ_5V6": -0.013061
    },
    "mahalanobis_direction": 3.0,
    "terms": 2,
@@ -2529,8 +2529,8 @@
    },
    "mahalanobis_corner": 4.2426,
    "z_direction": {
-    "VF_DZ_12": 2.999961,
-    "RS_DZ_12": -0.015373
+    "VF_DZ_12": 2.999945,
+    "RS_DZ_12": -0.01814
    },
    "mahalanobis_direction": 3.0,
    "terms": 2,
@@ -2550,8 +2550,8 @@
    },
    "mahalanobis_corner": 4.2426,
    "z_direction": {
-    "VF_DZ_24": 2.999928,
-    "RS_DZ_24": -0.020816
+    "VF_DZ_24": 2.999893,
+    "RS_DZ_24": -0.025395
    },
    "mahalanobis_direction": 3.0,
    "terms": 2,

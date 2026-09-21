@@ -171,6 +171,20 @@ def scratch(workdir: Path, cards: dict[str, dict[str, float]],
     return workdir
 
 
+def emission_of(card: str) -> float:
+    """The card's emission coefficient: diode `n`, BJT `nf`. Read, never typed.
+
+    Both appear in the same place in the physics -- IS = IS_TT*exp(dV/(n*V_T)) -- and a
+    card that declares neither is ideal, n = 1. The four BJTs all carry nf = 1, so this
+    changes nothing for them; the six diodes run 1.03 to 1.22.
+    """
+    for name in ("n", "nf"):
+        v = tt_of(name, card)
+        if v:
+            return v
+    return 1.0
+
+
 def tt_of(name: str, card: str | None = None) -> float | None:
     """TT value of a card parameter or a top-level .param, at case = 0.
 
@@ -396,10 +410,12 @@ def perturbations(group: str, model: dict) -> tuple[dict, dict]:
             # letting the variable vanish from the direction unrecorded (AD1).
             dead[var] = NO_LEVER_REASON["BV_"]
             continue
-        if form == "vbe":
-            add(var, param="is", form="exp_v", sigma=tt["sigma"], scale=1.0 / VT_THERMAL)
-        elif form == "vf":
-            add(var, param="is", form="exp_v", sigma=tt["sigma"], scale=1.0 / VT_THERMAL)
+        if form in ("vbe", "vf"):
+            # IS = IS_TT*exp(dV/(n*V_T)): the emission coefficient belongs in the scale.
+            # It is read from the card, never typed -- the six diodes run n = 1.03 to 1.22,
+            # so a single constant would be up to 22 % wrong, and worst on the Zeners.
+            add(var, param="is", form="exp_v", sigma=tt["sigma"],
+                scale=1.0 / (emission_of(card) * VT_THERMAL))
         elif form == "rpar":
             add(var, param="rb", sigma=tt["sigma"], extra_params=["rc", "re"])
         else:

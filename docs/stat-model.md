@@ -245,7 +245,24 @@ constrained at the first, the resistor σ split at the last.
 ### 2.9 Bipolar and diodes — `VBE_<bjt>`, `BF_<bjt>`, `RPAR_<bjt>`, `VF_<dio>`, `RS_<dio>`, `CJ_<dio>`
 
 The physical variable is the junction voltage, not the saturation current: `VBE` at 6 mV 3σ and
-`VF` at 8 mV, with `IS` derived as `IS_TT·exp(−ΔV/V_T)`. Today's cards move `IS` ±6 %, which is a
+`VF` at 8 mV, with `IS` derived as `IS_TT·exp(−ΔV/(n·V_T))`.
+
+**What the quoted σ means.** σ_VBE and σ_VF are *voltage quotes at 27 °C, inclusive of the card's
+own emission coefficient*, of a variable that is physically the saturation current — the way a
+datasheet quotes a junction spread. The realisation is therefore a fixed multiplier on `is`, with
+`σ/(n·V_T)` folded at generation, so `V_T` never appears in a model card. Two consequences, both
+intended:
+
+- **Frozen at 27 °C is not a compromise.** A fixed `IS` multiplier is the same physics at every
+  temperature; its *equivalent* voltage spread narrows with `V_T` as the die heats, which is
+  correct behaviour rather than an artefact.
+- **`n` is per card, read not typed.** The six diodes run `n` = 1.03 to 1.22 and two of the four
+  BJTs carry `nf` = 1.02/1.03, so one shared coefficient would be wrong by up to 22 %, worst on
+  the Zeners. `tools/gen_models.py` and `tools/measure_stat_directions.py` both read it from the
+  card, and they must always change together: if the two disagree, the cards and the measured
+  directions describe different distributions and nothing reports it.
+
+Today's cards move `IS` ±6 %, which is a
 ±1.5 mV Vbe shift — far tighter than any real bipolar process. Current gain `BF` is 25 % 3σ from
 ONC25's β band. `RPAR_<bjt>` covers `rb`/`rc`/`re` together at 20 % 3σ, since they come from one
 module.

@@ -182,7 +182,35 @@ def z_variables(corners: dict, table: dict | None = None,
 # ---------------------------------------------------------------- emission
 
 
-def expression(tt: float, form: str, sigma: float, var: str) -> str:
+def emission_table(src: list[str]) -> dict[str, float]:
+    """{card: emission coefficient} -- diode `n`, BJT `nf`, read from the template.
+
+    A pre-scan is necessary rather than a lookup while transforming: `n` sits BELOW `is`
+    in every card, so a single forward pass does not yet know it when it rewrites `is`.
+
+    Read, never typed (ruling Finding A). The six diodes run n = 1.03 to 1.22 and two of
+    the four BJTs carry nf = 1.02 / 1.03, so a single constant is wrong by up to 22 %.
+    """
+    out: dict[str, float] = {}
+    card = None
+    for line in src:
+        m = re.match(r"\.model\s+(\S+)\s", line, re.I)
+        if m:
+            card = m.group(1)
+            continue
+        if card is None:
+            continue
+        p = re.match(r"\+\s*(n|nf)\s*=\s*(.+?)\s*$", line, re.I)
+        if p and card not in out:
+            try:
+                out[card] = tt_of(p.group(2))
+            except IncParseError as exc:
+                raise SystemExit("gen_models: cannot read %s.%s: %s"
+                                 % (card, p.group(1), exc))
+    return out
+
+
+def expression(tt: float, form: str, sigma: float, var: str, n: float = 1.0) -> str:
     """One statistical parameter as a single expression in its unit-normal draw."""
     if not sigma:
         return "%.6g" % tt
@@ -199,7 +227,10 @@ def expression(tt: float, form: str, sigma: float, var: str) -> str:
         # Vbe spread then shrinks with V_T at high temperature, which is correct.
         # Sign is positive to match measure_stat_directions.perturbed(), which measured
         # the direction as tt*exp(+sigma*scale*z); the corner z values assume that sign.
-        return "{%.6g*exp(%.6g*Z_%s)}" % (tt, sigma / VT_THERMAL, var)
+        # `n` is the card's own emission coefficient, per the template's derivation
+        # IS = IS_TT*exp(dV/(n*V_T)) -- it must match the harness's scale exactly or the
+        # cards and the measured directions describe different distributions.
+        return "{%.6g*exp(%.6g*Z_%s)}" % (tt, sigma / (n * VT_THERMAL), var)
     return "{%.6g*exp(%.6g*Z_%s)}" % (tt, sigma, var)
 
 
@@ -250,6 +281,7 @@ def generate() -> str:
         raise SystemExit("gen_models: template and output are the same file; "
                          "a generator must never read the file it writes")
     src = TEMPLATE.read_text(encoding="utf-8").splitlines()
+    emission = emission_table(src)
 
     out: list[str] = []
     card: str | None = None
@@ -337,7 +369,9 @@ def generate() -> str:
                 if ent:
                     var, form, sigma = ent
                     out.append("%s%s%s%s%s" % (p.group(1), param, p.group(3),
-                                               expression(tt, form, sigma, var), tail))
+                                               expression(tt, form, sigma, var,
+                                                          emission.get(card, 1.0)),
+                                               tail))
                 else:
                     # corner-only (pclm): held_at_TT per dependent_parameters
                     out.append("%s%s%s%.6g%s" % (p.group(1), param, p.group(3), tt, tail))

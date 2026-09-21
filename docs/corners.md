@@ -71,9 +71,28 @@ Presets with shared-variable conflicts: **3, 4** — see above.
 ## How a direction is measured
 
 Per group, `g_i = d ln(metric)/d z_i` on the group's own classic bench (Vgs = Vds = class supply,
-sizing-guide width), then `z_fast = 3·g/|g|` and `z_slow = −z_fast`. A single-group corner is
-therefore exactly 3.00 by construction. `models/stat_directions.json` carries the full `g` vectors,
-the bench, and the variables excluded for having no lever, each with a reason.
+sizing-guide width). From that one `g` come both vectors: `z_direction = 3·g/|g|` (joint 3σ,
+distance exactly 3.00) and `z_corner_i = 3·sign(g_i)` (per-variable, distance `3·√k`).
+`models/stat_directions.json` carries the full `g` vectors, the bench, and the variables excluded
+for having no lever, each with a reason.
+
+### The term-count invariant
+
+A degraded direction is invisible in `corners.json`: every group's vector is normalised, so it
+carries no trace of how many variables went into it, and all 40 distances stayed entirely
+plausible while five records had silently lost terms. The quantity that actually moves is the
+term count, so that is what `tools/expected_terms.py` asserts, in two parts:
+
+- **Accounting (derived).** Every variable the model realises for a group is either a term in its
+  measured direction or a recorded exclusion — never simply absent. Computed from `applies_to`
+  alone, so it cannot be satisfied by editing the expectation.
+- **Snapshot (measured).** The term count equals a stored, reviewed value. This one cannot be
+  derived: `prune_no_lever` legitimately moves a variable from term to exclusion *after*
+  measurement, so the split is an outcome, not a property of the model. It is a tripwire against
+  silent drift, and moving it is meant to be a deliberate edit.
+
+`build_corners --check` runs both before it compares the file, because `corners.json` can be
+perfectly current and still be built from a direction that quietly lost terms.
 
 ## History
 

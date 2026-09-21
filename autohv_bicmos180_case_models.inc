@@ -1231,7 +1231,7 @@
 + )
 
 .model PNP_LAT_INT PNP (
-+ is={8e-16*exp(0.0773635*Z_VBE_PNP_LAT)}
++ is={8e-16*exp(0.0758465*Z_VBE_PNP_LAT)}
 + bf={35*exp(0.0833*Z_BF_PNP_LAT)}
 + nf=1.02
 + vaf=35
@@ -1305,7 +1305,7 @@
 + )
 
 .model PNP_HV_INT PNP (
-+ is={1e-16*exp(0.0773635*Z_VBE_PNP_HV)}
++ is={1e-16*exp(0.0751101*Z_VBE_PNP_HV)}
 + bf={18*exp(0.0833*Z_BF_PNP_HV)}
 + nf=1.03
 + vaf=50
@@ -1342,7 +1342,7 @@
 + )
 
 .model DIO_PN_INT D (
-+ is={2e-14*exp(0.10328*Z_VF_DIO_PN)}
++ is={2e-14*exp(0.0983621*Z_VF_DIO_PN)}
 + n=1.05
 + rs={1.2*exp(0.0667*Z_RS_DIO_PN)}
 + bv=100
@@ -1357,7 +1357,7 @@
 + )
 
 .model DIO_FAST_INT D (
-+ is={8e-13*exp(0.10328*Z_VF_DIO_FAST)}
++ is={8e-13*exp(0.100272*Z_VF_DIO_FAST)}
 + n=1.03
 + rs={0.8*exp(0.0667*Z_RS_DIO_FAST)}
 + bv=80
@@ -1372,7 +1372,7 @@
 + )
 
 .model DIO_SCH_INT D (
-+ is={3e-08*exp(0.10328*Z_VF_DIO_SCH)}
++ is={3e-08*exp(0.0956298*Z_VF_DIO_SCH)}
 + n=1.08
 + rs={0.45*exp(0.0667*Z_RS_DIO_SCH)}
 + bv=45
@@ -1390,7 +1390,7 @@
 + )
 
 .model DZ_5V6_INT D (
-+ is={5e-13*exp(0.10328*Z_VF_DZ_5V6)}
++ is={5e-13*exp(0.0898089*Z_VF_DZ_5V6)}
 + n=1.15
 + rs={1.8*exp(0.0667*Z_RS_DZ_5V6)}
 + bv=5.6
@@ -1405,7 +1405,7 @@
 + )
 
 .model DZ_12_INT D (
-+ is={2.5e-13*exp(0.10328*Z_VF_DZ_12)}
++ is={2.5e-13*exp(0.0875256*Z_VF_DZ_12)}
 + n=1.18
 + rs={2.5*exp(0.0667*Z_RS_DZ_12)}
 + bv=12
@@ -1420,7 +1420,7 @@
 + )
 
 .model DZ_24_INT D (
-+ is={1.2e-13*exp(0.10328*Z_VF_DZ_24)}
++ is={1.2e-13*exp(0.0846559*Z_VF_DZ_24)}
 + n=1.22
 + rs={3.5*exp(0.0667*Z_RS_DZ_24)}
 + bv=24
