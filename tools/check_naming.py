@@ -55,11 +55,12 @@ def tracked() -> list[str]:
     return out.decode("utf-8", errors="replace").split()
 
 
-# This file necessarily spells the forbidden names, in FORBIDDEN above. It passes its own
-# scan today only because the regex escapes happen to break the match (`\bonsemi\b` puts a
-# word character before "onsemi"), which is luck, not design -- a differently spelled
-# pattern would make the guard fail on itself and there would be no way to express the rule.
-# So the exemption is explicit and narrow: this one file, and nothing else.
+# This file necessarily spells the forbidden names, in FORBIDDEN above -- there is no way to
+# express the rule without naming what it forbids. It happens to pass its own scan today
+# because the regex escapes break the match, but that is luck: a differently spelled pattern
+# would make the guard fail on itself. So the exemption is explicit and narrow -- this one
+# file, and nothing else -- and the prose here avoids spelling the names, leaving FORBIDDEN
+# as the single place in the repository where they appear.
 SELF = "tools/check_naming.py"
 
 
