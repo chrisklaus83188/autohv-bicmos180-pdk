@@ -16,7 +16,7 @@ with this machine's path, and registers `~/xschem_lib` in `~/.xschem/xschemrc`.
 ## Using the devices
 Place any `autohv/<DEVICE>` part. Editable instance params:
 - 4-pin MOS (NMOS/PMOS 12·18·33·50), pins **d g s b**: `W L M MM_SIGMA`
-- 3-pin DMOS (N/P DMOS 20·40·60·80·120, DNMOS20), pins **d g s**: `W M MM_SIGMA`
+- 3-pin DMOS (N/P DMOS 20·40·60·80·120, DNMOS20V), pins **d g s**: `W M MM_SIGMA`
 - DMOS200 (N/P), pins **d g s**: `W L M MM_SIGMA`  (L default 8u)
 - BJT (NPN_LV/HV, PNP_LAT/HV), pins **c b e**: `AREA MM_SIGMA`
 - Diodes/Zeners (DIO_*, DZ_*), pins **a c**: `AREA MM_SIGMA`
@@ -33,6 +33,6 @@ Edit `xschem/gen_syms.sh`, then `bash xschem/gen_syms.sh` (rewrites `autohv/*.sy
 Do not hand-edit the 40 files individually.
 
 ## Example
-`autohv/examples/tb_nmos12_idvg.sch` — NMOS12 Id-Vgs sweep, label-wired (TT corner).
+`autohv/examples/tb_nmos12_idvg.sch` — NMOS12V Id-Vgs sweep, label-wired (TT corner).
 Headless: `xschem -n -x -q -o ~/_netout autohv/examples/tb_nmos12_idvg.sch`
 then `ngspice -b ~/_netout/tb_nmos12_idvg.spice`  (Id ramps to ~2.7 mA at Vgs=12 V).

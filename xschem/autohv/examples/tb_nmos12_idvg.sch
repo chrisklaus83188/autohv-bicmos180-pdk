@@ -4,7 +4,7 @@ K {}
 V {}
 S {}
 E {}
-C {autohv/NMOS12.sym} 0 0 0 0 {name=M1 W=10u L=1u M=1 MM_SIGMA=0}
+C {autohv/NMOS12V.sym} 0 0 0 0 {name=M1 W=10u L=1u M=1 MM_SIGMA=0}
 C {lab_pin.sym} 20 -40 0 0 {name=ld lab=D}
 C {lab_pin.sym} -40 0 0 1 {name=lg lab=G}
 C {gnd.sym} 20 40 0 0 {name=gs lab=0}

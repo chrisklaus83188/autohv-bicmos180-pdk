@@ -7,31 +7,31 @@ E {}
 T {AutoHV_BiCMOS180 - device sheet (all 40 devices + PWL sources, nothing wired)} -10 -110 0 0 0.5 0.5 {layer=4}
 T {Reference palette: copy any instance into a testbench. Params are editable per instance (press q).} -10 -86 0 0 0.28 0.28 {}
 T {LV NMOS   (d g s b)  -  W L M MM_SIGMA} -10 -60 0 0 0.3 0.3 {layer=8}
-C {autohv/NMOS12.sym} 0 0 0 0 {name=NMOS12 W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/NMOS18.sym} 150 0 0 0 {name=NMOS18 W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/NMOS33.sym} 300 0 0 0 {name=NMOS33 W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/NMOS50.sym} 450 0 0 0 {name=NMOS50 W=10u L=1u M=1 MM_SIGMA=0}
+C {autohv/NMOS12V.sym} 0 0 0 0 {name=NMOS12V W=10u L=1u M=1 MM_SIGMA=0}
+C {autohv/NMOS1V8.sym} 150 0 0 0 {name=NMOS1V8 W=10u L=1u M=1 MM_SIGMA=0}
+C {autohv/NMOS3V3.sym} 300 0 0 0 {name=NMOS3V3 W=10u L=1u M=1 MM_SIGMA=0}
+C {autohv/NMOS5V0.sym} 450 0 0 0 {name=NMOS5V0 W=10u L=1u M=1 MM_SIGMA=0}
 T {LV PMOS   (d g s b)} -10 120 0 0 0.3 0.3 {layer=8}
-C {autohv/PMOS12.sym} 0 180 0 0 {name=PMOS12 W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/PMOS18.sym} 150 180 0 0 {name=PMOS18 W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/PMOS33.sym} 300 180 0 0 {name=PMOS33 W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/PMOS50.sym} 450 180 0 0 {name=PMOS50 W=10u L=1u M=1 MM_SIGMA=0}
+C {autohv/PMOS12V.sym} 0 180 0 0 {name=PMOS12V W=10u L=1u M=1 MM_SIGMA=0}
+C {autohv/PMOS1V8.sym} 150 180 0 0 {name=PMOS1V8 W=10u L=1u M=1 MM_SIGMA=0}
+C {autohv/PMOS3V3.sym} 300 180 0 0 {name=PMOS3V3 W=10u L=1u M=1 MM_SIGMA=0}
+C {autohv/PMOS5V0.sym} 450 180 0 0 {name=PMOS5V0 W=10u L=1u M=1 MM_SIGMA=0}
 T {N-LDMOS   (d g s)  -  W M MM_SIGMA} -10 300 0 0 0.3 0.3 {layer=8}
-C {autohv/NDMOS20.sym} 0 360 0 0 {name=NDMOS20 W=10u M=1 MM_SIGMA=0}
-C {autohv/NDMOS40.sym} 150 360 0 0 {name=NDMOS40 W=10u M=1 MM_SIGMA=0}
-C {autohv/NDMOS60.sym} 300 360 0 0 {name=NDMOS60 W=10u M=1 MM_SIGMA=0}
-C {autohv/NDMOS80.sym} 450 360 0 0 {name=NDMOS80 W=10u M=1 MM_SIGMA=0}
-C {autohv/NDMOS120.sym} 600 360 0 0 {name=NDMOS120 W=10u M=1 MM_SIGMA=0}
-C {autohv/DNMOS20.sym} 750 360 0 0 {name=DNMOS20 W=10u M=1 MM_SIGMA=0}
+C {autohv/NDMOS20V.sym} 0 360 0 0 {name=NDMOS20V W=10u M=1 MM_SIGMA=0}
+C {autohv/NDMOS40V.sym} 150 360 0 0 {name=NDMOS40V W=10u M=1 MM_SIGMA=0}
+C {autohv/NDMOS60V.sym} 300 360 0 0 {name=NDMOS60V W=10u M=1 MM_SIGMA=0}
+C {autohv/NDMOS80V.sym} 450 360 0 0 {name=NDMOS80V W=10u M=1 MM_SIGMA=0}
+C {autohv/NDMOS120V.sym} 600 360 0 0 {name=NDMOS120V W=10u M=1 MM_SIGMA=0}
+C {autohv/DNMOS20V.sym} 750 360 0 0 {name=DNMOS20V W=10u M=1 MM_SIGMA=0}
 T {P-LDMOS   (d g s)} -10 480 0 0 0.3 0.3 {layer=8}
-C {autohv/PDMOS20.sym} 0 540 0 0 {name=PDMOS20 W=10u M=1 MM_SIGMA=0}
-C {autohv/PDMOS40.sym} 150 540 0 0 {name=PDMOS40 W=10u M=1 MM_SIGMA=0}
-C {autohv/PDMOS60.sym} 300 540 0 0 {name=PDMOS60 W=10u M=1 MM_SIGMA=0}
-C {autohv/PDMOS80.sym} 450 540 0 0 {name=PDMOS80 W=10u M=1 MM_SIGMA=0}
-C {autohv/PDMOS120.sym} 600 540 0 0 {name=PDMOS120 W=10u M=1 MM_SIGMA=0}
+C {autohv/PDMOS20V.sym} 0 540 0 0 {name=PDMOS20V W=10u M=1 MM_SIGMA=0}
+C {autohv/PDMOS40V.sym} 150 540 0 0 {name=PDMOS40V W=10u M=1 MM_SIGMA=0}
+C {autohv/PDMOS60V.sym} 300 540 0 0 {name=PDMOS60V W=10u M=1 MM_SIGMA=0}
+C {autohv/PDMOS80V.sym} 450 540 0 0 {name=PDMOS80V W=10u M=1 MM_SIGMA=0}
+C {autohv/PDMOS120V.sym} 600 540 0 0 {name=PDMOS120V W=10u M=1 MM_SIGMA=0}
 T {LDMOS 200V  (d g s)  -  W L M MM_SIGMA} -10 660 0 0 0.3 0.3 {layer=8}
-C {autohv/NDMOS200.sym} 0 720 0 0 {name=NDMOS200 W=10u L=8u M=1 MM_SIGMA=0}
-C {autohv/PDMOS200.sym} 150 720 0 0 {name=PDMOS200 W=10u L=8u M=1 MM_SIGMA=0}
+C {autohv/NDMOS200V.sym} 0 720 0 0 {name=NDMOS200V W=10u L=8u M=1 MM_SIGMA=0}
+C {autohv/PDMOS200V.sym} 150 720 0 0 {name=PDMOS200V W=10u L=8u M=1 MM_SIGMA=0}
 T {BJT   (c b e)  -  AREA MM_SIGMA} -10 840 0 0 0.3 0.3 {layer=8}
 C {autohv/NPN_LV.sym} 0 900 0 0 {name=NPN_LV AREA=1 MM_SIGMA=0}
 C {autohv/NPN_HV.sym} 150 900 0 0 {name=NPN_HV AREA=1 MM_SIGMA=0}
@@ -42,8 +42,8 @@ C {autohv/DIO_PN.sym} 0 1080 0 0 {name=DIO_PN AREA=1 MM_SIGMA=0}
 C {autohv/DIO_FAST.sym} 150 1080 0 0 {name=DIO_FAST AREA=1 MM_SIGMA=0}
 C {autohv/DIO_SCH.sym} 300 1080 0 0 {name=DIO_SCH AREA=1 MM_SIGMA=0}
 C {autohv/DZ_5V6.sym} 450 1080 0 0 {name=DZ_5V6 AREA=1 MM_SIGMA=0}
-C {autohv/DZ_12.sym} 600 1080 0 0 {name=DZ_12 AREA=1 MM_SIGMA=0}
-C {autohv/DZ_24.sym} 750 1080 0 0 {name=DZ_24 AREA=1 MM_SIGMA=0}
+C {autohv/DZ_12V.sym} 600 1080 0 0 {name=DZ_12V AREA=1 MM_SIGMA=0}
+C {autohv/DZ_24V.sym} 750 1080 0 0 {name=DZ_24V AREA=1 MM_SIGMA=0}
 T {Resistors   (p n)  -  L W MM_SIGMA} -10 1200 0 0 0.3 0.3 {layer=8}
 C {autohv/RPOLY_HI.sym} 0 1260 0 0 {name=RPOLY_HI L=100u W=10u MM_SIGMA=0}
 C {autohv/RPOLY_LO.sym} 150 1260 0 0 {name=RPOLY_LO L=100u W=10u MM_SIGMA=0}
