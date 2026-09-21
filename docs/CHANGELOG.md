@@ -74,7 +74,7 @@ Models/anchors frozen at v2-grounded (untouched). Summary: `docs/geometry-minima
   gate width; sub-3um not buildable -- clamped). BJT AREAmin [grounded] per device: NPN_LV 0.04
   (2x2um emitter), NPN_HV/PNP_HV/PNP_LAT 0.10 (3.2x3.2um). Diode/zener AREAmin 0.04 [derived]
   (catalog silent). CMOS W/L unchanged (already 180nm-grounded); R/C [derived]; M floors [declared].
-- LOCAL_reference_extraction.md PASS 4 (gitignored) carries the verbatim DRM/catalog geometry + page refs.
+- Grounding notes held locally (gitignored) carry the verbatim geometry + page refs.
 
 ### 2026-07-26 -- T3: flip wrapper + symbol defaults to fabrication minima
 
