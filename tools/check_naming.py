@@ -50,9 +50,19 @@ TAXONOMY = ("measured", "derived", "autohv-derived", "literature", "reference-cl
 
 
 def tracked() -> list[str]:
+    """Tracked files PLUS files staged for addition.
+
+    `git ls-files` alone made the pre-commit run vacuous for the file being added: a new
+    document passed the check, was committed, and failed on the next run. Including staged
+    additions means `--check` sees what the commit will contain, not what it replaced.
+    """
     out = subprocess.run(["git", "ls-files"], cwd=str(ROOT),
                          capture_output=True, check=True).stdout
-    return out.decode("utf-8", errors="replace").split()
+    files = set(out.decode("utf-8", errors="replace").split())
+    staged = subprocess.run(["git", "diff", "--cached", "--name-only", "--diff-filter=A"],
+                            cwd=str(ROOT), capture_output=True, check=False).stdout
+    files |= set(staged.decode("utf-8", errors="replace").split())
+    return sorted(files)
 
 
 # This file necessarily spells the forbidden names, in FORBIDDEN above -- there is no way to
@@ -105,12 +115,14 @@ def scan_old_device_names(files: list[str]) -> list[str]:
             # DEVICE scan only -- the reference-process rule still applies to it, because
             # that name was never ours to record.
             "docs/CHANGELOG.md"}
+    # Same principle, same scan only: docs/backlog/ is the program's dated record. A handoff
+    # that explains a rename has to be able to say what the old name was, and a handoff
+    # written before a rename recorded measurements under the names of its day.
+    skip_prefix = ("pdk_validation/baselines/", "docs/backlog/")
     bad = []
     for rel in files:
         r = rel.replace("\\", "/")
-        # Frozen baselines keep their original names on purpose; the comparison tools
-        # apply the map when reading them.
-        if r in skip or r.startswith("pdk_validation/baselines/"):
+        if r in skip or r.startswith(skip_prefix):
             continue
         if rx.search(r):
             bad.append("path uses a retired device name: %s" % r)
