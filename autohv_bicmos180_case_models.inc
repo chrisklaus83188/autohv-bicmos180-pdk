@@ -124,6 +124,7 @@
 .param Z_RPAR_NPN_LV={((case==-1) ? ((c_NPN_LV==1)*-3 + (c_NPN_LV==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RPAR_PNP_HV={((case==-1) ? ((c_PNP_HV==1)*-3 + (c_PNP_HV==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RPAR_PNP_LAT={((case==-1) ? ((c_PNP_LAT==1)*-3 + (c_PNP_LAT==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RSH_GATE={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RSH_RNPLUS={((case==-1) ? ((c_RNPLUS==1)*3 + (c_RNPLUS==2)*-3) : ((case==7)*-3 + (case==8)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RSH_RNWELL={((case==-1) ? ((c_RNWELL==1)*3 + (c_RNWELL==2)*-3) : ((case==7)*-3 + (case==8)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RSH_RPOLY_HI={((case==-1) ? ((c_RPOLY_HI==1)*3 + (c_RPOLY_HI==2)*-3) : ((case==7)*-3 + (case==8)*3 + (case==13)*-3 + (case==14)*3 + (case==15)*-3 + (case==16)*3)) + PROC_ON*AGAUSS(0,1,1)}

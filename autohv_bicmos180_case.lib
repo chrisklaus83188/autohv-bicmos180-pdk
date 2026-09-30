@@ -31,84 +31,180 @@
 
 * ============================ DEVICE SUBCIRCUITS ============================
 * Place these via the Qucs-S 'SPICE Library Device' (File Components group).
-.subckt NMOS1V8 d g s b params: W=0.22u L=0.18u M=1 MM_SIGMA=0
+.subckt NMOS1V8 d g s b params: W=0.22u L=0.18u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0
+* Phase 3b. Coefficients are 1 sigma in foundry units, from local_mismatch.NMOS1V8
+* in models/stat_model.json. AGAUSS's third argument is a sigma SCALE, not a clip.
 .param AUM2={(W/1u)*(L/1u)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.00344/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.00344/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0025/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0015/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS1V8_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.00344/sqrt(AUM2+1e-12), 1) + Z_VT*0.00344/sqrt(AUM2+1e-12)}
+.param DBETA_MM={MM_ON*AGAUSS(0, 0.015/sqrt(AUM2+1e-12), 1) + Z_BETA*0.015/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + Z_W*0.0025/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + Z_L*0.0015/sqrt(AUM2+1e-12)}
+* Global edge bias, additive in metres: +1 sigma means WIDER/LONGER, matching how
+* measure_stat_directions perturbs lint/wint (scale=-0.5, dL=-2*dlint).
+.param WEFF={W*(1+DWREL_MM) + 5e-09*Z_DW_ACT_LV}
+.param LEFF={L*(1+DLREL_MM) + 3.33e-09*Z_DL_POLY}
+.param WF={WEFF/NF}
+.param LD=0.5u
+* Ruling Q1: shared stripes; PD excludes the gate-facing sidewall (BSIM3 cjswg).
+.param ADF={WF*LD*(NF+1)/(2*NF)}
+.param PDF={(2*(WF+2*LD) + (NF-1)*2*LD)/(2*NF)}
+.param RG={8*exp(0.0667*Z_RSH_GATE)*WF/(3*LEFF*NF)}
+M0 d gi s b NMOS1V8_INT W={WF} L={LEFF} m={NF*M} delvto={DVTH_MM} mulu0={1+DBETA_MM} AD={ADF} AS={ADF} PD={PDF} PS={PDF}
+RGATE g gi {RG}
 .ends NMOS1V8
 
-.subckt PMOS1V8 d g s b params: W=0.22u L=0.18u M=1 MM_SIGMA=0
+.subckt PMOS1V8 d g s b params: W=0.22u L=0.18u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0
+* Phase 3b. Coefficients are 1 sigma in foundry units, from local_mismatch.PMOS1V8
+* in models/stat_model.json. AGAUSS's third argument is a sigma SCALE, not a clip.
 .param AUM2={(W/1u)*(L/1u)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.00366/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.00366/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0025/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0015/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS1V8_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.00366/sqrt(AUM2+1e-12), 1) + Z_VT*0.00366/sqrt(AUM2+1e-12)}
+.param DBETA_MM={MM_ON*AGAUSS(0, 0.015/sqrt(AUM2+1e-12), 1) + Z_BETA*0.015/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + Z_W*0.0025/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + Z_L*0.0015/sqrt(AUM2+1e-12)}
+* Global edge bias, additive in metres: +1 sigma means WIDER/LONGER, matching how
+* measure_stat_directions perturbs lint/wint (scale=-0.5, dL=-2*dlint).
+.param WEFF={W*(1+DWREL_MM) + 5e-09*Z_DW_ACT_LV}
+.param LEFF={L*(1+DLREL_MM) + 3.33e-09*Z_DL_POLY}
+.param WF={WEFF/NF}
+.param LD=0.5u
+* Ruling Q1: shared stripes; PD excludes the gate-facing sidewall (BSIM3 cjswg).
+.param ADF={WF*LD*(NF+1)/(2*NF)}
+.param PDF={(2*(WF+2*LD) + (NF-1)*2*LD)/(2*NF)}
+.param RG={8*exp(0.0667*Z_RSH_GATE)*WF/(3*LEFF*NF)}
+M0 d gi s b PMOS1V8_INT W={WF} L={LEFF} m={NF*M} delvto={DVTH_MM} mulu0={1+DBETA_MM} AD={ADF} AS={ADF} PD={PDF} PS={PDF}
+RGATE g gi {RG}
 .ends PMOS1V8
 
-.subckt NMOS3V3 d g s b params: W=0.30u L=0.35u M=1 MM_SIGMA=0
+.subckt NMOS3V3 d g s b params: W=0.30u L=0.35u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0
+* Phase 3b. Coefficients are 1 sigma in foundry units, from local_mismatch.NMOS3V3
+* in models/stat_model.json. AGAUSS's third argument is a sigma SCALE, not a clip.
 .param AUM2={(W/1u)*(L/1u)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.00451/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.00451/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0025/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0015/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS3V3_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.00451/sqrt(AUM2+1e-12), 1) + Z_VT*0.00451/sqrt(AUM2+1e-12)}
+.param DBETA_MM={MM_ON*AGAUSS(0, 0.015/sqrt(AUM2+1e-12), 1) + Z_BETA*0.015/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + Z_W*0.0025/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + Z_L*0.0015/sqrt(AUM2+1e-12)}
+* Global edge bias, additive in metres: +1 sigma means WIDER/LONGER, matching how
+* measure_stat_directions perturbs lint/wint (scale=-0.5, dL=-2*dlint).
+.param WEFF={W*(1+DWREL_MM) + 5e-09*Z_DW_ACT_LV}
+.param LEFF={L*(1+DLREL_MM) + 3.33e-09*Z_DL_POLY}
+.param WF={WEFF/NF}
+.param LD=0.5u
+* Ruling Q1: shared stripes; PD excludes the gate-facing sidewall (BSIM3 cjswg).
+.param ADF={WF*LD*(NF+1)/(2*NF)}
+.param PDF={(2*(WF+2*LD) + (NF-1)*2*LD)/(2*NF)}
+.param RG={8*exp(0.0667*Z_RSH_GATE)*WF/(3*LEFF*NF)}
+M0 d gi s b NMOS3V3_INT W={WF} L={LEFF} m={NF*M} delvto={DVTH_MM} mulu0={1+DBETA_MM} AD={ADF} AS={ADF} PD={PDF} PS={PDF}
+RGATE g gi {RG}
 .ends NMOS3V3
 
-.subckt PMOS3V3 d g s b params: W=0.30u L=0.35u M=1 MM_SIGMA=0
+.subckt PMOS3V3 d g s b params: W=0.30u L=0.35u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0
+* Phase 3b. Coefficients are 1 sigma in foundry units, from local_mismatch.PMOS3V3
+* in models/stat_model.json. AGAUSS's third argument is a sigma SCALE, not a clip.
 .param AUM2={(W/1u)*(L/1u)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.00481/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.00481/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0025/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0015/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS3V3_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.00481/sqrt(AUM2+1e-12), 1) + Z_VT*0.00481/sqrt(AUM2+1e-12)}
+.param DBETA_MM={MM_ON*AGAUSS(0, 0.015/sqrt(AUM2+1e-12), 1) + Z_BETA*0.015/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + Z_W*0.0025/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + Z_L*0.0015/sqrt(AUM2+1e-12)}
+* Global edge bias, additive in metres: +1 sigma means WIDER/LONGER, matching how
+* measure_stat_directions perturbs lint/wint (scale=-0.5, dL=-2*dlint).
+.param WEFF={W*(1+DWREL_MM) + 5e-09*Z_DW_ACT_LV}
+.param LEFF={L*(1+DLREL_MM) + 3.33e-09*Z_DL_POLY}
+.param WF={WEFF/NF}
+.param LD=0.5u
+* Ruling Q1: shared stripes; PD excludes the gate-facing sidewall (BSIM3 cjswg).
+.param ADF={WF*LD*(NF+1)/(2*NF)}
+.param PDF={(2*(WF+2*LD) + (NF-1)*2*LD)/(2*NF)}
+.param RG={8*exp(0.0667*Z_RSH_GATE)*WF/(3*LEFF*NF)}
+M0 d gi s b PMOS3V3_INT W={WF} L={LEFF} m={NF*M} delvto={DVTH_MM} mulu0={1+DBETA_MM} AD={ADF} AS={ADF} PD={PDF} PS={PDF}
+RGATE g gi {RG}
 .ends PMOS3V3
 
-.subckt NMOS5V0 d g s b params: W=0.40u L=0.50u M=1 MM_SIGMA=0
+.subckt NMOS5V0 d g s b params: W=0.40u L=0.50u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0
+* Phase 3b. Coefficients are 1 sigma in foundry units, from local_mismatch.NMOS5V0
+* in models/stat_model.json. AGAUSS's third argument is a sigma SCALE, not a clip.
 .param AUM2={(W/1u)*(L/1u)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.00596/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.00596/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0025/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0015/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS5V0_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.00596/sqrt(AUM2+1e-12), 1) + Z_VT*0.00596/sqrt(AUM2+1e-12)}
+.param DBETA_MM={MM_ON*AGAUSS(0, 0.015/sqrt(AUM2+1e-12), 1) + Z_BETA*0.015/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + Z_W*0.0025/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + Z_L*0.0015/sqrt(AUM2+1e-12)}
+* Global edge bias, additive in metres: +1 sigma means WIDER/LONGER, matching how
+* measure_stat_directions perturbs lint/wint (scale=-0.5, dL=-2*dlint).
+.param WEFF={W*(1+DWREL_MM) + 5e-09*Z_DW_ACT_LV}
+.param LEFF={L*(1+DLREL_MM) + 3.33e-09*Z_DL_POLY}
+.param WF={WEFF/NF}
+.param LD=0.5u
+* Ruling Q1: shared stripes; PD excludes the gate-facing sidewall (BSIM3 cjswg).
+.param ADF={WF*LD*(NF+1)/(2*NF)}
+.param PDF={(2*(WF+2*LD) + (NF-1)*2*LD)/(2*NF)}
+.param RG={8*exp(0.0667*Z_RSH_GATE)*WF/(3*LEFF*NF)}
+M0 d gi s b NMOS5V0_INT W={WF} L={LEFF} m={NF*M} delvto={DVTH_MM} mulu0={1+DBETA_MM} AD={ADF} AS={ADF} PD={PDF} PS={PDF}
+RGATE g gi {RG}
 .ends NMOS5V0
 
-.subckt PMOS5V0 d g s b params: W=0.40u L=0.50u M=1 MM_SIGMA=0
+.subckt PMOS5V0 d g s b params: W=0.40u L=0.50u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0
+* Phase 3b. Coefficients are 1 sigma in foundry units, from local_mismatch.PMOS5V0
+* in models/stat_model.json. AGAUSS's third argument is a sigma SCALE, not a clip.
 .param AUM2={(W/1u)*(L/1u)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.00641/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.00641/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0025/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0015/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS5V0_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.00641/sqrt(AUM2+1e-12), 1) + Z_VT*0.00641/sqrt(AUM2+1e-12)}
+.param DBETA_MM={MM_ON*AGAUSS(0, 0.015/sqrt(AUM2+1e-12), 1) + Z_BETA*0.015/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + Z_W*0.0025/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + Z_L*0.0015/sqrt(AUM2+1e-12)}
+* Global edge bias, additive in metres: +1 sigma means WIDER/LONGER, matching how
+* measure_stat_directions perturbs lint/wint (scale=-0.5, dL=-2*dlint).
+.param WEFF={W*(1+DWREL_MM) + 5e-09*Z_DW_ACT_LV}
+.param LEFF={L*(1+DLREL_MM) + 3.33e-09*Z_DL_POLY}
+.param WF={WEFF/NF}
+.param LD=0.5u
+* Ruling Q1: shared stripes; PD excludes the gate-facing sidewall (BSIM3 cjswg).
+.param ADF={WF*LD*(NF+1)/(2*NF)}
+.param PDF={(2*(WF+2*LD) + (NF-1)*2*LD)/(2*NF)}
+.param RG={8*exp(0.0667*Z_RSH_GATE)*WF/(3*LEFF*NF)}
+M0 d gi s b PMOS5V0_INT W={WF} L={LEFF} m={NF*M} delvto={DVTH_MM} mulu0={1+DBETA_MM} AD={ADF} AS={ADF} PD={PDF} PS={PDF}
+RGATE g gi {RG}
 .ends PMOS5V0
 
-.subckt NMOS12V d g s b params: W=0.22u L=0.50u M=1 MM_SIGMA=0
+.subckt NMOS12V d g s b params: W=0.22u L=0.50u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0
+* Phase 3b. Coefficients are 1 sigma in foundry units, from local_mismatch.NMOS12V
+* in models/stat_model.json. AGAUSS's third argument is a sigma SCALE, not a clip.
 .param AUM2={(W/1u)*(L/1u)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.01502/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.01502/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0025/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0015/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS12V_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.01502/sqrt(AUM2+1e-12), 1) + Z_VT*0.01502/sqrt(AUM2+1e-12)}
+.param DBETA_MM={MM_ON*AGAUSS(0, 0.015/sqrt(AUM2+1e-12), 1) + Z_BETA*0.015/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + Z_W*0.0025/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + Z_L*0.0015/sqrt(AUM2+1e-12)}
+* Global edge bias, additive in metres: +1 sigma means WIDER/LONGER, matching how
+* measure_stat_directions perturbs lint/wint (scale=-0.5, dL=-2*dlint).
+.param WEFF={W*(1+DWREL_MM) + 6.67e-09*Z_DW_ACT_HV}
+.param LEFF={L*(1+DLREL_MM) + 3.33e-09*Z_DL_POLY}
+.param WF={WEFF/NF}
+.param LD=0.5u
+* Ruling Q1: shared stripes; PD excludes the gate-facing sidewall (BSIM3 cjswg).
+.param ADF={WF*LD*(NF+1)/(2*NF)}
+.param PDF={(2*(WF+2*LD) + (NF-1)*2*LD)/(2*NF)}
+.param RG={8*exp(0.0667*Z_RSH_GATE)*WF/(3*LEFF*NF)}
+M0 d gi s b NMOS12V_INT W={WF} L={LEFF} m={NF*M} delvto={DVTH_MM} mulu0={1+DBETA_MM} AD={ADF} AS={ADF} PD={PDF} PS={PDF}
+RGATE g gi {RG}
 .ends NMOS12V
 
-.subckt PMOS12V d g s b params: W=0.22u L=0.50u M=1 MM_SIGMA=0
+.subckt PMOS12V d g s b params: W=0.22u L=0.50u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0
+* Phase 3b. Coefficients are 1 sigma in foundry units, from local_mismatch.PMOS12V
+* in models/stat_model.json. AGAUSS's third argument is a sigma SCALE, not a clip.
 .param AUM2={(W/1u)*(L/1u)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.01584/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.01584/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0025/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.0015/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS12V_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.01584/sqrt(AUM2+1e-12), 1) + Z_VT*0.01584/sqrt(AUM2+1e-12)}
+.param DBETA_MM={MM_ON*AGAUSS(0, 0.015/sqrt(AUM2+1e-12), 1) + Z_BETA*0.015/sqrt(AUM2+1e-12)}
+.param DWREL_MM={MM_ON*AGAUSS(0, 0.0025/sqrt(AUM2+1e-12), 1) + Z_W*0.0025/sqrt(AUM2+1e-12)}
+.param DLREL_MM={MM_ON*AGAUSS(0, 0.0015/sqrt(AUM2+1e-12), 1) + Z_L*0.0015/sqrt(AUM2+1e-12)}
+* Global edge bias, additive in metres: +1 sigma means WIDER/LONGER, matching how
+* measure_stat_directions perturbs lint/wint (scale=-0.5, dL=-2*dlint).
+.param WEFF={W*(1+DWREL_MM) + 6.67e-09*Z_DW_ACT_HV}
+.param LEFF={L*(1+DLREL_MM) + 3.33e-09*Z_DL_POLY}
+.param WF={WEFF/NF}
+.param LD=0.5u
+* Ruling Q1: shared stripes; PD excludes the gate-facing sidewall (BSIM3 cjswg).
+.param ADF={WF*LD*(NF+1)/(2*NF)}
+.param PDF={(2*(WF+2*LD) + (NF-1)*2*LD)/(2*NF)}
+.param RG={8*exp(0.0667*Z_RSH_GATE)*WF/(3*LEFF*NF)}
+M0 d gi s b PMOS12V_INT W={WF} L={LEFF} m={NF*M} delvto={DVTH_MM} mulu0={1+DBETA_MM} AD={ADF} AS={ADF} PD={PDF} PS={PDF}
+RGATE g gi {RG}
 .ends PMOS12V
 
 .subckt NDMOS20V d g s params: W=3u M=1 MM_SIGMA=0

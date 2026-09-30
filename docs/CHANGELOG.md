@@ -702,8 +702,8 @@ existing AGAUSS-based MC harness.
 
 ```spice
 .param MM_ON=0                          ; turn OFF random MC
-XM1 d1 g1 s b NMOS5V0 W=100u L=2u MM_SIGMA=+3   ; +3-sigma per instance
-XM2 d2 g2 s b NMOS5V0 W=100u L=2u MM_SIGMA=-3   ; opposing direction
+XM1 d1 g1 s b NMOS5V0 W=100u L=2u Z_VT=+3 Z_W=+3 Z_L=+3   ; +3-sigma per instance
+XM2 d2 g2 s b NMOS5V0 W=100u L=2u Z_VT=-3 Z_W=-3 Z_L=-3   ; opposing direction
 ```
 
 **Mechanism (additive form).** Each mismatch parameter is now:
@@ -757,7 +757,7 @@ deck instantiations (MM_SIGMA defaults to 0).
 
 **Regression coverage added.**
 `pdk_validation/regression/transients/mismatch_corner.cir` instantiates
-two NMOS5V0 at MM_SIGMA=+/-3, measures `log(I1/I2)`, asserts within
+two NMOS5V0 at Z_VT=+/-3 Z_W=+/-3 Z_L=+/-3, measures `log(I1/I2)`, asserts within
 +/-10% of the analytic prediction (-1.44%). Baseline measured -1.48%
 (2.5% deviation from theory, well within tolerance). If the
 deterministic mechanism ever breaks, this trips on the next CI run.

@@ -108,7 +108,7 @@ VGS = 2.0
 VDS = 3.0
 
 SENS_TEMPLATE = """\
-* sensitivity probe: one NMOS5V0, deterministic MM_SIGMA knob (MM_ON=0)
+* sensitivity probe: one NMOS5V0, deterministic Z_VT knob (MM_ON=0)
 .include "{lib}"
 .param case=0
 .param PROC_ON=0
@@ -117,7 +117,7 @@ SENS_TEMPLATE = """\
 Vd1 d1 0 {vds}
 Vg1 g1 0 {vgs}
 
-XM1 d1 g1 0 0 NMOS5V0 W={w}u L={l}u M=1 MM_SIGMA={z}
+XM1 d1 g1 0 0 NMOS5V0 W={w}u L={l}u M=1 Z_VT={z} Z_W={z} Z_L={z}
 
 .control
 option numdgt=12

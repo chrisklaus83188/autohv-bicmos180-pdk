@@ -76,8 +76,8 @@ Quick example — worst-case differential pair offset:
 
 ```spice
 .param MM_ON=0
-XM1 d1 g1 s b NMOS5V0 W=100u L=2u MM_SIGMA=+3
-XM2 d2 g2 s b NMOS5V0 W=100u L=2u MM_SIGMA=-3
+XM1 d1 g1 s b NMOS5V0 W=100u L=2u Z_VT=+3 Z_W=+3 Z_L=+3
+XM2 d2 g2 s b NMOS5V0 W=100u L=2u Z_VT=-3 Z_W=-3 Z_L=-3
 ```
 
 The full flow (sensitivity scan → compose worst-case pattern → lock as a

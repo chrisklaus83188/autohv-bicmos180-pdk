@@ -82,8 +82,8 @@ bracketing, CI gating, and sensitivity analysis. Set `MM_ON=0` when using
 ```spice
 * Worst-case differential pair input offset:
 .param case=0 PROC_ON=0 MM_ON=0
-XM1 d1 g1 s b NMOS5V0 W=100u L=2u MM_SIGMA=+3   ; +3σ Vth shift
-XM2 d2 g2 s b NMOS5V0 W=100u L=2u MM_SIGMA=-3   ; -3σ Vth shift, opposing
+XM1 d1 g1 s b NMOS5V0 W=100u L=2u Z_VT=+3 Z_W=+3 Z_L=+3   ; +3σ Vth shift
+XM2 d2 g2 s b NMOS5V0 W=100u L=2u Z_VT=-3 Z_W=-3 Z_L=-3   ; -3σ Vth shift, opposing
 ```
 
 Full flow (sensitivity scan → compose worst-case pattern → lock as testbench

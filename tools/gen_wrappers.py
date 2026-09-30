@@ -66,6 +66,94 @@ def load() -> dict:
     return json.loads(MODEL.read_text(encoding="utf-8"))["local_mismatch"]
 
 
+# Lateral diffusion / contacted-stripe length used for the junction geometry. Authored, not
+# statistical: it is a layout constant, and the previous wrappers hardcoded the same 0.5 um.
+LD = "0.5u"
+
+
+def mos_wrapper(dev: str, w_def: str, l_def: str, lm: dict, gv: dict) -> list[str]:
+    """The whole BSIM3 wrapper body. Phase 3b, with ruling Q1 for the finger geometry.
+
+    KNOBS. Four independent deterministic n-sigma dials replace the single MM_SIGMA, which
+    moved Vth, W and L together -- a scenario no process produces, since the three are
+    independent. MM_SIGMA=X is exactly Z_VT=X Z_W=X Z_L=X, which is how the 118 callers
+    migrate; Z_BETA is new and had no MM_SIGMA equivalent.
+
+    BETA. Driven through the BSIM3 instance parameter `mulu0` (verified: ngspice accepts it
+    and it moves Id). Id does not move by the full 1+DBETA in saturation -- velocity
+    saturation and series resistance absorb part of it -- which is correct physics, not a
+    scaling error.
+
+    EDGE BIAS. Z_DW_ACT_* and Z_DL_POLY were declared with live corner values and consumed by
+    NOTHING: their applies_to says `additive-in-wrapper`, and no wrapper existed to honour it.
+    Same class of defect as VBE/VF before Finding A. The sign and scale must match how the
+    harness measured the direction -- it perturbs lint/wint with scale=-0.5, and dL=-2*dlint,
+    so a +1 sigma draw means L LONGER by +sigma metres. Hence `+ sigma*Z`, additive in metres.
+
+    GATE RESISTOR. RSH_GATE * (W/NF) / (3*L*NF): the 1/3 is the distributed-gate result for a
+    single-side-fed poly finger. It is a series element on the gate, so DC is untouched (no
+    gate current) and only AC/transient see it -- which is the point of adding it.
+
+    FINGER GEOMETRY (ruling Q1). NF fingers sit on NF+1 diffusion stripes, drain and source
+    taking half each, and ngspice multiplies the per-finger value by m = NF*M:
+
+        AD = AS = (W/NF)*LD*(NF+1)/(2*NF)
+
+    exact at NF=1, and totalling 1.5 and 2.5 stripe-areas at NF=2 and NF=4.
+
+    PD/PS are the FIELD-OXIDE sidewall perimeter only: BSIM3 handles the gate-side sidewall
+    through cjswg, so the gate-facing edge is excluded (ruling Q1). An end stripe exposes
+    three sides (W_f + 2*LD); an interior stripe, sharing both long sides with gates, exposes
+    only its two short sides (2*LD):
+
+        PD = PS = [2*(W_f + 2*LD) + (NF-1)*2*LD] / (2*NF)
+
+    At NF=1 this is W_f + 2*LD. The previous wrapper used 2*(W_f + LD), i.e. it counted BOTH
+    long edges, so it double-counted the gate-facing sidewall. Sidewall junction capacitance
+    therefore drops by about one W_f of perimeter per finger -- a real, intended change.
+    """
+    d = lm[dev]
+    s_vt = d["A_VT"]["value"] / 1000.0        # mV.um -> V.um
+    s_be = d["A_BETA"]["value"] / 100.0       # %.um  -> relative.um
+    s_w = d["A_W"]["value"] / 100.0
+    s_l = d["A_L"]["value"] / 100.0
+
+    dw_var = "DW_ACT_LV" if dev in gv["DW_ACT_LV"]["shared_by"] else "DW_ACT_HV"
+    s_dw = gv[dw_var]["sigma"]
+    s_dl = gv["DL_POLY"]["sigma"]
+    rg_nom, rg_sig = gv["RSH_GATE"]["nominal"], gv["RSH_GATE"]["sigma"]
+
+    def mm(name, coef, knob):
+        return (".param %s={MM_ON*AGAUSS(0, %s/sqrt(AUM2%s), 1) + %s*%s/sqrt(AUM2%s)}"
+                % (name, fmt(coef), GUARD, knob, fmt(coef), GUARD))
+
+    return [
+        ".subckt %s d g s b params: W=%s L=%s M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0"
+        % (dev, w_def, l_def),
+        "* Phase 3b. Coefficients are 1 sigma in foundry units, from local_mismatch.%s" % dev,
+        "* in models/stat_model.json. AGAUSS's third argument is a sigma SCALE, not a clip.",
+        ".param AUM2={(W/1u)*(L/1u)*M}",
+        mm("DVTH_MM", s_vt, "Z_VT"),
+        mm("DBETA_MM", s_be, "Z_BETA"),
+        mm("DWREL_MM", s_w, "Z_W"),
+        mm("DLREL_MM", s_l, "Z_L"),
+        "* Global edge bias, additive in metres: +1 sigma means WIDER/LONGER, matching how",
+        "* measure_stat_directions perturbs lint/wint (scale=-0.5, dL=-2*dlint).",
+        ".param WEFF={W*(1+DWREL_MM) + %s*Z_%s}" % (fmt(s_dw), dw_var),
+        ".param LEFF={L*(1+DLREL_MM) + %s*Z_DL_POLY}" % fmt(s_dl),
+        ".param WF={WEFF/NF}",
+        ".param LD=%s" % LD,
+        "* Ruling Q1: shared stripes; PD excludes the gate-facing sidewall (BSIM3 cjswg).",
+        ".param ADF={WF*LD*(NF+1)/(2*NF)}",
+        ".param PDF={(2*(WF+2*LD) + (NF-1)*2*LD)/(2*NF)}",
+        ".param RG={%s*exp(%s*Z_RSH_GATE)*WF/(3*LEFF*NF)}" % (fmt(rg_nom), fmt(rg_sig)),
+        "M0 d gi s b %s_INT W={WF} L={LEFF} m={NF*M} delvto={DVTH_MM} mulu0={1+DBETA_MM}"
+        " AD={ADF} AS={ADF} PD={PDF} PS={PDF}" % dev,
+        "RGATE g gi {RG}",
+        ".ends %s" % dev,
+    ]
+
+
 def mos_lines(dev: str, lm: dict) -> dict[str, str]:
     """AUM2 + the three MOS mismatch params, from this device's named coefficients."""
     d = lm[dev]
@@ -146,6 +234,10 @@ def generate() -> str:
 
     out, dev, repl = [], None, {}
     for line in TEMPLATE.read_text(encoding="utf-8").splitlines():
+        mk = re.match(r"\* <<<MOS_WRAPPER (\S+) W=(\S+) L=(\S+)>>>", line)
+        if mk:
+            out.extend(mos_wrapper(mk.group(1), mk.group(2), mk.group(3), lm, gv))
+            continue
         m = re.match(r"\.subckt (\S+) ", line)
         if m:
             dev = m.group(1)

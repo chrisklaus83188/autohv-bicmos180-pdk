@@ -176,6 +176,17 @@ def z_variables(corners: dict, table: dict | None = None,
                     continue
                 for dev in a.get("devices", []):
                     names.add(f"{prefix}_{dev}")
+        # Same problem for a PLAIN global whose only realisation is a wrapper target --
+        # RSH_GATE (target: mos_rgate) is one shared variable, not one per device, so its
+        # Z_ is just Z_<NAME>. Handling only *_template entries above left Z_RSH_GATE
+        # undeclared, and ngspice fails outright on the dangling reference rather than
+        # quietly treating it as zero.
+        for name, v in model["global_variables"].items():
+            if name.startswith("_") or not isinstance(v, dict) or not v.get("sigma"):
+                continue
+            for a in v.get("applies_to") or []:
+                if not a.get("param") and a.get("target"):
+                    names.add(name)   # bare: the emitter prefixes Z_
     return sorted(names)
 
 

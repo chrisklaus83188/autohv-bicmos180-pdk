@@ -31,85 +31,21 @@
 
 * ============================ DEVICE SUBCIRCUITS ============================
 * Place these via the Qucs-S 'SPICE Library Device' (File Components group).
-.subckt NMOS1V8 d g s b params: W=0.22u L=0.18u M=1 MM_SIGMA=0
-.param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0105/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0105/3/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS1V8_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
-.ends NMOS1V8
+* <<<MOS_WRAPPER NMOS1V8 W=0.22u L=0.18u>>>
 
-.subckt PMOS1V8 d g s b params: W=0.22u L=0.18u M=1 MM_SIGMA=0
-.param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0105/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0105/3/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS1V8_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
-.ends PMOS1V8
+* <<<MOS_WRAPPER PMOS1V8 W=0.22u L=0.18u>>>
 
-.subckt NMOS3V3 d g s b params: W=0.30u L=0.35u M=1 MM_SIGMA=0
-.param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.012/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS3V3_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
-.ends NMOS3V3
+* <<<MOS_WRAPPER NMOS3V3 W=0.30u L=0.35u>>>
 
-.subckt PMOS3V3 d g s b params: W=0.30u L=0.35u M=1 MM_SIGMA=0
-.param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.012/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS3V3_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
-.ends PMOS3V3
+* <<<MOS_WRAPPER PMOS3V3 W=0.30u L=0.35u>>>
 
-.subckt NMOS5V0 d g s b params: W=0.40u L=0.50u M=1 MM_SIGMA=0
-.param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.033/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.033/3/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS5V0_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
-.ends NMOS5V0
+* <<<MOS_WRAPPER NMOS5V0 W=0.40u L=0.50u>>>
 
-.subckt PMOS5V0 d g s b params: W=0.40u L=0.50u M=1 MM_SIGMA=0
-.param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.033/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.033/3/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS5V0_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
-.ends PMOS5V0
+* <<<MOS_WRAPPER PMOS5V0 W=0.40u L=0.50u>>>
 
-.subckt NMOS12V d g s b params: W=0.22u L=0.50u M=1 MM_SIGMA=0
-.param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.093/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.093/3/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b NMOS12V_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
-.ends NMOS12V
+* <<<MOS_WRAPPER NMOS12V W=0.22u L=0.50u>>>
 
-.subckt PMOS12V d g s b params: W=0.22u L=0.50u M=1 MM_SIGMA=0
-.param AUM2={(W/1u)*(L/1u)}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.093/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.093/3/sqrt(AUM2+1e-12)}
-.param DWREL_MM={MM_ON*AGAUSS(0, 0.0075/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0075/3/sqrt(AUM2+1e-12)}
-.param DLREL_MM={MM_ON*AGAUSS(0, 0.0045000000000000005/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.0045000000000000005/3/sqrt(AUM2+1e-12)}
-.param WEFF={W*(1+DWREL_MM)}
-.param LEFF={L*(1+DLREL_MM)}
-M0 d g s b PMOS12V_INT W={WEFF} L={LEFF} M={M} delvto={DVTH_MM} AD={WEFF*0.5u} AS={WEFF*0.5u} PD={2*(WEFF+0.5u)} PS={2*(WEFF+0.5u)}
-.ends PMOS12V
+* <<<MOS_WRAPPER PMOS12V W=0.22u L=0.50u>>>
 
 .subckt NDMOS20V d g s params: W=3u M=1 MM_SIGMA=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min

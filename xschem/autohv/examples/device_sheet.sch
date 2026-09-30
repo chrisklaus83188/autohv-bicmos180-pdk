@@ -7,15 +7,15 @@ E {}
 T {AutoHV_BiCMOS180 - device sheet (all 40 devices + PWL sources, nothing wired)} -10 -110 0 0 0.5 0.5 {layer=4}
 T {Reference palette: copy any instance into a testbench. Params are editable per instance (press q).} -10 -86 0 0 0.28 0.28 {}
 T {LV NMOS   (d g s b)  -  W L M MM_SIGMA} -10 -60 0 0 0.3 0.3 {layer=8}
-C {autohv/NMOS12V.sym} 0 0 0 0 {name=NMOS12V W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/NMOS1V8.sym} 150 0 0 0 {name=NMOS1V8 W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/NMOS3V3.sym} 300 0 0 0 {name=NMOS3V3 W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/NMOS5V0.sym} 450 0 0 0 {name=NMOS5V0 W=10u L=1u M=1 MM_SIGMA=0}
+C {autohv/NMOS12V.sym} 0 0 0 0 {name=NMOS12V W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
+C {autohv/NMOS1V8.sym} 150 0 0 0 {name=NMOS1V8 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
+C {autohv/NMOS3V3.sym} 300 0 0 0 {name=NMOS3V3 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
+C {autohv/NMOS5V0.sym} 450 0 0 0 {name=NMOS5V0 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
 T {LV PMOS   (d g s b)} -10 120 0 0 0.3 0.3 {layer=8}
-C {autohv/PMOS12V.sym} 0 180 0 0 {name=PMOS12V W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/PMOS1V8.sym} 150 180 0 0 {name=PMOS1V8 W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/PMOS3V3.sym} 300 180 0 0 {name=PMOS3V3 W=10u L=1u M=1 MM_SIGMA=0}
-C {autohv/PMOS5V0.sym} 450 180 0 0 {name=PMOS5V0 W=10u L=1u M=1 MM_SIGMA=0}
+C {autohv/PMOS12V.sym} 0 180 0 0 {name=PMOS12V W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
+C {autohv/PMOS1V8.sym} 150 180 0 0 {name=PMOS1V8 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
+C {autohv/PMOS3V3.sym} 300 180 0 0 {name=PMOS3V3 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
+C {autohv/PMOS5V0.sym} 450 180 0 0 {name=PMOS5V0 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
 T {N-LDMOS   (d g s)  -  W M MM_SIGMA} -10 300 0 0 0.3 0.3 {layer=8}
 C {autohv/NDMOS20V.sym} 0 360 0 0 {name=NDMOS20V W=10u M=1 MM_SIGMA=0}
 C {autohv/NDMOS40V.sym} 150 360 0 0 {name=NDMOS40V W=10u M=1 MM_SIGMA=0}
