@@ -1,7 +1,7 @@
 # Handoff: where the program stands, and five things I should not decide alone
 
-**Branch:** `mc-realism` @ `e9038f8`, pushed, tree clean, seven checks green
-**Date:** 2026-09-27
+**Branch:** `mc-realism` @ `4a512d9`, pushed, tree clean, seven checks green
+**Date:** 2026-09-27, re-confirmed 2026-09-30 — **nothing has advanced in between**
 **Purpose:** a position statement, not a package report. Phase 3a is reported separately in
 `HANDOFF_v3_phase3a_wrappers.md`. This document exists so you can steer before I spend effort
 on choices that are yours.
@@ -110,9 +110,21 @@ case from "superseded", and it is your call whether v2_2 should carry a note say
 - **`xschem/designs/*.sch`** — renamed, symbol references all resolve, but **not
   netlist-verified**; xschem is not on PATH here.
 
-## 5. What I will do next, absent a reply
+## 5. What is actually done, and what is not
 
-Phase 3b (the four knobs, gate resistor, edge bias), then the `MM_SIGMA` migration and removal,
-then the Zener bench and `BV_DZ_*` — all of which are unblocked — and then Phase 4. I will leave
-the resistor split, the capacitor splits, the diode `A_IS` and `NF` wiring untouched until you
-answer, since each one would otherwise bake in a number I chose rather than one you ruled.
+**As of 2026-09-30 the tree is still at `4a512d9` and nothing has advanced since this document
+was written.** Phase 3a is the last work landed. The unblocked items listed in §2 — the four
+knobs, the gate resistor, edge bias, the `MM_SIGMA` migration and removal, the Zener bench and
+`BV_DZ_*`, and Phases 4–6 — are **not started**. I say so explicitly because the earlier wording
+here read as a plan in progress, and it was not.
+
+So there is a clean choice in front of you rather than a part-built tree:
+
+- **Answer the five questions** and I complete Phase 3 in one pass, blocked items included.
+- **Or say "proceed unblocked"** and I do the §2 work first — knobs, gate resistor, edge bias,
+  `MM_SIGMA` migration, Zener bench, Phases 4–6 — leaving the four undetermined coefficient sets
+  and `NF` for a later pass.
+
+Either is fine; the second just means Phase 3 closes in two commits instead of one. What I will
+not do is pick values for Q2, Q3 or Q4 myself, since each would bake a declared number into the
+model on my authority rather than yours.
