@@ -183,8 +183,10 @@ def vdmos_lines(dev: str, lm: dict) -> dict[str, str]:
     one = three / 3.0
     return {
         "mtot": ".param mtot={(W/W_REF)*M}",
+        # MM_SIGMA drove this single term only, so Z_VT is an exact one-for-one
+        # replacement -- unlike the MOS case, where one dial moved three terms.
         "DVTH_MM": (".param DVTH_MM={MM_ON*AGAUSS(0, %s, 1)/sqrt(max(mtot,%s))"
-                    " + MM_SIGMA*%s/sqrt(max(mtot,%s))}"
+                    " + Z_VT*%s/sqrt(max(mtot,%s))}"
                     % (fmt(one), VDMOS_GUARD, fmt(one), VDMOS_GUARD)),
     }
 
@@ -241,6 +243,8 @@ def generate() -> str:
         m = re.match(r"\.subckt (\S+) ", line)
         if m:
             dev = m.group(1)
+            if dev in list(lm["_VDMOS"]["A_VT"]["ladder"]):
+                line = line.replace("MM_SIGMA=0", "Z_VT=0")
             if dev in MOS:
                 repl = mos_lines(dev, lm)
             elif dev in VDMOS:

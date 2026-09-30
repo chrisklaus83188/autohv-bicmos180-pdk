@@ -93,6 +93,11 @@ RES_GROUPS = ["RPOLY_HI", "RPOLY_LO", "RNWELL", "RNPLUS", "RPPLUS"]
 CAP_GROUPS = ["CMIM_STD", "CMIM_HI", "CMOM", "CFRINGE"]
 BJT_GROUPS = ["NPN_LV", "PNP_LAT", "NPN_HV", "PNP_HV"]
 DIO_GROUPS = ["DIO_PN", "DIO_FAST", "DIO_SCH", "DZ_5V6", "DZ_12V", "DZ_24V"]
+# The Zeners stay in DIO_GROUPS -- they are part of the diode set for presets 11/12 --
+# but they get their OWN bench and kind: for a Zener, breakdown is the operating point,
+# not an off-state limit, so a forward-conduction bench measures the wrong thing
+# entirely and would prune BV as "no lever" (ruling Q5/B).
+ZEN_GROUPS = ["DZ_5V6", "DZ_12V", "DZ_24V"]
 POLY_RES = {"RPOLY_HI", "RPOLY_LO"}
 
 
@@ -118,6 +123,8 @@ def kind_of(group: str) -> str:
         return "capacitor"
     if group in BJT_GROUPS:
         return "bjt"
+    if group in ZEN_GROUPS:
+        return "zener"
     if group in DIO_GROUPS:
         return "diode"
     raise SystemExit(f"unknown group {group}")
@@ -280,6 +287,23 @@ def deck_diode(group: str, bench: dict, bias: str) -> tuple[str, str]:
     return "\n".join(_wrap(f"{group} If", body, ["op", "print abs(i(Vf))"])), "i"
 
 
+def deck_zener(group: str, bench: dict, bias: str) -> tuple[str, str]:
+    """Reverse breakdown, CURRENT-driven, metric ln V_z (ruling Q5/B).
+
+    Current-driven rather than voltage-driven because that is how a Zener is used and how its
+    tolerance is specified: force the reference current, read the voltage it clamps at. A
+    voltage-driven bench would measure current on the near-vertical part of the breakdown
+    knee, where a 1 % voltage change moves the current by orders of magnitude and the
+    sensitivity is numerically hopeless.
+
+    Ports are (anode, cathode). The anode sits at ground and the current source injects into
+    the cathode, so the junction is reverse-biased and V(k) is the breakdown voltage.
+    """
+    body = [f"Izen 0 k {bench['Iz']:.6g}",
+            f"X1 0 k {group} AREA={bench['AREA']:.6g}"]
+    return "\n".join(_wrap(f"{group} Vz", body, ["op", "print v(k)"])), "z"
+
+
 def _wrap(title: str, body: list[str], control: list[str]) -> list[str]:
     return ([f"* direction bench: {title}", f'.include "{LIB.name}"',
              ".param case=0", ".param PROC_ON=0", ".param MM_ON=0",
@@ -289,7 +313,8 @@ def _wrap(title: str, body: list[str], control: list[str]) -> list[str]:
 
 
 BUILDERS = {"mos": deck_mos, "vdmos": deck_vdmos, "resistor": deck_resistor,
-            "capacitor": deck_capacitor, "bjt": deck_bjt, "diode": deck_diode}
+            "capacitor": deck_capacitor, "bjt": deck_bjt, "diode": deck_diode,
+            "zener": deck_zener}
 
 
 def measure(ng: str, workdir: Path, deck: str, mode: str, bench: dict) -> float:
@@ -306,7 +331,7 @@ def measure(ng: str, workdir: Path, deck: str, mode: str, bench: dict) -> float:
             os.unlink(path)
         except OSError:
             pass
-    m = re.search(r"(?:abs\(i\(v\w+\)\)|mag\(i\(vac\)\))\s*=\s*([-\d.eE+]+)", out, re.I)
+    m = re.search(r"(?:abs\(i\(v\w+\)\)|mag\(i\(vac\)\)|v\(\w+\))\s*=\s*([-\d.eE+]+)", out, re.I)
     if not m:
         raise RuntimeError(f"no metric:\n{out[-700:]}")
     v = abs(float(m.group(1)))
@@ -316,6 +341,8 @@ def measure(ng: str, workdir: Path, deck: str, mode: str, bench: dict) -> float:
         return bench["V"] / v                      # ln R
     if mode == "c":
         return v / (2 * math.pi * bench["freq"])   # ln C
+    if mode == "z":
+        return v                                   # ln V_z, already a voltage
     return v                                       # ln I
 
 
@@ -410,6 +437,11 @@ def perturbations(group: str, model: dict) -> tuple[dict, dict]:
             # letting the variable vanish from the direction unrecorded (AD1).
             dead[var] = NO_LEVER_REASON["BV_"]
             continue
+        if kind == "zener" and form == "vf":
+            # In reverse breakdown the saturation current sets the forward knee, not V_z.
+            dead[var] = ("reverse-breakdown bench: the forward saturation current has no "
+                         "lever on V_z")
+            continue
         if form in ("vbe", "vf"):
             # IS = IS_TT*exp(dV/(n*V_T)): the emission coefficient belongs in the scale.
             # It is read from the card, never typed -- the six diodes run n = 1.03 to 1.22,
@@ -479,6 +511,11 @@ def bench_for(group: str, model: dict, sizing: dict) -> dict:
                   "Ib": 1e-5 / max(pt.get("beta", 100.0), 1.0)})
     elif kind == "diode":
         b.update({"AREA": 1.0, "Vf": None})
+    elif kind == "zener":
+        # Reference current from the sizing guide where it lists one, else the ruled 100 uA.
+        iz = (sizing.get("zener", {}).get(group, {}) or {}).get("Iz_A")
+        b.update({"AREA": 1.0, "Iz": iz if iz else 100e-6,
+                  "Iz_source": "sizing-guide" if iz else "declared 100 uA (ruling Q5/B)"})
     return b
 
 

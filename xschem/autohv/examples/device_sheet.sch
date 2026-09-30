@@ -17,21 +17,21 @@ C {autohv/PMOS1V8.sym} 150 180 0 0 {name=PMOS1V8 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z
 C {autohv/PMOS3V3.sym} 300 180 0 0 {name=PMOS3V3 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
 C {autohv/PMOS5V0.sym} 450 180 0 0 {name=PMOS5V0 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
 T {N-LDMOS   (d g s)  -  W M MM_SIGMA} -10 300 0 0 0.3 0.3 {layer=8}
-C {autohv/NDMOS20V.sym} 0 360 0 0 {name=NDMOS20V W=10u M=1 MM_SIGMA=0}
-C {autohv/NDMOS40V.sym} 150 360 0 0 {name=NDMOS40V W=10u M=1 MM_SIGMA=0}
-C {autohv/NDMOS60V.sym} 300 360 0 0 {name=NDMOS60V W=10u M=1 MM_SIGMA=0}
-C {autohv/NDMOS80V.sym} 450 360 0 0 {name=NDMOS80V W=10u M=1 MM_SIGMA=0}
-C {autohv/NDMOS120V.sym} 600 360 0 0 {name=NDMOS120V W=10u M=1 MM_SIGMA=0}
-C {autohv/DNMOS20V.sym} 750 360 0 0 {name=DNMOS20V W=10u M=1 MM_SIGMA=0}
+C {autohv/NDMOS20V.sym} 0 360 0 0 {name=NDMOS20V W=10u M=1 Z_VT=0}
+C {autohv/NDMOS40V.sym} 150 360 0 0 {name=NDMOS40V W=10u M=1 Z_VT=0}
+C {autohv/NDMOS60V.sym} 300 360 0 0 {name=NDMOS60V W=10u M=1 Z_VT=0}
+C {autohv/NDMOS80V.sym} 450 360 0 0 {name=NDMOS80V W=10u M=1 Z_VT=0}
+C {autohv/NDMOS120V.sym} 600 360 0 0 {name=NDMOS120V W=10u M=1 Z_VT=0}
+C {autohv/DNMOS20V.sym} 750 360 0 0 {name=DNMOS20V W=10u M=1 Z_VT=0}
 T {P-LDMOS   (d g s)} -10 480 0 0 0.3 0.3 {layer=8}
-C {autohv/PDMOS20V.sym} 0 540 0 0 {name=PDMOS20V W=10u M=1 MM_SIGMA=0}
-C {autohv/PDMOS40V.sym} 150 540 0 0 {name=PDMOS40V W=10u M=1 MM_SIGMA=0}
-C {autohv/PDMOS60V.sym} 300 540 0 0 {name=PDMOS60V W=10u M=1 MM_SIGMA=0}
-C {autohv/PDMOS80V.sym} 450 540 0 0 {name=PDMOS80V W=10u M=1 MM_SIGMA=0}
-C {autohv/PDMOS120V.sym} 600 540 0 0 {name=PDMOS120V W=10u M=1 MM_SIGMA=0}
+C {autohv/PDMOS20V.sym} 0 540 0 0 {name=PDMOS20V W=10u M=1 Z_VT=0}
+C {autohv/PDMOS40V.sym} 150 540 0 0 {name=PDMOS40V W=10u M=1 Z_VT=0}
+C {autohv/PDMOS60V.sym} 300 540 0 0 {name=PDMOS60V W=10u M=1 Z_VT=0}
+C {autohv/PDMOS80V.sym} 450 540 0 0 {name=PDMOS80V W=10u M=1 Z_VT=0}
+C {autohv/PDMOS120V.sym} 600 540 0 0 {name=PDMOS120V W=10u M=1 Z_VT=0}
 T {LDMOS 200V  (d g s)  -  W L M MM_SIGMA} -10 660 0 0 0.3 0.3 {layer=8}
-C {autohv/NDMOS200V.sym} 0 720 0 0 {name=NDMOS200V W=10u L=8u M=1 MM_SIGMA=0}
-C {autohv/PDMOS200V.sym} 150 720 0 0 {name=PDMOS200V W=10u L=8u M=1 MM_SIGMA=0}
+C {autohv/NDMOS200V.sym} 0 720 0 0 {name=NDMOS200V W=10u L=8u M=1 Z_VT=0}
+C {autohv/PDMOS200V.sym} 150 720 0 0 {name=PDMOS200V W=10u L=8u M=1 Z_VT=0}
 T {BJT   (c b e)  -  AREA MM_SIGMA} -10 840 0 0 0.3 0.3 {layer=8}
 C {autohv/NPN_LV.sym} 0 900 0 0 {name=NPN_LV AREA=1 MM_SIGMA=0}
 C {autohv/NPN_HV.sym} 150 900 0 0 {name=NPN_HV AREA=1 MM_SIGMA=0}

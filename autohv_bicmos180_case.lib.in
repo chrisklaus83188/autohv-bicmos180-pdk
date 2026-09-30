@@ -54,7 +54,7 @@
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.024/3/sqrt(max(mtot,1e-6))}
 .param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
 .param Cth=1e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
@@ -77,7 +77,7 @@ M0 d g_int s NDMOS20V_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.024/3/sqrt(max(mtot,1e-6))}
 .param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
 .param Cth=1e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
@@ -100,7 +100,7 @@ M0 d g_int s PDMOS20V_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.027/3/sqrt(max(mtot,1e-6))}
 .param Rth=150        ; K/W: thermal R, default for 60V class (override per-instance)
 .param Cth=2e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
@@ -123,7 +123,7 @@ M0 d g_int s NDMOS60V_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.027/3/sqrt(max(mtot,1e-6))}
 .param Rth=150        ; K/W: thermal R, default for 60V class (override per-instance)
 .param Cth=2e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
@@ -146,7 +146,7 @@ M0 d g_int s PDMOS60V_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.03/3/sqrt(max(mtot,1e-6))}
 .param Rth=100        ; K/W: thermal R, default for 120V class (override per-instance)
 .param Cth=4e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
@@ -169,7 +169,7 @@ M0 d g_int s NDMOS120V_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.03/3/sqrt(max(mtot,1e-6))}
 .param Rth=100        ; K/W: thermal R, default for 120V class (override per-instance)
 .param Cth=4e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
@@ -192,7 +192,7 @@ M0 d g_int s PDMOS120V_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0255, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0255/3/sqrt(max(mtot,1e-6))}
 .param Rth=180        ; K/W: thermal R, default for 40V class (override per-instance)
 .param Cth=1.5e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
@@ -215,7 +215,7 @@ M0 d g_int s NDMOS40V_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0255, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0255/3/sqrt(max(mtot,1e-6))}
 .param Rth=180        ; K/W: thermal R, default for 40V class (override per-instance)
 .param Cth=1.5e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
@@ -238,7 +238,7 @@ M0 d g_int s PDMOS40V_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0285, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0285/3/sqrt(max(mtot,1e-6))}
 .param Rth=120        ; K/W: thermal R, default for 80V class (override per-instance)
 .param Cth=3e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
@@ -261,7 +261,7 @@ M0 d g_int s NDMOS80V_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.0285, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0285/3/sqrt(max(mtot,1e-6))}
 .param Rth=120        ; K/W: thermal R, default for 80V class (override per-instance)
 .param Cth=3e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)
@@ -289,7 +289,7 @@ M0 d g_int s PDMOS80V_INT m={mtot}
 .param RDRIFT={max(3018.5*(Leff/L_REF-1)/mtot, 1e-6)}
 .param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
 .param Cth=5e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 Rdrift d dd {RDRIFT}
@@ -320,7 +320,7 @@ M0 dd g_int s NDMOS200V_INT m={mtot}
 .param RDRIFT={max(9302.1*(Leff/L_REF-1)/mtot, 1e-6)}
 .param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
 .param Cth=5e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 Rdrift d dd {RDRIFT}
@@ -344,7 +344,7 @@ M0 dd g_int s PDMOS200V_INT m={mtot}
 .param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.024/3/sqrt(max(mtot,1e-6))}
 .param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
 .param Cth=1e-06     ; J/K: thermal capacitance
-Vshift g g_int DC {-DVTH_MM}
+Vshift g g_int DC {DVTH_MM}
 Rgmin  g g_int 1e9   ; gmin shunt: breaks the singular matrix when MM_ON=0 (DVTH_MM=0V) for cascoded LDMOS
 Rcond  g_int s 1e6   ; gives g_int a DC path to determined s -- fixes multi-instance floating-mirror singularity (HANDOFF_dmos200_vshift_multiinstance_REPLY)
 .if (SH_ON==1)

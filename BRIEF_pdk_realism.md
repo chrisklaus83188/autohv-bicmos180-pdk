@@ -34,7 +34,7 @@ W/L** — device size enters only through the multiplier `m`. The wrapper conver
 drawn width into that multiplier:
 
 ```spice
-.subckt NDMOS200V d g s params: W=10u L=8u M=1 MM_SIGMA=0
+.subckt NDMOS200V d g s params: W=10u L=8u M=1 Z_VT=0
 * 200V LDMOS: W free (m=W/W_REF); L = drift length. RESURF window ~5u..16u.
 .param W_REF=10u
 .param L_REF=8u

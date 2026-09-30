@@ -26,7 +26,7 @@
      "Vds": 0.9,
      "gm_id": 6.37
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "L_analog_um": 1.0,
     "L_classic_um": 0.18
    },
@@ -84,7 +84,7 @@
      "Vds": 0.9,
      "gm_id": 5.8
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "L_analog_um": 1.0,
     "L_classic_um": 0.18
    },
@@ -142,7 +142,7 @@
      "Vds": 1.65,
      "gm_id": 5.77
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "L_analog_um": 1.0,
     "L_classic_um": 0.35
    },
@@ -200,7 +200,7 @@
      "Vds": 1.65,
      "gm_id": 5.57
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "L_analog_um": 1.0,
     "L_classic_um": 0.35
    },
@@ -258,7 +258,7 @@
      "Vds": 2.5,
      "gm_id": 5.7
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "L_analog_um": 1.0,
     "L_classic_um": 0.5
    },
@@ -316,7 +316,7 @@
      "Vds": 2.5,
      "gm_id": 5.9
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "L_analog_um": 1.0,
     "L_classic_um": 0.5
    },
@@ -374,7 +374,7 @@
      "Vds": 6.0,
      "gm_id": 5.73
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "L_analog_um": 1.0,
     "L_classic_um": 0.5
    },
@@ -432,7 +432,7 @@
      "Vds": 6.0,
      "gm_id": 6.43
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "L_analog_um": 1.0,
     "L_classic_um": 0.5
    },
@@ -490,7 +490,7 @@
      "gm_id": 5.89,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
    },
    "kind": "vdmos",
@@ -540,7 +540,7 @@
      "gm_id": 6.39,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
    "kind": "vdmos",
    "metric_classic": 0.001327514227055,
@@ -589,7 +589,7 @@
      "gm_id": 5.88,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
    },
    "kind": "vdmos",
@@ -639,7 +639,7 @@
      "gm_id": 6.37,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
    "kind": "vdmos",
    "metric_classic": 0.001204538181393,
@@ -688,7 +688,7 @@
      "gm_id": 5.87,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
    },
    "kind": "vdmos",
@@ -738,7 +738,7 @@
      "gm_id": 6.35,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
    "kind": "vdmos",
    "metric_classic": 0.0007015587373691,
@@ -787,7 +787,7 @@
      "gm_id": 5.85,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
    },
    "kind": "vdmos",
@@ -835,7 +835,7 @@
      "gm_id": 6.33,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
    "kind": "vdmos",
    "metric_classic": 0.0005478007784252,
@@ -884,7 +884,7 @@
      "gm_id": 5.84,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
    },
    "kind": "vdmos",
@@ -932,7 +932,7 @@
      "gm_id": 6.31,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
    "kind": "vdmos",
    "metric_classic": 0.000387800078438,
@@ -979,7 +979,7 @@
      "gm_id": 5.82,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']",
     "note": "W is clamped to the 3 um fab floor in the sizing guide; used as-is"
    },
    "kind": "vdmos",
@@ -1027,7 +1027,7 @@
      "gm_id": 6.28,
      "current_A": 1e-05
     },
-    "source": "docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
+    "source": "derived:docs/sizing-guide.json mos.<dev>.mirror_points['1e-05']"
    },
    "kind": "vdmos",
    "metric_classic": 0.0002771373838186,
@@ -1460,7 +1460,8 @@
    },
    "g_analog": {},
    "excluded": {
-    "CJ_DIO_PN": "junction capacitance has no lever on a DC forward current"
+    "CJ_DIO_PN": "junction capacitance has no lever on a DC forward current",
+    "BV_DIO_PN": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
    },
    "z_fast": {
     "VF_DIO_PN": 2.999987363108166,
@@ -1484,7 +1485,8 @@
    },
    "g_analog": {},
    "excluded": {
-    "CJ_DIO_FAST": "junction capacitance has no lever on a DC forward current"
+    "CJ_DIO_FAST": "junction capacitance has no lever on a DC forward current",
+    "BV_DIO_FAST": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
    },
    "z_fast": {
     "VF_DIO_FAST": 2.9999943832876275,
@@ -1508,7 +1510,8 @@
    },
    "g_analog": {},
    "excluded": {
-    "CJ_DIO_SCH": "junction capacitance has no lever on a DC forward current"
+    "CJ_DIO_SCH": "junction capacitance has no lever on a DC forward current",
+    "BV_DIO_SCH": "breakdown has no lever on drain current at the bench bias (the device is biased far below its rating)"
    },
    "z_fast": {
     "VF_DIO_SCH": 2.9999982218458716,
@@ -1517,74 +1520,80 @@
    "mahalanobis": 3.0
   },
   "DZ_5V6": {
-   "predicted_3sigma_swing": 0.267806452006194,
-   "metric_3sigma_swing": 0.267806452006194,
+   "predicted_3sigma_swing": 0.05028302185777815,
+   "metric_3sigma_swing": 0.05028302185777815,
    "bench": {
     "AREA": 1.0,
-    "Vf": 0.5687144815921783
+    "Iz": 0.0001,
+    "Iz_source": "declared 100 uA (ruling Q5/B)"
    },
-   "kind": "diode",
-   "metric_classic": 9.999930198368e-05,
+   "kind": "zener",
+   "metric_classic": 5.541182924653,
    "metric_analog": null,
    "g_classic": {
-    "VF_DZ_5V6": 0.08926797129050179,
-    "RS_DZ_5V6": -0.00038865169342816586
+    "RS_DZ_5V6": 2.0989446424257707e-06,
+    "BV_DZ_5V6": 0.016761007154502905
    },
    "g_analog": {},
    "excluded": {
+    "VF_DZ_5V6": "reverse-breakdown bench: the forward saturation current has no lever on V_z",
     "CJ_DZ_5V6": "junction capacitance has no lever on a DC forward current"
    },
    "z_fast": {
-    "VF_DZ_5V6": 2.9999715675107566,
-    "RS_DZ_5V6": -0.013061168671069177
+    "RS_DZ_5V6": 0.0003756835027787776,
+    "BV_DZ_5V6": 2.999999976476984
    },
    "mahalanobis": 3.0
   },
   "DZ_12V": {
-   "predicted_3sigma_swing": 0.26044561739743916,
-   "metric_3sigma_swing": 0.26044561739743916,
+   "predicted_3sigma_swing": 0.049727296571630955,
+   "metric_3sigma_swing": 0.049727296571630955,
    "bench": {
     "AREA": 1.0,
-    "Vf": 0.6047705233097076
+    "Iz": 0.0001,
+    "Iz_source": "declared 100 uA (ruling Q5/B)"
    },
-   "kind": "diode",
-   "metric_classic": 0.0001000006329005,
+   "kind": "zener",
+   "metric_classic": 11.99009888985,
    "metric_analog": null,
    "g_classic": {
-    "VF_DZ_12V": 0.08681361862469483,
-    "RS_DZ_12V": -0.0005249564116915906
+    "RS_DZ_12V": 1.3472502977673884e-06,
+    "BV_DZ_12V": 0.01657576546912587
    },
    "g_analog": {},
    "excluded": {
+    "VF_DZ_12V": "reverse-breakdown bench: the forward saturation current has no lever on V_z",
     "CJ_DZ_12V": "junction capacitance has no lever on a DC forward current"
    },
    "z_fast": {
-    "VF_DZ_12V": 2.999945153348301,
-    "RS_DZ_12V": -0.01814047689662053
+    "RS_DZ_12V": 0.00024383494611335575,
+    "BV_DZ_12V": 2.9999999900907532
    },
    "mahalanobis": 3.0
   },
   "DZ_24V": {
-   "predicted_3sigma_swing": 0.2511876399189766,
-   "metric_3sigma_swing": 0.2511876399189766,
+   "predicted_3sigma_swing": 0.04965202349729119,
+   "metric_3sigma_swing": 0.04965202349729119,
    "bench": {
     "AREA": 1.0,
-    "Vf": 0.6485234916210174
+    "Iz": 0.0001,
+    "Iz_source": "declared 100 uA (ruling Q5/B)"
    },
-   "kind": "diode",
-   "metric_classic": 9.999818501372e-05,
+   "kind": "zener",
+   "metric_classic": 24.01655032385,
    "metric_analog": null,
    "g_classic": {
-    "VF_DZ_24V": 0.08372621330498209,
-    "RS_DZ_24V": -0.0007087781774295365
+    "RS_DZ_24V": 9.41647697372261e-07,
+    "BV_DZ_24V": 0.016550674472309623
    },
    "g_analog": {},
    "excluded": {
+    "VF_DZ_24V": "reverse-breakdown bench: the forward saturation current has no lever on V_z",
     "CJ_DZ_24V": "junction capacitance has no lever on a DC forward current"
    },
    "z_fast": {
-    "VF_DZ_24V": 2.9998925105865095,
-    "RS_DZ_24V": -0.025395372156541814
+    "RS_DZ_24V": 0.00017068446922032695,
+    "BV_DZ_24V": 2.9999999951444685
    },
    "mahalanobis": 3.0
   }

@@ -1408,7 +1408,13 @@
         "NPN_LV",
         "NPN_HV",
         "PNP_LAT",
-        "PNP_HV"
+        "PNP_HV",
+        "DZ_5V6",
+        "DZ_12V",
+        "DZ_24V",
+        "DIO_PN",
+        "DIO_FAST",
+        "DIO_SCH"
       ],
       "applies_to": [
         {
@@ -1427,7 +1433,13 @@
             "PDMOS120V",
             "NDMOS200V",
             "PDMOS200V",
-            "DNMOS20V"
+            "DNMOS20V",
+            "DZ_5V6",
+            "DZ_12V",
+            "DZ_24V",
+            "DIO_PN",
+            "DIO_FAST",
+            "DIO_SCH"
           ],
           "note": "These cards carry a bv parameter directly. Membership derived from the cards, not hand-listed: an earlier hand-written list omitted DNMOS20V."
         },
@@ -1449,7 +1461,8 @@
           "note": "BJT cards carry no bv parameter; breakdown lives in the wrapper as .param BVCBO feeding the Bavl avalanche source. Rewritten as {TT*exp(sigma*Z_BV_<bjt>)} in autohv_bicmos180_case.lib (ruling AD1)."
         }
       ],
-      "bjt_note": "BV_<bjt> carries the -10 % FF-SS breakdown ladder through the wrapper's Bavl avalanche source only. Like the VDMOS BV_*, it has no lever at the bench bias and is excluded from every measured direction, contributing 0 to each corner vector."
+      "bjt_note": "BV_<bjt> carries the -10 % FF-SS breakdown ladder through the wrapper's Bavl avalanche source only. Like the VDMOS BV_*, it has no lever at the bench bias and is excluded from every measured direction, contributing 0 to each corner vector.",
+      "zener_note": "ruling Q5/B. BV_DZ_* at 5 % 3-sigma lognormal, declared. The three Zeners join the diode set in presets 11/12 as hi/lo on V_z -- note 'lo' for a Zener means LOWER breakdown. DIO_PN/FAST/SCH also carry BV_*, but it is excluded from their directions for the same reason the VDMOS BV_* are: at a forward-conduction bench an off-state limit has no lever. For a Zener breakdown IS the operating point, which is why it needs its own bench."
     },
     "JS_MOS": {
       "origin": "source/drain junction formation",
@@ -2045,25 +2058,121 @@
       ],
       "source": "reference-class:model-form",
       "error_bar": "+-50%",
-      "note": "Ruling F1: grounded on the reference process's model-form Pelgrom coefficient (1.1-1.55 %.um), which is consistent with today's 1.06. The spec-table column is NOT used; see the discrepancy note in docs/stat-model.md."
+      "note": "Ruling F1: grounded on the reference process's model-form Pelgrom coefficient (1.1-1.55 %.um), which is consistent with today's 1.06. The spec-table column is NOT used; see the discrepancy note in docs/stat-model.md.",
+      "A_RSH": {
+        "per_type": {
+          "RPOLY_HI": 0.8488,
+          "RPOLY_LO": 0.8488,
+          "RNWELL": 2.2624,
+          "RNPLUS": 1.4144,
+          "RPPLUS": 1.4144
+        },
+        "units": "%.um",
+        "variance_share_at_reference": 0.64,
+        "distribution": "normal",
+        "source": "declared",
+        "error_bar": "+-50%",
+        "derivation": "ruling Q2. The four terms are constrained only by (a) combined sigma equals the lumped value at the W=L=10 um reference and (b) end+head <= 20 % of the variance there -- four unknowns, one equation and one bound. The shares 64/16/10/10 are CHOSEN, not measured: sheet-dominant as poly requires, with end+head at the 20 % ceiling so the NS mechanism is large enough to test rather than numerically irrelevant."
+      },
+      "A_W": {
+        "per_type": {
+          "RPOLY_HI": 0.4244,
+          "RPOLY_LO": 0.4244,
+          "RNWELL": 1.1312,
+          "RNPLUS": 0.7072,
+          "RPPLUS": 0.7072
+        },
+        "units": "%.um",
+        "variance_share_at_reference": 0.16,
+        "distribution": "normal",
+        "source": "declared",
+        "error_bar": "+-50%",
+        "derivation": "ruling Q2. The four terms are constrained only by (a) combined sigma equals the lumped value at the W=L=10 um reference and (b) end+head <= 20 % of the variance there -- four unknowns, one equation and one bound. The shares 64/16/10/10 are CHOSEN, not measured: sheet-dominant as poly requires, with end+head at the 20 % ceiling so the NS mechanism is large enough to test rather than numerically irrelevant."
+      },
+      "A_LEND": {
+        "per_type": {
+          "RPOLY_HI": 0.33551766,
+          "RPOLY_LO": 0.33551766,
+          "RNWELL": 0.89429212,
+          "RNPLUS": 0.55909069,
+          "RPPLUS": 0.55909069
+        },
+        "units": "%.um",
+        "variance_share_at_reference": 0.1,
+        "distribution": "normal",
+        "source": "declared",
+        "error_bar": "+-50%",
+        "derivation": "ruling Q2. The four terms are constrained only by (a) combined sigma equals the lumped value at the W=L=10 um reference and (b) end+head <= 20 % of the variance there -- four unknowns, one equation and one bound. The shares 64/16/10/10 are CHOSEN, not measured: sheet-dominant as poly requires, with end+head at the 20 % ceiling so the NS mechanism is large enough to test rather than numerically irrelevant."
+      },
+      "SIG_HEAD": {
+        "per_type": {
+          "RPOLY_HI": 0.33551766,
+          "RPOLY_LO": 0.33551766,
+          "RNWELL": 0.89429212,
+          "RNPLUS": 0.55909069,
+          "RPPLUS": 0.55909069
+        },
+        "units": "%.um",
+        "variance_share_at_reference": 0.1,
+        "distribution": "normal",
+        "source": "declared",
+        "error_bar": "+-50%",
+        "derivation": "ruling Q2. The four terms are constrained only by (a) combined sigma equals the lumped value at the W=L=10 um reference and (b) end+head <= 20 % of the variance there -- four unknowns, one equation and one bound. The shares 64/16/10/10 are CHOSEN, not measured: sheet-dominant as poly requires, with end+head at the 20 % ceiling so the NS mechanism is large enough to test rather than numerically irrelevant."
+      },
+      "closed_form": "sigma_R_rel = sqrt( (A_RSH^2 + A_W^2 + NS*(A_LEND^2 + SIG_HEAD^2)) / (W*L) ) / sqrt(M), with W,L in um and L the TOTAL length. The sheet and width terms are area-law and so NS-independent (total area is unchanged by segmenting); end and head grow as sqrt(NS) because each segment contributes its own, which is the ruled behaviour."
     },
     "_CAPACITORS": {
       "A_C": {
-        "CMIM_STD": 0.53,
-        "CMIM_HI": 0.53,
-        "CMOM": 1.061,
-        "CFRINGE": 1.061,
+        "per_type": {
+          "CMIM_STD": 0.47404641,
+          "CMIM_HI": 0.47404641,
+          "CMOM": 0.75024029,
+          "CFRINGE": 0.75024029
+        },
         "units": "%.um",
-        "source": "carried-over",
-        "error_bar": "+-100%",
-        "note": "the reference process is silent on MIM matching."
-      },
-      "A_CPER": {
-        "value": null,
-        "units": "%.um^0.5",
         "source": "declared",
         "error_bar": "+-100%",
-        "note": "New perimeter term; value set by the Q-C constraint, which holds total C at each type's golden geometry of 100x100 um."
+        "was_lumped": {
+          "CMIM_STD": 0.53,
+          "CMIM_HI": 0.53,
+          "CMOM": 1.061,
+          "CFRINGE": 1.061,
+          "units": "%.um",
+          "source": "carried-over",
+          "error_bar": "+-100%",
+          "note": "the reference process is silent on MIM matching."
+        },
+        "derivation": "ruling Q3. Area share of the mismatch variance at the W=L=10 um reference: 80 % for the MIM pair, 50 % for CMOM/CFRINGE -- lateral-field capacitors are perimeter structures whose matching is dominated by edge definition. Combined sigma is unchanged at the reference."
+      },
+      "A_CPER": {
+        "per_type": {
+          "CMIM_STD": 0.14990664,
+          "CMIM_HI": 0.14990664,
+          "CMOM": 0.47449362,
+          "CFRINGE": 0.47449362
+        },
+        "units": "%.um^0.5",
+        "variance_share_at_reference": {
+          "CMIM_STD": 0.2,
+          "CMIM_HI": 0.2,
+          "CMOM": 0.5,
+          "CFRINGE": 0.5
+        },
+        "source": "declared",
+        "error_bar": "+-100%",
+        "derivation": "ruling Q3. sigma^2 = A_C^2/A + A_CPER^2/P; the perimeter share is 20 % for MIM and 50 % for the fringe pair, and A_CPER follows from holding the combined sigma at the reference geometry."
+      },
+      "nominal_perimeter_share_at_golden": {
+        "share": {
+          "CMIM_STD": 0.02,
+          "CMIM_HI": 0.02,
+          "CMOM": 0.3,
+          "CFRINGE": 0.3
+        },
+        "golden_geometry_um": "100 x 100",
+        "source": "declared",
+        "error_bar": "+-100%",
+        "derivation": "ruling Q3 / Q-C. Fraction of TOTAL C carried by the perimeter term at the 100x100 um golden geometry: 2 % for MIM (a plate capacitor with a small fringe) and 30 % for CMOM/CFRINGE (whose 'area' density is mostly interdigitated edge). Total C is unchanged at the golden geometry, so the area density absorbs the remainder."
       }
     },
     "_BJT": {
@@ -2086,7 +2195,16 @@
         "source": "declared",
         "error_bar": "+-100%"
       },
-      "area_convention": "sigma = A / sqrt(AREA * 100 * M) um^2; AREA is a multiple of the declared 100 um^2 cell, so AREA=0.04 is 4 um^2 (ruling Q-E)"
+      "area_convention": "sigma = A / sqrt(AREA * 100 * M) um^2; AREA is a multiple of the declared 100 um^2 cell, so AREA=0.04 is 4 um^2 (ruling Q-E)",
+      "A_IS": {
+        "units": "%.um",
+        "form": "A_IS = A_VBE / (n * V_T), n read per card via inc_parse",
+        "A_VBE_mV_um": 1.0,
+        "V_T_27C": 0.025852,
+        "source": "autohv-derived (from A_VBE, Finding A physics)",
+        "error_bar": "+-50%",
+        "derivation": "ruling Q4. Derived, not declared: the junction-mismatch family keeps ONE story. A_VBE is a voltage quote of a saturation-current variable, so the current-mismatch coefficient is that voltage divided by n*V_T -- exactly the Finding A conversion, with the card's own emission coefficient."
+      }
     },
     "_DIODES": {
       "A_IS": {
@@ -2691,34 +2809,34 @@
       "excluded": 1
     },
     "DIO_PN": {
-      "realised": 3,
+      "realised": 4,
       "terms": 2,
-      "excluded": 1
+      "excluded": 2
     },
     "DIO_FAST": {
-      "realised": 3,
+      "realised": 4,
       "terms": 2,
-      "excluded": 1
+      "excluded": 2
     },
     "DIO_SCH": {
-      "realised": 3,
+      "realised": 4,
       "terms": 2,
-      "excluded": 1
+      "excluded": 2
     },
     "DZ_5V6": {
-      "realised": 3,
+      "realised": 4,
       "terms": 2,
-      "excluded": 1
+      "excluded": 2
     },
     "DZ_12V": {
-      "realised": 3,
+      "realised": 4,
       "terms": 2,
-      "excluded": 1
+      "excluded": 2
     },
     "DZ_24V": {
-      "realised": 3,
+      "realised": 4,
       "terms": 2,
-      "excluded": 1
+      "excluded": 2
     }
   }
 }

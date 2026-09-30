@@ -69,7 +69,13 @@
 .param Z_BF_NPN_LV={((case==-1) ? ((c_NPN_LV==1)*3 + (c_NPN_LV==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_BF_PNP_HV={((case==-1) ? ((c_PNP_HV==1)*3 + (c_PNP_HV==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_BF_PNP_LAT={((case==-1) ? ((c_PNP_LAT==1)*3 + (c_PNP_LAT==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_BV_DIO_FAST={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_BV_DIO_PN={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_BV_DIO_SCH={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_BV_DNMOS20V={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_BV_DZ_12V={((case==-1) ? ((c_DZ_12V==1)*3 + (c_DZ_12V==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_BV_DZ_24V={((case==-1) ? ((c_DZ_24V==1)*3 + (c_DZ_24V==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_BV_DZ_5V6={((case==-1) ? ((c_DZ_5V6==1)*3 + (c_DZ_5V6==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_BV_NDMOS120V={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_BV_NDMOS200V={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_BV_NDMOS20V={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
@@ -133,9 +139,9 @@
 .param Z_RS_DIO_FAST={((case==-1) ? ((c_DIO_FAST==1)*-3 + (c_DIO_FAST==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RS_DIO_PN={((case==-1) ? ((c_DIO_PN==1)*-3 + (c_DIO_PN==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RS_DIO_SCH={((case==-1) ? ((c_DIO_SCH==1)*-3 + (c_DIO_SCH==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RS_DZ_12V={((case==-1) ? ((c_DZ_12V==1)*-3 + (c_DZ_12V==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RS_DZ_24V={((case==-1) ? ((c_DZ_24V==1)*-3 + (c_DZ_24V==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_RS_DZ_5V6={((case==-1) ? ((c_DZ_5V6==1)*-3 + (c_DZ_5V6==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RS_DZ_12V={((case==-1) ? ((c_DZ_12V==1)*3 + (c_DZ_12V==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RS_DZ_24V={((case==-1) ? ((c_DZ_24V==1)*3 + (c_DZ_24V==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RS_DZ_5V6={((case==-1) ? ((c_DZ_5V6==1)*3 + (c_DZ_5V6==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_TOX_12={((case==-1) ? ((c_NMOS12V==1)*-3 + (c_NMOS12V==2)*3 + (c_PMOS12V==1)*-3 + (c_PMOS12V==2)*3) : ((case==1)*-6 + (case==2)*6 + (case==5)*-6 + (case==6)*6 + (case==13)*6 + (case==14)*-6 + (case==15)*6 + (case==16)*-6)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_TOX_18={((case==-1) ? ((c_NMOS1V8==1)*-3 + (c_NMOS1V8==2)*3 + (c_PMOS1V8==1)*-3 + (c_PMOS1V8==2)*3) : ((case==1)*-6 + (case==2)*6 + (case==5)*-6 + (case==6)*6 + (case==13)*6 + (case==14)*-6 + (case==15)*6 + (case==16)*-6)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_TOX_33={((case==-1) ? ((c_NMOS3V3==1)*-3 + (c_NMOS3V3==2)*3 + (c_PMOS3V3==1)*-3 + (c_PMOS3V3==2)*3) : ((case==1)*-6 + (case==2)*6 + (case==5)*-6 + (case==6)*6 + (case==13)*6 + (case==14)*-6 + (case==15)*6 + (case==16)*-6)) + PROC_ON*AGAUSS(0,1,1)}
@@ -163,9 +169,9 @@
 .param Z_VF_DIO_FAST={((case==-1) ? ((c_DIO_FAST==1)*3 + (c_DIO_FAST==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_VF_DIO_PN={((case==-1) ? ((c_DIO_PN==1)*3 + (c_DIO_PN==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_VF_DIO_SCH={((case==-1) ? ((c_DIO_SCH==1)*3 + (c_DIO_SCH==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VF_DZ_12V={((case==-1) ? ((c_DZ_12V==1)*3 + (c_DZ_12V==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VF_DZ_24V={((case==-1) ? ((c_DZ_24V==1)*3 + (c_DZ_24V==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
-.param Z_VF_DZ_5V6={((case==-1) ? ((c_DZ_5V6==1)*3 + (c_DZ_5V6==2)*-3) : ((case==11)*-3 + (case==12)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VF_DZ_12V={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VF_DZ_24V={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_VF_DZ_5V6={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_VTH_DNMOS20V={((case==-1) ? ((c_DNMOS20V==1)*-3 + (c_DNMOS20V==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_VTH_NDMOS120V={((case==-1) ? ((c_NDMOS120V==1)*-3 + (c_NDMOS120V==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_VTH_NDMOS200V={((case==-1) ? ((c_NDMOS200V==1)*-3 + (c_NDMOS200V==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*-3 + (case==4)*3 + (case==5)*3 + (case==6)*-3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
@@ -1346,7 +1352,7 @@
 + is={2e-14*exp(0.0983621*Z_VF_DIO_PN)}
 + n=1.05
 + rs={1.2*exp(0.0667*Z_RS_DIO_PN)}
-+ bv=100
++ bv={100*exp(0.0167*Z_BV_DIO_PN)}
 + ibv=1e-05
 + nbv=1.2
 + cjo={2.8e-13*exp(0.01*Z_CJ_DIO_PN)}
@@ -1361,7 +1367,7 @@
 + is={8e-13*exp(0.100272*Z_VF_DIO_FAST)}
 + n=1.03
 + rs={0.8*exp(0.0667*Z_RS_DIO_FAST)}
-+ bv=80
++ bv={80*exp(0.0167*Z_BV_DIO_FAST)}
 + ibv=2e-05
 + nbv=1.2
 + cjo={1.8e-13*exp(0.01*Z_CJ_DIO_FAST)}
@@ -1376,7 +1382,7 @@
 + is={3e-08*exp(0.0956298*Z_VF_DIO_SCH)}
 + n=1.08
 + rs={0.45*exp(0.0667*Z_RS_DIO_SCH)}
-+ bv=45
++ bv={45*exp(0.0167*Z_BV_DIO_SCH)}
 + ibv=5e-05
 + nbv=1.1
 + cjo={1.4e-13*exp(0.01*Z_CJ_DIO_SCH)}
@@ -1394,7 +1400,7 @@
 + is={5e-13*exp(0.0898089*Z_VF_DZ_5V6)}
 + n=1.15
 + rs={1.8*exp(0.0667*Z_RS_DZ_5V6)}
-+ bv=5.6
++ bv={5.6*exp(0.0167*Z_BV_DZ_5V6)}
 + ibv=0.00025
 + nbv=2.5
 + cjo={1.2e-10*exp(0.01*Z_CJ_DZ_5V6)}
@@ -1409,7 +1415,7 @@
 + is={2.5e-13*exp(0.0875256*Z_VF_DZ_12V)}
 + n=1.18
 + rs={2.5*exp(0.0667*Z_RS_DZ_12V)}
-+ bv=12
++ bv={12*exp(0.0167*Z_BV_DZ_12V)}
 + ibv=0.00012
 + nbv=2.2
 + cjo={5.5e-11*exp(0.01*Z_CJ_DZ_12V)}
@@ -1424,7 +1430,7 @@
 + is={1.2e-13*exp(0.0846559*Z_VF_DZ_24V)}
 + n=1.22
 + rs={3.5*exp(0.0667*Z_RS_DZ_24V)}
-+ bv=24
++ bv={24*exp(0.0167*Z_BV_DZ_24V)}
 + ibv=8e-05
 + nbv=2
 + cjo={2.8e-11*exp(0.01*Z_CJ_DZ_24V)}
