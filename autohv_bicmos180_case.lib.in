@@ -435,67 +435,42 @@ B_tc c ci V={20e-3*(temper-27)}
 D0 a ci DZ_24V_INT area={AREAEFF}
 .ends DZ_24V
 
-.subckt RPOLY_HI p n params: L=0.5u W=0.5u MM_SIGMA=0
-* High-sheet poly: matching coeff worse than low-sheet poly (US Pat 12,464,737:
-* resistance and matching coeff are inversely related). VCR small (~200 ppm/V,
-* Allen poly ~100 ppm/V; higher-sheet/lower-doping poly trends a bit higher).
-.param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.03182/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.03182/3/sqrt(AUM2+1e-12)}
-.param RSH0=1200
-.param VCR1=200e-6
-.param VCR2=10e-6
-R0   p mid RPOLY_HI_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
-.ends RPOLY_HI
+* <<<RES_WRAPPER RPOLY_HI L=0.5u W=0.5u>>>
+*KEEP High-sheet poly: matching coeff worse than low-sheet poly (US Pat 12,464,737:
+*KEEP resistance and matching coeff are inversely related). VCR small (~200 ppm/V,
+*KEEP Allen poly ~100 ppm/V; higher-sheet/lower-doping poly trends a bit higher).
+*KEEPLINE .param VCR1=200e-6
+*KEEPLINE .param VCR2=10e-6
+*KEEPLINE BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 
-.subckt RPOLY_LO p n params: L=0.5u W=0.5u MM_SIGMA=0
-* Low-sheet (heavily-doped) poly: best matching of the poly pair, very linear
-* (VCR ~50 ppm/V), but high tc1 (heavily-doped poly trends metallic/positive).
-.param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.03182/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.03182/3/sqrt(AUM2+1e-12)}
-.param RSH0=25
-.param VCR1=50e-6
-.param VCR2=2e-6
-R0   p mid RPOLY_LO_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
-.ends RPOLY_LO
+* <<<RES_WRAPPER RPOLY_LO L=0.5u W=0.5u>>>
+*KEEP Low-sheet (heavily-doped) poly: best matching of the poly pair, very linear
+*KEEP (VCR ~50 ppm/V), but high tc1 (heavily-doped poly trends metallic/positive).
+*KEEPLINE .param VCR1=50e-6
+*KEEPLINE .param VCR2=2e-6
+*KEEPLINE BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 
-.subckt RNWELL p n params: L=0.5u W=0.5u MM_SIGMA=0
-* N-well resistor: worst matching of the set and a LARGE voltage coefficient
-* from junction-depletion modulation (~8000 ppm/V, Allen CMOS Analog Circuit
-* Design). R rises with terminal-voltage magnitude. Avoid on signal nodes.
-.param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.08485/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.08485/3/sqrt(AUM2+1e-12)}
-.param RSH0=1800
-.param VCR1=8000e-6
-.param VCR2=400e-6
-R0   p mid RNWELL_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
-.ends RNWELL
+* <<<RES_WRAPPER RNWELL L=0.5u W=0.5u>>>
+*KEEP N-well resistor: worst matching of the set and a LARGE voltage coefficient
+*KEEP from junction-depletion modulation (~8000 ppm/V, Allen CMOS Analog Circuit
+*KEEP Design). R rises with terminal-voltage magnitude. Avoid on signal nodes.
+*KEEPLINE .param VCR1=8000e-6
+*KEEPLINE .param VCR2=400e-6
+*KEEPLINE BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 
-.subckt RNPLUS p n params: L=0.5u W=0.5u MM_SIGMA=0
-* N+ diffusion resistor: moderate matching, moderate VCR from junction
-* depletion into the surrounding well/substrate (~1500 ppm/V).
-.param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.05303/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.05303/3/sqrt(AUM2+1e-12)}
-.param RSH0=32
-.param VCR1=1500e-6
-.param VCR2=80e-6
-R0   p mid RNPLUS_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
-.ends RNPLUS
+* <<<RES_WRAPPER RNPLUS L=0.5u W=0.5u>>>
+*KEEP N+ diffusion resistor: moderate matching, moderate VCR from junction
+*KEEP depletion into the surrounding well/substrate (~1500 ppm/V).
+*KEEPLINE .param VCR1=1500e-6
+*KEEPLINE .param VCR2=80e-6
+*KEEPLINE BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 
-.subckt RPPLUS p n params: L=0.5u W=0.5u MM_SIGMA=0
-* P+ diffusion resistor: moderate matching, moderate VCR (~1800 ppm/V),
-* slightly higher than N+ (opposite junction-side depletion behaviour).
-.param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.05303/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.05303/3/sqrt(AUM2+1e-12)}
-.param RSH0=58
-.param VCR1=1800e-6
-.param VCR2=90e-6
-R0   p mid RPPLUS_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
-.ends RPPLUS
+* <<<RES_WRAPPER RPPLUS L=0.5u W=0.5u>>>
+*KEEP P+ diffusion resistor: moderate matching, moderate VCR (~1800 ppm/V),
+*KEEP slightly higher than N+ (opposite junction-side depletion behaviour).
+*KEEPLINE .param VCR1=1800e-6
+*KEEPLINE .param VCR2=90e-6
+*KEEPLINE BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 
 .subckt CMIM_STD p n params: L=2u W=2u MM_SIGMA=0
 * Standard MIM: best matching of the four (MIM >> MOM matching; measured

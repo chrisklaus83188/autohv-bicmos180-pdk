@@ -155,9 +155,9 @@ C {autohv/NMOS5V0.sym} 1440 -540 0 0 {name=M9 W=10u L=4u M=1 Z_VT=0 Z_W=0 Z_L=0 
 C {autohv/NMOS5V0.sym} 1145 -540 0 1 {name=M10 W=10u L=4u M=1 Z_VT=0 Z_W=0 Z_L=0 spiceprefix=X}
 C {ipin.sym} 1125 -680 1 0 {name=p3 lab=IBIAS}
 C {autohv/PMOS5V0.sym} 2210 -1140 3 0 {name=M11 W=10u L=1u M=1 Z_VT=0 Z_W=0 Z_L=0 spiceprefix=X}
-C {autohv/RPOLY_HI.sym} 2270 -1110 0 0 {name=R1 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
-C {autohv/RPOLY_HI.sym} 2550 -1360 0 0 {name=R2 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
-C {autohv/RPOLY_HI.sym} 2210 -885 0 0 {name=R3 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
+C {autohv/RPOLY_HI.sym} 2270 -1110 0 0 {name=R1 L=100u W=10u Z_R=0 spiceprefix=X}
+C {autohv/RPOLY_HI.sym} 2550 -1360 0 0 {name=R2 L=100u W=10u Z_R=0 spiceprefix=X}
+C {autohv/RPOLY_HI.sym} 2210 -885 0 0 {name=R3 L=100u W=10u Z_R=0 spiceprefix=X}
 C {autohv/NDMOS200V.sym} 2190 -980 0 0 {name=M12 W=10u L=1u M=1 Z_VT=0 spiceprefix=X}
 C {iopin.sym} 1070 -1480 2 0 {name=p5 lab=CP}
 C {iopin.sym} 1070 -1260 2 0 {name=p4 lab=VIN}

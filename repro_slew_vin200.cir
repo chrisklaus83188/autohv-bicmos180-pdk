@@ -7,11 +7,11 @@
 
 .subckt HSL high low vbiasc out vss wp=30u lp=5u wc=60u lc=5u wrs=1u lrs=90u wro=1u lro=43u msr=0 msm=0 msc=0 msrs=0 msro=0
 X_M_ref refg refg high PDMOS200V W={wp} L={lp} Z_VT={msr}
-X_R_ref refg low RPOLY_HI W={wrs} L={lrs} MM_SIGMA={msrs}
+X_R_ref refg low RPOLY_HI W={wrs} L={lrs} Z_R={msrs}
 X_M_mir mird refg high PDMOS200V W={wp} L={lp} Z_VT={msm}
 R_pull mird vss 10Meg
 X_M_casc mird vbiasc out NDMOS200V W={wc} L={lc} Z_VT={msc}
-X_R_out out vss RPOLY_HI W={wro} L={lro} MM_SIGMA={msro}
+X_R_out out vss RPOLY_HI W={wro} L={lro} Z_R={msro}
 .ends HSL
 
 .subckt CMP vinp vinn vout vdd vss vbn wt=3u lt=2u wi=22u li=2u wl=10u ll=2u mst=0 md1=0 md2=0 ml1=0 ml2=0
@@ -27,7 +27,7 @@ X_ipB vout  voutn vdd vdd PMOS5V0 W=20u L=0.5u
 .ends CMP
 
 X_bias vbn vbn 0 0 NMOS5V0 W=10u L=1u Z_VT=0.0000 Z_W=0.0000 Z_L=0.0000
-X_R_bias vcc vbn RPOLY_HI W=0.5u L=270u MM_SIGMA=0.0000
+X_R_bias vcc vbn RPOLY_HI W=0.5u L=270u Z_R=0.0000
 
 X_hsl_cp vcp vin vcasc v_cp_lo 0 HSL wp=30u lp=5u wc=12u lc=5u wrs=1u lrs=90u wro=1.5u lro=75u msr=0.0000 msm=0.0000 msc=0.0000 msrs=0.0000 msro=0.0000
 X_hsl_43 vref43 vin vcasc v_43_lo 0 HSL wp=30u lp=5u wc=12u lc=5u wrs=1u lrs=90u wro=1.5u lro=75u msr=0.0000 msm=0.0000 msc=0.0000 msrs=0.0000 msro=0.0000

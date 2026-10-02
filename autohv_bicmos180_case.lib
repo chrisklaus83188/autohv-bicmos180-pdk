@@ -595,66 +595,126 @@ B_tc c ci V={20e-3*(temper-27)}
 D0 a ci DZ_24V_INT area={AREAEFF}
 .ends DZ_24V
 
-.subckt RPOLY_HI p n params: L=0.5u W=0.5u MM_SIGMA=0
+.subckt RPOLY_HI p n params: L=0.5u W=0.5u NS=1 M=1 Z_R=0
 * High-sheet poly: matching coeff worse than low-sheet poly (US Pat 12,464,737:
 * resistance and matching coeff are inversely related). VCR small (~200 ppm/V,
 * Allen poly ~100 ppm/V; higher-sheet/lower-doping poly trends a bit higher).
-.param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.01061/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.01061/sqrt(AUM2+1e-12)}
-.param RSH0=1200
+* Phase 3d. Coefficients are 1 sigma in foundry units from local_mismatch._RESISTORS.
+.param AUM2={(L/1u)*(W/1u)*M}
+* sheet and width are area-law; end and head grow as sqrt(NS), one per segment.
+.param SR={sqrt(7.20461e-05 + 1.80115e-05 + NS*(1.12572e-05 + 1.12572e-05))}
+.param RMM={1 + MM_ON*AGAUSS(0, SR/sqrt(AUM2+1e-12), 1) + Z_R*SR/sqrt(AUM2+1e-12)}
+.param WEFF={W + 3.33e-09*Z_DL_POLY}
+.param RHEAD={7.5*exp(0.1*Z_RHEAD_RPOLY_HI)}
 .param VCR1=200e-6
 .param VCR2=10e-6
-R0   p mid RPOLY_HI_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
+* Perturb and parallel the EFFECTIVE geometry, then convert back, so the model's own
+* L-short / W-narrow corrections land where they belong (see edge_corrections).
+.param SHORT=1e-07
+.param NARROW=1.2e-07
+.param LDRAWN={(L-2*SHORT)*RMM + 2*SHORT}
+.param WDRAWN={M*(WEFF-2*NARROW) + 2*NARROW}
+R0   p mid RPOLY_HI_INT L={LDRAWN} W={WDRAWN}
+BVCR mid nh V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
+* two contact heads per segment, so the head term is the only NS-dependent nominal.
+RHD  nh n {NS*2*RHEAD*RMM/M}
 .ends RPOLY_HI
 
-.subckt RPOLY_LO p n params: L=0.5u W=0.5u MM_SIGMA=0
+.subckt RPOLY_LO p n params: L=0.5u W=0.5u NS=1 M=1 Z_R=0
 * Low-sheet (heavily-doped) poly: best matching of the poly pair, very linear
 * (VCR ~50 ppm/V), but high tc1 (heavily-doped poly trends metallic/positive).
-.param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.01061/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.01061/sqrt(AUM2+1e-12)}
-.param RSH0=25
+* Phase 3d. Coefficients are 1 sigma in foundry units from local_mismatch._RESISTORS.
+.param AUM2={(L/1u)*(W/1u)*M}
+* sheet and width are area-law; end and head grow as sqrt(NS), one per segment.
+.param SR={sqrt(7.20461e-05 + 1.80115e-05 + NS*(1.12572e-05 + 1.12572e-05))}
+.param RMM={1 + MM_ON*AGAUSS(0, SR/sqrt(AUM2+1e-12), 1) + Z_R*SR/sqrt(AUM2+1e-12)}
+.param WEFF={W + 3.33e-09*Z_DL_POLY}
+.param RHEAD={7.5*exp(0.1*Z_RHEAD_RPOLY_LO)}
 .param VCR1=50e-6
 .param VCR2=2e-6
-R0   p mid RPOLY_LO_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
+* Perturb and parallel the EFFECTIVE geometry, then convert back, so the model's own
+* L-short / W-narrow corrections land where they belong (see edge_corrections).
+.param SHORT=1.2e-07
+.param NARROW=1.5e-07
+.param LDRAWN={(L-2*SHORT)*RMM + 2*SHORT}
+.param WDRAWN={M*(WEFF-2*NARROW) + 2*NARROW}
+R0   p mid RPOLY_LO_INT L={LDRAWN} W={WDRAWN}
+BVCR mid nh V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
+* two contact heads per segment, so the head term is the only NS-dependent nominal.
+RHD  nh n {NS*2*RHEAD*RMM/M}
 .ends RPOLY_LO
 
-.subckt RNWELL p n params: L=0.5u W=0.5u MM_SIGMA=0
+.subckt RNWELL p n params: L=0.5u W=0.5u NS=1 M=1 Z_R=0
 * N-well resistor: worst matching of the set and a LARGE voltage coefficient
 * from junction-depletion modulation (~8000 ppm/V, Allen CMOS Analog Circuit
 * Design). R rises with terminal-voltage magnitude. Avoid on signal nodes.
-.param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.02828/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.02828/sqrt(AUM2+1e-12)}
-.param RSH0=1800
+* Phase 3d. Coefficients are 1 sigma in foundry units from local_mismatch._RESISTORS.
+.param AUM2={(L/1u)*(W/1u)*M}
+* sheet and width are area-law; end and head grow as sqrt(NS), one per segment.
+.param SR={sqrt(0.000511845 + 0.000127961 + NS*(7.99758e-05 + 7.99758e-05))}
+.param RMM={1 + MM_ON*AGAUSS(0, SR/sqrt(AUM2+1e-12), 1) + Z_R*SR/sqrt(AUM2+1e-12)}
+.param WEFF={W}
+.param RHEAD={7.5*exp(0.1*Z_RHEAD_RNWELL)}
 .param VCR1=8000e-6
 .param VCR2=400e-6
-R0   p mid RNWELL_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
+* Perturb and parallel the EFFECTIVE geometry, then convert back, so the model's own
+* L-short / W-narrow corrections land where they belong (see edge_corrections).
+.param SHORT=1.5e-07
+.param NARROW=1.8e-07
+.param LDRAWN={(L-2*SHORT)*RMM + 2*SHORT}
+.param WDRAWN={M*(WEFF-2*NARROW) + 2*NARROW}
+R0   p mid RNWELL_INT L={LDRAWN} W={WDRAWN}
+BVCR mid nh V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
+* two contact heads per segment, so the head term is the only NS-dependent nominal.
+RHD  nh n {NS*2*RHEAD*RMM/M}
 .ends RNWELL
 
-.subckt RNPLUS p n params: L=0.5u W=0.5u MM_SIGMA=0
+.subckt RNPLUS p n params: L=0.5u W=0.5u NS=1 M=1 Z_R=0
 * N+ diffusion resistor: moderate matching, moderate VCR from junction
 * depletion into the surrounding well/substrate (~1500 ppm/V).
-.param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.01768/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.01768/sqrt(AUM2+1e-12)}
-.param RSH0=32
+* Phase 3d. Coefficients are 1 sigma in foundry units from local_mismatch._RESISTORS.
+.param AUM2={(L/1u)*(W/1u)*M}
+* sheet and width are area-law; end and head grow as sqrt(NS), one per segment.
+.param SR={sqrt(0.000200053 + 5.00132e-05 + NS*(3.12582e-05 + 3.12582e-05))}
+.param RMM={1 + MM_ON*AGAUSS(0, SR/sqrt(AUM2+1e-12), 1) + Z_R*SR/sqrt(AUM2+1e-12)}
+.param WEFF={W}
+.param RHEAD={7.5*exp(0.1*Z_RHEAD_RNPLUS)}
 .param VCR1=1500e-6
 .param VCR2=80e-6
-R0   p mid RNPLUS_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
+* Perturb and parallel the EFFECTIVE geometry, then convert back, so the model's own
+* L-short / W-narrow corrections land where they belong (see edge_corrections).
+.param SHORT=1.4e-07
+.param NARROW=1.8e-07
+.param LDRAWN={(L-2*SHORT)*RMM + 2*SHORT}
+.param WDRAWN={M*(WEFF-2*NARROW) + 2*NARROW}
+R0   p mid RNPLUS_INT L={LDRAWN} W={WDRAWN}
+BVCR mid nh V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
+* two contact heads per segment, so the head term is the only NS-dependent nominal.
+RHD  nh n {NS*2*RHEAD*RMM/M}
 .ends RNPLUS
 
-.subckt RPPLUS p n params: L=0.5u W=0.5u MM_SIGMA=0
+.subckt RPPLUS p n params: L=0.5u W=0.5u NS=1 M=1 Z_R=0
 * P+ diffusion resistor: moderate matching, moderate VCR (~1800 ppm/V),
 * slightly higher than N+ (opposite junction-side depletion behaviour).
-.param AUM2={(L/1u)*(W/1u)}
-.param RMM={1+MM_ON*AGAUSS(0, 0.01768/sqrt(AUM2+1e-12), 1) + MM_SIGMA*0.01768/sqrt(AUM2+1e-12)}
-.param RSH0=58
+* Phase 3d. Coefficients are 1 sigma in foundry units from local_mismatch._RESISTORS.
+.param AUM2={(L/1u)*(W/1u)*M}
+* sheet and width are area-law; end and head grow as sqrt(NS), one per segment.
+.param SR={sqrt(0.000200053 + 5.00132e-05 + NS*(3.12582e-05 + 3.12582e-05))}
+.param RMM={1 + MM_ON*AGAUSS(0, SR/sqrt(AUM2+1e-12), 1) + Z_R*SR/sqrt(AUM2+1e-12)}
+.param WEFF={W}
+.param RHEAD={7.5*exp(0.1*Z_RHEAD_RPPLUS)}
 .param VCR1=1800e-6
 .param VCR2=90e-6
-R0   p mid RPPLUS_INT L={L*RMM} W={W}
-BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
+* Perturb and parallel the EFFECTIVE geometry, then convert back, so the model's own
+* L-short / W-narrow corrections land where they belong (see edge_corrections).
+.param SHORT=1.4e-07
+.param NARROW=1.8e-07
+.param LDRAWN={(L-2*SHORT)*RMM + 2*SHORT}
+.param WDRAWN={M*(WEFF-2*NARROW) + 2*NARROW}
+R0   p mid RPPLUS_INT L={LDRAWN} W={WDRAWN}
+BVCR mid nh V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
+* two contact heads per segment, so the head term is the only NS-dependent nominal.
+RHD  nh n {NS*2*RHEAD*RMM/M}
 .ends RPPLUS
 
 .subckt CMIM_STD p n params: L=2u W=2u MM_SIGMA=0

@@ -1185,7 +1185,21 @@
         "RNWELL",
         "RNPLUS",
         "RPPLUS"
-      ]
+      ],
+      "applies_to": [
+        {
+          "target": "resistor_head",
+          "form": "multiplicative",
+          "devices": [
+            "RPOLY_HI",
+            "RPOLY_LO",
+            "RNWELL",
+            "RNPLUS",
+            "RPPLUS"
+          ]
+        }
+      ],
+      "realisation_note": "Phase 3. Realised in the resistor wrapper as a series element NS*2*RHEAD/M: two contact heads per segment, so the head resistance grows with NS while the sheet part does not (series segments of the same total length carry the same sheet resistance). Declared a wrapper target rather than a card parameter because the ngspice R model has no per-contact term."
     },
     "CDEN_MIM": {
       "origin": "MIM nitride thickness",

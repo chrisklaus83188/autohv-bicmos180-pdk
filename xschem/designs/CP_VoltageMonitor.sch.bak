@@ -136,9 +136,9 @@ C {noconn.sym} 2720 -615 2 0 {name=l7}
 C {noconn.sym} 2720 -585 2 0 {name=l8}
 C {noconn.sym} 2720 -555 2 0 {name=l9}
 C {autohv/PMOS5V0.sym} 2214 -1140 3 0 {name=M11 W=10u L=1u M=1 Z_VT=0 Z_W=0 Z_L=0 spiceprefix=X}
-C {autohv/RPOLY_HI.sym} 2274 -1110 0 0 {name=R1 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
-C {autohv/RPOLY_HI.sym} 2550 -1355 0 0 {name=R2 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
-C {autohv/RPOLY_HI.sym} 2214 -900 0 0 {name=R3 L=100u W=10u MM_SIGMA=0 spiceprefix=X}
+C {autohv/RPOLY_HI.sym} 2274 -1110 0 0 {name=R1 L=100u W=10u Z_R=0 spiceprefix=X}
+C {autohv/RPOLY_HI.sym} 2550 -1355 0 0 {name=R2 L=100u W=10u Z_R=0 spiceprefix=X}
+C {autohv/RPOLY_HI.sym} 2214 -900 0 0 {name=R3 L=100u W=10u Z_R=0 spiceprefix=X}
 C {autohv/NDMOS200V.sym} 2199 -985 0 0 {name=M12 W=10u L=8u M=1 Z_VT=0 spiceprefix=X}
 C {iopin.sym} 1135 -1485 2 0 {name=p5 lab=CP}
 C {iopin.sym} 1135 -1255 2 0 {name=p4 lab=VIN}

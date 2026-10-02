@@ -5,31 +5,31 @@ V {}
 S {}
 E {}
 T {resistor_string : 25x RPOLY_HI in series.  Taps: OV = after R5 (~80% of RP-RN), REG = after R13 (~48%), UV = after R20 (~20%).} -130 -135 0 0 0.3 0.3 {layer=4}
-C {autohv/RPOLY_HI.sym} 0 0 0 0 {name=R1 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 80 0 0 {name=R2 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 160 0 0 {name=R3 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 240 0 0 {name=R4 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 320 0 0 {name=R5 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 400 0 0 {name=R6 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 480 0 0 {name=R7 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 560 0 0 {name=R8 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 640 0 0 {name=R9 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 720 0 0 {name=R10 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 800 0 0 {name=R11 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 880 0 0 {name=R12 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 960 0 0 {name=R13 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1040 0 0 {name=R14 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1120 0 0 {name=R15 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1200 0 0 {name=R16 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1280 0 0 {name=R17 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1360 0 0 {name=R18 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1440 0 0 {name=R19 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1520 0 0 {name=R20 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1600 0 0 {name=R21 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1680 0 0 {name=R22 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1760 0 0 {name=R23 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1840 0 0 {name=R24 W=2u L=10u MM_SIGMA=0}
-C {autohv/RPOLY_HI.sym} 0 1920 0 0 {name=R25 W=2u L=10u MM_SIGMA=0}
+C {autohv/RPOLY_HI.sym} 0 0 0 0 {name=R1 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 80 0 0 {name=R2 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 160 0 0 {name=R3 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 240 0 0 {name=R4 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 320 0 0 {name=R5 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 400 0 0 {name=R6 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 480 0 0 {name=R7 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 560 0 0 {name=R8 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 640 0 0 {name=R9 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 720 0 0 {name=R10 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 800 0 0 {name=R11 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 880 0 0 {name=R12 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 960 0 0 {name=R13 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1040 0 0 {name=R14 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1120 0 0 {name=R15 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1200 0 0 {name=R16 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1280 0 0 {name=R17 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1360 0 0 {name=R18 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1440 0 0 {name=R19 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1520 0 0 {name=R20 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1600 0 0 {name=R21 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1680 0 0 {name=R22 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1760 0 0 {name=R23 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1840 0 0 {name=R24 W=2u L=10u Z_R=0}
+C {autohv/RPOLY_HI.sym} 0 1920 0 0 {name=R25 W=2u L=10u Z_R=0}
 N 0 30 0 50 {}
 N 0 110 0 130 {}
 N 0 190 0 210 {}

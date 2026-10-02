@@ -48,6 +48,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from inc_parse import IncParseError, tt_of  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = ROOT / "models" / "stat_model.json"
 TEMPLATE = ROOT / "autohv_bicmos180_case.lib.in"
@@ -191,6 +194,137 @@ def vdmos_lines(dev: str, lm: dict) -> dict[str, str]:
     }
 
 
+INC_TEMPLATE = ROOT / "autohv_bicmos180_case_models.inc.in"
+
+
+def edge_corrections() -> dict:
+    """{card: {narrow, short}} from the MODEL CARD template -- read, never typed.
+
+    The ngspice semiconductor-R model computes its own effective geometry as L-short and
+    W-narrow. Any wrapper arithmetic on L or W must be done on the EFFECTIVE value and
+    converted back, or it lands on the wrong lever:
+
+      * M parallel copies: widening the drawn strip to M*W lets the model subtract `narrow`
+        ONCE where M strips each lose it, overstating width by (M-1)*narrow -- measured as a
+        0.6 % error at M=2.
+      * a relative perturbation on the drawn L scales (L*RMM - short) instead of
+        RMM*(L - short), so the realised sigma is out by L/(L-short) -- about 1 % at
+        L = 10 um, which would have made acceptance B5 miss by that much.
+
+    MEASURED, not assumed: the model applies BOTH corrections on BOTH edges, so the
+    effective geometry is L-2*short and W-2*narrow. An L/W sweep on the bare card
+    gives offsets of 2.031e-07 and 2.433e-07 against card values of 1e-07 and
+    1.2e-07. Using 1x left acceptance B5 about 1 % short, which is how this was
+    caught.
+    """
+    out = {}
+    card = None
+    for line in INC_TEMPLATE.read_text(encoding="utf-8").splitlines():
+        m = re.match(r"\.model\s+(\S+)\s", line, re.I)
+        if m:
+            card = m.group(1)
+            continue
+        q = re.match(r"\+\s*(narrow|short)\s*=\s*(.+?)\s*$", line, re.I)
+        if q and card:
+            try:
+                out.setdefault(card, {})[q.group(1).lower()] = tt_of(q.group(2))
+            except IncParseError as exc:
+                raise SystemExit("gen_wrappers: %s.%s: %s" % (card, q.group(1), exc))
+    return out
+
+
+def res_wrapper(dev: str, l_def: str, w_def: str, keep: list[str], lm: dict,
+                gv: dict) -> list[str]:
+    """NS-segmented resistor with contact heads (ruling Q2, brief 5.3).
+
+    NOMINAL.  R = [ RSH*L/W_eff + NS*2*R_HEAD ] / M
+
+    The sheet part is NS-INDEPENDENT: NS segments of length L/NS in series carry the same
+    sheet resistance as one of length L. What NS buys is contact heads -- two per segment --
+    so the head term grows linearly with NS. M parallel copies divide the whole thing, which
+    the sheet element gets for free by widening to W_eff*M (M strips of width W_eff are one
+    strip of width M*W_eff at the same sheet resistance).
+
+    `rsh` is already statistical on the card, so the global sheet variation arrives through
+    the model and must NOT be re-applied here. The wrapper's old RSH0 param was dead code
+    duplicating that nominal, free to drift from it; it is gone.
+
+    LOCAL SIGMA.  Four terms, from the ruled 64/16/10/10 variance shares:
+
+        sigma_rel = sqrt( A_RSH^2 + A_W^2 + NS*(A_LEND^2 + SIG_HEAD^2) ) / sqrt(W*L*M)
+
+    Sheet and width are area-law and so NS-independent; end and head grow as sqrt(NS) because
+    each segment contributes its own. At the W=L=10 um, NS=1, M=1 reference this reproduces
+    today's lumped sigma exactly, which is acceptance B5.
+
+    RMM scales BOTH the sheet element and the head element, so it perturbs the total
+    resistance rather than only the body -- applying it to L alone would leave the head term
+    unperturbed and make the realised sigma fall short of the model's.
+
+    EDGE BIAS.  Poly resistors take DL_POLY on their WIDTH (applies_to: poly_resistor_W).
+    Sign matches the harness, which perturbs `narrow` at scale=-1.0, and narrow reduces
+    effective width -- so +1 sigma means WIDER by +sigma metres. The diffusion and well types
+    carry no poly edge, so they get no width bias.
+    """
+    ec = edge_corrections().get(dev + "_INT", {})
+    one = {k: lm["_RESISTORS"][k]["per_type"][dev]
+           for k in ("A_RSH", "A_W", "A_LEND", "SIG_HEAD")}
+    # %.um -> relative.um
+    a_rsh, a_w = one["A_RSH"] / 100.0, one["A_W"] / 100.0
+    a_end, a_hd = one["A_LEND"] / 100.0, one["SIG_HEAD"] / 100.0
+    rh = gv["_RHEAD_template"]
+    poly = dev in ("RPOLY_HI", "RPOLY_LO")
+
+    body = [
+        ".subckt %s p n params: L=%s W=%s NS=1 M=1 Z_R=0" % (dev, l_def, w_def),
+    ]
+    # authored type comments, carried through with the marker prefix stripped
+    body += ["* " + c[len("*KEEP"):].lstrip() for c in keep if c.startswith("*KEEP ")]
+    body += [
+        "* Phase 3d. Coefficients are 1 sigma in foundry units from "
+        "local_mismatch._RESISTORS.",
+        ".param AUM2={(L/1u)*(W/1u)*M}",
+        "* sheet and width are area-law; end and head grow as sqrt(NS), one per segment.",
+        ".param SR={sqrt(%s + %s + NS*(%s + %s))}"
+        % (fmt(a_rsh ** 2), fmt(a_w ** 2), fmt(a_end ** 2), fmt(a_hd ** 2)),
+        ".param RMM={1 + MM_ON*AGAUSS(0, SR/sqrt(AUM2%s), 1) + Z_R*SR/sqrt(AUM2%s)}"
+        % (GUARD, GUARD),
+    ]
+    if poly:
+        body.append(".param WEFF={W + %s*Z_DL_POLY}" % fmt(gv["DL_POLY"]["sigma"]))
+    else:
+        body.append(".param WEFF={W}")
+    body += [
+        ".param RHEAD={%s*exp(%s*Z_RHEAD_%s)}" % (fmt(rh["nominal"]), fmt(rh["sigma"]), dev),
+    ]
+    # the authored VCR coefficients, verbatim
+    body += [k[len("*KEEPLINE "):] for k in keep
+             if k.startswith("*KEEPLINE ") and ".param VCR" in k]
+    body += [
+        "* Perturb and parallel the EFFECTIVE geometry, then convert back, so the"
+        " model's own",
+        "* L-short / W-narrow corrections land where they belong (see edge_corrections).",
+        ".param SHORT=%s" % fmt(ec.get("short", 0.0)),
+        ".param NARROW=%s" % fmt(ec.get("narrow", 0.0)),
+        ".param LDRAWN={(L-2*SHORT)*RMM + 2*SHORT}",
+        ".param WDRAWN={M*(WEFF-2*NARROW) + 2*NARROW}",
+        "R0   p mid %s_INT L={LDRAWN} W={WDRAWN}" % dev,
+    ]
+    # The authored BVCR source ends on `n`. The contact heads go in series AFTER it, so its
+    # far node is re-pointed to the internal `nh`: that keeps V(p,mid) spanning exactly the
+    # resistor body, as it did before, while the heads sit at the far end of the chain.
+    for k in keep:
+        if k.startswith("*KEEPLINE ") and k[len("*KEEPLINE "):].startswith("BVCR"):
+            tok = k[len("*KEEPLINE "):].split(None, 3)
+            body.append(" ".join([tok[0], tok[1], "nh", tok[3]]))
+    body += [
+        "* two contact heads per segment, so the head term is the only NS-dependent nominal.",
+        "RHD  nh n {NS*2*RHEAD*RMM/M}",
+        ".ends %s" % dev,
+    ]
+    return body
+
+
 def res_lines(dev: str, lm: dict) -> dict[str, str]:
     one = lm["_RESISTORS"]["lumped_today_1sigma_pct_um"][dev] / 100.0
     return {
@@ -235,11 +369,24 @@ def generate() -> str:
                     if a.get("target") == "wrapper_BVCBO")["tt_V"])
 
     out, dev, repl = [], None, {}
+    pending_res, keep = None, []
     for line in TEMPLATE.read_text(encoding="utf-8").splitlines():
         mk = re.match(r"\* <<<MOS_WRAPPER (\S+) W=(\S+) L=(\S+)>>>", line)
         if mk:
             out.extend(mos_wrapper(mk.group(1), mk.group(2), mk.group(3), lm, gv))
             continue
+        rk = re.match(r"\* <<<RES_WRAPPER (\S+) L=(\S+) W=(\S+)>>>", line)
+        if rk:
+            pending_res = (rk.group(1), rk.group(2), rk.group(3))
+            keep = []
+            continue
+        if pending_res is not None:
+            if line.startswith("*KEEP"):
+                keep.append(line)
+                continue
+            out.extend(res_wrapper(pending_res[0], pending_res[1], pending_res[2],
+                                   keep, lm, gv))
+            pending_res, keep = None, []
         m = re.match(r"\.subckt (\S+) ", line)
         if m:
             dev = m.group(1)

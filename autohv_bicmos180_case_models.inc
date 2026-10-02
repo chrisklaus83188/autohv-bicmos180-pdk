@@ -126,6 +126,11 @@
 .param Z_RDSW_PMOS1V8={((case==-1) ? ((c_PMOS1V8==1)*-3 + (c_PMOS1V8==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RDSW_PMOS3V3={((case==-1) ? ((c_PMOS3V3==1)*-3 + (c_PMOS3V3==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RDSW_PMOS5V0={((case==-1) ? ((c_PMOS5V0==1)*-3 + (c_PMOS5V0==2)*3) : ((case==1)*-3 + (case==2)*3 + (case==3)*3 + (case==4)*-3 + (case==5)*-3 + (case==6)*3 + (case==13)*3 + (case==14)*-3 + (case==15)*3 + (case==16)*-3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RHEAD_RNPLUS={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RHEAD_RNWELL={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RHEAD_RPOLY_HI={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RHEAD_RPOLY_LO={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_RHEAD_RPPLUS={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RPAR_NPN_HV={((case==-1) ? ((c_NPN_HV==1)*-3 + (c_NPN_HV==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RPAR_NPN_LV={((case==-1) ? ((c_NPN_LV==1)*-3 + (c_NPN_LV==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_RPAR_PNP_HV={((case==-1) ? ((c_PNP_HV==1)*-3 + (c_PNP_HV==2)*3) : ((case==11)*3 + (case==12)*-3 + (case==13)*3 + (case==14)*-3)) + PROC_ON*AGAUSS(0,1,1)}

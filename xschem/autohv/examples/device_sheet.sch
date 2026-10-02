@@ -45,11 +45,11 @@ C {autohv/DZ_5V6.sym} 450 1080 0 0 {name=DZ_5V6 AREA=1 MM_SIGMA=0}
 C {autohv/DZ_12V.sym} 600 1080 0 0 {name=DZ_12V AREA=1 MM_SIGMA=0}
 C {autohv/DZ_24V.sym} 750 1080 0 0 {name=DZ_24V AREA=1 MM_SIGMA=0}
 T {Resistors   (p n)  -  L W MM_SIGMA} -10 1200 0 0 0.3 0.3 {layer=8}
-C {autohv/RPOLY_HI.sym} 0 1260 0 0 {name=RPOLY_HI L=100u W=10u MM_SIGMA=0}
-C {autohv/RPOLY_LO.sym} 150 1260 0 0 {name=RPOLY_LO L=100u W=10u MM_SIGMA=0}
-C {autohv/RNWELL.sym} 300 1260 0 0 {name=RNWELL L=100u W=10u MM_SIGMA=0}
-C {autohv/RNPLUS.sym} 450 1260 0 0 {name=RNPLUS L=100u W=10u MM_SIGMA=0}
-C {autohv/RPPLUS.sym} 600 1260 0 0 {name=RPPLUS L=100u W=10u MM_SIGMA=0}
+C {autohv/RPOLY_HI.sym} 0 1260 0 0 {name=RPOLY_HI L=100u W=10u Z_R=0}
+C {autohv/RPOLY_LO.sym} 150 1260 0 0 {name=RPOLY_LO L=100u W=10u Z_R=0}
+C {autohv/RNWELL.sym} 300 1260 0 0 {name=RNWELL L=100u W=10u Z_R=0}
+C {autohv/RNPLUS.sym} 450 1260 0 0 {name=RNPLUS L=100u W=10u Z_R=0}
+C {autohv/RPPLUS.sym} 600 1260 0 0 {name=RPPLUS L=100u W=10u Z_R=0}
 T {Capacitors   (p n)  -  L W MM_SIGMA} -10 1380 0 0 0.3 0.3 {layer=8}
 C {autohv/CMIM_STD.sym} 0 1440 0 0 {name=CMIM_STD L=100u W=100u MM_SIGMA=0}
 C {autohv/CMIM_HI.sym} 150 1440 0 0 {name=CMIM_HI L=100u W=100u MM_SIGMA=0}
