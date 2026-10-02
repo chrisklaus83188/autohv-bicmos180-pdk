@@ -472,62 +472,34 @@ D0 a ci DZ_24V_INT area={AREAEFF}
 *KEEPLINE .param VCR2=90e-6
 *KEEPLINE BVCR mid n V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 
-.subckt CMIM_STD p n params: L=2u W=2u MM_SIGMA=0
-* Standard MIM: best matching of the four (MIM >> MOM matching; measured
-* sigma ~0.1% vs ~0.65% for MOM, Subramanian et al.). Small VCC from the
-* nitride-like dielectric (~30 ppm/V + quadratic term).
-.param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.01591/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.01591/3/sqrt(AUM2+1e-12)}
-.param LS={sqrt(CMM)}
-.param CJ0=0.001
-.param VCC1=30e-6
-.param VCC2=20e-6
-.param C0NOM={CJ0*(L*LS)*(W*LS)}
-C0     p n CMIM_STD_INT L={L*LS} W={W*LS}
-Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
-.ends CMIM_STD
+* <<<CAP_WRAPPER CMIM_STD L=2u W=2u>>>
+*KEEP Standard MIM: best matching of the four (MIM >> MOM matching; measured
+*KEEP sigma ~0.1% vs ~0.65% for MOM, Subramanian et al.). Small VCC from the
+*KEEP nitride-like dielectric (~30 ppm/V + quadratic term).
+*KEEPLINE .param VCC1=30e-6
+*KEEPLINE .param VCC2=20e-6
+*KEEPLINE Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 
-.subckt CMIM_HI p n params: L=2u W=2u MM_SIGMA=0
-* High-density MIM: thinner dielectric -> slightly worse matching than STD and
-* a higher voltage coefficient (~60 ppm/V; higher field accentuates dielectric
-* nonlinearity). Still far better matched than the metal caps.
-.param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.01591/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.01591/3/sqrt(AUM2+1e-12)}
-.param LS={sqrt(CMM)}
-.param CJ0=0.002
-.param VCC1=60e-6
-.param VCC2=40e-6
-.param C0NOM={CJ0*(L*LS)*(W*LS)}
-C0     p n CMIM_HI_INT L={L*LS} W={W*LS}
-Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
-.ends CMIM_HI
+* <<<CAP_WRAPPER CMIM_HI L=2u W=2u>>>
+*KEEP High-density MIM: thinner dielectric -> slightly worse matching than STD and
+*KEEP a higher voltage coefficient (~60 ppm/V; higher field accentuates dielectric
+*KEEP nonlinearity). Still far better matched than the metal caps.
+*KEEPLINE .param VCC1=60e-6
+*KEEPLINE .param VCC2=40e-6
+*KEEPLINE Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 
-.subckt CMOM p n params: L=2u W=2u MM_SIGMA=0
-* Metal-oxide-metal: matches worse than MIM (~0.65% sigma class) but the SiO2
-* dielectric is very linear, so VCC is tiny (~5 ppm/V).
-.param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.03182/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.03182/3/sqrt(AUM2+1e-12)}
-.param LS={sqrt(CMM)}
-.param CJ0=0.00035
-.param VCC1=5e-6
-.param VCC2=2e-6
-.param C0NOM={CJ0*(L*LS)*(W*LS)}
-C0     p n CMOM_INT L={L*LS} W={W*LS}
-Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
-.ends CMOM
+* <<<CAP_WRAPPER CMOM L=2u W=2u>>>
+*KEEP Metal-oxide-metal: matches worse than MIM (~0.65% sigma class) but the SiO2
+*KEEP dielectric is very linear, so VCC is tiny (~5 ppm/V).
+*KEEPLINE .param VCC1=5e-6
+*KEEPLINE .param VCC2=2e-6
+*KEEPLINE Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 
-.subckt CFRINGE p n params: L=2u W=2u MM_SIGMA=0
-* Lateral fringe cap: lowest density and worst matching of the four, but the
-* most linear (oxide dielectric, VCC ~3 ppm/V). C0NOM uses the area term only
-* as a first-order scale for the (very small) VCC increment.
-.param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.03182/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.03182/3/sqrt(AUM2+1e-12)}
-.param LS={sqrt(CMM)}
-.param CJ0=0.00018
-.param VCC1=3e-6
-.param VCC2=1e-6
-.param C0NOM={CJ0*(L*LS)*(W*LS)}
-C0     p n CFRINGE_INT L={L*LS} W={W*LS}
-Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
-.ends CFRINGE
+* <<<CAP_WRAPPER CFRINGE L=2u W=2u>>>
+*KEEP Lateral fringe cap: lowest density and worst matching of the four, but the
+*KEEP most linear (oxide dielectric, VCC ~3 ppm/V). C0NOM uses the area term only
+*KEEP as a first-order scale for the (very small) VCC increment.
+*KEEPLINE .param VCC1=3e-6
+*KEEPLINE .param VCC2=1e-6
+*KEEPLINE Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 

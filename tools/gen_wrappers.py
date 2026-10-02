@@ -233,6 +233,64 @@ def edge_corrections() -> dict:
     return out
 
 
+def cap_wrapper(dev: str, l_def: str, w_def: str, keep: list, lm: dict) -> list:
+    """Capacitor with an area AND a perimeter term (ruling Q3).
+
+    NOMINAL  C = cj*A + cjsw*P, the densities split so total C is unchanged at the
+    100x100 um golden geometry. Away from it C/area now depends on size, which is the
+    point and is acceptance B6.
+
+    SIGMA    sigma^2 = A_C^2/A + A_CPER^2/P, divided by M. The perimeter carries 20 % of
+    the variance for the MIM pair and 50 % for CMOM/CFRINGE, whose matching really is
+    edge-defined.
+
+    ONE SCALE FACTOR FOR BOTH M AND MISMATCH, and it has to be solved rather than guessed.
+    Scaling both dimensions by sqrt(x) multiplies AREA by x but PERIMETER only by sqrt(x),
+    so the old `LS=sqrt(CMM)` trick would have realised only about 0.85x the intended sigma
+    on the 30 %-perimeter types -- and M parallel copies have the same problem, since M
+    copies multiply area and perimeter alike. So solve for the k that makes the TOTAL come
+    out right:
+
+        k^2*(1-f) + k*f = M*CMM,    f = C_perimeter / C_total at the nominal geometry
+
+    which is a quadratic with one positive root, and collapses to k=1 at M=CMM=1. f is
+    computed per instance from the densities and the drawn L, W, so it tracks geometry
+    instead of being pinned at the reference.
+    """
+    ac = lm["_CAPACITORS"]["A_C"]["per_type"][dev] / 100.0          # %.um -> rel.um
+    ap = lm["_CAPACITORS"]["A_CPER"]["per_type"][dev] / 100.0       # %.um^0.5 -> rel.um^0.5
+    sp = lm["_CAPACITORS"]["nominal_split"]["per_type"][dev]
+    cj, cjsw = sp["cj_area_F_per_m2"], sp["cjsw_perimeter_F_per_m"]
+
+    body = [".subckt %s p n params: L=%s W=%s M=1 Z_C=0" % (dev, l_def, w_def)]
+    body += ["* " + c[len("*KEEP"):].lstrip() for c in keep if c.startswith("*KEEP ")]
+    body += [
+        "* Phase 3e. 1-sigma coefficients from local_mismatch._CAPACITORS; densities from",
+        "* its nominal_split, which holds total C at the 100x100 um golden geometry.",
+        ".param AUM2={(L/1u)*(W/1u)}",
+        ".param PUM={2*((L/1u)+(W/1u))}",
+        ".param CSIG={sqrt(%s/(AUM2+1e-12) + %s/(PUM+1e-12))/sqrt(M)}"
+        % (fmt(ac ** 2), fmt(ap ** 2)),
+        ".param CMM={1 + MM_ON*AGAUSS(0, CSIG, 1) + Z_C*CSIG}",
+        ".param CJA=%s" % fmt(cj),
+        ".param CJP=%s" % fmt(cjsw),
+        ".param CARE={CJA*L*W}",
+        ".param CPER={CJP*2*(L+W)}",
+        ".param C0NOM={CARE+CPER}",
+        "* f = perimeter share of C at this geometry; k solves k^2(1-f)+kf = M*CMM.",
+        ".param FPER={CPER/(CARE+CPER)}",
+        ".param TGT={M*CMM}",
+        ".param KS={(-FPER + sqrt(FPER*FPER + 4*(1-FPER)*TGT))/(2*(1-FPER))}",
+    ]
+    body += [k[len("*KEEPLINE "):] for k in keep
+             if k.startswith("*KEEPLINE ") and ".param VCC" in k]
+    body += ["C0     p n %s_INT L={L*KS} W={W*KS}" % dev]
+    body += [k[len("*KEEPLINE "):] for k in keep
+             if k.startswith("*KEEPLINE ") and k[len("*KEEPLINE "):].startswith("Cextra")]
+    body += [".ends %s" % dev]
+    return body
+
+
 def res_wrapper(dev: str, l_def: str, w_def: str, keep: list[str], lm: dict,
                 gv: dict) -> list[str]:
     """NS-segmented resistor with contact heads (ruling Q2, brief 5.3).
@@ -369,12 +427,23 @@ def generate() -> str:
                     if a.get("target") == "wrapper_BVCBO")["tt_V"])
 
     out, dev, repl = [], None, {}
-    pending_res, keep = None, []
+    pending_res, pending_cap, keep = None, None, []
     for line in TEMPLATE.read_text(encoding="utf-8").splitlines():
         mk = re.match(r"\* <<<MOS_WRAPPER (\S+) W=(\S+) L=(\S+)>>>", line)
         if mk:
             out.extend(mos_wrapper(mk.group(1), mk.group(2), mk.group(3), lm, gv))
             continue
+        ck = re.match(r"\* <<<CAP_WRAPPER (\S+) L=(\S+) W=(\S+)>>>", line)
+        if ck:
+            pending_cap = (ck.group(1), ck.group(2), ck.group(3))
+            keep = []
+            continue
+        if pending_cap is not None:
+            if line.startswith("*KEEP"):
+                keep.append(line)
+                continue
+            out.extend(cap_wrapper(pending_cap[0], pending_cap[1], pending_cap[2], keep, lm))
+            pending_cap, keep = None, []
         rk = re.match(r"\* <<<RES_WRAPPER (\S+) L=(\S+) W=(\S+)>>>", line)
         if rk:
             pending_res = (rk.group(1), rk.group(2), rk.group(3))

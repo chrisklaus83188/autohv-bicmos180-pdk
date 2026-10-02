@@ -717,62 +717,102 @@ BVCR mid nh V={ V(p,mid)*(VCR1*sqrt(V(p,n)*V(p,n)+1e-6) + VCR2*V(p,n)*V(p,n)) }
 RHD  nh n {NS*2*RHEAD*RMM/M}
 .ends RPPLUS
 
-.subckt CMIM_STD p n params: L=2u W=2u MM_SIGMA=0
+.subckt CMIM_STD p n params: L=2u W=2u M=1 Z_C=0
 * Standard MIM: best matching of the four (MIM >> MOM matching; measured
 * sigma ~0.1% vs ~0.65% for MOM, Subramanian et al.). Small VCC from the
 * nitride-like dielectric (~30 ppm/V + quadratic term).
+* Phase 3e. 1-sigma coefficients from local_mismatch._CAPACITORS; densities from
+* its nominal_split, which holds total C at the 100x100 um golden geometry.
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.01591/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.01591/3/sqrt(AUM2+1e-12)}
-.param LS={sqrt(CMM)}
-.param CJ0=0.001
+.param PUM={2*((L/1u)+(W/1u))}
+.param CSIG={sqrt(2.2472e-05/(AUM2+1e-12) + 2.2472e-06/(PUM+1e-12))/sqrt(M)}
+.param CMM={1 + MM_ON*AGAUSS(0, CSIG, 1) + Z_C*CSIG}
+.param CJA=0.001
+.param CJP=0
+.param CARE={CJA*L*W}
+.param CPER={CJP*2*(L+W)}
+.param C0NOM={CARE+CPER}
+* f = perimeter share of C at this geometry; k solves k^2(1-f)+kf = M*CMM.
+.param FPER={CPER/(CARE+CPER)}
+.param TGT={M*CMM}
+.param KS={(-FPER + sqrt(FPER*FPER + 4*(1-FPER)*TGT))/(2*(1-FPER))}
 .param VCC1=30e-6
 .param VCC2=20e-6
-.param C0NOM={CJ0*(L*LS)*(W*LS)}
-C0     p n CMIM_STD_INT L={L*LS} W={W*LS}
+C0     p n CMIM_STD_INT L={L*KS} W={W*KS}
 Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 .ends CMIM_STD
 
-.subckt CMIM_HI p n params: L=2u W=2u MM_SIGMA=0
+.subckt CMIM_HI p n params: L=2u W=2u M=1 Z_C=0
 * High-density MIM: thinner dielectric -> slightly worse matching than STD and
 * a higher voltage coefficient (~60 ppm/V; higher field accentuates dielectric
 * nonlinearity). Still far better matched than the metal caps.
+* Phase 3e. 1-sigma coefficients from local_mismatch._CAPACITORS; densities from
+* its nominal_split, which holds total C at the 100x100 um golden geometry.
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.01591/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.01591/3/sqrt(AUM2+1e-12)}
-.param LS={sqrt(CMM)}
-.param CJ0=0.002
+.param PUM={2*((L/1u)+(W/1u))}
+.param CSIG={sqrt(2.2472e-05/(AUM2+1e-12) + 2.2472e-06/(PUM+1e-12))/sqrt(M)}
+.param CMM={1 + MM_ON*AGAUSS(0, CSIG, 1) + Z_C*CSIG}
+.param CJA=0.002
+.param CJP=0
+.param CARE={CJA*L*W}
+.param CPER={CJP*2*(L+W)}
+.param C0NOM={CARE+CPER}
+* f = perimeter share of C at this geometry; k solves k^2(1-f)+kf = M*CMM.
+.param FPER={CPER/(CARE+CPER)}
+.param TGT={M*CMM}
+.param KS={(-FPER + sqrt(FPER*FPER + 4*(1-FPER)*TGT))/(2*(1-FPER))}
 .param VCC1=60e-6
 .param VCC2=40e-6
-.param C0NOM={CJ0*(L*LS)*(W*LS)}
-C0     p n CMIM_HI_INT L={L*LS} W={W*LS}
+C0     p n CMIM_HI_INT L={L*KS} W={W*KS}
 Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 .ends CMIM_HI
 
-.subckt CMOM p n params: L=2u W=2u MM_SIGMA=0
+.subckt CMOM p n params: L=2u W=2u M=1 Z_C=0
 * Metal-oxide-metal: matches worse than MIM (~0.65% sigma class) but the SiO2
 * dielectric is very linear, so VCC is tiny (~5 ppm/V).
+* Phase 3e. 1-sigma coefficients from local_mismatch._CAPACITORS; densities from
+* its nominal_split, which holds total C at the 100x100 um golden geometry.
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.03182/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.03182/3/sqrt(AUM2+1e-12)}
-.param LS={sqrt(CMM)}
-.param CJ0=0.00035
+.param PUM={2*((L/1u)+(W/1u))}
+.param CSIG={sqrt(5.6286e-05/(AUM2+1e-12) + 2.25144e-05/(PUM+1e-12))/sqrt(M)}
+.param CMM={1 + MM_ON*AGAUSS(0, CSIG, 1) + Z_C*CSIG}
+.param CJA=0.00035
+.param CJP=0
+.param CARE={CJA*L*W}
+.param CPER={CJP*2*(L+W)}
+.param C0NOM={CARE+CPER}
+* f = perimeter share of C at this geometry; k solves k^2(1-f)+kf = M*CMM.
+.param FPER={CPER/(CARE+CPER)}
+.param TGT={M*CMM}
+.param KS={(-FPER + sqrt(FPER*FPER + 4*(1-FPER)*TGT))/(2*(1-FPER))}
 .param VCC1=5e-6
 .param VCC2=2e-6
-.param C0NOM={CJ0*(L*LS)*(W*LS)}
-C0     p n CMOM_INT L={L*LS} W={W*LS}
+C0     p n CMOM_INT L={L*KS} W={W*KS}
 Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 .ends CMOM
 
-.subckt CFRINGE p n params: L=2u W=2u MM_SIGMA=0
+.subckt CFRINGE p n params: L=2u W=2u M=1 Z_C=0
 * Lateral fringe cap: lowest density and worst matching of the four, but the
 * most linear (oxide dielectric, VCC ~3 ppm/V). C0NOM uses the area term only
 * as a first-order scale for the (very small) VCC increment.
+* Phase 3e. 1-sigma coefficients from local_mismatch._CAPACITORS; densities from
+* its nominal_split, which holds total C at the 100x100 um golden geometry.
 .param AUM2={(L/1u)*(W/1u)}
-.param CMM={1+MM_ON*AGAUSS(0, 0.03182/sqrt(AUM2+1e-12), 3) + MM_SIGMA*0.03182/3/sqrt(AUM2+1e-12)}
-.param LS={sqrt(CMM)}
-.param CJ0=0.00018
+.param PUM={2*((L/1u)+(W/1u))}
+.param CSIG={sqrt(5.6286e-05/(AUM2+1e-12) + 2.25144e-05/(PUM+1e-12))/sqrt(M)}
+.param CMM={1 + MM_ON*AGAUSS(0, CSIG, 1) + Z_C*CSIG}
+.param CJA=0.00018
+.param CJP=0
+.param CARE={CJA*L*W}
+.param CPER={CJP*2*(L+W)}
+.param C0NOM={CARE+CPER}
+* f = perimeter share of C at this geometry; k solves k^2(1-f)+kf = M*CMM.
+.param FPER={CPER/(CARE+CPER)}
+.param TGT={M*CMM}
+.param KS={(-FPER + sqrt(FPER*FPER + 4*(1-FPER)*TGT))/(2*(1-FPER))}
 .param VCC1=3e-6
 .param VCC2=1e-6
-.param C0NOM={CJ0*(L*LS)*(W*LS)}
-C0     p n CFRINGE_INT L={L*LS} W={W*LS}
+C0     p n CFRINGE_INT L={L*KS} W={W*KS}
 Cextra p n C={ C0NOM*(VCC1*sqrt(V(p,n)*V(p,n)+1e-6) + VCC2*V(p,n)*V(p,n)) }
 .ends CFRINGE
 

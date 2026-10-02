@@ -51,10 +51,10 @@ C {autohv/RNWELL.sym} 300 1260 0 0 {name=RNWELL L=100u W=10u Z_R=0}
 C {autohv/RNPLUS.sym} 450 1260 0 0 {name=RNPLUS L=100u W=10u Z_R=0}
 C {autohv/RPPLUS.sym} 600 1260 0 0 {name=RPPLUS L=100u W=10u Z_R=0}
 T {Capacitors   (p n)  -  L W MM_SIGMA} -10 1380 0 0 0.3 0.3 {layer=8}
-C {autohv/CMIM_STD.sym} 0 1440 0 0 {name=CMIM_STD L=100u W=100u MM_SIGMA=0}
-C {autohv/CMIM_HI.sym} 150 1440 0 0 {name=CMIM_HI L=100u W=100u MM_SIGMA=0}
-C {autohv/CMOM.sym} 300 1440 0 0 {name=CMOM L=100u W=100u MM_SIGMA=0}
-C {autohv/CFRINGE.sym} 450 1440 0 0 {name=CFRINGE L=100u W=100u MM_SIGMA=0}
+C {autohv/CMIM_STD.sym} 0 1440 0 0 {name=CMIM_STD L=100u W=100u Z_C=0}
+C {autohv/CMIM_HI.sym} 150 1440 0 0 {name=CMIM_HI L=100u W=100u Z_C=0}
+C {autohv/CMOM.sym} 300 1440 0 0 {name=CMOM L=100u W=100u Z_C=0}
+C {autohv/CFRINGE.sym} 450 1440 0 0 {name=CFRINGE L=100u W=100u Z_C=0}
 T {PIECEWISE-LINEAR SOURCES} -10 1570 0 0 0.4 0.4 {layer=4}
 T {Build a testbench stimulus with a plain vsource/isource whose value is a pwl(...) list, or use the dedicated controlled-PWL symbols.} -10 1594 0 0 0.26 0.26 {}
 C {vsource.sym} 0 1640 0 0 {name=VPWL1 value="pwl(0 0 10n 0 11n 1.8 100n 1.8 101n 0)"}

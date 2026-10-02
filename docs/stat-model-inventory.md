@@ -33,13 +33,13 @@ Regenerate with `python tools/stat_model_inventory.py`; `--check` fails if stale
 |---|---|
 | device wrappers in the library | 40 |
 | library header claims | 40 |
-| statistical card expressions (both notations) | 184 (149 in the models file, 35 in the library) |
+| statistical card expressions (both notations) | 188 (153 in the models file, 35 in the library) |
 |   of those, authored selector form `(tt*_isTT + ... + sf*_isSF)` | 0 — the authored spelling, now only in the .in template |
-|   of those, generated draw form `{TT + sigma*Z_X}` / `{TT*exp(sigma*Z_X)}` | 184 (149 in the models file, 35 in the library) |
+|   of those, generated draw form `{TT + sigma*Z_X}` / `{TT*exp(sigma*Z_X)}` | 188 (153 in the models file, 35 in the library) |
 | of those, geometry parameters (lint/wint/dwc/dlc/xl/xw/narrow/short) — brief R0 prerequisite | 0 — no corner moves geometry; edge bias is declared per D3 |
 | gate-resistance term (`rgate`/`rsh_poly`/`rgeomod`) in wrappers or cards | present |
 | β/mobility mismatch term in any wrapper | NMOS1V8, PMOS1V8, NMOS3V3, PMOS3V3, NMOS5V0, PMOS5V0, NMOS12V, PMOS12V |
-| AGAUSS sigma convention across mismatch terms | 45 terms at n=1, 14 terms at n=3 |
+| AGAUSS sigma convention across mismatch terms | 45 terms at n=1, 10 terms at n=3 |
 
 ## Wrappers that do not fit the R1/R2 pattern
 
@@ -58,13 +58,9 @@ Regenerate with `python tools/stat_model_inventory.py`; `--check` fails if stale
 | NDMOS200V | VDMOS: no per-finger geometry, `NF` has no lever (D2) |
 | PDMOS200V | VDMOS: no per-finger geometry, `NF` has no lever (D2) |
 | DNMOS20V | VDMOS: no per-finger geometry, `NF` has no lever (D2) |
-| CMIM_STD | no `M` instance parameter (R1 adds one) |
-| CMIM_STD | `cjsw=0` and no `narrow`/`short`: per-copy edge bias (R0/R3) has no lever |
-| CMIM_HI | no `M` instance parameter (R1 adds one) |
-| CMIM_HI | `cjsw=0` and no `narrow`/`short`: per-copy edge bias (R0/R3) has no lever |
-| CMOM | no `M` instance parameter (R1 adds one) |
-| CMOM | `cjsw=0` and no `narrow`/`short`: per-copy edge bias (R0/R3) has no lever |
-| CFRINGE | no `M` instance parameter (R1 adds one) |
+| CMIM_STD | perimeter via `cjsw` only; no `narrow`/`short`, and D3 declares DL/DW for MOS and R only |
+| CMIM_HI | perimeter via `cjsw` only; no `narrow`/`short`, and D3 declares DL/DW for MOS and R only |
+| CMOM | perimeter via `cjsw` only; no `narrow`/`short`, and D3 declares DL/DW for MOS and R only |
 | CFRINGE | perimeter via `cjsw` only; no `narrow`/`short`, and D3 declares DL/DW for MOS and R only |
 
 ## Device table
@@ -107,10 +103,10 @@ Regenerate with `python tools/stat_model_inventory.py`; `--check` fails if stale
 | RNWELL | resistor | semiconductor R | Vop_max 5 V | `L=0.5u W=0.5u NS=1 M=1 Z_R=0` | none | `AUM2=(L/1u)*(W/1u)*M` | no | add `M`; add `NS` (R3, D4/D5) | `Z_R` | TT edge bias narrow=1.8e-07, short=1.5e-07; no head resistance |
 | RNPLUS | resistor | semiconductor R | Vop_max 5 V | `L=0.5u W=0.5u NS=1 M=1 Z_R=0` | none | `AUM2=(L/1u)*(W/1u)*M` | no | add `M`; add `NS` (R3, D4/D5) | `Z_R` | TT edge bias narrow=1.8e-07, short=1.4e-07; no head resistance |
 | RPPLUS | resistor | semiconductor R | Vop_max 5 V | `L=0.5u W=0.5u NS=1 M=1 Z_R=0` | none | `AUM2=(L/1u)*(W/1u)*M` | no | add `M`; add `NS` (R3, D4/D5) | `Z_R` | TT edge bias narrow=1.8e-07, short=1.4e-07; no head resistance |
-| CMIM_STD | capacitor | semiconductor C | Vop_max 15 V | `L=2u W=2u MM_SIGMA=0` | C, lumped (applied to area): 1.591 %·µm at 3σ (1σ 0.5303) ÷ √(AUM2+1e-12) | `AUM2=(L/1u)*(W/1u)` | yes | add `M` | `Z_C` | no `M` instance parameter; `cjsw=0`: no perimeter term |
-| CMIM_HI | capacitor | semiconductor C | Vop_max 15 V | `L=2u W=2u MM_SIGMA=0` | C, lumped (applied to area): 1.591 %·µm at 3σ (1σ 0.5303) ÷ √(AUM2+1e-12) | `AUM2=(L/1u)*(W/1u)` | yes | add `M` | `Z_C` | no `M` instance parameter; `cjsw=0`: no perimeter term |
-| CMOM | capacitor | semiconductor C | Vop_max 10 V | `L=2u W=2u MM_SIGMA=0` | C, lumped (applied to area): 3.182 %·µm at 3σ (1σ 1.061) ÷ √(AUM2+1e-12) | `AUM2=(L/1u)*(W/1u)` | yes | add `M` | `Z_C` | no `M` instance parameter; `cjsw=0`: no perimeter term |
-| CFRINGE | capacitor | semiconductor C | Vop_max 10 V | `L=2u W=2u MM_SIGMA=0` | C, lumped (applied to area): 3.182 %·µm at 3σ (1σ 1.061) ÷ √(AUM2+1e-12) | `AUM2=(L/1u)*(W/1u)` | yes | add `M` | `Z_C` | no `M` instance parameter; perimeter term via `cjsw`; card has no `narrow`/`short` |
+| CMIM_STD | capacitor | semiconductor C | Vop_max 15 V | `L=2u W=2u M=1 Z_C=0` | none | `AUM2=(L/1u)*(W/1u)` | no | add `M` | `Z_C` | perimeter term via `cjsw`; card has no `narrow`/`short` |
+| CMIM_HI | capacitor | semiconductor C | Vop_max 15 V | `L=2u W=2u M=1 Z_C=0` | none | `AUM2=(L/1u)*(W/1u)` | no | add `M` | `Z_C` | perimeter term via `cjsw`; card has no `narrow`/`short` |
+| CMOM | capacitor | semiconductor C | Vop_max 10 V | `L=2u W=2u M=1 Z_C=0` | none | `AUM2=(L/1u)*(W/1u)` | no | add `M` | `Z_C` | perimeter term via `cjsw`; card has no `narrow`/`short` |
+| CFRINGE | capacitor | semiconductor C | Vop_max 10 V | `L=2u W=2u M=1 Z_C=0` | none | `AUM2=(L/1u)*(W/1u)` | no | add `M` | `Z_C` | perimeter term via `cjsw`; card has no `narrow`/`short` |
 
 ## Follow-ups outside this program
 

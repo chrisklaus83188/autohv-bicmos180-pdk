@@ -193,6 +193,16 @@ def z_variables(corners: dict, table: dict | None = None,
 # ---------------------------------------------------------------- emission
 
 
+def cap_split(model: dict) -> dict:
+    """{device: (cj, cjsw)} from local_mismatch._CAPACITORS.nominal_split (ruling Q3).
+
+    The card carried cjsw=0: the perimeter term existed and was simply unused. Splitting the
+    density is what makes C/area depend on size, which is acceptance B6.
+    """
+    ns = model["local_mismatch"]["_CAPACITORS"].get("nominal_split", {}).get("per_type", {})
+    return {d: (v["cj_area_F_per_m2"], v["cjsw_perimeter_F_per_m"]) for d, v in ns.items()}
+
+
 def emission_table(src: list[str]) -> dict[str, float]:
     """{card: emission coefficient} -- diode `n`, BJT `nf`, read from the template.
 
@@ -293,6 +303,7 @@ def generate() -> str:
                          "a generator must never read the file it writes")
     src = TEMPLATE.read_text(encoding="utf-8").splitlines()
     emission = emission_table(src)
+    csplit = cap_split(model)
 
     out: list[str] = []
     card: str | None = None
@@ -356,6 +367,27 @@ def generate() -> str:
             out.append(line)
             i += 1
             continue
+
+        # Capacitor densities come from the Q3 split, not from the template's TT: the
+        # area density is REDUCED and the perimeter density turned on, so total C is
+        # unchanged at the golden geometry. cjsw was a plain `cjsw=0` line that this tool
+        # did not own, which is why it is matched before the statistical-line branch.
+        if card and card.endswith("_INT") and card[:-4] in csplit:
+            cp = re.match(r"(\+\s*)(cj|cjsw)(\s*=\s*)(.+?)\s*$", line, re.I)
+            if cp:
+                dev = card[:-4]
+                cj, cjsw = csplit[dev]
+                ent = table.get((dev, "cj"))
+                var, _form, sig = ent if ent else (None, None, None)
+                val = cj if cp.group(2).lower() == "cj" else cjsw
+                if var and sig:
+                    out.append("%s%s%s{%s*exp(%s*Z_%s)}"
+                               % (cp.group(1), cp.group(2), cp.group(3),
+                                  "%.6g" % val, "%.6g" % sig, var))
+                else:
+                    out.append("%s%s%s%.6g" % (cp.group(1), cp.group(2), cp.group(3), val))
+                i += 1
+                continue
 
         # card parameter lines
         p = re.match(r"(\+\s*)(\w+)(\s*=\s*)\{(.+)\}(.*)$", line)
