@@ -2192,38 +2192,42 @@
         "per_type": {
           "CMIM_STD": {
             "cj_area_F_per_m2": 0.001,
-            "cjsw_perimeter_F_per_m": 0.0,
+            "cjsw_perimeter_F_per_m": 6.64064e-11,
             "cj_was": 0.001,
-            "perimeter_share_at_golden": 0.0
+            "perimeter_share_at_golden": 0.0026492,
+            "di": 7.5,
+            "t_eq_m": 6.64064e-08
           },
           "CMIM_HI": {
             "cj_area_F_per_m2": 0.002,
-            "cjsw_perimeter_F_per_m": 0.0,
+            "cjsw_perimeter_F_per_m": 6.64064e-11,
             "cj_was": 0.002,
-            "perimeter_share_at_golden": 0.0
+            "perimeter_share_at_golden": 0.0013264,
+            "di": 7.5,
+            "t_eq_m": 3.32032e-08
           },
           "CMOM": {
             "cj_area_F_per_m2": 0.00035,
-            "cjsw_perimeter_F_per_m": 0.0,
+            "cjsw_perimeter_F_per_m": 6.64064e-11,
             "cj_was": 0.00035,
-            "perimeter_share_at_golden": 0.0
+            "perimeter_share_at_golden": 0.0075321,
+            "di": 7.5,
+            "t_eq_m": 1.89733e-07
           },
           "CFRINGE": {
             "cj_area_F_per_m2": 0.00018,
-            "cjsw_perimeter_F_per_m": 0.0,
+            "cjsw_perimeter_F_per_m": 6.64064e-11,
             "cj_was": 0.00018,
-            "perimeter_share_at_golden": 0.0
+            "perimeter_share_at_golden": 0.014542,
+            "di": 7.5,
+            "t_eq_m": 3.68924e-07
           }
         },
         "golden_geometry": "100 x 100 um: A = 1e-8 m^2, P = 4e-4 m",
         "constraint": "cj_new*A + cjsw*P == cj_was*A at the golden geometry, so total C is unchanged there (ruling Q-C). Away from it C/area is no longer constant, which is the point: a real capacitor's density depends on size.",
-        "source": "declared",
+        "source": "autohv-derived (outline fringe, cj*t_eq)",
         "error_bar": "+-100%",
-        "HELD_PENDING_RULING": "The ruled shares (2 % MIM, 30 % CMOM/CFRINGE) are HELD AT ZERO pending a ruling, and the reason is a scaling-law objection, not a preference. Putting a share of C on the OUTLINE perimeter makes C diverge as 1/size: at 2x2 um it gives 1.98x the old value for CMIM_STD and 15.70x for CMOM. For the fringe types the premise is that their density is 'mostly interdigitated edge', which is true of the physical origin but does not follow to cjsw -- finger count scales with AREA, so that capacitance belongs in cj. For the MIM pair a fringe term genuinely does scale with outline perimeter, but 2 % at the golden geometry implies 0.5 fF/um, where the dielectric thickness (66 nm) and plate density (1 fF/um^2) imply roughly cj*t_ox ~ 0.07 fF/um, i.e. about 0.28 % at golden. See docs/backlog for the proposal.",
-        "proposal": {
-          "CMIM_STD/CMIM_HI": "derive the fringe from the dielectric: cjsw ~ cj*t_ox ~ 0.07 fF/um, about 0.28 % of C at the golden geometry -- grounded, not declared",
-          "CMOM/CFRINGE": "keep the interdigitated edge in cj where it scales correctly, and give cjsw only the small true outline fringe (same derivation)"
-        }
+        "derivation": "Ruling 2026-10-02: the Q3 nominal shares are WITHDRAWN and cjsw is DERIVED. cjsw = cj * t_eq with t_eq = eps_diel/cj, which collapses to cjsw = eps_diel = eps0*di -- the standard outline-fringe estimate, and independent of plate spacing. All four cards declare di = 7.5 and their cj is exactly eps0*di/thick (ratio 1.0000), so the fringe is the same 0.0664 fF/um for every type. cj is UNCHANGED: total C now moves slightly at the golden geometry and that is reported, not held -- an exact hold is what forced the bad share."
       },
       "sigma_split_status": "The sigma split (A_C / A_CPER, 20 % MIM and 50 % fringe of the variance) is ruled, defensible and ACTIVE: edge definition really does dominate CMOM matching, and a 1/sqrt(P) sigma term does not diverge the way a 1/size nominal term does."
     },

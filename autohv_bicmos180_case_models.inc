@@ -1518,7 +1518,7 @@
 
 .model CMIM_STD_INT C (
 + cj={0.001*exp(0.04*Z_CDEN_MIM)}
-+ cjsw={0*exp(0.04*Z_CDEN_MIM)}
++ cjsw={6.64064e-11*exp(0.04*Z_CDEN_MIM)}
 + thick=6.64066e-08
 + di=7.5
 + defw=1e-05
@@ -1530,7 +1530,7 @@
 
 .model CMIM_HI_INT C (
 + cj={0.002*exp(0.04*Z_CDEN_MIM)}
-+ cjsw={0*exp(0.04*Z_CDEN_MIM)}
++ cjsw={6.64064e-11*exp(0.04*Z_CDEN_MIM)}
 + thick=3.32033e-08
 + di=7.5
 + defw=1e-05
@@ -1542,7 +1542,7 @@
 
 .model CMOM_INT C (
 + cj={0.00035*exp(0.0667*Z_CDEN_MOM)}
-+ cjsw={0*exp(0.0667*Z_CDEN_MOM)}
++ cjsw={6.64064e-11*exp(0.0667*Z_CDEN_MOM)}
 + thick=1.89733e-07
 + di=7.5
 + defw=1e-05
@@ -1554,7 +1554,7 @@
 
 .model CFRINGE_INT C (
 + cj={0.00018*exp(0.0667*Z_CDEN_MOM)}
-+ cjsw={0*exp(0.0667*Z_CDEN_MOM)}
++ cjsw={6.64064e-11*exp(0.0667*Z_CDEN_MOM)}
 + thick=3.68926e-07
 + di=7.5
 + defw=5e-06
