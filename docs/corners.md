@@ -56,12 +56,12 @@ Two further consequences follow, and both are correct behaviour rather than defe
 | 6 | LV slow, HV fast | 21 | 65 | **40.02** |
 | 7 | all resistors lo | 5 | 6 | **9.00** |
 | 8 | all resistors hi | 5 | 6 | **9.00** |
-| 9 | all capacitors lo | 4 | 3 | **9.00** |
-| 10 | all capacitors hi | 4 | 3 | **9.00** |
+| 9 | all capacitors lo | 4 | 6 | **10.39** |
+| 10 | all capacitors hi | 4 | 6 | **10.39** |
 | 11 | BJT and diodes lo | 10 | 24 | **14.70** |
 | 12 | BJT and diodes hi | 10 | 24 | **14.70** |
-| 13 | slow everything | 40 | 97 | **47.62** |
-| 14 | fast everything | 40 | 97 | **47.62** |
+| 13 | slow everything | 40 | 100 | **47.91** |
+| 14 | fast everything | 40 | 100 | **47.91** |
 | 15 | SS with resistors lo | 26 | 70 | **44.40** |
 | 16 | FF with resistors hi | 26 | 70 | **44.40** |
 

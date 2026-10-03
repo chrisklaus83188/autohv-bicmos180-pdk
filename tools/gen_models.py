@@ -377,9 +377,13 @@ def generate() -> str:
             if cp:
                 dev = card[:-4]
                 cj, cjsw = csplit[dev]
-                ent = table.get((dev, "cj"))
+                # cj follows the AREA density variable (CDEN_*), cjsw its own perimeter
+                # variable (CPER_*): the area density is set by dielectric thickness, the
+                # fringe by edge definition, and those are different process steps.
+                is_cj = cp.group(2).lower() == "cj"
+                ent = table.get((dev, "cj" if is_cj else "cjsw"))
                 var, _form, sig = ent if ent else (None, None, None)
-                val = cj if cp.group(2).lower() == "cj" else cjsw
+                val = cj if is_cj else cjsw
                 if var and sig:
                     out.append("%s%s%s{%s*exp(%s*Z_%s)}"
                                % (cp.group(1), cp.group(2), cp.group(3),

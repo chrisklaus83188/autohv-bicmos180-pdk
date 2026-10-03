@@ -101,6 +101,9 @@
 .param Z_CJ_DZ_24V={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_CJ_DZ_5V6={((case==-1) ? (0) : (0)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_CPER_CFRINGE={((case==-1) ? ((c_CFRINGE==1)*3 + (c_CFRINGE==2)*-3) : ((case==9)*-3 + (case==10)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_CPER_CMIM_HI={((case==-1) ? ((c_CMIM_HI==1)*3 + (c_CMIM_HI==2)*-3) : ((case==9)*-3 + (case==10)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_CPER_CMIM_STD={((case==-1) ? ((c_CMIM_STD==1)*3 + (c_CMIM_STD==2)*-3) : ((case==9)*-3 + (case==10)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
+.param Z_CPER_CMOM={((case==-1) ? ((c_CMOM==1)*3 + (c_CMOM==2)*-3) : ((case==9)*-3 + (case==10)*3 + (case==13)*-3 + (case==14)*3)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_DL_POLY={((case==-1) ? ((c_NMOS12V==1)*-3 + (c_NMOS12V==2)*3 + (c_NMOS1V8==1)*-3 + (c_NMOS1V8==2)*3 + (c_NMOS3V3==1)*-3 + (c_NMOS3V3==2)*3 + (c_NMOS5V0==1)*-3 + (c_NMOS5V0==2)*3 + (c_PMOS12V==1)*-3 + (c_PMOS12V==2)*3 + (c_PMOS1V8==1)*-3 + (c_PMOS1V8==2)*3 + (c_PMOS3V3==1)*-3 + (c_PMOS3V3==2)*3 + (c_PMOS5V0==1)*-3 + (c_PMOS5V0==2)*3 + (c_RPOLY_HI==1)*-3 + (c_RPOLY_HI==2)*3 + (c_RPOLY_LO==1)*-3 + (c_RPOLY_LO==2)*3) : ((case==1)*-24 + (case==2)*24 + (case==5)*-24 + (case==6)*24 + (case==7)*6 + (case==8)*-6 + (case==13)*30 + (case==14)*-30 + (case==15)*30 + (case==16)*-30)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_DW_ACT_HV={((case==-1) ? ((c_NMOS12V==1)*3 + (c_NMOS12V==2)*-3 + (c_PMOS12V==1)*3 + (c_PMOS12V==2)*-3) : ((case==1)*6 + (case==2)*-6 + (case==5)*6 + (case==6)*-6 + (case==13)*-6 + (case==14)*6 + (case==15)*-6 + (case==16)*6)) + PROC_ON*AGAUSS(0,1,1)}
 .param Z_DW_ACT_LV={((case==-1) ? ((c_NMOS1V8==1)*3 + (c_NMOS1V8==2)*-3 + (c_NMOS3V3==1)*3 + (c_NMOS3V3==2)*-3 + (c_NMOS5V0==1)*3 + (c_NMOS5V0==2)*-3 + (c_PMOS1V8==1)*3 + (c_PMOS1V8==2)*-3 + (c_PMOS3V3==1)*3 + (c_PMOS3V3==2)*-3 + (c_PMOS5V0==1)*3 + (c_PMOS5V0==2)*-3) : ((case==1)*18 + (case==2)*-18 + (case==5)*18 + (case==6)*-18 + (case==13)*-18 + (case==14)*18 + (case==15)*-18 + (case==16)*18)) + PROC_ON*AGAUSS(0,1,1)}
@@ -1518,7 +1521,7 @@
 
 .model CMIM_STD_INT C (
 + cj={0.001*exp(0.04*Z_CDEN_MIM)}
-+ cjsw={6.64064e-11*exp(0.04*Z_CDEN_MIM)}
++ cjsw={6.64064e-11*exp(0.0833*Z_CPER_CMIM_STD)}
 + thick=6.64066e-08
 + di=7.5
 + defw=1e-05
@@ -1530,7 +1533,7 @@
 
 .model CMIM_HI_INT C (
 + cj={0.002*exp(0.04*Z_CDEN_MIM)}
-+ cjsw={6.64064e-11*exp(0.04*Z_CDEN_MIM)}
++ cjsw={6.64064e-11*exp(0.0833*Z_CPER_CMIM_HI)}
 + thick=3.32033e-08
 + di=7.5
 + defw=1e-05
@@ -1542,7 +1545,7 @@
 
 .model CMOM_INT C (
 + cj={0.00035*exp(0.0667*Z_CDEN_MOM)}
-+ cjsw={6.64064e-11*exp(0.0667*Z_CDEN_MOM)}
++ cjsw={6.64064e-11*exp(0.0833*Z_CPER_CMOM)}
 + thick=1.89733e-07
 + di=7.5
 + defw=1e-05
@@ -1554,7 +1557,7 @@
 
 .model CFRINGE_INT C (
 + cj={0.00018*exp(0.0667*Z_CDEN_MOM)}
-+ cjsw={6.64064e-11*exp(0.0667*Z_CDEN_MOM)}
++ cjsw={6.64064e-11*exp(0.0833*Z_CPER_CFRINGE)}
 + thick=3.68926e-07
 + di=7.5
 + defw=5e-06

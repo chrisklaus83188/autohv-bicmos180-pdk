@@ -713,9 +713,12 @@
    "z": {
     "CDEN_MIM": -6.0,
     "CDEN_MOM": -6.0,
-    "CPER_CFRINGE": -3.0
+    "CPER_CFRINGE": -3.0,
+    "CPER_CMIM_HI": -3.0,
+    "CPER_CMIM_STD": -3.0,
+    "CPER_CMOM": -3.0
    },
-   "mahalanobis": 9.0,
+   "mahalanobis": 10.3923,
    "shared_variable_conflicts": {},
    "missing_groups": []
   },
@@ -730,9 +733,12 @@
    "z": {
     "CDEN_MIM": 6.0,
     "CDEN_MOM": 6.0,
-    "CPER_CFRINGE": 3.0
+    "CPER_CFRINGE": 3.0,
+    "CPER_CMIM_HI": 3.0,
+    "CPER_CMIM_STD": 3.0,
+    "CPER_CMOM": 3.0
    },
-   "mahalanobis": 9.0,
+   "mahalanobis": 10.3923,
    "shared_variable_conflicts": {},
    "missing_groups": []
   },
@@ -879,6 +885,9 @@
     "CDEN_MIM": -6.0,
     "CDEN_MOM": -6.0,
     "CPER_CFRINGE": -3.0,
+    "CPER_CMIM_HI": -3.0,
+    "CPER_CMIM_STD": -3.0,
+    "CPER_CMOM": -3.0,
     "DL_POLY": 30.0,
     "DW_ACT_HV": -6.0,
     "DW_ACT_LV": -18.0,
@@ -967,7 +976,7 @@
     "VTH_PMOS3V3": -3.0,
     "VTH_PMOS5V0": -3.0
    },
-   "mahalanobis": 47.6235,
+   "mahalanobis": 47.9062,
    "shared_variable_conflicts": {},
    "missing_groups": []
   },
@@ -1026,6 +1035,9 @@
     "CDEN_MIM": 6.0,
     "CDEN_MOM": 6.0,
     "CPER_CFRINGE": 3.0,
+    "CPER_CMIM_HI": 3.0,
+    "CPER_CMIM_STD": 3.0,
+    "CPER_CMOM": 3.0,
     "DL_POLY": -30.0,
     "DW_ACT_HV": 6.0,
     "DW_ACT_LV": 18.0,
@@ -1114,7 +1126,7 @@
     "VTH_PMOS3V3": 3.0,
     "VTH_PMOS5V0": 3.0
    },
-   "mahalanobis": 47.6235,
+   "mahalanobis": 47.9062,
    "shared_variable_conflicts": {},
    "missing_groups": []
   },
@@ -2264,17 +2276,17 @@
   "CMIM_STD": {
    "kind": "capacitor",
    "z_corner": {
-    "CDEN_MIM": 3.0
+    "CDEN_MIM": 3.0,
+    "CPER_CMIM_STD": 3.0
    },
-   "mahalanobis_corner": 3.0,
+   "mahalanobis_corner": 4.2426,
    "z_direction": {
-    "CDEN_MIM": 3.0
+    "CDEN_MIM": 2.999956,
+    "CPER_CMIM_STD": 0.016274
    },
    "mahalanobis_direction": 3.0,
-   "terms": 1,
-   "excluded": {
-    "CPER_CMIM_STD": "cjsw is 0 on this card, so there is no perimeter lever"
-   },
+   "terms": 2,
+   "excluded": {},
    "bench": {
     "side_um": 100.0,
     "freq": 1000000.0
@@ -2283,17 +2295,17 @@
   "CMIM_HI": {
    "kind": "capacitor",
    "z_corner": {
-    "CDEN_MIM": 3.0
+    "CDEN_MIM": 3.0,
+    "CPER_CMIM_HI": 3.0
    },
-   "mahalanobis_corner": 3.0,
+   "mahalanobis_corner": 4.2426,
    "z_direction": {
-    "CDEN_MIM": 3.0
+    "CDEN_MIM": 2.999989,
+    "CPER_CMIM_HI": 0.008137
    },
    "mahalanobis_direction": 3.0,
-   "terms": 1,
-   "excluded": {
-    "CPER_CMIM_HI": "cjsw is 0 on this card, so there is no perimeter lever"
-   },
+   "terms": 2,
+   "excluded": {},
    "bench": {
     "side_um": 100.0,
     "freq": 1000000.0
@@ -2302,17 +2314,17 @@
   "CMOM": {
    "kind": "capacitor",
    "z_corner": {
-    "CDEN_MOM": 3.0
+    "CDEN_MOM": 3.0,
+    "CPER_CMOM": 3.0
    },
-   "mahalanobis_corner": 3.0,
+   "mahalanobis_corner": 4.2426,
    "z_direction": {
-    "CDEN_MOM": 3.0
+    "CDEN_MOM": 2.999867,
+    "CPER_CMOM": 0.028241
    },
    "mahalanobis_direction": 3.0,
-   "terms": 1,
-   "excluded": {
-    "CPER_CMOM": "cjsw is 0 on this card, so there is no perimeter lever"
-   },
+   "terms": 2,
+   "excluded": {},
    "bench": {
     "side_um": 100.0,
     "freq": 1000000.0
@@ -2326,8 +2338,8 @@
    },
    "mahalanobis_corner": 4.2426,
    "z_direction": {
-    "CDEN_MOM": 2.999929,
-    "CPER_CFRINGE": 0.020674
+    "CDEN_MOM": 2.999498,
+    "CPER_CFRINGE": 0.054906
    },
    "mahalanobis_direction": 3.0,
    "terms": 2,

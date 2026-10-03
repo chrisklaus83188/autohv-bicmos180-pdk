@@ -1102,68 +1102,68 @@
    "mahalanobis": 3.0
   },
   "RPOLY_HI": {
-   "predicted_3sigma_swing": 0.1940416779546565,
-   "metric_3sigma_swing": 0.1940416779546565,
+   "predicted_3sigma_swing": 0.19377995904958456,
+   "metric_3sigma_swing": 0.19377995904958456,
    "bench": {
     "W_um": 2.0,
     "L_um": 16.5,
     "V": 0.1
    },
    "kind": "resistor",
-   "metric_classic": 11113.859758840714,
+   "metric_classic": 11128.859758840981,
    "metric_analog": null,
    "g_classic": {
-    "DL_POLY": -0.0037841089711676545,
-    "RSH_RPOLY_HI": 0.06456977058199875
+    "DL_POLY": -0.003779008595643951,
+    "RSH_RPOLY_HI": 0.06448268016862713
    },
    "g_analog": {},
    "excluded": {
     "RHEAD_RPOLY_HI": "contact-head resistance has no wrapper term yet (Phase 3)"
    },
    "z_fast": {
-    "DL_POLY": -0.17551374065352754,
-    "RSH_RPOLY_HI": 2.9948614203067567
+    "DL_POLY": -0.17551390519229482,
+    "RSH_RPOLY_HI": 2.9948614106639644
    },
    "mahalanobis": 3.0
   },
   "RPOLY_LO": {
-   "predicted_3sigma_swing": 0.1468415953971775,
-   "metric_3sigma_swing": 0.1468415953971775,
+   "predicted_3sigma_swing": 0.14607767265782015,
+   "metric_3sigma_swing": 0.14607767265782015,
    "bench": {
     "W_um": 2.0,
     "L_um": 16.5,
     "V": 0.1
    },
    "kind": "resistor",
-   "metric_classic": 2869.4261698704,
+   "metric_classic": 2884.426169870553,
    "metric_analog": null,
    "g_classic": {
-    "DL_POLY": -0.003917667101621447,
-    "RSH_RPOLY_LO": 0.048790164194477015
+    "DL_POLY": -0.0038972940004291523,
+    "RSH_RPOLY_LO": 0.04853633958683057
    },
    "g_analog": {},
    "excluded": {
     "RHEAD_RPOLY_LO": "contact-head resistance has no wrapper term yet (Phase 3)"
    },
    "z_fast": {
-    "DL_POLY": -0.24011591415378172,
-    "RSH_RPOLY_LO": 2.9903752854399555
+    "DL_POLY": -0.2401164077006167,
+    "RSH_RPOLY_LO": 2.9903752458099553
    },
    "mahalanobis": 3.0
   },
   "RNWELL": {
-   "predicted_3sigma_swing": 0.25853308853150025,
-   "metric_3sigma_swing": 0.25853308853150025,
+   "predicted_3sigma_swing": 0.258315074320163,
+   "metric_3sigma_swing": 0.258315074320163,
    "bench": {
     "W_um": 2.0,
     "L_um": 16.5,
     "V": 0.1
    },
    "kind": "resistor",
-   "metric_classic": 17794.78402827337,
+   "metric_classic": 17809.784028274298,
    "metric_analog": null,
    "g_classic": {
-    "RSH_RNWELL": 0.08617769617716675
+    "RSH_RNWELL": 0.08610502477338766
    },
    "g_analog": {},
    "excluded": {
@@ -1175,18 +1175,18 @@
    "mahalanobis": 3.0
   },
   "RNPLUS": {
-   "predicted_3sigma_swing": 0.10812777408508589,
-   "metric_3sigma_swing": 0.10812777408508589,
+   "predicted_3sigma_swing": 0.10546182297744311,
+   "metric_3sigma_swing": 0.10546182297744311,
    "bench": {
     "W_um": 2.0,
     "L_um": 16.5,
     "V": 0.1
    },
    "kind": "resistor",
-   "metric_classic": 593.5041255235838,
+   "metric_classic": 608.5041255236864,
    "metric_analog": null,
    "g_classic": {
-    "RSH_RNPLUS": 0.0360425913616953
+    "RSH_RNPLUS": 0.035153940992481036
    },
    "g_analog": {},
    "excluded": {
@@ -1198,18 +1198,18 @@
    "mahalanobis": 3.0
   },
   "RPPLUS": {
-   "predicted_3sigma_swing": 0.1463704919628248,
-   "metric_3sigma_swing": 0.1463704919628248,
+   "predicted_3sigma_swing": 0.14437942474177357,
+   "metric_3sigma_swing": 0.14437942474177357,
    "bench": {
     "W_um": 2.0,
     "L_um": 16.5,
     "V": 0.1
    },
    "kind": "resistor",
-   "metric_classic": 1088.1236450227743,
+   "metric_classic": 1103.1236450228002,
    "metric_analog": null,
    "g_classic": {
-    "RSH_RPPLUS": 0.04879016398760827
+    "RSH_RPPLUS": 0.04812647491392452
    },
    "g_analog": {},
    "excluded": {
@@ -1221,90 +1221,90 @@
    "mahalanobis": 3.0
   },
   "CMIM_STD": {
-   "predicted_3sigma_swing": 0.11766213598910369,
-   "metric_3sigma_swing": 0.11766213598910369,
+   "predicted_3sigma_swing": 0.11735207052621638,
+   "metric_3sigma_swing": 0.11735207052621638,
    "bench": {
     "side_um": 100.0,
     "freq": 1000000.0
    },
    "kind": "capacitor",
-   "metric_classic": 1.000000029999977e-11,
+   "metric_classic": 1.0026562860796645e-11,
    "metric_analog": null,
    "g_classic": {
-    "CDEN_MIM": 0.039220711996367896
-   },
-   "g_analog": {},
-   "excluded": {
-    "CPER_CMIM_STD": "cjsw is 0 on this card, so there is no perimeter lever"
-   },
-   "z_fast": {
-    "CDEN_MIM": 3.0
-   },
-   "mahalanobis": 3.0
-  },
-  "CMIM_HI": {
-   "predicted_3sigma_swing": 0.11766213245903678,
-   "metric_3sigma_swing": 0.11766213245903678,
-   "bench": {
-    "side_um": 100.0,
-    "freq": 1000000.0
-   },
-   "kind": "capacitor",
-   "metric_classic": 2.000000119999776e-11,
-   "metric_analog": null,
-   "g_classic": {
-    "CDEN_MIM": 0.03922071081967893
-   },
-   "g_analog": {},
-   "excluded": {
-    "CPER_CMIM_HI": "cjsw is 0 on this card, so there is no perimeter lever"
-   },
-   "z_fast": {
-    "CDEN_MIM": 3.0
-   },
-   "mahalanobis": 3.0
-  },
-  "CMOM": {
-   "predicted_3sigma_swing": 0.19370931104378464,
-   "metric_3sigma_swing": 0.19370931104378464,
-   "bench": {
-    "side_um": 100.0,
-    "freq": 1000000.0
-   },
-   "kind": "capacitor",
-   "metric_classic": 3.5000000174993165e-12,
-   "metric_analog": null,
-   "g_classic": {
-    "CDEN_MOM": 0.06456977034792821
-   },
-   "g_analog": {},
-   "excluded": {
-    "CPER_CMOM": "cjsw is 0 on this card, so there is no perimeter lever"
-   },
-   "z_fast": {
-    "CDEN_MOM": 3.0
-   },
-   "mahalanobis": 3.0
-  },
-  "CFRINGE": {
-   "predicted_3sigma_swing": 0.19264293722795367,
-   "metric_3sigma_swing": 0.19264293722795367,
-   "bench": {
-    "side_um": 100.0,
-    "freq": 1000000.0
-   },
-   "kind": "capacitor",
-   "metric_classic": 1.8100000053993233e-12,
-   "metric_analog": null,
-   "g_classic": {
-    "CDEN_MOM": 0.06421278762993055,
-    "CPER_CFRINGE": 0.00044251892040669816
+    "CDEN_MIM": 0.03911678131177787,
+    "CPER_CMIM_STD": 0.00021219358273150135
    },
    "g_analog": {},
    "excluded": {},
    "z_fast": {
-    "CDEN_MOM": 2.9999287645076245,
-    "CPER_CFRINGE": 0.020673845306602674
+    "CDEN_MIM": 2.999955861258987,
+    "CPER_CMIM_STD": 0.016273613546144268
+   },
+   "mahalanobis": 3.0
+  },
+  "CMIM_HI": {
+   "predicted_3sigma_swing": 0.11750646172930647,
+   "metric_3sigma_swing": 0.11750646172930647,
+   "bench": {
+    "side_um": 100.0,
+    "freq": 1000000.0
+   },
+   "kind": "capacitor",
+   "metric_classic": 2.0026563761587226e-11,
+   "metric_analog": null,
+   "g_classic": {
+    "CDEN_MIM": 0.03916867650106148,
+    "CPER_CMIM_HI": 0.0001062379602139174
+   },
+   "g_analog": {},
+   "excluded": {},
+   "z_fast": {
+    "CDEN_MIM": 2.999988965046288,
+    "CPER_CMIM_HI": 0.008136928198279601
+   },
+   "mahalanobis": 3.0
+  },
+  "CMOM": {
+   "predicted_3sigma_swing": 0.19225779333448934,
+   "metric_3sigma_swing": 0.19225779333448934,
+   "bench": {
+    "side_um": 100.0,
+    "freq": 1000000.0
+   },
+   "kind": "capacitor",
+   "metric_classic": 3.526562577632517e-12,
+   "metric_analog": null,
+   "g_classic": {
+    "CDEN_MOM": 0.06408309143477631,
+    "CPER_CMOM": 0.0006032898056229641
+   },
+   "g_analog": {},
+   "excluded": {},
+   "z_fast": {
+    "CDEN_MOM": 2.999867068637177,
+    "CPER_CMOM": 0.028241290802502168
+   },
+   "mahalanobis": 3.0
+  },
+  "CFRINGE": {
+   "predicted_3sigma_swing": 0.19092242325351017,
+   "metric_3sigma_swing": 0.19092242325351017,
+   "bench": {
+    "side_um": 100.0,
+    "freq": 1000000.0
+   },
+   "kind": "capacitor",
+   "metric_classic": 1.8265625654802886e-12,
+   "metric_analog": null,
+   "g_classic": {
+    "CDEN_MOM": 0.0636301482338908,
+    "CPER_CFRINGE": 0.0011647518853692418
+   },
+   "g_analog": {},
+   "excluded": {},
+   "z_fast": {
+    "CDEN_MOM": 2.99949751499128,
+    "CPER_CFRINGE": 0.05490589732565867
    },
    "mahalanobis": 3.0
   },

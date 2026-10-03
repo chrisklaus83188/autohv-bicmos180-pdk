@@ -1253,7 +1253,14 @@
         "CMOM",
         "CFRINGE"
       ],
-      "constraint": "CDEN and CPER are split so total C is unchanged at each type's regression-golden geometry (ruling Q-C)."
+      "constraint": "Superseded 2026-10-02: CDEN/CPER are no longer split to hold total C at the golden geometry -- cjsw is derived from the dielectric instead, and the small shift in total C is reported. See _CAPACITORS.nominal_split.",
+      "applies_to": [
+        {
+          "param": "cjsw",
+          "form": "multiplicative"
+        }
+      ],
+      "realisation_note": "Phase 3f. Realised now that cjsw is non-zero: it was excluded from every direction with the reason 'cjsw is 0 on this card, so there is no perimeter lever', which was true and is no longer. The perimeter density carries its OWN global variation rather than following CDEN: the area density is set by the dielectric thickness, the fringe by edge definition, and those are different process steps."
     },
     "_VBE_template": {
       "_comment": "physical variable for BJT global spread; IS is derived from it (ruling 3.1)",
@@ -2826,18 +2833,18 @@
     },
     "CMIM_STD": {
       "realised": 2,
-      "terms": 1,
-      "excluded": 1
+      "terms": 2,
+      "excluded": 0
     },
     "CMIM_HI": {
       "realised": 2,
-      "terms": 1,
-      "excluded": 1
+      "terms": 2,
+      "excluded": 0
     },
     "CMOM": {
       "realised": 2,
-      "terms": 1,
-      "excluded": 1
+      "terms": 2,
+      "excluded": 0
     },
     "CFRINGE": {
       "realised": 2,

@@ -11,6 +11,7 @@ docs/backlog/HANDOFF_mc_realism_rulings.md).
   python tools/stat_model_inventory.py --check   # exit 1 if the document is stale
 """
 import csv
+import json
 import re
 import sys
 from pathlib import Path
@@ -144,6 +145,40 @@ def family(card, rated):
     return {"VDMOS": ("VDMOS/LDMOS", "VDMOS"), "NPN": ("BJT", "Gummel-Poon NPN"),
             "PNP": ("BJT", "Gummel-Poon PNP"), "D": ("diode", "diode"),
             "R": ("resistor", "semiconductor R"), "C": ("capacitor", "semiconductor C")}[t]
+
+
+
+def unrealised_variables(model: dict) -> list:
+    """Every global variable with a non-zero sigma that nothing realises.
+
+    A variable is realised if it has an `applies_to` (a card parameter, or a wrapper target),
+    a `follows` coupling, or an explicit `realised: false` carrying a reason -- the last being
+    how a deliberately-inert variable declares itself, as the edge-bias trio does at sigma 0.
+
+    This is the eighth standing check, and it exists because four variables reached the repo
+    declared but consumed by nothing: VBE/VF (found at Phase 3 planning), A_BETA (found during
+    3a), the edge-bias trio (3b) and RHEAD (3d). Each looked complete from every other angle:
+    corners.json assigned it a z, the inventory counted it, the directions harness recorded it.
+    Only tracing the consumer showed the gap.
+    """
+    bad = []
+    for name, v in model["global_variables"].items():
+        if not isinstance(v, dict):
+            continue
+        sigma = v.get("sigma")
+        if not sigma:
+            continue                      # sigma 0 or absent: nothing to realise
+        applies = ((v.get("applies_to") or []) + (v.get("applies_to_mos") or [])
+                   + (v.get("applies_to_vdmos") or []))
+        if applies or v.get("follows"):
+            continue
+        if v.get("realised") is False:
+            if not str(v.get("realised_reason") or "").strip():
+                bad.append("%s: realised:false with no realised_reason" % name)
+            continue
+        bad.append("%s: sigma=%s but no applies_to, no follows and no realised:false"
+                   % (name, sigma))
+    return bad
 
 
 def fmt_term(name, expr, fam, bp):
@@ -321,6 +356,17 @@ if __name__ == "__main__":
     text = render()
     if "--check" in sys.argv:
         current = OUT.read_text(encoding="utf-8") if OUT.exists() else ""
+        bad = unrealised_variables(json.loads(
+            (ROOT / "models" / "stat_model.json").read_text(encoding="utf-8")))
+        if bad:
+            print("unrealised-variable check FAILED (%d):" % len(bad))
+            for b in bad:
+                print("   ", b)
+            print()
+            print("A variable with a sigma that nothing consumes is invisible: corners.json")
+            print("assigns it a z and nothing applies it. Give it an applies_to, a follows,")
+            print("or realised:false with a realised_reason.")
+            sys.exit(1)
         if current != text:
             print("stale: %s differs from generator output" % OUT.relative_to(ROOT))
             sys.exit(1)
