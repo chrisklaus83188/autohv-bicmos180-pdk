@@ -47,7 +47,7 @@
 
 * <<<MOS_WRAPPER PMOS12V W=0.22u L=0.50u>>>
 
-.subckt NDMOS20V d g s params: W=3u M=1 MM_SIGMA=0
+.subckt NDMOS20V d g s params: W=3u M=1 Z_VT=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
@@ -70,7 +70,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s NDMOS20V_INT m={mtot}
 .endif
 .ends NDMOS20V
-.subckt PDMOS20V d g s params: W=3u M=1 MM_SIGMA=0
+.subckt PDMOS20V d g s params: W=3u M=1 Z_VT=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
@@ -93,7 +93,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s PDMOS20V_INT m={mtot}
 .endif
 .ends PDMOS20V
-.subckt NDMOS60V d g s params: W=3u M=1 MM_SIGMA=0
+.subckt NDMOS60V d g s params: W=3u M=1 Z_VT=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
@@ -116,7 +116,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s NDMOS60V_INT m={mtot}
 .endif
 .ends NDMOS60V
-.subckt PDMOS60V d g s params: W=3u M=1 MM_SIGMA=0
+.subckt PDMOS60V d g s params: W=3u M=1 Z_VT=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
@@ -139,7 +139,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s PDMOS60V_INT m={mtot}
 .endif
 .ends PDMOS60V
-.subckt NDMOS120V d g s params: W=3u M=1 MM_SIGMA=0
+.subckt NDMOS120V d g s params: W=3u M=1 Z_VT=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
@@ -162,7 +162,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s NDMOS120V_INT m={mtot}
 .endif
 .ends NDMOS120V
-.subckt PDMOS120V d g s params: W=3u M=1 MM_SIGMA=0
+.subckt PDMOS120V d g s params: W=3u M=1 Z_VT=0
 * HV DMOS p-channel: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
@@ -185,7 +185,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s PDMOS120V_INT m={mtot}
 .endif
 .ends PDMOS120V
-.subckt NDMOS40V d g s params: W=3u M=1 MM_SIGMA=0
+.subckt NDMOS40V d g s params: W=3u M=1 Z_VT=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
@@ -208,7 +208,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s NDMOS40V_INT m={mtot}
 .endif
 .ends NDMOS40V
-.subckt PDMOS40V d g s params: W=3u M=1 MM_SIGMA=0
+.subckt PDMOS40V d g s params: W=3u M=1 Z_VT=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
@@ -231,7 +231,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s PDMOS40V_INT m={mtot}
 .endif
 .ends PDMOS40V
-.subckt NDMOS80V d g s params: W=3u M=1 MM_SIGMA=0
+.subckt NDMOS80V d g s params: W=3u M=1 Z_VT=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
@@ -254,7 +254,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s NDMOS80V_INT m={mtot}
 .endif
 .ends NDMOS80V
-.subckt PDMOS80V d g s params: W=3u M=1 MM_SIGMA=0
+.subckt PDMOS80V d g s params: W=3u M=1 Z_VT=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
@@ -277,7 +277,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s PDMOS80V_INT m={mtot}
 .endif
 .ends PDMOS80V
-.subckt NDMOS200V d g s params: W=3u L=5.4u M=1 MM_SIGMA=0
+.subckt NDMOS200V d g s params: W=3u L=5.4u M=1 Z_VT=0
 * 200V LDMOS: W free (m=W/W_REF); L = drift length. Recommended RESURF window ~5u..16u.
 * L raises drift Rdson (~linear); breakdown is held at the model rating (see notes).
 .param W_REF=10u
@@ -306,7 +306,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 dd g_int s NDMOS200V_INT m={mtot}
 .endif
 .ends NDMOS200V
-.subckt PDMOS200V d g s params: W=3u L=5.4u M=1 MM_SIGMA=0
+.subckt PDMOS200V d g s params: W=3u L=5.4u M=1 Z_VT=0
 * 200V LDMOS p-channel: W free (m=W/W_REF); L = drift length. Recommended RESURF window ~5u..16u.
 * L raises drift Rdson (~linear); breakdown is held at the model rating. RDRIFT scale factor
 * is 3.0 (vs 1.2 on NDMOS200V): PMOS drift in n-well has ~2.5x higher per-um R, so the per-um
@@ -337,7 +337,7 @@ Cth_n TJ 0 {Cth} IC=0
 M0 dd g_int s PDMOS200V_INT m={mtot}
 .endif
 .ends PDMOS200V
-.subckt DNMOS20V d g s params: W=3u M=1 MM_SIGMA=0
+.subckt DNMOS20V d g s params: W=3u M=1 Z_VT=0
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
@@ -360,80 +360,43 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s DNMOS20V_INT m={mtot}
 .endif
 .ends DNMOS20V
-.subckt NPN_LV c b e params: AREA=0.04 MM_SIGMA=0
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-.param BVCBO={14*exp(0.0167*Z_BV_NPN_LV)}
-.param MAV_BJT=4
-Vsen c ci DC 0
-Q0 ci b e NPN_LV_INT area={AREAEFF}
-Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
-.ends NPN_LV
+* <<<BJT_WRAPPER NPN_LV>>>
+*KEEPLINE .param MAV_BJT=4
+*KEEPLINE Vsen c ci DC 0
+*KEEPLINE Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
 
-.subckt PNP_LAT c b e params: AREA=0.10 MM_SIGMA=0
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-.param BVCBO={18*exp(0.0167*Z_BV_PNP_LAT)}
-.param MAV_BJT=4
-Vsen c ci DC 0
-Q0 ci b e PNP_LAT_INT area={AREAEFF}
-Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
-.ends PNP_LAT
+* <<<BJT_WRAPPER PNP_LAT>>>
+*KEEPLINE .param MAV_BJT=4
+*KEEPLINE Vsen c ci DC 0
+*KEEPLINE Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
 
-.subckt NPN_HV c b e params: AREA=0.10 MM_SIGMA=0
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-.param BVCBO={45*exp(0.0167*Z_BV_NPN_HV)}
-.param MAV_BJT=4
-Vsen c ci DC 0
-Q0 ci b e NPN_HV_INT area={AREAEFF}
-Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
-.ends NPN_HV
+* <<<BJT_WRAPPER NPN_HV>>>
+*KEEPLINE .param MAV_BJT=4
+*KEEPLINE Vsen c ci DC 0
+*KEEPLINE Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
 
-.subckt PNP_HV c b e params: AREA=0.10 MM_SIGMA=0
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-.param BVCBO={32*exp(0.0167*Z_BV_PNP_HV)}
-.param MAV_BJT=4
-Vsen c ci DC 0
-Q0 ci b e PNP_HV_INT area={AREAEFF}
-Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
-.ends PNP_HV
+* <<<BJT_WRAPPER PNP_HV>>>
+*KEEPLINE .param MAV_BJT=4
+*KEEPLINE Vsen c ci DC 0
+*KEEPLINE Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
 
-.subckt DIO_PN a c params: AREA=0.04 MM_SIGMA=0
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-D0 a c DIO_PN_INT area={AREAEFF}
-.ends DIO_PN
+* <<<DIO_WRAPPER DIO_PN>>>
 
-.subckt DIO_FAST a c params: AREA=0.04 MM_SIGMA=0
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-D0 a c DIO_FAST_INT area={AREAEFF}
-.ends DIO_FAST
+* <<<DIO_WRAPPER DIO_FAST>>>
 
-.subckt DIO_SCH a c params: AREA=0.04 MM_SIGMA=0
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-D0 a c DIO_SCH_INT area={AREAEFF}
-.ends DIO_SCH
+* <<<DIO_WRAPPER DIO_SCH>>>
 
-.subckt DZ_5V6 a c params: AREA=0.04 MM_SIGMA=0
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-* bv temperature coefficient (phase-4 Step 2.4): +1.5 mV/C [grounded]. Positive avalanche TC;
-* the ~6.2 V zero-TC crossover sits just above this 5.6 V part. Implemented as a series B-source
-* adding TC*(temper-27) to the terminal breakdown (the built-in D model ignores tbv1 in ngspice-45);
-* zero at 27 C, so no nominal side effect. Zeners operate in reverse; the mV forward shift at T != 27 is negligible.
-B_tc c ci V={1.7e-3*(temper-27)}
-D0 a ci DZ_5V6_INT area={AREAEFF}
-.ends DZ_5V6
+* <<<DIO_WRAPPER DZ_5V6>>>
+*KEEP bv temperature coefficient (phase-4 Step 2.4): +1.5 mV/C [grounded]. Positive avalanche TC;
+*KEEP the ~6.2 V zero-TC crossover sits just above this 5.6 V part. Implemented as a series B-source
+*KEEP adding TC*(temper-27) to the terminal breakdown (the built-in D model ignores tbv1 in ngspice-45);
+*KEEP zero at 27 C, so no nominal side effect. Zeners operate in reverse; the mV forward shift at T != 27 is negligible.
 
-.subckt DZ_12V a c params: AREA=0.04 MM_SIGMA=0
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-* bv tempco (phase-4 Step 2.4): +8 mV/C [extrapolated], above the ~6.2 V zero-TC crossover. See DZ_5V6.
-B_tc c ci V={8e-3*(temper-27)}
-D0 a ci DZ_12V_INT area={AREAEFF}
-.ends DZ_12V
+* <<<DIO_WRAPPER DZ_12V>>>
+*KEEP bv tempco (phase-4 Step 2.4): +8 mV/C [extrapolated], above the ~6.2 V zero-TC crossover. See DZ_5V6.
 
-.subckt DZ_24V a c params: AREA=0.04 MM_SIGMA=0
-.param AREAEFF={AREA*(1+MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3) + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))}
-* bv tempco (phase-4 Step 2.4): +20 mV/C [extrapolated], strong positive avalanche TC. See DZ_5V6.
-B_tc c ci V={20e-3*(temper-27)}
-D0 a ci DZ_24V_INT area={AREAEFF}
-.ends DZ_24V
+* <<<DIO_WRAPPER DZ_24V>>>
+*KEEP bv tempco (phase-4 Step 2.4): +20 mV/C [extrapolated], strong positive avalanche TC. See DZ_5V6.
 
 * <<<RES_WRAPPER RPOLY_HI L=0.5u W=0.5u>>>
 *KEEP High-sheet poly: matching coeff worse than low-sheet poly (US Pat 12,464,737:

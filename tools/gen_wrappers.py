@@ -50,6 +50,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from inc_parse import IncParseError, tt_of  # noqa: E402
+from measure_stat_directions import VT_THERMAL  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = ROOT / "models" / "stat_model.json"
@@ -291,6 +292,116 @@ def cap_wrapper(dev: str, l_def: str, w_def: str, keep: list, lm: dict) -> list:
     return body
 
 
+def emission_of_card(dev: str) -> float:
+    """The card's emission coefficient (diode `n`, BJT `nf`), read never typed.
+
+    Two of the four BJTs carry nf = 1.02/1.03 and the six diodes run 1.03 to 1.22, so a
+    single constant would be wrong by up to 22 % -- the Finding A lesson.
+    """
+    card = dev + "_INT"
+    body = re.search(r"^\.model\s+" + card + r"\s.*?(?=^\.model|\Z)",
+                     INC_TEMPLATE.read_text(encoding="utf-8"), re.S | re.M | re.I)
+    if not body:
+        raise SystemExit("gen_wrappers: no card %s" % card)
+    for name in ("n", "nf"):
+        q = re.search(r"^\+\s*" + name + r"\s*=\s*(.+?)\s*$", body.group(0), re.M | re.I)
+        if q:
+            try:
+                return tt_of(q.group(1))
+            except IncParseError as exc:
+                raise SystemExit("gen_wrappers: %s.%s: %s" % (card, name, exc))
+    return 1.0
+
+
+def junction_sigmas(dev: str, lm: dict, n: float) -> tuple:
+    """(sigma_is_rel_per_um, sigma_bf_rel_per_um) in Pelgrom form (ruling Q4).
+
+    A_VBE is a VOLTAGE quote of a saturation-current variable, so the current-mismatch
+    coefficient is that voltage over n*V_T -- the same conversion as Finding A, with the
+    card's own emission coefficient. A_IS is DERIVED this way rather than declared, so the
+    whole junction family keeps one story.
+    """
+    b = lm["_BJT"]
+    s_is = (b["A_VBE"]["value"] / 1000.0) / (n * VT_THERMAL)   # mV.um -> relative.um
+    s_bf = b["A_BF"]["value"] / 100.0                          # %.um  -> relative.um
+    return s_is, s_bf
+
+
+def bjt_wrapper(dev: str, keep: list, lm: dict, gv: dict, n: float) -> list:
+    """BJT with INDEPENDENT Is and beta mismatch (ruling Q4).
+
+    The old wrapper had one AREAEFF term doing all the work. In Gummel-Poon `area` scales
+    Is but NOT bf, so that single term was an Is mismatch wearing a general name, and beta
+    mismatch was absent from this PDK entirely.
+
+    Is mismatch rides on `area`, which is exact: Is_eff = area*Is, and an area ratio is a
+    Vbe shift of n*V_T*ln(ratio) at fixed Ic. So no extra node is needed for it. The sign
+    is set so that +Z_VBE means a HIGHER Vbe, i.e. a SMALLER Is -- matching the knob's name
+    rather than the parameter it happens to drive.
+
+    Beta mismatch has no instance parameter at all, so it needs a circuit: sense the base
+    current through a 0 V source and return a fraction of it with a CCCS. KCL at the
+    external base node gives I_ext = Ib*(1-GB), so apparent beta scales by 1/(1-GB); set
+    GB = d/(1+d) and the scaling is exactly 1+d, not a small-signal approximation.
+
+    AREA*M also gives M its two correct effects at once: Is scales with M, and sigma falls
+    as 1/sqrt(AREA*100*M).
+    """
+    s_is, s_bf = junction_sigmas(dev, lm, n)
+    t = gv["_BV_template"]
+    entry = next(a for a in t["applies_to"] if a.get("target") == "wrapper_BVCBO")
+    body = [".subckt %s c b e params: AREA=0.04 M=1 Z_VBE=0 Z_BF=0" % dev]
+    body += ["* " + c[len("*KEEP"):].lstrip() for c in keep if c.startswith("*KEEP ")]
+    body += [
+        "* Phase 3h. AREA is a multiple of the 100 um^2 cell, so area_um2 = AREA*100*M.",
+        ".param AUM2={AREA*100*M}",
+        "* +Z_VBE = higher Vbe = SMALLER Is, hence the minus sign on the area multiplier.",
+        ".param DIS={MM_ON*AGAUSS(0, %s/sqrt(AUM2%s), 1) + Z_VBE*%s/sqrt(AUM2%s)}"
+        % (fmt(s_is), GUARD, fmt(s_is), GUARD),
+        ".param DBF={MM_ON*AGAUSS(0, %s/sqrt(AUM2%s), 1) + Z_BF*%s/sqrt(AUM2%s)}"
+        % (fmt(s_bf), GUARD, fmt(s_bf), GUARD),
+        ".param AREAEFF={AREA*M*(1-DIS)}",
+        "* exact, not small-signal: apparent beta scales by 1/(1-GB) = 1+DBF",
+        ".param GB={DBF/(1+DBF)}",
+        ".param BVCBO={%s*exp(%s*Z_BV_%s)}" % (fmt(entry["tt_V"][dev]), fmt(t["sigma"]), dev),
+    ]
+    body += [k[len("*KEEPLINE "):] for k in keep
+             if k.startswith("*KEEPLINE ") and ".param MAV" in k]
+    body += [k[len("*KEEPLINE "):] for k in keep
+             if k.startswith("*KEEPLINE ") and k[len("*KEEPLINE "):].startswith("Vsen ")]
+    body += [
+        "Vbsen b bi DC 0",
+        "Q0 ci bi e %s_INT area={AREAEFF}" % dev,
+        "Fbeta e b Vbsen {GB}",
+    ]
+    body += [k[len("*KEEPLINE "):] for k in keep
+             if k.startswith("*KEEPLINE ") and k[len("*KEEPLINE "):].startswith("Bavl ")]
+    body += [".ends %s" % dev]
+    return body
+
+
+def dio_wrapper(dev: str, keep: list, lm: dict, n: float) -> list:
+    """Diode with an Is mismatch derived the same way as the BJT's (ruling Q4).
+
+    Only one term: `area` scales Is exactly, and the diode has no beta. A_IS comes from
+    A_VBE/(n*V_T) with the card's own n, so a Schottky (n = 1.08) and a 24 V Zener
+    (n = 1.22) get different coefficients from the same declared voltage.
+    """
+    s_is, _ = junction_sigmas(dev, lm, n)
+    body = [".subckt %s a c params: AREA=0.04 M=1 Z_IS=0" % dev]
+    body += ["* " + k[len("*KEEP"):].lstrip() for k in keep if k.startswith("*KEEP ")]
+    body += [
+        "* Phase 3h. A_IS = A_VBE/(n*V_T), n read per card (Finding A physics).",
+        ".param AUM2={AREA*100*M}",
+        ".param DIS={MM_ON*AGAUSS(0, %s/sqrt(AUM2%s), 1) + Z_IS*%s/sqrt(AUM2%s)}"
+        % (fmt(s_is), GUARD, fmt(s_is), GUARD),
+        ".param AREAEFF={AREA*M*(1+DIS)}",
+        "D0 a c %s_INT area={AREAEFF}" % dev,
+        ".ends %s" % dev,
+    ]
+    return body
+
+
 def res_wrapper(dev: str, l_def: str, w_def: str, keep: list[str], lm: dict,
                 gv: dict) -> list[str]:
     """NS-segmented resistor with contact heads (ruling Q2, brief 5.3).
@@ -427,12 +538,28 @@ def generate() -> str:
                     if a.get("target") == "wrapper_BVCBO")["tt_V"])
 
     out, dev, repl = [], None, {}
-    pending_res, pending_cap, keep = None, None, []
+    pending_res, pending_cap, pending_j, keep = None, None, None, []
     for line in TEMPLATE.read_text(encoding="utf-8").splitlines():
         mk = re.match(r"\* <<<MOS_WRAPPER (\S+) W=(\S+) L=(\S+)>>>", line)
         if mk:
             out.extend(mos_wrapper(mk.group(1), mk.group(2), mk.group(3), lm, gv))
             continue
+        bk = re.match(r"\* <<<(BJT|DIO)_WRAPPER (\S+)>>>", line)
+        if bk:
+            pending_j = (bk.group(1), bk.group(2))
+            keep = []
+            continue
+        if pending_j is not None:
+            if line.startswith("*KEEP"):
+                keep.append(line)
+                continue
+            jkind, jdev = pending_j
+            nj = emission_of_card(jdev)
+            if jkind == "BJT":
+                out.extend(bjt_wrapper(jdev, keep, lm, gv, nj))
+            else:
+                out.extend(dio_wrapper(jdev, keep, lm, nj))
+            pending_j, keep = None, []
         ck = re.match(r"\* <<<CAP_WRAPPER (\S+) L=(\S+) W=(\S+)>>>", line)
         if ck:
             pending_cap = (ck.group(1), ck.group(2), ck.group(3))

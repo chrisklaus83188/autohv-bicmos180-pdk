@@ -73,7 +73,20 @@ for d in (NETLISTS, RAW):
 # device-instance emitter.  geometry goes in the deck, never in a script param.
 # ---------------------------------------------------------------------------
 def _dev(name, d, g, s, b, W, L, M):
-    return f"X{name} {d} {g} {s} {b} PMOS5V0 W={W:.6g} L={L:.6g} M={int(M)}"
+    """One mirror device, with the deterministic mismatch knob passed EXPLICITLY.
+
+    It has to be on the instance. A subckt parameter default shadows a same-named
+    top-level .param in ngspice, so the `.param MM_SIGMA=<n>` this file used to write in
+    the header never reached the device: measured on the pre-Phase-3 wrapper, an instance
+    without the parameter read delvto = 0.0000000000 while the same instance carrying
+    MM_SIGMA=3 read 1.2643069248e-02. Every mirror run labelled with a non-zero mm_sigma
+    was therefore measuring the TYPICAL device.
+
+    MMS is defined in the header, so the existing mm_sigma= argument keeps working and now
+    actually does something.
+    """
+    return (f"X{name} {d} {g} {s} {b} PMOS5V0 W={W:.6g} L={L:.6g} M={int(M)}"
+            " Z_VT={MMS}")
 
 
 def build_core(topo, geom, node_out="nout"):
@@ -142,7 +155,7 @@ def _header(title, case, proc, mm, temp, mm_sigma=0):
     return [
         f".title {title}",
         f'.include "{LIB}"',
-        f".param case={case} PROC_ON={proc} MM_ON={mm} MM_SIGMA={mm_sigma}",
+        f".param case={case} PROC_ON={proc} MM_ON={mm} MMS={mm_sigma}",
         f".options temp={temp}",
     ]
 

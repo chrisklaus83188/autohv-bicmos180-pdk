@@ -33,17 +33,17 @@ T {LDMOS 200V  (d g s)  -  W L M MM_SIGMA} -10 660 0 0 0.3 0.3 {layer=8}
 C {autohv/NDMOS200V.sym} 0 720 0 0 {name=NDMOS200V W=10u L=8u M=1 Z_VT=0}
 C {autohv/PDMOS200V.sym} 150 720 0 0 {name=PDMOS200V W=10u L=8u M=1 Z_VT=0}
 T {BJT   (c b e)  -  AREA MM_SIGMA} -10 840 0 0 0.3 0.3 {layer=8}
-C {autohv/NPN_LV.sym} 0 900 0 0 {name=NPN_LV AREA=1 MM_SIGMA=0}
-C {autohv/NPN_HV.sym} 150 900 0 0 {name=NPN_HV AREA=1 MM_SIGMA=0}
-C {autohv/PNP_LAT.sym} 300 900 0 0 {name=PNP_LAT AREA=1 MM_SIGMA=0}
-C {autohv/PNP_HV.sym} 450 900 0 0 {name=PNP_HV AREA=1 MM_SIGMA=0}
+C {autohv/NPN_LV.sym} 0 900 0 0 {name=NPN_LV AREA=1 Z_VBE=0}
+C {autohv/NPN_HV.sym} 150 900 0 0 {name=NPN_HV AREA=1 Z_VBE=0}
+C {autohv/PNP_LAT.sym} 300 900 0 0 {name=PNP_LAT AREA=1 Z_VBE=0}
+C {autohv/PNP_HV.sym} 450 900 0 0 {name=PNP_HV AREA=1 Z_VBE=0}
 T {Diodes / Zeners   (a c)  -  AREA MM_SIGMA} -10 1020 0 0 0.3 0.3 {layer=8}
-C {autohv/DIO_PN.sym} 0 1080 0 0 {name=DIO_PN AREA=1 MM_SIGMA=0}
-C {autohv/DIO_FAST.sym} 150 1080 0 0 {name=DIO_FAST AREA=1 MM_SIGMA=0}
-C {autohv/DIO_SCH.sym} 300 1080 0 0 {name=DIO_SCH AREA=1 MM_SIGMA=0}
-C {autohv/DZ_5V6.sym} 450 1080 0 0 {name=DZ_5V6 AREA=1 MM_SIGMA=0}
-C {autohv/DZ_12V.sym} 600 1080 0 0 {name=DZ_12V AREA=1 MM_SIGMA=0}
-C {autohv/DZ_24V.sym} 750 1080 0 0 {name=DZ_24V AREA=1 MM_SIGMA=0}
+C {autohv/DIO_PN.sym} 0 1080 0 0 {name=DIO_PN AREA=1 Z_IS=0}
+C {autohv/DIO_FAST.sym} 150 1080 0 0 {name=DIO_FAST AREA=1 Z_IS=0}
+C {autohv/DIO_SCH.sym} 300 1080 0 0 {name=DIO_SCH AREA=1 Z_IS=0}
+C {autohv/DZ_5V6.sym} 450 1080 0 0 {name=DZ_5V6 AREA=1 Z_IS=0}
+C {autohv/DZ_12V.sym} 600 1080 0 0 {name=DZ_12V AREA=1 Z_IS=0}
+C {autohv/DZ_24V.sym} 750 1080 0 0 {name=DZ_24V AREA=1 Z_IS=0}
 T {Resistors   (p n)  -  L W MM_SIGMA} -10 1200 0 0 0.3 0.3 {layer=8}
 C {autohv/RPOLY_HI.sym} 0 1260 0 0 {name=RPOLY_HI L=100u W=10u Z_R=0}
 C {autohv/RPOLY_LO.sym} 150 1260 0 0 {name=RPOLY_LO L=100u W=10u Z_R=0}

@@ -39,7 +39,7 @@ Regenerate with `python tools/stat_model_inventory.py`; `--check` fails if stale
 | of those, geometry parameters (lint/wint/dwc/dlc/xl/xw/narrow/short) — brief R0 prerequisite | 0 — no corner moves geometry; edge bias is declared per D3 |
 | gate-resistance term (`rgate`/`rsh_poly`/`rgeomod`) in wrappers or cards | present |
 | β/mobility mismatch term in any wrapper | NMOS1V8, PMOS1V8, NMOS3V3, PMOS3V3, NMOS5V0, PMOS5V0, NMOS12V, PMOS12V |
-| AGAUSS sigma convention across mismatch terms | 45 terms at n=1, 10 terms at n=3 |
+| AGAUSS sigma convention across mismatch terms | 59 terms at n=1 |
 
 ## Wrappers that do not fit the R1/R2 pattern
 
@@ -88,16 +88,16 @@ Regenerate with `python tools/stat_model_inventory.py`; `--check` fails if stale
 | NDMOS200V | VDMOS/LDMOS | VDMOS | Vds_dcmax 220 V | `W=3u L=5.4u M=1 Z_VT=0` | Vth (delvto): 11 mV per √cell (W_REF=10u) at 1σ (1σ 11) ÷ √(max(mtot,1e-6)) | `mtot=(W/W_REF)*M` | no | none: `M` already R1-correct via `mtot`; no `NF` (D2) | `Z_VT` | ngspice VDMOS has no W/L/AD/AS; size via `m=mtot` |
 | PDMOS200V | VDMOS/LDMOS | VDMOS | Vds_dcmax 220 V | `W=3u L=5.4u M=1 Z_VT=0` | Vth (delvto): 11 mV per √cell (W_REF=10u) at 1σ (1σ 11) ÷ √(max(mtot,1e-6)) | `mtot=(W/W_REF)*M` | no | none: `M` already R1-correct via `mtot`; no `NF` (D2) | `Z_VT` | ngspice VDMOS has no W/L/AD/AS; size via `m=mtot` |
 | DNMOS20V | VDMOS/LDMOS | VDMOS | Vds_dcmax 22 V | `W=3u M=1 Z_VT=0` | Vth (delvto): 8 mV per √cell (W_REF=10u) at 1σ (1σ 8) ÷ √(max(mtot,1e-6)) | `mtot=(W/W_REF)*M` | no | none: `M` already R1-correct via `mtot`; no `NF` (D2) | `Z_VT` | ngspice VDMOS has no W/L/AD/AS; size via `m=mtot` |
-| NPN_LV | BJT | Gummel-Poon NPN | Vce_max 7 V | `AREA=0.04 MM_SIGMA=0` | AREA, relative: 1.2 %·√AREA at 3σ (1σ 0.4) ÷ √(AREA+1e-12) | `AREA` | yes | none | `Z_AREA` | no `M` instance parameter |
-| PNP_LAT | BJT | Gummel-Poon PNP | Vce_max 13 V | `AREA=0.10 MM_SIGMA=0` | AREA, relative: 1.2 %·√AREA at 3σ (1σ 0.4) ÷ √(AREA+1e-12) | `AREA` | yes | none | `Z_AREA` | no `M` instance parameter |
-| NPN_HV | BJT | Gummel-Poon NPN | Vce_max 25 V | `AREA=0.10 MM_SIGMA=0` | AREA, relative: 1.2 %·√AREA at 3σ (1σ 0.4) ÷ √(AREA+1e-12) | `AREA` | yes | none | `Z_AREA` | no `M` instance parameter |
-| PNP_HV | BJT | Gummel-Poon PNP | Vce_max 22 V | `AREA=0.10 MM_SIGMA=0` | AREA, relative: 1.2 %·√AREA at 3σ (1σ 0.4) ÷ √(AREA+1e-12) | `AREA` | yes | none | `Z_AREA` | no `M` instance parameter |
-| DIO_PN | diode | diode | Vr_absmax 100 V | `AREA=0.04 MM_SIGMA=0` | AREA, relative: 1.2 %·√AREA at 3σ (1σ 0.4) ÷ √(AREA+1e-12) | `AREA` | yes | none | `Z_AREA` | no `M` instance parameter |
-| DIO_FAST | diode | diode | Vr_absmax 40 V | `AREA=0.04 MM_SIGMA=0` | AREA, relative: 1.2 %·√AREA at 3σ (1σ 0.4) ÷ √(AREA+1e-12) | `AREA` | yes | none | `Z_AREA` | no `M` instance parameter |
-| DIO_SCH | diode | diode | Vr_absmax 40 V | `AREA=0.04 MM_SIGMA=0` | AREA, relative: 1.2 %·√AREA at 3σ (1σ 0.4) ÷ √(AREA+1e-12) | `AREA` | yes | none | `Z_AREA` | no `M` instance parameter |
-| DZ_5V6 | diode | diode | Vr_absmax 5.6 V | `AREA=0.04 MM_SIGMA=0` | AREA, relative: 1.2 %·√AREA at 3σ (1σ 0.4) ÷ √(AREA+1e-12) | `AREA` | yes | none | `Z_AREA` | no `M` instance parameter |
-| DZ_12V | diode | diode | Vr_absmax 12 V | `AREA=0.04 MM_SIGMA=0` | AREA, relative: 1.2 %·√AREA at 3σ (1σ 0.4) ÷ √(AREA+1e-12) | `AREA` | yes | none | `Z_AREA` | no `M` instance parameter |
-| DZ_24V | diode | diode | Vr_absmax 24 V | `AREA=0.04 MM_SIGMA=0` | AREA, relative: 1.2 %·√AREA at 3σ (1σ 0.4) ÷ √(AREA+1e-12) | `AREA` | yes | none | `Z_AREA` | no `M` instance parameter |
+| NPN_LV | BJT | Gummel-Poon NPN | Vce_max 7 V | `AREA=0.04 M=1 Z_VBE=0 Z_BF=0` | DIS: 3.868 %·µm at 1σ (1σ 3.868) ÷ √(AUM2+1e-12)<br>DBF: 2 %·µm at 1σ (1σ 2) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| PNP_LAT | BJT | Gummel-Poon PNP | Vce_max 13 V | `AREA=0.04 M=1 Z_VBE=0 Z_BF=0` | DIS: 3.792 %·µm at 1σ (1σ 3.792) ÷ √(AUM2+1e-12)<br>DBF: 2 %·µm at 1σ (1σ 2) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| NPN_HV | BJT | Gummel-Poon NPN | Vce_max 25 V | `AREA=0.04 M=1 Z_VBE=0 Z_BF=0` | DIS: 3.868 %·µm at 1σ (1σ 3.868) ÷ √(AUM2+1e-12)<br>DBF: 2 %·µm at 1σ (1σ 2) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| PNP_HV | BJT | Gummel-Poon PNP | Vce_max 22 V | `AREA=0.04 M=1 Z_VBE=0 Z_BF=0` | DIS: 3.756 %·µm at 1σ (1σ 3.756) ÷ √(AUM2+1e-12)<br>DBF: 2 %·µm at 1σ (1σ 2) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| DIO_PN | diode | diode | Vr_absmax 100 V | `AREA=0.04 M=1 Z_IS=0` | DIS: 3.684 %·µm at 1σ (1σ 3.684) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| DIO_FAST | diode | diode | Vr_absmax 40 V | `AREA=0.04 M=1 Z_IS=0` | DIS: 3.756 %·µm at 1σ (1σ 3.756) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| DIO_SCH | diode | diode | Vr_absmax 40 V | `AREA=0.04 M=1 Z_IS=0` | DIS: 3.582 %·µm at 1σ (1σ 3.582) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| DZ_5V6 | diode | diode | Vr_absmax 5.6 V | `AREA=0.04 M=1 Z_IS=0` | DIS: 3.364 %·µm at 1σ (1σ 3.364) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| DZ_12V | diode | diode | Vr_absmax 12 V | `AREA=0.04 M=1 Z_IS=0` | DIS: 3.278 %·µm at 1σ (1σ 3.278) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| DZ_24V | diode | diode | Vr_absmax 24 V | `AREA=0.04 M=1 Z_IS=0` | DIS: 3.171 %·µm at 1σ (1σ 3.171) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
 | RPOLY_HI | resistor | semiconductor R | Vop_max 5 V | `L=0.5u W=0.5u NS=1 M=1 Z_R=0` | none | `AUM2=(L/1u)*(W/1u)*M` | no | add `M`; add `NS` (R3, D4/D5) | `Z_R` | TT edge bias narrow=1.2e-07, short=1e-07; no head resistance |
 | RPOLY_LO | resistor | semiconductor R | Vop_max 5 V | `L=0.5u W=0.5u NS=1 M=1 Z_R=0` | none | `AUM2=(L/1u)*(W/1u)*M` | no | add `M`; add `NS` (R3, D4/D5) | `Z_R` | TT edge bias narrow=1.5e-07, short=1.2e-07; no head resistance |
 | RNWELL | resistor | semiconductor R | Vop_max 5 V | `L=0.5u W=0.5u NS=1 M=1 Z_R=0` | none | `AUM2=(L/1u)*(W/1u)*M` | no | add `M`; add `NS` (R3, D4/D5) | `Z_R` | TT edge bias narrow=1.8e-07, short=1.5e-07; no head resistance |
