@@ -81,7 +81,7 @@ def build(name, cell):
         ox = idx * COL
         rot, flip = (2, 1) if tag == "P" else (0, 0)
         L.append(f"C {{autohv/{dev['model']}.sym}} {ox} {row_y} {rot} {flip} "
-                 f"{{name=M{tag}{idx + 1} W={dev['W']} L={dev['L']} M=1 MM_SIGMA=0}}")
+                 f"{{name=M{tag}{idx + 1} W={dev['W']} L={dev['L']} M=1 Z_VT=0}}")
         for term in ("d", "g", "s", "b"):
             net = dev[term]
             tx, ty = ox + off[term][0], row_y + off[term][1]

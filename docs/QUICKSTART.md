@@ -50,22 +50,22 @@ ngspice -b mydeck.cir
 Set them anywhere before the analysis line. `case` is global — one corner per run;
 sweep it across runs for a corner analysis.
 
-### Deterministic mismatch via `MM_SIGMA` (per-instance)
+### Deterministic mismatch via `Z_*` (per-instance)
 
-Every device subckt also accepts a **per-instance** parameter `MM_SIGMA` (default 0).
+Every device subckt also accepts a **per-instance** parameter `Z_*` (default 0).
 When set to a non-zero σ-multiple, the device's mismatch parameters (Vth, W/L, area,
 sheet R, or cap density depending on the device class) are pinned to a deterministic
 value instead of drawn randomly. This is the deterministic alternative to MM_ON=1
 random draws and is intended for:
 
 - worst-case bracketing (set ±3 on a matched pair to see the bound)
-- sensitivity analysis (sweep MM_SIGMA from -3 to +3 on one device, watch the metric)
+- sensitivity analysis (sweep Z_* from -3 to +3 on one device, watch the metric)
 - CI-gating regression decks (deterministic results, no statistical noise)
 
-Set `MM_ON=0` when using `MM_SIGMA` — the two terms add in the expression, so
+Set `MM_ON=0` when using `Z_*` — the two terms add in the expression, so
 enabling both at once gives a non-physical sum.
 
-| MM_ON | MM_SIGMA on instance | Mode |
+| MM_ON | Z_* on instance | Mode |
 |-------|----------------------|------|
 | 0 | 0 | No mismatch (default) |
 | 1 | 0 | Random MC (the existing AGAUSS path) |

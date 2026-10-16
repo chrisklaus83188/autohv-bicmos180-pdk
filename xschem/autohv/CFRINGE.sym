@@ -1,8 +1,8 @@
 v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {type=capacitor
-format="@spiceprefix@name @pinlist @symname L=@L W=@W MM_SIGMA=@MM_SIGMA"
-template="name=C1 L=100u W=100u MM_SIGMA=0 spiceprefix=X"
+format="@spiceprefix@name @pinlist @symname L=@L W=@W M=@M Z_C=@Z_C"
+template="name=C1 L=100u W=100u M=1 Z_C=0 spiceprefix=X"
 }
 V {}
 S {}

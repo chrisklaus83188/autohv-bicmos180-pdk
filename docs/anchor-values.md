@@ -222,8 +222,8 @@ does not.
 | `B_pdiss` includes `Rdrift` (200 V pair) | power uses `V(d,s)`, which spans the external drift resistor | junction temperature on the 200 V parts, overestimated | artifact of the `Rdrift` wrapper construction |
 | VDMOS caps not corner-parametrized | fixed across all 5 corners | **switching-time corner spread on every VDMOS is identically zero** | `HANDOFF_vdmos_caps.md` suggestion #3, never implemented |
 | NMOS12V/PMOS12V frozen `tox`/`cj`/`cjsw`/`js` | bare constants, no corner or stat term | all 12 V dynamic corner spread is identically zero; FF mobility sits on TT oxide | Level-3 → BSIM3 migration residue |
-| AGAUSS consumed when `MM_SIGMA ≠ 0` | one RNG draw per instance | reproducibility of an MC sequence run alongside corner sims | ngspice `.param` has no comparison operators |
-| `MM_ON` and `MM_SIGMA` **add** | the two terms sum | any run with both non-zero — explicitly "don't do this" | documented contract, `MISMATCH_CORNERS.md` |
+| AGAUSS consumed when `Z_* ≠ 0` | one RNG draw per instance | reproducibility of an MC sequence run alongside corner sims | ngspice `.param` has no comparison operators |
+| `MM_ON` and `Z_*` **add** | the two terms sum | any run with both non-zero — explicitly "don't do this" | documented contract, `MISMATCH_CORNERS.md` |
 
 ---
 

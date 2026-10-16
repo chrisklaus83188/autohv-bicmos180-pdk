@@ -203,7 +203,7 @@ driver builds on (acceptance A11: under 2 s).
 
 ## 7. External random-number driver prototype
 
-Each device carries its own knob (`MM_SIGMA={S1}` on X1, `{S2}` on X2) with
+Each device carries its own knob (`Z_VT={S1}` on X1, `{S2}` on X2) with
 `MM_ON=0`; Python draws the unit-normal values (numpy `default_rng(0)`) and
 one ngspice invocation steps `alterparam` + `reset` + `op` through all 200 samples.
 
@@ -217,10 +217,10 @@ one ngspice invocation steps `alterparam` + `reset` + `op` through all 200 sampl
 | native `MM_ON=1` measurement (section 3) | 4.331 % |
 | HANDOFF section 4 prototype | 3.71 % |
 
-One `MM_SIGMA` scales a device's Vth, W and L terms by the same z, so the three
+One `Z_*` scales a device's Vth, W and L terms by the same z, so the three
 are perfectly correlated; the W term then partly cancels the Vth term, which is
 why the one-knob prediction sits slightly below the independent-terms one. The
-program replaces `MM_SIGMA` with independent `Z_VT`, `Z_W`, `Z_L` (R5 as ruled).
+program replaces `Z_*` with independent `Z_VT`, `Z_W`, `Z_L` (R5 as ruled).
 
 ## 8. Reproduce
 

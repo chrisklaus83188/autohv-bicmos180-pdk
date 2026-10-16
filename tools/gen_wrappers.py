@@ -78,10 +78,10 @@ LD = "0.5u"
 def mos_wrapper(dev: str, w_def: str, l_def: str, lm: dict, gv: dict) -> list[str]:
     """The whole BSIM3 wrapper body. Phase 3b, with ruling Q1 for the finger geometry.
 
-    KNOBS. Four independent deterministic n-sigma dials replace the single MM_SIGMA, which
+    KNOBS. Four independent deterministic n-sigma dials replace the single Z_*, which
     moved Vth, W and L together -- a scenario no process produces, since the three are
-    independent. MM_SIGMA=X is exactly Z_VT=X Z_W=X Z_L=X, which is how the 118 callers
-    migrate; Z_BETA is new and had no MM_SIGMA equivalent.
+    independent. Z_VT=X is exactly Z_VT=X Z_W=X Z_L=X, which is how the 118 callers
+    migrate; Z_BETA is new and had no Z_* equivalent.
 
     BETA. Driven through the BSIM3 instance parameter `mulu0` (verified: ngspice accepts it
     and it moves Id). Id does not move by the full 1+DBETA in saturation -- velocity
@@ -170,7 +170,7 @@ def mos_lines(dev: str, lm: dict) -> dict[str, str]:
     }
     for name, coef in (("DVTH_MM", a_vt), ("DWREL_MM", a_w), ("DLREL_MM", a_l)):
         out[name] = (".param %s={MM_ON*AGAUSS(0, %s/sqrt(AUM2%s), 1)"
-                     " + MM_SIGMA*%s/sqrt(AUM2%s)}"
+                     " + Z_**%s/sqrt(AUM2%s)}"
                      % (name, fmt(coef), GUARD, fmt(coef), GUARD))
     return out
 
@@ -187,7 +187,7 @@ def vdmos_lines(dev: str, lm: dict) -> dict[str, str]:
     one = three / 3.0
     return {
         "mtot": ".param mtot={(W/W_REF)*M}",
-        # MM_SIGMA drove this single term only, so Z_VT is an exact one-for-one
+        # Z_* drove this single term only, so Z_VT is an exact one-for-one
         # replacement -- unlike the MOS case, where one dial moved three terms.
         "DVTH_MM": (".param DVTH_MM={MM_ON*AGAUSS(0, %s, 1)/sqrt(max(mtot,%s))"
                     " + Z_VT*%s/sqrt(max(mtot,%s))}"
@@ -327,7 +327,8 @@ def junction_sigmas(dev: str, lm: dict, n: float) -> tuple:
     return s_is, s_bf
 
 
-def bjt_wrapper(dev: str, keep: list, lm: dict, gv: dict, n: float) -> list:
+def bjt_wrapper(dev: str, keep: list, lm: dict, gv: dict, n: float,
+                a_def: str = "0.04") -> list:
     """BJT with INDEPENDENT Is and beta mismatch (ruling Q4).
 
     The old wrapper had one AREAEFF term doing all the work. In Gummel-Poon `area` scales
@@ -350,7 +351,10 @@ def bjt_wrapper(dev: str, keep: list, lm: dict, gv: dict, n: float) -> list:
     s_is, s_bf = junction_sigmas(dev, lm, n)
     t = gv["_BV_template"]
     entry = next(a for a in t["applies_to"] if a.get("target") == "wrapper_BVCBO")
-    body = [".subckt %s c b e params: AREA=0.04 M=1 Z_VBE=0 Z_BF=0" % dev]
+    # The AREA default is AUTHORED per device and equals its fabrication minimum
+    # (NPN_LV 0.04, the others 0.10). Hardcoding one value put three wrappers
+    # below their own minimum, which preflight's defaults=minima check caught.
+    body = [".subckt %s c b e params: AREA=%s M=1 Z_VBE=0 Z_BF=0" % (dev, a_def)]
     body += ["* " + c[len("*KEEP"):].lstrip() for c in keep if c.startswith("*KEEP ")]
     body += [
         "* Phase 3h. AREA is a multiple of the 100 um^2 cell, so area_um2 = AREA*100*M.",
@@ -380,7 +384,8 @@ def bjt_wrapper(dev: str, keep: list, lm: dict, gv: dict, n: float) -> list:
     return body
 
 
-def dio_wrapper(dev: str, keep: list, lm: dict, n: float) -> list:
+def dio_wrapper(dev: str, keep: list, lm: dict, n: float,
+                a_def: str = "0.04") -> list:
     """Diode with an Is mismatch derived the same way as the BJT's (ruling Q4).
 
     Only one term: `area` scales Is exactly, and the diode has no beta. A_IS comes from
@@ -388,7 +393,7 @@ def dio_wrapper(dev: str, keep: list, lm: dict, n: float) -> list:
     (n = 1.22) get different coefficients from the same declared voltage.
     """
     s_is, _ = junction_sigmas(dev, lm, n)
-    body = [".subckt %s a c params: AREA=0.04 M=1 Z_IS=0" % dev]
+    body = [".subckt %s a c params: AREA=%s M=1 Z_IS=0" % (dev, a_def)]
     body += ["* " + k[len("*KEEP"):].lstrip() for k in keep if k.startswith("*KEEP ")]
     body += [
         "* Phase 3h. A_IS = A_VBE/(n*V_T), n read per card (Finding A physics).",
@@ -499,7 +504,7 @@ def res_lines(dev: str, lm: dict) -> dict[str, str]:
     return {
         "AUM2": ".param AUM2={(L/1u)*(W/1u)}",
         "RMM": (".param RMM={1+MM_ON*AGAUSS(0, %s/sqrt(AUM2%s), 1)"
-                " + MM_SIGMA*%s/sqrt(AUM2%s)}"
+                " + Z_**%s/sqrt(AUM2%s)}"
                 % (fmt(one), GUARD, fmt(one), GUARD)),
     }
 
@@ -509,7 +514,7 @@ def cap_lines(dev: str, lm: dict) -> dict[str, str]:
     return {
         "AUM2": ".param AUM2={(L/1u)*(W/1u)}",
         "CMM": (".param CMM={1+MM_ON*AGAUSS(0, %s/sqrt(AUM2%s), 1)"
-                " + MM_SIGMA*%s/sqrt(AUM2%s)}"
+                " + Z_**%s/sqrt(AUM2%s)}"
                 % (fmt(one), GUARD, fmt(one), GUARD)),
     }
 
@@ -544,21 +549,21 @@ def generate() -> str:
         if mk:
             out.extend(mos_wrapper(mk.group(1), mk.group(2), mk.group(3), lm, gv))
             continue
-        bk = re.match(r"\* <<<(BJT|DIO)_WRAPPER (\S+)>>>", line)
+        bk = re.match(r"\* <<<(BJT|DIO)_WRAPPER (\S+) AREA=(\S+)>>>", line)
         if bk:
-            pending_j = (bk.group(1), bk.group(2))
+            pending_j = (bk.group(1), bk.group(2), bk.group(3))
             keep = []
             continue
         if pending_j is not None:
             if line.startswith("*KEEP"):
                 keep.append(line)
                 continue
-            jkind, jdev = pending_j
+            jkind, jdev, jarea = pending_j
             nj = emission_of_card(jdev)
             if jkind == "BJT":
-                out.extend(bjt_wrapper(jdev, keep, lm, gv, nj))
+                out.extend(bjt_wrapper(jdev, keep, lm, gv, nj, jarea))
             else:
-                out.extend(dio_wrapper(jdev, keep, lm, nj))
+                out.extend(dio_wrapper(jdev, keep, lm, nj, jarea))
             pending_j, keep = None, []
         ck = re.match(r"\* <<<CAP_WRAPPER (\S+) L=(\S+) W=(\S+)>>>", line)
         if ck:
@@ -587,7 +592,7 @@ def generate() -> str:
         if m:
             dev = m.group(1)
             if dev in list(lm["_VDMOS"]["A_VT"]["ladder"]):
-                line = line.replace("MM_SIGMA=0", "Z_VT=0")
+                line = line.replace("Z_VT=0", "Z_VT=0")
             if dev in MOS:
                 repl = mos_lines(dev, lm)
             elif dev in VDMOS:

@@ -6,7 +6,7 @@ S {}
 E {}
 T {AutoHV_BiCMOS180 - device sheet (all 40 devices + PWL sources, nothing wired)} -10 -110 0 0 0.5 0.5 {layer=4}
 T {Reference palette: copy any instance into a testbench. Params are editable per instance (press q).} -10 -86 0 0 0.28 0.28 {}
-T {LV NMOS   (d g s b)  -  W L M MM_SIGMA} -10 -60 0 0 0.3 0.3 {layer=8}
+T {LV NMOS   (d g s b)  -  W L M Z_*} -10 -60 0 0 0.3 0.3 {layer=8}
 C {autohv/NMOS12V.sym} 0 0 0 0 {name=NMOS12V W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
 C {autohv/NMOS1V8.sym} 150 0 0 0 {name=NMOS1V8 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
 C {autohv/NMOS3V3.sym} 300 0 0 0 {name=NMOS3V3 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
@@ -16,7 +16,7 @@ C {autohv/PMOS12V.sym} 0 180 0 0 {name=PMOS12V W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L
 C {autohv/PMOS1V8.sym} 150 180 0 0 {name=PMOS1V8 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
 C {autohv/PMOS3V3.sym} 300 180 0 0 {name=PMOS3V3 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
 C {autohv/PMOS5V0.sym} 450 180 0 0 {name=PMOS5V0 W=10u L=1u M=1 Z_VT=0} Z_W=0} Z_L=0}
-T {N-LDMOS   (d g s)  -  W M MM_SIGMA} -10 300 0 0 0.3 0.3 {layer=8}
+T {N-LDMOS   (d g s)  -  W M Z_*} -10 300 0 0 0.3 0.3 {layer=8}
 C {autohv/NDMOS20V.sym} 0 360 0 0 {name=NDMOS20V W=10u M=1 Z_VT=0}
 C {autohv/NDMOS40V.sym} 150 360 0 0 {name=NDMOS40V W=10u M=1 Z_VT=0}
 C {autohv/NDMOS60V.sym} 300 360 0 0 {name=NDMOS60V W=10u M=1 Z_VT=0}
@@ -29,28 +29,28 @@ C {autohv/PDMOS40V.sym} 150 540 0 0 {name=PDMOS40V W=10u M=1 Z_VT=0}
 C {autohv/PDMOS60V.sym} 300 540 0 0 {name=PDMOS60V W=10u M=1 Z_VT=0}
 C {autohv/PDMOS80V.sym} 450 540 0 0 {name=PDMOS80V W=10u M=1 Z_VT=0}
 C {autohv/PDMOS120V.sym} 600 540 0 0 {name=PDMOS120V W=10u M=1 Z_VT=0}
-T {LDMOS 200V  (d g s)  -  W L M MM_SIGMA} -10 660 0 0 0.3 0.3 {layer=8}
+T {LDMOS 200V  (d g s)  -  W L M Z_*} -10 660 0 0 0.3 0.3 {layer=8}
 C {autohv/NDMOS200V.sym} 0 720 0 0 {name=NDMOS200V W=10u L=8u M=1 Z_VT=0}
 C {autohv/PDMOS200V.sym} 150 720 0 0 {name=PDMOS200V W=10u L=8u M=1 Z_VT=0}
-T {BJT   (c b e)  -  AREA MM_SIGMA} -10 840 0 0 0.3 0.3 {layer=8}
+T {BJT   (c b e)  -  AREA Z_*} -10 840 0 0 0.3 0.3 {layer=8}
 C {autohv/NPN_LV.sym} 0 900 0 0 {name=NPN_LV AREA=1 Z_VBE=0}
 C {autohv/NPN_HV.sym} 150 900 0 0 {name=NPN_HV AREA=1 Z_VBE=0}
 C {autohv/PNP_LAT.sym} 300 900 0 0 {name=PNP_LAT AREA=1 Z_VBE=0}
 C {autohv/PNP_HV.sym} 450 900 0 0 {name=PNP_HV AREA=1 Z_VBE=0}
-T {Diodes / Zeners   (a c)  -  AREA MM_SIGMA} -10 1020 0 0 0.3 0.3 {layer=8}
+T {Diodes / Zeners   (a c)  -  AREA Z_*} -10 1020 0 0 0.3 0.3 {layer=8}
 C {autohv/DIO_PN.sym} 0 1080 0 0 {name=DIO_PN AREA=1 Z_IS=0}
 C {autohv/DIO_FAST.sym} 150 1080 0 0 {name=DIO_FAST AREA=1 Z_IS=0}
 C {autohv/DIO_SCH.sym} 300 1080 0 0 {name=DIO_SCH AREA=1 Z_IS=0}
 C {autohv/DZ_5V6.sym} 450 1080 0 0 {name=DZ_5V6 AREA=1 Z_IS=0}
 C {autohv/DZ_12V.sym} 600 1080 0 0 {name=DZ_12V AREA=1 Z_IS=0}
 C {autohv/DZ_24V.sym} 750 1080 0 0 {name=DZ_24V AREA=1 Z_IS=0}
-T {Resistors   (p n)  -  L W MM_SIGMA} -10 1200 0 0 0.3 0.3 {layer=8}
+T {Resistors   (p n)  -  L W Z_*} -10 1200 0 0 0.3 0.3 {layer=8}
 C {autohv/RPOLY_HI.sym} 0 1260 0 0 {name=RPOLY_HI L=100u W=10u Z_R=0}
 C {autohv/RPOLY_LO.sym} 150 1260 0 0 {name=RPOLY_LO L=100u W=10u Z_R=0}
 C {autohv/RNWELL.sym} 300 1260 0 0 {name=RNWELL L=100u W=10u Z_R=0}
 C {autohv/RNPLUS.sym} 450 1260 0 0 {name=RNPLUS L=100u W=10u Z_R=0}
 C {autohv/RPPLUS.sym} 600 1260 0 0 {name=RPPLUS L=100u W=10u Z_R=0}
-T {Capacitors   (p n)  -  L W MM_SIGMA} -10 1380 0 0 0.3 0.3 {layer=8}
+T {Capacitors   (p n)  -  L W Z_*} -10 1380 0 0 0.3 0.3 {layer=8}
 C {autohv/CMIM_STD.sym} 0 1440 0 0 {name=CMIM_STD L=100u W=100u Z_C=0}
 C {autohv/CMIM_HI.sym} 150 1440 0 0 {name=CMIM_HI L=100u W=100u Z_C=0}
 C {autohv/CMOM.sym} 300 1440 0 0 {name=CMOM L=100u W=100u Z_C=0}

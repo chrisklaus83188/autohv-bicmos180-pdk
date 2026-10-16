@@ -1,8 +1,8 @@
 v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {type=pmos
-format="@spiceprefix@name @pinlist @symname W=@W L=@L M=@M MM_SIGMA=@MM_SIGMA"
-template="name=M1 W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X"
+format="@spiceprefix@name @pinlist @symname W=@W L=@L M=@M NF=@NF Z_VT=@Z_VT Z_BETA=@Z_BETA Z_W=@Z_W Z_L=@Z_L"
+template="name=M1 W=10u L=8u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0 spiceprefix=X"
 }
 V {}
 S {}

@@ -1,6 +1,6 @@
 .title A_100u_MIR_CS
 .include "../../../autohv_bicmos180_case.lib"
-.param case=0 PROC_ON=0 MM_ON=0 MM_SIGMA=0
+.param case=0 PROC_ON=0 MM_ON=0 Z_VT=0
 .options temp=27
 Vdd vdd 0 5
 Iin n2 0 0.0001

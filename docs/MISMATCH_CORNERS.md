@@ -1,7 +1,7 @@
-# Deterministic mismatch corners: `MM_SIGMA`
+# Deterministic mismatch corners: `Z_*`
 
 This PDK supports a deterministic alternative to Monte Carlo mismatch
-analysis: a per-instance parameter `MM_SIGMA` that snaps a device's
+analysis: a per-instance parameter `Z_*` that snaps a device's
 mismatch parameters to a specified σ-multiple instead of drawing
 randomly from `AGAUSS`. This document covers what it is, how to use
 it, and the caveats that matter for valid sign-off.
@@ -14,25 +14,25 @@ HSPICE convention `AGAUSS(0, X, 3)` truncates at ±X (where X is the
 3-σ bound), so the true 1-σ value is X / 3 (verified empirically on
 ngspice 45.2 in Phase E).
 
-`MM_SIGMA` adds a deterministic term to each mismatch expression:
+`Z_*` adds a deterministic term to each mismatch expression:
 
 ```
-DVTH_MM = MM_ON*AGAUSS(0, X, 3)/scale + MM_SIGMA*X/3/scale
+DVTH_MM = MM_ON*AGAUSS(0, X, 3)/scale + Z_**X/3/scale
 ```
 
-- `MM_SIGMA = 0` (the default): the deterministic term is 0, behavior
+- `Z_VT=0` (the default): the deterministic term is 0, behavior
   is identical to before. Use this for `MM_ON=1` Monte Carlo runs.
-- `MM_SIGMA = +3`: the parameter lands at exactly +X / scale = the
+- `Z_VT=+3`: the parameter lands at exactly +X / scale = the
   +3-σ bound. Same as the worst-case extreme of an AGAUSS draw.
-- `MM_SIGMA = +1`: parameter lands at the +1-σ value.
-- `MM_SIGMA` can be any real number — the form is linear in σ-units,
-  so sensitivity sweeps (e.g. `.step MM_SIGMA -3 3 0.5`) work natively.
+- `Z_VT=+1`: parameter lands at the +1-σ value.
+- `Z_*` can be any real number — the form is linear in σ-units,
+  so sensitivity sweeps (e.g. `.step Z_* -3 3 0.5`) work natively.
 
 ## 2. The intended flow
 
 ```
 1. Identify the metric you care about (offset, gain mismatch, settling).
-2. One-at-a-time sensitivity scan: set each device's MM_SIGMA to ±3
+2. One-at-a-time sensitivity scan: set each device's Z_* to ±3
    individually, with all others at 0. Record the sign of the metric
    change for each device. That tells you which sign worsens the metric.
 3. Compose the worst-case pattern: set every device to the sign that
@@ -48,21 +48,21 @@ This flow gives you fast deterministic CI iteration plus periodic
 statistical validation, which is the standard practice for analog
 design at this kind of complexity.
 
-## 3. Important: set `MM_ON=0` when using `MM_SIGMA`
+## 3. Important: set `MM_ON=0` when using `Z_*`
 
-`MM_ON` and `MM_SIGMA` are independent terms in the expression; if you
+`MM_ON` and `Z_*` are independent terms in the expression; if you
 set both, you get the sum of a random draw AND a deterministic shift,
 which doesn't represent anything physical. The four valid combinations:
 
-| `MM_ON` | `MM_SIGMA` | Meaning |
+| `MM_ON` | `Z_*` | Meaning |
 |---------|------------|---------|
 | 0 | 0 | No mismatch. Default. |
 | 1 | 0 | Random MC (existing Phase E harness, AGAUSS-driven). |
-| 0 | ±k | Deterministic corner at ±k σ on every instance that sets `MM_SIGMA=±k`. |
+| 0 | ±k | Deterministic corner at ±k σ on every instance that sets `Z_VT=±k`. |
 | 1 | ±k | **Don't do this**. Sum of random + deterministic; not a meaningful condition. |
 
-In practice: when you're using `MM_SIGMA`, set `.param MM_ON=0` at deck
-scope. When you're running MC, leave `MM_SIGMA=0` (i.e., just don't
+In practice: when you're using `Z_*`, set `.param MM_ON=0` at deck
+scope. When you're running MC, leave `Z_VT=0` (i.e., just don't
 pass it on the X-lines).
 
 ## 4. Canonical patterns
@@ -138,7 +138,7 @@ XM1 d g s b NMOS5V0 W=100u L=2u Z_VT={SCAN} Z_W={SCAN} Z_L={SCAN}
 
 Watch the `offset` measurement as `SCAN` sweeps. The slope at `SCAN=0`
 is `(metric_sensitivity to that device's σ)`. Sign of slope = direction
-of `MM_SIGMA` that worsens the metric.
+of `Z_*` that worsens the metric.
 
 ## 5. Caveats
 
@@ -192,7 +192,7 @@ patterns covering the union, not just one.
 
 ### 5.4. PROC and MM are independent axes
 
-`MM_SIGMA` only affects per-instance mismatch (the local
+`Z_*` only affects per-instance mismatch (the local
 component). Global process variation is on a separate axis, controlled
 by the 5 named corners (`case=0..4`) and the `PROC_ON` flag. Worst case
 is the product space:
@@ -203,16 +203,16 @@ For most analog designs the cross-product is too large to test
 exhaustively. Standard practice:
 
 - Test all MM corners at TT (case=0), validate worst-case mismatch.
-- Test FF and SS process corners with `MM_ON=0, MM_SIGMA=0` (no
+- Test FF and SS process corners with `MM_ON=0, Z_VT=0` (no
   mismatch), validate worst-case process.
 - Cross-check the few combinations you suspect will be marginal
   (typically SS process + worst-case mismatch on offset-sensitive
   circuits).
 
-### 5.5. AGAUSS still gets evaluated when `MM_SIGMA ≠ 0`
+### 5.5. AGAUSS still gets evaluated when `Z_* ≠ 0`
 
-The expression form is `MM_ON*AGAUSS(...) + MM_SIGMA*X/3/scale`. Even
-when `MM_SIGMA = +3` and `MM_ON = 0`, the `AGAUSS(...)` call is still
+The expression form is `MM_ON*AGAUSS(...) + Z_**X/3/scale`. Even
+when `Z_VT=+3` and `MM_ON = 0`, the `AGAUSS(...)` call is still
 evaluated (its result then multiplied by 0). This consumes an AGAUSS
 draw from the underlying RNG per instance.
 
@@ -225,7 +225,7 @@ MC in separate deck invocations anyway.
 
 ## 6. When to use corners vs. MC
 
-| | **MM_SIGMA corners** | **MC harness (Phase E)** |
+| | **Z_* corners** | **MC harness (Phase E)** |
 |---|---|---|
 | Speed | One sim per corner. Seconds. | N iterations (typically 100-1000). Minutes-hours. |
 | Determinism | Bit-exact reproducible. | Time-seeded; reproducible only with explicit seed handling (not currently supported). |
@@ -244,35 +244,35 @@ For reference, here's the form used in each device subckt.
 **BSIM3 MOS** (8 devices: NMOS/PMOS 12/18/33/50):
 ```
 .param DVTH_MM = MM_ON*AGAUSS(0, X/sqrt(AUM2+1e-12), 3)
-              + MM_SIGMA*X/3/sqrt(AUM2+1e-12)
+              + Z_**X/3/sqrt(AUM2+1e-12)
 ```
-Same form for DWREL_MM and DLREL_MM (one MM_SIGMA, three params).
+Same form for DWREL_MM and DLREL_MM (one Z_*, three params).
 
 **VDMOS** (13 devices: NDMOS/PDMOS 20/40/60/80/120/200, DNMOS20V):
 ```
 .param DVTH_MM = MM_ON*AGAUSS(0, X, 3)/sqrt(max(mtot,1e-6))
-              + MM_SIGMA*X/3/sqrt(max(mtot,1e-6))
+              + Z_**X/3/sqrt(max(mtot,1e-6))
 ```
 Single DVTH_MM term; subckt then applies it via the Vshift VSRC.
 
 **BJT and Diode** (10 devices: NPN_LV/HV, PNP_LAT/HV, DIO_*, DZ_*):
 ```
 .param AREAEFF = AREA*(1 + MM_ON*AGAUSS(0, 0.012/sqrt(AREA+1e-12), 3)
-                          + MM_SIGMA*0.012/3/sqrt(AREA+1e-12))
+                          + Z_**0.012/3/sqrt(AREA+1e-12))
 ```
 Effective AREA is multiplied by 1 + δ, where δ is the mismatch.
 
 **Behavioral resistor** (5 devices: RPOLY_HI/LO, RNWELL, RNPLUS, RPPLUS):
 ```
 .param RMM = 1 + MM_ON*AGAUSS(0, X/sqrt(AUM2+1e-12), 3)
-               + MM_SIGMA*X/3/sqrt(AUM2+1e-12)
+               + Z_**X/3/sqrt(AUM2+1e-12)
 ```
 Resistance is multiplied by `RMM`.
 
 **Behavioral capacitor** (4 devices: CMIM_STD/HI, CMOM, CFRINGE):
 ```
 .param CMM = 1 + MM_ON*AGAUSS(0, X/sqrt(AUM2+1e-12), 3)
-               + MM_SIGMA*X/3/sqrt(AUM2+1e-12)
+               + Z_**X/3/sqrt(AUM2+1e-12)
 .param LS  = sqrt(CMM)
 ```
 Capacitance scales as `CMM`; linear dimensions scale as `sqrt(CMM)`.
@@ -289,5 +289,5 @@ within ±10 %. This catches any future regression in the deterministic
 term computation.
 
 Smoke (Phase A) and the Phase E MC harness both run unchanged with
-`MM_SIGMA=0` default, confirming backward compatibility on every CI
+`Z_VT=0` default, confirming backward compatibility on every CI
 run.

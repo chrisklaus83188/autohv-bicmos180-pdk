@@ -15,18 +15,18 @@ with this machine's path, and registers `~/xschem_lib` in `~/.xschem/xschemrc`.
 
 ## Using the devices
 Place any `autohv/<DEVICE>` part. Editable instance params:
-- 4-pin MOS (NMOS/PMOS 12·18·33·50), pins **d g s b**: `W L M MM_SIGMA`
-- 3-pin DMOS (N/P DMOS 20·40·60·80·120, DNMOS20V), pins **d g s**: `W M MM_SIGMA`
-- DMOS200 (N/P), pins **d g s**: `W L M MM_SIGMA`  (L default 8u)
-- BJT (NPN_LV/HV, PNP_LAT/HV), pins **c b e**: `AREA MM_SIGMA`
-- Diodes/Zeners (DIO_*, DZ_*), pins **a c**: `AREA MM_SIGMA`
-- Resistors (RPOLY_*, RNWELL, RNPLUS, RPPLUS), pins **p n**: `L W MM_SIGMA`
-- Caps (CMIM_*, CMOM, CFRINGE), pins **p n**: `L W MM_SIGMA`
+- 4-pin MOS (NMOS/PMOS 12·18·33·50), pins **d g s b**: `W L M Z_*`
+- 3-pin DMOS (N/P DMOS 20·40·60·80·120, DNMOS20V), pins **d g s**: `W M Z_VT`
+- DMOS200 (N/P), pins **d g s**: `W L M Z_*`  (L default 8u)
+- BJT (NPN_LV/HV, PNP_LAT/HV), pins **c b e**: `AREA Z_VBE`
+- Diodes/Zeners (DIO_*, DZ_*), pins **a c**: `AREA Z_*`
+- Resistors (RPOLY_*, RNWELL, RNPLUS, RPPLUS), pins **p n**: `L W Z_R`
+- Caps (CMIM_*, CMOM, CFRINGE), pins **p n**: `L W Z_C`
 
 ## Model include + corner
 Drop one `autohv_lib` block on the testbench. Set its `CASE` attribute:
 **0=TT 1=FF 2=SS 3=FS 4=SF**. It emits the `.include` + `.param case=`.
-Per-device mismatch: set `MM_SIGMA` on the instance (needs global `MM_ON=1`).
+Per-device mismatch: set `Z_*` on the instance (needs global `MM_ON=1`).
 
 ## Regenerating symbols
 Edit `xschem/gen_syms.sh`, then `bash xschem/gen_syms.sh` (rewrites `autohv/*.sym`).

@@ -76,10 +76,10 @@ def _dev(name, d, g, s, b, W, L, M):
     """One mirror device, with the deterministic mismatch knob passed EXPLICITLY.
 
     It has to be on the instance. A subckt parameter default shadows a same-named
-    top-level .param in ngspice, so the `.param MM_SIGMA=<n>` this file used to write in
+    top-level .param in ngspice, so the `.param Z_VT=<n>` this file used to write in
     the header never reached the device: measured on the pre-Phase-3 wrapper, an instance
     without the parameter read delvto = 0.0000000000 while the same instance carrying
-    MM_SIGMA=3 read 1.2643069248e-02. Every mirror run labelled with a non-zero mm_sigma
+    Z_VT=3 read 1.2643069248e-02. Every mirror run labelled with a non-zero mm_sigma
     was therefore measuring the TYPICAL device.
 
     MMS is defined in the header, so the existing mm_sigma= argument keeps working and now

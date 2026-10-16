@@ -257,7 +257,7 @@ def measure_sensitivities(ngspice: str, lib_uri: str,
       * dvt0 rolls Vth off with L (with k3 and mobility off, d lnI/d lnL goes
         from -1.117 to -1.005).
 
-    The MM_SIGMA knob drives all three terms together, so the W and L
+    The Z_* knob drives all three terms together, so the W and L
     sensitivities are measured by perturbing the drawn dimensions and the Vth
     sensitivity is solved from the knob. Seven op points, about 0.6 s.
     """

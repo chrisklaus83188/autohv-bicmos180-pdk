@@ -221,7 +221,7 @@ def build():
         area = ("`AUM2=%s`" % bp["AUM2"] if "AUM2" in bp else
                 "`mtot=%s`" % bp["mtot"] if "mtot" in bp else
                 "`AREA`" if "AREA" in d["params"] else "–")
-        mm_sigma = any("MM_SIGMA*" in bp.get(t["name"], "") for t in terms)
+        mm_sigma = any("Z_**" in bp.get(t["name"], "") for t in terms)
         notes = []
         if model.startswith("BSIM3"):
             if "AUM2" in bp and "M" not in re.findall(r"\b\w+\b", bp["AUM2"]):
@@ -339,7 +339,7 @@ def render():
     L += ["| %s | %s |" % m for m in misfits]
     L += ["", "## Device table", "",
           "| device | family | model | rated | instance params | mismatch terms | area term | "
-          "`MM_SIGMA` path | Phase 1 (`M`/`NF`/`NS`) | Phase 2 knobs | notes |",
+          "`Z_*` path | Phase 1 (`M`/`NF`/`NS`) | Phase 2 knobs | notes |",
           "|---|---|---|---|---|---|---|---|---|---|---|"]
     for r in rows:
         L.append("| %(name)s | %(family)s | %(model)s | %(rated)s | `%(params)s` | %(terms)s | "

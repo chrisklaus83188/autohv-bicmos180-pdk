@@ -9,8 +9,8 @@ target simulator.
   Zeners, resistors, capacitors)
 - **5 process corners** selected by one global parameter
 - **Process + mismatch statistics** via two orthogonal global switches (Monte Carlo)
-- **Deterministic mismatch corners** via a per-instance `MM_SIGMA` knob — alternative
-  to MC for CI-gating and worst-case sign-off. See
+- **Deterministic mismatch corners** via per-instance σ-knobs — one per independent
+  mismatch term, an alternative to MC for CI-gating and worst-case sign-off. See
   [`docs/MISMATCH_CORNERS.md`](docs/MISMATCH_CORNERS.md)
 
 See **[docs/AutoHV_BiCMOS180_PDK_Reference.docx](docs/AutoHV_BiCMOS180_PDK_Reference.docx)**
@@ -73,11 +73,23 @@ X1  d g 0 0 NMOS1V8 W=10u L=1u M=1   ; d g s b
 
 ### Deterministic mismatch corners (alternative to Monte Carlo)
 
-Every device subckt also accepts a per-instance parameter `MM_SIGMA` (default 0)
-that snaps the device's mismatch parameters to a specified σ-multiple — a
-deterministic alternative to `MM_ON=1` AGAUSS draws. Useful for worst-case
-bracketing, CI gating, and sensitivity analysis. Set `MM_ON=0` when using
-`MM_SIGMA` (the two terms add, so don't enable both at once).
+Every device subckt accepts per-instance σ-knobs (all default 0) that snap its
+mismatch terms to a specified σ-multiple — a deterministic alternative to the
+`MM_ON=1` AGAUSS draws. There is one knob per *independent* term, so a worst case
+can be built term by term rather than with a single dial that moves everything
+together:
+
+| family | knobs |
+|---|---|
+| BSIM3 MOS | `Z_VT`, `Z_BETA`, `Z_W`, `Z_L` |
+| VDMOS / LDMOS | `Z_VT` |
+| resistors | `Z_R` |
+| capacitors | `Z_C` |
+| BJT | `Z_VBE`, `Z_BF` |
+| diodes / Zeners | `Z_IS` |
+
+Useful for worst-case bracketing, CI gating, and sensitivity analysis. Set
+`MM_ON=0` when using them (the two terms add, so don't enable both at once).
 
 ```spice
 * Worst-case differential pair input offset:
@@ -118,8 +130,8 @@ ngspice -b 01_nominal_op.cir
 | Capacitor                           | p n     | `L`, `W` |
 
 Ports are listed in pin order; that order is what the generated netlist uses.
-Every device also accepts the optional per-instance knob `MM_SIGMA` (default 0)
-for deterministic mismatch corners — see the section above and
+Every device also accepts optional per-instance σ-knobs (default 0) for
+deterministic mismatch corners — see the table above and
 [`docs/MISMATCH_CORNERS.md`](docs/MISMATCH_CORNERS.md).
 
 ## Notes

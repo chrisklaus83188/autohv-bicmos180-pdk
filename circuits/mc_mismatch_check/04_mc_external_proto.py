@@ -1,7 +1,7 @@
 """External random-number driver prototype.  (HANDOFF_monte_carlo.md section 4)
 
 Instead of letting the wrapper draw AGAUSS internally, each mirror device gets
-its own knob -- MM_SIGMA={S1} on X1, MM_SIGMA={S2} on X2 -- with MM_ON=0, so the
+its own knob -- Z_VT={S1} on X1, Z_VT={S2} on X2 -- with MM_ON=0, so the
 wrapper draws nothing itself.  Python generates the unit-normal z values from a
 fixed seed, and a single ngspice invocation steps `alterparam S1=.. S2=..` +
 `reset` + `op` through every sample.
@@ -11,10 +11,10 @@ What this establishes, as "before" evidence for the Phase 3 driver:
   * it is bit-reproducible (same seed -> identical output, run twice),
   * it is fast (one invocation for all samples; timed in 03_mc_runtime.py).
 
-Known limitation, recorded in the handoff: a single MM_SIGMA drives the Vth, W
+Known limitation, recorded in the handoff: a single Z_* drives the Vth, W
 and L terms of a device at the same sigma-multiple, so the three are perfectly
 correlated.  The first-order prediction below accounts for that; Phase 2 (R5 as
-ruled) replaces MM_SIGMA with independent Z_VT, Z_W, Z_L.
+ruled) replaces Z_* with independent Z_VT, Z_W, Z_L.
 
 Output: results/04_external_proto.json
 """
@@ -47,8 +47,8 @@ def deck(z):
         ".option num_threads=1",
         "Vdd  dd 0 %.6g" % M.VDD,
         "Iref dd in %.6g" % M.IREF,
-        "X1 in  in 0 0 %s W=%gu L=%gu MM_SIGMA={S1}" % (M.DEV, M.W, M.L),
-        "X2 out in 0 0 %s W=%gu L=%gu MM_SIGMA={S2}" % (M.DEV, M.W, M.L),
+        "X1 in  in 0 0 %s W=%gu L=%gu Z_VT={S1}" % (M.DEV, M.W, M.L),
+        "X2 out in 0 0 %s W=%gu L=%gu Z_VT={S2}" % (M.DEV, M.W, M.L),
         "Vout out 0 %.6g" % M.VOUT,
         ".control",
         "option temp=%d" % M.TEMP,

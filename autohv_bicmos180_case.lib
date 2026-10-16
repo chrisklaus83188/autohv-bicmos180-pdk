@@ -538,7 +538,7 @@ Fbeta e b Vbsen {GB}
 Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
 .ends NPN_LV
 
-.subckt PNP_LAT c b e params: AREA=0.04 M=1 Z_VBE=0 Z_BF=0
+.subckt PNP_LAT c b e params: AREA=0.10 M=1 Z_VBE=0 Z_BF=0
 * Phase 3h. AREA is a multiple of the 100 um^2 cell, so area_um2 = AREA*100*M.
 .param AUM2={AREA*100*M}
 * +Z_VBE = higher Vbe = SMALLER Is, hence the minus sign on the area multiplier.
@@ -556,7 +556,7 @@ Fbeta e b Vbsen {GB}
 Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
 .ends PNP_LAT
 
-.subckt NPN_HV c b e params: AREA=0.04 M=1 Z_VBE=0 Z_BF=0
+.subckt NPN_HV c b e params: AREA=0.10 M=1 Z_VBE=0 Z_BF=0
 * Phase 3h. AREA is a multiple of the 100 um^2 cell, so area_um2 = AREA*100*M.
 .param AUM2={AREA*100*M}
 * +Z_VBE = higher Vbe = SMALLER Is, hence the minus sign on the area multiplier.
@@ -574,7 +574,7 @@ Fbeta e b Vbsen {GB}
 Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
 .ends NPN_HV
 
-.subckt PNP_HV c b e params: AREA=0.04 M=1 Z_VBE=0 Z_BF=0
+.subckt PNP_HV c b e params: AREA=0.10 M=1 Z_VBE=0 Z_BF=0
 * Phase 3h. AREA is a multiple of the 100 um^2 cell, so area_um2 = AREA*100*M.
 .param AUM2={AREA*100*M}
 * +Z_VBE = higher Vbe = SMALLER Is, hence the minus sign on the area multiplier.

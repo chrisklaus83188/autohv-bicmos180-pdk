@@ -65,7 +65,7 @@ Regenerate with `python tools/stat_model_inventory.py`; `--check` fails if stale
 
 ## Device table
 
-| device | family | model | rated | instance params | mismatch terms | area term | `MM_SIGMA` path | Phase 1 (`M`/`NF`/`NS`) | Phase 2 knobs | notes |
+| device | family | model | rated | instance params | mismatch terms | area term | `Z_*` path | Phase 1 (`M`/`NF`/`NS`) | Phase 2 knobs | notes |
 |---|---|---|---|---|---|---|---|---|---|---|
 | NMOS1V8 | LV FET | BSIM3 (level 49) | Vds_dcmax 2 V | `W=0.22u L=0.18u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0` | Vth (delvto): 3.44 mV·µm at 1σ (1σ 3.44) ÷ √(AUM2+1e-12)<br>DBETA_MM: 1.5 %·µm at 1σ (1σ 1.5) ÷ √(AUM2+1e-12)<br>W, relative: 0.25 %·µm at 1σ (1σ 0.25) ÷ √(AUM2+1e-12)<br>L, relative: 0.15 %·µm at 1σ (1σ 0.15) ÷ √(AUM2+1e-12) | `AUM2=(W/1u)*(L/1u)*M` | no | fix `AUM2` to include `M`; add `NF` (Q10 stripe rule) | `Z_VT` `Z_W` `Z_L` | fixed wint=5e-09, lint=1.2e-08 |
 | PMOS1V8 | LV FET | BSIM3 (level 49) | Vds_dcmax 2 V | `W=0.22u L=0.18u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0` | Vth (delvto): 3.66 mV·µm at 1σ (1σ 3.66) ÷ √(AUM2+1e-12)<br>DBETA_MM: 1.5 %·µm at 1σ (1σ 1.5) ÷ √(AUM2+1e-12)<br>W, relative: 0.25 %·µm at 1σ (1σ 0.25) ÷ √(AUM2+1e-12)<br>L, relative: 0.15 %·µm at 1σ (1σ 0.15) ÷ √(AUM2+1e-12) | `AUM2=(W/1u)*(L/1u)*M` | no | fix `AUM2` to include `M`; add `NF` (Q10 stripe rule) | `Z_VT` `Z_W` `Z_L` | fixed wint=7e-09, lint=1.5e-08 |
@@ -89,9 +89,9 @@ Regenerate with `python tools/stat_model_inventory.py`; `--check` fails if stale
 | PDMOS200V | VDMOS/LDMOS | VDMOS | Vds_dcmax 220 V | `W=3u L=5.4u M=1 Z_VT=0` | Vth (delvto): 11 mV per √cell (W_REF=10u) at 1σ (1σ 11) ÷ √(max(mtot,1e-6)) | `mtot=(W/W_REF)*M` | no | none: `M` already R1-correct via `mtot`; no `NF` (D2) | `Z_VT` | ngspice VDMOS has no W/L/AD/AS; size via `m=mtot` |
 | DNMOS20V | VDMOS/LDMOS | VDMOS | Vds_dcmax 22 V | `W=3u M=1 Z_VT=0` | Vth (delvto): 8 mV per √cell (W_REF=10u) at 1σ (1σ 8) ÷ √(max(mtot,1e-6)) | `mtot=(W/W_REF)*M` | no | none: `M` already R1-correct via `mtot`; no `NF` (D2) | `Z_VT` | ngspice VDMOS has no W/L/AD/AS; size via `m=mtot` |
 | NPN_LV | BJT | Gummel-Poon NPN | Vce_max 7 V | `AREA=0.04 M=1 Z_VBE=0 Z_BF=0` | DIS: 3.868 %·µm at 1σ (1σ 3.868) ÷ √(AUM2+1e-12)<br>DBF: 2 %·µm at 1σ (1σ 2) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
-| PNP_LAT | BJT | Gummel-Poon PNP | Vce_max 13 V | `AREA=0.04 M=1 Z_VBE=0 Z_BF=0` | DIS: 3.792 %·µm at 1σ (1σ 3.792) ÷ √(AUM2+1e-12)<br>DBF: 2 %·µm at 1σ (1σ 2) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
-| NPN_HV | BJT | Gummel-Poon NPN | Vce_max 25 V | `AREA=0.04 M=1 Z_VBE=0 Z_BF=0` | DIS: 3.868 %·µm at 1σ (1σ 3.868) ÷ √(AUM2+1e-12)<br>DBF: 2 %·µm at 1σ (1σ 2) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
-| PNP_HV | BJT | Gummel-Poon PNP | Vce_max 22 V | `AREA=0.04 M=1 Z_VBE=0 Z_BF=0` | DIS: 3.756 %·µm at 1σ (1σ 3.756) ÷ √(AUM2+1e-12)<br>DBF: 2 %·µm at 1σ (1σ 2) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| PNP_LAT | BJT | Gummel-Poon PNP | Vce_max 13 V | `AREA=0.10 M=1 Z_VBE=0 Z_BF=0` | DIS: 3.792 %·µm at 1σ (1σ 3.792) ÷ √(AUM2+1e-12)<br>DBF: 2 %·µm at 1σ (1σ 2) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| NPN_HV | BJT | Gummel-Poon NPN | Vce_max 25 V | `AREA=0.10 M=1 Z_VBE=0 Z_BF=0` | DIS: 3.868 %·µm at 1σ (1σ 3.868) ÷ √(AUM2+1e-12)<br>DBF: 2 %·µm at 1σ (1σ 2) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
+| PNP_HV | BJT | Gummel-Poon PNP | Vce_max 22 V | `AREA=0.10 M=1 Z_VBE=0 Z_BF=0` | DIS: 3.756 %·µm at 1σ (1σ 3.756) ÷ √(AUM2+1e-12)<br>DBF: 2 %·µm at 1σ (1σ 2) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
 | DIO_PN | diode | diode | Vr_absmax 100 V | `AREA=0.04 M=1 Z_IS=0` | DIS: 3.684 %·µm at 1σ (1σ 3.684) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
 | DIO_FAST | diode | diode | Vr_absmax 40 V | `AREA=0.04 M=1 Z_IS=0` | DIS: 3.756 %·µm at 1σ (1σ 3.756) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |
 | DIO_SCH | diode | diode | Vr_absmax 40 V | `AREA=0.04 M=1 Z_IS=0` | DIS: 3.582 %·µm at 1σ (1σ 3.582) ÷ √(AUM2+1e-12) | `AUM2=AREA*100*M` | no | none | `Z_AREA` | – |

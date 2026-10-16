@@ -1,7 +1,7 @@
-* Phase D: deterministic mismatch corner check (MM_SIGMA mechanism).
+* Phase D: deterministic mismatch corner check (Z_* mechanism).
 *
 * Two identical NMOS5V0 in saturation at Vds=3, Vgs=2. M1 gets Z_VT=+3 Z_W=+3 Z_L=+3,
-* M2 gets MM_SIGMA=-3. With AGAUSS HSPICE convention (X is 3-sigma, true
+* M2 gets Z_VT=-3. With AGAUSS HSPICE convention (X is 3-sigma, true
 * 1-sigma = X/3), each instance's DVTH_MM lands at exactly +/-X = +/-13.5
 * mV / sqrt(W*L/um^2) = +/-13.5 mV / sqrt(10) = +/-4.27 mV at W=10u L=1u.
 *

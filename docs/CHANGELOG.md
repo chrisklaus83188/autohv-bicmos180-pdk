@@ -1,3 +1,29 @@
+## [unreleased] -- Phase 3h: junction mismatch, and a knob that never worked
+
+### 2026-10-16 -- three-term junction mismatch; deterministic knob corrected
+
+- **beta mismatch is a model ADDITION, not a change.** It was absent from this PDK entirely:
+  in Gummel-Poon `area` scales Is but not `bf`, so the single `AREAEFF` term was an Is
+  mismatch wearing a general name. BJTs now carry independent `Z_VBE` (Is, via `area`) and
+  `Z_BF` (beta, via a sensed-Ib CCCS with `GB = d/(1+d)`, exact rather than small-signal).
+  Verified: `Z_BF=1` moves beta by x1.01007 and leaves Ic unchanged.
+- `A_IS` is **derived** per card as `A_VBE/(n*V_T)`, so a Schottky (n = 1.08) and a 24 V Zener
+  (n = 1.22) get different coefficients from one declared voltage.
+- **The deterministic mismatch knob never reached a device** when set as a top-level `.param`:
+  a subckt parameter default shadows a same-named global, and ngspice accepts an undeclared
+  instance parameter with no error, no warning and no effect. Scope of what this invalidates
+  is recorded in `circuits/current_mirror_char/MIRROR_CHAR.md` -- deterministic-corner tables
+  yes, `MM_ON=1` Monte-Carlo statistics no.
+- `MM_SIGMA` is **retired**: replaced by `Z_VT`/`Z_BETA`/`Z_W`/`Z_L` (MOS), `Z_VT` (VDMOS),
+  `Z_R`, `Z_C`, `Z_VBE`/`Z_BF` and `Z_IS`. One dial that moved Vth, W and L together was not a
+  scenario any process produces. `tools/check_naming.py` fails if it returns.
+- **New guard:** `preflight.py` fails on any `X` instance passing a parameter its subckt does
+  not declare -- 3769 instances scanned, 0 undeclared. Verified against both a stale
+  `MM_SIGMA` and a typo'd `Z_VTT`.
+- Fixed a regression this work introduced: the generated BJT wrappers hardcoded `AREA=0.04`,
+  losing the authored per-device defaults (PNP_LAT / NPN_HV / PNP_HV are 0.10, their
+  fabrication minima). `preflight`'s defaults=minima check caught it.
+
 ## [unreleased] -- device rename: voltage class explicit in every name
 
 ### 2026-09-20 -- device rename

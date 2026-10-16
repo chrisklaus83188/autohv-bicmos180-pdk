@@ -21,9 +21,9 @@ emit_mos() {
   local f="$LIB/$name.sym" fmt tdef plabel xtype=nmos
   [ "$pol" = P ] && xtype=pmos
   case "$lmode" in
-    L)   fmt='W=@W L=@L M=@M MM_SIGMA=@MM_SIGMA'; tdef='W=10u L=1u M=1 MM_SIGMA=0 spiceprefix=X'; plabel='W=@W L=@L M=@M';;
-    L8)  fmt='W=@W L=@L M=@M MM_SIGMA=@MM_SIGMA'; tdef='W=10u L=8u M=1 MM_SIGMA=0 spiceprefix=X'; plabel='W=@W L=@L M=@M';;
-    NOL) fmt='W=@W M=@M MM_SIGMA=@MM_SIGMA';      tdef='W=10u M=1 MM_SIGMA=0 spiceprefix=X';      plabel='W=@W M=@M';;
+    L)   fmt='W=@W L=@L M=@M NF=@NF Z_VT=@Z_VT Z_BETA=@Z_BETA Z_W=@Z_W Z_L=@Z_L'; tdef='W=10u L=1u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0 spiceprefix=X'; plabel='W=@W L=@L M=@M';;
+    L8)  fmt='W=@W L=@L M=@M NF=@NF Z_VT=@Z_VT Z_BETA=@Z_BETA Z_W=@Z_W Z_L=@Z_L'; tdef='W=10u L=8u M=1 NF=1 Z_VT=0 Z_BETA=0 Z_W=0 Z_L=0 spiceprefix=X'; plabel='W=@W L=@L M=@M';;
+    NOL) fmt='W=@W M=@M Z_VT=@Z_VT';              tdef='W=10u M=1 Z_VT=0 spiceprefix=X';      plabel='W=@W M=@M';;
   esac
   # drain lead sticks out a touch further on HV (clears the drift box).
   # GRID RULE: every pin center is a multiple of 10; pin boxes are 6x6 with
@@ -209,21 +209,23 @@ emit_dev() {
   } > "$LIB/$name.sym"
   echo "wrote $name.sym"
 }
-BJT_FMT='AREA=@AREA MM_SIGMA=@MM_SIGMA';  BJT_TDEF='AREA=1 MM_SIGMA=0'
-RES_FMT='L=@L W=@W MM_SIGMA=@MM_SIGMA';    RES_TDEF='L=100u W=10u MM_SIGMA=0'
-CAP_FMT='L=@L W=@W MM_SIGMA=@MM_SIGMA';    CAP_TDEF='L=100u W=100u MM_SIGMA=0'
+BJT_FMT='AREA=@AREA M=@M Z_VBE=@Z_VBE Z_BF=@Z_BF';  BJT_TDEF='AREA=1 M=1 Z_VBE=0 Z_BF=0'
+# Diodes have no beta, so they carry Z_IS alone -- they used to share BJT_FMT.
+DIO_FMT='AREA=@AREA M=@M Z_IS=@Z_IS';     DIO_TDEF='AREA=1 M=1 Z_IS=0'
+RES_FMT='L=@L W=@W NS=@NS M=@M Z_R=@Z_R';  RES_TDEF='L=100u W=10u NS=1 M=1 Z_R=0'
+CAP_FMT='L=@L W=@W M=@M Z_C=@Z_C';         CAP_TDEF='L=100u W=100u M=1 Z_C=0'
 # BJT (c b e), AREA
 emit_dev NPN_LV  npn glyph_npn pins_npn "$BJT_FMT" "$BJT_TDEF" Q 'AREA=@AREA'
 emit_dev NPN_HV  npn glyph_npn pins_npn "$BJT_FMT" "$BJT_TDEF" Q 'AREA=@AREA'
 emit_dev PNP_LAT pnp glyph_pnp pins_pnp "$BJT_FMT" "$BJT_TDEF" Q 'AREA=@AREA'
 emit_dev PNP_HV  pnp glyph_pnp pins_pnp "$BJT_FMT" "$BJT_TDEF" Q 'AREA=@AREA'
 # Diodes / zeners (a c), AREA
-emit_dev DIO_PN   diode glyph_diode    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
-emit_dev DIO_FAST diode glyph_diode    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
-emit_dev DIO_SCH  diode glyph_schottky pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
-emit_dev DZ_5V6   diode glyph_zener    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
-emit_dev DZ_12V    diode glyph_zener    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
-emit_dev DZ_24V    diode glyph_zener    pins_ac "$BJT_FMT" "$BJT_TDEF" D 'AREA=@AREA'
+emit_dev DIO_PN   diode glyph_diode    pins_ac "$DIO_FMT" "$DIO_TDEF" D 'AREA=@AREA'
+emit_dev DIO_FAST diode glyph_diode    pins_ac "$DIO_FMT" "$DIO_TDEF" D 'AREA=@AREA'
+emit_dev DIO_SCH  diode glyph_schottky pins_ac "$DIO_FMT" "$DIO_TDEF" D 'AREA=@AREA'
+emit_dev DZ_5V6   diode glyph_zener    pins_ac "$DIO_FMT" "$DIO_TDEF" D 'AREA=@AREA'
+emit_dev DZ_12V    diode glyph_zener    pins_ac "$DIO_FMT" "$DIO_TDEF" D 'AREA=@AREA'
+emit_dev DZ_24V    diode glyph_zener    pins_ac "$DIO_FMT" "$DIO_TDEF" D 'AREA=@AREA'
 # Resistors (p n), L W -- per-material distinguishing mark
 emit_dev RPOLY_HI resistor glyph_res_poly2 pins_pn "$RES_FMT" "$RES_TDEF" R 'L=@L W=@W'
 emit_dev RPOLY_LO resistor glyph_res_poly1 pins_pn "$RES_FMT" "$RES_TDEF" R 'L=@L W=@W'

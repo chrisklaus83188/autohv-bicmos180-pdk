@@ -4341,7 +4341,7 @@
   },
   "agauss_evaluated_when_mm_sigma_set": {
    "where": "all 40 subckts",
-   "magnitude": "the AGAUSS draw is still consumed when MM_SIGMA is nonzero, perturbing the RNG sequence",
+   "magnitude": "the AGAUSS draw is still consumed when Z_* is nonzero, perturbing the RNG sequence",
    "physical_truth": "numerical bookkeeping, not physics",
    "corrupts": [
     "reproducibility of an MC sequence run alongside corner sims"
@@ -4354,7 +4354,7 @@
    "magnitude": "the random and deterministic terms SUM",
    "physical_truth": "n/a",
    "corrupts": [
-    "any run with MM_ON=1 and MM_SIGMA nonzero simultaneously - explicitly do-not-do-this"
+    "any run with MM_ON=1 and Z_* nonzero simultaneously - explicitly do-not-do-this"
    ],
    "why_present": "documented contract, MISMATCH_CORNERS.md four-mode table",
    "tag": "inventory"

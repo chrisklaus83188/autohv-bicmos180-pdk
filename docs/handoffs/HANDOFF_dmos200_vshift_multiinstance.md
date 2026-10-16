@@ -107,7 +107,7 @@ print v(voutA) v(voutB)
 instance via BSIM `delvto` and delete `Vshift`/`g_int`/`Rgmin`)** should resolve this too: it
 removes the `vshift#branch` matrix unknown from *every* `NDMOS200V`/`PDMOS200V`, so no number of
 floating instances can make those rows singular. It is electrically transparent at nominal
-(`MM_ON = 0`), so the realistic `VDMOS` I–V, output resistance, breakdown, and `MM_SIGMA` mismatch
+(`MM_ON = 0`), so the realistic `VDMOS` I–V, output resistance, breakdown, and `Z_*` mismatch
 all stay exactly as they are. Please verify the fix against **both** reproducers — the cascode one
 and this multi-instance one.
 

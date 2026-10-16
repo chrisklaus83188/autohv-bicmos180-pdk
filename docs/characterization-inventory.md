@@ -27,7 +27,7 @@ autohv-bicmos180-pdk/
 │
 ├── docs/                              Prose record of the PDK's evolution
 │   ├── CHANGELOG.md                   1021 lines — THE richest fix record in the repo
-│   ├── MISMATCH_CORNERS.md            The mismatch/MM_SIGMA contract (293 lines)
+│   ├── MISMATCH_CORNERS.md            The mismatch/Z_* contract (293 lines)
 │   ├── QUICKSTART.md                  1-page ngspice run guide
 │   ├── AutoHV_BiCMOS180_PDK_Reference.docx   22 KB binary reference manual (not parsed here)
 │   ├── handoffs/                      11 RESOLVED engineering correspondence docs + index
@@ -62,7 +62,7 @@ autohv-bicmos180-pdk/
 | Path | Covers | Devices | Key results / conclusions | Repro |
 |---|---|---|---|---|
 | `docs/CHANGELOG.md` | Every model change since 2026-05-22, reverse-chronological, all under `[Unreleased]` | All | The single most complete fix record. Carries before/after numbers for the VDMOS cap fix, PDMOS200V bv re-rating, Rcond sweep, 1/f calibration, self-heating, SC audit, corner sanity. | n/a (prose) |
-| `docs/MISMATCH_CORNERS.md` | Mismatch model contract + `MM_SIGMA` semantics | All 40 | `X_MM = MM_ON*AGAUSS(0,X,3)/scale + MM_SIGMA*X/3/scale`. HSPICE convention: **X is the 3σ bound, true 1σ = X/3**. Four-mode table; `(MM_ON=1, MM_SIGMA≠0)` explicitly "don't do this". | `transients/mismatch_corner.cir` |
+| `docs/MISMATCH_CORNERS.md` | Mismatch model contract + `Z_*` semantics | All 40 | `X_MM = MM_ON*AGAUSS(0,X,3)/scale + Z_**X/3/scale`. HSPICE convention: **X is the 3σ bound, true 1σ = X/3**. Four-mode table; `(MM_ON=1, Z_*≠0)` explicitly "don't do this". | `transients/mismatch_corner.cir` |
 | `docs/handoffs/HANDOFF_vdmos_caps.md` | **The VDMOS capacitance diagnosis** | 13 VDMOS | See §3 and §6.2. Full pre-fix table for `cgs`/`cgdmax`/`cgdmin`/`cjo`; the 10 µm-cell physical argument; pF-vs-fF unit-slip hypothesis. | `coss_check.cir` (partial) |
 | `docs/handoffs/HANDOFF_cascode_vshift_singularity.md` | `vshift#branch` singular matrix on cascodes | NDMOS200V/120 | `method=gear` aborts; `method=trap` "limps through but the operating point is corrupted — e.g. an average supply current measured as `-25.9 A`". | inline repro |
 | `docs/handoffs/HANDOFF_dmos200_breakdown.md` | PDMOS200V sub-200 V breakdown | PDMOS200V | Worst corner 194.58 V (FF/SF) vs 200 V class name. `"LEVEL=1 hid this entirely (no bv)"`. | inline repro |
@@ -253,7 +253,7 @@ high-impedance cascode source nodes via displacement current, parking them at ~1
 intended VDD−Vth ~4 V… Any HV-stack design using NMOS cascodes showed false SOA violations."*
 Regression `coss_check.cir` added, asserting `Cdrain < 1 pF` (baseline ~105 fF, ~10× margin).
 
-**`0cb9315` · 2026-06-04 · `MM_SIGMA` deterministic mismatch corners.** 40 subckts, 56 AGAUSS
+**`0cb9315` · 2026-06-04 · `Z_*` deterministic mismatch corners.** 40 subckts, 56 AGAUSS
 expressions extended. The additive form was forced by a simulator limitation: *"probed ngspice's
 .param expression parser and confirmed it does NOT support ==, !=, <, >= operators inside
 expressions."* Regression `mismatch_corner.cir`: analytic −1.44 %, measured −1.48 %, tol ±10 %.
@@ -361,7 +361,7 @@ cells, and −40/+27/+125 °C for comparators — note these two ranges disagree
 **Form** (`docs/MISMATCH_CORNERS.md` §1), uniform across all 40 devices:
 
 ```
-X_MM = MM_ON*AGAUSS(0, X, 3)/scale + MM_SIGMA*X/3/scale
+X_MM = MM_ON*AGAUSS(0, X, 3)/scale + Z_**X/3/scale
 ```
 
 **The AGAUSS convention is the load-bearing fact** (established empirically in Phase E, `8485df1`):
@@ -390,9 +390,9 @@ true 1-sigma = X / N. Empirically: `AGAUSS(0, 1, 3)` over 200 samples → sigma 
 
 There is **no `AVT`/`AVB` named parameter** — the AVT role is played by these bare literals.
 
-**`MM_SIGMA` semantics:** per-instance, default 0, signed sigma count. `MM_SIGMA=+3` pins the
-parameter at exactly the +X bound. Any real value works, so `.step MM_SIGMA -3 3 0.5` sweeps natively.
-The four-mode table is the hard contract; `(MM_ON=1, MM_SIGMA≠0)` is explicitly **"don't do this"** —
+**`Z_*` semantics:** per-instance, default 0, signed sigma count. `Z_VT=+3` pins the
+parameter at exactly the +X bound. Any real value works, so `.step Z_* -3 3 0.5` sweeps natively.
+The four-mode table is the hard contract; `(MM_ON=1, Z_*≠0)` is explicitly **"don't do this"** —
 the terms *add*, they do not exclude.
 
 **Migration history** (three distinct migrations, all in the CHANGELOG, **none of them in
@@ -401,7 +401,7 @@ the terms *add*, they do not exclude.
    (`4855fdf`). VDMOS could not follow.
 2. VDMOS conditioning: nothing → `Rgmin 1e9` (`0ceabc3`) → `+ Rcond 1e7` (`4b05308`) →
    `Rcond 1e6` (`454959e`).
-3. Conditional → additive `MM_SIGMA` form (`0cb9315`), forced by ngspice's parser.
+3. Conditional → additive `Z_*` form (`0cb9315`), forced by ngspice's parser.
 
 ### 4.6 Device limits
 
@@ -567,8 +567,8 @@ audit re-measures, this is a known fork in the record.
 1. **Device count.** `README.md:22` says 38 subckts; `QUICKSTART.md` and the xschem READMEs say 40;
    `.lib` header says *"All 38 .SUBCKT devices"*; `.inc` header says *"lists only the 76 devices, not
    the 38 internal *_INT models."* **Actual: 40 and 40.** Neither 38 nor 76 is correct.
-2. **`MM_SIGMA` usage is documented backwards in one place.** `xschem/autohv/README.md:29` says
-   `MM_SIGMA` *"needs global `MM_ON=1`"* — the direct opposite of the contract in `README.md`,
+2. **`Z_*` usage is documented backwards in one place.** `xschem/autohv/README.md:29` says
+   `Z_*` *"needs global `MM_ON=1`"* — the direct opposite of the contract in `README.md`,
    `QUICKSTART.md`, `MISMATCH_CORNERS.md` and the CHANGELOG, all of which specify `MM_ON=0` and warn
    that the two terms add.
 3. **`docs/backlog/README.md` item 2 is stale.** It lists the HV transient micro-stepping as open;

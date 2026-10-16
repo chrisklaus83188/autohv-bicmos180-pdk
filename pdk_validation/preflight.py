@@ -13,13 +13,14 @@ CLI:
 """
 from __future__ import annotations
 import csv, re, sys
+import re
 from pathlib import Path
 
 CSV_PATH = Path(__file__).resolve().parent / "device_limits.csv"
 LIB_PATH = Path(__file__).resolve().parents[1] / "autohv_bicmos180_case.lib"
 
 # v2.2-defaults: which wrapper `params:` defaults must equal a device_limits minimum.
-# (M / MM_SIGMA are not size floors; not asserted.)
+# (M / Z_* are not size floors; not asserted.)
 _DEFAULT_PARAMS = ("W", "L", "AREA")
 
 
@@ -140,6 +141,81 @@ _RATED = {
 }
 
 
+
+def declared_params() -> dict:
+    """{subckt: set of declared parameter names} from EVERY tracked .lib.
+
+    Not just the PDK library: the cell libraries under circuits/ declare their own subckts,
+    and checking instances against the PDK list alone would report every cell instance as
+    undeclared.
+    """
+    import subprocess
+    root = Path(__file__).resolve().parents[1]
+    files = subprocess.run(["git", "ls-files", "*.lib"], cwd=str(root),
+                           capture_output=True, check=True).stdout.decode().split()
+    out = {}
+    for rel in files:
+        if rel.endswith(".lib.in"):
+            continue
+        try:
+            txt = (root / rel).read_text(encoding="utf-8")
+        except Exception:
+            continue
+        for m in re.finditer(r"^\.subckt\s+(\S+)\s+(.*)$", txt, re.M | re.I):
+            name, rest = m.group(1), m.group(2)
+            names = set()
+            tail = re.split(r"\bparams:\s*", rest, maxsplit=1)
+            if len(tail) == 2:
+                names = set(re.findall(r"(\w+)\s*=", tail[1]))
+            out.setdefault(name.upper(), set()).update(names)
+    return out
+
+
+def check_undeclared_instance_params() -> list:
+    """Every X instance's parameters must be DECLARED by the subckt it calls.
+
+    ngspice accepts a parameter the subckt does not declare -- no error, no warning, no
+    effect. That is how the mirror characterisation ran for its whole life believing it was
+    applying a deterministic mismatch: the value was set, nothing consumed it, and every
+    result looked plausible. A typo in a knob name fails exactly the same way, silently.
+    """
+    import subprocess
+    root = Path(__file__).resolve().parents[1]
+    decl = declared_params()
+    files = subprocess.run(["git", "ls-files", "*.cir", "*.sp", "*.lib", "*.net"],
+                           cwd=str(root), capture_output=True, check=True).stdout.decode().split()
+    bad = []
+    for rel in files:
+        r = rel.replace("\\", "/")
+        if r.startswith("pdk_validation/baselines/") or r.endswith(".lib.in"):
+            continue
+        try:
+            txt = (root / rel).read_text(encoding="utf-8")
+        except Exception:
+            continue
+        for lineno, line in enumerate(txt.splitlines(), 1):
+            if not re.match(r"^[Xx]\S+\s", line):
+                continue
+            body = line.split(";")[0].split("$")[0]
+            toks = body.split()
+            kv = [t for t in toks if "=" in t]
+            if not kv:
+                continue
+            # the subckt name is the last bare token before the first key=value
+            first_kv = toks.index(kv[0])
+            if first_kv < 2:
+                continue
+            sub = toks[first_kv - 1].upper()
+            if sub not in decl:
+                continue                      # not a subckt we can see; not our business
+            for t in kv:
+                key = t.split("=", 1)[0]
+                if key and key not in decl[sub]:
+                    bad.append("%s:%d  %s passes %s, which %s does not declare"
+                               % (r, lineno, toks[0], key, sub))
+    return bad
+
+
 def preflight_report(check_rated: bool = True) -> int:
     """Read device_limits.csv, print a summary, validate. Return violation count."""
     lim = load_limits()
@@ -156,6 +232,14 @@ def preflight_report(check_rated: bool = True) -> int:
     if check_rated:
         for dev, bias in _RATED.items():
             problems += check_bias(dev, bias, lim)
+    # Every X instance's parameters must be DECLARED by the subckt it calls. ngspice accepts
+    # an undeclared one silently -- no error, no warning, no effect -- which is how the mirror
+    # characterisation spent its whole life believing it applied a deterministic mismatch.
+    undecl = check_undeclared_instance_params()
+    problems += undecl
+    print("[preflight] instance-parameter check: %s"
+          % ("OK -- every X instance parameter is declared by its subckt"
+             if not undecl else "%d UNDECLARED" % len(undecl)))
     if problems:
         print(f"[preflight] {len(problems)} violation(s):")
         for p in problems:

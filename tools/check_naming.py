@@ -138,6 +138,41 @@ def scan_old_device_names(files: list[str]) -> list[str]:
     return bad
 
 
+def scan_retired_params(files: list[str]) -> list[str]:
+    """MM_SIGMA must never return (ruling 2026-10-16).
+
+    It was the single deterministic mismatch dial, replaced by Z_VT/Z_BETA/Z_W/Z_L (MOS),
+    Z_VT (VDMOS), Z_R, Z_C, Z_VBE/Z_BF and Z_IS. The reason it needs a guard rather than
+    trust is that ngspice ACCEPTS a subckt parameter the subckt does not declare -- no
+    error, no warning, no effect -- so a stale MM_SIGMA reads as working and does nothing.
+    That is precisely how the mirror characterisation ran for its whole life believing it
+    applied a deterministic mismatch.
+
+    Historical records keep it: docs/backlog/ and docs/CHANGELOG.md, same rule as the
+    retired device names.
+    """
+    skip_exact = {"tools/check_naming.py", "docs/CHANGELOG.md",
+                  # Holds the post-mortem for the defect this guard exists to
+                  # prevent, so it has to name the parameter. Exempt by path and
+                  # only this path: a .md file cannot reach a netlist, but README
+                  # and QUICKSTART tell designers what to USE and stay guarded.
+                  "circuits/current_mirror_char/MIRROR_CHAR.md"}
+    skip_prefix = ("docs/backlog/", "pdk_validation/baselines/")
+    bad = []
+    for rel in files:
+        r = rel.replace("\\", "/")
+        if r in skip_exact or r.startswith(skip_prefix):
+            continue
+        try:
+            txt = (ROOT / rel).read_text(encoding="utf-8")
+        except (UnicodeDecodeError, IsADirectoryError, PermissionError, FileNotFoundError):
+            continue
+        for i, line in enumerate(txt.splitlines(), 1):
+            if re.search(r"(?<![A-Za-z0-9_])MM_SIGMA(?![A-Za-z0-9_])", line):
+                bad.append("%s:%d uses retired MM_SIGMA (now Z_VT/Z_R/Z_C/Z_VBE/Z_IS)" % (r, i))
+    return bad
+
+
 def scan_sources() -> list[str]:
     bad, seen = [], []
 
@@ -184,7 +219,8 @@ def main(argv=None) -> int:
         return 0
 
     files = tracked()
-    bad = scan_names(files) + scan_old_device_names(files) + scan_sources()
+    bad = (scan_names(files) + scan_old_device_names(files)
+           + scan_retired_params(files) + scan_sources())
     if bad:
         print("naming check FAILED (%d):" % len(bad))
         for b in bad[:40]:

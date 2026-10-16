@@ -44,7 +44,7 @@ Rcond  g_int s 1e7          ; <-- ADD: DC path from the floating gate-shift node
 - A single front-end now converges even at `R_pull = 10 MΩ` (previously needed ≤ 100 kΩ).
 - Leakage through `Rcond` ≈ 0.1 µA at these bias points (≈ 0.2 % of the ~55 µA mirror current) and
   is common-mode/matched → electrically transparent; the `Vshift` source still carries the
-  `MM_SIGMA`/`MM_ON` mismatch unchanged.
+  `Z_*`/`MM_ON` mismatch unchanged.
 
 `Rcond` is the same *kind* of element as the existing `Rgmin` shunt — just tied to a node that is
 actually determined, which is what `Rgmin`'s 1 GΩ-to-`g` could not guarantee once `g` floats.
@@ -77,7 +77,7 @@ Pass = `op` converges with `voutX` ~ 1–2 V (no singular matrix, no timestep co
 ## 5. Verification criteria (same spirit as the cascode handoff)
 - **Nominal transparent:** with `MM_ON=0`, reference-design metrics unchanged (within rounding)
   before vs. after adding `Rcond`.
-- **Mismatch preserved:** with `MM_ON=1` / `MM_SIGMA≠0`, the effective Vth shift is unchanged
+- **Mismatch preserved:** with `MM_ON=1` / `Z_*≠0`, the effective Vth shift is unchanged
   (the `Vshift` source is untouched).
 - **Self-heating:** I only tested `SH_ON=0`; please confirm `SH_ON=1` still converges (the `g_th`
   path derives from `g_int`, so `Rcond` should help there too).

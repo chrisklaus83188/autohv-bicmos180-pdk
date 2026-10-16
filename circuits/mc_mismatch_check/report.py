@@ -269,7 +269,7 @@ if ext:
     pr = ext["prediction"]
     w("## 7. External random-number driver prototype")
     w()
-    w("Each device carries its own knob (`MM_SIGMA={S1}` on X1, `{S2}` on X2) with")
+    w("Each device carries its own knob (`Z_VT={S1}` on X1, `{S2}` on X2) with")
     w("`MM_ON=0`; Python draws the unit-normal values (numpy `default_rng(%d)`) and"
       % ext["provenance"]["z_seed"])
     w("one ngspice invocation steps `alterparam` + `reset` + `op` through all %d samples."
@@ -288,10 +288,10 @@ if ext:
       % ext["native_mm_on_sigma_over_mu_pct_from_01"])
     w("| HANDOFF section 4 prototype | %.2f %% |" % ext["handoff_section4_sigma_over_mu_pct"])
     w()
-    w("One `MM_SIGMA` scales a device's Vth, W and L terms by the same z, so the three")
+    w("One `Z_*` scales a device's Vth, W and L terms by the same z, so the three")
     w("are perfectly correlated; the W term then partly cancels the Vth term, which is")
     w("why the one-knob prediction sits slightly below the independent-terms one. The")
-    w("program replaces `MM_SIGMA` with independent `Z_VT`, `Z_W`, `Z_L` (R5 as ruled).")
+    w("program replaces `Z_*` with independent `Z_VT`, `Z_W`, `Z_L` (R5 as ruled).")
     w()
 
 w("## 8. Reproduce")

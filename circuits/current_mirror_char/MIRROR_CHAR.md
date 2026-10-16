@@ -277,3 +277,36 @@ run_phase0.py  build_designs.py  run_dc.py  run_mc.py  compute_metrics.py  make_
 
 Reproduce: `python3 run_phase0.py && python3 build_designs.py && python3 run_dc.py &&
 python3 run_mc.py && python3 compute_metrics.py && python3 make_plots.py` (~3 min, 8 cores).
+
+## Deterministic mismatch knob: scope of the 2026-10-16 correction
+
+**What was wrong.** `mirror_lib.py` wrote `MM_SIGMA` only as a top-level `.param`, never on a
+device instance. In ngspice a subckt parameter default **shadows** a same-named global, so the
+value never reached a device. Measured against the wrapper that still declared it:
+
+| | `delvto` |
+|---|---|
+| top-level `.param MM_SIGMA=3` only | **0.0000000000** |
+| `MM_SIGMA=3` on the instance | 1.2643069248e-02 |
+
+The helper is unchanged in git history, so this predates the MC-realism program.
+
+**What is invalidated.** Any run that set the knob as a top-level `.param` expecting a
+deterministic ±kσ shift. Those measured the **typical device**: the deterministic-corner tables
+in this characterisation are the casualty.
+
+**What is NOT invalidated.** Runs with `MM_ON=1`, where each instance draws its own `AGAUSS`
+value. That path never depended on the knob, so the Monte-Carlo clouds and the σ/µ figures
+derived from them — including the original MC handoff's σ/µ = 4.33 % — are **live and valid**
+statistics. (Their *seeding* claim was separately false, per the `set rndseed` finding; that is
+a reproducibility problem, not a validity one.)
+
+**Now.** The knob is passed per instance, and `pdk_validation/preflight.py` fails on any `X`
+instance carrying a parameter its subckt does not declare — the mechanism that hid this, since
+ngspice accepts an undeclared parameter with no error, no warning and no effect.
+
+**Still open, for Phase 7 (ruled 2026-10-16):** the mirror mismatch corner is **differential** —
+`+kσ` on the reference device and `−kσ` on the output, on `Z_VT` only — not the common-mode
+shift the helper applies today (measured effect on the ratio: 0.04 %). The primary mismatch
+result comes from `mc_driver --mode mismatch`; the differential ±3σ pair is reported as a
+secondary "deterministic worst-case pair" table.

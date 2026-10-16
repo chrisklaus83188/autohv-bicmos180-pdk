@@ -51,7 +51,7 @@
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.024/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + Z_**0.024/3/sqrt(max(mtot,1e-6))}
 .param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
 .param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {DVTH_MM}
@@ -74,7 +74,7 @@ M0 d g_int s NDMOS20V_INT m={mtot}
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.024/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + Z_**0.024/3/sqrt(max(mtot,1e-6))}
 .param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
 .param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {DVTH_MM}
@@ -97,7 +97,7 @@ M0 d g_int s PDMOS20V_INT m={mtot}
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.027/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6)) + Z_**0.027/3/sqrt(max(mtot,1e-6))}
 .param Rth=150        ; K/W: thermal R, default for 60V class (override per-instance)
 .param Cth=2e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {DVTH_MM}
@@ -120,7 +120,7 @@ M0 d g_int s NDMOS60V_INT m={mtot}
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.027/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.027, 3)/sqrt(max(mtot,1e-6)) + Z_**0.027/3/sqrt(max(mtot,1e-6))}
 .param Rth=150        ; K/W: thermal R, default for 60V class (override per-instance)
 .param Cth=2e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {DVTH_MM}
@@ -143,7 +143,7 @@ M0 d g_int s PDMOS60V_INT m={mtot}
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.03/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6)) + Z_**0.03/3/sqrt(max(mtot,1e-6))}
 .param Rth=100        ; K/W: thermal R, default for 120V class (override per-instance)
 .param Cth=4e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {DVTH_MM}
@@ -166,7 +166,7 @@ M0 d g_int s NDMOS120V_INT m={mtot}
 * HV DMOS p-channel: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.03/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.03, 3)/sqrt(max(mtot,1e-6)) + Z_**0.03/3/sqrt(max(mtot,1e-6))}
 .param Rth=100        ; K/W: thermal R, default for 120V class (override per-instance)
 .param Cth=4e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {DVTH_MM}
@@ -189,7 +189,7 @@ M0 d g_int s PDMOS120V_INT m={mtot}
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0255, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0255/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0255, 3)/sqrt(max(mtot,1e-6)) + Z_**0.0255/3/sqrt(max(mtot,1e-6))}
 .param Rth=180        ; K/W: thermal R, default for 40V class (override per-instance)
 .param Cth=1.5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {DVTH_MM}
@@ -212,7 +212,7 @@ M0 d g_int s NDMOS40V_INT m={mtot}
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0255, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0255/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0255, 3)/sqrt(max(mtot,1e-6)) + Z_**0.0255/3/sqrt(max(mtot,1e-6))}
 .param Rth=180        ; K/W: thermal R, default for 40V class (override per-instance)
 .param Cth=1.5e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {DVTH_MM}
@@ -235,7 +235,7 @@ M0 d g_int s PDMOS40V_INT m={mtot}
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0285, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0285/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0285, 3)/sqrt(max(mtot,1e-6)) + Z_**0.0285/3/sqrt(max(mtot,1e-6))}
 .param Rth=120        ; K/W: thermal R, default for 80V class (override per-instance)
 .param Cth=3e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {DVTH_MM}
@@ -258,7 +258,7 @@ M0 d g_int s NDMOS80V_INT m={mtot}
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.0285, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.0285/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.0285, 3)/sqrt(max(mtot,1e-6)) + Z_**0.0285/3/sqrt(max(mtot,1e-6))}
 .param Rth=120        ; K/W: thermal R, default for 80V class (override per-instance)
 .param Cth=3e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {DVTH_MM}
@@ -285,7 +285,7 @@ M0 d g_int s PDMOS80V_INT m={mtot}
 .param L_MIN=5u
 .param Leff={max(L,L_MIN)}
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.033, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.033/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.033, 3)/sqrt(max(mtot,1e-6)) + Z_**0.033/3/sqrt(max(mtot,1e-6))}
 .param RDRIFT={max(3018.5*(Leff/L_REF-1)/mtot, 1e-6)}
 .param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
 .param Cth=5e-06     ; J/K: thermal capacitance
@@ -316,7 +316,7 @@ M0 dd g_int s NDMOS200V_INT m={mtot}
 .param L_MIN=5u
 .param Leff={max(L,L_MIN)}
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.033, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.033/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.033, 3)/sqrt(max(mtot,1e-6)) + Z_**0.033/3/sqrt(max(mtot,1e-6))}
 .param RDRIFT={max(9302.1*(Leff/L_REF-1)/mtot, 1e-6)}
 .param Rth=80        ; K/W: thermal R, default for 200V class (override per-instance)
 .param Cth=5e-06     ; J/K: thermal capacitance
@@ -341,7 +341,7 @@ M0 dd g_int s PDMOS200V_INT m={mtot}
 * HV DMOS: width W is the size knob (m=W/W_REF); channel/drift length fixed at process min
 .param W_REF=10u
 .param mtot={(W/W_REF)*M}
-.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + MM_SIGMA*0.024/3/sqrt(max(mtot,1e-6))}
+.param DVTH_MM={MM_ON*AGAUSS(0, 0.024, 3)/sqrt(max(mtot,1e-6)) + Z_**0.024/3/sqrt(max(mtot,1e-6))}
 .param Rth=200        ; K/W: thermal R, default for 20V class (override per-instance)
 .param Cth=1e-06     ; J/K: thermal capacitance
 Vshift g g_int DC {DVTH_MM}
@@ -360,42 +360,42 @@ Cth_n TJ 0 {Cth} IC=0
 M0 d g_int s DNMOS20V_INT m={mtot}
 .endif
 .ends DNMOS20V
-* <<<BJT_WRAPPER NPN_LV>>>
+* <<<BJT_WRAPPER NPN_LV AREA=0.04>>>
 *KEEPLINE .param MAV_BJT=4
 *KEEPLINE Vsen c ci DC 0
 *KEEPLINE Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
 
-* <<<BJT_WRAPPER PNP_LAT>>>
+* <<<BJT_WRAPPER PNP_LAT AREA=0.10>>>
 *KEEPLINE .param MAV_BJT=4
 *KEEPLINE Vsen c ci DC 0
 *KEEPLINE Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
 
-* <<<BJT_WRAPPER NPN_HV>>>
+* <<<BJT_WRAPPER NPN_HV AREA=0.10>>>
 *KEEPLINE .param MAV_BJT=4
 *KEEPLINE Vsen c ci DC 0
 *KEEPLINE Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
 
-* <<<BJT_WRAPPER PNP_HV>>>
+* <<<BJT_WRAPPER PNP_HV AREA=0.10>>>
 *KEEPLINE .param MAV_BJT=4
 *KEEPLINE Vsen c ci DC 0
 *KEEPLINE Bavl ci b I={ abs(i(Vsen))*( 1/(1 - (min(abs(V(ci,b))/BVCBO,0.997))**MAV_BJT) - 1 ) }
 
-* <<<DIO_WRAPPER DIO_PN>>>
+* <<<DIO_WRAPPER DIO_PN AREA=0.04>>>
 
-* <<<DIO_WRAPPER DIO_FAST>>>
+* <<<DIO_WRAPPER DIO_FAST AREA=0.04>>>
 
-* <<<DIO_WRAPPER DIO_SCH>>>
+* <<<DIO_WRAPPER DIO_SCH AREA=0.04>>>
 
-* <<<DIO_WRAPPER DZ_5V6>>>
+* <<<DIO_WRAPPER DZ_5V6 AREA=0.04>>>
 *KEEP bv temperature coefficient (phase-4 Step 2.4): +1.5 mV/C [grounded]. Positive avalanche TC;
 *KEEP the ~6.2 V zero-TC crossover sits just above this 5.6 V part. Implemented as a series B-source
 *KEEP adding TC*(temper-27) to the terminal breakdown (the built-in D model ignores tbv1 in ngspice-45);
 *KEEP zero at 27 C, so no nominal side effect. Zeners operate in reverse; the mV forward shift at T != 27 is negligible.
 
-* <<<DIO_WRAPPER DZ_12V>>>
+* <<<DIO_WRAPPER DZ_12V AREA=0.04>>>
 *KEEP bv tempco (phase-4 Step 2.4): +8 mV/C [extrapolated], above the ~6.2 V zero-TC crossover. See DZ_5V6.
 
-* <<<DIO_WRAPPER DZ_24V>>>
+* <<<DIO_WRAPPER DZ_24V AREA=0.04>>>
 *KEEP bv tempco (phase-4 Step 2.4): +20 mV/C [extrapolated], strong positive avalanche TC. See DZ_5V6.
 
 * <<<RES_WRAPPER RPOLY_HI L=0.5u W=0.5u>>>
