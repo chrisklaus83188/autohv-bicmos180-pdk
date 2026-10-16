@@ -127,6 +127,22 @@ for Rt in (1e3,1e4,1e5,1e6):
     g["resistors"][f"{Rt:g}"]=row
 
 # --- capacitors ---
+# Outline fringe, derived (cjsw = eps0*di), read from the model so this cannot drift from
+# the cards. It is the same for every type: cj*t_eq collapses to eps_diel, independent of
+# plate spacing.
+_CAPSPLIT = json.loads((REPO/"models"/"stat_model.json").read_text(encoding="utf-8")
+                       )["local_mismatch"]["_CAPACITORS"]["nominal_split"]["per_type"]
+CJSW_fF_per_um = next(iter(_CAPSPLIT.values()))["cjsw_perimeter_F_per_m"] * 1e15 / 1e6
+CAP_WMIN_um = 2.0            # device_limits.csv minimum for all four types
+
+
+def fringe_pct(dens_fF_um2, side_um):
+    """Perimeter share of total C for a square plate of this side."""
+    c_area = dens_fF_um2 * side_um * side_um
+    c_per = CJSW_fF_per_um * 4.0 * side_um
+    return 100.0 * c_per / (c_area + c_per)
+
+
 CAP={"CMIM_HI":(2.0,0.75),"CMIM_STD":(1.0,0.75),"CMOM":(0.35,1.5),"CFRINGE":(0.18,1.5)}
 for Ct in (100e-15,1e-12,10e-12):
     best=None
@@ -137,7 +153,8 @@ for Ct in (100e-15,1e-12,10e-12):
         cand=(lay,round(area,1),round(side,1),round(sig,3),bits,amin)
         if best is None or area<best[1]: best=cand
     g["capacitors"][f"{Ct*1e12:g}pF"]={"layer":best[0],"area_um2":best[1],"side_um":best[2],
-        "sigma_dC_pct":best[3],"matching_bits":best[4],"analog_min_area_um2":best[5]}
+        "sigma_dC_pct":best[3],"matching_bits":best[4],"analog_min_area_um2":best[5],
+        "fringe_pct":round(fringe_pct(CAP[best[0]][0], best[2]),2)}
 
 # --- BJT ---
 VT=0.02585
@@ -220,11 +237,27 @@ for Rt in sorted(g["resistors"],key=lambda x:float(x)):
               f"{r['drift_pct_-40_150C']}% | {altstr} |")
 md.append("")
 md.append("## Capacitors\n")
-md.append("| target | layer | area (um2) | side (um) | min area (sig<1%) | sigma(dC/C) | matching bits |")
-md.append("|---|---|---|---|---|---|---|")
+md.append("| target | layer | area (um2) | side (um) | min area (sig<1%) | sigma(dC/C) | matching bits | fringe share |")
+md.append("|---|---|---|---|---|---|---|---|")
 for Ct in g["capacitors"]:
     c=g["capacitors"][Ct]
-    md.append(f"| {Ct} | {c['layer']} | {c['area_um2']} | {c['side_um']} | {c.get('analog_min_area_um2')} | {c['sigma_dC_pct']}% | {c['matching_bits']} |")
+    md.append(f"| {Ct} | {c['layer']} | {c['area_um2']} | {c['side_um']} | {c.get('analog_min_area_um2')} | {c['sigma_dC_pct']}% | {c['matching_bits']} | {c['fringe_pct']}% |")
+md.append("")
+md.append("### Fringe share at minimum geometry\n")
+md.append(f"Capacitance is `cj*area + cjsw*perimeter`, with the outline fringe derived from "
+          f"the dielectric (`cjsw = eps0*di` = {CJSW_fF_per_um:.4f} fF/um, the same for every "
+          f"type). The perimeter term does not scale with area, so **C/area is not constant** "
+          f"and the fringe dominates at small plates. At the minimum legal geometry "
+          f"({CAP_WMIN_um:g} x {CAP_WMIN_um:g} um):\n")
+md.append("| layer | density (fF/um2) | fringe share at min geometry |")
+md.append("|---|---|---|")
+for _lay,(_d,_a) in CAP.items():
+    md.append(f"| {_lay} | {_d} | {fringe_pct(_d, CAP_WMIN_um):.1f}% |")
+md.append("")
+md.append("**Do not instantiate a matching-critical capacitor at minimum geometry.** That is "
+          "physics, not a modelling artefact: a 2 um plate over a ~370 nm effective dielectric "
+          "is necessarily fringe-dominated, and the fringe matches worse than the plate. Size "
+          "from the table above, which picks area for the target sigma.")
 md.append("")
 md.append("## BJT -- AREA per decade of Ic\n")
 md.append("| device | 10uA Vbe/beta | 100uA Vbe/beta | 1mA Vbe/beta | pair sig(dVbe) | eff fT |")

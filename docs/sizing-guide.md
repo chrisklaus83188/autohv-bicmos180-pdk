@@ -69,11 +69,24 @@ Idss = **106.353 uA/um** at Vgs=0. Not a mirror-Vov device; size for self-biased
 
 ## Capacitors
 
-| target | layer | area (um2) | side (um) | min area (sig<1%) | sigma(dC/C) | matching bits |
-|---|---|---|---|---|---|---|
-| 0.1pF | CMIM_HI | 50.0 | 7.1 | 0.56 | 0.106% | 8.1 |
-| 1pF | CMIM_HI | 500.0 | 22.4 | 0.56 | 0.034% | 9.8 |
-| 10pF | CMIM_HI | 5000.0 | 70.7 | 0.56 | 0.011% | 11.4 |
+| target | layer | area (um2) | side (um) | min area (sig<1%) | sigma(dC/C) | matching bits | fringe share |
+|---|---|---|---|---|---|---|---|
+| 0.1pF | CMIM_HI | 50.0 | 7.1 | 0.56 | 0.106% | 8.1 | 1.84% |
+| 1pF | CMIM_HI | 500.0 | 22.4 | 0.56 | 0.034% | 9.8 | 0.59% |
+| 10pF | CMIM_HI | 5000.0 | 70.7 | 0.56 | 0.011% | 11.4 | 0.19% |
+
+### Fringe share at minimum geometry
+
+Capacitance is `cj*area + cjsw*perimeter`, with the outline fringe derived from the dielectric (`cjsw = eps0*di` = 0.0664 fF/um, the same for every type). The perimeter term does not scale with area, so **C/area is not constant** and the fringe dominates at small plates. At the minimum legal geometry (2 x 2 um):
+
+| layer | density (fF/um2) | fringe share at min geometry |
+|---|---|---|
+| CMIM_HI | 2.0 | 6.2% |
+| CMIM_STD | 1.0 | 11.7% |
+| CMOM | 0.35 | 27.5% |
+| CFRINGE | 0.18 | 42.5% |
+
+**Do not instantiate a matching-critical capacitor at minimum geometry.** That is physics, not a modelling artefact: a 2 um plate over a ~370 nm effective dielectric is necessarily fringe-dominated, and the fringe matches worse than the plate. Size from the table above, which picks area for the target sigma.
 
 ## BJT -- AREA per decade of Ic
 

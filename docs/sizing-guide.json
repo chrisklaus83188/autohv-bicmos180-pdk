@@ -665,7 +665,8 @@
    "side_um": 7.1,
    "sigma_dC_pct": 0.106,
    "matching_bits": 8.1,
-   "analog_min_area_um2": 0.56
+   "analog_min_area_um2": 0.56,
+   "fringe_pct": 1.84
   },
   "1pF": {
    "layer": "CMIM_HI",
@@ -673,7 +674,8 @@
    "side_um": 22.4,
    "sigma_dC_pct": 0.034,
    "matching_bits": 9.8,
-   "analog_min_area_um2": 0.56
+   "analog_min_area_um2": 0.56,
+   "fringe_pct": 0.59
   },
   "10pF": {
    "layer": "CMIM_HI",
@@ -681,7 +683,8 @@
    "side_um": 70.7,
    "sigma_dC_pct": 0.011,
    "matching_bits": 11.4,
-   "analog_min_area_um2": 0.56
+   "analog_min_area_um2": 0.56,
+   "fringe_pct": 0.19
   }
  },
  "bjt": {
