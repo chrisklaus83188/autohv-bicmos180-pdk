@@ -2,10 +2,10 @@
 
 **Responds to:** the 2026-10-02 ruling (Q3 nominal shares withdrawn; derive `cjsw`; add the eighth check)
 **Branch:** `mc-realism` @ `5945257`, pushed, tree clean, **seven checks green**
-**Date:** 2026-10-02
+**Date:** 2026-10-02, re-confirmed 2026-10-15 — **nothing has advanced in between**
 **Status:** Phase 3 ~92 % done. Both ruled items applied. **Two acceptance bounds in B6 are
-exceeded and I believe they must be** — §2. Nothing is blocked; I am continuing to the BJT/diode
-rewrite.
+exceeded and I believe they must be** — §2. Nothing is blocked. The BJT/diode rewrite and the
+rest of §4 are **not started**: the tree is exactly as this document describes it.
 
 ---
 
